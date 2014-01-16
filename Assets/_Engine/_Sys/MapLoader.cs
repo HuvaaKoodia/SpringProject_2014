@@ -11,7 +11,6 @@ public class MapData{
 	public MapData(int w,int h){
 		map_data=new string[w,h];
 	}
-
 }
 
 public class MapLoader : MonoBehaviour{
