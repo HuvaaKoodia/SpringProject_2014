@@ -4,18 +4,11 @@ using System.Collections.Generic;
 
 public class TileMain : MonoBehaviour 
 {
-	public Rect size;
-	public Vector3 position;
-	public GameObject tileObject;
-	
-	public TileData Data{get;private set;}
-	public void SetData(TileData data){
-		Data=data;
-	}
+	public TileObjData Data{get;private set;}
+	public GameObject TileObject;	
 
-	public bool Blocked ()
-	{
-		return tileObject!=null;
+	public void SetData(TileObjData data){
+		Data=data;
 	}
 
 	
