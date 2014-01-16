@@ -33,7 +33,7 @@ public class ShipGenerator : MonoBehaviour
 				}
 				if (tile=="r"){
 					//random room
-					cell.RoomData=Subs.GetRandom(XmlMapRead.Maps);
+					cell.RoomData=Subs.GetRandom(XmlMapRead.Rooms["room"]);
 				}
 				
 				if (tile=="e"){

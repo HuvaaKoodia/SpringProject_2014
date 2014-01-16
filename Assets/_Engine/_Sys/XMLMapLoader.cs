@@ -26,14 +26,14 @@ public class ShipMapData{
 }
 
 public class XMLMapLoader : MonoBehaviour{
-
-	public List<MapData> Maps {get;private set;}
+	
+	public Dictionary<string,List<MapData>> Rooms {get;private set;}
 	public Dictionary<string,ShipMapData> Ships {get;private set;}
 	
 	public void Awake()
 	{
-		Maps=new List<MapData>();
 		Ships=new Dictionary<string, ShipMapData>();
+		Rooms=new Dictionary<string, List<MapData>>();
 		
 		XML_sys.OnRead+=read;
 	}
@@ -53,11 +53,18 @@ public class XMLMapLoader : MonoBehaviour{
 			foreach (XmlNode node in root){
 				if (node.Name=="Room")
 				{
-					Maps.Add(readMapData(node));
+					string name=node.Attributes["type"].Value;
+					
+					if (!Rooms.ContainsKey(name))
+					{
+						Rooms.Add(name,new List<MapData>());
+					}
+
+					Rooms[name].Add(readMapData(node));
 				}
 				if (node.Name=="Ship")
 				{
-					string name=node.Attributes["name"].Value;
+					string name=node.Attributes["type"].Value;
 					int floor=XML_Loader.getAttInt(node,"floor");
 					
 					ShipMapData ship=null;

@@ -17,9 +17,8 @@ public class GameController : MonoBehaviour {
 	public TileObjData[,] TileObjectMap;
 	public TileMain[,] TileMainMap;
 
-    public GameObject enemyPrefab;
     int currentEnemy = 0;
-    public List<GameObject> enemies;
+    public List<EnemyMain> enemies;
 
     TurnState currentTurn = TurnState.PlayerTurn;
 
@@ -28,7 +27,7 @@ public class GameController : MonoBehaviour {
     {
 		//TileObjects=new List<TileObjData>();
 		//Tiles=new List<TileMain>();
-        enemies = new List<GameObject>();
+        enemies = new List<EnemyMain>();
 
 		MapGen.GenerateObjectDataMap(this);
 		MapGen.GenerateSceneMap(this);

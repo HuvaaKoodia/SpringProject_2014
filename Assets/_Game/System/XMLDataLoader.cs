@@ -29,7 +29,7 @@ public class XMLDataLoader : XML_Loader
                     float movementSpeed = XML_Loader.getAttFlt(node, "MovementSpeed");
                     float turnSpeed = XML_Loader.getAttFlt(node, "TurnSpeed");
 
-                    PlayerData newPlayer = new PlayerData(playerHealth, movementSpeed, turnSpeed);
+                    PlayerXmlData newPlayer = new PlayerXmlData(playerHealth, movementSpeed, turnSpeed);
                     database.players.Add(newPlayer);
                 }
             }
@@ -60,7 +60,7 @@ public class XMLDataLoader : XML_Loader
                     int accuracy = XML_Loader.getAttInt(node, "Accuracy");
                     int heat = XML_Loader.getAttInt(node, "Heat");
 
-                    WeaponData newWeapon = new WeaponData(weaponType, weaponName, damage, accuracy, heat);
+                    WeaponXmlData newWeapon = new WeaponXmlData(weaponType, weaponName, damage, accuracy, heat);
                     database.weapons.Add(newWeapon);
                 }
             }
@@ -86,7 +86,7 @@ public class XMLDataLoader : XML_Loader
                     int health = XML_Loader.getAttInt(node, "Health");
                     int damage = XML_Loader.getAttInt(node, "Damage");
 
-                    EnemyData newEnemy = new EnemyData(enemyType, health, damage);
+                    EnemyXmlData newEnemy = new EnemyXmlData(enemyType, health, damage);
                     database.enemies.Add(newEnemy);
                 }
             }
@@ -111,7 +111,7 @@ public class XMLDataLoader : XML_Loader
 
                     int health = XML_Loader.getAttInt(node, "Health");
 
-                    ObstacleData newObstacle = new ObstacleData(obstacleType, health);
+                    ObstacleXmlData newObstacle = new ObstacleXmlData(obstacleType, health);
                     database.obstacles.Add(newObstacle);
                 }
             }
