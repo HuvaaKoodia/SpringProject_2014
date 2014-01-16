@@ -1,18 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerMain : MonoBehaviour
-{
+public class EntityMain : MonoBehaviour {
 
 	// Use this for initialization
-	void Start()
-    {
+	void Start () {
 	
 	}
 	
 	// Update is called once per frame
-	void Update()
-    {
+	void Update () {
 	
 	}
 }

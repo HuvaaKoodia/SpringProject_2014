@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerMovementSub : MonoBehaviour {
+public class EnemyMain : MonoBehaviour {
 
 	// Use this for initialization
-	void Start () {
-	
+	void Start ()
+    {
+        transform.GetComponent<EntityMovementSub>().parent = this.transform;
 	}
 	
 	// Update is called once per frame
