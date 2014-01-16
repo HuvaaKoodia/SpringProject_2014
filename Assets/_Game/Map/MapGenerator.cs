@@ -24,15 +24,30 @@ public class MapGenerator : MonoBehaviour
 				var data=GC.TileObjectMap[x,y]=new TileObjData();
 				
 				data.TilePosition=new Vector3(x,0,y);
-				
+
+                int[] pos = { x, y }; //pelaajan & vihujen gridisijainnin asetukseen
 				switch (md.map_data[x,y])
 				{
 					case ".":
 						data.SetType(TileObjData.Type.Floor);
-					break;
+					    break;
 					case "x":
 						data.SetType(TileObjData.Type.Wall);
-					break;
+					    break;
+
+                    //Jarkon testailua pelaajan ja vihujen sijoittamiseen
+                    case "p":
+                        data.SetType(TileObjData.Type.Floor);
+                        GameObject.Find("Player").SendMessage("SetPositionInGrid", pos);
+                        break;
+                    case "e":
+                        data.SetType(TileObjData.Type.Floor);
+
+                        GameObject newEnemy = GameObject.Instantiate(GC.enemyPrefab, new Vector3(x, 0, y), Quaternion.identity) as GameObject;
+                     
+                        newEnemy.SendMessage("SetPositionInGrid", pos);
+                        GC.enemies.Add(newEnemy);
+                        break;
 				}
 			}
 		}

@@ -4,22 +4,29 @@ using System.Collections;
 public class PlayerInputSub : MonoBehaviour {
 
     GameObject player;
-    PlayerMovementSub playerMovement;
+    EntityMovementSub playerMovement;
 
 	// Use this for initialization
 	void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        playerMovement = player.gameObject.GetComponent<PlayerMovementSub>();
+        player = transform.root.gameObject;
+        playerMovement = player.gameObject.GetComponent<EntityMovementSub>();
 	}
 	
 	// Update is called once per frame
 	void Update()
     {
-        MovementInput();
+        if (playerMovement.currentMovement == MovementState.NotMoving)
+        {
+            bool didMove = MovementInput();
+            if (didMove)
+            {
+                SendMessageUpwards("EndTurn");
+            }
+        }
 	}
 
-    void MovementInput()
+    bool MovementInput()
     {
         float verticalAxis = Input.GetAxis("Vertical");
         float horizontalAxis = Input.GetAxis("Horizontal");
@@ -27,19 +34,25 @@ public class PlayerInputSub : MonoBehaviour {
         if (verticalAxis > 0)
         {
             playerMovement.SendMessage("MoveForward");
+            return true;
         }
         else if (verticalAxis < 0)
         {
             playerMovement.SendMessage("MoveBackward");
+            return true;
         }
         else if (horizontalAxis > 0)
         {
             playerMovement.SendMessage("TurnRight");
+            return true;
         }
         else if (horizontalAxis < 0)
         {
             playerMovement.SendMessage("TurnLeft");
+            return true;
         }
+
+        return false;
     }
 
     void MouseInput()
