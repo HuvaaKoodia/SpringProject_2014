@@ -8,11 +8,40 @@ public class XMLDataLoader : XML_Loader
 {
     public static void Read(GameDatabase database)
     {
-        checkFolder("Data/Weapons");
+        checkFolder("Data/Player");
+        var files = Directory.GetFiles("Data/Player");
+  
+        #region Player
 
-        var files = Directory.GetFiles("Data/Weapons");
+        foreach (var f in files)
+        {
+            var Xdoc = new XmlDocument();
+            Xdoc.Load(f);
+
+            var root = Xdoc["Root"];
+
+            foreach (XmlNode node in root)
+            {
+                if (node.Name == "Player")
+                {
+                    int playerHealth = XML_Loader.getAttInt(node, "Health");
+
+                    float movementSpeed = XML_Loader.getAttFlt(node, "MovementSpeed");
+                    float turnSpeed = XML_Loader.getAttFlt(node, "TurnSpeed");
+
+                    PlayerData newPlayer = new PlayerData(playerHealth, movementSpeed, turnSpeed);
+                    database.players.Add(newPlayer);
+                }
+            }
+        }
+
+        #endregion
 
         #region Weapons
+        
+        checkFolder("Data/Weapons");
+        files = Directory.GetFiles("Data/Weapons");
+
         foreach (var f in files)
         {
             var Xdoc = new XmlDocument();
