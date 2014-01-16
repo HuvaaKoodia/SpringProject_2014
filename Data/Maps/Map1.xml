@@ -1,35 +1,53 @@
 <Root>
-	<!-- Map Legend
+<!--
+--Room Legend--
 . = floor
 x = wall
+d = door
+
+--Ship Legend--
+. = space
+c = corridor
+r = room
+a = airlock
+e = elevator
 -->
 
-	<Room w="7" h="5">
-	.......
-	xx.xxxx
-	x......
-	xxx.xxx
-	.......
+	<Room type="elevator" w="3" h="3">
+	xxx
+	x.x
+	xxx
 	</Room>
 
-	<!--
-	<ship name="D7" floor="0" w="7" h="5">
+	<Room type="airlock" w="7" h="5">
+	xxx
+	x.x
+	xxx
+	</Room>
+	
+	<Room type="room" w="7" h="5">
+	xxxxxxx
+	x.....x
+	x.....x
+	x.....x
+	xxx.xxx
+	</Room>
+
+	<Ship type="D7" floor="0" w="7" h="6">
 	...e...
-	.ddc...
-	.rrcrdr
-	...cddd
+	.ccc.c.
+	.rrcrcr
+	...cr..
 	...c...
 	...a...
-	</ship>
+	</Ship>
 	
-	<ship name="D7" floor="1" w="7" h="5">
+	<Ship type="D7" floor="1" w="7" h="6">
 	...e...
 	...c...
 	...c...
 	...o...
 	.......
 	.......
-	</ship>
-	-->
-
+	</Ship>
 </Root>

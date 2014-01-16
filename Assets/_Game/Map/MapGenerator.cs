@@ -2,6 +2,10 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// Generates TileObjectData maps and TileObject maps from ShipObjectData.
+/// </summary>
+/// 
 public class MapGenerator : MonoBehaviour 
 {
 	public XMLMapLoader XmlMapRead;
