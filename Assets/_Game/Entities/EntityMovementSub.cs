@@ -65,25 +65,26 @@ public class EntityMovementSub : MonoBehaviour
     void TryToMove(int direction)
     {
         //TODO CHECK OBSTACLES
-        if (currentMovement == MovementState.NotMoving)
+        int nextX = GetNextTileX(direction, currentGridX);
+        int nextY = GetNextTileY(direction, currentGridY);
+
+        if (currentMovement == MovementState.NotMoving && CanMoveToTile(nextX, nextY))
         {
-            int nextX = GetNextTileX(direction, currentGridX);
-            int nextY = GetNextTileY(direction, currentGridY);
 
-            //Debug.Log("Next X: " + nextX + " nextY: " + nextY);
-            if (CanMoveToTile(nextX, nextY))
-            {
-                tilemap[currentGridX, currentGridY].LeaveTile();
+            tilemap[currentGridX, currentGridY].LeaveTile();
 
-                currentGridX = nextX;
-                currentGridY = nextY;
+            currentGridX = nextX;
+            currentGridY = nextY;
 
-                currentMovement = MovementState.Moving;
+            currentMovement = MovementState.Moving;
 
-                targetPosition = tilemap[currentGridX, currentGridY].Data.TilePosition;
+            targetPosition = tilemap[currentGridX, currentGridY].Data.TilePosition;
 
-                tilemap[currentGridX, currentGridY].SetEntity(parent.gameObject.GetComponent<EntityMain>());
-            }
+            tilemap[currentGridX, currentGridY].SetEntity(parent.gameObject.GetComponent<EntityMain>());
+        }
+        else
+        {
+            FinishMoving();
         }
     }
 
@@ -112,6 +113,10 @@ public class EntityMovementSub : MonoBehaviour
             else if (targetRotationAngle > 360)
                 targetRotationAngle -= 360;
         }
+        else
+        {
+            FinishMoving();
+        }
     }
 
     void Move()
@@ -130,7 +135,7 @@ public class EntityMovementSub : MonoBehaviour
             else
             {
                 parent.position = targetPosition;
-                currentMovement = MovementState.NotMoving;
+                FinishMoving();
             }
         }
 
@@ -153,9 +158,15 @@ public class EntityMovementSub : MonoBehaviour
             else
             {
                 parent.eulerAngles = new Vector3(parent.eulerAngles.x, targetRotationAngle, parent.eulerAngles.z);
-                currentMovement = MovementState.NotMoving;
+                FinishMoving();
             }
         }
+    }
+
+    void FinishMoving()
+    {
+        currentMovement = MovementState.NotMoving;
+        parent.SendMessage("FinishedMoving", SendMessageOptions.DontRequireReceiver);
     }
 
     bool CanMoveToTile(int x, int y)
@@ -167,7 +178,8 @@ public class EntityMovementSub : MonoBehaviour
             return false;
         }
 
-        if (tilemap[x, y].Data.TileType == TileObjData.Type.Floor)
+        TileMain nextTile = tilemap[x, y];
+        if (nextTile.Data.TileType == TileObjData.Type.Floor && nextTile.entityOnTile == null)
             return true;
         else
             return false;

@@ -7,7 +7,7 @@ public class TileMain : MonoBehaviour
 	public TileObjData Data{get;private set;}
     public GameObject TileObject;
 
-    public EntityMain entityOnTile = null;
+    public EntityMain entityOnTile {get; private set;}
 
 	public void SetData(TileObjData data){
 		Data=data;

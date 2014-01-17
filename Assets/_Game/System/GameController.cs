@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 enum TurnState
 {
-    PlayerTurn, AiTurn
+    PlayerTurn, AiTurn, WaitingAIToFinish
 }
 
 public class GameController : MonoBehaviour {
@@ -18,6 +18,7 @@ public class GameController : MonoBehaviour {
 	public TileMain[,] TileMainMap;
 
     int currentEnemy = 0;
+    int finishedEnemies = 0;
     public List<EnemyMain> enemies;
 
     TurnState currentTurn = TurnState.PlayerTurn;
@@ -48,6 +49,11 @@ public class GameController : MonoBehaviour {
                 ChangeTurn();
             }
         }
+        else if (currentTurn == TurnState.WaitingAIToFinish && enemies.Count == finishedEnemies)
+        {
+            finishedEnemies = 0;
+            ChangeTurn();
+        }
 	}
 
 	/// <summary>
@@ -74,10 +80,19 @@ public class GameController : MonoBehaviour {
         {
             currentTurn = TurnState.AiTurn;
         }
+        else if (currentTurn == TurnState.AiTurn)
+        {
+            currentTurn = TurnState.WaitingAIToFinish;
+        }
         else
         {
             currentTurn = TurnState.PlayerTurn;
             GameObject.Find("Player").SendMessage("StartTurn");
         }
+    }
+
+    public void EnemyFinishedTurn()
+    {
+        finishedEnemies++;
     }
 }

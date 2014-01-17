@@ -90,7 +90,7 @@ public class MapGenerator : MonoBehaviour
 										
 					case TileObjData.Obj.Enemy:
                         var newEnemy = GameObject.Instantiate(MapPrefabs.EnemyPrefab, new Vector3(x, 0, y), Quaternion.identity) as EnemyMain;
-                     
+                        newEnemy.name = "Enemy";
                         newEnemy.SendMessage("SetPositionInGrid", pos);
                         GC.enemies.Add(newEnemy);
 					break;

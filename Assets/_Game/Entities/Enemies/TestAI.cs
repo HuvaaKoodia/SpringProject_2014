@@ -20,7 +20,6 @@ public class TestAI : MonoBehaviour {
     void RandomMovement()
     {
         int rand = Subs.GetRandom(4);
-        Debug.Log("AI moving, " + rand);
         switch (rand)
         {
             case 0:
