@@ -9,7 +9,7 @@ public class PrefabStore : MonoBehaviour {
 	
 	public GameObject 
 		BasicFloor,
-		BasicWall
-
+		BasicWall,
+		BasicEmpty
 		;
 }

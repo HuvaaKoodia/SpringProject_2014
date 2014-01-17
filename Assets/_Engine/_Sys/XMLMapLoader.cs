@@ -7,33 +7,44 @@ using System.Xml;
 
 
 //DEV. rename to RoomXMLData and ShipXMLData
-public class MapData{
+public class MapXmlData{
 	public string[,] map_data;
-
-	public MapData(int w,int h){
+	public int W{get{return map_data.GetLength(0);}}
+	public int H{get{return map_data.GetLength(1);}}
+	
+	public MapXmlData(int w,int h){
 		map_data=new string[w,h];
 	}
 }
 
-public class ShipMapData{
-	public string Name;
-	public Dictionary<int,MapData> Floors;
+public class ShipMapXmlData{
+	public string Name{get;private set;}
+	public Dictionary<int,MapXmlData> Floors;
+	public int CorridorLengthMin{get;private set;}
+	public int CorridorLengthMax{get;private set;}
+	public int CorridorWidth{get;private set;}
 	
-	public ShipMapData(string name){
+	public ShipMapXmlData(string name){
 		Name=name;
-		Floors=new Dictionary<int, MapData>();
+		Floors=new Dictionary<int, MapXmlData>();
+	}
+	
+	public void SetCorridor(int lmin,int lmax,int width){
+		CorridorLengthMax=lmax;
+		CorridorLengthMin=lmin;
+		CorridorWidth=width;
 	}
 }
 
 public class XMLMapLoader : MonoBehaviour{
 	
-	public Dictionary<string,List<MapData>> Rooms {get;private set;}
-	public Dictionary<string,ShipMapData> Ships {get;private set;}
+	public Dictionary<string,List<MapXmlData>> Rooms {get;private set;}
+	public Dictionary<string,ShipMapXmlData> Ships {get;private set;}
 	
 	public void Awake()
 	{
-		Ships=new Dictionary<string, ShipMapData>();
-		Rooms=new Dictionary<string, List<MapData>>();
+		Ships=new Dictionary<string, ShipMapXmlData>();
+		Rooms=new Dictionary<string, List<MapXmlData>>();
 		
 		XML_sys.OnRead+=read;
 	}
@@ -57,7 +68,7 @@ public class XMLMapLoader : MonoBehaviour{
 					
 					if (!Rooms.ContainsKey(name))
 					{
-						Rooms.Add(name,new List<MapData>());
+						Rooms.Add(name,new List<MapXmlData>());
 					}
 
 					Rooms[name].Add(readMapData(node));
@@ -66,18 +77,40 @@ public class XMLMapLoader : MonoBehaviour{
 				{
 					string name=node.Attributes["type"].Value;
 					int floor=XML_Loader.getAttInt(node,"floor");
+					int lmin=1,lmax=3,w=2;
+					var att=node.Attributes["c_len"];
+					if (att!=null){
+						var spl=Subs.Split(att.Value,",");
+						if (spl.Length>0)
+						{
+							lmin=lmax=int.Parse(spl[0]);
+						}
+						if (spl.Length>1)
+						{
+							lmax=int.Parse(spl[1]);
+						}
+					}
 					
-					ShipMapData ship=null;
+					att=node.Attributes["c_wid"];
+					if (att!=null){
+						w=int.Parse(att.Value);
+					}
+					
+					ShipMapXmlData ship=null;
 					if (Ships.ContainsKey(name))
 					{
 						Ships.TryGetValue(name,out ship);
+						
 					}
 					else
 					{
-						ship=new ShipMapData(name);
-						Ships.Add(name,ship);	
+						ship=new ShipMapXmlData(name);
+						Ships.Add(name,ship);
+						ship.SetCorridor(lmin,lmax,w);
 					}
+					
 					ship.Floors.Add(floor,readMapData(node));
+					
 				}
 			}
 		}
@@ -104,20 +137,20 @@ public class XMLMapLoader : MonoBehaviour{
 		*/
 	}
 	
-	MapData readMapData(XmlNode node){
+	MapXmlData readMapData(XmlNode node){
 				
 		int 
 			width=XML_Loader.getAttInt(node,"w"),
 			height=XML_Loader.getAttInt(node,"h");
 		
-		var map=new MapData(width,height);
+		var map=new MapXmlData(width,height);
 
 		var spl=node.InnerText.Replace(" ","").Replace("\r","").Replace("\t","").Split('\n');
 		int y=0,x=0;
 		foreach (var line in spl)
 		{
 			if (line=="") continue;
-			while (x<map.map_data.GetLength(0))
+			while (x<map.W)
 			{
 				var ss=line.Substring(x,1).ToLower();
 				map.map_data[x,height-1-y]=ss;

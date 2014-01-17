@@ -13,14 +13,22 @@ public class MapGenerator : MonoBehaviour
 	
 	/// <summary>
 	/// Generates the TileObjectDataMap from a XMLMapData file.
+	/// DEV. Debug.
 	/// </summary>
 	public void GenerateObjectDataMap(GameController GC){
 		
 		//random generate map
 		var md = XmlMapRead.Rooms["room"][0];
 			
-		int w=md.map_data.GetLength(0);
-		int h=md.map_data.GetLength(1);
+		GenerateObjectDataMap(GC,md);
+	}
+	/// <summary>
+	/// Generates the TileObjectDataMap from a XMLMapData file.
+	/// </summary>
+	public void GenerateObjectDataMap(GameController GC,MapXmlData md){
+		
+		int w=md.W;
+		int h=md.H;
 			
 		GC.ResetTileObjectMap(w,h);
 
@@ -36,6 +44,9 @@ public class MapGenerator : MonoBehaviour
 				{
 					case ".":
 						data.SetType(TileObjData.Type.Floor);
+					    break;
+					case ",":
+						data.SetType(TileObjData.Type.Empty);
 					    break;
 					case "x":
 						data.SetType(TileObjData.Type.Wall);
@@ -53,8 +64,9 @@ public class MapGenerator : MonoBehaviour
 			}
 		}
 	}
+	
 	/// <summary>
-	/// Generates the 3d world objects to the scene.
+	/// Generates the 3d world objects to the scene from the ObjectDataMap.
 	/// </summary>
 	public void GenerateSceneMap(GameController GC)
 	{
@@ -75,6 +87,9 @@ public class MapGenerator : MonoBehaviour
 				{
 					case TileObjData.Type.Wall:
 						tileobj=MapPrefabs.BasicWall;
+					break;
+					case TileObjData.Type.Empty:
+						tileobj=MapPrefabs.BasicEmpty;
 					break;
 				}
 				

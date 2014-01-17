@@ -126,6 +126,11 @@ public class Subs{
     {
         return !insideArea(Position,area);
     }
+
+	public static bool insideArea(int x,int y,int ax,int ay,int aw,int ah)
+    {
+        return (x >= ax && x < ax + aw && y >= ay && y < ay + ah);
+    }
 	
 	public static void ChangeColor(Transform t, Color color){
 		if (t.renderer!=null){
@@ -145,7 +150,6 @@ public class Subs{
 	/// <summary>
     /// Autofits the text to fit in an area with the preferred width.
     /// </summary>
-    /// <param name="width"></param>
     public static string autofit_text(string text,int width,UIFont font)
     {
         text=text.Replace("\n", " \n ").Replace("\\n", " \n ");

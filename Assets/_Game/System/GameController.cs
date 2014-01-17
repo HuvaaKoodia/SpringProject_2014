@@ -11,8 +11,10 @@ public class GameController : MonoBehaviour {
 	
 	//public List<TileObjData> TileObjects{get;private set;}
 	//public List<TileMain> Tiles{get;private set;}
+	public EngineController EngCont;
 	
 	public MapGenerator MapGen;
+	public ShipGenerator ShipGen;
 	
 	public TileObjData[,] TileObjectMap;
 	public TileMain[,] TileMainMap;
@@ -28,12 +30,13 @@ public class GameController : MonoBehaviour {
     {
 		//TileObjects=new List<TileObjData>();
 		//Tiles=new List<TileMain>();
-        enemies = new List<EnemyMain>();
-
-		MapGen.GenerateObjectDataMap(this);
+       	enemies = new List<EnemyMain>();
+		
+		var ship_floor0=ShipGen.GenerateShipObjectData();
+		MapGen.GenerateObjectDataMap(this,ship_floor0);
 		MapGen.GenerateSceneMap(this);
 	}
-	
+
 	// Update is called once per frame
 	void Update()
     {
@@ -42,7 +45,7 @@ public class GameController : MonoBehaviour {
         {
             enemies[currentEnemy].SendMessage("RandomMovement");
             currentEnemy++;
-
+			
             if (currentEnemy == enemies.Count)
             {
                 currentEnemy = 0;
