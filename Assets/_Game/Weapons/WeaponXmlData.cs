@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WeaponData
+public class WeaponXmlData
 {
     public string Type { get; private set; }
     public string Name { get; private set; }
@@ -10,7 +10,7 @@ public class WeaponData
     public int Accuracy { get; private set; }
     public int Heat { get; private set; }
 
-    public WeaponData(string type, string name, int damage, int accuracy, int heat)
+    public WeaponXmlData(string type, string name, int damage, int accuracy, int heat)
     {
         this.Type = type;
         this.Name = name;

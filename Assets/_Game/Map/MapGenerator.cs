@@ -2,15 +2,22 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// Generates TileObjectData maps and TileObject maps from ShipObjectData.
+/// </summary>
+/// 
 public class MapGenerator : MonoBehaviour 
 {
 	public XMLMapLoader XmlMapRead;
 	public PrefabStore MapPrefabs;
 	
+	/// <summary>
+	/// Generates the TileObjectDataMap from a XMLMapData file.
+	/// </summary>
 	public void GenerateObjectDataMap(GameController GC){
 		
 		//random generate map
-		var md = XmlMapRead.Maps[0];
+		var md = XmlMapRead.Rooms["room"][0];
 			
 		int w=md.map_data.GetLength(0);
 		int h=md.map_data.GetLength(1);
@@ -24,8 +31,7 @@ public class MapGenerator : MonoBehaviour
 				var data=GC.TileObjectMap[x,y]=new TileObjData();
 				
 				data.TilePosition=new Vector3(x,0,y);
-
-                int[] pos = { x, y }; //pelaajan & vihujen gridisijainnin asetukseen
+				
 				switch (md.map_data[x,y])
 				{
 					case ".":
@@ -35,18 +41,13 @@ public class MapGenerator : MonoBehaviour
 						data.SetType(TileObjData.Type.Wall);
 					    break;
 
-                    //Jarkon testailua pelaajan ja vihujen sijoittamiseen
                     case "p":
                         data.SetType(TileObjData.Type.Floor);
-                        GameObject.Find("Player").SendMessage("SetPositionInGrid", pos);
+						data.SetObj(TileObjData.Obj.Player);
                         break;
                     case "e":
                         data.SetType(TileObjData.Type.Floor);
-
-                        GameObject newEnemy = GameObject.Instantiate(GC.enemyPrefab, new Vector3(x, 0, y), Quaternion.identity) as GameObject;
-                     
-                        newEnemy.SendMessage("SetPositionInGrid", pos);
-                        GC.enemies.Add(newEnemy);
+						data.SetObj(TileObjData.Obj.Enemy);	
                         break;
 				}
 			}
@@ -57,10 +58,8 @@ public class MapGenerator : MonoBehaviour
 	/// </summary>
 	public void GenerateSceneMap(GameController GC)
 	{
-		var md = XmlMapRead.Maps[0];
-		
-		int w=md.map_data.GetLength(0);
-		int h=md.map_data.GetLength(1);
+		int w=GC.TileObjectMap.GetLength(0);
+		int h=GC.TileObjectMap.GetLength(1);
 		
 		GC.TileMainMap=new TileMain[w,h];
 		
@@ -71,7 +70,6 @@ public class MapGenerator : MonoBehaviour
 				var tile=GC.TileMainMap[x,y]= Instantiate(MapPrefabs.TilePrefab, new Vector3(x, 0, y), Quaternion.identity) as TileMain;
 				tile.SetData(GC.TileObjectMap[x,y]);
 				
-				
 				GameObject tileobj=MapPrefabs.BasicFloor;
 				switch (tile.Data.TileType)
 				{
@@ -80,7 +78,26 @@ public class MapGenerator : MonoBehaviour
 					break;
 				}
 				
+				int[] pos = { x, y }; //pelaajan & vihujen gridisijainnin asetukseen
+				switch (tile.Data.ObjType)
+				{
+					case TileObjData.Obj.Player:
+					//Instantiate player instead 
+						var player=GameObject.Find("Player");
+						if (player!=null)
+							player.SendMessage("SetPositionInGrid", pos);
+					break;
+										
+					case TileObjData.Obj.Enemy:
+                        var newEnemy = GameObject.Instantiate(MapPrefabs.EnemyPrefab, new Vector3(x, 0, y), Quaternion.identity) as EnemyMain;
+                     
+                        newEnemy.SendMessage("SetPositionInGrid", pos);
+                        GC.enemies.Add(newEnemy);
+					break;
+				}
+				
 				tile.TileObject=Instantiate(tileobj,
+					
 					GC.TileObjectMap[x,y].TilePosition+tileobj.transform.position,
 					Quaternion.identity) as GameObject;
 			}
