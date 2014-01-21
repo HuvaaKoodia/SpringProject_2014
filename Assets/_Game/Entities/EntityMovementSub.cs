@@ -14,9 +14,8 @@ public class EntityMovementSub : MonoBehaviour
     int mapWidth;
     int mapHeight;
 
-    int currentGridX = 0;
-    int currentGridY = 0;
-
+    public int currentGridX { get; private set; }
+    public int currentGridY { get; private set; }
     public MovementState currentMovement = MovementState.NotMoving;
 
     float movementSpeed = 2;
@@ -51,12 +50,12 @@ public class EntityMovementSub : MonoBehaviour
         transform.position = new Vector3(position[0], transform.position.y, position[1]);
     }
 
-    void MoveForward()
+    public void MoveForward()
     {
         TryToMove(targetRotationAngle);
     }
 
-    void MoveBackward()
+    public void MoveBackward()
     {
         int dir = (180 + targetRotationAngle) % 360;
         TryToMove(dir);
@@ -88,13 +87,13 @@ public class EntityMovementSub : MonoBehaviour
         }
     }
 
-    void TurnLeft()
+    public void TurnLeft()
     {
         int target = (int)parent.eulerAngles.y - 90;
         Turn(target);
     }
 
-    void TurnRight()
+    public void TurnRight()
     {  
         int target = (int)parent.eulerAngles.y + 90;
         Turn(target);
