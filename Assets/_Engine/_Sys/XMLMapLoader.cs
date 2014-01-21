@@ -11,9 +11,16 @@ public class MapXmlData{
 	public string[,] map_data;
 	public int W{get{return map_data.GetLength(0);}}
 	public int H{get{return map_data.GetLength(1);}}
-	
+
 	public MapXmlData(int w,int h){
 		map_data=new string[w,h];
+	}
+
+	public string GetIndex(int x,int y){
+		if (Subs.insideArea(x,y,0,0,W,H)){
+			return map_data[x,y];
+		}
+		return "";
 	}
 }
 
@@ -139,25 +146,28 @@ public class XMLMapLoader : MonoBehaviour{
 	
 	MapXmlData readMapData(XmlNode node){
 				
-		int 
-			width=XML_Loader.getAttInt(node,"w"),
-			height=XML_Loader.getAttInt(node,"h");
-		
+		//int 
+		//	width=XML_Loader.getAttInt(node,"w"),
+		//	height=XML_Loader.getAttInt(node,"h");
+
+		var lines=Subs.Split(node.InnerText.Replace("\r","").Replace("\t",""),"\n");
+		var indexes=Subs.Split(lines[0]," ");
+
+		int width=indexes.Length,height=lines.Length;
+
+
 		var map=new MapXmlData(width,height);
 
-		var spl=node.InnerText.Replace(" ","").Replace("\r","").Replace("\t","").Split('\n');
-		int y=0,x=0;
-		foreach (var line in spl)
+		lines=Subs.Split(node.InnerText.Replace("\r","").Replace("\t",""),"\n");
+		int y=0;
+		foreach (var line in lines)
 		{
-			if (line=="") continue;
-			while (x<map.W)
-			{
-				var ss=line.Substring(x,1).ToLower();
-				map.map_data[x,height-1-y]=ss;
-				x++;
+			indexes=Subs.Split(line," ");
+			for (int x=0;x<map.W;x++){
+				var ss=indexes[x];
+				map.map_data[x,y]=ss;
 			}
-			y++;
-			x=0;
+			++y;
 		}
 		
 		return map;

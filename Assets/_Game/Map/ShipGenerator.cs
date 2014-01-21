@@ -9,6 +9,309 @@ public class ShipGenerator : MonoBehaviour
 {
 	public XMLMapLoader XmlMapRead;
 	public PrefabStore MapPrefabs;
+
+	public MapXmlData GenerateShipObjectData()
+	{
+		//randomize ship type
+		ShipMapXmlData ship_data=Subs.GetRandom(XmlMapRead.Ships.Values);
+		//DEV.temp just the first floor
+		MapXmlData CurrentFloor=ship_data.Floors[0];
+		
+		int w=CurrentFloor.W;
+		int h=CurrentFloor.H;
+		List<CellData> Rooms=new List<CellData>();
+		MapXmlData NewFloorMap=new MapXmlData(w,h);
+		
+		//Assign map indexes and generate room cells
+		for(int x=0;x<w;x++)
+		{		
+			for(int y=0;y<h;y++)
+			{
+				var index=CurrentFloor.GetIndex(x,y);
+				NewFloorMap.map_data[x,y]=index;
+
+				if (index=="R"){
+					//random room
+					var cell=new CellData("R");
+					cell.X=x;cell.Y=y;
+					cell.W=0;cell.H=0;
+
+					Rooms.Add(cell);
+
+					//calculate max room size
+					int ww=0;
+					while (true){
+						if (CurrentFloor.GetIndex(x+ww,y).ToLower()=="r"){
+							cell.W+=1;
+							++ww;
+						}
+						else break;
+					}
+					ww=0;
+					while (true){
+						if (CurrentFloor.GetIndex(x,y+ww).ToLower()=="r"){
+							cell.H+=1;
+							++ww;
+						}
+						else break;
+					}
+					//check legit walls
+					for (int i=0;i<cell.W;i++){
+						if (CurrentFloor.GetIndex(cell.X+i,cell.Y-1)!="c"){
+							cell.TopOK=false;
+						}
+						if (CurrentFloor.GetIndex(cell.X+i,cell.Y+cell.H)!="c"){
+							cell.BottomOK=false;
+						}
+					}
+
+					for (int i=0;i<cell.H;i++){
+						if (CurrentFloor.GetIndex(cell.X-1,cell.Y+i)!="c"){
+							cell.LeftOK=false;
+						}
+						if (CurrentFloor.GetIndex(cell.X+cell.W,cell.Y+i)!="c"){
+							cell.BottomOK=false;
+						}
+					}
+
+					//randomize a room of right size
+					int c=0;
+					MapXmlData rroom;
+					while (true){
+						++c;
+						if (c>100){
+							Debug.LogError("No fitting room in ["+cell.X+", "+cell.Y+"]");
+							break;
+						}
+
+						rroom=Subs.GetRandom(XmlMapRead.Rooms["room"]);
+
+						if (rroom.W>cell.W||rroom.H>cell.H){
+							continue;
+						}
+
+						cell.RoomData=rroom;
+					}
+				}
+			}
+		}
+
+		//add rooms
+
+		foreach(var room in Rooms){
+			//check if offset needs to be tampered with
+			
+			//check if there is a need to change offset
+			int rw_diff=room.W-room.RoomData.W,rh_diff=room.H-room.RoomData.H;
+
+			List<int> corridor_directions=new List<int>();
+			if (room.RightOK) corridor_directions.Add(0);
+			if (room.TopOK) corridor_directions.Add(1);
+			if (room.LeftOK) corridor_directions.Add(2);
+			if (room.BottomOK) corridor_directions.Add(3);
+
+			List<Vector2> PossibleFixes=new List<Vector2>();
+			List<Vector2> PossibleDoors=new List<Vector2>();
+
+			foreach (var dir in corridor_directions){
+
+				if (dir==2){//corridor on left side
+					PossibleFixes.Add(new Vector2(0,Subs.GetRandom(rh_diff)));
+
+					var door_p=GetRandomDoorPos(room,NewFloorMap,false,1);
+					if (door_p!=Vector2.zero){
+						PossibleDoors.Add(door_p);
+					}
+				}
+				else
+				if (dir==0){//corridor on right side
+					PossibleFixes.Add(new Vector2(rw_diff,Subs.GetRandom(rh_diff)));
+
+					var door_p=GetRandomDoorPos(room,NewFloorMap,false,-1);
+					if (door_p!=Vector2.zero){
+						PossibleDoors.Add(door_p);
+					}
+				}
+				else
+				if (dir==3){//corridor on bottom side
+					PossibleFixes.Add(new Vector2(Subs.GetRandom(rw_diff),rh_diff));
+
+					var door_p=GetRandomDoorPos(room,NewFloorMap,true,-1);
+					if (door_p!=Vector2.zero){
+						PossibleDoors.Add(door_p);
+					}
+				}
+				else
+				if (dir==1){//corridor on top side
+					PossibleFixes.Add(new Vector2(Subs.GetRandom(rw_diff),0));
+
+					var door_p=GetRandomDoorPos(room,NewFloorMap,true,1);
+					if (door_p!=Vector2.zero){
+						PossibleDoors.Add(door_p);
+					}
+				}
+
+			}
+
+			//apply random door(s)
+			if (PossibleDoors.Count>0){
+				int amount_of_doors=Mathf.Max(1,Subs.GetRandom(PossibleDoors.Count));
+				while (amount_of_doors>0){
+					--amount_of_doors;
+					var r_fix=Subs.GetRandom(PossibleDoors);
+					
+					room.RoomData.map_data[(int)r_fix.x,(int)r_fix.y]="c";
+				}
+			}
+			
+			//apply a random offset fix if necessary
+			if (PossibleFixes.Count>0){
+				var r_fix=Subs.GetRandom(PossibleFixes);
+				
+				room.XOFF=(int)r_fix.x;
+				room.YOFF=(int)r_fix.y;
+			}
+
+
+
+			//create room
+			for (int mx = 0; mx < room.RoomData.W; mx++)
+			{
+				for (int my = 0; my < room.RoomData.H; my++)
+				{
+					NewFloorMap.map_data[room.X+room.XOFF+mx,room.Y+room.YOFF+my]=room.RoomData.map_data[mx,my];
+				}
+			}
+		}
+
+		//clear room tiles
+		for(int x=0;x<w;x++)
+		{
+			for(int y=0;y<h;y++)
+			{
+				if (NewFloorMap.map_data[x,y].ToLower()=="r")
+					NewFloorMap.map_data[x,y]=",";
+			}
+		}
+
+		//create corridor walls
+		for(int x=0;x<w;x++)
+		{
+			for(int y=0;y<h;y++)
+			{
+				if (NewFloorMap.map_data[x,y].ToLower()=="c"){
+					int dir=0,xo=0,yo=0;
+					while (dir<4){
+						if (dir==0){ xo=1;yo=0; }
+						if (dir==1){ xo=-1;yo=0;}
+						if (dir==2){ xo=0;yo=1; }
+						if (dir==3){ xo=0;yo=-1;}
+						
+						var index=NewFloorMap.GetIndex(x+xo,y+yo);
+						
+						if (index==","){
+							NewFloorMap.map_data[x+xo,y+yo]="x";
+						}
+
+						++dir;
+					}
+				}
+			}
+		}
+		return NewFloorMap;
+	}
+
+	/// <summary>
+	/// Gets the random door position.
+	/// Returns zero if non found.
+	/// DEV.Map unused for the moment
+	/// </summary>
+	private Vector2 GetRandomDoorPos(CellData room,MapXmlData map,bool horizontal,int relative_dir){
+		var temp_door_list=new List<Vector2>();
+		int w=room.RoomData.H;
+		if (horizontal)
+			w=room.RoomData.W;
+
+		for (int i=0;i<w;i++){
+			int x=0,y=0;
+			if (horizontal){
+				x+=i;y+=relative_dir;
+			}
+			else{
+				x+=relative_dir;y+=i;
+			}
+			var oi=room.RoomData.GetIndex(x,y);
+			if (oi=="."){
+				if (horizontal){
+					temp_door_list.Add(new Vector2(x,y-relative_dir));
+				}
+				else{
+					temp_door_list.Add(new Vector2(x-relative_dir,y));
+				}
+			}
+		}
+		if (temp_door_list.Count>0){
+			return Subs.GetRandom(temp_door_list);
+		}
+		return Vector2.zero;
+	}
+
+	private class CellData{
+		//public TileType Type;
+		public string TileIndex;
+		public bool IsEmpty=true,TopOK=true,BottomOK=true,RightOK=true,LeftOK=true;
+		public int X,Y,W=0,H=0,LOCK_W=0,LOCK_H=0;
+		MapXmlData room;
+		
+		int xoff,yoff;
+		
+		public bool XOFFchanged{get;private set;}
+		public bool YOFFchanged{get;private set;}
+		
+		public int XOFF{
+			get{return xoff;}
+			set{
+				xoff=value;
+				XOFFchanged=true;
+			}
+		}
+		public int YOFF{
+			get{return yoff;}
+			set{
+				yoff=value;
+				YOFFchanged=true;
+			}
+		}
+		
+		public MapXmlData RoomData{
+			get 
+			{
+				return room;	
+			}
+			set
+			{
+				IsEmpty=false;
+				room=value;
+				//SetSize(room.W,room.H);
+			}
+		}
+		
+		public void SetSize(int w,int h){
+			IsEmpty=false;	
+			W=w;
+			H=h;
+		}
+		
+		public CellData(string index){
+			SetSize(1,1);
+			TileIndex=index;
+		}
+	}
+}
+
+
+	//OLD
+	/*
 	
 	public MapXmlData GenerateShipObjectData()
 	{
@@ -27,13 +330,13 @@ public class ShipGenerator : MonoBehaviour
 			for(int y=0;y<h;y++)
 			{
 				var cell=Cellmap[x,y]=new CellData(CurrentFloor.map_data[x,y]);
-
+				
 				//corridors hard wired down the line
-//				if (cell.TileIndex=="c"){
-//					a specified corridor size: 1 2 3 ?
-//					cell.RoomData=Subs.GetRandom(XmlMapRead.Rooms["corridor"]);
-//				}
-
+				//				if (cell.TileIndex=="c"){
+				//					a specified corridor size: 1 2 3 ?
+				//					cell.RoomData=Subs.GetRandom(XmlMapRead.Rooms["corridor"]);
+				//				}
+				
 				if (cell.TileIndex=="r"){
 					//random room
 					cell.RoomData=Subs.GetRandom(XmlMapRead.Rooms["room"]);
@@ -48,7 +351,7 @@ public class ShipGenerator : MonoBehaviour
 		}
 		//recalculate corridor sizes to match ship floor parameters
 		for (int x = 0; x < w; x++)
-			{
+		{
 			for (int y = 0; y < h; y++)
 			{
 				var cell=Cellmap[x,y];
@@ -56,7 +359,7 @@ public class ShipGenerator : MonoBehaviour
 					//find direction
 					bool is_hor=false,is_ver=false;
 					CellData 
-					data=GetCell(x+1,y,Cellmap);
+						data=GetCell(x+1,y,Cellmap);
 					if (data!=null&&data.TileIndex=="c")
 						is_hor=true;
 					data=GetCell(x-1,y,Cellmap);
@@ -91,7 +394,7 @@ public class ShipGenerator : MonoBehaviour
 		int temp_size=0;
 		//columns
 		for (int x = 0; x < w; x++)
-			{
+		{
 			temp_size=0;
 			//find max width in column
 			for (int y = 0; y < h; y++)
@@ -109,7 +412,7 @@ public class ShipGenerator : MonoBehaviour
 		}
 		//rows
 		for (int y = 0; y < h; y++)
-			{
+		{
 			temp_size=0;
 			//find max height in row
 			for (int x = 0; x < w; x++)
@@ -125,14 +428,14 @@ public class ShipGenerator : MonoBehaviour
 				Cellmap[x,y].H=temp_size;
 			}
 		}
-			
-	//generating mapData object from cellmap and ship blueprint
-
+		
+		//generating mapData object from cellmap and ship blueprint
+		
 		//calculate maximal size for map. Also set cell x&y positions
 		int ship_w=0,ship_h=0;
 		temp_size=0;
 		for (int x = 0; x < w; x++)
-			{
+		{
 			temp_size=0;
 			for (int y = 0; y < h; y++)
 			{
@@ -145,7 +448,7 @@ public class ShipGenerator : MonoBehaviour
 		}
 		
 		for (int y = 0; y < h; y++)
-			{
+		{
 			temp_size=0;
 			for (int x = 0; x < w; x++)
 			{
@@ -169,7 +472,7 @@ public class ShipGenerator : MonoBehaviour
 		
 		//add corridors
 		for (int x = 0; x < w; x++)
-			{
+		{
 			for (int y = 0; y < h; y++)
 			{
 				var cell=Cellmap[x,y]; 
@@ -177,11 +480,11 @@ public class ShipGenerator : MonoBehaviour
 				if (cell.TileIndex=="c"){
 					//construct corridors (hard wired)
 					int cw=cell.W,ch=cell.H;
-
+					
 					if (cell.LOCK_H!=0){
 						ch=cell.LOCK_H;
 						int h_diff=cell.H-cell.LOCK_H;
-
+						
 						//check if adjecent cells already have an offset
 						if (h_diff>0&&cell.isHor){
 							CellData cc;
@@ -204,7 +507,7 @@ public class ShipGenerator : MonoBehaviour
 					if (cell.LOCK_W!=0){
 						cw=cell.LOCK_W;
 						int w_diff=cell.W-cell.LOCK_W;
-
+						
 						//check if adjecent cells already have an offset
 						if (w_diff>0&&cell.isVer){
 							CellData cc; 
@@ -222,10 +525,10 @@ public class ShipGenerator : MonoBehaviour
 									cell.XOFF=Subs.GetRandom(w_diff+1);
 								}
 							}
-
+							
 						}
 					}
-
+					
 					for (int cx = 0; cx < cw; cx++)
 					{
 						for (int cy = 0; cy < ch; cy++)
@@ -236,18 +539,18 @@ public class ShipGenerator : MonoBehaviour
 				}
 			}
 		}
-
+		
 		//add rooms
 		for (int x = 0; x < w; x++)
 		{
 			for (int y = 0; y < h; y++)
 			{
 				var cell=Cellmap[x,y]; 
-
+				
 				if (cell.RoomData!=null)
 				{
 					//check if offset needs to be tampered with
-
+					
 					//gather all adjacent corridors
 					List<CellData> corridors_dirs=new List<CellData>();
 					int xo=0,yo=0;
@@ -259,7 +562,7 @@ public class ShipGenerator : MonoBehaviour
 						if (dir==1){ xo=-1;yo=0;}
 						if (dir==2){ xo=0;yo=1; }
 						if (dir==3){ xo=0;yo=-1;}
-
+						
 						other=GetCell(x+xo,y+yo,Cellmap);
 						
 						if (other!=null&&other.TileIndex=="c"){
@@ -267,12 +570,12 @@ public class ShipGenerator : MonoBehaviour
 						}
 						++dir;
 					}
-
+					
 					//check if there is a need to change offset
 					int rw_diff=cell.W-cell.RoomData.W,rh_diff=cell.H-cell.RoomData.H;
-
+					
 					List<Vector2> PossibleFixes=new List<Vector2>();
-
+					
 					foreach(var ac in corridors_dirs){
 						int diff=0;
 						if (ac.isVer){
@@ -302,16 +605,16 @@ public class ShipGenerator : MonoBehaviour
 							}
 						}
 					}
-
+					
 					//apply a random fix if necessary
-
+					
 					if (PossibleFixes.Count>0){
 						var r_fix=Subs.GetRandom(PossibleFixes);
-
+						
 						cell.XOFF=(int)r_fix.x;
 						cell.YOFF=(int)r_fix.y;
 					}
-
+					
 					//create room
 					for (int mx = 0; mx < cell.RoomData.W; mx++)
 					{
@@ -323,11 +626,11 @@ public class ShipGenerator : MonoBehaviour
 				}
 			}
 		}
-			
+		
 		Debug.Log("SHIP GENERATOR DEBUG: ");
-
+		
 		for (int y = 0; y < h; y++)
-			{
+		{
 			string line="";
 			for (int x = 0; x < w; x++)
 			{
@@ -407,7 +710,7 @@ public class ShipGenerator : MonoBehaviour
 
 
 
-/* OLD dysfunctional
+/* EVEN OLDER and dysfunctional
 		//resize cell sizes to fit adjacent rooms
 		
 		for(int x=0;x<w;x++)

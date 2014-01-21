@@ -13,6 +13,13 @@ public class Subs{
 	public static int GetRandom(int max){
 		return Random.Range(0,max);
 	}
+
+	/// <summary>
+	/// Random int from min to max (ex).
+	/// </summary>
+	public static int GetRandom(int min,int max){
+		return Random.Range(min,max);
+	}
 	
 	/// <summary>
 	/// Random float from 0 to max (ex).

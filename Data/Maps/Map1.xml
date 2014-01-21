@@ -19,63 +19,62 @@ a = airlock
 e = elevator
 -->
 
-	<Room type="corridor" w="1" h="1">
-	.
-	</Room>
-
 	<Room type="elevator" w="3" h="3">
-	xxx
-	x.x
-	xxx
+	x x x
+	x . x
+	x x x
 	</Room>
 
 	<Room type="airlock" w="3" h="3">
-	xxx
-	x.x
-	xxx
+	x x x
+	x . x
+	x x x
 	</Room>
 	
-	<Room type="room" w="7" h="5">
-	xxxxxxx
-	x.....x
-	x.xx..x
-	x.....x
-	xxxxxxx
+	<Room type="room" w="4" h="4" connectToRooms="1">
+	x x x x
+	x . . x
+	x . . x
+	x x x x
 	</Room>
 	
-	<Room type="room" w="4" h="4">
-	xxxx
-	x..x
-	x..x
-	xxxx
+	<Room type="room" w="6" h="5">
+	x x x x x x
+	x . . . . x
+	x x x x x x
+	x . . x . x
+	x x x x x x
 	</Room>
-	<!--TESTER
-	<Ship type="D7" floor="0" w="7" h="6" c_len="4,4" c_wid="2">
-	.......
-	.......
-	...r...
-	..ccc.r
-	.......
-	.......
-	</Ship>
-	-->
 	
-	<Ship type="D7" floor="0" w="7" h="6" c_len="4,4" c_wid="2">
-	...r...
-	ccccccc
-	crrcrcr
-	crrcrcc
-	crrc.rc
-	ccccccc
-	</Ship>
+	<Room type="room" w="6" h="6">
+	x x x x x x
+	x . . x . x
+	x x x . x x
+	x . . x . x
+	x . . x . x
+	x x x x x x
+	</Room>
 	
-	
-	<Ship type="D7" floor="1" w="7" h="6">
-	...e...
-	...c...
-	..rcr..
-	...o...
-	.......
-	.......
+	<Ship type="D7" floor="0">
+	, , , , , , , , , , , , , , , , ,
+	, c c c c c c c c c c c c c c c , 
+	, c R r r r r r r r c R r r r c , 
+	, c r r r r r r r r c r r r r c ,
+	, c r r r r r r r r c r r r r c ,
+	, c r r r r r r r r c r r r r c ,
+	, c r r r r r r r r c r r r r c ,
+	, c r r r r r r r r c r r r r c ,
+	, c r r r r r r r r c r r r r c ,
+	, c r r r r r r r r c r r r r c ,
+	, c c c c c c c c c c c c c c c ,
+	, , , , c R r r r r r r r c , , ,
+	, , , , c r r r r r r r r c , , ,
+	, , , , c r r r r r r r r c , , ,
+	, , , , c r r r r r r r r c , , ,
+	, , , , c r r r r r r r r c , , ,
+	, , , , c r r r r r r r r c , , ,
+	, , , , c r r r r r r r r c , , ,
+	, , , , c c c c c c c c c c , , ,
+	, , , , , , , , , , , , , , , , , 
 	</Ship>
 </Root>
