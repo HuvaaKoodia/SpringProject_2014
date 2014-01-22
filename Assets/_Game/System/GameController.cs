@@ -33,16 +33,16 @@ public class GameController : MonoBehaviour {
 		//Tiles=new List<TileMain>();
        	enemies = new List<EnemyMain>();
 
-		if (!UseTestMap)
+		if (UseTestMap)
 		{
-			var ship_floor0=ShipGen.GenerateShipObjectData();
-			MapGen.GenerateObjectDataMap(this,ship_floor0);
+			var testfloor = MapGen.XmlMapRead.Rooms["pathfindingtest"][0];
+			MapGen.GenerateObjectDataMap(this,testfloor);
 			MapGen.GenerateSceneMap(this);
 		}
-		else
-		{
-            var testfloor = MapGen.XmlMapRead.Rooms["pathfindingtest"][0];
-			MapGen.GenerateObjectDataMap(this,testfloor);
+		else{
+			var ship_objdata=ShipGen.GenerateShipObjectData();
+			MapGen.GenerateObjectDataMap(this,ship_objdata.Floors[0]);
+			MapGen.GenerateShipItems(this,ship_objdata);
 			MapGen.GenerateSceneMap(this);
 		}
 	}
@@ -50,6 +50,8 @@ public class GameController : MonoBehaviour {
 	// Update is called once per frame
 	void Update()
     {
+		if (!UseTestMap) return;
+
         //AI:n pyörittely, pois täältä jossain vaiheessa?
         if (currentTurn == TurnState.AiTurn && enemies.Count > 0)
         {

@@ -10,13 +10,15 @@ public class ShipGenerator : MonoBehaviour
 	public XMLMapLoader XmlMapRead;
 	public PrefabStore MapPrefabs;
 
-	public MapXmlData GenerateShipObjectData()
+	public ShipObjData GenerateShipObjectData()
 	{
 		//randomize ship type
 		ShipMapXmlData ship_data=Subs.GetRandom(XmlMapRead.Ships.Values);
 		//DEV.temp just the first floor
 		MapXmlData CurrentFloor=ship_data.Floors[0];
-		
+
+		ShipObjData ship_obj_data=new ShipObjData(ship_data.Name);
+
 		int w=CurrentFloor.W;
 		int h=CurrentFloor.H;
 		List<CellData> Rooms=new List<CellData>();
@@ -41,6 +43,10 @@ public class ShipGenerator : MonoBehaviour
 					//calculate max room size
 					int ww=0;
 					while (true){
+						if (CurrentFloor.GetIndex(x+ww,y)=="T"){
+							cell.W+=1;
+							break;
+						}
 						if (CurrentFloor.GetIndex(x+ww,y).ToLower()=="r"){
 							cell.W+=1;
 							++ww;
@@ -49,30 +55,17 @@ public class ShipGenerator : MonoBehaviour
 					}
 					ww=0;
 					while (true){
+						if (CurrentFloor.GetIndex(x,y+ww)=="T"){
+							cell.H+=1;
+							break;
+						}
 						if (CurrentFloor.GetIndex(x,y+ww).ToLower()=="r"){
 							cell.H+=1;
 							++ww;
 						}
 						else break;
 					}
-					//check legit walls
-					for (int i=0;i<cell.W;i++){
-						if (CurrentFloor.GetIndex(cell.X+i,cell.Y-1)!="c"){
-							cell.TopOK=false;
-						}
-						if (CurrentFloor.GetIndex(cell.X+i,cell.Y+cell.H)!="c"){
-							cell.BottomOK=false;
-						}
-					}
-
-					for (int i=0;i<cell.H;i++){
-						if (CurrentFloor.GetIndex(cell.X-1,cell.Y+i)!="c"){
-							cell.LeftOK=false;
-						}
-						if (CurrentFloor.GetIndex(cell.X+cell.W,cell.Y+i)!="c"){
-							cell.BottomOK=false;
-						}
-					}
+					CheckLegitWalls(cell,CurrentFloor);
 
 					//randomize a room of right size
 					int c=0;
@@ -91,79 +84,39 @@ public class ShipGenerator : MonoBehaviour
 						}
 
 						cell.RoomData=rroom;
+						break;
 					}
 				}
 			}
 		}
 
-		//add rooms
+	//Rooms
 
 		foreach(var room in Rooms){
 			//check if offset needs to be tampered with
-			
-			//check if there is a need to change offset
 			int rw_diff=room.W-room.RoomData.W,rh_diff=room.H-room.RoomData.H;
 
-			List<int> corridor_directions=new List<int>();
-			if (room.RightOK) corridor_directions.Add(0);
-			if (room.TopOK) corridor_directions.Add(1);
-			if (room.LeftOK) corridor_directions.Add(2);
-			if (room.BottomOK) corridor_directions.Add(3);
-
 			List<Vector2> PossibleFixes=new List<Vector2>();
-			List<Vector2> PossibleDoors=new List<Vector2>();
 
-			foreach (var dir in corridor_directions){
+			foreach (var dir in room.corridor_dirs){
 
 				if (dir==2){//corridor on left side
 					PossibleFixes.Add(new Vector2(0,Subs.GetRandom(rh_diff)));
-
-					var door_p=GetRandomDoorPos(room,NewFloorMap,false,1);
-					if (door_p!=Vector2.zero){
-						PossibleDoors.Add(door_p);
-					}
 				}
 				else
 				if (dir==0){//corridor on right side
 					PossibleFixes.Add(new Vector2(rw_diff,Subs.GetRandom(rh_diff)));
-
-					var door_p=GetRandomDoorPos(room,NewFloorMap,false,-1);
-					if (door_p!=Vector2.zero){
-						PossibleDoors.Add(door_p);
-					}
 				}
 				else
 				if (dir==3){//corridor on bottom side
 					PossibleFixes.Add(new Vector2(Subs.GetRandom(rw_diff),rh_diff));
-
-					var door_p=GetRandomDoorPos(room,NewFloorMap,true,-1);
-					if (door_p!=Vector2.zero){
-						PossibleDoors.Add(door_p);
-					}
 				}
 				else
 				if (dir==1){//corridor on top side
 					PossibleFixes.Add(new Vector2(Subs.GetRandom(rw_diff),0));
-
-					var door_p=GetRandomDoorPos(room,NewFloorMap,true,1);
-					if (door_p!=Vector2.zero){
-						PossibleDoors.Add(door_p);
-					}
-				}
-
-			}
-
-			//apply random door(s)
-			if (PossibleDoors.Count>0){
-				int amount_of_doors=Mathf.Max(1,Subs.GetRandom(PossibleDoors.Count));
-				while (amount_of_doors>0){
-					--amount_of_doors;
-					var r_fix=Subs.GetRandom(PossibleDoors);
-					
-					room.RoomData.map_data[(int)r_fix.x,(int)r_fix.y]="c";
 				}
 			}
-			
+
 			//apply a random offset fix if necessary
 			if (PossibleFixes.Count>0){
 				var r_fix=Subs.GetRandom(PossibleFixes);
@@ -171,10 +124,10 @@ public class ShipGenerator : MonoBehaviour
 				room.XOFF=(int)r_fix.x;
 				room.YOFF=(int)r_fix.y;
 			}
-
-
-
-			//create room
+		}
+	
+		//add rooms to floor plan
+		foreach(var room in Rooms){
 			for (int mx = 0; mx < room.RoomData.W; mx++)
 			{
 				for (int my = 0; my < room.RoomData.H; my++)
@@ -184,7 +137,7 @@ public class ShipGenerator : MonoBehaviour
 			}
 		}
 
-		//clear room tiles
+		//clear room tiles r->.
 		for(int x=0;x<w;x++)
 		{
 			for(int y=0;y<h;y++)
@@ -193,7 +146,7 @@ public class ShipGenerator : MonoBehaviour
 					NewFloorMap.map_data[x,y]=",";
 			}
 		}
-
+		
 		//create corridor walls
 		for(int x=0;x<w;x++)
 		{
@@ -212,103 +165,214 @@ public class ShipGenerator : MonoBehaviour
 						if (index==","){
 							NewFloorMap.map_data[x+xo,y+yo]="x";
 						}
-
+						
 						++dir;
 					}
 				}
 			}
 		}
-		return NewFloorMap;
+
+
+	//add doors
+
+		foreach(var room in Rooms){
+			List<Vector2> PossibleDoors=new List<Vector2>();
+			
+			for (var dir=0;dir<4;dir++){
+				var door_p=GetRandomDoorPos(room,NewFloorMap,dir);
+				if (door_p!=Vector2.zero){
+					PossibleDoors.Add(door_p);
+				}
+			}
+
+			//apply random door(s)
+			if (PossibleDoors.Count>0){
+				int amount_of_doors=Mathf.Max(1,Subs.GetRandom(PossibleDoors.Count));
+				while (amount_of_doors>0){
+					--amount_of_doors;
+					var r_fix=Subs.GetRandom(PossibleDoors);
+					
+					NewFloorMap.map_data[(int)r_fix.x,(int)r_fix.y]="d";
+				}
+			}
+		}
+
+		ship_obj_data.Floors.Add(0,NewFloorMap);
+		ship_obj_data.FloorRooms.Add(0,Rooms);
+
+		return ship_obj_data;
 	}
 
 	/// <summary>
 	/// Gets the random door position.
 	/// Returns zero if non found.
-	/// DEV.Map unused for the moment
 	/// </summary>
-	private Vector2 GetRandomDoorPos(CellData room,MapXmlData map,bool horizontal,int relative_dir){
-		var temp_door_list=new List<Vector2>();
-		int w=room.RoomData.H;
-		if (horizontal)
-			w=room.RoomData.W;
+	private Vector2 GetRandomDoorPos(CellData room,MapXmlData map,int dir){
+		var temp_door_list=new List<Vector2>();//DEV. unnec list
+		if (dir==0){
+			for (int i=0;i<room.RoomData.H;i++){
+				int 
+				x=room.X+room.XOFF+room.RoomData.W-1,
+				y=room.Y+room.YOFF+i;
 
-		for (int i=0;i<w;i++){
-			int x=0,y=0;
-			if (horizontal){
-				x+=i;y+=relative_dir;
-			}
-			else{
-				x+=relative_dir;y+=i;
-			}
-			var oi=room.RoomData.GetIndex(x,y);
-			if (oi=="."){
-				if (horizontal){
-					temp_door_list.Add(new Vector2(x,y-relative_dir));
+				var oi=map.GetIndex(x+1,y);
+				if (oi=="c"){
+					oi=map.GetIndex(x,y);
+					if (oi=="x"){
+						oi=map.GetIndex(x-1,y);
+						if (oi=="."){
+							temp_door_list.Add(new Vector2(x,y));
+						}
+					}
 				}
-				else{
-					temp_door_list.Add(new Vector2(x-relative_dir,y));
+			}
+		}else
+		if (dir==1){
+			for (int i=0;i<room.RoomData.W;i++){
+				int 
+					x=room.X+room.XOFF+i,
+					y=room.Y+room.YOFF;
+				
+				var oi=map.GetIndex(x,y-1);
+				if (oi=="c"){
+					oi=map.GetIndex(x,y);
+					if (oi=="x"){
+						oi=map.GetIndex(x,y+1);
+						if (oi=="."){
+							temp_door_list.Add(new Vector2(x,y));
+						}
+					}
+				}
+			}
+		}else
+		if (dir==2){
+			for (int i=0;i<room.RoomData.H;i++){
+				int 
+					x=room.X+room.XOFF,
+					y=room.Y+room.YOFF+i;
+				
+				var oi=map.GetIndex(x-1,y);
+				if (oi=="c"){
+					oi=map.GetIndex(x,y);
+					if (oi=="x"){
+						oi=map.GetIndex(x+1,y);
+						if (oi=="."){
+							temp_door_list.Add(new Vector2(x,y));
+						}
+					}
+				}
+			}
+		}else 
+		if (dir==3){
+			for (int i=0;i<room.RoomData.W;i++){
+				int 
+					x=room.X+room.XOFF+i,
+					y=room.Y+room.YOFF+room.RoomData.H-1;
+				
+				var oi=map.GetIndex(x,y+1);
+				if (oi=="c"){
+					oi=map.GetIndex(x,y);
+					if (oi=="x"){
+						oi=map.GetIndex(x,y-1);
+						if (oi=="."){
+							temp_door_list.Add(new Vector2(x,y));
+						}
+					}
 				}
 			}
 		}
+
 		if (temp_door_list.Count>0){
 			return Subs.GetRandom(temp_door_list);
 		}
 		return Vector2.zero;
 	}
+	/// <summary>
+	/// Checks the legit walls, which can be used to create doors, for random buildings.
+	/// DEV. imp a more adv algorithm
+	/// </summary>
+	private void CheckLegitWalls(CellData cell,MapXmlData floor){
+		cell.corridor_dirs.Clear();
+		bool upok=true,downok=true,leftok=true,rightok=true;
+		for (int i=0;i<cell.W;i++){
+			if (upok&&floor.GetIndex(cell.X+i,cell.Y-1)!="c"){
+				upok=false;
+			}
+			if (downok&&floor.GetIndex(cell.X+i,cell.Y+cell.H)!="c"){
+				downok=false;
+			}
+		}
+		
+		for (int i=0;i<cell.H;i++){
+			if (leftok&&floor.GetIndex(cell.X-1,cell.Y+i)!="c"){
+				leftok=false;
+			}
+			if (rightok&&floor.GetIndex(cell.X+cell.W,cell.Y+i)!="c"){
+				rightok=false;
+			}
+		}
 
-	private class CellData{
-		//public TileType Type;
-		public string TileIndex;
-		public bool IsEmpty=true,TopOK=true,BottomOK=true,RightOK=true,LeftOK=true;
-		public int X,Y,W=0,H=0,LOCK_W=0,LOCK_H=0;
-		MapXmlData room;
-		
-		int xoff,yoff;
-		
-		public bool XOFFchanged{get;private set;}
-		public bool YOFFchanged{get;private set;}
-		
-		public int XOFF{
-			get{return xoff;}
-			set{
-				xoff=value;
-				XOFFchanged=true;
-			}
-		}
-		public int YOFF{
-			get{return yoff;}
-			set{
-				yoff=value;
-				YOFFchanged=true;
-			}
-		}
-		
-		public MapXmlData RoomData{
-			get 
-			{
-				return room;	
-			}
-			set
-			{
-				IsEmpty=false;
-				room=value;
-				//SetSize(room.W,room.H);
-			}
-		}
-		
-		public void SetSize(int w,int h){
-			IsEmpty=false;	
-			W=w;
-			H=h;
-		}
-		
-		public CellData(string index){
-			SetSize(1,1);
-			TileIndex=index;
-		}
+		if (upok) 		cell.corridor_dirs.Add(1);
+		if (downok) 	cell.corridor_dirs.Add(3);
+		if (rightok) 	cell.corridor_dirs.Add(0);
+		if (leftok) 	cell.corridor_dirs.Add(2);
 	}
+
 }
 
+
+public class CellData{
+	//public TileType Type;
+	public string TileIndex;
+	public bool IsEmpty=true;
+	public int X,Y,W=0,H=0,LOCK_W=0,LOCK_H=0;
+	MapXmlData room;
+	public List<int> corridor_dirs=new List<int>();
+
+	int xoff,yoff;
+	
+	public bool XOFFchanged{get;private set;}
+	public bool YOFFchanged{get;private set;}
+	
+	public int XOFF{
+		get{return xoff;}
+		set{
+			xoff=value;
+			XOFFchanged=true;
+		}
+	}
+	public int YOFF{
+		get{return yoff;}
+		set{
+			yoff=value;
+			YOFFchanged=true;
+		}
+	}
+	
+	public MapXmlData RoomData{
+		get 
+		{
+			return room;	
+		}
+		set
+		{
+			IsEmpty=false;
+			room=value;
+			//SetSize(room.W,room.H);
+		}
+	}
+	
+	public void SetSize(int w,int h){
+		IsEmpty=false;	
+		W=w;
+		H=h;
+	}
+	
+	public CellData(string index){
+		SetSize(1,1);
+		TileIndex=index;
+	}
+}
 
 	//OLD
 	/*

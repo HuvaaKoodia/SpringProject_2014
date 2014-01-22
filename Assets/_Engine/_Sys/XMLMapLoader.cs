@@ -5,10 +5,27 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 
+public class GameXMLMapDataAttributes{
+	public int LootAmountMin{get;private set;}
+	public int LootAmountMax{get;private set;}
+	public int EnemyAmountMin{get;private set;}
+	public int EnemyAmountMax{get;private set;}
+	
+	public void SetLootAmount(int min,int max){
+		LootAmountMin=min;
+		LootAmountMax=max;
+	}
+	public void SetEnemyAmount(int min,int max){
+		EnemyAmountMin=min;
+		EnemyAmountMax=max;
+	}
+}
 
 //DEV. rename to RoomXMLData and ShipXMLData
-public class MapXmlData{
+public class MapXmlData:GameXMLMapDataAttributes{
 	public string[,] map_data;
+	public int X{get;set;}
+	public int Y{get;set;}
 	public int W{get{return map_data.GetLength(0);}}
 	public int H{get{return map_data.GetLength(1);}}
 
@@ -22,24 +39,17 @@ public class MapXmlData{
 		}
 		return "";
 	}
+
+	//game specific data
 }
 
 public class ShipMapXmlData{
 	public string Name{get;private set;}
 	public Dictionary<int,MapXmlData> Floors;
-	public int CorridorLengthMin{get;private set;}
-	public int CorridorLengthMax{get;private set;}
-	public int CorridorWidth{get;private set;}
 	
 	public ShipMapXmlData(string name){
 		Name=name;
 		Floors=new Dictionary<int, MapXmlData>();
-	}
-	
-	public void SetCorridor(int lmin,int lmax,int width){
-		CorridorLengthMax=lmax;
-		CorridorLengthMin=lmin;
-		CorridorWidth=width;
 	}
 }
 
@@ -84,40 +94,19 @@ public class XMLMapLoader : MonoBehaviour{
 				{
 					string name=node.Attributes["type"].Value;
 					int floor=XML_Loader.getAttInt(node,"floor");
-					int lmin=1,lmax=3,w=2;
-					var att=node.Attributes["c_len"];
-					if (att!=null){
-						var spl=Subs.Split(att.Value,",");
-						if (spl.Length>0)
-						{
-							lmin=lmax=int.Parse(spl[0]);
-						}
-						if (spl.Length>1)
-						{
-							lmax=int.Parse(spl[1]);
-						}
-					}
-					
-					att=node.Attributes["c_wid"];
-					if (att!=null){
-						w=int.Parse(att.Value);
-					}
-					
+
 					ShipMapXmlData ship=null;
 					if (Ships.ContainsKey(name))
 					{
 						Ships.TryGetValue(name,out ship);
-						
 					}
 					else
 					{
 						ship=new ShipMapXmlData(name);
 						Ships.Add(name,ship);
-						ship.SetCorridor(lmin,lmax,w);
 					}
 					
 					ship.Floors.Add(floor,readMapData(node));
-					
 				}
 			}
 		}
@@ -154,10 +143,41 @@ public class XMLMapLoader : MonoBehaviour{
 		var indexes=Subs.Split(lines[0]," ");
 
 		int width=indexes.Length,height=lines.Length;
-
-
+		
 		var map=new MapXmlData(width,height);
+		//attributes
 
+		int min=0,max=1;
+		var att=node.Attributes["loot_a"];
+		if (att!=null){
+			var spl=Subs.Split(att.Value,",");
+			if (spl.Length>0)
+			{
+				min=max=int.Parse(spl[0]);
+			}
+			if (spl.Length>1)
+			{
+				max=int.Parse(spl[1]);
+			}
+		}
+		map.SetLootAmount(min,max);
+
+		min=0;max=1;
+		att=node.Attributes["enemy_a"];
+		if (att!=null){
+			var spl=Subs.Split(att.Value,",");
+			if (spl.Length>0)
+			{
+				min=max=int.Parse(spl[0]);
+			}
+			if (spl.Length>1)
+			{
+				max=int.Parse(spl[1]);
+			}
+		}
+		map.SetEnemyAmount(min,max);
+
+		//load map
 		lines=Subs.Split(node.InnerText.Replace("\r","").Replace("\t",""),"\n");
 		int y=0;
 		foreach (var line in lines)

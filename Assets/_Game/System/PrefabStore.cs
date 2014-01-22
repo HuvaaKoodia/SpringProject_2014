@@ -8,8 +8,9 @@ public class PrefabStore : MonoBehaviour {
 	public TileMain TilePrefab;
 	
 	public GameObject 
-		BasicFloor,
-		BasicWall,
-		BasicEmpty
+			BasicFloor,
+			BasicWall,
+			BasicEmpty,
+			BasicDoor
 		;
 }
