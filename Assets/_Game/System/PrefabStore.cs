@@ -11,6 +11,7 @@ public class PrefabStore : MonoBehaviour {
 			BasicFloor,
 			BasicWall,
 			BasicEmpty,
-			BasicDoor
+			BasicDoor,
+			BasicLoot
 		;
 }

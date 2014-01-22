@@ -33,10 +33,10 @@ public class GameController : MonoBehaviour {
 		//Tiles=new List<TileMain>();
 
 		aiController = new AIcontroller(this);
-		player = GameObject.Find("Player").GetComponent<PlayerMain>();
 
 		if (UseTestMap)
 		{
+			player = GameObject.Find("Player").GetComponent<PlayerMain>();
 			var testfloor = MapGen.XmlMapRead.Rooms["pathfindingtest"][0];
 			var ship_floor0=ShipGen.GenerateShipObjectData();
 			MapGen.GenerateObjectDataMap(this,testfloor);
