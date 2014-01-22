@@ -8,6 +8,8 @@ public class EnemyMain : MonoBehaviour {
 	public EntityMovementSub movement;
 	public TestAI ai;
 
+    public bool waitingForAttackPhase;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -17,6 +19,8 @@ public class EnemyMain : MonoBehaviour {
 		movement = parent.gameObject.GetComponent<EntityMovementSub>();
 
 		ai = transform.root.GetComponent<TestAI>();
+
+        waitingForAttackPhase = false;
 	}
 	
 	// Update is called once per frame
@@ -28,16 +32,12 @@ public class EnemyMain : MonoBehaviour {
 	public void StartEnemyTurn()
 	{
 		ai.ResetAP();
+        waitingForAttackPhase = false;
 	}
 	public void PlayMovementPhase()
 	{
 		if (!ai.HasUsedTurn)
 			ai.PlayMovementPhase();
-	}
-
-	public void PlayAttackingPhase()
-	{
-
 	}
 
 	public void StartMoving()
@@ -49,10 +49,18 @@ public class EnemyMain : MonoBehaviour {
     public void FinishedMoving(bool wontMoveAnymore = false)
     {
 		aiController.EnemyFinishedTurn(wontMoveAnymore);
+
+        if (wontMoveAnymore)
+            waitingForAttackPhase = true;
+    }
+
+
+    public void PlayAttackingPhase()
+    {
+
     }
 
 	public void FinishedAttacking()
 	{
-	
 	}
 }

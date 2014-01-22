@@ -57,7 +57,6 @@ public class GameController : MonoBehaviour {
     		if (!UseTestMap) return;
     		
 		if (currentTurn != TurnState.PlayerTurn && currentTurn != TurnState.StartPlayerTurn)
-
 		{
 			aiController.UpdateAI(currentTurn);
 		}

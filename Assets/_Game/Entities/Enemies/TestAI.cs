@@ -48,13 +48,13 @@ public class TestAI : MonoBehaviour
 		waitedForOthersToMoveThisTurn = false;
 		HasUsedTurn = true;
 
-		if (!hasTarget)
+		if (hasTarget)
 		{
-			parent.FinishedMoving();
+            MoveToTarget();
 		}
 		else
 		{
-			MoveToTarget();
+            parent.FinishedMoving();
 		}
 
 		turnsSincePathCheck++;
@@ -92,39 +92,56 @@ public class TestAI : MonoBehaviour
             return;
 		}
 
-		bool DidMove = movement.MoveToTile(path.next.position, true);
+		MovementState movedSuccessfully = movement.MoveToTile(path.next.position, true);
 
-		ap--;
-
-       	if (DidMove)
+        if (movedSuccessfully == MovementState.Moving)
 		{
-			if (movement.currentMovement == MovementState.Moving)
-			{
-            	path = path.next;
-			}
-			else
-			{
-				Debug.Log("Something is blocking " + path.next.position);
-				EntityMain entityBlocking = tilemap[path.next.position.X, path.next.position.Y].entityOnTile;
-
-				if (entityBlocking != null) 
-				{
-					/*if (entityBlocking.tag == "AI" && !waitedForOthersToMoveThisTurn)
-					{
-						Debug.Log("Telling other guy to move");
-						waitedForOthersToMoveThisTurn = true;
-						entityBlocking.GetComponent<EnemyMain>().PlayMovementPhase();
-						this.MoveToTarget();
-					}*/
-					if (entityBlocking.tag == "Player")
-					{
-						//meleetä tänne
-						Debug.Log("Enemy at melee range");
-					}
-				}
-			}
+            ap--;
+            path = path.next;
+		}
+        else if (movedSuccessfully == MovementState.Turning)
+        {
+            ap--;
         }
-	}
+        else
+        {
+            EntityMain entityBlocking = tilemap[path.next.position.X, path.next.position.Y].entityOnTile;
+            Debug.Log(entityBlocking.tag + " is blocking " + path.next.position);
+            if (entityBlocking != null)
+            {
+                if (entityBlocking.tag == "AI" && !waitedForOthersToMoveThisTurn)
+                {
+                    waitedForOthersToMoveThisTurn = true;
+                    EnemyMain blocker  = entityBlocking.GetComponent<EnemyMain>();
+
+                    if (!blocker.waitingForAttackPhase)
+                    {
+                        Debug.Log("Telling other guy to move");
+                        blocker.PlayMovementPhase();
+                        this.MoveToTarget();
+                    }
+                    else
+                    {
+                        Debug.Log("Finding path around stationary enemy");
+                        CheckPath();
+                    }
+
+                    this.MoveToTarget();
+                }
+                else
+                {
+                    if (entityBlocking.tag == "Player")
+                    {
+                        //meleetä tänne
+                        Debug.Log("Enemy at melee range");
+                    }
+
+                    parent.FinishedMoving(true);
+                }
+            }
+        }
+    }
+
 
 	private void CheckPath()
 	{	

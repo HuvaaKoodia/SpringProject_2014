@@ -62,41 +62,45 @@ public class EntityMovementSub : MonoBehaviour
         transform.position = new Vector3(position[0], transform.position.y, position[1]);
     }
 
-    public void MoveForward()
+    public bool MoveForward()
     {
-        TryToMove(targetRotationAngle);
+        return TryToMove(targetRotationAngle);
     }
 
-    public void MoveBackward()
+    public bool MoveBackward()
     {
         int dir = (180 + targetRotationAngle) % 360;
-        TryToMove(dir);
+        return TryToMove(dir);
     }
 
-    void TryToMove(int direction)
+    bool TryToMove(int direction)
     {
         //TODO CHECK OBSTACLES
         int nextX = GetNextTileX(direction, currentGridX);
         int nextY = GetNextTileY(direction, currentGridY);
 
-        if (currentMovement == MovementState.NotMoving && CanMoveToTile(nextX, nextY))
+        if (currentMovement == MovementState.NotMoving)
         {
+            if (CanMoveToTile(nextX, nextY))
+            {
 
-            tilemap[currentGridX, currentGridY].LeaveTile();
+                tilemap[currentGridX, currentGridY].LeaveTile();
 
-            currentGridX = nextX;
-            currentGridY = nextY;
+                currentGridX = nextX;
+                currentGridY = nextY;
 
-            currentMovement = MovementState.Moving;
+                currentMovement = MovementState.Moving;
 
-            targetPosition = tilemap[currentGridX, currentGridY].Data.TilePosition;
+                targetPosition = tilemap[currentGridX, currentGridY].Data.TilePosition;
 
-			tilemap[currentGridX, currentGridY].SetEntity(parentTransform.gameObject.GetComponent<EntityMain>());
+                tilemap[currentGridX, currentGridY].SetEntity(parentTransform.gameObject.GetComponent<EntityMain>());
+                return true;
+            }
+            else
+                return false;
         }
         else
-        {
-            FinishMoving();
-        }
+            return true;
     }
 
     public void TurnLeft()
@@ -124,11 +128,11 @@ public class EntityMovementSub : MonoBehaviour
             else if (targetRotationAngle > 360)
                 targetRotationAngle -= 360;
         }
-        else
-        {
-            Debug.Log("jännä finish kusi hommat");
-            FinishMoving();
-        }
+        //else
+        //{
+        //    Debug.Log("jännä finish kusi hommat");
+        //    FinishMoving();
+        //}
     }
 
     void Move()
@@ -218,7 +222,7 @@ public class EntityMovementSub : MonoBehaviour
     }
 
     //returns true if moved, false if turned
-    public bool MoveToTile(Point3D tile, bool stayWaiting)
+    public MovementState MoveToTile(Point3D tile, bool stayWaiting)
     {
 		waitBeforeMoving = stayWaiting;
 
@@ -229,77 +233,73 @@ public class EntityMovementSub : MonoBehaviour
             case 0:
                 if (tile.Y - currentGridY == 1)
                 {
-                    MoveForward();
-                    return true;
+                    return MoveForward() ? MovementState.Moving : MovementState.NotMoving;
                 }
                 else if (tile.X - currentGridX == 1)
                 {
 					TurnRight();
-                    return false;
+                    return MovementState.Turning;
                 }
                 else
                 {
                     TurnLeft();
-                    return false;
+                    return MovementState.Turning;
                 }
             #endregion
             #region 180
             case 180:
                 if (currentGridY - tile.Y == 1)
                 {
-                    MoveForward();
-                    return true;
+                    return MoveForward() ? MovementState.Moving : MovementState.NotMoving;
                 }
                 else if (currentGridX - tile.X == 1)
                 {
 					TurnRight();
-                    return false;
+                    return MovementState.Turning;
                 }
 				else
 				{
 					TurnLeft();
-					return false;
+                    return MovementState.Turning;
 				}
             #endregion
             #region 90
             case 90:
                 if (tile.X - currentGridX == 1)
                 {
-                    MoveForward();
-                    return true;
+                    return MoveForward() ? MovementState.Moving : MovementState.NotMoving;
                 }
                 else if (currentGridY - tile.Y == 1)
                 {
                     TurnRight();
-                    return false;
+                    return MovementState.Turning;
                 }
 				else
 				{
 					TurnLeft();
-					return false;
+                    return MovementState.Turning;
 				}
             #endregion
             #region 270
             case 270:
                 if (currentGridX - tile.X == 1)
                 {
-                    MoveForward();
-                    return true;
+                    return MoveForward() ? MovementState.Moving : MovementState.NotMoving;
                 }
                 else if (tile.Y - currentGridY == 1)
                 {
                     TurnRight();
-                    return false;
+                    return MovementState.Turning;
                 }
                 else
                 {
                     TurnLeft();
-                    return false;
+                    return MovementState.Turning;
                 }
             #endregion
         }
 
-        return false;
+        return MovementState.NotMoving;
     }
 
 	public void StartMoving()

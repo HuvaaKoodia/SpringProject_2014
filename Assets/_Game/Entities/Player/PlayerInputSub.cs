@@ -34,22 +34,20 @@ public class PlayerInputSub : MonoBehaviour {
 
         if (verticalAxis > 0)
         {
-            playerMovement.SendMessage("MoveForward");
-            return true;
+            return playerMovement.MoveForward();
         }
         else if (verticalAxis < 0)
         {
-            playerMovement.SendMessage("MoveBackward");
-            return true;
+            return playerMovement.MoveBackward();
         }
         else if (horizontalAxis > 0)
         {
-            playerMovement.SendMessage("TurnRight");
+            playerMovement.TurnRight();
             return true;
         }
         else if (horizontalAxis < 0)
         {
-            playerMovement.SendMessage("TurnLeft");
+            playerMovement.TurnLeft();
             return true;
         }
 
