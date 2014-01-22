@@ -39,16 +39,11 @@ public class GameController : MonoBehaviour {
 		{
 			var testfloor = MapGen.XmlMapRead.Rooms["pathfindingtest"][0];
 			var ship_floor0=ShipGen.GenerateShipObjectData();
-			MapGen.GenerateObjectDataMap(this,ship_floor0);
+			MapGen.GenerateObjectDataMap(this,testfloor);
 			MapGen.GenerateSceneMap(this);
 		}
 		else
 		{
-            var testfloor = MapGen.XmlMapRead.Rooms["pathfindingtest"][0];
-			MapGen.GenerateObjectDataMap(this,testfloor);
-			MapGen.GenerateSceneMap(this);
-		}
-		else{
 			var ship_objdata=ShipGen.GenerateShipObjectData();
 			MapGen.GenerateObjectDataMap(this,ship_objdata.Floors[0]);
 			MapGen.GenerateShipItems(this,ship_objdata);
