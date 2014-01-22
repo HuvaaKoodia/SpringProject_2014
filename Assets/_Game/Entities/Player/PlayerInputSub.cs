@@ -3,13 +3,13 @@ using System.Collections;
 
 public class PlayerInputSub : MonoBehaviour {
 
-    GameObject player;
+    PlayerMain player;
     EntityMovementSub playerMovement;
 
 	// Use this for initialization
 	void Start()
     {
-        player = transform.root.gameObject;
+        player = transform.root.gameObject.GetComponent<PlayerMain>();
         playerMovement = player.gameObject.GetComponent<EntityMovementSub>();
 	}
 	
@@ -19,10 +19,11 @@ public class PlayerInputSub : MonoBehaviour {
         if (playerMovement.currentMovement == MovementState.NotMoving)
         {
             bool didMove = MovementInput();
-            if (didMove)
-            {
-                SendMessageUpwards("EndTurn");
-            }
+
+			if (didMove)
+			{
+				player.StartedMoving();
+			}
         }
 	}
 

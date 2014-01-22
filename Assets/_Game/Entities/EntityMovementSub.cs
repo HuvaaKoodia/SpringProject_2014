@@ -6,16 +6,18 @@ public enum MovementState
     NotMoving, Moving, Turning
 };
 
+[RequireComponent(typeof(EntityMain))]
 public class EntityMovementSub : MonoBehaviour
 {
-    public Transform parent;
+    public Transform parentTransform;
+	public EntityMain parentEntity;
 
     TileMain[,] tilemap;
     int mapWidth;
     int mapHeight;
 
-    public int currentGridX { get; private set; }
-    public int currentGridY { get; private set; }
+	public int currentGridX;// { get; private set; }
+	public int currentGridY;// { get; private set; }
     public MovementState currentMovement = MovementState.NotMoving;
 
     float movementSpeed = 2;
@@ -24,23 +26,33 @@ public class EntityMovementSub : MonoBehaviour
     public Vector3 targetPosition;
     public int targetRotationAngle;
 
+	bool waitBeforeMoving;
+
 	// Use this for initialization
 	void Start()
     {
-        parent = transform.root;
+		parentTransform = transform.root;
 
         tilemap = GameObject.Find("SharedSystems").GetComponentInChildren<GameController>().TileMainMap;
 
-        tilemap[currentGridX, currentGridY].SetEntity(parent.GetComponent<EntityMain>());
+		tilemap[currentGridX, currentGridY].SetEntity(parentTransform.GetComponent<EntityMain>());
         
         mapWidth = tilemap.GetLength(0);
         mapHeight = tilemap.GetLength(1);
+
+		waitBeforeMoving = false;
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        Move();
+		if (!waitBeforeMoving)
+        	Move();
+
+		if (currentMovement == MovementState.NotMoving)
+		{
+			parentTransform.eulerAngles = new Vector3(parentTransform.eulerAngles.x, targetRotationAngle, parentTransform.eulerAngles.z);
+		}
 	}
 
     public void SetPositionInGrid(int[] position)
@@ -79,7 +91,7 @@ public class EntityMovementSub : MonoBehaviour
 
             targetPosition = tilemap[currentGridX, currentGridY].Data.TilePosition;
 
-            tilemap[currentGridX, currentGridY].SetEntity(parent.gameObject.GetComponent<EntityMain>());
+			tilemap[currentGridX, currentGridY].SetEntity(parentTransform.gameObject.GetComponent<EntityMain>());
         }
         else
         {
@@ -89,13 +101,13 @@ public class EntityMovementSub : MonoBehaviour
 
     public void TurnLeft()
     {
-        int target = (int)parent.eulerAngles.y - 90;
+		int target = (int)parentTransform.eulerAngles.y - 90;
         Turn(target);
     }
 
     public void TurnRight()
     {  
-        int target = (int)parent.eulerAngles.y + 90;
+		int target = (int)parentTransform.eulerAngles.y + 90;
         Turn(target);
     }
 
@@ -114,6 +126,7 @@ public class EntityMovementSub : MonoBehaviour
         }
         else
         {
+            Debug.Log("jännä finish kusi hommat");
             FinishMoving();
         }
     }
@@ -122,28 +135,28 @@ public class EntityMovementSub : MonoBehaviour
     {
         if (currentMovement == MovementState.Moving)
         {
-            Vector3 movementDir = targetPosition - parent.position;
+			Vector3 movementDir = targetPosition - parentTransform.position;
             float distance = movementDir.magnitude;
             movementDir.Normalize();
 
             
             if (distance > Vector3.Magnitude(movementDir * Time.deltaTime * movementSpeed))
             {
-                parent.position += movementDir * Time.deltaTime * movementSpeed;
+				parentTransform.position += movementDir * Time.deltaTime * movementSpeed;
             }
             else
             {
-                parent.position = targetPosition;
-                FinishMoving();
+				parentTransform.position = targetPosition;
+	            FinishMoving();
             }
         }
 
         else if (currentMovement == MovementState.Turning)
         {
-            float direction = targetRotationAngle - parent.eulerAngles.y;
+			float direction = targetRotationAngle - parentTransform.eulerAngles.y;
             direction /= Mathf.Abs(direction);
 
-            float distance = targetRotationAngle - parent.eulerAngles.y;
+			float distance = targetRotationAngle - parentTransform.eulerAngles.y;
 
             //to prevent 270 degree turns
             if (distance > 180)
@@ -152,11 +165,11 @@ public class EntityMovementSub : MonoBehaviour
             //Debug.Log("direction: "+ direction + " distance: " + distance);
             if (Mathf.Abs(direction * Time.deltaTime * turnSpeed) < Mathf.Abs(distance))
             {
-                parent.Rotate(parent.transform.up, direction * Time.deltaTime * turnSpeed);
+				parentTransform.Rotate(parentTransform.transform.up, direction * Time.deltaTime * turnSpeed);
             }
             else
             {
-                parent.eulerAngles = new Vector3(parent.eulerAngles.x, targetRotationAngle, parent.eulerAngles.z);
+				parentTransform.eulerAngles = new Vector3(parentTransform.eulerAngles.x, targetRotationAngle, parentTransform.eulerAngles.z);
                 FinishMoving();
             }
         }
@@ -165,7 +178,7 @@ public class EntityMovementSub : MonoBehaviour
     void FinishMoving()
     {
         currentMovement = MovementState.NotMoving;
-        parent.SendMessage("FinishedMoving", SendMessageOptions.DontRequireReceiver);
+		parentTransform.SendMessage("FinishedMoving", false, SendMessageOptions.DontRequireReceiver);
     }
 
     bool CanMoveToTile(int x, int y)
@@ -203,4 +216,94 @@ public class EntityMovementSub : MonoBehaviour
         else
             return currentY;
     }
+
+    //returns true if moved, false if turned
+    public bool MoveToTile(Point3D tile, bool stayWaiting)
+    {
+		waitBeforeMoving = stayWaiting;
+
+        switch (targetRotationAngle)
+        {
+            #region 360/0
+            case 360:
+            case 0:
+                if (tile.Y - currentGridY == 1)
+                {
+                    MoveForward();
+                    return true;
+                }
+                else if (tile.X - currentGridX == 1)
+                {
+					TurnRight();
+                    return false;
+                }
+                else
+                {
+                    TurnLeft();
+                    return false;
+                }
+            #endregion
+            #region 180
+            case 180:
+                if (currentGridY - tile.Y == 1)
+                {
+                    MoveForward();
+                    return true;
+                }
+                else if (currentGridX - tile.X == 1)
+                {
+					TurnRight();
+                    return false;
+                }
+				else
+				{
+					TurnLeft();
+					return false;
+				}
+            #endregion
+            #region 90
+            case 90:
+                if (tile.X - currentGridX == 1)
+                {
+                    MoveForward();
+                    return true;
+                }
+                else if (currentGridY - tile.Y == 1)
+                {
+                    TurnRight();
+                    return false;
+                }
+				else
+				{
+					TurnLeft();
+					return false;
+				}
+            #endregion
+            #region 270
+            case 270:
+                if (currentGridX - tile.X == 1)
+                {
+                    MoveForward();
+                    return true;
+                }
+                else if (tile.Y - currentGridY == 1)
+                {
+                    TurnRight();
+                    return false;
+                }
+                else
+                {
+                    TurnLeft();
+                    return false;
+                }
+            #endregion
+        }
+
+        return false;
+    }
+
+	public void StartMoving()
+	{
+		waitBeforeMoving = false;
+	}
 }

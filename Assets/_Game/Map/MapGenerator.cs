@@ -121,7 +121,7 @@ public class MapGenerator : MonoBehaviour
 						var newEnemy = GameObject.Instantiate(MapPrefabs.EnemyPrefab, new Vector3(x, 0, y), Quaternion.identity) as EnemyMain;
                         newEnemy.name = "Enemy";
                         newEnemy.SendMessage("SetPositionInGrid", pos);
-                        GC.enemies.Add(newEnemy);
+                        GC.aiController.enemies.Add(newEnemy);
 					break;
 				}
 			}
