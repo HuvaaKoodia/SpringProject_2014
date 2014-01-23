@@ -9,8 +9,8 @@ public class PlayerInputSub : MonoBehaviour {
 	// Use this for initialization
 	void Start()
     {
-        player = transform.root.gameObject.GetComponent<PlayerMain>();
-        playerMovement = player.gameObject.GetComponent<EntityMovementSub>();
+        player = gameObject.GetComponent<PlayerMain>();
+		playerMovement = player.movement;
 	}
 	
 	// Update is called once per frame

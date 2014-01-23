@@ -14,4 +14,10 @@ public class PrefabStore : MonoBehaviour {
 			BasicEmpty,
 			BasicDoor
 		;
+
+	public GameObject 
+		Corridor_OneWall,
+		Corridor_TwoWall,
+		Corridor_Corner
+		;
 }

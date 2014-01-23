@@ -8,6 +8,7 @@ using System.Collections.Generic;
 /// 
 public class MapGenerator : MonoBehaviour 
 {
+	public static Vector3 TileSize=new Vector3(3,3,3);
 	public const string WallIcon="w",DoorIcon="d";
 
 	public XMLMapLoader XmlMapRead;
@@ -72,14 +73,13 @@ public class MapGenerator : MonoBehaviour
 		}
 	}
 
-
-
-	
 	/// <summary>
 	/// Generates the 3d world objects to the scene from the ObjectDataMap.
 	/// </summary>
 	public void GenerateSceneMap(GameController GC)
 	{
+		var clone_parent=new GameObject("WorldObjects");
+
 		int w=GC.TileObjectMap.GetLength(0);
 		int h=GC.TileObjectMap.GetLength(1);
 		
@@ -91,8 +91,10 @@ public class MapGenerator : MonoBehaviour
 			{	
 				//tile
 				int y_pos=h-1-y;
-				var tile=GC.TileMainMap[x,y]= Instantiate(MapPrefabs.TilePrefab, new Vector3(x, 0, y), Quaternion.identity) as TileMain;
+				var tile_pos=new Vector3(x*TileSize.x, 0, y*TileSize.z);
+				var tile=GC.TileMainMap[x,y]= Instantiate(MapPrefabs.TilePrefab, tile_pos, Quaternion.identity) as TileMain;
 				tile.SetData(GC.TileObjectMap[x,y]);
+				tile.transform.parent=clone_parent.transform;
 
 				GameObject tileobj=MapPrefabs.BasicFloor;//if floor or corridor
 				switch (tile.Data.TileType)
@@ -108,32 +110,38 @@ public class MapGenerator : MonoBehaviour
 					break;
 				}
 
-				tile.TileObject=Instantiate(tileobj,tile.transform.position+tileobj.transform.position,Quaternion.identity) as GameObject;
+				tile.TileObject=Instantiate(tileobj,tile_pos+tileobj.transform.position,Quaternion.identity) as GameObject;
+				tile.TileObject.transform.parent=tile.transform;
 
 				//other objects
 				int[] pos = { x, y }; //pelaajan & vihujen gridisijainnin asetukseen
+
 				switch (tile.Data.ObjType)
 				{
 					case TileObjData.Obj.Player:
-					//Instantiate player instead 
-                        var player = GameObject.Instantiate(MapPrefabs.PlayerPrefab, new Vector3(x, 0, y), Quaternion.identity) as PlayerMain;
+						var player = GameObject.Instantiate(MapPrefabs.PlayerPrefab, tile_pos, Quaternion.identity) as PlayerMain;
                         player.name = "Player";
 
 						GC.player=player;
 
                     	player.movement.SetPositionInGrid(pos);
 
+					player.transform.parent=clone_parent.transform;
+
 					break;
 										
 					case TileObjData.Obj.Enemy:
-						var newEnemy = GameObject.Instantiate(MapPrefabs.EnemyPrefab, new Vector3(x, 0, y), Quaternion.identity) as EnemyMain;
+						var newEnemy = GameObject.Instantiate(MapPrefabs.EnemyPrefab, tile_pos, Quaternion.identity) as EnemyMain;
                         newEnemy.name = "Enemy";
-                        newEnemy.SendMessage("SetPositionInGrid", pos);
+                        newEnemy.movement.SetPositionInGrid(pos);
                         GC.aiController.enemies.Add(newEnemy);
+
+						newEnemy.transform.parent=clone_parent.transform;
 					break;
 
 					case TileObjData.Obj.Loot:
-						var LootCrate = GameObject.Instantiate(MapPrefabs.LootCratePrefab, new Vector3(x,0, y), Quaternion.identity) as GameObject;
+						var LootCrate = GameObject.Instantiate(MapPrefabs.LootCratePrefab, tile_pos, Quaternion.identity) as GameObject;
+						LootCrate.transform.parent=clone_parent.transform;
 					break;
 				}
 			}

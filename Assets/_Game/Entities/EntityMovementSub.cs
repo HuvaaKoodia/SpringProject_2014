@@ -60,7 +60,7 @@ public class EntityMovementSub : MonoBehaviour
     {
         currentGridX = position[0];
         currentGridY = position[1];
-        transform.position = new Vector3(position[0], transform.position.y, position[1]);
+		transform.position = new Vector3(position[0]*MapGenerator.TileSize.x, transform.position.y, position[1]*MapGenerator.TileSize.z);
     }
 
     public bool MoveForward()
