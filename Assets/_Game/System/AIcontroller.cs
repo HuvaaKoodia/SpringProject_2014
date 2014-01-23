@@ -6,7 +6,7 @@ public class AIcontroller
 {
 	GameController GC;
 
-	int currentEnemy = 0;
+	int currentAttacker = 0;
 	int finishedEnemies = 0;
 	int enemiesWontMoveAnymore = 0;
 	public List<EnemyMain> enemies;
@@ -39,13 +39,17 @@ public class AIcontroller
 		{
 			finishedEnemies = 0;
 
-			if (enemiesWontMoveAnymore < enemies.Count)
-				GC.ChangeTurn(TurnState.AIMovement);	
-			else
-				GC.ChangeTurn(TurnState.AIAttack);
+            if (enemiesWontMoveAnymore < enemies.Count)
+                GC.ChangeTurn(TurnState.AIMovement);
+            else
+            {
+                enemies[currentAttacker].PlayAttackingPhase();
+                GC.ChangeTurn(TurnState.AIAttack);
+            }
 		}
-		else if (currentTurn == TurnState.AIAttack)
+		else if (currentTurn == TurnState.AIAttack && currentAttacker >= enemies.Count)
 		{
+            currentAttacker = 0;
 			GC.ChangeTurn(TurnState.StartPlayerTurn);
 		}
 		else if (currentTurn == TurnState.StartAITurn)
@@ -58,7 +62,7 @@ public class AIcontroller
 		}
 	}
 
-	public void EnemyFinishedTurn(bool wontMoveAnymore)
+	public void EnemyFinishedMoving(bool wontMoveAnymore)
 	{
 		finishedEnemies++;
 
@@ -67,4 +71,11 @@ public class AIcontroller
 			enemiesWontMoveAnymore++;
 		}
 	}
+
+    public void EnemyFinishedAttacking()
+    {
+        currentAttacker++;
+        if (currentAttacker < enemies.Count)
+            enemies[currentAttacker].PlayAttackingPhase();
+    }
 }

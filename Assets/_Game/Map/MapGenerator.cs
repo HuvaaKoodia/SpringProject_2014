@@ -116,10 +116,13 @@ public class MapGenerator : MonoBehaviour
 				{
 					case TileObjData.Obj.Player:
 					//Instantiate player instead 
-						var player = GameObject.Instantiate(MapPrefabs.PlayerPrefab, new Vector3(x, 0, y), Quaternion.identity) as PlayerMain;
-						if (player!=null)
-							player.SendMessage("SetPositionInGrid", pos);
+                        var player = GameObject.Instantiate(MapPrefabs.PlayerPrefab, new Vector3(x, 0, y), Quaternion.identity) as PlayerMain;
+                        player.name = "Player";
+
 						GC.player=player;
+
+                    	player.movement.SetPositionInGrid(pos);
+
 					break;
 										
 					case TileObjData.Obj.Enemy:

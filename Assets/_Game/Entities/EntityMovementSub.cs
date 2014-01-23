@@ -31,7 +31,8 @@ public class EntityMovementSub : MonoBehaviour
 	// Use this for initialization
 	void Start()
     {
-		parentTransform = transform.root;
+		parentTransform = transform;
+        parentEntity = transform.gameObject.GetComponent<EntityMain>();
 
         tilemap = GameObject.Find("SharedSystems").GetComponentInChildren<GameController>().TileMainMap;
 
@@ -93,7 +94,7 @@ public class EntityMovementSub : MonoBehaviour
 
                 targetPosition = tilemap[currentGridX, currentGridY].Data.TilePosition;
 
-                tilemap[currentGridX, currentGridY].SetEntity(parentTransform.gameObject.GetComponent<EntityMain>());
+                tilemap[currentGridX, currentGridY].SetEntity(parentEntity);
                 return true;
             }
             else
@@ -182,7 +183,7 @@ public class EntityMovementSub : MonoBehaviour
     void FinishMoving()
     {
         currentMovement = MovementState.NotMoving;
-		parentTransform.SendMessage("FinishedMoving", false, SendMessageOptions.DontRequireReceiver);
+        parentEntity.FinishedMoving(false);
     }
 
     bool CanMoveToTile(int x, int y)
@@ -305,5 +306,36 @@ public class EntityMovementSub : MonoBehaviour
 	public void StartMoving()
 	{
 		waitBeforeMoving = false;
+	}
+
+	public TileMain GetCurrenTile()
+	{
+		return tilemap[currentGridX, currentGridY];
+	}
+
+	public TileMain GetTileInFront()
+	{
+		int nextX = currentGridX, nextY = currentGridY;
+		if (targetRotationAngle == 0 || targetRotationAngle == 360)
+		{
+			nextY = 1;
+		}
+		else if (targetRotationAngle == 180)
+		{
+			nextY = -1;
+		}
+		else if (targetRotationAngle == 90)
+		{
+			nextX = 1;
+		}
+		else
+		{
+			nextX = -1;
+		}
+
+		if (nextX < 0 || nextX > tilemap.GetLength(0) || nextY < 0 || nextY > tilemap.GetLength(1))
+			return null;
+
+		return tilemap[nextX, nextX];
 	}
 }

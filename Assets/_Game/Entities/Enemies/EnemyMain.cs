@@ -1,25 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnemyMain : MonoBehaviour {
+public class EnemyMain : EntityMain {
 
 	AIcontroller aiController;
-	public EntityMain parent;
-	public EntityMovementSub movement;
 	public TestAI ai;
 
     public bool waitingForAttackPhase;
 
+	public GameObject graphics;
+	public MeshRenderer renderer;
+
 	// Use this for initialization
+	public override void Awake()
+	{
+		base.Awake();
+
+		renderer = graphics.GetComponent<MeshRenderer>();
+
+		aiController = GC.aiController;
+		ai = transform.root.GetComponent<TestAI>();
+	}
+
 	void Start ()
     {
-        parent = transform.root.gameObject.GetComponent<EntityMain>();
-		aiController = parent.GC.aiController;
-
-		movement = parent.gameObject.GetComponent<EntityMovementSub>();
-
-		ai = transform.root.GetComponent<TestAI>();
-
         waitingForAttackPhase = false;
 	}
 	
@@ -32,8 +36,10 @@ public class EnemyMain : MonoBehaviour {
 	public void StartEnemyTurn()
 	{
 		ai.ResetAP();
+		//graphics.SetActive(true);
         waitingForAttackPhase = false;
 	}
+
 	public void PlayMovementPhase()
 	{
 		if (!ai.HasUsedTurn)
@@ -46,21 +52,48 @@ public class EnemyMain : MonoBehaviour {
 		movement.StartMoving();
 	}
 
-    public void FinishedMoving(bool wontMoveAnymore)
+	public override void FinishedMoving(bool wontMoveAnymore)
     {
-		aiController.EnemyFinishedTurn(wontMoveAnymore);
+		aiController.EnemyFinishedMoving(wontMoveAnymore);
 
         if (wontMoveAnymore)
+		{
+			//graphics.SetActive(false);
             waitingForAttackPhase = true;
+		}
     }
 
 
     public void PlayAttackingPhase()
     {
-
+		ai.PlayAttackPhase();
     }
 
 	public void FinishedAttacking()
 	{
+        aiController.EnemyFinishedAttacking();
+	}
+
+	public override void TakeDamage(int damage)
+	{
+		health -= damage;
+
+		//temp
+		Color oldColor = renderer.material.color;
+		Color newColor = new Color(oldColor.r, oldColor.g-0.2f, oldColor.b-0.2f);
+
+		renderer.material.color = newColor;
+
+		if (health <= 0)
+		{
+			Die();
+		}
+	}
+
+	void Die()
+	{
+		movement.GetCurrenTile().LeaveTile();
+		GC.aiController.enemies.Remove(this);
+		Destroy(this.gameObject);
 	}
 }

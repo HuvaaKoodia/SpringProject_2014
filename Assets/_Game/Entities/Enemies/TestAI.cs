@@ -18,18 +18,22 @@ public class TestAI : MonoBehaviour
 	int turnsSincePathCheck;
 	public const int PathCheckInterval = 3;
 
-	int ap;
+	public int ap;
 	const int apMax = 3;
+    const int movementCost = 1;
+    const int attackCost = 2;
+
+	public int damage = 20;
 	
     public SearchNode path;
 	// Use this for initialization
 	void Start () {
         parent = transform.root.gameObject.GetComponent<EnemyMain>();
-        movement = parent.gameObject.GetComponent<EntityMovementSub>();
+		movement = parent.movement;
 
         tilemap = GameObject.Find("SharedSystems").GetComponentInChildren<GameController>().TileMainMap;
 
-		player = parent.parent.GC.player;
+		player = parent.GC.player;
 
 		HasUsedTurn = false;
 		waitedForOthersToMoveThisTurn = false;
@@ -65,25 +69,25 @@ public class TestAI : MonoBehaviour
 		}
 	}
 
-    private void RandomMovement()
-    {
-        int rand = Subs.GetRandom(4);
-        switch (rand)
+	public void PlayAttackPhase()
+	{
+        if (ap >= attackCost)
         {
-            case 0:
-                movement.MoveForward();
-                break;
-            case 1:
-                movement.MoveBackward();
-                break;
-            case 2:
-                movement.TurnLeft();
-                break;
-            case 3:
-                movement.TurnRight();
-                break;
+			TileMain tileinFront = movement.GetTileInFront();
+
+			if (tileinFront != null && tileinFront.entityOnTile != null && tileinFront.entityOnTile.tag == "Player")
+			{
+				Attack ();
+			}
         }
-    }
+
+        parent.FinishedAttacking();
+	}
+
+	private void Attack()
+	{
+		player.TakeDamage(damage);
+	}
 
 	private void MoveToTarget()
     {
@@ -97,52 +101,50 @@ public class TestAI : MonoBehaviour
 
         if (movedSuccessfully == MovementState.Moving)
 		{
-            ap--;
+            ap -= movementCost;
             path = path.next;
 		}
         else if (movedSuccessfully == MovementState.Turning)
         {
-            ap--;
+            ap -= movementCost;
         }
         else
         {
             EntityMain entityBlocking = tilemap[path.next.position.X, path.next.position.Y].entityOnTile;
-            Debug.Log(entityBlocking.tag + " is blocking " + path.next.position);
+            //Debug.Log(entityBlocking.tag + " is blocking " + path.next.position);
             if (entityBlocking != null)
             {
-                if (entityBlocking.tag == "AI" && !waitedForOthersToMoveThisTurn)
+				//vähän rikki niin kommenteissa, korjataan kun tärkeämpää asiaa saatu alta pois
+                if (!waitedForOthersToMoveThisTurn)
                 {
-                    waitedForOthersToMoveThisTurn = true;
-                    EnemyMain blocker  = entityBlocking.GetComponent<EnemyMain>();
+					if (entityBlocking.tag == "AI")
+					{
+	                    waitedForOthersToMoveThisTurn = true;
+	                    EnemyMain blocker  = entityBlocking.GetComponent<EnemyMain>();
 
-                    if (!blocker.waitingForAttackPhase)
-                    {
-                        Debug.Log("Telling other guy to move");
-                        blocker.PlayMovementPhase();
-                        this.MoveToTarget();
-                    }
-                    else
-                    {
-                        Debug.Log("Finding path around stationary enemy");
-                        CheckPath();
-                    }
+	                    if (!blocker.waitingForAttackPhase)
+	                    {
+	                        //Debug.Log("Telling other guy to move");
+	                        blocker.PlayMovementPhase();
+	                    }
+	                    else
+	                    {
+	                        //Debug.Log("Finding path around stationary enemy");
+	                        CheckPath();
+	                    }
 
-                    this.MoveToTarget();
-                }
-                else
-                {
-                    if (entityBlocking.tag == "Player")
-                    {
-                        //meleetä tänne
-                        Debug.Log("Enemy at melee range");
-                    }
-
-                    parent.FinishedMoving(true);
-                }
-            }
-        }
+	                    this.MoveToTarget();
+					}
+					else if (entityBlocking.tag == "Player")
+					{
+						parent.FinishedMoving(true);
+					}
+					return;
+				}
+				CheckPath();
+			}
+		}
     }
-
 
 	private void CheckPath()
 	{	
@@ -162,5 +164,25 @@ public class TestAI : MonoBehaviour
 	public void ResetAP()
 	{
 		ap = apMax;
+	}
+
+	private void RandomMovement()
+	{
+		int rand = Subs.GetRandom(4);
+		switch (rand)
+		{
+		case 0:
+			movement.MoveForward();
+			break;
+		case 1:
+			movement.MoveBackward();
+			break;
+		case 2:
+			movement.TurnLeft();
+			break;
+		case 3:
+			movement.TurnRight();
+			break;
+		}
 	}
 }

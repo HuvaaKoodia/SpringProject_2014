@@ -3,13 +3,14 @@ using System.Collections;
 
 public class EntityMain : MonoBehaviour
 {
-
     public GameController GC;
+    public EntityMovementSub movement;
+
+	public int health =  100;
 
 	// Use this for initialization
-	void Start ()
+	public virtual void Awake ()
     {
-        transform.GetComponent<EntityMovementSub>().parentTransform = this.transform;
         GC = GameObject.Find("GameSystems").GetComponent<GameController>();
 	}
 	
@@ -17,5 +18,14 @@ public class EntityMain : MonoBehaviour
 	void Update()
     {
 	
+	}
+
+    public virtual void FinishedMoving(bool wontMoveAnymore) 
+    { 
+    }
+
+	public virtual void TakeDamage(int damage)
+	{
+
 	}
 }

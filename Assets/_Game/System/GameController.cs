@@ -91,6 +91,6 @@ public class GameController : MonoBehaviour {
 
 	void StartPlayerTurn()
 	{
-		player.StartTurn();
+		player.StartPlayerPhase();
 	}
 }

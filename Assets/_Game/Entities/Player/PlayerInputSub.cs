@@ -23,7 +23,10 @@ public class PlayerInputSub : MonoBehaviour {
 			if (didMove)
 			{
 				player.StartedMoving();
+				return;
 			}
+
+			MouseInput();
         }
 	}
 
@@ -54,10 +57,16 @@ public class PlayerInputSub : MonoBehaviour {
         return false;
     }
 
-    void MouseInput()
-    {
-        //TODO
-    }
+	bool MouseInput()
+	{
+		if (Input.GetMouseButtonDown(0))
+		{
+			player.Attack();
+			return true;
+		}
+
+		return false;
+	}
 
     void HotkeyInput()
     {
