@@ -36,6 +36,7 @@ public class TestAI : MonoBehaviour
 
 		ap = apMax;
 
+		if (parent.parent.GC.UseTestMap)
 		CheckPath();
 	}
 	
@@ -54,7 +55,7 @@ public class TestAI : MonoBehaviour
 		}
 		else
 		{
-            parent.FinishedMoving();
+            parent.FinishedMoving(false);
 		}
 
 		turnsSincePathCheck++;

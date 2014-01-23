@@ -36,7 +36,6 @@ public class GameController : MonoBehaviour {
 
 		if (UseTestMap)
 		{
-			player = GameObject.Find("Player").GetComponent<PlayerMain>();
 			var testfloor = MapGen.XmlMapRead.Rooms["pathfindingtest"][0];
 			var ship_floor0=ShipGen.GenerateShipObjectData();
 			MapGen.GenerateObjectDataMap(this,testfloor);
@@ -54,7 +53,7 @@ public class GameController : MonoBehaviour {
 	// Update is called once per frame
 	void Update()
     {
-    		if (!UseTestMap) return;
+		if (!UseTestMap) return;
     		
 		if (currentTurn != TurnState.PlayerTurn && currentTurn != TurnState.StartPlayerTurn)
 		{

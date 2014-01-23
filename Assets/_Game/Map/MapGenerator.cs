@@ -8,6 +8,8 @@ using System.Collections.Generic;
 /// 
 public class MapGenerator : MonoBehaviour 
 {
+	public const string WallIcon="w";
+
 	public XMLMapLoader XmlMapRead;
 	public PrefabStore MapPrefabs;
 	
@@ -43,13 +45,15 @@ public class MapGenerator : MonoBehaviour
 				switch (md.map_data[x,y])
 				{
 					case "c":
+						data.SetType(TileObjData.Type.Corridor);
+					break;
 					case ".":
 						data.SetType(TileObjData.Type.Floor);
 					    break;
 					case ",":
 						data.SetType(TileObjData.Type.Empty);
 					    break;
-					case "x":
+					case WallIcon:
 						data.SetType(TileObjData.Type.Wall);
 					    break;
 					case "d":
@@ -90,7 +94,7 @@ public class MapGenerator : MonoBehaviour
 				var tile=GC.TileMainMap[x,y]= Instantiate(MapPrefabs.TilePrefab, new Vector3(x, 0, y), Quaternion.identity) as TileMain;
 				tile.SetData(GC.TileObjectMap[x,y]);
 
-				GameObject tileobj=MapPrefabs.BasicFloor;
+				GameObject tileobj=MapPrefabs.BasicFloor;//if floor or corridor
 				switch (tile.Data.TileType)
 				{
 					case TileObjData.Type.Wall:
@@ -112,9 +116,10 @@ public class MapGenerator : MonoBehaviour
 				{
 					case TileObjData.Obj.Player:
 					//Instantiate player instead 
-						var player=GameObject.Find("Player");
+						var player = GameObject.Instantiate(MapPrefabs.PlayerPrefab, new Vector3(x, 0, y), Quaternion.identity) as PlayerMain;
 						if (player!=null)
 							player.SendMessage("SetPositionInGrid", pos);
+						GC.player=player;
 					break;
 										
 					case TileObjData.Obj.Enemy:
@@ -123,11 +128,15 @@ public class MapGenerator : MonoBehaviour
                         newEnemy.SendMessage("SetPositionInGrid", pos);
                         GC.aiController.enemies.Add(newEnemy);
 					break;
+
+					case TileObjData.Obj.Loot:
+						var LootCrate = GameObject.Instantiate(MapPrefabs.LootCratePrefab, new Vector3(x,0, y), Quaternion.identity) as GameObject;
+					break;
 				}
 			}
 		}
 	}
-
+	
 	/// <summary>
 	/// Generates items (loot & enemies) to the room and corridors of the ship to the TileObjectMap
 	/// Call after GenerateObjectDataMap and before GenerateSceneMap
@@ -137,55 +146,84 @@ public class MapGenerator : MonoBehaviour
 
 		int current_floor=0;
 		var md=ship.Floors[current_floor];
+		var xml_md=ship.XmlData.Floors[current_floor];
 
 		int w=md.W;
 		int h=md.H;
 
-		int floor_amount_enemies=Subs.GetRandom(md.EnemyAmountMin,md.EnemyAmountMax);
-		int floor_amount_loot=Subs.GetRandom(md.LootAmountMin,md.LootAmountMax);
+		int floor_amount_enemies=Subs.GetRandom(xml_md.EnemyAmountMin,xml_md.EnemyAmountMax);
+		int floor_amount_loot=Subs.GetRandom(xml_md.LootAmountMin,xml_md.LootAmountMax);
 
 		//rooms
 		List<TileObjData> free_tiles=new List<TileObjData>();
 		var rooms_list=ship.FloorRooms[current_floor];
-		foreach(var room in rooms_list){
-			//get free positions
-			free_tiles.Clear();
-			for (int x = 0; x < room.W; x++)
-			{
-				for (int y = 0; y < room.H; y++)
-				{
-					var tile=GC.TileObjectMap[room.X+x,room.Y+y];
-					if (tile.TileType==TileObjData.Type.Floor)
-						free_tiles.Add(tile);
-				}
-			}
+		foreach (var room in rooms_list){
 
 			//loot crates
 
+			GetFreeTilesOfType(GC,TileObjData.Type.Floor,free_tiles);
+			int l_amount=Subs.GetRandom(room.RoomXmlData.LootAmountMin,room.RoomXmlData.LootAmountMax);
+			
+			while (free_tiles.Count>0){
+				if (l_amount==0) break;
+				
+				var tile=Subs.GetRandom(free_tiles);
+				free_tiles.Remove(tile);
+				
+				l_amount--;
+				
+				tile.SetObj(TileObjData.Obj.Loot);
+			}
+
 			//enemies
-			int e_amount=Subs.GetRandom(room.RoomData.EnemyAmountMin,room.RoomData.EnemyAmountMax);
-			int iii=0;
+			GetFreeTilesOfType(GC,TileObjData.Type.Floor,free_tiles);
+			int e_amount=Subs.GetRandom(room.RoomXmlData.EnemyAmountMin,room.RoomXmlData.EnemyAmountMax);
+
 			while (free_tiles.Count>0){
 
-				if (e_amount==0) break;
+				if (e_amount==0||floor_amount_enemies==0) break;
 
-				var pos=Subs.GetRandom(free_tiles);
-				free_tiles.Remove(pos);
-
-				if (pos.ObjType!=TileObjData.Obj.None) continue;
+				var tile=Subs.GetRandom(free_tiles);
+				free_tiles.Remove(tile);
 
 				e_amount--;
 				floor_amount_enemies--;
 
-				pos.SetObj(TileObjData.Obj.Enemy);
-
+				tile.SetObj(TileObjData.Obj.Enemy);
 			}
 		}
 
 		//add remaining enemies to corridors
+		if (floor_amount_enemies>0){
+			GetFreeTilesOfType(GC,TileObjData.Type.Corridor,free_tiles);
+			while (free_tiles.Count>0){
+				
+				if (floor_amount_enemies==0) break;
+				
+				var tile=Subs.GetRandom(free_tiles);
+				free_tiles.Remove(tile);
 
+				floor_amount_enemies--;
+				
+				tile.SetObj(TileObjData.Obj.Enemy);
+			}
+		}
+		//add items to the item crates DEV.TODO
+	}
 
-		//add items to the item crates
+	void GetFreeTilesOfType(GameController GC,TileObjData.Type type,List<TileObjData> free_tiles){
+		free_tiles.Clear();
 
+		for (int x = 0; x < GC.TileObjectMap.GetLength(0); x++)
+		{
+			for (int y = 0; y < GC.TileObjectMap.GetLength(1); y++)
+			{
+				var tile=GC.TileObjectMap[x,y];
+				if (tile.TileType==type&&tile.ObjType==TileObjData.Obj.None){
+					free_tiles.Add(tile);
+				}
+			}
+		}
 	}
 }
+

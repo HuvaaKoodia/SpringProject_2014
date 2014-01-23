@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class TileObjData
 {
-	public enum Type {Floor,Wall,Empty,Door};
-	public enum Obj {None,Player,Enemy};
+	public enum Type {Floor,Wall,Empty,Door,Corridor};
+	public enum Obj {None,Player,Enemy,Loot};
 	
 	public Vector3 TilePosition;
 	public Type TileType{get;private set;}

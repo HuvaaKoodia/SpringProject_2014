@@ -13,11 +13,9 @@ public class ShipGenerator : MonoBehaviour
 	public ShipObjData GenerateShipObjectData()
 	{
 		//randomize ship type
-		ShipMapXmlData ship_data=Subs.GetRandom(XmlMapRead.Ships.Values);
+		ShipMapXmlData ship_xml_data=Subs.GetRandom(XmlMapRead.Ships.Values);
 		//DEV.temp just the first floor
-		MapXmlData CurrentFloor=ship_data.Floors[0];
-
-		ShipObjData ship_obj_data=new ShipObjData(ship_data.Name);
+		MapXmlData CurrentFloor=ship_xml_data.Floors[0];
 
 		int w=CurrentFloor.W;
 		int h=CurrentFloor.H;
@@ -83,7 +81,7 @@ public class ShipGenerator : MonoBehaviour
 							continue;
 						}
 
-						cell.RoomData=rroom;
+						cell.RoomXmlData=rroom;
 						break;
 					}
 				}
@@ -94,7 +92,7 @@ public class ShipGenerator : MonoBehaviour
 
 		foreach(var room in Rooms){
 			//check if offset needs to be tampered with
-			int rw_diff=room.W-room.RoomData.W,rh_diff=room.H-room.RoomData.H;
+			int rw_diff=room.W-room.RoomXmlData.W,rh_diff=room.H-room.RoomXmlData.H;
 
 			List<Vector2> PossibleFixes=new List<Vector2>();
 
@@ -128,11 +126,11 @@ public class ShipGenerator : MonoBehaviour
 	
 		//add rooms to floor plan
 		foreach(var room in Rooms){
-			for (int mx = 0; mx < room.RoomData.W; mx++)
+			for (int mx = 0; mx < room.RoomXmlData.W; mx++)
 			{
-				for (int my = 0; my < room.RoomData.H; my++)
+				for (int my = 0; my < room.RoomXmlData.H; my++)
 				{
-					NewFloorMap.map_data[room.X+room.XOFF+mx,room.Y+room.YOFF+my]=room.RoomData.map_data[mx,my];
+					NewFloorMap.map_data[room.X+room.XOFF+mx,room.Y+room.YOFF+my]=room.RoomXmlData.map_data[mx,my];
 				}
 			}
 		}
@@ -163,7 +161,7 @@ public class ShipGenerator : MonoBehaviour
 						var index=NewFloorMap.GetIndex(x+xo,y+yo);
 						
 						if (index==","){
-							NewFloorMap.map_data[x+xo,y+yo]="x";
+							NewFloorMap.map_data[x+xo,y+yo]=MapGenerator.WallIcon;
 						}
 						
 						++dir;
@@ -197,6 +195,7 @@ public class ShipGenerator : MonoBehaviour
 			}
 		}
 
+		ShipObjData ship_obj_data=new ShipObjData(ship_xml_data);
 		ship_obj_data.Floors.Add(0,NewFloorMap);
 		ship_obj_data.FloorRooms.Add(0,Rooms);
 
@@ -210,15 +209,15 @@ public class ShipGenerator : MonoBehaviour
 	private Vector2 GetRandomDoorPos(CellData room,MapXmlData map,int dir){
 		var temp_door_list=new List<Vector2>();//DEV. unnec list
 		if (dir==0){
-			for (int i=0;i<room.RoomData.H;i++){
+			for (int i=0;i<room.RoomXmlData.H;i++){
 				int 
-				x=room.X+room.XOFF+room.RoomData.W-1,
+					x=room.X+room.XOFF+room.RoomXmlData.W-1,
 				y=room.Y+room.YOFF+i;
 
 				var oi=map.GetIndex(x+1,y);
 				if (oi=="c"){
 					oi=map.GetIndex(x,y);
-					if (oi=="x"){
+					if (oi==MapGenerator.WallIcon){
 						oi=map.GetIndex(x-1,y);
 						if (oi=="."){
 							temp_door_list.Add(new Vector2(x,y));
@@ -228,7 +227,7 @@ public class ShipGenerator : MonoBehaviour
 			}
 		}else
 		if (dir==1){
-			for (int i=0;i<room.RoomData.W;i++){
+			for (int i=0;i<room.RoomXmlData.W;i++){
 				int 
 					x=room.X+room.XOFF+i,
 					y=room.Y+room.YOFF;
@@ -236,7 +235,7 @@ public class ShipGenerator : MonoBehaviour
 				var oi=map.GetIndex(x,y-1);
 				if (oi=="c"){
 					oi=map.GetIndex(x,y);
-					if (oi=="x"){
+					if (oi==MapGenerator.WallIcon){
 						oi=map.GetIndex(x,y+1);
 						if (oi=="."){
 							temp_door_list.Add(new Vector2(x,y));
@@ -246,7 +245,7 @@ public class ShipGenerator : MonoBehaviour
 			}
 		}else
 		if (dir==2){
-			for (int i=0;i<room.RoomData.H;i++){
+			for (int i=0;i<room.RoomXmlData.H;i++){
 				int 
 					x=room.X+room.XOFF,
 					y=room.Y+room.YOFF+i;
@@ -254,7 +253,7 @@ public class ShipGenerator : MonoBehaviour
 				var oi=map.GetIndex(x-1,y);
 				if (oi=="c"){
 					oi=map.GetIndex(x,y);
-					if (oi=="x"){
+					if (oi==MapGenerator.WallIcon){
 						oi=map.GetIndex(x+1,y);
 						if (oi=="."){
 							temp_door_list.Add(new Vector2(x,y));
@@ -264,15 +263,15 @@ public class ShipGenerator : MonoBehaviour
 			}
 		}else 
 		if (dir==3){
-			for (int i=0;i<room.RoomData.W;i++){
+			for (int i=0;i<room.RoomXmlData.W;i++){
 				int 
 					x=room.X+room.XOFF+i,
-					y=room.Y+room.YOFF+room.RoomData.H-1;
+					y=room.Y+room.YOFF+room.RoomXmlData.H-1;
 				
 				var oi=map.GetIndex(x,y+1);
 				if (oi=="c"){
 					oi=map.GetIndex(x,y);
-					if (oi=="x"){
+					if (oi==MapGenerator.WallIcon){
 						oi=map.GetIndex(x,y-1);
 						if (oi=="."){
 							temp_door_list.Add(new Vector2(x,y));
@@ -349,7 +348,7 @@ public class CellData{
 		}
 	}
 	
-	public MapXmlData RoomData{
+	public MapXmlData RoomXmlData{
 		get 
 		{
 			return room;	
@@ -398,17 +397,17 @@ public class CellData{
 				//corridors hard wired down the line
 				//				if (cell.TileIndex=="c"){
 				//					a specified corridor size: 1 2 3 ?
-				//					cell.RoomData=Subs.GetRandom(XmlMapRead.Rooms["corridor"]);
+				//					cell.RoomXmlData=Subs.GetRandom(XmlMapRead.Rooms["corridor"]);
 				//				}
 				
 				if (cell.TileIndex=="r"){
 					//random room
-					cell.RoomData=Subs.GetRandom(XmlMapRead.Rooms["room"]);
+					cell.RoomXmlData=Subs.GetRandom(XmlMapRead.Rooms["room"]);
 				}
 				
 				if (cell.TileIndex=="e"){
 					//random elevator room
-					cell.RoomData=Subs.GetRandom(XmlMapRead.Rooms["elevator"]);
+					cell.RoomXmlData=Subs.GetRandom(XmlMapRead.Rooms["elevator"]);
 					
 				}
 			}
@@ -611,7 +610,7 @@ public class CellData{
 			{
 				var cell=Cellmap[x,y]; 
 				
-				if (cell.RoomData!=null)
+				if (cell.RoomXmlData!=null)
 				{
 					//check if offset needs to be tampered with
 					
@@ -636,7 +635,7 @@ public class CellData{
 					}
 					
 					//check if there is a need to change offset
-					int rw_diff=cell.W-cell.RoomData.W,rh_diff=cell.H-cell.RoomData.H;
+					int rw_diff=cell.W-cell.RoomXmlData.W,rh_diff=cell.H-cell.RoomXmlData.H;
 					
 					List<Vector2> PossibleFixes=new List<Vector2>();
 					
@@ -680,11 +679,11 @@ public class CellData{
 					}
 					
 					//create room
-					for (int mx = 0; mx < cell.RoomData.W; mx++)
+					for (int mx = 0; mx < cell.RoomXmlData.W; mx++)
 					{
-						for (int my = 0; my < cell.RoomData.H; my++)
+						for (int my = 0; my < cell.RoomXmlData.H; my++)
 						{
-							floor_plan.map_data[cell.X+cell.XOFF+mx,cell.Y+cell.YOFF+my]=cell.RoomData.map_data[mx,my];
+							floor_plan.map_data[cell.X+cell.XOFF+mx,cell.Y+cell.YOFF+my]=cell.RoomXmlData.map_data[mx,my];
 						}
 					}
 				}
@@ -743,7 +742,7 @@ public class CellData{
 			}
 		}
 
-		public MapXmlData RoomData{
+		public MapXmlData RoomXmlData{
 			get 
 			{
 				return room;	

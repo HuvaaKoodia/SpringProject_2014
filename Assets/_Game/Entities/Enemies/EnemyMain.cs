@@ -46,7 +46,7 @@ public class EnemyMain : MonoBehaviour {
 		movement.StartMoving();
 	}
 
-    public void FinishedMoving(bool wontMoveAnymore = false)
+    public void FinishedMoving(bool wontMoveAnymore)
     {
 		aiController.EnemyFinishedTurn(wontMoveAnymore);
 

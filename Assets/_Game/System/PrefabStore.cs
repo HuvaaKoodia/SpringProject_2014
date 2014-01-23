@@ -6,12 +6,12 @@ public class PrefabStore : MonoBehaviour {
 	public PlayerMain PlayerPrefab;
 	public EnemyMain EnemyPrefab;
 	public TileMain TilePrefab;
+	public GameObject LootCratePrefab;
 	
 	public GameObject 
 			BasicFloor,
 			BasicWall,
 			BasicEmpty,
-			BasicDoor,
-			BasicLoot
+			BasicDoor
 		;
 }
