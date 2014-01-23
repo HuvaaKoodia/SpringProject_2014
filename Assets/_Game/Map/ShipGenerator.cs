@@ -211,6 +211,11 @@ public class ShipGenerator : MonoBehaviour
 				var index=NewFloorMap.map_data[x,y].ToLower();
 				if (index=="r"||index=="t")
 					NewFloorMap.map_data[x,y]=",";
+
+				//DEV:TEMP:HAX DOOR
+
+				if (index=="d")
+					NewFloorMap.map_data[x,y]=".";
 			}
 		}
 		
@@ -220,7 +225,7 @@ public class ShipGenerator : MonoBehaviour
 			for(int y=0;y<h;y++)
 			{
 				var t_index=NewFloorMap.map_data[x,y].ToLower();
-				if (t_index=="c"||t_index=="d"){
+				if (t_index=="c"||t_index==MapGenerator.DoorIcon){
 					int dir=0,xo=0,yo=0;
 					while (dir<4){
 						if (dir==0){ xo=1;yo=0; }
@@ -259,8 +264,10 @@ public class ShipGenerator : MonoBehaviour
 				while (amount_of_doors>0){
 					--amount_of_doors;
 					var r_fix=Subs.GetRandom(PossibleDoors);
-					
-					NewFloorMap.map_data[(int)r_fix.x,(int)r_fix.y]="d";
+
+					//DEV:TEMP:HAX DOOR
+					//NewFloorMap.map_data[(int)r_fix.x,(int)r_fix.y]=MapGenerator.DoorIcon;
+					NewFloorMap.map_data[(int)r_fix.x,(int)r_fix.y]=".";
 				}
 			}
 		}

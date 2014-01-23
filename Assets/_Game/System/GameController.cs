@@ -53,8 +53,7 @@ public class GameController : MonoBehaviour {
 	// Update is called once per frame
 	void Update()
     {
-		if (!UseTestMap) return;
-    		
+
 		if (currentTurn != TurnState.PlayerTurn && currentTurn != TurnState.StartPlayerTurn)
 		{
 			aiController.UpdateAI(currentTurn);

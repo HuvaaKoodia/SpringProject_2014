@@ -39,8 +39,7 @@ public class TestAI : MonoBehaviour
 		waitedForOthersToMoveThisTurn = false;
 
 		ap = apMax;
-
-		if (parent.parent.GC.UseTestMap)
+		
 		CheckPath();
 	}
 	

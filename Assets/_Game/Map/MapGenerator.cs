@@ -8,7 +8,7 @@ using System.Collections.Generic;
 /// 
 public class MapGenerator : MonoBehaviour 
 {
-	public const string WallIcon="w";
+	public const string WallIcon="w",DoorIcon="d";
 
 	public XMLMapLoader XmlMapRead;
 	public PrefabStore MapPrefabs;
@@ -56,7 +56,7 @@ public class MapGenerator : MonoBehaviour
 					case WallIcon:
 						data.SetType(TileObjData.Type.Wall);
 					    break;
-					case "d":
+					case DoorIcon:
 						data.SetType(TileObjData.Type.Door);
 						break;
                     case "p":
@@ -104,8 +104,7 @@ public class MapGenerator : MonoBehaviour
 						tileobj=MapPrefabs.BasicEmpty;
 					break;
 					case TileObjData.Type.Door:
-						//DEV:HAXtileobj=MapPrefabs.BasicDoor;
-						tileobj=MapPrefabs.BasicFloor;
+						tileobj=MapPrefabs.BasicDoor;
 					break;
 				}
 
