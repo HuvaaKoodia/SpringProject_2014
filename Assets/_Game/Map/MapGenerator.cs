@@ -96,52 +96,38 @@ public class MapGenerator : MonoBehaviour
 				tile.SetData(GC.TileObjectMap[x,y]);
 				tile.transform.parent=clone_parent.transform;
 
-				GameObject tileobj=MapPrefabs.BasicFloor;//if floor or corridor
-				switch (tile.Data.TileType)
-				{
-					case TileObjData.Type.Wall:
-						tileobj=MapPrefabs.BasicWall;
-					break;
-					case TileObjData.Type.Empty:
-						tileobj=MapPrefabs.BasicEmpty;
-					break;
-					case TileObjData.Type.Door:
-						tileobj=MapPrefabs.BasicDoor;
-					break;
-				}
-
-				tile.TileObject=Instantiate(tileobj,tile_pos+tileobj.transform.position,Quaternion.identity) as GameObject;
+				//tile mesh
+				SetTileObject(x,y,tile,GC.TileObjectMap);
 				tile.TileObject.transform.parent=tile.transform;
 
-				//other objects
-				int[] pos = { x, y }; //pelaajan & vihujen gridisijainnin asetukseen
+				//game objects
+				int[] entity_pos = { x, y };
 
 				switch (tile.Data.ObjType)
 				{
 					case TileObjData.Obj.Player:
-						var player = GameObject.Instantiate(MapPrefabs.PlayerPrefab, tile_pos, Quaternion.identity) as PlayerMain;
-                        player.name = "Player";
+					var player = GameObject.Instantiate(MapPrefabs.PlayerPrefab, tile_pos, Quaternion.identity) as PlayerMain;
+                	player.name = "Player";
 
-						GC.player=player;
+					GC.player=player;
 
-                    	player.movement.SetPositionInGrid(pos);
+					player.movement.SetPositionInGrid(entity_pos);
 
 					player.transform.parent=clone_parent.transform;
-
 					break;
 										
 					case TileObjData.Obj.Enemy:
-						var newEnemy = GameObject.Instantiate(MapPrefabs.EnemyPrefab, tile_pos, Quaternion.identity) as EnemyMain;
-                        newEnemy.name = "Enemy";
-                        newEnemy.movement.SetPositionInGrid(pos);
-                        GC.aiController.enemies.Add(newEnemy);
+					var newEnemy = GameObject.Instantiate(MapPrefabs.EnemyPrefab, tile_pos, Quaternion.identity) as EnemyMain;
+                	newEnemy.name = "Enemy";
+					newEnemy.movement.SetPositionInGrid(entity_pos);
+               		GC.aiController.enemies.Add(newEnemy);
 
-						newEnemy.transform.parent=clone_parent.transform;
+					newEnemy.transform.parent=clone_parent.transform;
 					break;
 
 					case TileObjData.Obj.Loot:
-						var LootCrate = GameObject.Instantiate(MapPrefabs.LootCratePrefab, tile_pos, Quaternion.identity) as GameObject;
-						LootCrate.transform.parent=clone_parent.transform;
+					var LootCrate = GameObject.Instantiate(MapPrefabs.LootCratePrefab, tile_pos, Quaternion.identity) as GameObject;
+					LootCrate.transform.parent=clone_parent.transform;
 					break;
 				}
 			}
@@ -235,6 +221,71 @@ public class MapGenerator : MonoBehaviour
 				}
 			}
 		}
+	}
+
+	void SetTileObject (int x,int y,TileMain tile,TileObjData[,] grid)
+	{
+		var rotation=Quaternion.identity;
+		GameObject tileobj=MapPrefabs.BasicFloor;//if floor or corridor
+		switch (tile.Data.TileType)
+		{
+		case TileObjData.Type.Wall:
+			tileobj=MapPrefabs.BasicWall;
+			break;
+		case TileObjData.Type.Empty:
+			tileobj=MapPrefabs.BasicEmpty;
+			break;
+		case TileObjData.Type.Door:
+			tileobj=MapPrefabs.BasicDoor;
+			break;
+		case TileObjData.Type.Floor:
+		case TileObjData.Type.Corridor:
+			TileObjData.Type[] tile_types=new TileObjData.Type[9];
+
+			int xx=0,yy=0;
+			for(int i=0;i<8;i++){
+				if (i==0){xx=1;yy=0;}
+				if (i==1){xx=1;yy=1;}
+				if (i==2){xx=0;yy=1;}
+				if (i==3){xx=-1;yy=1;}
+				if (i==4){xx=-1;yy=0;}
+				if (i==5){xx=-1;yy=-1;}
+				if (i==6){xx=0;yy=-1;}
+				if (i==7){xx=1;yy=-1;}
+
+				tile_types[i]=grid[x+xx,y+yy].TileType;
+			}
+
+			if (CheckTypeEqual(
+				obj=>{return obj==TileObjData.Type.Corridor||obj==TileObjData.Type.Floor;},
+				tile_types,0,4))
+			{
+				//horizontal corridor
+				tileobj=MapPrefabs.Corridor_TwoWall;
+			}else
+			if (CheckTypeEqual(
+				obj=>{return obj==TileObjData.Type.Corridor||obj==TileObjData.Type.Floor;},
+				tile_types,2,6))
+			{
+				//vertical corridor
+				tileobj=MapPrefabs.Corridor_TwoWall;
+				rotation=Quaternion.AngleAxis(90,Vector3.up);
+			}
+
+
+			break;
+		}
+		
+		tile.TileObject=Instantiate(tileobj,tile.transform.position+tileobj.transform.position,rotation) as GameObject;
+	}
+
+	bool CheckTypeEqual(System.Func<TileObjData.Type,bool> test, TileObjData.Type[] tile_types,params int[] dirs){
+		foreach(var dir in dirs){
+			if (!test(tile_types[dir])){
+				return false;
+			}
+		}
+		return true;
 	}
 }
 
