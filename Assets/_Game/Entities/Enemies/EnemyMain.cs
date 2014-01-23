@@ -36,21 +36,45 @@ public class EnemyMain : EntityMain {
 	public void StartEnemyTurn()
 	{
 		ai.ResetAP();
-		//graphics.SetActive(true);
         waitingForAttackPhase = false;
+        Debug.Log("new ai turn");
 	}
 
-	public void PlayMovementPhase()
-	{
-		if (!ai.HasUsedTurn)
-			ai.PlayMovementPhase();
-	}
+    public void PlayMovementTurn()
+    {
+        if (!ai.HasUsedTurn)
+        {
+            if (ai.ap > 0)
+                ai.PlayMovementPhase();
+            else
+                OutOfAP();
+        }
+    }
 
-	public void StartMoving()
-	{
-		ai.HasUsedTurn = false;
-		movement.StartMoving();
-	}
+    public void StartMoving()
+    {
+        if (ai.foundMove)
+        {
+            movement.StartMoving();
+        }
+        else
+        {
+            FinishedMoving(true);
+        }
+
+        if (ai.ap <= 0)
+            FinishedMoving(true);
+
+        ai.HasUsedTurn = false;
+        ai.waitedForOthersToMoveThisTurn = false;
+        ai.foundMove = false;
+    }
+
+    void OutOfAP()
+    {
+        ai.HasUsedTurn = true;
+        FinishedMoving(true);
+    }
 
 	public override void FinishedMoving(bool wontMoveAnymore)
     {
@@ -96,4 +120,9 @@ public class EnemyMain : EntityMain {
 		GC.aiController.enemies.Remove(this);
 		Destroy(this.gameObject);
 	}
+
+    public bool HasUsedTurn()
+    {
+        return ai.HasUsedTurn;
+    }
 }

@@ -13,7 +13,8 @@ public class TestAI : MonoBehaviour
 
 	bool hasTarget;
 	public bool HasUsedTurn;
-	bool waitedForOthersToMoveThisTurn;
+    public bool foundMove;
+	public bool waitedForOthersToMoveThisTurn;
 
 	int turnsSincePathCheck;
 	public const int PathCheckInterval = 3;
@@ -36,6 +37,7 @@ public class TestAI : MonoBehaviour
 		player = parent.GC.player;
 
 		HasUsedTurn = false;
+        foundMove = false;
 		waitedForOthersToMoveThisTurn = false;
 
 		ap = apMax;
@@ -49,16 +51,14 @@ public class TestAI : MonoBehaviour
 
 	public void PlayMovementPhase()
 	{
-		waitedForOthersToMoveThisTurn = false;
-		HasUsedTurn = true;
-
 		if (hasTarget)
 		{
             MoveToTarget();
 		}
 		else
 		{
-            parent.FinishedMoving(false);
+            //parent.FinishedMoving(true);
+            RandomMovement();
 		}
 
 		turnsSincePathCheck++;
@@ -90,8 +90,9 @@ public class TestAI : MonoBehaviour
 
 	private void MoveToTarget()
     {
-        if (path == null || path.next == null || ap <= 0)
+        if (path == null || path.next == null)
 		{
+            HasUsedTurn = true;
 			parent.FinishedMoving(true);
             return;
 		}
@@ -100,15 +101,20 @@ public class TestAI : MonoBehaviour
 
         if (movedSuccessfully == MovementState.Moving)
 		{
+            HasUsedTurn = true;
+            foundMove = true;
             ap -= movementCost;
             path = path.next;
 		}
         else if (movedSuccessfully == MovementState.Turning)
         {
+            HasUsedTurn = true;
+            foundMove = true;
             ap -= movementCost;
         }
         else
         {
+            waitedForOthersToMoveThisTurn = true;
             EntityMain entityBlocking = tilemap[path.next.position.X, path.next.position.Y].entityOnTile;
             //Debug.Log(entityBlocking.tag + " is blocking " + path.next.position);
             if (entityBlocking != null)
@@ -116,31 +122,16 @@ public class TestAI : MonoBehaviour
 				//vähän rikki niin kommenteissa, korjataan kun tärkeämpää asiaa saatu alta pois
                 if (!waitedForOthersToMoveThisTurn)
                 {
-					if (entityBlocking.tag == "AI")
-					{
-	                    waitedForOthersToMoveThisTurn = true;
-	                    EnemyMain blocker  = entityBlocking.GetComponent<EnemyMain>();
-
-	                    if (!blocker.waitingForAttackPhase)
-	                    {
-	                        //Debug.Log("Telling other guy to move");
-	                        blocker.PlayMovementPhase();
-	                    }
-	                    else
-	                    {
-	                        //Debug.Log("Finding path around stationary enemy");
-	                        CheckPath();
-	                    }
-
-	                    this.MoveToTarget();
-					}
-					else if (entityBlocking.tag == "Player")
-					{
-						parent.FinishedMoving(true);
-					}
-					return;
-				}
-				CheckPath();
+                    if (entityBlocking.tag == "Player")
+                    {
+                        HasUsedTurn = true;
+                        parent.FinishedMoving(true);
+                    }
+                }
+                else
+                {
+                    HasUsedTurn = true;
+                }
 			}
 		}
     }
@@ -167,20 +158,31 @@ public class TestAI : MonoBehaviour
 
 	private void RandomMovement()
 	{
-		int rand = Subs.GetRandom(4);
+		int rand = Subs.GetRandom(3);
 		switch (rand)
 		{
 		case 0:
-			movement.MoveForward();
+            if (movement.MoveForward())
+            {
+                Debug.Log("forward");
+                ap--;
+                HasUsedTurn = true;
+                foundMove = true;
+            }
 			break;
 		case 1:
-			movement.MoveBackward();
+            Debug.Log("right");
+            ap--;
+            HasUsedTurn = true;
+            foundMove = true;
+			movement.TurnRight();
 			break;
 		case 2:
+            Debug.Log("left");
+            ap--;
+            HasUsedTurn = true;
+            foundMove = true;
 			movement.TurnLeft();
-			break;
-		case 3:
-			movement.TurnRight();
 			break;
 		}
 	}

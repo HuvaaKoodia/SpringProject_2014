@@ -57,7 +57,7 @@ public class MapGenerator : MonoBehaviour
 						data.SetType(TileObjData.Type.Wall);
 					    break;
 					case DoorIcon:
-						data.SetType(TileObjData.Type.Door);
+						data.SetType(TileObjData.Type.Floor);
 						break;
                     case "p":
                         data.SetType(TileObjData.Type.Floor);
@@ -128,7 +128,7 @@ public class MapGenerator : MonoBehaviour
 					case TileObjData.Obj.Enemy:
 						var newEnemy = GameObject.Instantiate(MapPrefabs.EnemyPrefab, new Vector3(x, 0, y), Quaternion.identity) as EnemyMain;
                         newEnemy.name = "Enemy";
-                        newEnemy.SendMessage("SetPositionInGrid", pos);
+                        newEnemy.movement.SetPositionInGrid(pos);
                         GC.aiController.enemies.Add(newEnemy);
 					break;
 

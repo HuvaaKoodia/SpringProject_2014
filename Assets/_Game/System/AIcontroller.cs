@@ -21,28 +21,38 @@ public class AIcontroller
 	{
 		if (currentTurn == TurnState.AIMovement)
 		{
-			enemiesWontMoveAnymore = 0;
+            while (true)
+            {
+                int enemiesUsedTurn = 0;
+                foreach (EnemyMain enemy in enemies)
+                {
+                    enemy.PlayMovementTurn();
 
-			foreach (EnemyMain enemy in enemies)
-			{
-				enemy.PlayMovementPhase();
-			}
+                    if (enemy.HasUsedTurn())
+                        enemiesUsedTurn++;
+                }
 
-			foreach (EnemyMain enemy in enemies)
-			{
-				enemy.StartMoving();
-			}
+                if (enemiesUsedTurn >= enemies.Count)
+                    break;
+            }
+
+            foreach (EnemyMain enemy in enemies)
+            {
+                enemy.StartMoving();
+            }
+   
 
 			GC.ChangeTurn(TurnState.WaitingAIToFinish);
 		}
-		else if (currentTurn == TurnState.WaitingAIToFinish && enemies.Count <= finishedEnemies)
+        else if (currentTurn == TurnState.WaitingAIToFinish && !CheckForMovingEnemies())
 		{
-			finishedEnemies = 0;
-
             if (enemiesWontMoveAnymore < enemies.Count)
+            {
                 GC.ChangeTurn(TurnState.AIMovement);
+            }
             else
             {
+                enemiesWontMoveAnymore = 0;
                 enemies[currentAttacker].PlayAttackingPhase();
                 GC.ChangeTurn(TurnState.AIAttack);
             }
@@ -77,5 +87,16 @@ public class AIcontroller
         currentAttacker++;
         if (currentAttacker < enemies.Count)
             enemies[currentAttacker].PlayAttackingPhase();
+    }
+
+    bool CheckForMovingEnemies()
+    {
+        foreach (EnemyMain enemy in enemies)
+        {
+            if (enemy.movement.currentMovement != MovementState.NotMoving)
+                return true;
+        }
+
+        return false;
     }
 }
