@@ -7,6 +7,43 @@ using System.Collections.Generic;
 /// </summary>
 public class ShipGenerator : MonoBehaviour 
 {
+	private Dictionary<string,string> RoomStartIndexes=
+	new Dictionary<string,string>{
+		{"R","room"},{"A","airlock"}
+	};
+
+	bool IsRoomStartIndex(string index){
+		foreach(var i in RoomStartIndexes){
+			if (i.Key==index)
+				return true;
+		}
+		return false;
+	}
+
+	void FitRoom(string room_index,CellData cell){
+
+		string room_name=RoomStartIndexes[room_index];
+
+		int c=0;
+		MapXmlData rroom;
+		while (true){
+			++c;
+			if (c>100){
+				Debug.LogError("No fitting room in ["+cell.X+", "+cell.Y+"]");
+				break;
+			}
+			
+			rroom=Subs.GetRandom(XmlMapRead.Rooms[room_name]);
+			
+			if (rroom.W>cell.W||rroom.H>cell.H){
+				continue;
+			}
+			
+			cell.RoomXmlData=rroom;
+			break;
+		}
+	}
+
 	public XMLMapLoader XmlMapRead;
 	public PrefabStore MapPrefabs;
 
@@ -30,7 +67,7 @@ public class ShipGenerator : MonoBehaviour
 				var index=CurrentFloor.GetIndex(x,y);
 				NewFloorMap.map_data[x,y]=index;
 
-				if (index=="R"){
+				if (IsRoomStartIndex(index)){
 					//random room
 					var cell=new CellData("R");
 					cell.X=x;cell.Y=y;
@@ -42,14 +79,15 @@ public class ShipGenerator : MonoBehaviour
 
 					int ww=1;
 					while (true){
-						if (CurrentFloor.GetIndex(x+ww,y)=="R"){
+						var nindex=CurrentFloor.GetIndex(x+ww,y);
+						if (IsRoomStartIndex(nindex)){
 							break;
 						}
-						if (CurrentFloor.GetIndex(x+ww,y)=="T"){
+						if (nindex=="T"){
 							cell.W+=1;
 							break;
 						}
-						if (CurrentFloor.GetIndex(x+ww,y)=="r"){
+						if (nindex=="r"){
 							cell.W+=1;
 							++ww;
 						}
@@ -57,14 +95,15 @@ public class ShipGenerator : MonoBehaviour
 					}
 					ww=1;
 					while (true){
-						if (CurrentFloor.GetIndex(x,y+ww)=="R"){
+						var nindex=CurrentFloor.GetIndex(x,y+ww);
+						if (IsRoomStartIndex(nindex)){
 							break;
 						}
-						if (CurrentFloor.GetIndex(x,y+ww)=="T"){
+						if (nindex=="T"){
 							cell.H+=1;
 							break;
 						}
-						if (CurrentFloor.GetIndex(x,y+ww)=="r"){
+						if (nindex=="r"){
 							cell.H+=1;
 							++ww;
 						}
@@ -72,24 +111,46 @@ public class ShipGenerator : MonoBehaviour
 					}
 					CheckLegitWalls(cell,CurrentFloor);
 
+					if (index=="R"){
 					//randomize a room of right size
-					int c=0;
-					MapXmlData rroom;
-					while (true){
-						++c;
-						if (c>100){
-							Debug.LogError("No fitting room in ["+cell.X+", "+cell.Y+"]");
+						int c=0;
+						MapXmlData rroom;
+						while (true){
+							++c;
+							if (c>100){
+								Debug.LogError("No fitting room in ["+cell.X+", "+cell.Y+"]");
+								break;
+							}
+
+							rroom=Subs.GetRandom(XmlMapRead.Rooms["room"]);
+
+							if (rroom.W>cell.W||rroom.H>cell.H){
+								continue;
+							}
+
+							cell.RoomXmlData=rroom;
 							break;
 						}
-
-						rroom=Subs.GetRandom(XmlMapRead.Rooms["room"]);
-
-						if (rroom.W>cell.W||rroom.H>cell.H){
-							continue;
+					}
+					else if (index=="A"){
+						int c=0;
+						MapXmlData rroom;
+						while (true){
+							++c;
+							if (c>100){
+								Debug.LogError("No fitting room in ["+cell.X+", "+cell.Y+"]");
+								break;
+							}
+							
+							rroom=Subs.GetRandom(XmlMapRead.Rooms["airlock"]);
+							
+							if (rroom.W>cell.W||rroom.H>cell.H){
+								continue;
+							}
+							
+							cell.RoomXmlData=rroom;
+							break;
 						}
-
-						cell.RoomXmlData=rroom;
-						break;
 					}
 				}
 			}

@@ -188,8 +188,7 @@ public class EntityMovementSub : MonoBehaviour
 
     bool CanMoveToTile(int x, int y)
     {
-        if (x < 0 || x > mapWidth - 1 ||
-            y < 0 || y > mapHeight - 1)
+		if (!Subs.insideArea(x,y,0,0,mapWidth,mapHeight))
         {
             //Debug.Log("Out of range, X: " + x + " Y: " + y);
             return false;

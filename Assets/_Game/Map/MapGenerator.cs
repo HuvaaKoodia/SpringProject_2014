@@ -104,7 +104,8 @@ public class MapGenerator : MonoBehaviour
 						tileobj=MapPrefabs.BasicEmpty;
 					break;
 					case TileObjData.Type.Door:
-						tileobj=MapPrefabs.BasicDoor;
+						//DEV:HAXtileobj=MapPrefabs.BasicDoor;
+						tileobj=MapPrefabs.BasicFloor;
 					break;
 				}
 
