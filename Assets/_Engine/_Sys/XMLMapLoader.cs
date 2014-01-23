@@ -138,8 +138,8 @@ public class XMLMapLoader : MonoBehaviour{
 		//int 
 		//	width=XML_Loader.getAttInt(node,"w"),
 		//	height=XML_Loader.getAttInt(node,"h");
-
-		var lines=Subs.Split(node.InnerText.Replace("\r","").Replace("\t",""),"\n");
+		var text = node.InnerText.Trim ();
+		var lines=Subs.Split(text.Replace("\r","").Replace("\t",""),"\n");
 		var indexes=Subs.Split(lines[0]," ");
 
 		int width=indexes.Length,height=lines.Length;
@@ -178,10 +178,11 @@ public class XMLMapLoader : MonoBehaviour{
 		map.SetEnemyAmount(min,max);
 
 		//load map
-		lines=Subs.Split(node.InnerText.Replace("\r","").Replace("\t",""),"\n");
 		int y=0;
 		foreach (var line in lines)
 		{
+			if (line==" ") continue;
+
 			indexes=Subs.Split(line," ");
 			for (int x=0;x<map.W;x++){
 				var ss=indexes[x];

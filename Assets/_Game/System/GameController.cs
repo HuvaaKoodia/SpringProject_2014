@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour {
 	
 	//public List<TileObjData> TileObjects{get;private set;}
 	//public List<TileMain> Tiles{get;private set;}
+	public string TestLoadShipName;
 	public bool UseTestMap;
 	public EngineController EngCont;
 	
@@ -37,13 +38,12 @@ public class GameController : MonoBehaviour {
 		if (UseTestMap)
 		{
 			var testfloor = MapGen.XmlMapRead.Rooms["pathfindingtest"][0];
-			var ship_floor0=ShipGen.GenerateShipObjectData();
 			MapGen.GenerateObjectDataMap(this,testfloor);
 			MapGen.GenerateSceneMap(this);
 		}
 		else
 		{
-			var ship_objdata=ShipGen.GenerateShipObjectData();
+			var ship_objdata=ShipGen.GenerateShipObjectData(TestLoadShipName);
 			MapGen.GenerateObjectDataMap(this,ship_objdata.Floors[0]);
 			MapGen.GenerateShipItems(this,ship_objdata);
 			MapGen.GenerateSceneMap(this);

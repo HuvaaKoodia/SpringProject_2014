@@ -10,10 +10,10 @@ public class ShipGenerator : MonoBehaviour
 	public XMLMapLoader XmlMapRead;
 	public PrefabStore MapPrefabs;
 
-	public ShipObjData GenerateShipObjectData()
+	public ShipObjData GenerateShipObjectData(string TestLoadShipName)
 	{
 		//randomize ship type
-		ShipMapXmlData ship_xml_data=Subs.GetRandom(XmlMapRead.Ships.Values);
+		ShipMapXmlData ship_xml_data=XmlMapRead.Ships[TestLoadShipName];
 		//DEV.temp just the first floor
 		MapXmlData CurrentFloor=ship_xml_data.Floors[0];
 
@@ -34,30 +34,37 @@ public class ShipGenerator : MonoBehaviour
 					//random room
 					var cell=new CellData("R");
 					cell.X=x;cell.Y=y;
-					cell.W=0;cell.H=0;
+					cell.W=1;cell.H=1;
 
 					Rooms.Add(cell);
 
 					//calculate max room size
-					int ww=0;
+
+					int ww=1;
 					while (true){
+						if (CurrentFloor.GetIndex(x+ww,y)=="R"){
+							break;
+						}
 						if (CurrentFloor.GetIndex(x+ww,y)=="T"){
 							cell.W+=1;
 							break;
 						}
-						if (CurrentFloor.GetIndex(x+ww,y).ToLower()=="r"){
+						if (CurrentFloor.GetIndex(x+ww,y)=="r"){
 							cell.W+=1;
 							++ww;
 						}
 						else break;
 					}
-					ww=0;
+					ww=1;
 					while (true){
+						if (CurrentFloor.GetIndex(x,y+ww)=="R"){
+							break;
+						}
 						if (CurrentFloor.GetIndex(x,y+ww)=="T"){
 							cell.H+=1;
 							break;
 						}
-						if (CurrentFloor.GetIndex(x,y+ww).ToLower()=="r"){
+						if (CurrentFloor.GetIndex(x,y+ww)=="r"){
 							cell.H+=1;
 							++ww;
 						}
@@ -140,7 +147,8 @@ public class ShipGenerator : MonoBehaviour
 		{
 			for(int y=0;y<h;y++)
 			{
-				if (NewFloorMap.map_data[x,y].ToLower()=="r")
+				var index=NewFloorMap.map_data[x,y].ToLower();
+				if (index=="r"||index=="t")
 					NewFloorMap.map_data[x,y]=",";
 			}
 		}
@@ -150,7 +158,8 @@ public class ShipGenerator : MonoBehaviour
 		{
 			for(int y=0;y<h;y++)
 			{
-				if (NewFloorMap.map_data[x,y].ToLower()=="c"){
+				var t_index=NewFloorMap.map_data[x,y].ToLower();
+				if (t_index=="c"||t_index=="d"){
 					int dir=0,xo=0,yo=0;
 					while (dir<4){
 						if (dir==0){ xo=1;yo=0; }
