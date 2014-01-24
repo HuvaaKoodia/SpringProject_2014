@@ -165,21 +165,21 @@ public class TestAI : MonoBehaviour
 		case 0:
             if (movement.MoveForward())
             {
-                Debug.Log("forward");
+                //Debug.Log("forward");
                 ap--;
                 HasUsedTurn = true;
                 foundMove = true;
             }
 			break;
 		case 1:
-            Debug.Log("right");
+            //Debug.Log("right");
             ap--;
             HasUsedTurn = true;
             foundMove = true;
 			movement.TurnRight();
 			break;
 		case 2:
-            Debug.Log("left");
+            //Debug.Log("left");
             ap--;
             HasUsedTurn = true;
             foundMove = true;

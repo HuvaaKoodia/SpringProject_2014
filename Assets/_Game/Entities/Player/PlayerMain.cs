@@ -3,8 +3,7 @@ using System.Collections;
 
 public class PlayerMain : EntityMain
 {
-    PlayerInputSub inputSub;
-	//public EntityMovementSub movement { get; private set; }
+	public PlayerInputSub inputSub;
 
 	public int ap;
 	const int apMax = 2;

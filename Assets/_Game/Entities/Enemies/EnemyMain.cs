@@ -37,7 +37,7 @@ public class EnemyMain : EntityMain {
 	{
 		ai.ResetAP();
         waitingForAttackPhase = false;
-        Debug.Log("new ai turn");
+        //Debug.Log("new ai turn");
 	}
 
     public void PlayMovementTurn()

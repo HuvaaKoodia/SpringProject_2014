@@ -6,11 +6,15 @@ public class PlayerInputSub : MonoBehaviour {
     PlayerMain player;
     EntityMovementSub playerMovement;
 
+	public bool targetingMode;
+
 	// Use this for initialization
 	void Start()
     {
         player = gameObject.GetComponent<PlayerMain>();
 		playerMovement = player.movement;
+
+		targetingMode = false;
 	}
 	
 	// Update is called once per frame
@@ -18,58 +22,96 @@ public class PlayerInputSub : MonoBehaviour {
     {
         if (playerMovement.currentMovement == MovementState.NotMoving)
         {
-            bool didMove = MovementInput();
-
-			if (didMove)
-			{
-				player.StartedMoving();
-				return;
-			}
-
-			MouseInput();
-        }
-	}
-
-    bool MovementInput()
-    {
-        float verticalAxis = Input.GetAxis("Vertical");
-        float horizontalAxis = Input.GetAxis("Horizontal");
-
-        if (verticalAxis > 0)
-        {
-            return playerMovement.MoveForward();
-        }
-        else if (verticalAxis < 0)
-        {
-            return playerMovement.MoveBackward();
-        }
-        else if (horizontalAxis > 0)
-        {
-            playerMovement.TurnRight();
-            return true;
-        }
-        else if (horizontalAxis < 0)
-        {
-            playerMovement.TurnLeft();
-            return true;
+            HotkeyInput();
         }
 
-        return false;
-    }
-
-	bool MouseInput()
-	{
-		if (Input.GetMouseButtonDown(0))
+		if (targetingMode)
 		{
-			player.Attack();
-			return true;
+			MouseInput();
 		}
-
-		return false;
 	}
 
     void HotkeyInput()
     {
-        //TODO
+		if (!targetingMode)
+		{
+	        float verticalAxis = Input.GetAxis("Vertical");
+	        float horizontalAxis = Input.GetAxis("Horizontal");
+
+	        if (verticalAxis > 0)
+	        {
+				MoveForwardInput();
+				return ;
+	        }
+	        else if (verticalAxis < 0)
+	        {
+				MoveBackwardInput();
+				return ;
+	        }
+	        else if (horizontalAxis > 0)
+	        {
+				TurnRightInput();
+	            return ;
+	        }
+	        else if (horizontalAxis < 0)
+	        {
+				TurnLeftInput();
+	            return;
+	        }
+		}
+
+		if (Input.GetButtonDown("Targeting mode"))
+		{
+			TargetingModeInput();
+		}
     }
+
+	void MouseInput()
+	{
+		if (Input.GetMouseButtonDown(0))
+		{
+			player.Attack();
+		}
+	}
+	
+	public void MoveForwardInput()
+	{
+		if (playerMovement.currentMovement != MovementState.NotMoving || targetingMode)
+			return;
+
+		if (playerMovement.MoveForward())
+			player.StartedMoving();
+	}
+
+	public void MoveBackwardInput()
+	{
+		if (playerMovement.currentMovement != MovementState.NotMoving ||!targetingMode)
+			return;
+		
+		if (playerMovement.MoveBackward())
+			player.StartedMoving();
+	}
+
+	public void TurnLeftInput()
+	{
+		if (playerMovement.currentMovement != MovementState.NotMoving || targetingMode)
+			return;
+		
+		playerMovement.TurnLeft();
+		player.StartedMoving();
+	}
+
+	public void TurnRightInput()
+	{
+		if (playerMovement.currentMovement != MovementState.NotMoving || targetingMode)
+			return;
+		
+		playerMovement.TurnRight();
+		player.StartedMoving();
+	}
+
+	public void TargetingModeInput()
+	{
+		targetingMode = !targetingMode;
+	}
 }

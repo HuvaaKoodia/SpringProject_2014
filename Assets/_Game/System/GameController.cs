@@ -26,6 +26,8 @@ public class GameController : MonoBehaviour {
 	public PlayerMain player;
 
 	public TurnState currentTurn = TurnState.StartPlayerTurn;
+
+	public MenuHandler menuHandler;
 	
 	// Use this for initialization
 	void Start()
@@ -48,6 +50,8 @@ public class GameController : MonoBehaviour {
 			MapGen.GenerateShipItems(this,ship_objdata);
 			MapGen.GenerateSceneMap(this);
 		}
+
+		menuHandler.player = player;
 	}
 
 	// Update is called once per frame

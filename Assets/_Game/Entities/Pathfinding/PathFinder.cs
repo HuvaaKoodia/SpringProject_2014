@@ -44,14 +44,16 @@ public static class PathFinder
         int startPos = start.X + (start.Y + start.Z * sy) * sx;
         brWorld[startPos] = true;
 
+		int numCheckedTiles = 0;
         while (openList.HasNext())
         {                
+			numCheckedTiles++;
             SearchNode current = openList.ExtractFirst();
             Console.WriteLine(current.position);
 
             if (current.position.GetDistanceSquared(end) < 2)
             {
-                current.position.GetDistanceSquared(end);
+				//Debug.Log("Checked " + numCheckedTiles + " tiles and found a route");
                 return new SearchNode(end, current.pathCost + 1, current.cost + 1, current);
             }
 
@@ -80,6 +82,7 @@ public static class PathFinder
 				}
             }
         }
+		//Debug.Log("Checked " + numCheckedTiles + " tiles and didn't find a route");
         return null; //no path found
     }
 
