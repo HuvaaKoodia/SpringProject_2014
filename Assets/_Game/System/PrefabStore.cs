@@ -18,6 +18,8 @@ public class PrefabStore : MonoBehaviour {
 	public GameObject 
 		Corridor_OneWall,
 		Corridor_TwoWall,
-		Corridor_Corner
+		Corridor_Corner,
+		Corridor_TCrossing,
+		Corridor_Floor
 		;
 }

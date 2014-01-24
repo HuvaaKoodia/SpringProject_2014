@@ -240,6 +240,7 @@ public class MapGenerator : MonoBehaviour
 			break;
 		case TileObjData.Type.Floor:
 		case TileObjData.Type.Corridor:
+			//gather adjacent corridor types
 			TileObjData.Type[] tile_types=new TileObjData.Type[9];
 
 			int xx=0,yy=0;
@@ -256,22 +257,121 @@ public class MapGenerator : MonoBehaviour
 				tile_types[i]=grid[x+xx,y+yy].TileType;
 			}
 
-			if (CheckTypeEqual(
-				obj=>{return obj==TileObjData.Type.Corridor||obj==TileObjData.Type.Floor;},
-				tile_types,0,4))
+			//test functions
+			System.Func<TileObjData.Type,bool> FloorOrCorridor=
+				obj=>{return obj==TileObjData.Type.Corridor||obj==TileObjData.Type.Floor;};
+			System.Func<TileObjData.Type,bool> Wall=
+				obj=>{return obj==TileObjData.Type.Wall;};
+
+			//check tile type
+			if (CheckTypeEqual(FloorOrCorridor,tile_types,0,1,2,3,4,5,6,7))
+			{
+				//Floor
+				tileobj=MapPrefabs.Corridor_Floor;
+			}
+			else if (CheckTypeEqual(FloorOrCorridor,tile_types,6,7,0,1,2))
+			{
+				//Wall 1
+				tileobj=MapPrefabs.Corridor_OneWall;
+			}
+			else if (CheckTypeEqual(FloorOrCorridor,tile_types,0,1,2,3,4))
+			{
+				//Wall 2
+				tileobj=MapPrefabs.Corridor_OneWall;
+				rotation=Quaternion.AngleAxis(-90,Vector3.up);
+			}
+			else if (CheckTypeEqual(FloorOrCorridor,tile_types,2,3,4,5,6))
+			{
+				//Wall 3
+				tileobj=MapPrefabs.Corridor_OneWall;
+				rotation=Quaternion.AngleAxis(180,Vector3.up);
+			}
+			else if (CheckTypeEqual(FloorOrCorridor,tile_types,4,5,6,7,0))
+			{
+				//Wall 4
+				tileobj=MapPrefabs.Corridor_OneWall;
+				rotation=Quaternion.AngleAxis(90,Vector3.up);
+			}
+			else if (CheckTypeEqual(FloorOrCorridor,tile_types,0,2))
+			{
+				//room corner 1
+				tileobj=MapPrefabs.Corridor_Corner;
+			}
+			else if (CheckTypeEqual(FloorOrCorridor,tile_types,2,4))
+			{
+				//room corner 2
+				tileobj=MapPrefabs.Corridor_Corner;
+				rotation=Quaternion.AngleAxis(-90,Vector3.up);
+			}
+			else if (CheckTypeEqual(FloorOrCorridor,tile_types,4,6))
+			{
+				//room corner 3
+				tileobj=MapPrefabs.Corridor_Corner;
+				rotation=Quaternion.AngleAxis(180,Vector3.up);
+			}
+			else if (CheckTypeEqual(FloorOrCorridor,tile_types,6,0))
+			{
+				//room corner 4
+				tileobj=MapPrefabs.Corridor_Corner;
+				rotation=Quaternion.AngleAxis(90,Vector3.up);
+			}
+			else if (CheckTypeEqual(FloorOrCorridor,tile_types,0,2,4))
+			{
+				//Tcrossing 1
+				tileobj=MapPrefabs.Corridor_TCrossing;
+			}
+			else if (CheckTypeEqual(FloorOrCorridor,tile_types,2,4,6))
+			{
+				//Tcrossing 2
+				tileobj=MapPrefabs.Corridor_TCrossing;
+				rotation=Quaternion.AngleAxis(-90,Vector3.up);
+			}
+			else if (CheckTypeEqual(FloorOrCorridor,tile_types,4,6,0))
+			{
+				//Tcrossing 3
+				tileobj=MapPrefabs.Corridor_TCrossing;
+				rotation=Quaternion.AngleAxis(180,Vector3.up);
+			}
+			else if (CheckTypeEqual(FloorOrCorridor,tile_types,6,0,2))
+			{
+				//Tcrossing 4
+				tileobj=MapPrefabs.Corridor_TCrossing;
+				rotation=Quaternion.AngleAxis(90,Vector3.up);
+			}
+			else if (CheckTypeEqual(FloorOrCorridor,tile_types,0,4))
 			{
 				//horizontal corridor
 				tileobj=MapPrefabs.Corridor_TwoWall;
-			}else
-			if (CheckTypeEqual(
-				obj=>{return obj==TileObjData.Type.Corridor||obj==TileObjData.Type.Floor;},
-				tile_types,2,6))
+			}
+			else if (CheckTypeEqual(FloorOrCorridor,tile_types,2,6))
 			{
 				//vertical corridor
 				tileobj=MapPrefabs.Corridor_TwoWall;
 				rotation=Quaternion.AngleAxis(90,Vector3.up);
 			}
-
+			else if (CheckTypeEqual(FloorOrCorridor,tile_types,0,2))
+			{
+				//corner 1
+				tileobj=MapPrefabs.Corridor_Corner;
+			}
+			else if (CheckTypeEqual(FloorOrCorridor,tile_types,2,4))
+			{
+				//corner 2
+				tileobj=MapPrefabs.Corridor_Corner;
+				rotation=Quaternion.AngleAxis(-90,Vector3.up);
+			}
+			else if (CheckTypeEqual(FloorOrCorridor,tile_types,4,6))
+			{
+				//corner 3
+				tileobj=MapPrefabs.Corridor_Corner;
+				rotation=Quaternion.AngleAxis(180,Vector3.up);
+			}
+			else if (CheckTypeEqual(FloorOrCorridor,tile_types,6,0))
+			{
+				//corner 4
+				tileobj=MapPrefabs.Corridor_Corner;
+				rotation=Quaternion.AngleAxis(90,Vector3.up);
+			}
 
 			break;
 		}
