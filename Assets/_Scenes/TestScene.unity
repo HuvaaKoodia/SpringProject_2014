@@ -149,8 +149,28 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 4e352aa64cbc07a40b14dd522f0506fb, type: 2}
       propertyPath: UseTestMap
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11400008, guid: 4e352aa64cbc07a40b14dd522f0506fb, type: 2}
+      propertyPath: Corridor_OneWall
+      value: 
+      objectReference: {fileID: 100002, guid: 4bf5d683ca4441247be27d973b6ac2bf, type: 2}
+    - target: {fileID: 11400008, guid: 4e352aa64cbc07a40b14dd522f0506fb, type: 2}
+      propertyPath: Corridor_TwoWall
+      value: 
+      objectReference: {fileID: 100002, guid: 706d613207f36b54a948f1e8c25681cd, type: 2}
+    - target: {fileID: 11400008, guid: 4e352aa64cbc07a40b14dd522f0506fb, type: 2}
+      propertyPath: Corridor_Corner
+      value: 
+      objectReference: {fileID: 100002, guid: 4eaf325f6a34dc94dbd96f04ef782c28, type: 2}
+    - target: {fileID: 11400008, guid: 4e352aa64cbc07a40b14dd522f0506fb, type: 2}
+      propertyPath: Corridor_TCrossing
+      value: 
+      objectReference: {fileID: 100002, guid: 85a6973b8fa36a04b9d81a05b47648c3, type: 2}
+    - target: {fileID: 11400008, guid: 4e352aa64cbc07a40b14dd522f0506fb, type: 2}
+      propertyPath: Corridor_Floor
+      value: 
+      objectReference: {fileID: 100000, guid: ae8a6d383c5a498418e2cdbbd988d970, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4e352aa64cbc07a40b14dd522f0506fb, type: 2}
   m_RootGameObject: {fileID: 682935425}
@@ -239,7 +259,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TestLoadShipName: blackone
-  UseTestMap: 1
+  UseTestMap: 0
   EngCont: {fileID: 456725370}
   MapGen: {fileID: 456725369}
   ShipGen: {fileID: 456725368}
@@ -530,7 +550,7 @@ Transform:
   m_GameObject: {fileID: 836136586}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 1, z: 3}
   m_Children: []
   m_Father: {fileID: 29139785}
 --- !u!1 &985648495
@@ -593,6 +613,11 @@ MonoBehaviour:
   BasicWall: {fileID: 100000, guid: 61a5c8fb07519b54a83facebee526035, type: 2}
   BasicEmpty: {fileID: 100000, guid: 744415d51b306c7439d0e4c0e97b3cbb, type: 2}
   BasicDoor: {fileID: 100000, guid: 57e21dd772560de408ee73b478f5c434, type: 2}
+  Corridor_OneWall: {fileID: 100002, guid: 4bf5d683ca4441247be27d973b6ac2bf, type: 2}
+  Corridor_TwoWall: {fileID: 100002, guid: 706d613207f36b54a948f1e8c25681cd, type: 2}
+  Corridor_Corner: {fileID: 100002, guid: 4eaf325f6a34dc94dbd96f04ef782c28, type: 2}
+  Corridor_TCrossing: {fileID: 100002, guid: 85a6973b8fa36a04b9d81a05b47648c3, type: 2}
+  Corridor_Floor: {fileID: 100000, guid: ae8a6d383c5a498418e2cdbbd988d970, type: 2}
 --- !u!1 &1441418369
 GameObject:
   m_ObjectHideFlags: 0
@@ -901,7 +926,6 @@ GameObject:
   - 20: {fileID: 1857280751}
   - 92: {fileID: 1857280750}
   - 124: {fileID: 1857280749}
-  - 81: {fileID: 1857280748}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -920,13 +944,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1441418370}
---- !u!81 &1857280748
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1857280746}
-  m_Enabled: 1
 --- !u!124 &1857280749
 Behaviour:
   m_ObjectHideFlags: 0
