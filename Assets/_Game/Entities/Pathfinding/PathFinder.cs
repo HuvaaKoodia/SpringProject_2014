@@ -41,7 +41,7 @@ public static class PathFinder
         int sy = world.GetLength(1);
         int sz = 1;
         bool[] brWorld = new bool[sx * sy * sz];
-        int startPos = start.Y + (start.X + start.Z * sy) * sx;
+        int startPos = start.X + (start.Y + start.Z * sy) * sx;
         brWorld[startPos] = true;
 
         while (openList.HasNext())
@@ -63,8 +63,9 @@ public static class PathFinder
                 if (tmp.X < 0 || tmp.X > sx || tmp.Y < 0 || tmp.Y > sy || tmp.Z < 0 || tmp.Z > 0)
                     continue;
 
-                int brWorldIdx = tmp.Y + (tmp.X + tmp.Z * sy) * sx;
+                int brWorldIdx = tmp.X + (tmp.Y + tmp.Z * sy) * sx;
 
+				try{
                 if (PositionIsFree(tmp, world, sx, sy, sz) && brWorld[brWorldIdx] == false)
                 {
                     brWorld[brWorldIdx] = true;
@@ -73,6 +74,10 @@ public static class PathFinder
                     SearchNode node = new SearchNode(tmp, cost, pathCost, current);
                     openList.Add(node);
                 }
+				}
+				catch{
+					Debug.Log("brWorldIdx out of range: " + brWorldIdx + " max is: " + brWorld.GetLength(0) + " X: " + tmp.X + " Y: " + tmp.Y);
+				}
             }
         }
         return null; //no path found
