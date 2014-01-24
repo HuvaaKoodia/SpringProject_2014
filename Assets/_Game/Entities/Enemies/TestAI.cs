@@ -58,6 +58,7 @@ public class TestAI : MonoBehaviour
 		else
 		{
             //parent.FinishedMoving(true);
+			//HasUsedTurn = true;
             RandomMovement();
 		}
 

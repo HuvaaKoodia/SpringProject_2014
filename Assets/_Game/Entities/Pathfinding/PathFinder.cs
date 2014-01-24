@@ -37,8 +37,8 @@ public static class PathFinder
         MinHeap openList = new MinHeap();            
         openList.Add(startNode);
 
-        int sx = world.GetLength(1);
-        int sy = world.GetLength(0);
+        int sx = world.GetLength(0);
+        int sy = world.GetLength(1);
         int sz = 1;
         bool[] brWorld = new bool[sx * sy * sz];
         int startPos = start.Y + (start.X + start.Z * sy) * sx;
@@ -80,8 +80,8 @@ public static class PathFinder
 
     private static bool PositionIsFree(Point3D position, TileMain[,] world, int mapWidth, int mapHeight, int mapDepth)
     {
-        if (position.X < 0 || position.X > mapHeight - 1 ||
-            position.Y < 0 || position.Y > mapWidth - 1 ||
+        if (position.X < 0 || position.X > mapWidth - 1 ||
+            position.Y < 0 || position.Y > mapHeight - 1 ||
             position.Z < 0 || position.Z > mapDepth - 1)
         {
             //Debug.Log("Out of range, X: " + x + " Y: " + y);
@@ -99,7 +99,7 @@ public static class PathFinder
 			Debug.Log(position + " is out of map range");
 		}
 
-        if (nextTile != null && nextTile.Data.TileType == TileObjData.Type.Floor)
+        if (nextTile != null && (nextTile.Data.TileType == TileObjData.Type.Floor || nextTile.Data.TileType == TileObjData.Type.Corridor))
             return true;
         else
             return false;

@@ -195,7 +195,8 @@ public class EntityMovementSub : MonoBehaviour
         }
 
         TileMain nextTile = tilemap[x, y];
-        if (nextTile.Data.TileType == TileObjData.Type.Floor && nextTile.entityOnTile == null)
+        if ((nextTile.Data.TileType == TileObjData.Type.Floor || nextTile.Data.TileType == TileObjData.Type.Corridor) 
+		    && nextTile.entityOnTile == null)
             return true;
         else
             return false;
@@ -317,24 +318,24 @@ public class EntityMovementSub : MonoBehaviour
 		int nextX = currentGridX, nextY = currentGridY;
 		if (targetRotationAngle == 0 || targetRotationAngle == 360)
 		{
-			nextY = 1;
+			nextY += 1;
 		}
 		else if (targetRotationAngle == 180)
 		{
-			nextY = -1;
+			nextY -= 1;
 		}
 		else if (targetRotationAngle == 90)
 		{
-			nextX = 1;
+			nextX += 1;
 		}
 		else
 		{
-			nextX = -1;
+			nextX -= 1;
 		}
 
 		if (nextX < 0 || nextX > tilemap.GetLength(0) || nextY < 0 || nextY > tilemap.GetLength(1))
 			return null;
 
-		return tilemap[nextX, nextX];
+		return tilemap[nextX, nextY];
 	}
 }
