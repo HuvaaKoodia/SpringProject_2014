@@ -92,7 +92,7 @@ public class EntityMovementSub : MonoBehaviour
 
                 currentMovement = MovementState.Moving;
 
-                targetPosition = tilemap[currentGridX, currentGridY].Data.TilePosition;
+                targetPosition = tilemap[currentGridX, currentGridY].transform.position;
 
                 tilemap[currentGridX, currentGridY].SetEntity(parentEntity);
                 return true;

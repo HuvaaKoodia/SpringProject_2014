@@ -29,7 +29,7 @@ public class TestAI : MonoBehaviour
     public SearchNode path;
 	// Use this for initialization
 	void Start () {
-        parent = transform.root.gameObject.GetComponent<EnemyMain>();
+        parent = gameObject.GetComponent<EnemyMain>();
 		movement = parent.movement;
 
         tilemap = GameObject.Find("SharedSystems").GetComponentInChildren<GameController>().TileMainMap;
