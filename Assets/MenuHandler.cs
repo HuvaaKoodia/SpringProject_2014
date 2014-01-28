@@ -6,13 +6,17 @@ public class MenuHandler : MonoBehaviour {
 	public GameController GC;
 	public PlayerMain player;
 
+    public UISprite targetingText;
+    public UILabel healthText;
 	// Use this for initialization
 	void Start () {
+       targetingText.gameObject.SetActive(player.inputSub.targetingMode);
+       healthText.text = player.Health.ToString();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+	    healthText.text = player.Health.ToString();
 	}
 
 	void MoveBackwardButtonPressed()
@@ -38,6 +42,7 @@ public class MenuHandler : MonoBehaviour {
 	void TargetingModeButtonPressed()
 	{
 		player.inputSub.TargetingModeInput();
+        targetingText.gameObject.SetActive(player.inputSub.targetingMode);
 	}
 
 	void EndTurnButtonPressed()

@@ -9,6 +9,7 @@ public class PlayerMain : EntityMain
 	public int ap;
 	const int apMax = 2;
 	const int movementCost = 1;
+    const int lootPickupCost = 1;
 	const int attackCost = 2;
 
 	// Use this for initialization
@@ -62,66 +63,47 @@ public class PlayerMain : EntityMain
 		ap -= movementCost;
 	}
 
-	public void Attack(EnemyMain enemy)
-	{
-		if (ap < attackCost)
-			return;
+    public void Attack(EnemyMain enemy)
+    {
+        if (ap < attackCost)
+            return;
 
-		enemy.TakeDamage(34);
-		ap -= attackCost;
-		
-		//Debug.Log("Shot enemy");
-		if (ap <= 0)
-		{
-			Debug.Log("AP run out after shot");
-			EndPlayerPhase();
-		}
-		else
-		{
-			StartTurn();
-		}
-			
-		
-	}
+        enemy.TakeDamage(34);
+        ap -= attackCost;
 
-	public void Attack()
-	{
-		if (ap < attackCost)
-			return;
+        //Debug.Log("Shot enemy");
+        if (ap <= 0)
+        {
+            Debug.Log("AP run out after shot");
+            EndPlayerPhase();
+        }
+        else
+        {
+            StartTurn();
+        }
 
-		Component target;
-		if (Subs.GetObjectMousePos(out target, 50, "Enemy"))
-	    {
-			if (target.tag == "AI")
-			{
-				EnemyMain enemy = target.gameObject.GetComponent<EnemyMain>();
-				enemy.TakeDamage(34);
-				ap -= attackCost;
 
-				//Debug.Log("Shot enemy");
-				if (ap <= 0)
-				{
-					Debug.Log("AP run out after shot");
-					EndPlayerPhase();
-				}
-				else
-				{
+    }
 
-					StartTurn();
-				}
-			}
-		}
-	}
+    public void PickupLoot(GameObject loot)
+    {
+        if (ap < lootPickupCost)
+            return;
+
+        Destroy(loot);
+
+        Health += 20;
+    }
 
 	public override void TakeDamage(int damage)
 	{
 		if (INVINCIBLE) return;
-		health -= damage;
+		Health -= damage;
 
-		if (health <= 0)
+        if (Health <= 0)
 		{
 			Debug.Log("Kuoli saatana");
-			health = 100;
+            Health = 100;
 			int[] pos = {1, 1};
 			movement.SetPositionInGrid(pos);
 		}

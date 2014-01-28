@@ -23,12 +23,9 @@ public class PlayerInputSub : MonoBehaviour {
         if (playerMovement.currentMovement == MovementState.NotMoving)
         {
             HotkeyInput();
-        }
 
-		if (targetingMode)
-		{
-			MouseInput();
-		}
+            MouseInput();
+        }
 	}
 
     void HotkeyInput()
@@ -71,14 +68,18 @@ public class PlayerInputSub : MonoBehaviour {
 		if (Input.GetMouseButtonDown(0))
 		{
 			Component target;
-			if (Subs.GetObjectMousePos(out target, 50, "Enemy"))
+            if (targetingMode && Subs.GetObjectMousePos(out target, 50, "Enemy"))
 			{
-				if (target.tag == "AI")
-				{
-					var enemy=target.GetComponent<EnemyMain>();
-					player.Attack(enemy);
-				}
+                EnemyMain enemy = target.GetComponent<EnemyMain>();
+                player.Attack(enemy);
+
+                return;
 			}
+
+            if (!targetingMode && Subs.GetObjectMousePos(out target, MapGenerator.TileSize.magnitude - 2, "Loot"))
+            {
+                player.PickupLoot(target.gameObject);
+            }
 		}
 	}
 	

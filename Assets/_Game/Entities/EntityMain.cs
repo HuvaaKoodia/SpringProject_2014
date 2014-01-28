@@ -6,11 +6,21 @@ public class EntityMain : MonoBehaviour
     public GameController GC;
     public EntityMovementSub movement;
 
-	public int health =  100;
+    private int health;
+    public int Health
+    {
+        get { return health; }
+        set
+        {
+            health = Mathf.Clamp(value, 0, maxHealth);
+        }
+    }
+    public int maxHealth = 100;
 
 	// Use this for initialization
 	public virtual void Awake ()
     {
+        health = maxHealth;
         GC = GameObject.Find("GameSystems").GetComponent<GameController>();
 	}
 	

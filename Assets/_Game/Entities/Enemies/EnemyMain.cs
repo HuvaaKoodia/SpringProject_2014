@@ -100,7 +100,7 @@ public class EnemyMain : EntityMain {
 
 	public override void TakeDamage(int damage)
 	{
-		health -= damage;
+		Health -= damage;
 
 		//temp
 		Color oldColor = renderer.material.color;
@@ -108,7 +108,7 @@ public class EnemyMain : EntityMain {
 
 		renderer.material.color = newColor;
 
-		if (health <= 0)
+        if (Health <= 0)
 		{
 			Die();
 		}
