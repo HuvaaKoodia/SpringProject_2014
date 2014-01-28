@@ -68,14 +68,33 @@ public class XMLMapLoader : MonoBehaviour{
 	
 	void read()
 	{
-		XML_Loader.checkFolder("Data/Maps");
-		var files=Directory.GetFiles("Data/Maps");
+		var path ="Data/Maps";
+		List<XmlDocument> DOX=new List<XmlDocument>();
+#if UNITY_ANDROID
+	//load from resources
+		var text_assets=Resources.LoadAll(path);
+
+		foreach (var ta in text_assets)
+		{
+			TextAsset asset=(TextAsset)ta;
+			var Xdoc=new XmlDocument();
+			Xdoc.Load(asset.text.ToStream());
+			DOX.Add(Xdoc);
+		}
+#else
+	//load from disc
+		XML_Loader.checkFolder(path);
+		var files=Directory.GetFiles(path);
 
 		foreach (var f in files)
 		{
 			var Xdoc=new XmlDocument();
 			Xdoc.Load(f);
-
+			DOX.Add(Xdoc);
+		}
+#endif
+		foreach (var Xdoc in DOX)
+		{
 			var root=Xdoc["Root"];
 
 			foreach (XmlNode node in root){

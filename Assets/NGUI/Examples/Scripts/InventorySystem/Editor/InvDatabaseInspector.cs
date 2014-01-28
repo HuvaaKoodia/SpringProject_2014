@@ -371,7 +371,7 @@ public class InvDatabaseInspector : Editor
 				{
 					NGUIEditorTools.RegisterUndo("Add Item Stat", db);
 					InvStat stat = new InvStat();
-					stat.id = InvStat.Identifier.Armor;
+					stat.id = InvStat.Identifier.Value;
 					item.stats.Add(stat);
 				}
 

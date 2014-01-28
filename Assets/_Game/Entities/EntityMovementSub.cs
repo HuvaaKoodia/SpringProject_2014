@@ -20,8 +20,8 @@ public class EntityMovementSub : MonoBehaviour
 	public int currentGridY;// { get; private set; }
     public MovementState currentMovement = MovementState.NotMoving;
 
-    float movementSpeed = 2;
-    float turnSpeed = 90;
+    public float movementSpeed = 2;
+    public float turnSpeed = 90;
 
     public Vector3 targetPosition;
     public int targetRotationAngle;

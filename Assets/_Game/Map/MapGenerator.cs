@@ -170,12 +170,13 @@ public class MapGenerator : MonoBehaviour
 			int l_amount=Subs.GetRandom(room.RoomXmlData.LootAmountMin,room.RoomXmlData.LootAmountMax);
 			
 			while (free_tiles.Count>0){
-				if (l_amount==0) break;
+				if (floor_amount_loot==0||l_amount==0) break;
 				
 				var tile=Subs.GetRandom(free_tiles);
 				free_tiles.Remove(tile);
 				
 				l_amount--;
+				floor_amount_loot--;
 				
 				tile.SetObj(TileObjData.Obj.Loot);
 			}

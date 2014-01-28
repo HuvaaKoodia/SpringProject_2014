@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 [ExecuteInEditMode]
 [AddComponentMenu("NGUI/Examples/Item Database")]
+
+
 public class InvDatabase : MonoBehaviour
 {
 	// Cached list of all available item databases

@@ -5,6 +5,7 @@ public class PlayerMain : EntityMain
 {
 	public PlayerInputSub inputSub;
 
+	public bool INVINCIBLE=false;
 	public int ap;
 	const int apMax = 2;
 	const int movementCost = 1;
@@ -61,6 +62,28 @@ public class PlayerMain : EntityMain
 		ap -= movementCost;
 	}
 
+	public void Attack(EnemyMain enemy)
+	{
+		if (ap < attackCost)
+			return;
+
+		enemy.TakeDamage(34);
+		ap -= attackCost;
+		
+		//Debug.Log("Shot enemy");
+		if (ap <= 0)
+		{
+			Debug.Log("AP run out after shot");
+			EndPlayerPhase();
+		}
+		else
+		{
+			StartTurn();
+		}
+			
+		
+	}
+
 	public void Attack()
 	{
 		if (ap < attackCost)
@@ -83,6 +106,7 @@ public class PlayerMain : EntityMain
 				}
 				else
 				{
+
 					StartTurn();
 				}
 			}
@@ -91,6 +115,7 @@ public class PlayerMain : EntityMain
 
 	public override void TakeDamage(int damage)
 	{
+		if (INVINCIBLE) return;
 		health -= damage;
 
 		if (health <= 0)

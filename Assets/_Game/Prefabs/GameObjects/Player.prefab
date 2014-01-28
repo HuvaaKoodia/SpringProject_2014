@@ -84,7 +84,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100004}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: .595038414, z: 0}
+  m_LocalPosition: {x: 0, y: .800000012, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400000}
@@ -179,6 +179,7 @@ MonoBehaviour:
   movement: {fileID: 11400002}
   health: 100
   inputSub: {fileID: 11400004}
+  INVINCIBLE: 1
   ap: 0
 --- !u!114 &11400002
 MonoBehaviour:
@@ -196,6 +197,8 @@ MonoBehaviour:
   currentGridX: 0
   currentGridY: 0
   currentMovement: 0
+  movementSpeed: 2
+  turnSpeed: 90
   targetPosition: {x: 0, y: 0, z: 0}
   targetRotationAngle: 0
 --- !u!114 &11400004

@@ -75,7 +75,8 @@ public class PlayerInputSub : MonoBehaviour {
 			{
 				if (target.tag == "AI")
 				{
-					player.Attack();
+					var enemy=target.GetComponent<EnemyMain>();
+					player.Attack(enemy);
 				}
 			}
 		}
