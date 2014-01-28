@@ -8,21 +8,16 @@ public class XMLDataLoader : XML_Loader
 {
     public static void Read(GameDatabase database)
     {
-        checkFolder("Data/Player");
-        var files = Directory.GetFiles("Data/Player");
-  
-        #region Player
+		var DOX=XML_Loader.GetAllXmlDocuments("Data");
 
-        foreach (var f in files)
+		foreach (var Xdoc in DOX)
         {
-            var Xdoc = new XmlDocument();
-            Xdoc.Load(f);
-
             var root = Xdoc["Root"];
 
             foreach (XmlNode node in root)
             {
-                if (node.Name == "Player")
+				#region Player
+				if (node.Name == "Player")
                 {
                     int playerHealth = XML_Loader.getAttInt(node, "Health");
 
@@ -32,26 +27,9 @@ public class XMLDataLoader : XML_Loader
                     PlayerXmlData newPlayer = new PlayerXmlData(playerHealth, movementSpeed, turnSpeed);
                     database.players.Add(newPlayer);
                 }
-            }
-        }
-
-        #endregion
-
-        #region Weapons
-        
-        checkFolder("Data/Weapons");
-        files = Directory.GetFiles("Data/Weapons");
-
-        foreach (var f in files)
-        {
-            var Xdoc = new XmlDocument();
-            Xdoc.Load(f);
-
-            var root = Xdoc["Root"];
-
-            foreach (XmlNode node in root)
-            {
-                if (node.Name == "Weapon")
+				#endregion
+				#region Weapon
+				if (node.Name == "Weapon")
                 {
                     string weaponType = XML_Loader.getAttStr(node, "Type");
                     string weaponName = XML_Loader.getAttStr(node, "Name");
@@ -63,23 +41,9 @@ public class XMLDataLoader : XML_Loader
                     WeaponXmlData newWeapon = new WeaponXmlData(weaponType, weaponName, damage, accuracy, heat);
                     database.weapons.Add(newWeapon);
                 }
-            }
-        }
-        #endregion
-
-        #region Enemies
-        checkFolder("Data/Enemies");
-        files = Directory.GetFiles("Data/Enemies");
-        foreach (var f in files)
-        {
-            var Xdoc = new XmlDocument();
-            Xdoc.Load(f);
-
-            var root = Xdoc["Root"];
-
-            foreach (XmlNode node in root)
-            {
-                if (node.Name == "Enemy")
+				#endregion
+				#region Enemy
+				if (node.Name == "Enemy")
                 {
                     string enemyType = XML_Loader.getAttStr(node, "Type");
 
@@ -89,22 +53,8 @@ public class XMLDataLoader : XML_Loader
                     EnemyXmlData newEnemy = new EnemyXmlData(enemyType, health, damage);
                     database.enemies.Add(newEnemy);
                 }
-            }
-        }
-        #endregion
-
-        #region Obstacles
-        checkFolder("Data/Obstacles");
-        files = Directory.GetFiles("Data/Obstacles");
-        foreach (var f in files)
-        {
-            var Xdoc = new XmlDocument();
-            Xdoc.Load(f);
-
-            var root = Xdoc["Root"];
-
-            foreach (XmlNode node in root)
-            {
+				#endregion
+				#region Obstacle
                 if (node.Name == "Obstacle")
                 {
                     string obstacleType = XML_Loader.getAttStr(node, "Type");
@@ -114,8 +64,8 @@ public class XMLDataLoader : XML_Loader
                     ObstacleXmlData newObstacle = new ObstacleXmlData(obstacleType, health);
                     database.obstacles.Add(newObstacle);
                 }
+				#endregion
             }
-        }
-        #endregion
+		}
     }
 }
