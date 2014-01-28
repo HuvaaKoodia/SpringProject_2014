@@ -42,6 +42,6 @@ public class MenuHandler : MonoBehaviour {
 
 	void EndTurnButtonPressed()
 	{
-		player.EndPlayerPhase();
+		player.inputSub.EndTurnInput();
 	}
 }
