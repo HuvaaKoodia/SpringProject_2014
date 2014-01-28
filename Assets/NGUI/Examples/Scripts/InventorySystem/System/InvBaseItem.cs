@@ -1,27 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-/// <summary>
-/// Inventory System -- Base Item. Note that it would be incredibly tedious to create all items by hand, Warcraft style.
-/// It's a lot more straightforward to create all items to be of the same level as far as stats go, then specify an
-/// appropriate level range for the item where it will appear. Effective item stats can then be calculated by lowering
-/// the base stats by an appropriate amount. Add a quality modifier, and you have additional variety, Terraria 1.1 style.
-/// </summary>
-
-[System.Serializable]
 public class InvBaseItem
 {
 	public enum Slot
 	{
-		None,			// First element MUST be 'None'
-		Weapon,			// All the following elements are yours to customize -- edit, add or remove as you desire
-		Shield,
-		Body,
-		Shoulders,
-		Bracers,
-		Boots,
-		Trinket,
-		_LastDoNotUse,	// Flash export doesn't support Enum.GetNames :(
+		None,
+		WeaponRightHand,
+		WeaponLeftHand,
+		WeaponRightShoulder,
+		WeaponLeftShoulder,
+		Utility1,
+		Utility2,
+		Utility3,
+		Utility4,
+		_Amount
 	}
 
 	/// <summary>
@@ -30,23 +23,9 @@ public class InvBaseItem
 	/// </summary>
 
 	public int id16;
-
-	/// <summary>
-	/// Name of this item.
-	/// </summary>
-
+	
 	public string name;
-
-	/// <summary>
-	/// This item's custom description.
-	/// </summary>
-
 	public string description;
-
-	/// <summary>
-	/// Slot that this item belongs to.
-	/// </summary>
-
 	public Slot slot = Slot.None;
 
 	/// <summary>

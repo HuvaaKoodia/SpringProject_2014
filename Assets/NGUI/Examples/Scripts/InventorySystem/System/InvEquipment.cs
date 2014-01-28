@@ -33,7 +33,7 @@ public class InvEquipment : MonoBehaviour
 			if (mItems == null)
 			{
 				// Automatically figure out how many item slots we need
-				int count = (int)InvBaseItem.Slot._LastDoNotUse;
+				int count = (int)InvBaseItem.Slot._Amount;
 				mItems = new InvGameItem[count];
 			}
 

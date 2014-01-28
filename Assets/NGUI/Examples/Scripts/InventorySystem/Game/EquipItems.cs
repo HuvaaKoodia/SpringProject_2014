@@ -1,9 +1,4 @@
-﻿//----------------------------------------------
-//            NGUI: Next-Gen UI kit
-// Copyright © 2011-2013 Tasharen Entertainment
-//----------------------------------------------
-
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Equip the specified items on the character when the script is started.
@@ -21,7 +16,7 @@ public class EquipItems : MonoBehaviour
 			InvEquipment eq = GetComponent<InvEquipment>();
 			if (eq == null) eq = gameObject.AddComponent<InvEquipment>();
 
-			int qualityLevels = (int)InvGameItem.Quality._LastDoNotUse;
+			int qualityLevels = (int)InvGameItem.Quality._Amount;
 
 			for (int i = 0, imax = itemIDs.Length; i < imax; ++i)
 			{

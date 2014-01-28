@@ -199,6 +199,22 @@ public class MapGenerator : MonoBehaviour
 		}
 
 		//add remaining enemies to corridors
+		if (floor_amount_loot>0){
+			GetFreeTilesOfType(GC,TileObjData.Type.Floor,free_tiles);
+			while (free_tiles.Count>0){
+				
+				if (floor_amount_loot==0) break;
+				
+				var tile=Subs.GetRandom(free_tiles);
+				free_tiles.Remove(tile);
+
+				floor_amount_loot--;
+				
+				tile.SetObj(TileObjData.Obj.Loot);
+			}
+		}
+
+		//add remaining loot to random rooms
 		if (floor_amount_enemies>0){
 			GetFreeTilesOfType(GC,TileObjData.Type.Corridor,free_tiles);
 			while (free_tiles.Count>0){
@@ -207,12 +223,15 @@ public class MapGenerator : MonoBehaviour
 				
 				var tile=Subs.GetRandom(free_tiles);
 				free_tiles.Remove(tile);
-
+				
 				floor_amount_enemies--;
 				
 				tile.SetObj(TileObjData.Obj.Enemy);
 			}
 		}
+
+
+
 		//add items to the item crates DEV.TODO
 	}
 

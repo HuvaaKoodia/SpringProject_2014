@@ -14,19 +14,10 @@ public class InvGameItem
 {
 	public enum Quality
 	{
-		Broken,
-		Cursed,
-		Damaged,
-		Worn,
-		Sturdy,			// Normal quality
-		Polished,
-		Improved,
-		Crafted,
+		Inferior,
+		Normal,
 		Superior,
-		Enchanted,
-		Epic,
-		Legendary,
-		_LastDoNotUse,	// Flash export doesn't support Enum.GetNames :(
+		_Amount,
 	}
 
 	// ID of the base item used to create this game item
@@ -36,7 +27,7 @@ public class InvGameItem
 	/// Item quality -- applies a penalty or bonus to all base stats.
 	/// </summary>
 
-	public Quality quality = Quality.Sturdy;
+	public Quality quality = Quality.Normal;
 
 	/// <summary>
 	/// Item's effective level.
@@ -97,18 +88,9 @@ public class InvGameItem
 
 			switch (quality)
 			{
-				case Quality.Cursed:	mult = -1f;		break;
-				case Quality.Broken:	mult = 0f;		break;
-				case Quality.Damaged:	mult = 0.25f;	break;
-				case Quality.Worn:		mult = 0.9f;	break;
-				case Quality.Sturdy:	mult = 1f;		break;
-				case Quality.Polished:	mult = 1.1f;	break;
-				case Quality.Improved:	mult = 1.25f;	break;
-				case Quality.Crafted:	mult = 1.5f;	break;
-				case Quality.Superior:	mult = 1.75f;	break;
-				case Quality.Enchanted:	mult = 2f;		break;
-				case Quality.Epic:		mult = 2.5f;	break;
-				case Quality.Legendary:	mult = 3f;		break;
+				case Quality.Inferior:	mult = .5f;	break;
+				case Quality.Normal:	mult = 1f;	break;
+				case Quality.Superior:	mult = 1.5f;break;
 			}
 
 			// Take item's level into account
@@ -132,33 +114,15 @@ public class InvGameItem
 
 			switch (quality)
 			{
-				case Quality.Cursed:	c = Color.red; break;
-				case Quality.Broken:	c = new Color(0.4f, 0.2f, 0.2f); break;
-				case Quality.Damaged:	c = new Color(0.4f, 0.4f, 0.4f); break;
-				case Quality.Worn:		c = new Color(0.7f, 0.7f, 0.7f); break;
-				case Quality.Sturdy:	c = new Color(1.0f, 1.0f, 1.0f); break;
-				case Quality.Polished:	c = NGUIMath.HexToColor(0xe0ffbeff); break;
-				case Quality.Improved:	c = NGUIMath.HexToColor(0x93d749ff); break;
-				case Quality.Crafted:	c = NGUIMath.HexToColor(0x4eff00ff); break;
-				case Quality.Superior:	c = NGUIMath.HexToColor(0x00baffff); break;
-				case Quality.Enchanted: c = NGUIMath.HexToColor(0x7376fdff); break;
-				case Quality.Epic:		c = NGUIMath.HexToColor(0x9600ffff); break;
-				case Quality.Legendary: c = NGUIMath.HexToColor(0xff9000ff); break;
+				case Quality.Inferior:	c = Color.red; break;
+				case Quality.Normal:	c = Color.blue; break;
+				case Quality.Superior:	c = Color.green; break;
 			}
 			return c;
 		}
 	}
 
-	/// <summary>
-	/// Create a game item with the specified ID.
-	/// </summary>
-
 	public InvGameItem (int id) { mBaseItemID = id; }
-
-	/// <summary>
-	/// Create a game item with the specified ID and base item.
-	/// </summary>
-
 	public InvGameItem (int id, InvBaseItem bi) { mBaseItemID = id; mBaseItem = bi; }
 
 	/// <summary>
@@ -205,7 +169,7 @@ public class InvGameItem
 			}
 
 			// This would be the place to determine if it's a weapon or armor and sort stats accordingly
-			stats.Sort(InvStat.CompareArmor);
+			stats.Sort(InvStat.CompareWeapon);
 		}
 		return stats;
 	}

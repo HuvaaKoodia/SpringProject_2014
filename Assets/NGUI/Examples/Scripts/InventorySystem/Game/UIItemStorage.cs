@@ -13,28 +13,11 @@ using System.Collections.Generic;
 [AddComponentMenu("NGUI/Examples/UI Item Storage")]
 public class UIItemStorage : MonoBehaviour
 {
-	/// <summary>
-	/// Maximum size of the container. Adding more items than this number will not work.
-	/// </summary>
 
 	public int maxItemCount = 8;
 
-	/// <summary>
-	/// Maximum number of rows to create.
-	/// </summary>
-
 	public int maxRows = 4;
-
-	/// <summary>
-	/// Maximum number of columns to create.
-	/// </summary>
-
 	public int maxColumns = 4;
-
-	/// <summary>
-	/// Template used to create inventory icons.
-	/// </summary>
-
 	public GameObject template;
 
 	/// <summary>
