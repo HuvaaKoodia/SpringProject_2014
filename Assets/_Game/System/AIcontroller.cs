@@ -53,7 +53,9 @@ public class AIcontroller
             else
             {
                 enemiesWontMoveAnymore = 0;
-                enemies[currentAttacker].PlayAttackingPhase();
+				if (enemies.Count != 0)
+                	enemies[currentAttacker].PlayAttackingPhase();
+
                 GC.ChangeTurn(TurnState.AIAttack);
             }
 		}

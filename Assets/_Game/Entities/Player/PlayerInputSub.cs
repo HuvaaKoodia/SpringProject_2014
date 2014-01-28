@@ -73,14 +73,17 @@ public class PlayerInputSub : MonoBehaviour {
 			Component target;
 			if (Subs.GetObjectMousePos(out target, 50, "Enemy"))
 			{
-				if (target.tag == "AI");
+				if (target.tag == "AI")
+				{
+					player.Attack();
+				}
 			}
 		}
 	}
 	
 	public void MoveForwardInput()
 	{
-		if (playerMovement.currentMovement != MovementState.NotMoving || targetingMode)
+		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving || targetingMode)
 			return;
 
 		if (playerMovement.MoveForward())
@@ -89,7 +92,7 @@ public class PlayerInputSub : MonoBehaviour {
 
 	public void MoveBackwardInput()
 	{
-		if (playerMovement.currentMovement != MovementState.NotMoving || targetingMode)
+		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving || targetingMode)
 			return;
 		
 		if (playerMovement.MoveBackward())
@@ -98,7 +101,7 @@ public class PlayerInputSub : MonoBehaviour {
 
 	public void TurnLeftInput()
 	{
-		if (playerMovement.currentMovement != MovementState.NotMoving || targetingMode)
+		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving || targetingMode)
 			return;
 		
 		playerMovement.TurnLeft();
@@ -107,7 +110,7 @@ public class PlayerInputSub : MonoBehaviour {
 
 	public void TurnRightInput()
 	{
-		if (playerMovement.currentMovement != MovementState.NotMoving || targetingMode)
+		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving || targetingMode)
 			return;
 		
 		playerMovement.TurnRight();
@@ -116,6 +119,17 @@ public class PlayerInputSub : MonoBehaviour {
 
 	public void TargetingModeInput()
 	{
+		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving)
+			return;
+
 		targetingMode = !targetingMode;
+	}
+
+	public void EndTurnInput()
+	{
+		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving)
+			return;
+
+		player.EndPlayerPhase();
 	}
 }

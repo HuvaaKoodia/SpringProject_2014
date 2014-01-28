@@ -39,8 +39,9 @@ public class GameController : MonoBehaviour {
 
 		if (UseTestMap)
 		{
-			var testfloor = SS.MGen.XmlMapRead.Rooms["pathfindingtest"][0];
-			SS.MGen.GenerateObjectDataMap(this,testfloor);
+			var ship_objdata=SS.SGen.GenerateShipObjectData("testship");
+			SS.MGen.GenerateObjectDataMap(this,ship_objdata.Floors[0]);
+			SS.MGen.GenerateShipItems(this,ship_objdata);
 			SS.MGen.GenerateSceneMap(this);
 		}
 		else
