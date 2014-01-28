@@ -189,29 +189,37 @@ public class XML_Loader{
 	/// </summary>
 	public static List<XmlDocument> GetAllXmlDocuments(string path){
 		List<XmlDocument> DOX=new List<XmlDocument>();
-		#if UNITY_ANDROID||UNITY_WEBPLAYER
-		//load from resources
-		var text_assets=Resources.LoadAll(path);
-		
-		foreach (var ta in text_assets)
-		{
-			TextAsset asset=(TextAsset)ta;
-			var Xdoc=new XmlDocument();
-			Xdoc.Load(asset.text.ToStream());
-			DOX.Add(Xdoc);
+
+		bool LoadFromDisc=true;
+
+#if UNITY_ANDROID||UNITY_WEBPLAYER
+		LoadFromDisc=false;
+#endif
+
+		if (LoadFromDisc){
+			//load from disc
+			XML_Loader.checkFolder(path);
+			var files=Directory.GetFiles(path);
+			
+			foreach (var f in files)
+			{
+				var Xdoc=new XmlDocument();
+				Xdoc.Load(f);
+				DOX.Add(Xdoc);
+			}
 		}
-		#else
-		//load from disc
-		XML_Loader.checkFolder(path);
-		var files=Directory.GetFiles(path);
-		
-		foreach (var f in files)
-		{
-			var Xdoc=new XmlDocument();
-			Xdoc.Load(f);
-			DOX.Add(Xdoc);
+		else{
+			//load from resources
+			var text_assets=Resources.LoadAll(path);
+			
+			foreach (var ta in text_assets)
+			{
+				TextAsset asset=(TextAsset)ta;
+				var Xdoc=new XmlDocument();
+				Xdoc.Load(asset.text.ToStream());
+				DOX.Add(Xdoc);
+			}
 		}
-		#endif
 		return DOX;
 	}
 }
