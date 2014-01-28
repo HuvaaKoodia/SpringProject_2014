@@ -66,7 +66,7 @@ public class PlayerMain : EntityMain
 			return;
 
 		Component target;
-		if (Subs.GetObjectMousePos(out target, 20, "Enemy"))
+		if (Subs.GetObjectMousePos(out target, 50, "Enemy"))
 	    {
 			if (target.tag == "AI")
 			{

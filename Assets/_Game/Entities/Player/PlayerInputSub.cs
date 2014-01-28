@@ -85,7 +85,7 @@ public class PlayerInputSub : MonoBehaviour {
 
 	public void MoveBackwardInput()
 	{
-		if (playerMovement.currentMovement != MovementState.NotMoving ||!targetingMode)
+		if (playerMovement.currentMovement != MovementState.NotMoving || targetingMode)
 			return;
 		
 		if (playerMovement.MoveBackward())
