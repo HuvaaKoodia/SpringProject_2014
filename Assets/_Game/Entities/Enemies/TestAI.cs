@@ -140,7 +140,7 @@ public class TestAI : MonoBehaviour
 		Point3D currentPos = new Point3D(movement.currentGridX, movement.currentGridY);
 		Point3D targetPos = new Point3D(player.movement.currentGridX, player.movement.currentGridY);
 
-		path = PathFinder.FindPath(tilemap, currentPos, targetPos);
+		path = PathFinder.FindPath(tilemap, currentPos, targetPos, 20);
 
 		if (path == null)
 			hasTarget = false;

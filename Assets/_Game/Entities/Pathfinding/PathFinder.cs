@@ -17,19 +17,20 @@ public static class PathFinder
 {                   
     /// <summary>
     /// Method that switfly finds the best path from start to end.
+	/// -1 maxChecks checks for all possible paths
     /// </summary>
     /// <returns>The starting breadcrumb traversable via .next to the end or null if there is no path</returns>        
-    public static SearchNode FindPath(TileMain[,] world, Point3D start, Point3D end)
+    public static SearchNode FindPath(TileMain[,] world, Point3D start, Point3D end, int maxChecks)
     {
         //note we just flip start and end here so you don't have to.            
-        return FindPathReversed(world, end, start); 
+		return FindPathReversed(world, end, start, maxChecks); 
     }        
 
     /// <summary>
     /// Method that switfly finds the best path from start to end. Doesn't reverse outcome
     /// </summary>
     /// <returns>The end breadcrump where each .next is a step back)</returns>
-    private static SearchNode FindPathReversed(TileMain[,] world, Point3D start, Point3D end)
+    private static SearchNode FindPathReversed(TileMain[,] world, Point3D start, Point3D end, int maxChecks)
     {
 
         SearchNode startNode = new SearchNode(start, 0, 0, null);
@@ -47,6 +48,11 @@ public static class PathFinder
 		int numCheckedTiles = 0;
         while (openList.HasNext())
         {                
+			if (numCheckedTiles == maxChecks)
+			{
+				break;
+			}
+
 			numCheckedTiles++;
             SearchNode current = openList.ExtractFirst();
             Console.WriteLine(current.position);

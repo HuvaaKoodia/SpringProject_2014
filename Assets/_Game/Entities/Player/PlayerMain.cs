@@ -41,7 +41,7 @@ public class PlayerMain : EntityMain
         inputSub.enabled = true;
     }
 
-    void EndPlayerPhase()
+    public void EndPlayerPhase()
     {
 		GC.ChangeTurn(TurnState.StartAITurn);
     }
@@ -66,7 +66,7 @@ public class PlayerMain : EntityMain
 			return;
 
 		Component target;
-		if (Subs.GetObjectMousePos(out target, 20, "Enemy"))
+		if (Subs.GetObjectMousePos(out target, 50, "Enemy"))
 	    {
 			if (target.tag == "AI")
 			{
