@@ -51,7 +51,8 @@ public class GameController : MonoBehaviour {
 			MapGen.GenerateSceneMap(this);
 		}
 
-		menuHandler.player = player;
+		if (menuHandler!=null)
+			menuHandler.player = player;
 	}
 
 	// Update is called once per frame
