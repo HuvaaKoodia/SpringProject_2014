@@ -3,12 +3,10 @@ using System.Collections;
 
 public class TestAI : MonoBehaviour
 {
-
     EnemyMain parent;
     EntityMovementSub movement;
-
+	
     TileMain[,] tilemap;
-
 	PlayerMain player;
 
 	bool hasTarget;
@@ -32,7 +30,7 @@ public class TestAI : MonoBehaviour
         parent = gameObject.GetComponent<EnemyMain>();
 		movement = parent.movement;
 
-        tilemap = GameObject.Find("SharedSystems").GetComponentInChildren<GameController>().TileMainMap;
+		tilemap = parent.GC.TileMainMap;
 
 		player = parent.GC.player;
 

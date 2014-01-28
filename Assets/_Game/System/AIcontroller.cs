@@ -99,4 +99,10 @@ public class AIcontroller
 
         return false;
     }
+
+	public void AddEnemy (EnemyMain enemy)
+	{
+		enemies.Add(enemy);
+		enemy.GC=GC;
+	}
 }

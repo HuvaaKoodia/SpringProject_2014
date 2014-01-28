@@ -12,7 +12,7 @@ public class EntityMovementSub : MonoBehaviour
     public Transform parentTransform;
 	public EntityMain parentEntity;
 
-    TileMain[,] tilemap;
+	TileMain[,] tilemap;
     int mapWidth;
     int mapHeight;
 
@@ -34,7 +34,7 @@ public class EntityMovementSub : MonoBehaviour
 		parentTransform = transform;
         parentEntity = transform.gameObject.GetComponent<EntityMain>();
 
-        tilemap = GameObject.Find("SharedSystems").GetComponentInChildren<GameController>().TileMainMap;
+		tilemap = parentEntity.GC.TileMainMap;
 
 		tilemap[currentGridX, currentGridY].SetEntity(parentTransform.GetComponent<EntityMain>());
         

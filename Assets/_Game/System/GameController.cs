@@ -15,14 +15,12 @@ public class GameController : MonoBehaviour {
 	public bool UseTestMap;
 	public EngineController EngCont;
 	
-	public MapGenerator MapGen;
-	public ShipGenerator ShipGen;
+	public SharedSystemsMain SS {get;private set;}
 	
 	public TileObjData[,] TileObjectMap;
 	public TileMain[,] TileMainMap;
 
 	public AIcontroller aiController;
-
 	public PlayerMain player;
 
 	public TurnState currentTurn = TurnState.StartPlayerTurn;
@@ -35,20 +33,22 @@ public class GameController : MonoBehaviour {
 		//TileObjects=new List<TileObjData>();
 		//Tiles=new List<TileMain>();
 
+		SS=GameObject.FindGameObjectWithTag("SharedSystems").GetComponent<SharedSystemsMain>();
+
 		aiController = new AIcontroller(this);
 
 		if (UseTestMap)
 		{
-			var testfloor = MapGen.XmlMapRead.Rooms["pathfindingtest"][0];
-			MapGen.GenerateObjectDataMap(this,testfloor);
-			MapGen.GenerateSceneMap(this);
+			var testfloor = SS.MGen.XmlMapRead.Rooms["pathfindingtest"][0];
+			SS.MGen.GenerateObjectDataMap(this,testfloor);
+			SS.MGen.GenerateSceneMap(this);
 		}
 		else
 		{
-			var ship_objdata=ShipGen.GenerateShipObjectData(TestLoadShipName);
-			MapGen.GenerateObjectDataMap(this,ship_objdata.Floors[0]);
-			MapGen.GenerateShipItems(this,ship_objdata);
-			MapGen.GenerateSceneMap(this);
+			var ship_objdata=SS.SGen.GenerateShipObjectData(TestLoadShipName);
+			SS.MGen.GenerateObjectDataMap(this,ship_objdata.Floors[0]);
+			SS.MGen.GenerateShipItems(this,ship_objdata);
+			SS.MGen.GenerateSceneMap(this);
 		}
 
 		if (menuHandler!=null)

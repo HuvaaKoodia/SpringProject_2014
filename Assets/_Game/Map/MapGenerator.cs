@@ -128,7 +128,7 @@ public class MapGenerator : MonoBehaviour
 						var newEnemy = GameObject.Instantiate(MapPrefabs.EnemyPrefab, tile_pos, Quaternion.identity) as EnemyMain;
 	                	newEnemy.name = "Enemy";
 						newEnemy.movement.SetPositionInGrid(entity_pos);
-	               		GC.aiController.enemies.Add(newEnemy);
+	               		GC.aiController.AddEnemy(newEnemy);
 						
 						newEnemy.transform.parent=enemy_container.transform;
 					break;
@@ -230,7 +230,9 @@ public class MapGenerator : MonoBehaviour
 			}
 		}
 	}
-
+	/// <summary>
+	/// Sets the correct graphics to tiles.
+	/// </summary>
 	void SetTileObject (int x,int y,TileMain tile,TileObjData[,] grid)
 	{
 		var rotation=Quaternion.identity;
