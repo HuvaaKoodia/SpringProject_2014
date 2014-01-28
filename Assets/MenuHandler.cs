@@ -39,4 +39,9 @@ public class MenuHandler : MonoBehaviour {
 	{
 		player.inputSub.TargetingModeInput();
 	}
+
+	void EndTurnButtonPressed()
+	{
+		player.EndPlayerPhase();
+	}
 }

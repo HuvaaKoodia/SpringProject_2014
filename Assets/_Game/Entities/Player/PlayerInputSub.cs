@@ -70,7 +70,11 @@ public class PlayerInputSub : MonoBehaviour {
 	{
 		if (Input.GetMouseButtonDown(0))
 		{
-			player.Attack();
+			Component target;
+			if (Subs.GetObjectMousePos(out target, 50, "Enemy"))
+			{
+				if (target.tag == "AI");
+			}
 		}
 	}
 	

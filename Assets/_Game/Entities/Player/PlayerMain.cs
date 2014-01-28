@@ -41,7 +41,7 @@ public class PlayerMain : EntityMain
         inputSub.enabled = true;
     }
 
-    void EndPlayerPhase()
+    public void EndPlayerPhase()
     {
 		GC.ChangeTurn(TurnState.StartAITurn);
     }

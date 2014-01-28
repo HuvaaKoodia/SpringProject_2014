@@ -129,11 +129,6 @@ public class EntityMovementSub : MonoBehaviour
             else if (targetRotationAngle > 360)
                 targetRotationAngle -= 360;
         }
-        //else
-        //{
-        //    Debug.Log("jännä finish kusi hommat");
-        //    FinishMoving();
-        //}
     }
 
     void Move()
