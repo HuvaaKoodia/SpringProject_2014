@@ -10,14 +10,16 @@ public class MenuHandler : MonoBehaviour {
 
     public UISprite targetingText;
 	public UISprite turnText;
+	public UISprite engageButton;
+
     public UILabel healthText;
 
 	public UIPanel targetMarkPanel;
 
 	// Use this for initialization
 	void Start () {
-       targetingText.gameObject.SetActive(player.targetingMode);
-       healthText.text = player.Health.ToString();
+		CheckTargetingModePanel();
+       	healthText.text = player.Health.ToString();
 	}
 	
 	// Update is called once per frame
@@ -56,8 +58,14 @@ public class MenuHandler : MonoBehaviour {
 		player.inputSub.EndTurnInput();
 	}
 
+	void EngageCombatPressed()
+	{
+		player.inputSub.EngageCombatInput();
+	}
+
 	public void CheckTargetingModePanel()
 	{
 		targetingText.gameObject.SetActive(player.targetingMode);
+		engageButton.gameObject.SetActive(player.targetingMode);
 	}
 }

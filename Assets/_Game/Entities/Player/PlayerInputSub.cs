@@ -57,6 +57,10 @@ public class PlayerInputSub : MonoBehaviour {
 		{
 			TargetingModeInput();
 		}
+		else if (Input.GetButtonDown("Engage Combat"))
+		{
+			EngageCombatInput();
+		}
     }
 
 	void MouseInput()
@@ -67,7 +71,7 @@ public class PlayerInputSub : MonoBehaviour {
 			if (player.targetingMode && Subs.GetObjectMousePos(out target, 20, "Enemy"))
 			{
                 EnemyMain enemy = target.GetComponent<EnemyMain>();
-                player.Attack(enemy);
+				player.gun.ToggleTarget(enemy);
 
                 return;
 			}
@@ -124,6 +128,14 @@ public class PlayerInputSub : MonoBehaviour {
 			player.EndTargetingMode();
 		else
 			player.StartTargetingMode();
+	}
+
+	public void EngageCombatInput()
+	{
+		if (this.enabled == false || !player.targetingMode)
+			return;
+
+		player.Attack();
 	}
 
 	public void EndTurnInput()

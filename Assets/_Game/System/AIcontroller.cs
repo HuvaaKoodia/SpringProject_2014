@@ -120,15 +120,15 @@ public class AIcontroller
 		foreach(EnemyMain enemy in enemies)
 		{
 			enemy.currentTargetState = TargetState.NotInSight;
-
+			Vector3 adjustedEnemyPos = enemy.transform.position + Vector3.up*0.6f;
 			//check if enemy can be seen
-			Vector3 enemyPosInScreen = Camera.main.WorldToScreenPoint(enemy.transform.position + Vector3.up*0.6f);
+			Vector3 enemyPosInScreen = Camera.main.WorldToScreenPoint(adjustedEnemyPos);
 			if (GeometryUtility.TestPlanesAABB(planes, enemy.collider.bounds))
 			{
-				Ray ray = new Ray(gunPosition, enemy.transform.position - gunPosition);
+				Ray ray = new Ray(gunPosition, adjustedEnemyPos - gunPosition);
 				RaycastHit hitInfo;
 
-				Debug.DrawLine(ray.origin, ray.origin + ray.direction*20, Color.red, 2.0f);
+				Debug.DrawRay(ray.origin, ray.direction * 20, Color.red, 2.0f);
 				if (Physics.Raycast(ray, out hitInfo, 20))
 				{
 					if (hitInfo.transform.parent.transform == enemy.transform)

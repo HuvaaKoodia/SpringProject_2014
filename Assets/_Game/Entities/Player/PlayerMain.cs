@@ -8,6 +8,9 @@ public class PlayerMain : EntityMain
 	public bool targetingMode { get; private set; }
 
 	public bool INVINCIBLE=false;
+
+	public WeaponMain gun;
+
 	public int ap;
 	const int apMax = 2;
 	const int movementCost = 1;
@@ -68,27 +71,20 @@ public class PlayerMain : EntityMain
 		ap -= movementCost;
 	}
 
-    public void Attack(EnemyMain enemy)
+    public void Attack()
     {
         if (ap < attackCost)
             return;
 
-		enemy.TakeDamage(50);
-        //ap -= attackCost;
+		if (gun.HasTargets)
+		{
+			gun.Shoot();
+			ap -= attackCost;
+		}
 
-        //Debug.Log("Shot enemy");
-        if (ap <= 0)
-        {
-            Debug.Log("AP run out after shot");
-            EndPlayerPhase();
-        }
-        else
-        {
-            StartTurn();
-        }
-
-
-    }
+		if (ap == 0)
+			EndPlayerPhase();
+	}
 
     public void PickupLoot(GameObject loot)
     {
@@ -103,6 +99,7 @@ public class PlayerMain : EntityMain
 	public override void TakeDamage(int damage)
 	{
 		if (INVINCIBLE) return;
+
 		Health -= damage;
 
         if (Health <= 0)
@@ -124,6 +121,7 @@ public class PlayerMain : EntityMain
 	public void EndTargetingMode()
 	{
 		targetingMode = false;
+		gun.ClearTargets();
 		GC.aiController.UntargetAllEnemies();
 		GC.menuHandler.CheckTargetingModePanel();
 	}
