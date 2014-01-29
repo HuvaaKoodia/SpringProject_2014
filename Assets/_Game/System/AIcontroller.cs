@@ -131,7 +131,7 @@ public class AIcontroller
 				Debug.DrawRay(ray.origin, ray.direction * 20, Color.red, 2.0f);
 				if (Physics.Raycast(ray, out hitInfo, 20))
 				{
-					if (hitInfo.transform.parent.transform == enemy.transform)
+					if (hitInfo.transform == enemy.transform)
 					{
 						enemy.InTargetSight(enemyPosInScreen);
 					}
