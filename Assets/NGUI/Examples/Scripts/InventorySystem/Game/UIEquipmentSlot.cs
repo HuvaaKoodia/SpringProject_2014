@@ -2,9 +2,24 @@ using UnityEngine;
 
 public class UIEquipmentSlot : UIItemSlot
 {
-	public InvEquipment equipment;
-	public InvBaseItem.Slot slot;
+	public enum Slot
+	{
+		None=-1,
+		WeaponRightHand,
+		WeaponLeftHand,
+		WeaponRightShoulder,
+		WeaponLeftShoulder,
+		Utility1,
+		Utility2,
+		Utility3,
+		Utility4,
 
+		_Amount
+	}
+
+	public InvEquipmentStorage equipment;
+	public Slot slot;
+	
 	override protected InvGameItem observedItem
 	{
 		get
@@ -19,6 +34,7 @@ public class UIEquipmentSlot : UIItemSlot
 
 	override protected InvGameItem Replace (InvGameItem item)
 	{
+		//quick hax
 		return (equipment != null) ? equipment.Replace(slot, item) : item;
 	}
 }

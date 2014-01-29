@@ -1,17 +1,5 @@
-//----------------------------------------------
-//            NGUI: Next-Gen UI kit
-// Copyright © 2011-2013 Tasharen Entertainment
-//----------------------------------------------
-
 using UnityEngine;
 using System.Collections.Generic;
-
-/// <summary>
-/// Abstract UI component observing an item somewhere in the inventory. This item can be equipped on
-/// the character, it can be lying in a chest, or it can be hot-linked by another player. Either way,
-/// all the common behavior is in this class. What the observed item actually is...
-/// that's up to the derived class to determine.
-/// </summary>
 
 public abstract class UIItemSlot : MonoBehaviour
 {
@@ -52,7 +40,7 @@ public abstract class UIItemSlot : MonoBehaviour
 			{
 				string t = "[" + NGUIText.EncodeColor(item.color) + "]" + item.name + "[-]\n";
 
-				t += "[AFAFAF]Level " + item.itemLevel + " " + bi.slot;
+				t += "[AFAFAF]Level " + item.itemLevel + " " + bi.type;
 
 				List<InvStat> stats = item.CalculateStats();
 

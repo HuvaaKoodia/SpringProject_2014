@@ -170,7 +170,7 @@ public class InvDatabaseInspector : Editor
 				{
 					bi.name = "Copy of " + item.name;
 					bi.description = item.description;
-					bi.slot = item.slot;
+					bi.type = item.type;
 					bi.color = item.color;
 					bi.iconName = item.iconName;
 					bi.attachment = item.attachment;
@@ -238,7 +238,7 @@ public class InvDatabaseInspector : Editor
 				GUILayout.EndHorizontal();
 
 				string itemDesc = GUILayout.TextArea(item.description, 200, GUILayout.Height(100f));
-				InvBaseItem.Slot slot = (InvBaseItem.Slot)EditorGUILayout.EnumPopup("Slot", item.slot);
+				InvBaseItem.Type type = (InvBaseItem.Type)EditorGUILayout.EnumPopup("Type",item.type);
 				string iconName = "";
 				float iconSize = 64f;
 				bool drawIcon = false;
@@ -377,7 +377,7 @@ public class InvDatabaseInspector : Editor
 
 				// Save all values
 				if (!itemDesc.Equals(item.description) ||
-					slot	!= item.slot ||
+					type	!= item.type ||
 					go		!= item.attachment ||
 					color	!= item.color ||
 					min		!= item.minItemLevel ||
@@ -386,7 +386,7 @@ public class InvDatabaseInspector : Editor
 				{
 					NGUIEditorTools.RegisterUndo("Item Properties", db);
 					item.description = itemDesc;
-					item.slot = slot;
+					item.type = type;
 					item.attachment = go;
 					item.color = color;
 					item.iconName = iconName;

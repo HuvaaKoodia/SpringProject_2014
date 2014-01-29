@@ -4,17 +4,12 @@ using System.Collections.Generic;
 [System.Serializable]
 public class InvBaseItem
 {
-	public enum Slot
+	public enum Type
 	{
 		None,
-		WeaponRightHand,
-		WeaponLeftHand,
-		WeaponRightShoulder,
-		WeaponLeftShoulder,
-		Utility1,
-		Utility2,
-		Utility3,
-		Utility4,
+		WeaponHand,
+		WeaponShoulder,
+		Utility,
 		_Amount
 	}
 
@@ -27,7 +22,7 @@ public class InvBaseItem
 	
 	public string name;
 	public string description;
-	public Slot slot = Slot.None;
+	public Type type = Type.None;
 
 	/// <summary>
 	/// Minimum and maximum allowed level for this item. When random loot gets generated,

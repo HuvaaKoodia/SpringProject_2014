@@ -1,24 +1,14 @@
-﻿//----------------------------------------------
-//            NGUI: Next-Gen UI kit
-// Copyright © 2011-2013 Tasharen Entertainment
-//----------------------------------------------
-
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 
 /// <summary>
-/// Storage container that stores items.
+/// Creates item storage slots in Hud based on a InvItemStorage.
 /// </summary>
-
-[AddComponentMenu("NGUI/Examples/UI Item Storage")]
 public class UIItemStorage : MonoBehaviour
 {
+	public InvItemStorage ItemStorage;
 
-	public int maxItemCount = 8;
-
-	public int maxRows = 4;
-	public int maxColumns = 4;
-	public GameObject template;
+	public GameObject SlotPrefab;
 
 	/// <summary>
 	/// Background widget to scale after the item slots have been created.
@@ -27,7 +17,7 @@ public class UIItemStorage : MonoBehaviour
 	public UIWidget background;
 
 	/// <summary>
-	/// Spacing between icons.
+	/// Spacing between slots.
 	/// </summary>
 
 	public int spacing = 128;
@@ -38,52 +28,22 @@ public class UIItemStorage : MonoBehaviour
 
 	public int padding = 10;
 
-	List<InvGameItem> mItems = new List<InvGameItem>();
-
-	/// <summary>
-	/// List of items in the container.
-	/// </summary>
-
-	public List<InvGameItem> items { get { while (mItems.Count < maxItemCount) mItems.Add(null); return mItems; } }
-
-	/// <summary>
-	/// Convenience function that returns an item at the specified slot.
-	/// </summary>
-
-	public InvGameItem GetItem (int slot) { return (slot < items.Count) ? mItems[slot] : null; }
-
-	/// <summary>
-	/// Replace an item in the container with the specified one.
-	/// </summary>
-	/// <returns>An item that was replaced.</returns>
-
-	public InvGameItem Replace (int slot, InvGameItem item)
-	{
-		if (slot < maxItemCount)
-		{
-			InvGameItem prev = items[slot];
-			mItems[slot] = item;
-			return prev;
-		}
-		return item;
-	}
-
 	/// <summary>
 	/// Initialize the container and create an appropriate number of UI slots.
 	/// </summary>
 
 	void Start ()
 	{
-		if (template != null)
+		if (SlotPrefab != null)
 		{
 			int count = 0;
 			Bounds b = new Bounds();
 
-			for (int y = 0; y < maxRows; ++y)
+			for (int y = 0; y < ItemStorage.maxRows; ++y)
 			{
-				for (int x = 0; x < maxColumns; ++x)
+				for (int x = 0; x < ItemStorage.maxColumns; ++x)
 				{
-					GameObject go = NGUITools.AddChild(gameObject, template);
+					GameObject go = NGUITools.AddChild(gameObject, SlotPrefab);
 					Transform t = go.transform;
 					t.localPosition = new Vector3(padding + (x + 0.5f) * spacing, -padding - (y + 0.5f) * spacing, 0f);
 
@@ -91,13 +51,13 @@ public class UIItemStorage : MonoBehaviour
 					
 					if (slot != null)
 					{
-						slot.storage = this;
+						slot.storage = ItemStorage;
 						slot.slot = count;
 					}
 
 					b.Encapsulate(new Vector3(padding * 2f + (x + 1) * spacing, -padding * 2f - (y + 1) * spacing, 0f));
 
-					if (++count >= maxItemCount)
+					if (++count >= ItemStorage.maxItemCount)
 					{
 						if (background != null)
 						{

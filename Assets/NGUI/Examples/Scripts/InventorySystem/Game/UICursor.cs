@@ -104,6 +104,8 @@ public class UICursor : MonoBehaviour
 			mInstance.mSprite.atlas = atlas;
 			mInstance.mSprite.spriteName = sprite;
 			mInstance.mSprite.MakePixelPerfect();
+			mInstance.mSprite.width=(int)(mInstance.mSprite.width*0.9f);
+			mInstance.mSprite.height=(int)(mInstance.mSprite.height*0.9f);
 			mInstance.Update();
 		}
 	}

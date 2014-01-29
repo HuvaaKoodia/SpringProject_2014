@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class EquipRandomItem : MonoBehaviour
 {
-	public InvEquipment equipment;
+	public InvEquipmentStorage equipment;
 
 	void OnClick()
 	{

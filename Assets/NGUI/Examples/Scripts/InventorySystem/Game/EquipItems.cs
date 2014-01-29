@@ -4,7 +4,6 @@
 /// Equip the specified items on the character when the script is started.
 /// </summary>
 
-[AddComponentMenu("NGUI/Examples/Equip Items")]
 public class EquipItems : MonoBehaviour
 {
 	public int[] itemIDs;
@@ -13,8 +12,8 @@ public class EquipItems : MonoBehaviour
 	{
 		if (itemIDs != null && itemIDs.Length > 0)
 		{
-			InvEquipment eq = GetComponent<InvEquipment>();
-			if (eq == null) eq = gameObject.AddComponent<InvEquipment>();
+			InvEquipmentStorage eq = GetComponent<InvEquipmentStorage>();
+			if (eq == null) eq = gameObject.AddComponent<InvEquipmentStorage>();
 
 			int qualityLevels = (int)InvGameItem.Quality._Amount;
 

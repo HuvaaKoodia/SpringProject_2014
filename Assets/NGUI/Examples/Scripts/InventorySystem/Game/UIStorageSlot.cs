@@ -12,7 +12,7 @@ using UnityEngine;
 [AddComponentMenu("NGUI/Examples/UI Storage Slot")]
 public class UIStorageSlot : UIItemSlot
 {
-	public UIItemStorage storage;
+	public InvItemStorage storage;
 	public int slot = 0;
 
 	override protected InvGameItem observedItem

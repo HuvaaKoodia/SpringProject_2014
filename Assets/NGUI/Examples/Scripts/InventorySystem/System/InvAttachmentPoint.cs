@@ -7,7 +7,7 @@ public class InvAttachmentPoint : MonoBehaviour
 	/// Item slot that this attachment point covers.
 	/// </summary>
 
-	public InvBaseItem.Slot slot;
+	public InvBaseItem.Type slot;
 
 	GameObject mPrefab;
 	GameObject mChild;
