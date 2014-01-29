@@ -7,6 +7,7 @@ public class MenuHandler : MonoBehaviour {
 	public PlayerMain player;
 
     public UISprite targetingText;
+	public UISprite turnText;
     public UILabel healthText;
 	// Use this for initialization
 	void Start () {
@@ -17,6 +18,7 @@ public class MenuHandler : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	    healthText.text = player.Health.ToString();
+		turnText.gameObject.SetActive(GC.currentTurn == TurnState.PlayerTurn);
 	}
 
 	void MoveBackwardButtonPressed()
