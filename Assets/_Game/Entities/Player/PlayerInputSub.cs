@@ -6,15 +6,11 @@ public class PlayerInputSub : MonoBehaviour {
     PlayerMain player;
     EntityMovementSub playerMovement;
 
-	public bool targetingMode;
-
 	// Use this for initialization
 	void Start()
     {
         player = gameObject.GetComponent<PlayerMain>();
 		playerMovement = player.movement;
-
-		targetingMode = false;
 	}
 	
 	// Update is called once per frame
@@ -30,7 +26,7 @@ public class PlayerInputSub : MonoBehaviour {
 
     void HotkeyInput()
     {
-		if (!targetingMode)
+		if (!player.targetingMode)
 		{
 	        float verticalAxis = Input.GetAxis("Vertical");
 	        float horizontalAxis = Input.GetAxis("Horizontal");
@@ -68,7 +64,7 @@ public class PlayerInputSub : MonoBehaviour {
 		if (Input.GetMouseButtonDown(0))
 		{
 			Component target;
-            if (targetingMode && Subs.GetObjectMousePos(out target, 50, "Enemy"))
+			if (player.targetingMode && Subs.GetObjectMousePos(out target, 20, "Enemy"))
 			{
                 EnemyMain enemy = target.GetComponent<EnemyMain>();
                 player.Attack(enemy);
@@ -76,7 +72,7 @@ public class PlayerInputSub : MonoBehaviour {
                 return;
 			}
 
-            if (!targetingMode && Subs.GetObjectMousePos(out target, MapGenerator.TileSize.magnitude - 2, "Loot"))
+			if (!player.targetingMode && Subs.GetObjectMousePos(out target, MapGenerator.TileSize.magnitude - 2, "Loot"))
             {
                 player.PickupLoot(target.gameObject);
             }
@@ -85,7 +81,7 @@ public class PlayerInputSub : MonoBehaviour {
 	
 	public void MoveForwardInput()
 	{
-		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving || targetingMode)
+		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving || player.targetingMode)
 			return;
 
 		if (playerMovement.MoveForward())
@@ -94,7 +90,7 @@ public class PlayerInputSub : MonoBehaviour {
 
 	public void MoveBackwardInput()
 	{
-		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving || targetingMode)
+		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving || player.targetingMode)
 			return;
 		
 		if (playerMovement.MoveBackward())
@@ -103,7 +99,7 @@ public class PlayerInputSub : MonoBehaviour {
 
 	public void TurnLeftInput()
 	{
-		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving || targetingMode)
+		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving || player.targetingMode)
 			return;
 		
 		playerMovement.TurnLeft();
@@ -112,7 +108,7 @@ public class PlayerInputSub : MonoBehaviour {
 
 	public void TurnRightInput()
 	{
-		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving || targetingMode)
+		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving || player.targetingMode)
 			return;
 		
 		playerMovement.TurnRight();
@@ -124,7 +120,10 @@ public class PlayerInputSub : MonoBehaviour {
 		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving)
 			return;
 
-		targetingMode = !targetingMode;
+		if (player.targetingMode)
+			player.EndTargetingMode();
+		else
+			player.StartTargetingMode();
 	}
 
 	public void EndTurnInput()

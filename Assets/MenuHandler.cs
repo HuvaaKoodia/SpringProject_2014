@@ -6,12 +6,17 @@ public class MenuHandler : MonoBehaviour {
 	public GameController GC;
 	public PlayerMain player;
 
+	public Camera NGUICamera;
+
     public UISprite targetingText;
 	public UISprite turnText;
     public UILabel healthText;
+
+	public UIPanel targetMarkPanel;
+
 	// Use this for initialization
 	void Start () {
-       targetingText.gameObject.SetActive(player.inputSub.targetingMode);
+       targetingText.gameObject.SetActive(player.targetingMode);
        healthText.text = player.Health.ToString();
 	}
 	
@@ -44,11 +49,15 @@ public class MenuHandler : MonoBehaviour {
 	void TargetingModeButtonPressed()
 	{
 		player.inputSub.TargetingModeInput();
-        targetingText.gameObject.SetActive(player.inputSub.targetingMode);
 	}
 
 	void EndTurnButtonPressed()
 	{
 		player.inputSub.EndTurnInput();
+	}
+
+	public void CheckTargetingModePanel()
+	{
+		targetingText.gameObject.SetActive(player.targetingMode);
 	}
 }

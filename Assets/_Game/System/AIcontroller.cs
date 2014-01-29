@@ -68,6 +68,7 @@ public class AIcontroller
 		{
 			foreach (EnemyMain enemy in enemies)
 			{
+				UntargetEnemy(enemy);
 				enemy.StartEnemyTurn();
 			}
 			GC.ChangeTurn(TurnState.AIMovement);
@@ -106,5 +107,49 @@ public class AIcontroller
 	{
 		enemies.Add(enemy);
 		enemy.GC=GC;
+	}
+
+	public void CheckTargetableEnemies(Vector3 gunPosition)
+	{
+		int border = 20;
+		int screenWidth = (int)Camera.main.pixelWidth;
+		int screenHeight = (int)Camera.main.pixelHeight;
+
+		Plane[] planes;
+		planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
+		foreach(EnemyMain enemy in enemies)
+		{
+			enemy.currentTargetState = TargetState.NotInSight;
+
+			//check if enemy can be seen
+			Vector3 enemyPosInScreen = Camera.main.WorldToScreenPoint(enemy.transform.position + Vector3.up*0.6f);
+			if (GeometryUtility.TestPlanesAABB(planes, enemy.collider.bounds))
+			{
+				Ray ray = new Ray(gunPosition, enemy.transform.position - gunPosition);
+				RaycastHit hitInfo;
+
+				Debug.DrawLine(ray.origin, ray.origin + ray.direction*20, Color.red, 2.0f);
+				if (Physics.Raycast(ray, out hitInfo, 20))
+				{
+					if (hitInfo.transform.parent.transform == enemy.transform)
+					{
+						enemy.InTargetSight(enemyPosInScreen);
+					}
+				}
+			}
+		}
+	}
+
+	public void UntargetAllEnemies()
+	{
+		foreach(EnemyMain enemy in enemies)
+		{
+			UntargetEnemy(enemy);
+		}
+	}
+
+	void UntargetEnemy(EnemyMain enemy)
+	{
+		enemy.NotInTargetSight();
 	}
 }

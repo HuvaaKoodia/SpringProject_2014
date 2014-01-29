@@ -31,4 +31,9 @@ public class PrefabStore : MonoBehaviour {
 		Corridor_Crossroad,
 		Corridor_Deadend
 		;
+
+	public UISprite
+		InsightSprite,
+		TargetedSprite
+		;
 }

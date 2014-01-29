@@ -5,6 +5,8 @@ public class PlayerMain : EntityMain
 {
 	public PlayerInputSub inputSub;
 
+	public bool targetingMode { get; private set; }
+
 	public bool INVINCIBLE=false;
 	public int ap;
 	const int apMax = 2;
@@ -19,6 +21,8 @@ public class PlayerMain : EntityMain
 		
 		GC = GameObject.Find("GameSystems").GetComponent<GameController>();
 		inputSub = GetComponent<PlayerInputSub>();
+
+		targetingMode = false;
 	}
 
 	void Start()
@@ -46,6 +50,7 @@ public class PlayerMain : EntityMain
     public void EndPlayerPhase()
     {
 		inputSub.enabled = false;
+		EndTargetingMode();
 		GC.ChangeTurn(TurnState.StartAITurn);
     }
 
@@ -68,8 +73,8 @@ public class PlayerMain : EntityMain
         if (ap < attackCost)
             return;
 
-        enemy.TakeDamage(34);
-        ap -= attackCost;
+		enemy.TakeDamage(50);
+        //ap -= attackCost;
 
         //Debug.Log("Shot enemy");
         if (ap <= 0)
@@ -107,5 +112,19 @@ public class PlayerMain : EntityMain
 			int[] pos = {1, 1};
 			movement.SetPositionInGrid(pos);
 		}
+	}
+
+	public void StartTargetingMode()
+	{
+		targetingMode = true;
+		GC.aiController.CheckTargetableEnemies(Camera.main.transform.position);
+		GC.menuHandler.CheckTargetingModePanel();
+	}
+
+	public void EndTargetingMode()
+	{
+		targetingMode = false;
+		GC.aiController.UntargetAllEnemies();
+		GC.menuHandler.CheckTargetingModePanel();
 	}
 }

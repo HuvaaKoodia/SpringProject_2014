@@ -8,12 +8,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400000}
-  - 114: {fileID: 11400000}
   - 114: {fileID: 11400002}
   - 114: {fileID: 11400014}
-  - 114: {fileID: 11400016}
   m_Layer: 0
-  m_Name: GameSystems
+  m_Name: MapSystems
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,9 +25,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400002}
-  - 114: {fileID: 11400004}
   - 114: {fileID: 11400018}
   - 114: {fileID: 11400020}
+  - 114: {fileID: 11400000}
   m_Layer: 0
   m_Name: SharedSystems
   m_TagString: SharedSystems
@@ -123,20 +121,16 @@ MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
+  m_GameObject: {fileID: 100002}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8491d5bbfde51a34a89da7bd6480fb55, type: 3}
+  m_Script: {fileID: 11500000, guid: f4d2ddf9674324f4e9026e8ba772e8e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TestLoadShipName: whitemansburden
-  UseTestMap: 0
-  EngCont: {fileID: 11400016}
-  MapGen: {fileID: 11400002}
-  ShipGen: {fileID: 11400014}
-  player: {fileID: 0}
-  currentTurn: 0
-  menuHandler: {fileID: 0}
+  GDB: {fileID: 11400006}
+  PS: {fileID: 11400008}
+  MGen: {fileID: 11400002}
+  SGen: {fileID: 11400014}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -150,17 +144,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   XmlMapRead: {fileID: 11400010}
   MapPrefabs: {fileID: 11400008}
---- !u!114 &11400004
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da82a1908a6e148419b327bb06cdb783, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -207,6 +190,8 @@ MonoBehaviour:
     type: 2}
   Corridor_Crossroad: {fileID: 100002, guid: d7510d5d1aae4f94fb1d8bdfc954bdca, type: 2}
   Corridor_Deadend: {fileID: 100002, guid: 399e260600281404889d6460b7681adc, type: 2}
+  InsightSprite: {fileID: 11400000, guid: b225bf727f92d1f4ea3729003a238644, type: 2}
+  TargetedSprite: {fileID: 11400000, guid: 3a4a67f0bbf1b1c498a4c6b6993d7532, type: 2}
 --- !u!114 &11400010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -242,19 +227,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   XmlMapRead: {fileID: 11400010}
   MapPrefabs: {fileID: 11400008}
---- !u!114 &11400016
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 979a975f8c113624da0c55a29f25a052, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enable_Restart: 1
-  enable_Quit: 1
 --- !u!114 &11400018
 MonoBehaviour:
   m_ObjectHideFlags: 1
