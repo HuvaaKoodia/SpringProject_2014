@@ -53,7 +53,10 @@ public class GameController : MonoBehaviour {
 		}
 
 		if (menuHandler!=null)
+		{
 			menuHandler.player = player;
+			menuHandler.CheckTargetingModePanel();
+		}
 	}
 
 	// Update is called once per frame
@@ -67,7 +70,7 @@ public class GameController : MonoBehaviour {
 		else if (currentTurn == TurnState.StartPlayerTurn)
 		{
 			StartPlayerTurn();
-			currentTurn = TurnState.PlayerTurn;
+			ChangeTurn(TurnState.PlayerTurn);
 		}
 	}
 
@@ -92,6 +95,7 @@ public class GameController : MonoBehaviour {
     public void ChangeTurn(TurnState turn)
     {
 		currentTurn = turn;
+		menuHandler.turnText.gameObject.SetActive(currentTurn == TurnState.PlayerTurn);
     }
 
 	void StartPlayerTurn()

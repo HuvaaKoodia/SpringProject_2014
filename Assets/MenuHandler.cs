@@ -10,22 +10,23 @@ public class MenuHandler : MonoBehaviour {
 
     public UISprite targetingText;
 	public UISprite turnText;
+
+	public UISprite endButton;
 	public UISprite engageButton;
 
     public UILabel healthText;
 
 	public UIPanel targetMarkPanel;
 
+	public GunInfoDisplay gunInfoDisplay;
+
 	// Use this for initialization
 	void Start () {
-		CheckTargetingModePanel();
        	healthText.text = player.Health.ToString();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	    healthText.text = player.Health.ToString();
-		turnText.gameObject.SetActive(GC.currentTurn == TurnState.PlayerTurn);
 	}
 
 	void MoveBackwardButtonPressed()
@@ -63,9 +64,32 @@ public class MenuHandler : MonoBehaviour {
 		player.inputSub.EngageCombatInput();
 	}
 
+	void LeftHandWeaponPressed()
+	{
+		player.ChangeWeapon(WeaponID.LeftHand);
+	}
+
+	void LeftShoulderWeaponPressed()
+	{
+		player.ChangeWeapon(WeaponID.LeftShoulder);
+	}
+
+	void RightHandWeaponPressed()
+	{
+		player.ChangeWeapon(WeaponID.RightHand);
+	}
+
+	void RightShoulderWeaponPressed()
+	{
+		player.ChangeWeapon(WeaponID.RightShoulder);
+	}
+
 	public void CheckTargetingModePanel()
 	{
 		targetingText.gameObject.SetActive(player.targetingMode);
-		engageButton.gameObject.SetActive(player.targetingMode);
+		engageButton.gameObject.SetActive(player.targetingSub.HasAnyTargets());
+		//don't show end turn button when targeting, as it's kinda confusing
+		//as it won't shoot
+		endButton.gameObject.SetActive(!player.targetingMode);
 	}
 }

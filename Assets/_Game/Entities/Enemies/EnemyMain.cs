@@ -1,11 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum TargetState
-{
-	NotInSight, CanTarget, Targeted
-}
-
 public class EnemyMain : EntityMain {
 
 	AIcontroller aiController;
@@ -16,9 +11,6 @@ public class EnemyMain : EntityMain {
 	public GameObject graphics;
 	public MeshRenderer renderer;
 
-	public TargetState currentTargetState;
-	UISprite targetSprite;
-
 	// Use this for initialization
 	public override void Awake()
 	{
@@ -28,12 +20,6 @@ public class EnemyMain : EntityMain {
 
 		aiController = GC.aiController;
 		ai = transform.root.GetComponent<TestAI>();
-
-		currentTargetState = TargetState.NotInSight;
-		targetSprite = GameObject.Instantiate(GC.SS.PS.InsightSprite) as UISprite;
-		targetSprite.transform.parent = GC.menuHandler.targetMarkPanel.transform;
-		targetSprite.panel = GC.menuHandler.targetMarkPanel;
-		targetSprite.enabled = false;
 	}
 
 	void Start ()
@@ -139,32 +125,4 @@ public class EnemyMain : EntityMain {
     {
         return ai.HasUsedTurn;
     }
-
-	public void InTargetSight()
-	{
-		Vector3 enemyPosInScreen = Camera.main.WorldToScreenPoint(transform.position);
-		InTargetSight(enemyPosInScreen);
-	}
-
-	public void InTargetSight(Vector3 positionInCamera)
-	{
-		currentTargetState = TargetState.CanTarget;
-		positionInCamera.z = 1;
-		targetSprite.spriteName = "crosshair_gray";
-		targetSprite.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-		targetSprite.transform.position = GC.menuHandler.NGUICamera.ScreenToWorldPoint(positionInCamera);
-		targetSprite.enabled = true;
-	}
-
-	public void BeingTargeted()
-	{
-		currentTargetState = TargetState.Targeted;
-		targetSprite.spriteName = "crosshair_red";
-	}
-	
-	public void NotInTargetSight()
-	{
-		currentTargetState = TargetState.NotInSight;
-		targetSprite.enabled = false;
-	}
 }

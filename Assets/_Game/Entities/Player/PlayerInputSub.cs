@@ -67,19 +67,20 @@ public class PlayerInputSub : MonoBehaviour {
 	{
 		if (Input.GetMouseButtonDown(0))
 		{
-			Component target;
-			if (player.targetingMode && Subs.GetObjectMousePos(out target, 20, "Enemy"))
+			if (player.targetingMode)
 			{
-                EnemyMain enemy = target.GetComponent<EnemyMain>();
-				player.gun.ToggleTarget(enemy);
-
-                return;
+				player.targetingSub.TargetAtMousePosition();
 			}
-
-			if (!player.targetingMode && Subs.GetObjectMousePos(out target, MapGenerator.TileSize.magnitude - 2, "Loot"))
-            {
-                player.PickupLoot(target.gameObject);
-            }
+			else
+			{
+				Component target;
+				if (!player.targetingMode && Subs.GetObjectMousePos(out target, MapGenerator.TileSize.magnitude - 2, "Loot"))
+	            {
+	                player.PickupLoot(target.gameObject);
+	            }
+			}
+			
+			player.GC.menuHandler.CheckTargetingModePanel();
 		}
 	}
 	
@@ -136,6 +137,14 @@ public class PlayerInputSub : MonoBehaviour {
 			return;
 
 		player.Attack();
+	}
+
+	public void ChangeWeaponInput()
+	{
+		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving)
+			return;
+
+
 	}
 
 	public void EndTurnInput()

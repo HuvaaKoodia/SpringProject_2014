@@ -1,15 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+using System.Collections.Generic;
+
+public enum WeaponID
+{
+	LeftShoulder = 0,
+	LeftHand = 1,
+	RightShoulder = 2,
+	RightHand = 3
+}
+
 public class PlayerMain : EntityMain
 {
 	public PlayerInputSub inputSub;
+	public PlayerTargetingSub targetingSub;
 
+	public List<WeaponMain> gunList;
+	public WeaponMain currentGun;
+	
 	public bool targetingMode { get; private set; }
 
 	public bool INVINCIBLE=false;
-
-	public WeaponMain gun;
 
 	public int ap;
 	const int apMax = 2;
@@ -42,6 +54,11 @@ public class PlayerMain : EntityMain
     public void StartPlayerPhase()
     {
 		ap = apMax;
+		foreach(WeaponMain gun in gunList)
+		{
+			gun.ReduceHeat();
+		}
+		GC.menuHandler.gunInfoDisplay.UpdateGunInfo();
         StartTurn();
     }
 
@@ -54,6 +71,7 @@ public class PlayerMain : EntityMain
     {
 		inputSub.enabled = false;
 		EndTargetingMode();
+		GC.menuHandler.gunInfoDisplay.UpdateGunInfo();
 		GC.ChangeTurn(TurnState.StartAITurn);
     }
 
@@ -76,10 +94,14 @@ public class PlayerMain : EntityMain
         if (ap < attackCost)
             return;
 
-		if (gun.HasTargets)
+		ap -= attackCost;
+
+		foreach(WeaponMain gun in gunList)
 		{
-			gun.Shoot();
-			ap -= attackCost;
+			if (gun.HasTargets)
+			{
+				gun.Shoot();
+			}
 		}
 
 		if (ap == 0)
@@ -94,6 +116,7 @@ public class PlayerMain : EntityMain
         Destroy(loot);
 
         Health += 20;
+		currentGun.AddAmmo(10);
     }
 
 	public override void TakeDamage(int damage)
@@ -102,27 +125,35 @@ public class PlayerMain : EntityMain
 
 		Health -= damage;
 
+		GC.menuHandler.healthText.text = Health.ToString();
+
         if (Health <= 0)
 		{
 			Debug.Log("Kuoli saatana");
             Health = 100;
-			int[] pos = {1, 1};
-			movement.SetPositionInGrid(pos);
+			GC.EngCont.Restart();
 		}
 	}
 
 	public void StartTargetingMode()
 	{
 		targetingMode = true;
-		GC.aiController.CheckTargetableEnemies(Camera.main.transform.position);
+		targetingSub.CheckTargetableEnemies(Camera.main.transform.position);
 		GC.menuHandler.CheckTargetingModePanel();
 	}
 
 	public void EndTargetingMode()
 	{
 		targetingMode = false;
-		gun.ClearTargets();
-		GC.aiController.UntargetAllEnemies();
+		targetingSub.UnsightAllEnemies();
+		GC.menuHandler.CheckTargetingModePanel();
+	}
+
+	public void ChangeWeapon(WeaponID id)
+	{
+		currentGun = gunList[(int)id];
+		targetingSub.CheckGunTargets();
+		GC.menuHandler.gunInfoDisplay.UpdateGunInfo();
 		GC.menuHandler.CheckTargetingModePanel();
 	}
 }

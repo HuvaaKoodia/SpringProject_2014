@@ -9,17 +9,32 @@ public class EngineController : MonoBehaviour {
 	//Update is called once per frame
 	void Update (){
 
-		if (enable_Restart&&Input.GetKeyDown(KeyCode.R)){
-			
-			Application.LoadLevel(Application.loadedLevel);
-			if (AfterRestart!=null)
-				AfterRestart();
+		if (Input.GetKeyDown(KeyCode.R)){
+            Restart();
 		}
 		
-		if (enable_Quit&&Input.GetKeyDown(KeyCode.Escape)){
-			if (BeforeQuit!=null)
-				BeforeQuit();
-			Application.Quit();
+		if (Input.GetKeyDown(KeyCode.Escape)){
+            Quit();
 		}
 	}
+
+    public void Restart()
+    {
+        if (!enable_Restart)
+            return;
+
+        Application.LoadLevel(Application.loadedLevel);
+        if (AfterRestart != null)
+            AfterRestart();
+    }
+
+    public void Quit()
+    {
+        if (!enable_Quit)
+            return;
+
+        if (BeforeQuit != null)
+            BeforeQuit();
+        Application.Quit();
+    }
 }
