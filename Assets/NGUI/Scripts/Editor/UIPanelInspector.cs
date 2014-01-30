@@ -42,7 +42,7 @@ public class UIPanelInspector : UIRectEditor
 	/// Helper function that draws draggable knobs.
 	/// </summary>
 
-	void DrawKnob (Vector4 point, int id, bool canResize)
+	void DrawKnob (Vector4 point, int type, bool canResize)
 	{
 		if (mStyle0 == null) mStyle0 = "sv_label_0";
 		if (mStyle1 == null) mStyle1 = "sv_label_7";
@@ -51,11 +51,11 @@ public class UIPanelInspector : UIRectEditor
 
 		if (canResize)
 		{
-			mStyle1.Draw(rect, GUIContent.none, id);
+			mStyle1.Draw(rect, GUIContent.none, type);
 		}
 		else
 		{
-			mStyle0.Draw(rect, GUIContent.none, id);
+			mStyle0.Draw(rect, GUIContent.none, type);
 		}
 	}
 
@@ -71,8 +71,8 @@ public class UIPanelInspector : UIRectEditor
 		if (!UIWidget.showHandles) return;
 
 		Event e = Event.current;
-		int id = GUIUtility.GetControlID(s_Hash, FocusType.Passive);
-		EventType type = e.GetTypeForControl(id);
+		int type = GUIUtility.GetControlID(s_Hash, FocusType.Passive);
+		EventType id = e.GetTypeForControl(type);
 		Transform t = mPanel.cachedTransform;
 
 		Vector3[] handles = UIWidgetInspector.GetHandles(mPanel.worldCorners);
@@ -88,13 +88,13 @@ public class UIPanelInspector : UIRectEditor
 
 		if (mPanel.isAnchored && mAction == UIWidgetInspector.Action.None)
 		{
-			UIWidgetInspector.DrawAnchor(mPanel.leftAnchor, mPanel.cachedTransform, handles, 0, id);
-			UIWidgetInspector.DrawAnchor(mPanel.topAnchor, mPanel.cachedTransform, handles, 1, id);
-			UIWidgetInspector.DrawAnchor(mPanel.rightAnchor, mPanel.cachedTransform, handles, 2, id);
-			UIWidgetInspector.DrawAnchor(mPanel.bottomAnchor, mPanel.cachedTransform, handles, 3, id);
+			UIWidgetInspector.DrawAnchor(mPanel.leftAnchor, mPanel.cachedTransform, handles, 0, type);
+			UIWidgetInspector.DrawAnchor(mPanel.topAnchor, mPanel.cachedTransform, handles, 1, type);
+			UIWidgetInspector.DrawAnchor(mPanel.rightAnchor, mPanel.cachedTransform, handles, 2, type);
+			UIWidgetInspector.DrawAnchor(mPanel.bottomAnchor, mPanel.cachedTransform, handles, 3, type);
 		}
 
-		if (type == EventType.Repaint)
+		if (id == EventType.Repaint)
 		{
 			bool showDetails = (mAction == UIWidgetInspector.Action.Scale) || NGUISettings.drawGuides;
 			if (mAction == UIWidgetInspector.Action.None && e.modifiers == EventModifiers.Control) showDetails = true;
@@ -127,7 +127,7 @@ public class UIPanelInspector : UIRectEditor
 
 		UIWidget.Pivot pivotUnderMouse = UIWidgetInspector.GetPivotUnderMouse(handles, e, resizable, canMove, ref actionUnderMouse);
 
-		switch (type)
+		switch (id)
 		{
 			case EventType.Repaint:
 			{
@@ -142,24 +142,24 @@ public class UIPanelInspector : UIRectEditor
 					Handles.BeginGUI();
 					{
 						for (int i = 0; i < 4; ++i)
-							DrawKnob(handles[i], id, resizable[i]);
+							DrawKnob(handles[i], type, resizable[i]);
 
 						if (Mathf.Abs(v1.y - v0.y) > 80f)
 						{
 							if (mPanel.leftAnchor.target == null || mPanel.leftAnchor.absolute != 0)
-								DrawKnob(handles[4], id, resizable[4]);
+								DrawKnob(handles[4], type, resizable[4]);
 
 							if (mPanel.rightAnchor.target == null || mPanel.rightAnchor.absolute != 0)
-								DrawKnob(handles[6], id, resizable[6]);
+								DrawKnob(handles[6], type, resizable[6]);
 						}
 
 						if (Mathf.Abs(v3.x - v0.x) > 80f)
 						{
 							if (mPanel.topAnchor.target == null || mPanel.topAnchor.absolute != 0)
-								DrawKnob(handles[5], id, resizable[5]);
+								DrawKnob(handles[5], type, resizable[5]);
 
 							if (mPanel.bottomAnchor.target == null || mPanel.bottomAnchor.absolute != 0)
-								DrawKnob(handles[7], id, resizable[7]);
+								DrawKnob(handles[7], type, resizable[7]);
 						}
 					}
 					Handles.EndGUI();
@@ -176,7 +176,7 @@ public class UIPanelInspector : UIRectEditor
 				{
 					if (e.modifiers == 0)
 					{
-						GUIUtility.hotControl = GUIUtility.keyboardControl = id;
+						GUIUtility.hotControl = GUIUtility.keyboardControl = type;
 						e.Use();
 					}
 				}
@@ -190,7 +190,7 @@ public class UIPanelInspector : UIRectEditor
 					mStartCR = mPanel.baseClipRegion;
 					mDragPivot = pivotUnderMouse;
 					mActionUnderMouse = actionUnderMouse;
-					GUIUtility.hotControl = GUIUtility.keyboardControl = id;
+					GUIUtility.hotControl = GUIUtility.keyboardControl = type;
 					e.Use();
 				}
 			}
@@ -198,7 +198,7 @@ public class UIPanelInspector : UIRectEditor
 
 			case EventType.MouseUp:
 			{
-				if (GUIUtility.hotControl == id)
+				if (GUIUtility.hotControl == type)
 				{
 					GUIUtility.hotControl = 0;
 					GUIUtility.keyboardControl = 0;
@@ -255,7 +255,7 @@ public class UIPanelInspector : UIRectEditor
 				bool dragStarted = (e.mousePosition - mStartMouse).magnitude > 3f;
 				if (dragStarted) mAllowSelection = false;
 
-				if (GUIUtility.hotControl == id)
+				if (GUIUtility.hotControl == type)
 				{
 					e.Use();
 
@@ -362,7 +362,7 @@ public class UIPanelInspector : UIRectEditor
 				}
 				else if (e.keyCode == KeyCode.Escape)
 				{
-					if (GUIUtility.hotControl == id)
+					if (GUIUtility.hotControl == type)
 					{
 						if (mAction != UIWidgetInspector.Action.None)
 						{

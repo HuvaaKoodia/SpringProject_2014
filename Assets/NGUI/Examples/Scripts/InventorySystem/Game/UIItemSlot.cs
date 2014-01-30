@@ -40,26 +40,26 @@ public abstract class UIItemSlot : MonoBehaviour
 			{
 				string t = "[" + NGUIText.EncodeColor(item.color) + "]" + item.name + "[-]\n";
 
-				t += "[AFAFAF]Level " + item.itemLevel + " " + bi.type;
+				t += "[AFAFAF]MK." + item.itemLevel + " " + bi.type;
 
 				List<InvStat> stats = item.CalculateStats();
 
 				for (int i = 0, imax = stats.Count; i < imax; ++i)
 				{
 					InvStat stat = stats[i];
-					if (stat.amount == 0) continue;
+					if (stat._amount == 0) continue;
 
-					if (stat.amount < 0)
+					if (stat._amount < 0)
 					{
-						t += "\n[FF0000]" + stat.amount;
+						t += "\n[FF0000]" + stat._amount;
 					}
 					else
 					{
-						t += "\n[00FF00]+" + stat.amount;
+						t += "\n[00FF00]+" + stat._amount;
 					}
 
 					if (stat.modifier == InvStat.Modifier.Percent) t += "%";
-					t += " " + stat.id;
+					t += " " + stat.type;
 					t += "[-]";
 				}
 
@@ -83,9 +83,8 @@ public abstract class UIItemSlot : MonoBehaviour
 		}
 		else if (mItem != null)
 		{
-			mDraggedItem = Replace(null);
+			StartDraggingItem(Replace(null));
 			if (mDraggedItem != null) NGUITools.PlaySound(grabSound);
-			UpdateCursor();
 		}
 	}
 
@@ -98,9 +97,8 @@ public abstract class UIItemSlot : MonoBehaviour
 		if (mDraggedItem == null && mItem != null)
 		{
 			UICamera.currentTouch.clickNotification = UICamera.ClickNotification.BasedOnDelta;
-			mDraggedItem = Replace(null);
-			NGUITools.PlaySound(grabSound);
-			UpdateCursor();
+			StartDraggingItem(Replace(null));
+			if (mDraggedItem != null) NGUITools.PlaySound(grabSound);
 		}
 	}
 
@@ -112,12 +110,22 @@ public abstract class UIItemSlot : MonoBehaviour
 	{
 		InvGameItem item = Replace(mDraggedItem);
 
-		if (mDraggedItem == item) NGUITools.PlaySound(errorSound);
+		UICamera.current.ResetTooltipDelay();
+
+		if (mDraggedItem == item){
+			//wrong type for the slot
+			NGUITools.PlaySound(errorSound);
+		}
 		else if (item != null) NGUITools.PlaySound(grabSound);
 		else NGUITools.PlaySound(placeSound);
 
+		StartDraggingItem(item);
+	}
+
+	void StartDraggingItem(InvGameItem item){
 		mDraggedItem = item;
 		UpdateCursor();
+		UIEquipmentSlot.UpdateSlotColors(item);
 	}
 
 	/// <summary>
@@ -172,10 +180,11 @@ public abstract class UIItemSlot : MonoBehaviour
 				}
 			}
 
+			/*
 			if (background != null)
 			{
 				background.color = (i != null) ? i.color : Color.white;
-			}
+			}*/
 		}
 	}
 }

@@ -1796,8 +1796,8 @@ public class NGUIEditorTools
 		if (s_GetInstanceIDFromGUID == null)
 			s_GetInstanceIDFromGUID = typeof(AssetDatabase).GetMethod("GetInstanceIDFromGUID");
 
-		int id = (int)s_GetInstanceIDFromGUID.Invoke(null, new object[] { guid });
-		if (id != 0) return EditorUtility.InstanceIDToObject(id);
+		int type = (int)s_GetInstanceIDFromGUID.Invoke(null, new object[] { guid });
+		if (type != 0) return EditorUtility.InstanceIDToObject(type);
 #endif
 		string path = AssetDatabase.GUIDToAssetPath(guid);
 		if (string.IsNullOrEmpty(path)) return null;

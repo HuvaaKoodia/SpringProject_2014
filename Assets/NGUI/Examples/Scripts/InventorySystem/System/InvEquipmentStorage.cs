@@ -3,12 +3,21 @@ using System.Collections.Generic;
 
 public class EquipmentStorageSlot{
 	public UIEquipmentSlot.Slot Slot {get;private set;}
-	public InvBaseItem.Type Type {get;private set;}
+	public List<InvBaseItem.Type> TypeList {get;private set;}
 	public InvGameItem Item;
 
-	public EquipmentStorageSlot(UIEquipmentSlot.Slot slot,InvBaseItem.Type type){
+	public EquipmentStorageSlot(UIEquipmentSlot.Slot slot,params InvBaseItem.Type[] types){
 		Slot=slot;
-		Type=type;
+
+		TypeList=new List<InvBaseItem.Type>();
+		foreach (var t in types){
+			TypeList.Add(t);
+		}
+	}
+
+	public bool HasType(InvBaseItem.Type type)
+	{
+		return TypeList.Contains(type);
 	}
 }
 
@@ -20,10 +29,10 @@ public class InvEquipmentStorage : MonoBehaviour
 	public void Awake(){
 		//create Slots. HARDCODED
 		EquipmentSlots=new EquipmentStorageSlot[8];
-		AddSlot(UIEquipmentSlot.Slot.WeaponLeftHand,InvBaseItem.Type.WeaponHand);
-		AddSlot(UIEquipmentSlot.Slot.WeaponRightHand,InvBaseItem.Type.WeaponHand);
-		AddSlot(UIEquipmentSlot.Slot.WeaponLeftShoulder,InvBaseItem.Type.WeaponShoulder);
-		AddSlot(UIEquipmentSlot.Slot.WeaponRightShoulder,InvBaseItem.Type.WeaponShoulder);
+		AddSlot(UIEquipmentSlot.Slot.WeaponLeftHand,InvBaseItem.Type.LightWeapon);
+		AddSlot(UIEquipmentSlot.Slot.WeaponRightHand,InvBaseItem.Type.LightWeapon);
+		AddSlot(UIEquipmentSlot.Slot.WeaponLeftShoulder,InvBaseItem.Type.HeavyWeapon,InvBaseItem.Type.LightWeapon);
+		AddSlot(UIEquipmentSlot.Slot.WeaponRightShoulder,InvBaseItem.Type.HeavyWeapon,InvBaseItem.Type.LightWeapon);
 
 		AddSlot(UIEquipmentSlot.Slot.Utility1,InvBaseItem.Type.Utility);
 		AddSlot(UIEquipmentSlot.Slot.Utility2,InvBaseItem.Type.Utility);
@@ -31,9 +40,14 @@ public class InvEquipmentStorage : MonoBehaviour
 		AddSlot(UIEquipmentSlot.Slot.Utility4,InvBaseItem.Type.Utility);
 	}
 
-	private void AddSlot(UIEquipmentSlot.Slot slot,InvBaseItem.Type type){
+	private void AddSlot(UIEquipmentSlot.Slot slot,params InvBaseItem.Type[] type){
 		EquipmentSlots[(int)slot]=new EquipmentStorageSlot(slot,type);
 	}
+
+	public EquipmentStorageSlot GetSlot(UIEquipmentSlot.Slot slot){
+		return EquipmentSlots[(int)slot];
+	}
+
 
 	/// <summary>
 	/// Equip the specified item automatically replacing an existing one.
@@ -51,7 +65,7 @@ public class InvEquipmentStorage : MonoBehaviour
 		}
 		else{
 			// If the item is not of appropriate type, we shouldn't do anything
-			if (item.baseItem.type != Slot.Type) return item;
+			if (!Slot.HasType(item.baseItem.type)) return item;
 
 			// Equip this item
 			var prev = Slot.Item;
@@ -95,7 +109,7 @@ public class InvEquipmentStorage : MonoBehaviour
 		//find first free slot
 		EquipmentStorageSlot Slot=null;
 		foreach (var slot in EquipmentSlots){
-			if (slot.Type==item.baseItem.type&&slot.Item==null){
+			if (slot.HasType(item.baseItem.type)&&slot.Item==null){
 				Slot=slot;
 				break;
 			}

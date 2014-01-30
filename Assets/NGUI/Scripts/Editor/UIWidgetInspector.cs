@@ -105,7 +105,7 @@ public class UIWidgetInspector : UIRectEditor
 	/// Draw a control dot at the specified world position.
 	/// </summary>
 
-	static public void DrawKnob (Vector3 point, bool selected, bool canResize, int id)
+	static public void DrawKnob (Vector3 point, bool selected, bool canResize, int type)
 	{
 		if (mGreyDot == null) mGreyDot = "sv_label_0";
 		if (mBlueDot == null) mBlueDot = "sv_label_1";
@@ -122,29 +122,29 @@ public class UIWidgetInspector : UIRectEditor
 		{
 			if (NGUISettings.colorMode == NGUISettings.ColorMode.Orange)
 			{
-				mRedDot.Draw(rect, GUIContent.none, id);
+				mRedDot.Draw(rect, GUIContent.none, type);
 			}
 			else
 			{
-				mOrangeDot.Draw(rect, GUIContent.none, id);
+				mOrangeDot.Draw(rect, GUIContent.none, type);
 			}
 		}
 		else if (canResize)
 		{
 			if (NGUISettings.colorMode == NGUISettings.ColorMode.Orange)
 			{
-				mOrangeDot.Draw(rect, GUIContent.none, id);
+				mOrangeDot.Draw(rect, GUIContent.none, type);
 			}
 			else if (NGUISettings.colorMode == NGUISettings.ColorMode.Green)
 			{
-				mGreenDot.Draw(rect, GUIContent.none, id);
+				mGreenDot.Draw(rect, GUIContent.none, type);
 			}
 			else
 			{
-				mBlueDot.Draw(rect, GUIContent.none, id);
+				mBlueDot.Draw(rect, GUIContent.none, type);
 			}
 		}
-		else mGreyDot.Draw(rect, GUIContent.none, id);
+		else mGreyDot.Draw(rect, GUIContent.none, type);
 	}
 
 	/// <summary>
@@ -295,7 +295,7 @@ public class UIWidgetInspector : UIRectEditor
 	/// Draw the specified anchor point.
 	/// </summary>
 
-	static public void DrawAnchor (UIRect.AnchorPoint anchor, Transform myTrans, Vector3[] myCorners, int side, int id)
+	static public void DrawAnchor (UIRect.AnchorPoint anchor, Transform myTrans, Vector3[] myCorners, int side, int type)
 	{
 		if (!anchor.target) return;
 
@@ -366,7 +366,7 @@ public class UIWidgetInspector : UIRectEditor
 
 		NGUIHandles.DrawShadowedLine(myCorners, myPos, theirPos, Color.yellow);
 
-		if (Event.current.GetTypeForControl(id) == EventType.Repaint)
+		if (Event.current.GetTypeForControl(type) == EventType.Repaint)
 		{
 			Vector2 screenPoint = HandleUtility.WorldToGUIPoint(theirPos);
 			Rect rect = new Rect(screenPoint.x - 7f, screenPoint.y - 7f, 14f, 14f);
@@ -377,7 +377,7 @@ public class UIWidgetInspector : UIRectEditor
 
 			Handles.BeginGUI();
 				
-			mYellowDot.Draw(rect, GUIContent.none, id);
+			mYellowDot.Draw(rect, GUIContent.none, type);
 
 			Vector3 diff = v1 - v0;
 			bool isHorizontal = Mathf.Abs(diff.x) > Mathf.Abs(diff.y);
@@ -430,8 +430,8 @@ public class UIWidgetInspector : UIRectEditor
 		Transform t = mWidget.cachedTransform;
 
 		Event e = Event.current;
-		int id = GUIUtility.GetControlID(s_Hash, FocusType.Passive);
-		EventType type = e.GetTypeForControl(id);
+		int type = GUIUtility.GetControlID(s_Hash, FocusType.Passive);
+		EventType id = e.GetTypeForControl(type);
 
 		Action actionUnderMouse = mAction;
 		Vector3[] handles = GetHandles(mWidget.worldCorners);
@@ -444,13 +444,13 @@ public class UIWidgetInspector : UIRectEditor
 		// If the widget is anchored, draw the anchors
 		if (mWidget.isAnchored)
 		{
-			DrawAnchor(mWidget.leftAnchor, mWidget.cachedTransform, handles, 0, id);
-			DrawAnchor(mWidget.topAnchor, mWidget.cachedTransform, handles, 1, id);
-			DrawAnchor(mWidget.rightAnchor, mWidget.cachedTransform, handles, 2, id);
-			DrawAnchor(mWidget.bottomAnchor, mWidget.cachedTransform, handles, 3, id);
+			DrawAnchor(mWidget.leftAnchor, mWidget.cachedTransform, handles, 0, type);
+			DrawAnchor(mWidget.topAnchor, mWidget.cachedTransform, handles, 1, type);
+			DrawAnchor(mWidget.rightAnchor, mWidget.cachedTransform, handles, 2, type);
+			DrawAnchor(mWidget.bottomAnchor, mWidget.cachedTransform, handles, 3, type);
 		}
 
-		if (type == EventType.Repaint)
+		if (id == EventType.Repaint)
 		{
 			bool showDetails = (mAction == UIWidgetInspector.Action.Scale) || NGUISettings.drawGuides;
 			if (mAction == UIWidgetInspector.Action.None && e.modifiers == EventModifiers.Control) showDetails = true;
@@ -478,7 +478,7 @@ public class UIWidgetInspector : UIRectEditor
 		
 		UIWidget.Pivot pivotUnderMouse = GetPivotUnderMouse(handles, e, resizable, true, ref actionUnderMouse);
 		
-		switch (type)
+		switch (id)
 		{
 			case EventType.Repaint:
 			{
@@ -493,24 +493,24 @@ public class UIWidgetInspector : UIRectEditor
 					Handles.BeginGUI();
 					{
 						for (int i = 0; i < 4; ++i)
-							DrawKnob(handles[i], mWidget.pivot == pivotPoints[i], resizable[i], id);
+							DrawKnob(handles[i], mWidget.pivot == pivotPoints[i], resizable[i], type);
 
 						if ((v1 - v0).magnitude > 80f)
 						{
 							if (mWidget.leftAnchor.target == null || mWidget.leftAnchor.absolute != 0)
-								DrawKnob(handles[4], mWidget.pivot == pivotPoints[4], resizable[4], id);
+								DrawKnob(handles[4], mWidget.pivot == pivotPoints[4], resizable[4], type);
 
 							if (mWidget.rightAnchor.target == null || mWidget.rightAnchor.absolute != 0)
-								DrawKnob(handles[6], mWidget.pivot == pivotPoints[6], resizable[6], id);
+								DrawKnob(handles[6], mWidget.pivot == pivotPoints[6], resizable[6], type);
 						}
 
 						if ((v3 - v0).magnitude > 80f)
 						{
 							if (mWidget.topAnchor.target == null || mWidget.topAnchor.absolute != 0)
-								DrawKnob(handles[5], mWidget.pivot == pivotPoints[5], resizable[5], id);
+								DrawKnob(handles[5], mWidget.pivot == pivotPoints[5], resizable[5], type);
 
 							if (mWidget.bottomAnchor.target == null || mWidget.bottomAnchor.absolute != 0)
-								DrawKnob(handles[7], mWidget.pivot == pivotPoints[7], resizable[7], id);
+								DrawKnob(handles[7], mWidget.pivot == pivotPoints[7], resizable[7], type);
 						}
 					}
 					Handles.EndGUI();
@@ -527,7 +527,7 @@ public class UIWidgetInspector : UIRectEditor
 				{
 					if (e.modifiers == 0)
 					{
-						GUIUtility.hotControl = GUIUtility.keyboardControl = id;
+						GUIUtility.hotControl = GUIUtility.keyboardControl = type;
 						e.Use();
 					}
 				}
@@ -550,7 +550,7 @@ public class UIWidgetInspector : UIRectEditor
 
 					mDragPivot = pivotUnderMouse;
 					mActionUnderMouse = actionUnderMouse;
-					GUIUtility.hotControl = GUIUtility.keyboardControl = id;
+					GUIUtility.hotControl = GUIUtility.keyboardControl = type;
 					e.Use();
 				}
 			}
@@ -562,7 +562,7 @@ public class UIWidgetInspector : UIRectEditor
 				bool dragStarted = (e.mousePosition - mStartMouse).magnitude > 3f;
 				if (dragStarted) mAllowSelection = false;
 
-				if (GUIUtility.hotControl == id)
+				if (GUIUtility.hotControl == type)
 				{
 					e.Use();
 
@@ -667,7 +667,7 @@ public class UIWidgetInspector : UIRectEditor
 
 			case EventType.MouseUp:
 			{
-				if (GUIUtility.hotControl == id)
+				if (GUIUtility.hotControl == type)
 				{
 					GUIUtility.hotControl = 0;
 					GUIUtility.keyboardControl = 0;
@@ -750,7 +750,7 @@ public class UIWidgetInspector : UIRectEditor
 				}
 				else if (e.keyCode == KeyCode.Escape)
 				{
-					if (GUIUtility.hotControl == id)
+					if (GUIUtility.hotControl == type)
 					{
 						if (mAction != Action.None)
 						{
