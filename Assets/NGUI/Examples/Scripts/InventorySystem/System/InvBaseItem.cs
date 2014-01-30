@@ -7,8 +7,8 @@ public class InvBaseItem
 	public enum Type
 	{
 		None,
-		WeaponHand,
-		WeaponShoulder,
+		LightWeapon,
+		HeavyWeapon,
 		Utility,
 		_Amount
 	}
@@ -24,16 +24,11 @@ public class InvBaseItem
 	public string description;
 	public Type type = Type.None;
 
-	/// <summary>
-	/// Minimum and maximum allowed level for this item. When random loot gets generated,
-	/// only items within appropriate level should be considered.
-	/// </summary>
-
 	public int minItemLevel = 1;
-	public int maxItemLevel = 50;
+	public int maxItemLevel = 10;
 
 	/// <summary>
-	/// And and all base stats this item may have at a maximum level (50).
+	/// And and all base stats this item may have at a maximum level.
 	/// Actual object's stats are calculated based on item's level and quality.
 	/// </summary>
 
@@ -47,21 +42,7 @@ public class InvBaseItem
 
 	public GameObject attachment;
 
-	/// <summary>
-	/// Object's main material color.
-	/// </summary>
-
 	public Color color = Color.white;
-
-	/// <summary>
-	/// Atlas used for the item's icon.
-	/// </summary>
-
 	public UIAtlas iconAtlas;
-
-	/// <summary>
-	/// Name of the icon's sprite within the atlas.
-	/// </summary>
-
 	public string iconName = "";
 }

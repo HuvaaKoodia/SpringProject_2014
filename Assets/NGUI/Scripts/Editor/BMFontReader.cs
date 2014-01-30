@@ -63,7 +63,7 @@ public static class BMFontReader
 				if (split[0] == "char")
 				{
 					// Expected data style:
-					// char id=13 x=506 y=62 width=3 height=3 xoffset=-1 yoffset=50 xadvance=0 page=0 chnl=15
+					// char type=13 x=506 y=62 width=3 height=3 xoffset=-1 yoffset=50 xadvance=0 page=0 chnl=15
 
 					int channel = (len > 10) ? GetInt(split[10]) : 15;
 
@@ -76,8 +76,8 @@ public static class BMFontReader
 
 					if (len > 8)
 					{
-						int id = GetInt(split[1]);
-						BMGlyph glyph = font.GetGlyph(id, true);
+						int type = GetInt(split[1]);
+						BMGlyph glyph = font.GetGlyph(type, true);
 
 						if (glyph != null)
 						{
@@ -90,7 +90,7 @@ public static class BMFontReader
 							glyph.advance	= GetInt(split[8]);
 							glyph.channel	= channel;
 						}
-						else Debug.Log("Char: " + split[1] + " (" + id + ") is NULL");
+						else Debug.Log("Char: " + split[1] + " (" + type + ") is NULL");
 					}
 					else
 					{
@@ -149,7 +149,7 @@ public static class BMFontReader
 				else if (split[0] == "page")
 				{
 					// Expected data style:
-					// page id=0 file="textureName.png"
+					// page type=0 file="textureName.png"
 
 					if (len > 2)
 					{

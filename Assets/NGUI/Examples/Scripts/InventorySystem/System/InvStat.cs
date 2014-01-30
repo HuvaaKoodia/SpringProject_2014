@@ -4,7 +4,7 @@ using System.Collections.Generic;
 [System.Serializable]
 public class InvStat
 {
-	public enum Identifier
+	public enum Type
 	{
 		Value,
 		Damage,
@@ -23,22 +23,22 @@ public class InvStat
 		Percent,
 	}
 
-	public Identifier id;
+	public Type type;
 	public Modifier modifier;
-	public int amount;
+	public int min_amount,max_amount,_amount;
 	
-	static public string GetName (Identifier i)
+	static public string GetName (Type i)
 	{
 		return i.ToString();
 	}
 
-	static public string GetDescription (Identifier i)
+	static public string GetDescription (Type i)
 	{
 		switch (i)
 		{
-			case Identifier.Damage:			return "Amount of damage done per hit.";
-			case Identifier.Crit:			return "Increases critical hit chance.";
-			case Identifier.Heat:			return "Amount of heat generated per use.";
+		case Type.Damage:			return "Amount of damage done per hit.";
+		case Type.Crit:			return "Increases critical hit chance.";
+		case Type.Heat:			return "Amount of heat generated per use.";
 		}
 		return null;
 	}
@@ -49,16 +49,16 @@ public class InvStat
 
 	static public int CompareWeapon (InvStat a, InvStat b)
 	{
-		int ia = (int)a.id;
-		int ib = (int)b.id;
+		int ia = (int)a.type;
+		int ib = (int)b.type;
 
-		if		(a.id == Identifier.Damage) ia -= 10000;
-		else if (a.id == Identifier.Heat)  ia -= 5000;
-		if		(b.id == Identifier.Damage) ib -= 10000;
-		else if (b.id == Identifier.Heat)  ib -= 5000;
+		if		(a.type == Type.Damage) ia -= 10000;
+		else if (a.type == Type.Heat)  ia -= 5000;
+		if		(b.type == Type.Damage) ib -= 10000;
+		else if (b.type == Type.Heat)  ib -= 5000;
 
-		if (a.amount < 0) ia += 1000;
-		if (b.amount < 0) ib += 1000;
+		if (a._amount < 0) ia += 1000;
+		if (b._amount < 0) ib += 1000;
 		
 		if (a.modifier == Modifier.Percent) ia += 100;
 		if (b.modifier == Modifier.Percent) ib += 100;

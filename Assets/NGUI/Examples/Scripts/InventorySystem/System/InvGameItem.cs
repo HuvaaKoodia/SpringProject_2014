@@ -21,7 +21,7 @@ public class InvGameItem
 	}
 
 	// ID of the base item used to create this game item
-	[SerializeField] int mBaseItemID = 0;
+	//[SerializeField] int mBaseItemID = 0;
 
 	/// <summary>
 	/// Item quality -- applies a penalty or bonus to all base stats.
@@ -42,7 +42,7 @@ public class InvGameItem
 	/// ID of the base item used to create this one.
 	/// </summary>
 
-	public int baseItemID { get { return mBaseItemID; } }
+	//public int baseItemID { get { return mBaseItemID; } }
 
 	/// <summary>
 	/// Base item used by this game item.
@@ -52,10 +52,10 @@ public class InvGameItem
 	{
 		get
 		{
-			if (mBaseItem == null)
-			{
-				mBaseItem = InvDatabase.FindByID(baseItemID);
-			}
+			//if (mBaseItem == null)
+			//{
+			//	mBaseItem = InvDatabase.FindByID(baseItemID);
+			//}
 			return mBaseItem;
 		}
 	}
@@ -69,7 +69,7 @@ public class InvGameItem
 		get
 		{
 			if (baseItem == null) return null;
-			return quality.ToString() + " " + baseItem.name;
+			return "[" + NGUIText.EncodeColor(color) + "]"+quality.ToString() + " [FFFFFF]" + baseItem.name;
 		}
 	}
 
@@ -94,7 +94,7 @@ public class InvGameItem
 			}
 
 			// Take item's level into account
-			float linear = itemLevel / 50f;
+			float linear = (float)itemLevel / baseItem.maxItemLevel;
 
 			// Add a curve for more interesting results
 			mult *= Mathf.Lerp(linear, linear * linear, 0.5f);
@@ -115,15 +115,15 @@ public class InvGameItem
 			switch (quality)
 			{
 				case Quality.Inferior:	c = Color.red; break;
-				case Quality.Normal:	c = Color.blue; break;
+				case Quality.Normal:	c = Color.cyan; break;
 				case Quality.Superior:	c = Color.green; break;
 			}
 			return c;
 		}
 	}
 
-	public InvGameItem (int id) { mBaseItemID = id; }
-	public InvGameItem (int id, InvBaseItem bi) { mBaseItemID = id; mBaseItem = bi; }
+	//public InvGameItem (int type) { mBaseItemID = type; }
+	public InvGameItem (int type, InvBaseItem bi) { mBaseItem = bi; }
 
 	/// <summary>
 	/// Calculate and return the list of effective stats based on item level and quality.
@@ -141,7 +141,7 @@ public class InvGameItem
 			for (int i = 0, imax = baseStats.Count; i < imax; ++i)
 			{
 				InvStat bs = baseStats[i];
-				int amount = Mathf.RoundToInt(mult * bs.amount);
+				int amount = bs.min_amount+Mathf.RoundToInt(mult * (bs.max_amount-bs.min_amount));
 				if (amount == 0) continue;
 
 				bool found = false;
@@ -150,9 +150,9 @@ public class InvGameItem
 				{
 					InvStat s = stats[b];
 
-					if (s.id == bs.id && s.modifier == bs.modifier)
+					if (s.type== bs.type && s.modifier == bs.modifier)
 					{
-						s.amount += amount;
+						s._amount += amount;
 						found = true;
 						break;
 					}
@@ -161,8 +161,8 @@ public class InvGameItem
 				if (!found)
 				{
 					InvStat stat = new InvStat();
-					stat.id = bs.id;
-					stat.amount = amount;
+					stat.type = bs.type;
+					stat._amount = amount;
 					stat.modifier = bs.modifier;
 					stats.Add(stat);
 				}

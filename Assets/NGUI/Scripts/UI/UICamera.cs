@@ -780,17 +780,17 @@ public class UICamera : MonoBehaviour
 	/// Get or create a touch event.
 	/// </summary>
 
-	static public MouseOrTouch GetTouch (int id)
+	static public MouseOrTouch GetTouch (int type)
 	{
 		MouseOrTouch touch = null;
 
-		if (id < 0) return GetMouse(-id - 1);
+		if (type < 0) return GetMouse(-type - 1);
 
-		if (!mTouches.TryGetValue(id, out touch))
+		if (!mTouches.TryGetValue(type, out touch))
 		{
 			touch = new MouseOrTouch();
 			touch.touchBegan = true;
-			mTouches.Add(id, touch);
+			mTouches.Add(type, touch);
 		}
 		return touch;
 	}
@@ -799,7 +799,7 @@ public class UICamera : MonoBehaviour
 	/// Remove a touch event from the list.
 	/// </summary>
 
-	static public void RemoveTouch (int id) { mTouches.Remove(id); }
+	static public void RemoveTouch (int type) { mTouches.Remove(type); }
 
 	/// <summary>
 	/// Add this camera to the list.
@@ -1016,7 +1016,7 @@ public class UICamera : MonoBehaviour
 			if (mTooltipTime != 0f)
 			{
 				// Delay the tooltip
-				mTooltipTime = RealTime.time + tooltipDelay;
+				ResetTooltipDelay();
 			}
 			else if (mTooltip != null)
 			{
@@ -1060,7 +1060,7 @@ public class UICamera : MonoBehaviour
 		if (!isPressed && highlightChanged)
 		{
 			currentScheme = ControlScheme.Mouse;
-			mTooltipTime = RealTime.time + tooltipDelay;
+			ResetTooltipDelay();
 			mHover = mMouse[0].current;
 			Notify(mHover, "OnHover", true);
 		}
@@ -1073,6 +1073,10 @@ public class UICamera : MonoBehaviour
 	/// <summary>
 	/// Update touch-based events.
 	/// </summary>
+
+	public void ResetTooltipDelay(){
+		mTooltipTime = RealTime.time + tooltipDelay;
+	}
 
 	public void ProcessTouches ()
 	{

@@ -44,8 +44,8 @@ public class UIWidgetContainerEditor : Editor
 		UIWidget[] widgets = t.GetComponentsInChildren<UIWidget>();
 
 		Event e = Event.current;
-		int id = GUIUtility.GetControlID(mHash, FocusType.Passive);
-		EventType type = e.GetTypeForControl(id);
+		int type = GUIUtility.GetControlID(mHash, FocusType.Passive);
+		EventType id= e.GetTypeForControl(type);
 		bool isWithinRect = false;
 		Vector3[] corners = null;
 		Vector3[] handles = null;
@@ -120,7 +120,7 @@ public class UIWidgetContainerEditor : Editor
 #endif
 		}
 
-		switch (type)
+		switch (id)
 		{
 			case EventType.Repaint:
 			{
@@ -137,18 +137,18 @@ public class UIWidgetContainerEditor : Editor
 						Handles.BeginGUI();
 						{
 							for (int i = 0; i < 4; ++i)
-								UIWidgetInspector.DrawKnob(handles[i], false, false, id);
+								UIWidgetInspector.DrawKnob(handles[i], false, false, type);
 
 							if (Mathf.Abs(v1.y - v0.y) > 80f)
 							{
-								UIWidgetInspector.DrawKnob(handles[4], false, false, id);
-								UIWidgetInspector.DrawKnob(handles[6], false, false, id);
+								UIWidgetInspector.DrawKnob(handles[4], false, false, type);
+								UIWidgetInspector.DrawKnob(handles[6], false, false, type);
 							}
 
 							if (Mathf.Abs(v3.x - v0.x) > 80f)
 							{
-								UIWidgetInspector.DrawKnob(handles[5], false, false, id);
-								UIWidgetInspector.DrawKnob(handles[7], false, false, id);
+								UIWidgetInspector.DrawKnob(handles[5], false, false, type);
+								UIWidgetInspector.DrawKnob(handles[7], false, false, type);
 							}
 						}
 						Handles.EndGUI();
@@ -164,14 +164,14 @@ public class UIWidgetContainerEditor : Editor
 
 				if (e.button == 1)
 				{
-					GUIUtility.hotControl = GUIUtility.keyboardControl = id;
+					GUIUtility.hotControl = GUIUtility.keyboardControl = type;
 					e.Use();
 				}
 				else if (e.button == 0 && isWithinRect && corners != null && UIWidgetInspector.Raycast(corners, out mStartDrag))
 				{
 					mCanDrag = true;
 					mStartPos = t.position;
-					GUIUtility.hotControl = GUIUtility.keyboardControl = id;
+					GUIUtility.hotControl = GUIUtility.keyboardControl = type;
 					e.Use();
 				}
 			}
@@ -183,7 +183,7 @@ public class UIWidgetContainerEditor : Editor
 				bool dragStarted = (e.mousePosition - mStartMouse).magnitude > 3f;
 				if (dragStarted) mAllowSelection = false;
 
-				if (GUIUtility.hotControl == id)
+				if (GUIUtility.hotControl == type)
 				{
 					e.Use();
 
@@ -218,7 +218,7 @@ public class UIWidgetContainerEditor : Editor
 
 			case EventType.MouseUp:
 			{
-				if (GUIUtility.hotControl == id)
+				if (GUIUtility.hotControl == type)
 				{
 					GUIUtility.hotControl = 0;
 					GUIUtility.keyboardControl = 0;
@@ -285,7 +285,7 @@ public class UIWidgetContainerEditor : Editor
 				}
 				else if (e.keyCode == KeyCode.Escape)
 				{
-					if (GUIUtility.hotControl == id)
+					if (GUIUtility.hotControl == type)
 					{
 						if (mIsDragging)
 						{

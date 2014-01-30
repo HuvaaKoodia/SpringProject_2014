@@ -24,17 +24,17 @@ public class XML_Loader{
 //XML subs
 
     //getting values
-	public static string getStr(XmlElement element,string name){
+	public static string getStr(XmlNode element,string name){
 		if (element[name]==null) return "";
 		return element[name].InnerText;
 	}
 	
-	public static int getInt(XmlElement element,string name){
+	public static int getInt(XmlNode element,string name){
 		if (element[name]==null) return 0;
 		return int.Parse(element[name].InnerText);
 	}
 	
-	public static float getFlt(XmlElement element,string name){
+	public static float getFlt(XmlNode element,string name){
 		if (element[name]==null) return 0f;
 		return float.Parse(element[name].InnerText);
 	}
@@ -199,7 +199,7 @@ public class XML_Loader{
 		if (LoadFromDisc){
 			//load from disc
 			XML_Loader.checkFolder(path);
-			var files=Directory.GetFiles(path);
+			var files=Directory.GetFiles(path,"*.xml",SearchOption.AllDirectories);
 			
 			foreach (var f in files)
 			{

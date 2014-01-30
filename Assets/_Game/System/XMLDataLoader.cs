@@ -8,7 +8,7 @@ public class XMLDataLoader : XML_Loader
 {
     public static void Read(GameDatabase database)
     {
-		var DOX=XML_Loader.GetAllXmlDocuments("Data");
+		var DOX=GetAllXmlDocuments("Data/");
 
 		foreach (var Xdoc in DOX)
         {
@@ -28,20 +28,9 @@ public class XMLDataLoader : XML_Loader
                     database.players.Add(newPlayer);
                 }
 				#endregion
-				#region Weapon
-				if (node.Name == "Weapon")
-                {
-                    string weaponType = XML_Loader.getAttStr(node, "Type");
-                    string weaponName = XML_Loader.getAttStr(node, "Name");
 
-                    int damage = XML_Loader.getAttInt(node, "Damage");
-                    int accuracy = XML_Loader.getAttInt(node, "Accuracy");
-                    int heat = XML_Loader.getAttInt(node, "Heat");
+				ReadWeapon(node,database);
 
-                    WeaponXmlData newWeapon = new WeaponXmlData(weaponType, weaponName, damage, accuracy, heat);
-                    database.weapons.Add(newWeapon);
-                }
-				#endregion
 				#region Enemy
 				if (node.Name == "Enemy")
                 {
@@ -68,4 +57,42 @@ public class XMLDataLoader : XML_Loader
             }
 		}
     }
+
+	static void ReadWeapon (XmlNode node, GameDatabase database)
+	{
+		if (node.Name == "Weapon")
+		{
+			InvBaseItem item=new InvBaseItem();
+			item.name=getAttStr(node,"type");
+			item.description=getStr(node,"Description");
+			item.iconName=getAttStr(node,"sprite");
+
+			foreach(var t in Subs.EnumValues<InvStat.Type>()){
+				AddStat(node,item,t);
+			}
+			/*string weaponType = XML_Loader.getAttStr(node, "Type");
+                    string weaponName = XML_Loader.getAttStr(node, "Name");
+
+                    int damage = XML_Loader.getAttInt(node, "Damage");
+                    int accuracy = XML_Loader.getAttInt(node, "Accuracy");
+                    int heat = XML_Loader.getAttInt(node, "Heat");
+
+                    WeaponXmlData newWeapon = new WeaponXmlData(weaponType, weaponName, damage, accuracy, heat);
+                    database.weapons.Add(newWeapon);
+			 */
+			database.items.Add(item);
+		}
+
+	}
+
+	static void AddStat(XmlNode node,InvBaseItem item,InvStat.Type type){
+		var n1=node[type.ToString()];
+		if (n1!=null){
+			var stat=new InvStat();
+			stat.type=type;
+			stat.min_amount=getAttInt(n1,"min");
+			stat.min_amount=getAttInt(n1,"max");
+			item.stats.Add(stat);
+		}
+	}
 }

@@ -161,9 +161,9 @@ public class NGUISettings
 		
 		if (retVal == null)
 		{
-			int id;
-			if (int.TryParse(path, out id))
-				return EditorUtility.InstanceIDToObject(id) as T;
+			int type;
+			if (int.TryParse(path, out type))
+				return EditorUtility.InstanceIDToObject(type) as T;
 		}
 		return retVal;
 	}

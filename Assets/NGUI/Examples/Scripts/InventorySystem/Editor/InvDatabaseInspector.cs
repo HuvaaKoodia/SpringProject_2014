@@ -139,7 +139,7 @@ public class InvDatabaseInspector : Editor
 
 			if (atlas != db.iconAtlas)
 			{
-				NGUIEditorTools.RegisterUndo("Databse Atlas change", db);
+				NGUIEditorTools.RegisterUndo("Database Atlas change", db);
 				db.iconAtlas = atlas;
 				foreach (InvBaseItem i in db.items) i.iconAtlas = atlas;
 			}
@@ -180,8 +180,9 @@ public class InvDatabaseInspector : Editor
 					foreach (InvStat stat in item.stats)
 					{
 						InvStat copy = new InvStat();
-						copy.id = stat.id;
-						copy.amount = stat.amount;
+						copy.type = stat.type;
+						copy.min_amount = stat.min_amount;
+						copy.max_amount = stat.max_amount;
 						copy.modifier = stat.modifier;
 						bi.stats.Add(copy);
 					}
@@ -337,14 +338,20 @@ public class InvDatabaseInspector : Editor
 
 						GUILayout.BeginHorizontal();
 						{
-							InvStat.Identifier iden = (InvStat.Identifier)EditorGUILayout.EnumPopup(stat.id, GUILayout.Width(80f));
-
+							//stat type
+							InvStat.Type iden = (InvStat.Type)EditorGUILayout.EnumPopup(stat.type, GUILayout.Width(60f));
+							//min max
 							// Color the field red if it's negative, green if it's positive
-							if (stat.amount > 0) GUI.backgroundColor = Color.green;
-							else if (stat.amount < 0) GUI.backgroundColor = Color.red;
-							int amount = EditorGUILayout.IntField(stat.amount, GUILayout.Width(40f));
-							GUI.backgroundColor = Color.white;
+							if (stat.min_amount > 0) GUI.backgroundColor = Color.green;
+							else if (stat.min_amount < 0) GUI.backgroundColor = Color.red;
+							int min_amount = EditorGUILayout.IntField(stat.min_amount, GUILayout.Width(40f));
 
+							if (stat.min_amount > 0) GUI.backgroundColor = Color.green;
+							else if (stat.min_amount < 0) GUI.backgroundColor = Color.red;
+							int max_amount = EditorGUILayout.IntField(stat.max_amount, GUILayout.Width(40f));
+
+							//modifier
+							GUI.backgroundColor = Color.white;
 							InvStat.Modifier mod = (InvStat.Modifier)EditorGUILayout.EnumPopup(stat.modifier);
 
 							GUI.backgroundColor = Color.red;
@@ -354,11 +361,12 @@ public class InvDatabaseInspector : Editor
 								item.stats.RemoveAt(i);
 								--i;
 							}
-							else if (iden != stat.id || amount != stat.amount || mod != stat.modifier)
+							else if (iden != stat.type || min_amount != stat.min_amount || max_amount != stat.max_amount || mod != stat.modifier)
 							{
 								NGUIEditorTools.RegisterUndo("Item Stats", db);
-								stat.id = iden;
-								stat.amount = amount;
+								stat.type = iden;
+								stat.min_amount = min_amount;
+								stat.max_amount = max_amount;
 								stat.modifier = mod;
 							}
 							GUI.backgroundColor = Color.white;
@@ -371,7 +379,7 @@ public class InvDatabaseInspector : Editor
 				{
 					NGUIEditorTools.RegisterUndo("Add Item Stat", db);
 					InvStat stat = new InvStat();
-					stat.id = InvStat.Identifier.Value;
+					stat.type = InvStat.Type.Value;
 					item.stats.Add(stat);
 				}
 
