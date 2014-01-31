@@ -20,7 +20,7 @@ public class PlayerMain : EntityMain
 	public PlayerTargetingSub targetingSub;
 
 	public List<WeaponMain> gunList;
-	public WeaponMain currentGun;
+	public WeaponID currentGunID;
 	
 	public bool targetingMode { get; private set; }
 
@@ -61,7 +61,6 @@ public class PlayerMain : EntityMain
 		{
 			gun.ReduceHeat();
 		}
-		GC.menuHandler.gunInfoDisplay.UpdateGunInfo();
         StartTurn();
     }
 
@@ -74,7 +73,6 @@ public class PlayerMain : EntityMain
     {
 		inputSub.enabled = false;
 		EndTargetingMode();
-		GC.menuHandler.gunInfoDisplay.UpdateGunInfo();
 		GC.ChangeTurn(TurnState.StartAITurn);
     }
 
@@ -119,7 +117,7 @@ public class PlayerMain : EntityMain
         Destroy(loot);
 
         Health += 20;
-		currentGun.AddAmmo(10);
+		GetCurrentWeapon().AddAmmo(10);
     }
 
 	public override void TakeDamage(int damage)
@@ -154,9 +152,8 @@ public class PlayerMain : EntityMain
 
 	public void ChangeWeapon(WeaponID id)
 	{
-		currentGun = gunList[(int)id];
+		currentGunID = id;
 		targetingSub.CheckGunTargets();
-		GC.menuHandler.gunInfoDisplay.UpdateGunInfo();
 		GC.menuHandler.CheckTargetingModePanel();
 	}
 
@@ -164,4 +161,11 @@ public class PlayerMain : EntityMain
 	{
 		return gunList[(int)id];
 	}
+	
+	public WeaponMain GetCurrentWeapon()
+	{
+		return gunList[(int)currentGunID];
+	}
+
+	
 }

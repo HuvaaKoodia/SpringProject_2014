@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+using System.Collections.Generic;
+
 public class GunInfoDisplay : MonoBehaviour {
 
 	public MenuHandler menuHandler;
 
-	public UILabel label;
+	public UILabel infoLabel;
+	public UISprite selectionHighlight;
+	public List<UISprite> weaponSelectionButtons;
 
 	// Use this for initialization
 	void Start () {
@@ -21,7 +25,10 @@ public class GunInfoDisplay : MonoBehaviour {
 		if (menuHandler.player == null)
 			return;
 
-		WeaponMain gun = menuHandler.player.currentGun;
+		selectionHighlight.transform.position = 
+			weaponSelectionButtons[(int)menuHandler.player.currentGunID].transform.position;
+
+		WeaponMain gun = menuHandler.player.GetCurrentWeapon();
 
 		string info = gun.GunName;
 
@@ -34,9 +41,14 @@ public class GunInfoDisplay : MonoBehaviour {
 		info += "heat: " + gun.CurrentHeat + "/100";
 
 		info += "\n";
+	
+		info += "ROF: " + gun.GetNumShotsTargetedTotal() + "/" + gun.RateOfFire;
 
-		info += "ROF: " + gun.RateOfFire;
+		infoLabel.text = info;
+	}
 
-		label.text = info;
+	public Color GetGunColor(WeaponID id)
+	{
+		return weaponSelectionButtons[(int)id].color;
 	}
 }

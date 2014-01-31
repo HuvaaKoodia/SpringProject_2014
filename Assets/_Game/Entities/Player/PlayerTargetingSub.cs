@@ -10,7 +10,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 	List<EnemyMain> allEnemies;
 
-	Dictionary<EnemyMain, UISprite> targetableEnemies;
+	Dictionary<EnemyMain, TargetMarkHandler> targetableEnemies;
 
 	UISprite insightPrefab;
 
@@ -20,7 +20,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 		allEnemies = player.GC.aiController.enemies;
 
-		targetableEnemies = new Dictionary<EnemyMain, UISprite>();
+		targetableEnemies = new Dictionary<EnemyMain, TargetMarkHandler>();
 
 		insightPrefab = player.GC.SS.PS.InsightSprite;
 	}
@@ -76,35 +76,24 @@ public class PlayerTargetingSub : MonoBehaviour {
 			gun.ClearTargets();
 		}
 
-		foreach(KeyValuePair<EnemyMain, UISprite> targetSprite in targetableEnemies)
-		{
-			NGUITools.Destroy(targetSprite.Value);
-			Destroy(targetSprite.Value.gameObject);
-		}
+		foreach (KeyValuePair<EnemyMain, TargetMarkHandler> enemyPair in targetableEnemies)
+			enemyPair.Value.DeInit();
 
 		targetableEnemies.Clear();
-	}
-	
-	void UnsightEnemy(EnemyMain enemy)
-	{
-		player.currentGun.RemoveTarget(enemy);
-
-		NGUITools.Destroy(targetableEnemies[enemy]);
-		targetableEnemies.Remove(enemy);
 	}
 	
 	public void AddEnemyToTargetables(EnemyMain enemy, Vector3 enemyPosInScreen)
 	{
 		enemyPosInScreen.z = 1;
 
-		UISprite targetSprite = GameObject.Instantiate(insightPrefab) as UISprite;
+		/*UISprite targetSprite = GameObject.Instantiate(insightPrefab) as UISprite;
 		targetSprite.transform.parent = player.GC.menuHandler.targetMarkPanel.transform;
 		targetSprite.spriteName = "crosshair_gray";
 		targetSprite.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
 		targetSprite.transform.position = player.GC.menuHandler.NGUICamera.ScreenToWorldPoint(enemyPosInScreen);
-		targetSprite.enabled = true;
-
-		targetableEnemies.Add(enemy, targetSprite);
+		targetSprite.enabled = true;*/
+		TargetMarkHandler tmHandler = new TargetMarkHandler(player.GC, enemyPosInScreen);
+		targetableEnemies.Add(enemy, tmHandler);
 	}
 
 	public void TargetAtMousePosition()
@@ -116,32 +105,21 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 			if (targetableEnemies.ContainsKey(enemyTargeted))
 			{
-				bool wasAdded = player.currentGun.ToggleTarget(enemyTargeted);
+				player.GetCurrentWeapon().ToggleTarget(enemyTargeted);
 
-				if (wasAdded)
-				{
-					targetableEnemies[enemyTargeted].spriteName = "crosshair_red";
-				}
-				else
-				{
-					targetableEnemies[enemyTargeted].spriteName = "crosshair_gray";
-				}
+				targetableEnemies[enemyTargeted].ChangeNumShots(
+					player.currentGunID, 
+					player.GetCurrentWeapon().GetNumShotsAtTarget(enemyTargeted));
 			}
 		}
 	}
 
 	public void CheckGunTargets()
 	{
-		foreach(KeyValuePair<EnemyMain, UISprite> enemyPair in targetableEnemies)
+		foreach(KeyValuePair<EnemyMain, TargetMarkHandler> enemyPair in targetableEnemies)
 		{
-			if (player.currentGun.targets.Contains(enemyPair.Key))
-			{
-				enemyPair.Value.spriteName = "crosshair_red";
-			}
-			else
-			{
-				enemyPair.Value.spriteName = "crosshair_gray";
-			}
+			enemyPair.Value.ChangeNumShots(player.currentGunID, 
+			               player.GetCurrentWeapon().GetNumShotsAtTarget(enemyPair.Key));
 		}
 	}
 

@@ -23,7 +23,7 @@ public class WeaponMain : MonoBehaviour {
 	public int MaxAmmo { get; protected set;}
 	public int CurrentAmmo { get; protected set;}
 
-	public List<EnemyMain> targets { get; private set;}
+	public Dictionary<EnemyMain, int> targets { get; private set;}
 
 	public void SetWeapon(InvGameItem weapon){
 			Weapon=weapon;
@@ -52,7 +52,7 @@ public class WeaponMain : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		targets = new List<EnemyMain>();
+		targets = new Dictionary<EnemyMain, int>();
 	}
 	
 	// Update is called once per frame
@@ -62,9 +62,13 @@ public class WeaponMain : MonoBehaviour {
 	//return true if added, false if removed
 	public virtual bool ToggleTarget(EnemyMain enemy)
 	{
-		if (targets.Contains(enemy))
+		if (targets.ContainsKey(enemy))
 		{
-			RemoveTarget(enemy);
+			if (GetNumShotsTargetedTotal() < RateOfFire)
+				IncreaseShotsAtTarget(enemy);
+			else
+				RemoveTarget(enemy);
+
 			return false;
 		}
 		else
@@ -76,10 +80,20 @@ public class WeaponMain : MonoBehaviour {
 
 	protected void AddTarget(EnemyMain enemy)
 	{
-		if (targets.Count < RateOfFire)
+		if (GetNumShotsTargetedTotal() < RateOfFire)
 		{
-			targets.Add(enemy);
+			targets.Add(enemy, 1);
 		}
+	}
+
+	protected void IncreaseShotsAtTarget(EnemyMain enemy)
+	{
+		targets[enemy]++;
+	}
+
+	protected void RemoveTarget(EnemyMain enemy)
+	{
+		targets.Remove(enemy);
 	}
 
 	public void ClearTargets()
@@ -87,43 +101,25 @@ public class WeaponMain : MonoBehaviour {
 		targets.Clear();
 	}
 
-	public void RemoveTarget(EnemyMain enemy)
-	{
-		if (targets.Contains(enemy))
-		{
-			targets.Remove(enemy);
-		}
-	}
-
 	public void Shoot()
 	{
-		int shotsPerTarget = Mathf.CeilToInt((float)RateOfFire / targets.Count);
-
-		int totalShots = 0;
-
 		if (CurrentHeat >= 100 || CurrentAmmo <= 0)
 			return;
 
 		CurrentHeat += HeatGeneration;
 
-		foreach(EnemyMain enemy in targets)
+		foreach(KeyValuePair<EnemyMain, int> enemyPair in targets)
 		{
 			//shoot all shots at one enemy concecutively
-			for (int i = 0; i < shotsPerTarget; i++)
+			for (int i = 0; i < enemyPair.Value; i++)
 			{
-				//stop shooting if all shots for turn have been shot, this should be true
-				//only at last enemy if amount of shots divided by targets isn't even
-				if (totalShots == RateOfFire)
-					break;
-
-				totalShots++;
 				CurrentAmmo--;
 
 				if (Accuracy > Subs.RandomPercent())
 				{
 					int dmg = (int)Random.Range(MinDamage, MaxDamage);
 
-					enemy.TakeDamage(dmg);
+					enemyPair.Key.TakeDamage(dmg);
 				}
 			}
 		}
@@ -137,5 +133,22 @@ public class WeaponMain : MonoBehaviour {
 	public void AddAmmo(int amount)
 	{
 		CurrentAmmo = Mathf.Min(CurrentAmmo+amount, MaxAmmo);
+	}
+
+	public int GetNumShotsTargetedTotal()
+	{
+		int numShots = 0; 
+		foreach(KeyValuePair<EnemyMain, int> enemyPair in targets)
+			numShots += enemyPair.Value;
+
+		return numShots;
+	}
+
+	public int GetNumShotsAtTarget(EnemyMain enemy)
+	{
+		if (targets.ContainsKey(enemy))
+			return targets[enemy];
+		else
+			return 0;
 	}
 }
