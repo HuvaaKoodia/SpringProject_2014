@@ -11,6 +11,8 @@ public class MapGenerator : MonoBehaviour
 	public static Vector3 TileSize=new Vector3(3,3,3);
 	public const string WallIcon="w",DoorIcon="d";
 
+	public bool DEBUG_create_temp_tiles=false;
+
 	public XMLMapLoader XmlMapRead;
 	public PrefabStore MapPrefabs;
 	
@@ -106,7 +108,8 @@ public class MapGenerator : MonoBehaviour
 
 				//tile mesh
 				SetTileObject(x,y,tile,GC.TileObjectMap);
-				tile.TileObject.transform.parent=tile.transform;
+				if (tile.TileObject!=null)
+					tile.TileObject.transform.parent=tile.transform;
 
 				//game objects
 				int[] entity_pos = { x, y };
@@ -136,8 +139,22 @@ public class MapGenerator : MonoBehaviour
 					case TileObjData.Obj.Loot:
 						var LootCrate = GameObject.Instantiate(MapPrefabs.LootCratePrefab, tile_pos, Quaternion.identity) as GameObject;
 						LootCrate.transform.parent=object_container.transform;
+
+					GC.LootCrates.Add(LootCrate.GetComponent<LootCrateMain>());
 					break;
 				}
+			}
+		}
+	}
+	/// <summary>
+	/// Generates loot to the loot containers.
+	/// DEV.
+	/// </summary>
+	public void GenerateLoot(GameController GC,ShipObjData ship){
+		foreach (var c in GC.LootCrates){
+			int a=Subs.GetRandom(1,5);
+			for (int i=0;i<a;i++){
+				c.Items.Add(InvGameItem.GetRandomItem(GC.SS.GDB));
 			}
 		}
 	}
@@ -203,7 +220,6 @@ public class MapGenerator : MonoBehaviour
 		if (floor_amount_loot>0){
 			GetFreeTilesOfType(GC,TileObjData.Type.Floor,free_tiles);
 			while (free_tiles.Count>0){
-				
 				if (floor_amount_loot==0) break;
 				
 				var tile=Subs.GetRandom(free_tiles);
@@ -230,10 +246,6 @@ public class MapGenerator : MonoBehaviour
 				tile.SetObj(TileObjData.Obj.Enemy);
 			}
 		}
-
-
-
-		//add items to the item crates DEV.TODO
 	}
 
 	void GetFreeTilesOfType(GameController GC,TileObjData.Type type,List<TileObjData> free_tiles){
@@ -256,14 +268,14 @@ public class MapGenerator : MonoBehaviour
 	void SetTileObject (int x,int y,TileMain tile,TileObjData[,] grid)
 	{
 		var rotation=Quaternion.identity;
-		GameObject tileobj=MapPrefabs.BasicFloor;//if floor or corridor
+		GameObject tileobj=null;//if floor or corridor
 		switch (tile.Data.TileType)
 		{
 		case TileObjData.Type.Wall:
-			tileobj=MapPrefabs.BasicWall;
+			if (DEBUG_create_temp_tiles) tileobj=MapPrefabs.BasicWall;
 			break;
 		case TileObjData.Type.Empty:
-			tileobj=MapPrefabs.BasicEmpty;
+			if (DEBUG_create_temp_tiles) tileobj=MapPrefabs.BasicEmpty;
 			break;
 		case TileObjData.Type.Door:
 			tileobj=MapPrefabs.BasicDoor;
@@ -560,8 +572,8 @@ public class MapGenerator : MonoBehaviour
 
 			break;
 		}
-		
-		tile.TileObject=Instantiate(tileobj,tile.transform.position+tileobj.transform.position,rotation) as GameObject;
+		if (tileobj!=null)
+			tile.TileObject=Instantiate(tileobj,tile.transform.position,rotation) as GameObject;
 	}
 
 	bool CheckTypeEqual(System.Func<TileObjData.Type,bool> test, TileObjData.Type[] tile_types,params int[] dirs){

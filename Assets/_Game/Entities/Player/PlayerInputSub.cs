@@ -87,19 +87,27 @@ public class PlayerInputSub : MonoBehaviour {
 		{
 			if (player.targetingMode)
 			{
-				player.targetingSub.TargetAtMousePosition();
+				player.targetingSub.TargetAtMousePosition(true);
 			}
 			else
 			{
 				Component target;
 				if (!player.targetingMode && Subs.GetObjectMousePos(out target, MapGenerator.TileSize.magnitude - 2, "Loot"))
 	            {
-	                player.PickupLoot(target.gameObject);
+	                player.PickupLoot(target.GetComponent<LootCrateMain>());
 	            }
 			}
 			
 			player.GC.menuHandler.CheckTargetingModePanel();
 		}
+		else if (Input.GetMouseButtonDown(1))
+		{
+			if (player.targetingMode)
+			{
+				player.targetingSub.TargetAtMousePosition(false);
+			}
+		}
+
 	}
 	
 	public void MoveForwardInput()

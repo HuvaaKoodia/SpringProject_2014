@@ -99,7 +99,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 		targetableEnemies.Add(enemy, tmHandler);
 	}
 
-	public void TargetAtMousePosition()
+	public void TargetAtMousePosition(bool left_click)
 	{
 		Component target;
 		if (player.targetingMode && Subs.GetObjectMousePos(out target, 20, "Enemy"))
@@ -108,7 +108,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 			if (targetableEnemies.ContainsKey(enemyTargeted))
 			{
-				player.GetCurrentWeapon().ToggleTarget(enemyTargeted);
+				player.GetCurrentWeapon().ToggleTarget(enemyTargeted,left_click);
 
 				targetableEnemies[enemyTargeted].ChangeNumShots(
 					player.currentGunID, 

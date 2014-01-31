@@ -8,7 +8,7 @@ public class InventoryMain : MonoBehaviour {
 
 	public MenuHandler HUD;
 	public GameObject InventoryParent,LootParent;
-	public UIItemStorage InventoryStorage,LootStorate;
+	public UIItemStorage InventoryStorage,LootStorage;
 	public List<UIEquipmentSlot> EqupmentSlots;
 	public EquipRandomItem temp_random_item_button;
 
@@ -28,17 +28,25 @@ public class InventoryMain : MonoBehaviour {
 
 	public void ToggleInventory()
 	{
+
+
 		InventoryParent.SetActive(!InventoryParent.activeSelf);
 		HUD.gameObject.SetActive(!InventoryParent.activeSelf);
 
-		//activate weapons
-		ActivateWeapon(WeaponID.LeftHand,UIEquipmentSlot.Slot.WeaponLeftHand);
-		ActivateWeapon(WeaponID.LeftShoulder,UIEquipmentSlot.Slot.WeaponLeftShoulder);
-		ActivateWeapon(WeaponID.RightHand,UIEquipmentSlot.Slot.WeaponRightHand);
-		ActivateWeapon(WeaponID.RightShoulder,UIEquipmentSlot.Slot.WeaponRightShoulder);
 
-		//activate utilities
-		//DEV.TODO
+		if (!InventoryParent.activeSelf){
+			//activate weapons
+			ActivateWeapon(WeaponID.LeftHand,UIEquipmentSlot.Slot.WeaponLeftHand);
+			ActivateWeapon(WeaponID.LeftShoulder,UIEquipmentSlot.Slot.WeaponLeftShoulder);
+			ActivateWeapon(WeaponID.RightHand,UIEquipmentSlot.Slot.WeaponRightHand);
+			ActivateWeapon(WeaponID.RightShoulder,UIEquipmentSlot.Slot.WeaponRightShoulder);
+
+			//activate utilities
+			//DEV.TODO
+
+
+			if (LootParent.activeSelf) LootParent.SetActive(false);
+		}
 	}
 
 	void ActivateWeapon(WeaponID id,UIEquipmentSlot.Slot slot){
@@ -60,7 +68,9 @@ public class InventoryMain : MonoBehaviour {
 	}
 
 	//DEV.TODO
-	public void SetLoot(){
-		
+	public void SetLoot(LootCrateMain loot){
+		LootParent.SetActive(true);
+
+		LootStorage.ChangeItemStorage(loot.Items);
 	}
 }

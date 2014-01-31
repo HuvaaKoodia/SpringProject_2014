@@ -115,9 +115,8 @@ public class InvGameItem
 		}
 		return null;
 	}
-
-	//public InvGameItem (int type) { mBaseItemID = type; }
-	public InvGameItem (int type, InvBaseItem bi) 
+	
+	public InvGameItem (InvBaseItem bi) 
 	{ 
 		mBaseItem = bi; 
 		Stats=CalculateStats();
@@ -171,4 +170,17 @@ public class InvGameItem
 		}
 		return stats;
 	}
+
+	public static InvGameItem GetRandomItem (GameDatabase DB)
+	{
+		int qualityLevels = (int)InvGameItem.Quality._Amount;
+		int index = Random.Range(0, DB.items.Count);
+		InvBaseItem item = Subs.GetRandom(DB.items);
+		
+		InvGameItem gi = new InvGameItem(item);
+		gi.quality = (InvGameItem.Quality)Random.Range(0, qualityLevels);
+		gi.itemLevel = NGUITools.RandomRange(item.minItemLevel, item.maxItemLevel);
+		return gi;
+	}
+
 }

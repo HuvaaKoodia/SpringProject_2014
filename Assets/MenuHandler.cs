@@ -22,7 +22,6 @@ public class MenuHandler : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-       	healthText.text = player.Health.ToString();
 	}
 	
 	// Update is called once per frame
@@ -91,5 +90,10 @@ public class MenuHandler : MonoBehaviour {
 		//don't show end turn button when targeting, as it's kinda confusing
 		//as it won't shoot
 		endButton.gameObject.SetActive(!player.targetingMode);
+	}
+
+	public void UpdateHealthText (int health)
+	{
+		healthText.text = ""+health;
 	}
 }

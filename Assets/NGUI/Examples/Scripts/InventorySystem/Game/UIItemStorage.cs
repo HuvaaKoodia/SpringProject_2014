@@ -6,6 +6,7 @@ using System.Collections.Generic;
 /// </summary>
 public class UIItemStorage : MonoBehaviour
 {
+
 	public InvItemStorage ItemStorage;
 
 	public GameObject SlotPrefab;
@@ -32,42 +33,56 @@ public class UIItemStorage : MonoBehaviour
 	/// Initialize the container and create an appropriate number of UI slots.
 	/// </summary>
 
+	List<UIStorageSlot> Slots;
+
 	void Start ()
 	{
-		if (SlotPrefab != null)
-		{
-			int count = 0;
-			Bounds b = new Bounds();
+		UpdateSlots();
 
-			for (int y = 0; y < ItemStorage.maxRows; ++y)
-			{
-				for (int x = 0; x < ItemStorage.maxColumns; ++x)
-				{
-					GameObject go = NGUITools.AddChild(gameObject, SlotPrefab);
-					Transform t = go.transform;
-					t.localPosition = new Vector3(padding + (x + 0.5f) * spacing, -padding - (y + 0.5f) * spacing, 0f);
+	}
 
-					UIStorageSlot slot = go.GetComponent<UIStorageSlot>();
-					
-					if (slot != null)
-					{
-						slot.storage = ItemStorage;
-						slot.slot = count;
-					}
+	public void ChangeItemStorage (InvItemStorage items)
+	{
+		ItemStorage=items;
 
-					b.Encapsulate(new Vector3(padding * 2f + (x + 1) * spacing, -padding * 2f - (y + 1) * spacing, 0f));
+		UpdateSlots();
 
-					if (++count >= ItemStorage.maxItemCount)
-					{
-						if (background != null)
-						{
-							background.transform.localScale = b.size;
-						}
-						return;
-					}
-				}
-			}
-			if (background != null) background.transform.localScale = b.size;
+	}
+
+	void UpdateSlots ()
+	{
+		if (SlotPrefab == null||ItemStorage==null) return;
+
+		if (Slots==null) Slots=new List<UIStorageSlot>();
+
+		if (Slots.Count>0){
+			foreach (var s in Slots)
+				NGUITools.Destroy(s.gameObject);
 		}
+		Slots.Clear();
+
+		int count = 0;
+		Bounds b = new Bounds();
+		
+		for (int y = 0; y < ItemStorage.maxRows; ++y)
+		{
+			for (int x = 0; x < ItemStorage.maxColumns; ++x)
+			{
+				GameObject go = NGUITools.AddChild(gameObject, SlotPrefab);
+				Transform t = go.transform;
+				t.localPosition = new Vector3(padding + (x + 0.5f) * spacing, -padding - (y + 0.5f) * spacing, 0f);
+				
+				UIStorageSlot slot = go.GetComponent<UIStorageSlot>();
+				Slots.Add(slot);
+				if (slot != null)
+				{
+					slot.storage = ItemStorage;
+					slot.slot = count;
+				}
+				++count;
+				b.Encapsulate(new Vector3(padding * 2f + (x + 1) * spacing, -padding * 2f - (y + 1) * spacing, 0f));
+			}
+		}
+		if (background != null) background.transform.localScale = b.size;
 	}
 }

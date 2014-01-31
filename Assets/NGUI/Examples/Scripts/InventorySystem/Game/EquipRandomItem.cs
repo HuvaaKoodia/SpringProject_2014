@@ -9,16 +9,9 @@ public class EquipRandomItem : MonoBehaviour
 	void OnClick()
 	{
 		if (equipment == null) return;
-		List<InvBaseItem> list = DB.items;
-		if (list.Count == 0) return;
+		if (DB.items.Count == 0) return;
 
-		int qualityLevels = (int)InvGameItem.Quality._Amount;
-		int index = Random.Range(0, list.Count);
-		InvBaseItem item = list[index];
-
-		InvGameItem gi = new InvGameItem(index, item);
-		gi.quality = (InvGameItem.Quality)Random.Range(0, qualityLevels);
-		gi.itemLevel = NGUITools.RandomRange(item.minItemLevel, item.maxItemLevel);
+		var gi=InvGameItem.GetRandomItem(DB);
 		equipment.Equip(gi);
 	}
 }

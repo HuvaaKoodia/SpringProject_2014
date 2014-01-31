@@ -46,6 +46,7 @@ public class PlayerMain : EntityMain
 	void Start()
     {
 		ap = apMax;
+		GC.menuHandler.UpdateHealthText(maxHealth);
 	}
 	
 	// Update is called once per frame
@@ -118,15 +119,14 @@ public class PlayerMain : EntityMain
 			EndPlayerPhase();
 	}
 
-    public void PickupLoot(GameObject loot)
+    public void PickupLoot(LootCrateMain loot)
     {
         if (ap < lootPickupCost)
             return;
 
-        Destroy(loot);
-
-        Health += 20;
-		GetCurrentWeapon().AddAmmo(10);
+		GC.Inventory.SetLoot(loot);
+		GC.Inventory.ToggleInventory();
+		loot.Looted();
     }
 
 	public override void TakeDamage(int damage)
@@ -135,7 +135,7 @@ public class PlayerMain : EntityMain
 
 		Health -= damage;
 
-		GC.menuHandler.healthText.text = Health.ToString();
+		GC.menuHandler.UpdateHealthText(Health);
 
         if (Health <= 0)
 		{

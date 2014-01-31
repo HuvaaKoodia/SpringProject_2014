@@ -27,37 +27,37 @@ public class GameController : MonoBehaviour {
 
 	public MenuHandler menuHandler;
 	public InventoryMain Inventory;
+
+	public List<LootCrateMain> LootCrates {get;private set;}
 	
 	// Use this for initialization
-	void Awake()
+	void Start()
     {
 		//TileObjects=new List<TileObjData>();
 		//Tiles=new List<TileMain>();
 
 		SS=GameObject.FindGameObjectWithTag("SharedSystems").GetComponent<SharedSystemsMain>();
 
+		LootCrates=new List<LootCrateMain>();
 		aiController = new AIcontroller(this);
-
+		ShipObjData ship_objdata=null;
 		if (UseTestMap)
 		{
-			var ship_objdata=SS.SGen.GenerateShipObjectData("testship");
-			SS.MGen.GenerateObjectDataMap(this,ship_objdata.Floors[0]);
-			SS.MGen.GenerateShipItems(this,ship_objdata);
-			SS.MGen.GenerateSceneMap(this);
+			ship_objdata=SS.SGen.GenerateShipObjectData("testship");
 		}
 		else
 		{
-			var ship_objdata=SS.SGen.GenerateShipObjectData(TestLoadShipName);
-			SS.MGen.GenerateObjectDataMap(this,ship_objdata.Floors[0]);
-			SS.MGen.GenerateShipItems(this,ship_objdata);
-			SS.MGen.GenerateSceneMap(this);
+			ship_objdata=SS.SGen.GenerateShipObjectData(TestLoadShipName);
 		}
 
-		if (menuHandler!=null)
-		{
-			menuHandler.player = player;
-			menuHandler.CheckTargetingModePanel();
-		}
+		SS.MGen.GenerateObjectDataMap(this,ship_objdata.Floors[0]);
+		SS.MGen.GenerateShipItems(this,ship_objdata);
+		SS.MGen.GenerateSceneMap(this);
+		SS.MGen.GenerateLoot(this,ship_objdata);
+
+		menuHandler.player = player;
+		menuHandler.CheckTargetingModePanel();
+
 
 		//link player to hud
 		Inventory.SetPlayer(player);

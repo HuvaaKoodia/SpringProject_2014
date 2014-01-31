@@ -69,22 +69,23 @@ public class WeaponMain : MonoBehaviour {
 	}
 
 	//return true if added, false if removed
-	public virtual bool ToggleTarget(EnemyMain enemy)
+	public virtual bool ToggleTarget(EnemyMain enemy,bool left_click)
 	{
 		if (targets.ContainsKey(enemy))
 		{
-			if (GetNumShotsTargetedTotal() < RateOfFire)
+			if (left_click&&GetNumShotsTargetedTotal() < RateOfFire)
 				IncreaseShotsAtTarget(enemy);
-			else
-				RemoveTarget(enemy);
+			else if (!left_click)
+				DecreaseShotsAtTarget(enemy);
 
 			return false;
 		}
-		else
+		else if (left_click)
 		{
 			AddTarget(enemy);
 			return true;
 		}
+		return false;
 	}
 
 	protected void AddTarget(EnemyMain enemy)
@@ -99,6 +100,16 @@ public class WeaponMain : MonoBehaviour {
 	{
 		targets[enemy]++;
 	}
+
+	protected void DecreaseShotsAtTarget(EnemyMain enemy)
+	{
+		targets[enemy]--;
+		if (targets[enemy]<=0){
+			RemoveTarget(enemy);
+		}
+	}
+
+
 
 	protected void RemoveTarget(EnemyMain enemy)
 	{

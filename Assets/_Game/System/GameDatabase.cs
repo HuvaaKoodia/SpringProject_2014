@@ -15,7 +15,7 @@ public class GameDatabase : MonoBehaviour
 	public UIAtlas ItemAtlas;
 
 	// Use this for initialization
-	void Start()
+	void Awake()
     {
         players = new List<PlayerXmlData>();
 	    //weapons = new List<WeaponXmlData>();
