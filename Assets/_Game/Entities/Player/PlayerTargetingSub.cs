@@ -14,6 +14,11 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 	UISprite insightPrefab;
 
+	public Rect TargetingArea 
+	{ 
+		get { return new Rect(60, 40, Screen.width-120, Screen.height-80); }
+	}
+
 	// Use this for initialization
 	void Awake () {
 		player = gameObject.GetComponent<PlayerMain>();
@@ -34,7 +39,6 @@ public class PlayerTargetingSub : MonoBehaviour {
 	{
 		UnsightAllEnemies();
 
-		int border = 20;
 		int screenWidth = (int)Camera.main.pixelWidth;
 		int screenHeight = (int)Camera.main.pixelHeight;
 		
@@ -47,8 +51,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 			Vector3 enemyPosInScreen = Camera.main.WorldToScreenPoint(adjustedEnemyPos);
 		
 			//if enemy is near edges of screen, ignore it (because its under hud)
-			if (Subs.insideArea(screenWidth, screenHeight, 
-			                    border, border, screenWidth-border, screenHeight-border))
+			if (!TargetingArea.Contains(enemyPosInScreen))
 				continue;
 
 			//check if enemy can be seen

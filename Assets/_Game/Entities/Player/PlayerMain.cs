@@ -51,7 +51,16 @@ public class PlayerMain : EntityMain
 	// Update is called once per frame
 	void Update()
     {
-	
+		if (GC.currentTurn != TurnState.PlayerTurn)
+			return;
+
+		foreach (WeaponMain weapon in gunList)
+		{
+			if (weapon == GetCurrentWeapon() && targetingMode)
+				weapon.LookAtMouse(targetingSub.TargetingArea);
+			else
+				weapon.RotateGraphics();
+		}
 	}
 
     public void StartPlayerPhase()

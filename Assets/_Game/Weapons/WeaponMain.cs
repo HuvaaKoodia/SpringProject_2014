@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 public class WeaponMain : MonoBehaviour {
 
+	public PlayerMain player;
+
 	public InvGameItem Weapon{get;private set;}
 
 	public string GunName { get;protected set;}
@@ -24,6 +26,10 @@ public class WeaponMain : MonoBehaviour {
 	public int CurrentAmmo { get; protected set;}
 
 	public Dictionary<EnemyMain, int> targets { get; private set;}
+
+	bool hasTargetRotation;
+	public Quaternion targetRotation;
+	public float rotationSpeed;
 
 	public void SetWeapon(InvGameItem weapon){
 			Weapon=weapon;
@@ -52,6 +58,9 @@ public class WeaponMain : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
+		rotationSpeed = 50;
+		targetRotation = Quaternion.identity;
+		hasTargetRotation = false;
 		targets = new Dictionary<EnemyMain, int>();
 	}
 	
@@ -150,5 +159,31 @@ public class WeaponMain : MonoBehaviour {
 			return targets[enemy];
 		else
 			return 0;
+	}
+
+	public void RotateGraphics()
+	{
+		if (hasTargetRotation)
+		{
+			transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime*rotationSpeed);
+		}
+		else
+		{
+			transform.rotation = Quaternion.RotateTowards(transform.rotation, player.transform.rotation, Time.deltaTime*rotationSpeed);
+		}
+	}
+
+	public void LookAtMouse(Rect bounds)
+	{
+		if (bounds.Contains(new Vector2(Input.mousePosition.x, Input.mousePosition.y)))
+		{
+
+			Vector3 mouseToWorld = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x , Input.mousePosition.y, 10));
+			/*
+			Quaternion temp = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(mouseToWorld), Time.deltaTime*rotationSpeed);
+			transform.rotation = temp * Quaternion.AngleAxis(90, Vector3.left);
+			*/
+			transform.LookAt(mouseToWorld);
+		}
 	}
 }
