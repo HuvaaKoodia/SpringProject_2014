@@ -66,22 +66,22 @@ public class MenuHandler : MonoBehaviour {
 
 	void LeftHandWeaponPressed()
 	{
-		player.ChangeWeapon(WeaponID.LeftHand);
+		player.inputSub.ChangeWeaponInput(WeaponID.LeftHand);
 	}
 
 	void LeftShoulderWeaponPressed()
 	{
-		player.ChangeWeapon(WeaponID.LeftShoulder);
+		player.inputSub.ChangeWeaponInput(WeaponID.LeftShoulder);
 	}
 
 	void RightHandWeaponPressed()
 	{
-		player.ChangeWeapon(WeaponID.RightHand);
+		player.inputSub.ChangeWeaponInput(WeaponID.RightHand);
 	}
 
 	void RightShoulderWeaponPressed()
 	{
-		player.ChangeWeapon(WeaponID.RightShoulder);
+		player.inputSub.ChangeWeaponInput(WeaponID.RightShoulder);
 	}
 
 	public void CheckTargetingModePanel()

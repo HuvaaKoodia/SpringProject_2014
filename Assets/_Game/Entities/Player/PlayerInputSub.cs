@@ -21,6 +21,8 @@ public class PlayerInputSub : MonoBehaviour {
             HotkeyInput();
 
             MouseInput();
+
+			player.GC.menuHandler.gunInfoDisplay.UpdateGunInfo();
         }
 	}
 
@@ -60,6 +62,22 @@ public class PlayerInputSub : MonoBehaviour {
 		else if (Input.GetButtonDown("Engage Combat"))
 		{
 			EngageCombatInput();
+		}
+		else if (Input.GetKeyDown(KeyCode.Alpha1))
+		{
+			ChangeWeaponInput(WeaponID.LeftShoulder);
+		}
+		else if (Input.GetKeyDown(KeyCode.Alpha2))
+		{
+			ChangeWeaponInput(WeaponID.LeftHand);
+		}
+		else if (Input.GetKeyDown(KeyCode.Alpha3))
+		{
+			ChangeWeaponInput(WeaponID.RightShoulder);
+		}
+		else if (Input.GetKeyDown(KeyCode.Alpha4))
+		{
+			ChangeWeaponInput(WeaponID.RightHand);
 		}
     }
 
@@ -139,12 +157,12 @@ public class PlayerInputSub : MonoBehaviour {
 		player.Attack();
 	}
 
-	public void ChangeWeaponInput()
+	public void ChangeWeaponInput(WeaponID id)
 	{
 		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving)
 			return;
 
-
+		player.ChangeWeapon(id);
 	}
 
 	public void EndTurnInput()

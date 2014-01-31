@@ -36,4 +36,8 @@ public class PrefabStore : MonoBehaviour {
 		InsightSprite,
 		TargetedSprite
 		;
+
+	public UILabel
+		NumShotsLabel
+		;
 }
