@@ -1,9 +1,41 @@
 <Root>
-	<Weapon type = "MachineGun" name = "Sasha" sprite = "Orc Armor - Boots">
+	<!--
+	Item types:
+		LightWeapon
+		HeavyWeapon
+		Utility
+	Stats:
+		Value
+		Damage
+		Crit
+		Heat
+		Firerate
+	Sprites:
+		TODO
+	-->
+
+	<Weapon type = "LightWeapon" name = "Machine Gun" sprite = "Orc Armor - Bracers">
 		<Description>Basic machinegun</Description>
-		<Level min ="0" max="10"/>
+		<Level min ="1" max="10"/>
 		<Damage min="5" max="10"/>
-		<Accuracy min="12" max="22"/>
-		<Heat min="5" max="27"/>
+		<Accuracy min="50" max="90"/>
+		<Firerate min="3" max="3"/>
+		<Heat min="10" max="20"/>
+		<Cooling min="5" max="20"/>
+	</Weapon>
+	
+	<Weapon type = "HeavyWeapon" name = "HE Missiles" sprite = "Orc Armor - Shoulders">
+		<Description>High-Explosive Missile rack</Description>
+		<Level min ="1" max="10"/>
+		<Damage min="25" max="110"/>
+		<Accuracy min="35" max="66"/>
+		<Firerate min="2" max="5"/>
+		<Heat min="40" max="72"/>
+		<Cooling min="5" max="20"/>
+	</Weapon>
+	
+	<Weapon type = "Utility" name = "Radar" sprite = "Orc Armor - Boots">
+		<Description>Radar unit</Description>
+		<Level min ="1" max="1"/>
 	</Weapon>
 </Root>

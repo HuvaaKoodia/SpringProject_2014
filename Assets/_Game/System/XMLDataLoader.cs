@@ -63,7 +63,8 @@ public class XMLDataLoader : XML_Loader
 		if (node.Name == "Weapon")
 		{
 			InvBaseItem item=new InvBaseItem();
-			item.name=getAttStr(node,"type");
+			item.name=getAttStr(node,"name");
+			item.type=(InvBaseItem.Type)System.Enum.Parse(typeof(InvBaseItem.Type),getAttStr(node,"type"),true);
 			item.description=getStr(node,"Description");
 			item.iconName=getAttStr(node,"sprite");
 
@@ -91,7 +92,7 @@ public class XMLDataLoader : XML_Loader
 			var stat=new InvStat();
 			stat.type=type;
 			stat.min_amount=getAttInt(n1,"min");
-			stat.min_amount=getAttInt(n1,"max");
+			stat.max_amount=getAttInt(n1,"max");
 			item.stats.Add(stat);
 		}
 	}

@@ -4,11 +4,12 @@ using System.Collections.Generic;
 public class EquipRandomItem : MonoBehaviour
 {
 	public InvEquipmentStorage equipment;
+	public GameDatabase DB;
 
 	void OnClick()
 	{
 		if (equipment == null) return;
-		List<InvBaseItem> list = InvDatabase.list[0].items;
+		List<InvBaseItem> list = DB.items;
 		if (list.Count == 0) return;
 
 		int qualityLevels = (int)InvGameItem.Quality._Amount;

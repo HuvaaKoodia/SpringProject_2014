@@ -5,7 +5,9 @@ using System.Collections.Generic;
 
 public class WeaponMain : MonoBehaviour {
 
-	public string GunName { get; protected set;}
+	public InvGameItem Weapon{get;private set;}
+
+	public string GunName { get;protected set;}
 
 	public int MinDamage { get; protected set;}
 	public int MaxDamage { get; protected set;}
@@ -22,6 +24,26 @@ public class WeaponMain : MonoBehaviour {
 	public int CurrentAmmo { get; protected set;}
 
 	public List<EnemyMain> targets { get; private set;}
+
+	public void SetWeapon(InvGameItem weapon){
+			Weapon=weapon;
+			GunName=Weapon.baseItem.name;
+			
+			//DEV.temp calc
+			var dam=weapon.GetStat(InvStat.Type.Damage)._amount;
+			MinDamage = dam-2;
+			MaxDamage = dam+2;
+			
+			RateOfFire = weapon.GetStat(InvStat.Type.Firerate)._amount;
+			Accuracy = weapon.GetStat(InvStat.Type.Accuracy)._amount;
+			
+			HeatGeneration = weapon.GetStat(InvStat.Type.Heat)._amount;
+			CoolingRate = weapon.GetStat(InvStat.Type.Cooling)._amount;
+			CurrentHeat = 0;
+			
+			MaxAmmo = 20;
+			CurrentAmmo = MaxAmmo;
+	}
 
 	public bool HasTargets
 	{

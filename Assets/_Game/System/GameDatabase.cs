@@ -10,6 +10,10 @@ public class GameDatabase : MonoBehaviour
     public List<EnemyXmlData> enemies { get; private set; }
     public List<ObstacleXmlData> obstacles { get; private set; }
 
+	//item specific stuff
+	public InvDatabase ItemDB;
+	public UIAtlas ItemAtlas;
+
 	// Use this for initialization
 	void Start()
     {
@@ -22,12 +26,10 @@ public class GameDatabase : MonoBehaviour
 
         XMLDataLoader.Read(this);
 
-		Debug.Log("Item amount: "+items.Count);
-	}
-	
-	// Update is called once per frame
-	void Update()
-    {
-		
+		foreach (var i in items){
+			i.iconAtlas=ItemAtlas;
+			//add to visual database for debugging
+			if (ItemDB!=null) ItemDB.items.Add(i);
+		}
 	}
 }

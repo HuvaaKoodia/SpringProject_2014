@@ -55,7 +55,6 @@ public class InvEquipmentStorage : MonoBehaviour
 
 	public InvGameItem Replace (UIEquipmentSlot.Slot slot, InvGameItem item)
 	{
-		//InvBaseItem baseItem = (item != null) ? item.baseItem : null;
 		var Slot=EquipmentSlots[(int)slot];
 
 		if (item==null){
@@ -71,27 +70,6 @@ public class InvEquipmentStorage : MonoBehaviour
 			var prev = Slot.Item;
 			Slot.Item=item;
 
-			/*
-			// Get the list of all attachment points
-			if (mAttachments == null) mAttachments = GetComponentsInChildren<InvAttachmentPoint>();
-
-			// Equip the item visually
-			for (int i = 0, imax = mAttachments.Length; i < imax; ++i)
-			{
-				InvAttachmentPoint ip = mAttachments[i];
-
-				if (ip.slot == slot)
-				{
-					GameObject go = ip.Attach(baseItem != null ? baseItem.attachment : null);
-
-					if (baseItem != null && go != null)
-					{
-						Renderer ren = go.renderer;
-						if (ren != null) ren.material.color = baseItem.color;
-					}
-				}
-			}
-			*/
 			return prev;
 		}
 	}

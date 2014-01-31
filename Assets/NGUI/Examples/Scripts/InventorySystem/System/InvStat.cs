@@ -10,6 +10,9 @@ public class InvStat
 		Damage,
 		Crit,
 		Heat,
+		Cooling,
+		Firerate,
+		Accuracy,
 		Other
 	}
 

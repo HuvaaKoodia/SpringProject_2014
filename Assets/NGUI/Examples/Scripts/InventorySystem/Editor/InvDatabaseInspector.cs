@@ -162,7 +162,7 @@ public class InvDatabaseInspector : Editor
 
 				InvBaseItem bi = new InvBaseItem();
 				bi.iconAtlas = db.iconAtlas;
-				bi.id16 = (db.items.Count > 0) ? db.items[db.items.Count - 1].id16 + 1 : 0;
+				//bi.id16 = (db.items.Count > 0) ? db.items[db.items.Count - 1].id16 + 1 : 0;
 				db.items.Add(bi);
 				mIndex = db.items.Count - 1;
 

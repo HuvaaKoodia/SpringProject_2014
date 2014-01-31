@@ -26,9 +26,10 @@ public class GameController : MonoBehaviour {
 	public TurnState currentTurn = TurnState.StartPlayerTurn;
 
 	public MenuHandler menuHandler;
+	public InventoryMain Inventory;
 	
 	// Use this for initialization
-	void Start()
+	void Awake()
     {
 		//TileObjects=new List<TileObjData>();
 		//Tiles=new List<TileMain>();
@@ -57,6 +58,9 @@ public class GameController : MonoBehaviour {
 			menuHandler.player = player;
 			menuHandler.CheckTargetingModePanel();
 		}
+
+		//link player to hud
+		Inventory.SetPlayer(player);
 	}
 
 	// Update is called once per frame

@@ -1,14 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-/// <summary>
-/// Since it would be incredibly tedious to create thousands of unique items by hand, a simple solution is needed.
-/// Separating items into 2 parts is that solution. Base item contains stats that the item would have if it was max
-/// level. All base items are created with their stats at max level. Game item, the second item class, has an
-/// effective item level which is used to calculate effective item stats. Game items can be generated with a random
-/// level (clamped within base item's min/max level range), and with random quality affecting the item's stats.
-/// </summary>
-
 [System.Serializable]
 public class InvGameItem
 {
@@ -38,38 +30,30 @@ public class InvGameItem
 	// Cached for speed
 	InvBaseItem mBaseItem;
 
-	/// <summary>
-	/// ID of the base item used to create this one.
-	/// </summary>
-
-	//public int baseItemID { get { return mBaseItemID; } }
-
-	/// <summary>
-	/// Base item used by this game item.
-	/// </summary>
 
 	public InvBaseItem baseItem
 	{
 		get
 		{
-			//if (mBaseItem == null)
-			//{
-			//	mBaseItem = InvDatabase.FindByID(baseItemID);
-			//}
 			return mBaseItem;
 		}
 	}
 
-	/// <summary>
-	/// Game item's name should prefix the quality
-	/// </summary>
-
-	public string name
+	public string name_long
 	{
 		get
 		{
 			if (baseItem == null) return null;
 			return "[" + NGUIText.EncodeColor(color) + "]"+quality.ToString() + " [FFFFFF]" + baseItem.name;
+		}
+	}
+
+	public string name_linefeed
+	{
+		get
+		{
+			if (baseItem == null) return null;
+			return "[" + NGUIText.EncodeColor(color) + "]"+quality.ToString() + "\n[FFFFFF]" + baseItem.name;
 		}
 	}
 
@@ -122,8 +106,22 @@ public class InvGameItem
 		}
 	}
 
+	public List<InvStat> Stats{get;private set;}
+
+	public InvStat GetStat (InvStat.Type type)
+	{
+		foreach(var s in Stats){
+			if (s.type==type) return s;
+		}
+		return null;
+	}
+
 	//public InvGameItem (int type) { mBaseItemID = type; }
-	public InvGameItem (int type, InvBaseItem bi) { mBaseItem = bi; }
+	public InvGameItem (int type, InvBaseItem bi) 
+	{ 
+		mBaseItem = bi; 
+		Stats=CalculateStats();
+	}
 
 	/// <summary>
 	/// Calculate and return the list of effective stats based on item level and quality.

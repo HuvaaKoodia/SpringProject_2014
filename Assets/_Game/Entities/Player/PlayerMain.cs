@@ -13,6 +13,9 @@ public enum WeaponID
 
 public class PlayerMain : EntityMain
 {
+	public InvItemStorage items;
+	public InvEquipmentStorage equipment;
+
 	public PlayerInputSub inputSub;
 	public PlayerTargetingSub targetingSub;
 
@@ -155,5 +158,10 @@ public class PlayerMain : EntityMain
 		targetingSub.CheckGunTargets();
 		GC.menuHandler.gunInfoDisplay.UpdateGunInfo();
 		GC.menuHandler.CheckTargetingModePanel();
+	}
+
+	public WeaponMain GetWeapon (WeaponID id)
+	{
+		return gunList[(int)id];
 	}
 }

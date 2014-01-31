@@ -2,8 +2,6 @@ using UnityEngine;
 using System.Collections.Generic;
 
 [ExecuteInEditMode]
-[AddComponentMenu("NGUI/Examples/Item Database")]
-
 
 public class InvDatabase : MonoBehaviour
 {
@@ -60,20 +58,6 @@ public class InvDatabase : MonoBehaviour
 	void OnDisable () { mIsDirty = true; }
 
 	/// <summary>
-	/// Find an item by its 16-bit ID.
-	/// </summary>
-
-	InvBaseItem GetItem (int id16)
-	{
-		for (int i = 0, imax = items.Count; i < imax; ++i)
-		{
-			InvBaseItem item = items[i];
-			if (item.id16 == id16) return item;
-		}
-		return null;
-	}
-
-	/// <summary>
 	/// Find a database given its ID.
 	/// </summary>
 
@@ -85,16 +69,6 @@ public class InvDatabase : MonoBehaviour
 			if (db.databaseID == dbID) return db;
 		}
 		return null;
-	}
-
-	/// <summary>
-	/// Find the specified item given its full 32-bit ID (not to be confused with individual 16-bit item IDs).
-	/// </summary>
-
-	static public InvBaseItem FindByID (int id32)
-	{
-		InvDatabase db = GetDatabase(id32 >> 16);
-		return (db != null) ? db.GetItem(id32 & 0xFFFF) : null;
 	}
 
 	/// <summary>
@@ -120,22 +94,4 @@ public class InvDatabase : MonoBehaviour
 		return null;
 	}
 
-	/// <summary>
-	/// Get the full 32-bit ID of the specified item.
-	/// Use this to get a list of items on the character that can get saved out to an external database or file.
-	/// </summary>
-
-	static public int FindItemID (InvBaseItem item)
-	{
-		for (int i = 0, imax = list.Length; i < imax; ++i)
-		{
-			InvDatabase db = list[i];
-
-			if (db.items.Contains(item))
-			{
-				return (db.databaseID << 16) | item.id16;
-			}
-		}
-		return -1;
-	}
 }

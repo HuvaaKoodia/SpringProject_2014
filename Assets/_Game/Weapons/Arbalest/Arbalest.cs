@@ -5,7 +5,6 @@ public class Arbalest : WeaponMain {
 
 	// Use this for initialization
 	void Start () {
-		GunName = "Arbalest";
 
 		MinDamage = 20;
 		MaxDamage = 40;
