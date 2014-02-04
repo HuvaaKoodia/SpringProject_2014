@@ -19,7 +19,6 @@ public class PlayerInputSub : MonoBehaviour {
         if (playerMovement.currentMovement == MovementState.NotMoving)
         {
             HotkeyInput();
-
             MouseInput();
 
 			player.GC.menuHandler.gunInfoDisplay.UpdateGunInfo();
@@ -92,10 +91,19 @@ public class PlayerInputSub : MonoBehaviour {
 			else
 			{
 				Component target;
-				if (!player.targetingMode && Subs.GetObjectMousePos(out target, MapGenerator.TileSize.magnitude - 2, "Loot"))
+
+                //DEV.TEMP DOOR CHECK
+                var door=playerMovement.CheckForDoor();
+                if (door!=null){
+                    door.Toggle();
+                }
+                else
+				if (Subs.GetObjectMousePos(out target, MapGenerator.TileSize.magnitude - 2, "Loot"))
 	            {
 	                player.PickupLoot(target.GetComponent<LootCrateMain>());
 	            }
+				
+				
 			}
 			
 			player.GC.menuHandler.CheckTargetingModePanel();
@@ -107,7 +115,6 @@ public class PlayerInputSub : MonoBehaviour {
 				player.targetingSub.TargetAtMousePosition(false);
 			}
 		}
-
 	}
 	
 	public void MoveForwardInput()

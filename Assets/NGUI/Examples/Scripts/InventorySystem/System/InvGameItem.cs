@@ -119,8 +119,11 @@ public class InvGameItem
 	public InvGameItem (InvBaseItem bi) 
 	{ 
 		mBaseItem = bi; 
-		Stats=CalculateStats();
 	}
+
+    public void RecalculateStats(){
+        Stats=CalculateStats();
+    }
 
 	/// <summary>
 	/// Calculate and return the list of effective stats based on item level and quality.
@@ -180,6 +183,7 @@ public class InvGameItem
 		InvGameItem gi = new InvGameItem(item);
 		gi.quality = (InvGameItem.Quality)Random.Range(0, qualityLevels);
 		gi.itemLevel = NGUITools.RandomRange(item.minItemLevel, item.maxItemLevel);
+        gi.RecalculateStats();
 		return gi;
 	}
 

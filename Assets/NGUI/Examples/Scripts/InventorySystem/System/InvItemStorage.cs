@@ -38,7 +38,9 @@ public class InvItemStorage : MonoBehaviour
 
 	public void Add(InvGameItem item){
 		for (int i=0;i<maxItemCount;i++){
-			if (Replace(i,item)!=item) break;
+			if (GetItem(i)==null){
+				if (Replace(i,item)!=item) break;
+			}
 		}
 	}
 }

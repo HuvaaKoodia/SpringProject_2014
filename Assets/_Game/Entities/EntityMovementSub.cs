@@ -188,13 +188,16 @@ public class EntityMovementSub : MonoBehaviour
             //Debug.Log("Out of range, X: " + x + " Y: " + y);
             return false;
         }
-
         TileMain nextTile = tilemap[x, y];
-        if ((nextTile.Data.TileType == TileObjData.Type.Floor || nextTile.Data.TileType == TileObjData.Type.Corridor) 
-		    && nextTile.entityOnTile == null)
+
+        var door=nextTile.GetDoor();
+        if (door!=null&&!door.IsOpen) return false;
+        
+        if (nextTile.BlockedForMovement) 
             return true;
         else
             return false;
+
     }
 
     int GetNextTileX(int direction, int currentX)
@@ -216,8 +219,7 @@ public class EntityMovementSub : MonoBehaviour
         else
             return currentY;
     }
-
-    //returns true if moved, false if turned
+	
     public MovementState MoveToTile(Point3D tile, bool stayWaiting)
     {
 		waitBeforeMoving = stayWaiting;
@@ -332,5 +334,15 @@ public class EntityMovementSub : MonoBehaviour
 			return null;
 
 		return tilemap[nextX, nextY];
+	}
+
+	public DoorMain CheckForDoor(){
+		Component target;
+		if (Subs.GetObjectMousePos(out target,MapGenerator.TileSize.x+2, "Door"))
+		{
+			var door=target.GetComponent<DoorMain>();
+			return door;
+		}
+		return null;
 	}
 }

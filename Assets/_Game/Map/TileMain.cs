@@ -9,6 +9,15 @@ public class TileMain : MonoBehaviour
 
     public EntityMain entityOnTile {get; private set;}
 
+	public bool BlockedForMovement{
+		get{
+			return (Data.TileType == TileObjData.Type.Floor
+			        ||Data.TileType == TileObjData.Type.Corridor
+			        ||Data.TileType==TileObjData.Type.Door
+			        )&& entityOnTile == null;
+		}
+	}
+
 	public void SetData(TileObjData data){
 		Data=data;
 	}
@@ -21,5 +30,9 @@ public class TileMain : MonoBehaviour
     public void LeaveTile()
     {
         entityOnTile = null;
+    }
+
+    public DoorMain GetDoor(){
+        return TileObject.GetComponent<DoorMain>();
     }
 }
