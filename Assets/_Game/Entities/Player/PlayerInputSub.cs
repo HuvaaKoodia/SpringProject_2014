@@ -181,6 +181,8 @@ public class PlayerInputSub : MonoBehaviour {
 			player.EndTargetingMode();
 		else
 			player.StartTargetingMode();
+
+		player.GC.menuHandler.ToggleTargetingHUD();
 	}
 
 	public void EngageCombatInput()

@@ -1,5 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+
+public enum MenuState
+{
+	NothingSelected, MovementHUD, TargetingHUD, InventoryHUD
+}
 
 public class MenuHandler : MonoBehaviour {
 
@@ -20,8 +26,12 @@ public class MenuHandler : MonoBehaviour {
 
 	public GunInfoDisplay gunInfoDisplay;
 
+	public MenuState currentMenuState;
+
 	// Use this for initialization
-	void Start () {
+	void Start()
+	{
+		currentMenuState = MenuState.NothingSelected;
 	}
 	
 	// Update is called once per frame
@@ -91,6 +101,42 @@ public class MenuHandler : MonoBehaviour {
 	void RightShoulderWeaponPressed()
 	{
 		player.inputSub.ChangeWeaponInput(WeaponID.RightShoulder);
+	}
+
+	public void ToggleMovementHUD()
+	{
+		ChangeMenuState(MenuState.MovementHUD);
+	}
+
+	public void ToggleTargetingHUD()
+	{
+		ChangeMenuState(MenuState.TargetingHUD);
+	}
+
+	public void ToggleInventoryHUD()
+	{
+		ChangeMenuState(MenuState.InventoryHUD);
+	}
+
+	void ChangeMenuState(MenuState newState)
+	{
+		if (newState == currentMenuState)
+			currentMenuState = MenuState.NothingSelected;
+
+		switch (currentMenuState)
+		{
+		case MenuState.NothingSelected:
+			break;
+
+		case MenuState.MovementHUD:
+			break;
+
+		case MenuState.TargetingHUD:
+			break;
+
+		case MenuState.InventoryHUD:
+			break;
+		}
 	}
 
 	public void CheckTargetingModePanel()
