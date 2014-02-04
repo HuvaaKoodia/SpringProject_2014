@@ -38,6 +38,16 @@ public class MenuHandler : MonoBehaviour {
 		player.inputSub.MoveForwardInput();
 	}
 
+	void MoveLeftButtonPressed()
+	{
+		player.inputSub.MoveLeftInput();
+	}
+
+	void MoveRightButtonPressed()
+	{
+		player.inputSub.MoveRightInput();
+	}
+
 	void TurnLeftButtonPressed()
 	{
 		player.inputSub.TurnLeftInput();

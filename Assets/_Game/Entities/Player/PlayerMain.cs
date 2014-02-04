@@ -52,12 +52,9 @@ public class PlayerMain : EntityMain
 	// Update is called once per frame
 	void Update()
     {
-		if (GC.currentTurn != TurnState.PlayerTurn)
-			return;
-
 		foreach (WeaponMain weapon in gunList)
 		{
-			if (weapon == GetCurrentWeapon() && targetingMode)
+			if (targetingMode && !weapon.HasTargets && weapon == GetCurrentWeapon())
 				weapon.LookAtMouse(targetingSub.TargetingArea);
 			else
 				weapon.RotateGraphics();
@@ -102,10 +99,7 @@ public class PlayerMain : EntityMain
 
     public void Attack()
     {
-        if (ap < attackCost)
-            return;
-
-		ap -= attackCost;
+		ap = 0;
 
 		foreach(WeaponMain gun in gunList)
 		{
@@ -161,6 +155,7 @@ public class PlayerMain : EntityMain
 
 	public void ChangeWeapon(WeaponID id)
 	{
+		GetCurrentWeapon().Unselected();
 		currentGunID = id;
 		targetingSub.CheckGunTargets();
 		GC.menuHandler.CheckTargetingModePanel();

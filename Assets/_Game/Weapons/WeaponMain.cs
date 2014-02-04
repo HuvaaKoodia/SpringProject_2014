@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 
+using System.Linq;
+
+using System.Collections;
 using System.Collections.Generic;
 
 public class WeaponMain : MonoBehaviour {
@@ -27,7 +29,6 @@ public class WeaponMain : MonoBehaviour {
 
 	public Dictionary<EnemyMain, int> targets { get; private set;}
 
-	bool hasTargetRotation;
 	public Quaternion targetRotation;
 	public float rotationSpeed;
 
@@ -60,7 +61,6 @@ public class WeaponMain : MonoBehaviour {
 	void Awake () {
 		rotationSpeed = 50;
 		targetRotation = Quaternion.identity;
-		hasTargetRotation = false;
 		targets = new Dictionary<EnemyMain, int>();
 	}
 	
@@ -73,16 +73,32 @@ public class WeaponMain : MonoBehaviour {
 	{
 		if (targets.ContainsKey(enemy))
 		{
-			if (left_click&&GetNumShotsTargetedTotal() < RateOfFire)
-				IncreaseShotsAtTarget(enemy);
+			if (left_click)
+			{
+				if (GetNumShotsTargetedTotal() < RateOfFire)
+					IncreaseShotsAtTarget(enemy);
+				else
+					RemoveTarget(enemy);
+			}
 			else if (!left_click)
 				DecreaseShotsAtTarget(enemy);
 
+			SetTargetRotation();
 			return false;
 		}
-		else if (left_click)
+		else
 		{
 			AddTarget(enemy);
+
+			if (!left_click)
+			{
+				while(GetNumShotsTargetedTotal() < RateOfFire)
+				{
+					IncreaseShotsAtTarget(enemy);
+				}
+			}
+
+			SetTargetRotation();
 			return true;
 		}
 		return false;
@@ -108,8 +124,6 @@ public class WeaponMain : MonoBehaviour {
 			RemoveTarget(enemy);
 		}
 	}
-
-
 
 	protected void RemoveTarget(EnemyMain enemy)
 	{
@@ -174,7 +188,7 @@ public class WeaponMain : MonoBehaviour {
 
 	public void RotateGraphics()
 	{
-		if (hasTargetRotation)
+		if (HasTargets)
 		{
 			transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime*rotationSpeed);
 		}
@@ -188,13 +202,33 @@ public class WeaponMain : MonoBehaviour {
 	{
 		if (bounds.Contains(new Vector2(Input.mousePosition.x, Input.mousePosition.y)))
 		{
+			Ray ray=Camera.main.ScreenPointToRay(Input.mousePosition);
+			RaycastHit info;
 
-			Vector3 mouseToWorld = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x , Input.mousePosition.y, 10));
-			/*
-			Quaternion temp = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(mouseToWorld), Time.deltaTime*rotationSpeed);
-			transform.rotation = temp * Quaternion.AngleAxis(90, Vector3.left);
-			*/
-			transform.LookAt(mouseToWorld);
+			float mouseDistance = 10;
+			if (Physics.Raycast(ray, out info))
+			{
+				mouseDistance = info.distance;
+			}
+
+			Vector3 mouseToWorld = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x , Input.mousePosition.y, mouseDistance));
+
+			targetRotation = Quaternion.LookRotation((mouseToWorld - transform.position));
+		}
+
+		transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime*rotationSpeed);
+	}
+	
+	public void Unselected()
+	{
+		SetTargetRotation();
+	}
+
+	void SetTargetRotation()
+	{
+		if (HasTargets)
+		{
+			targetRotation = Quaternion.LookRotation((targets.Keys.First().transform.position + Vector3.up *0.6f)- transform.position);
 		}
 	}
 }

@@ -45,17 +45,25 @@ public class PlayerInputSub : MonoBehaviour {
 	        }
 	        else if (horizontalAxis > 0)
 	        {
-				TurnRightInput();
+				MoveRightInput();
 	            return ;
 	        }
 	        else if (horizontalAxis < 0)
 	        {
-				TurnLeftInput();
+				MoveLeftInput();
 	            return;
 	        }
 		}
 
-		if (Input.GetButtonDown("Targeting mode"))
+		if (Input.GetButtonDown("TurnLeft"))
+		{
+			TurnLeftInput();
+		}
+		else if (Input.GetButtonDown("TurnRight"))
+		{
+			TurnRightInput();
+		}
+		else if (Input.GetButtonDown("Targeting mode"))
 		{
 			TargetingModeInput();
 		}
@@ -125,6 +133,24 @@ public class PlayerInputSub : MonoBehaviour {
 			return;
 		
 		if (playerMovement.MoveBackward())
+			player.StartedMoving();
+	}
+
+	public void MoveLeftInput()
+	{
+		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving || player.targetingMode)
+			return;
+		
+		if (playerMovement.MoveLeft())
+			player.StartedMoving();
+	}
+
+	public void MoveRightInput()
+	{
+		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving || player.targetingMode)
+			return;
+		
+		if (playerMovement.MoveRight())
 			player.StartedMoving();
 	}
 
