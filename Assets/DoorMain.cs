@@ -18,15 +18,11 @@ public class DoorMain : MonoBehaviour {
 
 		anim_on=false;
 		if (open){
-			graphics.animation[open_animation].normalizedTime = 0;
-			graphics.animation[open_animation].speed=1;
 			graphics.animation.Play(open_animation);
 			StartCoroutine(OpenTimer(graphics.animation[open_animation].length));
 		}
 		else{
-			graphics.animation[open_animation].normalizedTime = 1;
-			graphics.animation[open_animation].speed=-1;
-			graphics.animation.Play(open_animation);
+			graphics.animation.Play(close_animation);
 			IsOpen=false;
 		}
 
