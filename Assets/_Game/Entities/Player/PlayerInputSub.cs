@@ -44,17 +44,25 @@ public class PlayerInputSub : MonoBehaviour {
 	        }
 	        else if (horizontalAxis > 0)
 	        {
-				TurnRightInput();
+				MoveRightInput();
 	            return ;
 	        }
 	        else if (horizontalAxis < 0)
 	        {
-				TurnLeftInput();
+				MoveLeftInput();
 	            return;
 	        }
 		}
 
-		if (Input.GetButtonDown("Targeting mode"))
+		if (Input.GetButtonDown("TurnLeft"))
+		{
+			TurnLeftInput();
+		}
+		else if (Input.GetButtonDown("TurnRight"))
+		{
+			TurnRightInput();
+		}
+		else if (Input.GetButtonDown("Targeting mode"))
 		{
 			TargetingModeInput();
 		}
@@ -135,6 +143,24 @@ public class PlayerInputSub : MonoBehaviour {
 			player.StartedMoving();
 	}
 
+	public void MoveLeftInput()
+	{
+		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving || player.targetingMode)
+			return;
+		
+		if (playerMovement.MoveLeft())
+			player.StartedMoving();
+	}
+
+	public void MoveRightInput()
+	{
+		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving || player.targetingMode)
+			return;
+		
+		if (playerMovement.MoveRight())
+			player.StartedMoving();
+	}
+
 	public void TurnLeftInput()
 	{
 		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving || player.targetingMode)
@@ -162,6 +188,8 @@ public class PlayerInputSub : MonoBehaviour {
 			player.EndTargetingMode();
 		else
 			player.StartTargetingMode();
+
+		player.GC.menuHandler.ToggleTargetingHUD();
 	}
 
 	public void EngageCombatInput()

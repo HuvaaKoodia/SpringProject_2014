@@ -74,6 +74,18 @@ public class EntityMovementSub : MonoBehaviour
         return TryToMove(dir);
     }
 
+	public bool MoveLeft()
+	{
+		int dir = (270 + targetRotationAngle) % 360;
+		return TryToMove(dir);
+	}
+
+	public bool MoveRight()
+	{
+		int dir = (90 + targetRotationAngle) % 360;
+		return TryToMove(dir);
+	}
+
     bool TryToMove(int direction)
     {
         //TODO CHECK OBSTACLES
