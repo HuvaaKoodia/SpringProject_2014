@@ -4,14 +4,14 @@ using System.Collections.Generic;
 public class EquipRandomItem : MonoBehaviour
 {
 	public InvEquipmentStorage equipment;
-	public GameDatabase DB;
+	public XmlDatabase XDB;
 
 	void OnClick()
 	{
 		if (equipment == null) return;
-		if (DB.items.Count == 0) return;
+		if (XDB.items.Count == 0) return;
 
-		var gi=InvGameItem.GetRandomItem(DB);
+		var gi=InvGameItem.GetRandomItem(XDB);
 		equipment.Equip(gi);
 	}
 }

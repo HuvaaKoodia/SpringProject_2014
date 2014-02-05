@@ -9,6 +9,11 @@ public class UIItemStorage : MonoBehaviour
 
 	public InvItemStorage ItemStorage;
 
+    public void SetItemStorage(InvItemStorage store){
+        ItemStorage=store;
+        UpdateSlots();
+    }
+
 	public GameObject SlotPrefab;
 
 	/// <summary>

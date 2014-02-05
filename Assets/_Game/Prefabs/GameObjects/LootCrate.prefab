@@ -26,7 +26,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 400002}
   - 114: {fileID: 11400002}
-  - 114: {fileID: 11400000}
   - 65: {fileID: 6500000}
   m_Layer: 11
   m_Name: LootCrate
@@ -98,20 +97,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: .5, z: 0}
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8d5bfa146208db45b5505e025ffbd2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxItemCount: 8
-  maxRows: 4
-  maxColumns: 2
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -123,7 +108,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca287c58d27cb9746856bb723f36bc8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Items: {fileID: 11400000}
   graphics: {fileID: 100000}
 --- !u!1001 &100100000
 Prefab:

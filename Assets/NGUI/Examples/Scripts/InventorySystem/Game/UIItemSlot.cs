@@ -1,8 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+public delegate void OnDragStartEvent(InvGameItem item);
+
 public abstract class UIItemSlot : MonoBehaviour
 {
+
+    protected OnDragStartEvent OnDragStart;
 	public UISprite icon;
 	public UIWidget background;
 	public UILabel label;
@@ -125,7 +129,8 @@ public abstract class UIItemSlot : MonoBehaviour
 	void StartDraggingItem(InvGameItem item){
 		mDraggedItem = item;
 		UpdateCursor();
-		UIEquipmentSlot.UpdateSlotColors(item);
+        if (OnDragStart!=null)
+            OnDragStart(item);
 	}
 
 	/// <summary>

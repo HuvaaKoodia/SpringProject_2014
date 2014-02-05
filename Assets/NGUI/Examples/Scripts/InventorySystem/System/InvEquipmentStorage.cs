@@ -13,21 +13,33 @@ public class EquipmentStorageSlot{
 		foreach (var t in types){
 			TypeList.Add(t);
 		}
+
+        ObjData=new MechaPartObjData();
 	}
 
 	public bool HasType(InvBaseItem.Type type)
 	{
 		return TypeList.Contains(type);
 	}
+
+    //stats
+
+    public MechaPartObjData ObjData{get;private set;}
 }
 
-public class InvEquipmentStorage : MonoBehaviour
+public class InvEquipmentStorage
 {
+    public EquipmentStorageSlot UpperTorso{get;private set;}
+    public EquipmentStorageSlot LowerTorso{get;private set;}
 	public EquipmentStorageSlot[] EquipmentSlots {get;private set;}
 	InvAttachmentPoint[] mAttachments;
 
-	public void Awake(){
-		//create Slots. HARDCODED
+    public InvEquipmentStorage(){
+        Awake();
+    }
+
+	void Awake(){
+		//Inventory Slots
 		EquipmentSlots=new EquipmentStorageSlot[8];
 		AddSlot(UIEquipmentSlot.Slot.WeaponLeftHand,InvBaseItem.Type.LightWeapon);
 		AddSlot(UIEquipmentSlot.Slot.WeaponRightHand,InvBaseItem.Type.LightWeapon);
@@ -38,6 +50,10 @@ public class InvEquipmentStorage : MonoBehaviour
 		AddSlot(UIEquipmentSlot.Slot.Utility2,InvBaseItem.Type.Utility);
 		AddSlot(UIEquipmentSlot.Slot.Utility3,InvBaseItem.Type.Utility);
 		AddSlot(UIEquipmentSlot.Slot.Utility4,InvBaseItem.Type.Utility);
+
+        //Hidden slots
+        UpperTorso =new EquipmentStorageSlot(UIEquipmentSlot.Slot.UpperTorso);
+        LowerTorso =new EquipmentStorageSlot(UIEquipmentSlot.Slot.LowerTorso);
 	}
 
 	private void AddSlot(UIEquipmentSlot.Slot slot,params InvBaseItem.Type[] type){
@@ -47,7 +63,6 @@ public class InvEquipmentStorage : MonoBehaviour
 	public EquipmentStorageSlot GetSlot(UIEquipmentSlot.Slot slot){
 		return EquipmentSlots[(int)slot];
 	}
-
 
 	/// <summary>
 	/// Equip the specified item automatically replacing an existing one.

@@ -31,8 +31,7 @@ public class TestAI : MonoBehaviour
 		movement = parent.movement;
 
 		tilemap = parent.GC.TileMainMap;
-
-		player = parent.GC.player;
+		player = parent.GC.Player;
 
 		HasUsedTurn = false;
         foundMove = false;
@@ -84,7 +83,7 @@ public class TestAI : MonoBehaviour
 
 	private void Attack()
 	{
-		player.TakeDamage(damage);
+		player.TakeDamage(damage,movement.currentGridX,movement.currentGridY);
 	}
 
 	private void MoveToTarget()

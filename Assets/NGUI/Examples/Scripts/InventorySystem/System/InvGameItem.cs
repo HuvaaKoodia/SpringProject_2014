@@ -174,11 +174,11 @@ public class InvGameItem
 		return stats;
 	}
 
-	public static InvGameItem GetRandomItem (GameDatabase DB)
+    public static InvGameItem GetRandomItem (XmlDatabase XDB)
 	{
 		int qualityLevels = (int)InvGameItem.Quality._Amount;
-		int index = Random.Range(0, DB.items.Count);
-		InvBaseItem item = Subs.GetRandom(DB.items);
+		int index = Random.Range(0, XDB.items.Count);
+		InvBaseItem item = Subs.GetRandom(XDB.items);
 		
 		InvGameItem gi = new InvGameItem(item);
 		gi.quality = (InvGameItem.Quality)Random.Range(0, qualityLevels);

@@ -21,8 +21,7 @@ public class GameController : MonoBehaviour {
 	public TileMain[,] TileMainMap;
 
 	public AIcontroller aiController;
-	public PlayerMain player;
-
+	
 	public TurnState currentTurn = TurnState.StartPlayerTurn;
 
 	public MenuHandler menuHandler;
@@ -32,6 +31,16 @@ public class GameController : MonoBehaviour {
 
 	public UICamera NGUICamera;
 	
+    PlayerMain player;
+
+    public PlayerMain Player{
+        get{return player;}
+        set{
+            player=value;
+            player.SetObjData(SS.GDB.PlayerData);
+        }
+    }
+
 	// Use this for initialization
 	void Start()
     {
@@ -60,15 +69,16 @@ public class GameController : MonoBehaviour {
 		menuHandler.player = player;
 		menuHandler.CheckTargetingModePanel();
 
-
 		//link player to hud
 		Inventory.SetPlayer(player);
+
+        var ec=GetComponent<EngineController>();
+        ec.AfterRestart+=SS.GDB.StartNewGame;
 	}
 
 	// Update is called once per frame
 	void Update()
     {
-
 		if (currentTurn != TurnState.PlayerTurn && currentTurn != TurnState.StartPlayerTurn)
 		{
 			aiController.UpdateAI(currentTurn);

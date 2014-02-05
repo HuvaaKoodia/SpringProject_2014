@@ -107,9 +107,9 @@ public class MapGenerator : MonoBehaviour
                 tile.transform.parent = tile_container.transform;
 
                 //tile mesh
-                SetTileObject(x, y, tile, GC.TileObjectMap);
-                if (tile.TileObject != null)
-                    tile.TileObject.transform.parent = tile.transform;
+                SetTileGraphics(x, y, tile, GC.TileObjectMap);
+                if (tile.TileGraphics != null)
+                    tile.TileGraphics.transform.parent = tile.transform;
 
                 //game objects
                 int[] entity_pos = { x, y };
@@ -120,7 +120,7 @@ public class MapGenerator : MonoBehaviour
                         var player = GameObject.Instantiate(MapPrefabs.PlayerPrefab, tile_pos, Quaternion.identity) as PlayerMain;
                         player.name = "Player";
 
-                        GC.player = player;
+                        GC.Player = player;
 
                         player.movement.SetPositionInGrid(entity_pos);
 
@@ -138,9 +138,12 @@ public class MapGenerator : MonoBehaviour
 
                     case TileObjData.Obj.Loot:
                         var LootCrate = GameObject.Instantiate(MapPrefabs.LootCratePrefab, tile_pos, Quaternion.identity) as GameObject;
-                        LootCrate.transform.parent = object_container.transform;
+                        //LootCrate.transform.parent = object_container.transform;
 
                         GC.LootCrates.Add(LootCrate.GetComponent<LootCrateMain>());
+                        tile.TileObject=LootCrate;
+                        tile.TileObject.transform.parent = tile.transform;
+
                         break;
                 }
             }
@@ -157,7 +160,7 @@ public class MapGenerator : MonoBehaviour
             int a = Subs.GetRandom(1, 5);
             for (int i=0; i<a; i++)
             {
-                c.Items.Add(InvGameItem.GetRandomItem(GC.SS.GDB));
+                c.Items.Add(InvGameItem.GetRandomItem(GC.SS.XDB));
             }
         }
     }
@@ -187,7 +190,6 @@ public class MapGenerator : MonoBehaviour
         {
 
             //loot crates
-
             GetFreeTilesOfType(GC, TileObjData.Type.Floor, free_tiles);
             int l_amount = Subs.GetRandom(room.RoomXmlData.LootAmountMin, room.RoomXmlData.LootAmountMax);
             
@@ -282,10 +284,11 @@ public class MapGenerator : MonoBehaviour
     /// <summary>
     /// Sets the correct graphics to tiles.
     /// </summary>
-    void SetTileObject(int x, int y, TileMain tile, TileObjData[,] grid)
+    void SetTileGraphics(int x, int y, TileMain tile, TileObjData[,] grid)
     {
         var rotation = Quaternion.identity;
         GameObject tileobj = null;//if floor or corridor
+        bool add_as_tileobject_as_well=false;
 
         //gather adjacent corridor types
         TileObjData.Type[] tile_types = new TileObjData.Type[9];
@@ -371,6 +374,8 @@ public class MapGenerator : MonoBehaviour
                 {
                     rotation = Quaternion.AngleAxis(90, Vector3.up);
                 }
+
+                add_as_tileobject_as_well=true;
                 break;
             case TileObjData.Type.Floor:
             case TileObjData.Type.Corridor:
@@ -595,8 +600,12 @@ public class MapGenerator : MonoBehaviour
 
                 break;
         }
-        if (tileobj != null)
-            tile.TileObject = Instantiate(tileobj, tile.transform.position, rotation) as GameObject;
+        if (tileobj != null){
+            tile.TileGraphics = Instantiate(tileobj, tile.transform.position, rotation) as GameObject;
+            if (add_as_tileobject_as_well){
+                tile.TileObject=tile.TileGraphics;
+            }
+        }
     }
 
     bool CheckTypeEqual(System.Func<TileObjData.Type,bool> test, TileObjData.Type[] tile_types, params int[] dirs)

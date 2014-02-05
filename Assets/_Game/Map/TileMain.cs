@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class TileMain : MonoBehaviour 
 {
 	public TileObjData Data{get;private set;}
-    public GameObject TileObject;
+    public GameObject TileGraphics,TileObject;
 
     public EntityMain entityOnTile {get; private set;}
 
