@@ -14,23 +14,20 @@ public class UIEquipmentSlot : UIItemSlot
 		Utility2,
 		Utility3,
 		Utility4,
+        UpperTorso,
+        LowerTorso,
 		RecycleBin,
 		_Amount
 	}
 
 	public InvEquipmentStorage equipment;
+    public InventoryMain Inventory;
 	public Slot slot;
 
-	//LAZY HAX
-	public static List<UIEquipmentSlot> EquipmentSlots{get;private set;}
-
-	public static void ResetStaticList(){
-		EquipmentSlots=new List<UIEquipmentSlot>();
-	}
-
-	public static void UpdateSlotColors(InvGameItem item){
-		foreach (var slot in EquipmentSlots){
-			slot.SetSlotColor(item);
+	public void UpdateSlotColors(InvGameItem item){
+		foreach (var slot in Inventory.EquipmentSlots){
+            if (slot.slot!=Slot.RecycleBin)
+                slot.SetSlotColor(item);
 		}
 	}
 
@@ -48,9 +45,7 @@ public class UIEquipmentSlot : UIItemSlot
 	}
 
 	void Start(){
-		if (EquipmentSlots==null) ResetStaticList();
-		if (slot!=Slot.RecycleBin)
-			EquipmentSlots.Add(this);
+        OnDragStart+=UpdateSlotColors;
 	}
 
 	override protected InvGameItem observedItem
@@ -69,7 +64,6 @@ public class UIEquipmentSlot : UIItemSlot
 	{
 		//quick hax
 		if (slot==Slot.RecycleBin){
-
 			return null;
 		}
 		return (equipment != null) ? equipment.Replace(slot, item) : item;

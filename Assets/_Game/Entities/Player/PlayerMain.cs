@@ -13,8 +13,7 @@ public enum WeaponID
 
 public class PlayerMain : EntityMain
 {
-	public InvItemStorage items;
-	public InvEquipmentStorage equipment;
+    public PlayerObjData ObjData{get;private set;}
 
 	public PlayerInputSub inputSub;
 	public PlayerTargetingSub targetingSub;
@@ -31,6 +30,10 @@ public class PlayerMain : EntityMain
 	const int movementCost = 1;
     const int lootPickupCost = 1;
 	const int attackCost = 2;
+
+    public void SetObjData(PlayerObjData data){
+        ObjData=data;
+    }
 
 	// Use this for initialization
 	public override void Awake()
@@ -122,12 +125,26 @@ public class PlayerMain : EntityMain
 		GC.Inventory.ToggleInventory();
 		loot.Looted();
     }
-
-	public override void TakeDamage(int damage)
+    /// <summary>
+    /// Inflicts damage from grid position x,y
+    /// </summary>
+	public void TakeDamage(int damage,int x,int y)
 	{
 		if (INVINCIBLE) return;
 
-		Health -= damage;
+		//Health -= damage;
+        int dir=0;
+        int xo=x-movement.currentGridX,yo=y-movement.currentGridY;
+
+        if (yo==0){
+            dir=xo>0?dir=0:dir=2;
+        }
+        else{
+            dir=yo>0?dir=1:dir=3;
+        }
+
+        Debug.Log("Damage from dir: "+dir);
+        ObjData.TakeDMG(damage,dir);
 
 		GC.menuHandler.UpdateHealthText(Health);
 
@@ -171,5 +188,15 @@ public class PlayerMain : EntityMain
 		return gunList[(int)currentGunID];
 	}
 
+    /// <summary>
+    /// Sets the equipped GameItem weapon to the corresponding WeaponMain for game usage.
+    /// </summary>
+    public void ActivateWeapon(WeaponID id,UIEquipmentSlot.Slot slot){
+        var weapon=GetWeapon(id);
+        var item=ObjData.Equipment.GetSlot(slot).Item;
+        if (weapon.Weapon!=item){
+            weapon.SetWeapon(item);
+        }
+    }
 	
 }

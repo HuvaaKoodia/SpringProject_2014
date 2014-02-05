@@ -86,6 +86,21 @@ public class PlayerInputSub : MonoBehaviour {
 		{
 			ChangeWeaponInput(WeaponID.RightHand);
 		}
+#if UNITY_EDITOR
+        //DEV.DEBUG damage
+        if (Input.GetKey(KeyCode.Keypad6)){
+            player.ObjData.TakeDMG(10,0);
+        }
+        if (Input.GetKey(KeyCode.Keypad8)){
+            player.ObjData.TakeDMG(10,1);
+        }
+        if (Input.GetKey(KeyCode.Keypad4)){
+            player.ObjData.TakeDMG(10,2);
+        }
+        if (Input.GetKey(KeyCode.Keypad2)){
+            player.ObjData.TakeDMG(10,3);
+        }
+#endif
     }
 
 	void MouseInput()

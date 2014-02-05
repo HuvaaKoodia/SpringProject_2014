@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class GameDatabase : MonoBehaviour
+public class XmlDatabase : MonoBehaviour
 {
     public List<PlayerXmlData> players { get; private set; }
    // public List<WeaponXmlData> weapons { get; private set; }

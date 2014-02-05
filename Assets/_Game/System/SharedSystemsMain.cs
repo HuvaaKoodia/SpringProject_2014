@@ -3,7 +3,8 @@ using System.Collections;
 
 public class SharedSystemsMain : MonoBehaviour {
 
-	public GameDatabase GDB;
+    public GameDB GDB;
+    public XmlDatabase XDB;
 	public PrefabStore PS;
 	public MapGenerator MGen;
 	public ShipGenerator SGen;

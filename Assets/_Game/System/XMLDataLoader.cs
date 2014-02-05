@@ -6,7 +6,7 @@ using System.IO;
 
 public class XMLDataLoader : XML_Loader
 {
-    public static void Read(GameDatabase database)
+    public static void Read(XmlDatabase database)
     {
 		var DOX=GetAllXmlDocuments("Data/");
 
@@ -58,7 +58,7 @@ public class XMLDataLoader : XML_Loader
 		}
     }
 
-	static void ReadWeapon (XmlNode node, GameDatabase database)
+    static void ReadWeapon (XmlNode node, XmlDatabase database)
 	{
 		if (node.Name == "Weapon")
 		{

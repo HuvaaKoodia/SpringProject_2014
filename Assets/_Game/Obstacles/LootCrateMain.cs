@@ -3,7 +3,7 @@ using System.Collections;
 
 public class LootCrateMain : MonoBehaviour {
 
-	public InvItemStorage Items;
+    public InvItemStorage Items{get;private set;}
 	public GameObject graphics;
 	public void Looted ()
 	{
@@ -12,8 +12,8 @@ public class LootCrateMain : MonoBehaviour {
 	}
 
 	// Use this for initialization
-	void Start () {
-	
+	void Awake () {
+        Items=new InvItemStorage(8,4,2);
 	}
 	
 	// Update is called once per frame

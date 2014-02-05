@@ -12,8 +12,6 @@ GameObject:
   - 114: {fileID: 11400002}
   - 114: {fileID: 11400004}
   - 114: {fileID: 11400008}
-  - 114: {fileID: 11400010}
-  - 114: {fileID: 11400006}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -600,8 +598,6 @@ MonoBehaviour:
   GC: {fileID: 0}
   movement: {fileID: 11400002}
   maxHealth: 100
-  items: {fileID: 11400006}
-  equipment: {fileID: 11400010}
   inputSub: {fileID: 11400004}
   targetingSub: {fileID: 11400008}
   gunList:
@@ -643,20 +639,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c912e0c77919e9943bd76a8959c1df44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11400006
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8d5bfa146208db45b5505e025ffbd2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxItemCount: 8
-  maxRows: 4
-  maxColumns: 2
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -666,17 +648,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88e1933c7cfa9f3468fa7fe2e930c5f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &11400010
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 669bf9dcd99e8c6448f446db4f3c10fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &11400012

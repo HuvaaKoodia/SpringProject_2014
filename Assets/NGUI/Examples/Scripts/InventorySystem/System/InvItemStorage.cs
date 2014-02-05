@@ -2,16 +2,28 @@
 using System.Collections.Generic;
 
 /// <summary>
-/// Contains the characters GameItems.
+/// Contains the characters inventory GameItems.
 /// </summary>
-public class InvItemStorage : MonoBehaviour
+public class InvItemStorage
 {
 	public int maxItemCount = 8;
 	
 	public int maxRows = 4;
 	public int maxColumns = 4;
 
-	List<InvGameItem> mItems = new List<InvGameItem>();
+    void Awake(){
+        mItems = new List<InvGameItem>();
+    }
+
+    public InvItemStorage(int itemcount,int rows,int columns){
+        maxItemCount=itemcount;
+        maxRows=rows;
+        maxColumns=columns;
+
+        Awake();
+    }
+
+    List<InvGameItem> mItems;
 	public List<InvGameItem> items { get { while (mItems.Count < maxItemCount) mItems.Add(null); return mItems; } }
 
 	/// <summary>
