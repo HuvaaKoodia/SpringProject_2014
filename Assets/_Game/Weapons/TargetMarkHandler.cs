@@ -33,7 +33,6 @@ public class TargetMarkHandler
 			new Vector3(Mathf.Cos(70 * Mathf.Deg2Rad), Mathf.Sin(70 * Mathf.Deg2Rad), 0),
 			new Vector3(Mathf.Cos(30 * Mathf.Deg2Rad), Mathf.Sin(30 * Mathf.Deg2Rad), 0)
 		};
-		int offsetDistance = 2;
 		
 		for(int i = 0; i < 4; i++)
 		{

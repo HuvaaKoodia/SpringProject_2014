@@ -113,10 +113,14 @@ public static class PathFinder
 			Debug.Log(position + " is out of map range");
 		}
 
-        if (nextTile != null && (nextTile.Data.TileType == TileObjData.Type.Floor || nextTile.Data.TileType == TileObjData.Type.Corridor))
-            return true;
-        else
-            return false;
+		var door=nextTile.GetDoor();
+		if (door!=null&&!door.IsOpen) 
+			return false;
+		
+		if (nextTile.BlockedForMovement) 
+			return false;
+		else
+			return true;
     }
 
     class Surr

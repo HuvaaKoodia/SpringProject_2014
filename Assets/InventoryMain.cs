@@ -28,25 +28,33 @@ public class InventoryMain : MonoBehaviour {
 
 	public void ToggleInventory()
 	{
-
-
-		InventoryParent.SetActive(!InventoryParent.activeSelf);
-		HUD.gameObject.SetActive(!InventoryParent.activeSelf);
-
-
-		if (!InventoryParent.activeSelf){
-			//activate weapons
-			ActivateWeapon(WeaponID.LeftHand,UIEquipmentSlot.Slot.WeaponLeftHand);
-			ActivateWeapon(WeaponID.LeftShoulder,UIEquipmentSlot.Slot.WeaponLeftShoulder);
-			ActivateWeapon(WeaponID.RightHand,UIEquipmentSlot.Slot.WeaponRightHand);
-			ActivateWeapon(WeaponID.RightShoulder,UIEquipmentSlot.Slot.WeaponRightShoulder);
-
-			//activate utilities
-			//DEV.TODO
-
-
-			if (LootParent.activeSelf) LootParent.SetActive(false);
+		if (InventoryParent.activeSelf)
+		{
+			DeactivateInventory();
 		}
+		else
+		{
+			ActivateInventory();
+		}
+
+		HUD.ToggleInventoryHUD();
+	}
+
+	public void ActivateInventory()
+	{ 
+		InventoryParent.SetActive(true);
+	}
+
+	public void DeactivateInventory()
+	{ 
+		InventoryParent.SetActive(false);
+
+		ActivateWeapon(WeaponID.LeftHand,UIEquipmentSlot.Slot.WeaponLeftHand);
+		ActivateWeapon(WeaponID.LeftShoulder,UIEquipmentSlot.Slot.WeaponLeftShoulder);
+		ActivateWeapon(WeaponID.RightHand,UIEquipmentSlot.Slot.WeaponRightHand);
+		ActivateWeapon(WeaponID.RightShoulder,UIEquipmentSlot.Slot.WeaponRightShoulder);
+		
+		if (LootParent.activeSelf) LootParent.SetActive(false);
 	}
 
 	void ActivateWeapon(WeaponID id,UIEquipmentSlot.Slot slot){

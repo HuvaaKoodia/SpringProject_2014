@@ -18,6 +18,7 @@ public class PlayerMain : EntityMain
 
 	public PlayerInputSub inputSub;
 	public PlayerTargetingSub targetingSub;
+	public PlayerInteractSub interactSub;
 
 	public List<WeaponMain> gunList;
 	public WeaponID currentGunID;
@@ -47,6 +48,8 @@ public class PlayerMain : EntityMain
     {
 		ap = apMax;
 		GC.menuHandler.UpdateHealthText(maxHealth);
+
+		interactSub.CheckForInteractables();
 	}
 	
 	// Update is called once per frame
@@ -85,6 +88,8 @@ public class PlayerMain : EntityMain
 
     public override void FinishedMoving(bool wontMoveAnymore)
 	{
+		interactSub.CheckForInteractables();
+
         if (ap <= 0)
             EndPlayerPhase();
         else

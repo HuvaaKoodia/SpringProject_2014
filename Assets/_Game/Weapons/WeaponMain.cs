@@ -101,7 +101,6 @@ public class WeaponMain : MonoBehaviour {
 			SetTargetRotation();
 			return true;
 		}
-		return false;
 	}
 
 	protected void AddTarget(EnemyMain enemy)

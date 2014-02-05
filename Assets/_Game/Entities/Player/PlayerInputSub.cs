@@ -19,15 +19,19 @@ public class PlayerInputSub : MonoBehaviour {
         if (playerMovement.currentMovement == MovementState.NotMoving)
         {
             HotkeyInput();
-            MouseInput();
+
+			if (!player.GC.NGUICamera.MenuButtonPressed)
+            	MouseInput();
 
 			player.GC.menuHandler.gunInfoDisplay.UpdateGunInfo();
         }
+
+		player.GC.NGUICamera.MenuButtonPressed = false;
 	}
 
     void HotkeyInput()
     {
-		if (!player.targetingMode)
+		if (!player.targetingMode && player.GC.menuHandler.currentMenuState == MenuState.MovementHUD)
 		{
 	        float verticalAxis = Input.GetAxis("Vertical");
 	        float horizontalAxis = Input.GetAxis("Horizontal");
@@ -52,42 +56,46 @@ public class PlayerInputSub : MonoBehaviour {
 				MoveLeftInput();
 	            return;
 	        }
+			
+			if (Input.GetButtonDown("TurnLeft"))
+			{
+				TurnLeftInput();
+			}
+			else if (Input.GetButtonDown("TurnRight"))
+			{
+				TurnRightInput();
+			}
+		}
+		else if (player.GC.menuHandler.currentMenuState == MenuState.TargetingHUD)
+		{
+		 	if (Input.GetKeyDown(KeyCode.Alpha1))
+			{
+				ChangeWeaponInput(WeaponID.LeftShoulder);
+			}
+			else if (Input.GetKeyDown(KeyCode.Alpha2))
+			{
+				ChangeWeaponInput(WeaponID.LeftHand);
+			}
+			else if (Input.GetKeyDown(KeyCode.Alpha3))
+			{
+				ChangeWeaponInput(WeaponID.RightShoulder);
+			}
+			else if (Input.GetKeyDown(KeyCode.Alpha4))
+			{
+				ChangeWeaponInput(WeaponID.RightHand);
+			}
+			else if (Input.GetButtonDown("Engage Combat"))
+			{
+				EngageCombatInput();
+			}
 		}
 
-		if (Input.GetButtonDown("TurnLeft"))
-		{
-			TurnLeftInput();
-		}
-		else if (Input.GetButtonDown("TurnRight"))
-		{
-			TurnRightInput();
-		}
-		else if (Input.GetButtonDown("Targeting mode"))
+		if (Input.GetButtonDown("Targeting mode"))
 		{
 			TargetingModeInput();
 		}
-		else if (Input.GetButtonDown("Engage Combat"))
-		{
-			EngageCombatInput();
-		}
-		else if (Input.GetKeyDown(KeyCode.Alpha1))
-		{
-			ChangeWeaponInput(WeaponID.LeftShoulder);
-		}
-		else if (Input.GetKeyDown(KeyCode.Alpha2))
-		{
-			ChangeWeaponInput(WeaponID.LeftHand);
-		}
-		else if (Input.GetKeyDown(KeyCode.Alpha3))
-		{
-			ChangeWeaponInput(WeaponID.RightShoulder);
-		}
-		else if (Input.GetKeyDown(KeyCode.Alpha4))
-		{
-			ChangeWeaponInput(WeaponID.RightHand);
-		}
-    }
-
+	}
+	
 	void MouseInput()
 	{
 		if (Input.GetMouseButtonDown(0))
@@ -98,20 +106,7 @@ public class PlayerInputSub : MonoBehaviour {
 			}
 			else
 			{
-				Component target;
-
-                //DEV.TEMP DOOR CHECK
-                var door=playerMovement.CheckForDoor();
-                if (door!=null){
-                    door.Toggle();
-                }
-                else
-				if (Subs.GetObjectMousePos(out target, MapGenerator.TileSize.magnitude - 2, "Loot"))
-	            {
-	                player.PickupLoot(target.GetComponent<LootCrateMain>());
-	            }
-				
-				
+				InteractInput(true);
 			}
 			
 			player.GC.menuHandler.CheckTargetingModePanel();
@@ -122,6 +117,8 @@ public class PlayerInputSub : MonoBehaviour {
 			{
 				player.targetingSub.TargetAtMousePosition(false);
 			}
+			else
+				player.GC.menuHandler.CheckTargetingModePanel();
 		}
 	}
 	
@@ -214,5 +211,15 @@ public class PlayerInputSub : MonoBehaviour {
 			return;
 
 		player.EndPlayerPhase();
+	}
+
+	public void InteractInput(bool screenClick)
+	{
+		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving)
+			return;
+
+		if (player.GC.menuHandler.currentMenuState == MenuState.NothingSelected || 
+		    player.GC.menuHandler.currentMenuState == MenuState.MovementHUD)
+			player.interactSub.Interact(screenClick);
 	}
 }

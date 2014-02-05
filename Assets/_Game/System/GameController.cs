@@ -29,6 +29,8 @@ public class GameController : MonoBehaviour {
 	public InventoryMain Inventory;
 
 	public List<LootCrateMain> LootCrates {get;private set;}
+
+	public UICamera NGUICamera;
 	
 	// Use this for initialization
 	void Start()

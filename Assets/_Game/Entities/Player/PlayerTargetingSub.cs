@@ -14,6 +14,8 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 	UISprite insightPrefab;
 
+	public LayerMask targetingRayMask;
+
 	public Rect TargetingArea 
 	{ 
 		get { return new Rect(60, 40, Screen.width-120, Screen.height-80); }
@@ -61,7 +63,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 				RaycastHit hitInfo;
 				
 				Debug.DrawRay(ray.origin, ray.direction * 20, Color.red, 2.0f);
-				if (Physics.Raycast(ray, out hitInfo, 20))
+				if (Physics.Raycast(ray, out hitInfo, 20, targetingRayMask))
 				{
 					if (hitInfo.transform == enemy.transform)
 					{

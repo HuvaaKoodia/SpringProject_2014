@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LootCrateMain : MonoBehaviour {
+public class LootCrateMain : InteractableMain {
 
 	public InvItemStorage Items;
 	public GameObject graphics;
@@ -19,5 +19,10 @@ public class LootCrateMain : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
+	}
+
+	public override void Interact()
+	{
+		Looted();
 	}
 }

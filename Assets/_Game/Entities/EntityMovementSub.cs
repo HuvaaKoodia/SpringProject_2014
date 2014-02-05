@@ -29,7 +29,7 @@ public class EntityMovementSub : MonoBehaviour
 	bool waitBeforeMoving;
 
 	// Use this for initialization
-	void Start()
+	void Awake()
     {
 		parentTransform = transform;
         parentEntity = transform.gameObject.GetComponent<EntityMain>();
@@ -203,12 +203,13 @@ public class EntityMovementSub : MonoBehaviour
         TileMain nextTile = tilemap[x, y];
 
         var door=nextTile.GetDoor();
-        if (door!=null&&!door.IsOpen) return false;
+        if (door!=null&&!door.IsOpen) 
+			return false;
         
-        if (nextTile.BlockedForMovement) 
-            return true;
-        else
+        if (nextTile.BlockedForMovement)
             return false;
+        else
+            return true;
 
     }
 

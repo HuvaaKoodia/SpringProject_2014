@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DoorMain : MonoBehaviour {
+public class DoorMain : InteractableMain {
 
 	public bool IsOpen{get;private set;}
 	public string open_animation,close_animation;
 	public GameObject graphics;
+
+	public GameObject doorCollider;
 
 	bool anim_on;
 
@@ -24,6 +26,7 @@ public class DoorMain : MonoBehaviour {
 		else{
 			graphics.animation.Play(close_animation);
 			IsOpen=false;
+			doorCollider.SetActive(true);
 		}
 
 		return true;
@@ -39,5 +42,11 @@ public class DoorMain : MonoBehaviour {
 		yield return new WaitForSeconds(delay);
 		anim_on=false;
 		IsOpen=true;
+		doorCollider.SetActive(false);
+	}
+
+	public override void Interact()
+	{
+		Toggle();
 	}
 }

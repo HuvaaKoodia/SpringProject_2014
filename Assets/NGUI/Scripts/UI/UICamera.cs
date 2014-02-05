@@ -37,6 +37,7 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Camera))]
 public class UICamera : MonoBehaviour
 {
+	public bool MenuButtonPressed;
 	public enum ControlScheme
 	{
 		Mouse,
@@ -807,6 +808,7 @@ public class UICamera : MonoBehaviour
 
 	void Awake ()
 	{
+		MenuButtonPressed = false;
 		mWidth = Screen.width;
 		mHeight = Screen.height;
 
@@ -1309,6 +1311,13 @@ public class UICamera : MonoBehaviour
 			currentTouch.dragStarted = false;
 			Notify(currentTouch.pressed, "OnPress", true);
 
+			int layer = LayerMask.NameToLayer("NGUI");
+			if (currentTouch.pressed != null &&
+			    currentTouch.pressed.layer == layer)
+			{
+				MenuButtonPressed = true;
+			}
+
 			// Clear the selection
 			if (currentTouch.pressed != mCurrentSelection)
 			{
@@ -1423,7 +1432,6 @@ public class UICamera : MonoBehaviour
 					if (currentTouch.clickNotification != ClickNotification.None)
 					{
 						float time = RealTime.time;
-
 						Notify(currentTouch.pressed, "OnClick", null);
 
 						if (currentTouch.clickTime + 0.35f > time)

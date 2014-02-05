@@ -9,14 +9,14 @@ public class EnemyMain : EntityMain {
     public bool waitingForAttackPhase;
 
 	public GameObject graphics;
-	public MeshRenderer renderer;
+	public MeshRenderer meshRenderer;
 
 	// Use this for initialization
 	public override void Awake()
 	{
 		base.Awake();
 
-		renderer = graphics.GetComponent<MeshRenderer>();
+		meshRenderer = graphics.GetComponent<MeshRenderer>();
 
 		aiController = GC.aiController;
 		ai = transform.root.GetComponent<TestAI>();
@@ -106,7 +106,7 @@ public class EnemyMain : EntityMain {
 		Color oldColor = renderer.material.color;
 		Color newColor = new Color(oldColor.r, oldColor.g-0.2f, oldColor.b-0.2f);
 
-		renderer.material.color = newColor;
+		meshRenderer.material.color = newColor;
 
         if (Health <= 0)
 		{
