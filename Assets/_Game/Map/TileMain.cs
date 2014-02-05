@@ -33,6 +33,7 @@ public class TileMain : MonoBehaviour
     }
 
     public DoorMain GetDoor(){
+        if (TileObject==null) return null;
         return TileObject.GetComponent<DoorMain>();
     }
 }
