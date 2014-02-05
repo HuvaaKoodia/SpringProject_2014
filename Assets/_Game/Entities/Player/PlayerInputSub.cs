@@ -31,7 +31,7 @@ public class PlayerInputSub : MonoBehaviour {
 
     void HotkeyInput()
     {
-		if (!player.targetingMode && player.GC.menuHandler.currentMenuState == MenuState.MovementHUD)
+		if (!player.targetingMode)
 		{
 	        float verticalAxis = Input.GetAxis("Vertical");
 	        float horizontalAxis = Input.GetAxis("Horizontal");
@@ -211,9 +211,11 @@ public class PlayerInputSub : MonoBehaviour {
 			return;
 
 		player.Attack();
-	}
 
-	public void ChangeWeaponInput(WeaponID id)
+        player.GC.menuHandler.ToggleTargetingHUD();
+    }
+    
+    public void ChangeWeaponInput(WeaponID id)
 	{
 		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving)
 			return;

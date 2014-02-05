@@ -35,8 +35,6 @@ public class EntityMovementSub : MonoBehaviour
         parentEntity = transform.gameObject.GetComponent<EntityMain>();
 
 		tilemap = parentEntity.GC.TileMainMap;
-
-		tilemap[currentGridX, currentGridY].SetEntity(parentTransform.GetComponent<EntityMain>());
         
         mapWidth = tilemap.GetLength(0);
         mapHeight = tilemap.GetLength(1);
@@ -44,6 +42,11 @@ public class EntityMovementSub : MonoBehaviour
 		waitBeforeMoving = false;
 	}
 	
+
+    void Start(){
+        UpdateTileEntityToThis();
+    }
+
 	// Update is called once per frame
 	void Update ()
     {
@@ -106,7 +109,8 @@ public class EntityMovementSub : MonoBehaviour
 
                 targetPosition = tilemap[currentGridX, currentGridY].transform.position;
 
-                tilemap[currentGridX, currentGridY].SetEntity(parentEntity);
+
+                UpdateTileEntityToThis();
                 return true;
             }
             else
@@ -358,4 +362,9 @@ public class EntityMovementSub : MonoBehaviour
 		}
 		return null;
 	}
+
+    void UpdateTileEntityToThis()
+    {
+        tilemap[currentGridX, currentGridY].SetEntity(parentEntity);
+    }
 }

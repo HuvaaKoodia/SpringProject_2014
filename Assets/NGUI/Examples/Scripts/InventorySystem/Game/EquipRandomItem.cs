@@ -8,10 +8,6 @@ public class EquipRandomItem : MonoBehaviour
 
 	void OnClick()
 	{
-		if (equipment == null) return;
-		if (XDB.items.Count == 0) return;
-
-		var gi=InvGameItem.GetRandomItem(XDB);
-		equipment.Equip(gi);
+        InvEquipmentStorage.EquipRandomItem(equipment,XDB);
 	}
 }

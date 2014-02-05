@@ -21,12 +21,11 @@ public class DoorMain : InteractableMain {
 		anim_on=false;
 		if (open){
 			graphics.animation.Play(open_animation);
-			StartCoroutine(OpenTimer(graphics.animation[open_animation].length));
+            StartCoroutine(ToggleTimer(true,graphics.animation[open_animation].length));
 		}
 		else{
 			graphics.animation.Play(close_animation);
-			IsOpen=false;
-			doorCollider.SetActive(true);
+            StartCoroutine(ToggleTimer(false,graphics.animation[open_animation].length));
 		}
 
 		return true;
@@ -37,12 +36,19 @@ public class DoorMain : InteractableMain {
 		Open(!IsOpen);
 	}
 
-	IEnumerator OpenTimer(float delay){
+    IEnumerator ToggleTimer(bool open,float delay){
+        if (!open){
+            IsOpen=open;
+            doorCollider.SetActive(!open);
+        }
 		anim_on=true;
 		yield return new WaitForSeconds(delay);
 		anim_on=false;
-		IsOpen=true;
-		doorCollider.SetActive(false);
+
+        if (open){
+    		IsOpen=open;
+            doorCollider.SetActive(!open);
+        }
 	}
 
 	public override void Interact()

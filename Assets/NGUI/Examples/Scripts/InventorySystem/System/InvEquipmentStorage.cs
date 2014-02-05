@@ -177,4 +177,16 @@ public class InvEquipmentStorage
 		}
 		return null;
 	}
+
+
+    //statics
+
+    public static void EquipRandomItem(InvEquipmentStorage equipment,XmlDatabase XDB){
+        if (equipment == null) return;
+        if (XDB.items.Count == 0) return;
+        
+        var gi=InvGameItem.GetRandomItem(XDB);
+        equipment.Equip(gi);
+    }
+    
 }

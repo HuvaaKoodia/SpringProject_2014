@@ -129,6 +129,11 @@ public class MenuHandler : MonoBehaviour {
 		ChangeMenuState(MenuState.InventoryHUD);
 	}
 
+    public void SetNothingSelected()
+    {
+        ChangeMenuState(MenuState.NothingSelected);
+    }
+
 	public void SetInteractVisibility(bool visible)
 	{
 		if (currentMenuState == MenuState.InventoryHUD ||
