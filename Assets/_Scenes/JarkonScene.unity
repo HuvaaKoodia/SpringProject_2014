@@ -2190,7 +2190,7 @@ MonoBehaviour:
   grabSound: {fileID: 8300000, guid: cab912f3009b43843b0a48ac3120c6ad, type: 3}
   placeSound: {fileID: 8300000, guid: 4ecb26c462ed72b4dbfba168ff91e2fa, type: 3}
   errorSound: {fileID: 8300000, guid: ab4b41aa0a43dcc48a386073b6a1a0d9, type: 3}
-  equipment: {fileID: 0}
+  Inventory: {fileID: 0}
   slot: 2
 --- !u!65 &427042426
 BoxCollider:
@@ -2320,7 +2320,6 @@ MonoBehaviour:
   TestLoadShipName: whitemansburden
   UseTestMap: 0
   EngCont: {fileID: 453917343}
-  player: {fileID: 0}
   currentTurn: 0
   menuHandler: {fileID: 1208657778}
   Inventory: {fileID: 2068029783}
@@ -3933,7 +3932,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4d2ddf9674324f4e9026e8ba772e8e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GDB: {fileID: 985648497}
+  GDB: {fileID: 985648499}
+  XDB: {fileID: 985648497}
   PS: {fileID: 985648498}
   MGen: {fileID: 456725369}
   SGen: {fileID: 456725368}
@@ -4165,7 +4165,7 @@ MonoBehaviour:
   grabSound: {fileID: 8300000, guid: cab912f3009b43843b0a48ac3120c6ad, type: 3}
   placeSound: {fileID: 8300000, guid: 4ecb26c462ed72b4dbfba168ff91e2fa, type: 3}
   errorSound: {fileID: 8300000, guid: ab4b41aa0a43dcc48a386073b6a1a0d9, type: 3}
-  equipment: {fileID: 0}
+  Inventory: {fileID: 0}
   slot: 6
 --- !u!65 &736627485
 BoxCollider:
@@ -5407,8 +5407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 646fca1f4356ca24e9cee27b0432ab47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  equipment: {fileID: 0}
-  DB: {fileID: 0}
+  XDB: {fileID: 0}
 --- !u!65 &892141751
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6117,6 +6116,7 @@ GameObject:
   - 4: {fileID: 985648496}
   - 114: {fileID: 985648497}
   - 114: {fileID: 985648498}
+  - 114: {fileID: 985648499}
   m_Layer: 0
   m_Name: Databases
   m_TagString: Untagged
@@ -6189,6 +6189,17 @@ MonoBehaviour:
   InsightSprite: {fileID: 11400000, guid: b225bf727f92d1f4ea3729003a238644, type: 2}
   TargetedSprite: {fileID: 11400000, guid: 3a4a67f0bbf1b1c498a4c6b6993d7532, type: 2}
   NumShotsLabel: {fileID: 11400000, guid: 60f0360bfe15a2f4cb50624539b2c99a, type: 2}
+--- !u!114 &985648499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 985648495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c9dbb49fd96f3498c2795c24a965e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &998747366
 GameObject:
   m_ObjectHideFlags: 0
@@ -6272,7 +6283,7 @@ MonoBehaviour:
   grabSound: {fileID: 8300000, guid: cab912f3009b43843b0a48ac3120c6ad, type: 3}
   placeSound: {fileID: 8300000, guid: 4ecb26c462ed72b4dbfba168ff91e2fa, type: 3}
   errorSound: {fileID: 8300000, guid: ab4b41aa0a43dcc48a386073b6a1a0d9, type: 3}
-  equipment: {fileID: 0}
+  Inventory: {fileID: 0}
   slot: 3
 --- !u!65 &998747371
 BoxCollider:
@@ -6326,7 +6337,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 849fd93d348255049af49ba16fb8bcb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemStorage: {fileID: 0}
   SlotPrefab: {fileID: 100000, guid: d8b3491109ac9a54981225a3a7876ace, type: 2}
   background: {fileID: 0}
   spacing: 130
@@ -9267,7 +9277,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 849fd93d348255049af49ba16fb8bcb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemStorage: {fileID: 0}
   SlotPrefab: {fileID: 100000, guid: d8b3491109ac9a54981225a3a7876ace, type: 2}
   background: {fileID: 0}
   spacing: 130
@@ -10333,6 +10342,14 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 4e352aa64cbc07a40b14dd522f0506fb, type: 2}
+      propertyPath: XDB
+      value: 
+      objectReference: {fileID: 985648497}
+    - target: {fileID: 11400000, guid: 4e352aa64cbc07a40b14dd522f0506fb, type: 2}
+      propertyPath: GDB
+      value: 
+      objectReference: {fileID: 985648499}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4e352aa64cbc07a40b14dd522f0506fb, type: 2}
   m_RootGameObject: {fileID: 682935425}
@@ -10404,7 +10421,7 @@ MonoBehaviour:
   grabSound: {fileID: 8300000, guid: cab912f3009b43843b0a48ac3120c6ad, type: 3}
   placeSound: {fileID: 8300000, guid: 4ecb26c462ed72b4dbfba168ff91e2fa, type: 3}
   errorSound: {fileID: 8300000, guid: ab4b41aa0a43dcc48a386073b6a1a0d9, type: 3}
-  equipment: {fileID: 0}
+  Inventory: {fileID: 0}
   slot: 7
 --- !u!65 &1639480326
 BoxCollider:
@@ -11073,7 +11090,7 @@ MonoBehaviour:
   grabSound: {fileID: 8300000, guid: cab912f3009b43843b0a48ac3120c6ad, type: 3}
   placeSound: {fileID: 8300000, guid: 4ecb26c462ed72b4dbfba168ff91e2fa, type: 3}
   errorSound: {fileID: 8300000, guid: ab4b41aa0a43dcc48a386073b6a1a0d9, type: 3}
-  equipment: {fileID: 0}
+  Inventory: {fileID: 0}
   slot: 5
 --- !u!65 &1716060811
 BoxCollider:
@@ -11860,7 +11877,7 @@ MonoBehaviour:
   grabSound: {fileID: 8300000, guid: cab912f3009b43843b0a48ac3120c6ad, type: 3}
   placeSound: {fileID: 8300000, guid: 4ecb26c462ed72b4dbfba168ff91e2fa, type: 3}
   errorSound: {fileID: 8300000, guid: ab4b41aa0a43dcc48a386073b6a1a0d9, type: 3}
-  equipment: {fileID: 0}
+  Inventory: {fileID: 0}
   slot: 0
 --- !u!65 &1851236367
 BoxCollider:
@@ -11958,7 +11975,7 @@ MonoBehaviour:
   grabSound: {fileID: 8300000, guid: cab912f3009b43843b0a48ac3120c6ad, type: 3}
   placeSound: {fileID: 8300000, guid: 4ecb26c462ed72b4dbfba168ff91e2fa, type: 3}
   errorSound: {fileID: 8300000, guid: ab4b41aa0a43dcc48a386073b6a1a0d9, type: 3}
-  equipment: {fileID: 0}
+  Inventory: {fileID: 0}
   slot: 8
 --- !u!65 &1853280032
 BoxCollider:
@@ -12159,7 +12176,7 @@ MonoBehaviour:
   grabSound: {fileID: 8300000, guid: cab912f3009b43843b0a48ac3120c6ad, type: 3}
   placeSound: {fileID: 8300000, guid: 4ecb26c462ed72b4dbfba168ff91e2fa, type: 3}
   errorSound: {fileID: 8300000, guid: ab4b41aa0a43dcc48a386073b6a1a0d9, type: 3}
-  equipment: {fileID: 0}
+  Inventory: {fileID: 0}
   slot: 1
 --- !u!65 &1875377137
 BoxCollider:
@@ -12775,7 +12792,7 @@ MonoBehaviour:
   grabSound: {fileID: 8300000, guid: cab912f3009b43843b0a48ac3120c6ad, type: 3}
   placeSound: {fileID: 8300000, guid: 4ecb26c462ed72b4dbfba168ff91e2fa, type: 3}
   errorSound: {fileID: 8300000, guid: ab4b41aa0a43dcc48a386073b6a1a0d9, type: 3}
-  equipment: {fileID: 0}
+  Inventory: {fileID: 0}
   slot: 4
 --- !u!65 &1967724626
 BoxCollider:
@@ -13069,16 +13086,7 @@ MonoBehaviour:
   LootParent: {fileID: 1041118332}
   InventoryStorage: {fileID: 1471357580}
   LootStorage: {fileID: 1030497250}
-  EqupmentSlots:
-  - {fileID: 1853280031}
-  - {fileID: 1716060810}
-  - {fileID: 1851236366}
-  - {fileID: 1875377136}
-  - {fileID: 1967724625}
-  - {fileID: 1639480325}
-  - {fileID: 427042425}
-  - {fileID: 736627484}
-  - {fileID: 998747370}
+  EquipmentSlots: []
   temp_random_item_button: {fileID: 892141750}
 --- !u!54 &2068029784
 Rigidbody:

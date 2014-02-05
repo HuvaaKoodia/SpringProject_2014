@@ -152,7 +152,7 @@ public class MenuHandler : MonoBehaviour {
 			MovementHud.SetActive(false);
 			TargetingHud.SetActive(false);
 			InventoryHud.DeactivateInventory();
-			GC.player.EndTargetingMode();
+			GC.Player.EndTargetingMode();
 			SetInteractVisibility(true);
 			break;
 
@@ -161,7 +161,7 @@ public class MenuHandler : MonoBehaviour {
 			MovementHud.SetActive(true);
 			TargetingHud.SetActive(false);
 			InventoryHud.DeactivateInventory();
-			GC.player.EndTargetingMode();
+			GC.Player.EndTargetingMode();
 			break;
 
 		case MenuState.TargetingHUD:
@@ -176,7 +176,7 @@ public class MenuHandler : MonoBehaviour {
 			EndHud.SetActive(false);
 			MovementHud.SetActive(false);
 			TargetingHud.SetActive(false);
-			GC.player.EndTargetingMode();
+			GC.Player.EndTargetingMode();
 			SetInteractVisibility(false);
 			break;
 		}

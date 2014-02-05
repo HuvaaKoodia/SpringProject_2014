@@ -103,7 +103,7 @@ public class EnemyMain : EntityMain {
 		Health -= damage;
 
 		//temp
-        Color oldColor = mesh_renderer.material.color;
+        Color oldColor = meshRenderer.material.color;
 		Color newColor = new Color(oldColor.r, oldColor.g-0.2f, oldColor.b-0.2f);
 
 		meshRenderer.material.color = newColor;

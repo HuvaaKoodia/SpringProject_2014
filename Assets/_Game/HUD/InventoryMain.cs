@@ -49,7 +49,8 @@ public class InventoryMain : MonoBehaviour {
 	{ 
 		InventoryParent.SetActive(false);
 
-		if (!InventoryParent.activeSelf){
+		if (!InventoryParent.activeSelf)
+		{
 			//activate weapons
             Player.ActivateWeapon(WeaponID.LeftHand,UIEquipmentSlot.Slot.WeaponLeftHand);
             Player.ActivateWeapon(WeaponID.LeftShoulder,UIEquipmentSlot.Slot.WeaponLeftShoulder);
@@ -61,8 +62,6 @@ public class InventoryMain : MonoBehaviour {
 			//DEV.TODO
 
 		if (LootParent.activeSelf) LootParent.SetActive(false);
-	}
-			if (LootParent.activeSelf) LootParent.SetActive(false);
 		}
 	}
 
