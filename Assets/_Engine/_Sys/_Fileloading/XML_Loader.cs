@@ -53,6 +53,11 @@ public class XML_Loader{
 		if (element.Attributes[name]==null) return 0f;
 		return float.Parse(element.Attributes[name].Value);
 	}
+
+    public static bool getAttBool(XmlNode node,string name){
+        return getAttStr(node,name).ToLower()=="true"?true:false;
+
+    }
 	
 	//adding elements
 	public static XmlElement addElement(XmlElement element,string name){
