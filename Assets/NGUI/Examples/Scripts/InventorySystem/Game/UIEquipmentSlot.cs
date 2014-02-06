@@ -62,7 +62,6 @@ public class UIEquipmentSlot : UIItemSlot
 
 	override protected InvGameItem Replace (InvGameItem item)
 	{
-		//quick hax
 		if (slot==Slot.RecycleBin){
 			return null;
 		}

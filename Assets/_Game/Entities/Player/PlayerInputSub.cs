@@ -94,17 +94,17 @@ public class PlayerInputSub : MonoBehaviour {
 		}
 #if UNITY_EDITOR
         //DEV.DEBUG damage
-        if (Input.GetKey(KeyCode.Keypad6)){
-            player.ObjData.TakeDMG(10,0);
+        if (Input.GetKeyDown(KeyCode.Keypad6)){
+            player.TakeDamage(10,1,0);
         }
-        if (Input.GetKey(KeyCode.Keypad8)){
-            player.ObjData.TakeDMG(10,1);
+        if (Input.GetKeyDown(KeyCode.Keypad8)){
+            player.TakeDamage(10,0,1);
         }
-        if (Input.GetKey(KeyCode.Keypad4)){
-            player.ObjData.TakeDMG(10,2);
+        if (Input.GetKeyDown(KeyCode.Keypad4)){
+            player.TakeDamage(10,-1,0);
         }
-        if (Input.GetKey(KeyCode.Keypad2)){
-            player.ObjData.TakeDMG(10,3);
+        if (Input.GetKeyDown(KeyCode.Keypad2)){
+            player.TakeDamage(10,0,-1);
         }
 #endif
 

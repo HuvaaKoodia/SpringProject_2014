@@ -5,8 +5,9 @@ public class MechaPartObjData{
     public int HP{get;private set;}
     public int HEAT{get;private set;}
 
+    public bool OVERHEAT{get;private set;}
     public bool USABLE{get{return HP>0;}}
-    public bool CHANGABLE{get{return HEAT<10;}}
+    public bool CHANGABLE{get{return HEAT<XmlDatabase.WeaponChangeableHeatThreshold;}}
 
     public MechaPartObjData(){
         HP=100;
@@ -22,6 +23,12 @@ public class MechaPartObjData{
     public void AddHEAT(int heat){
         HEAT+=heat;
         HEAT=Mathf.Clamp(HEAT,0,100);
+        if (HEAT==100){
+            OVERHEAT=true;
+        }
+        if (HEAT<XmlDatabase.OverheatDissipateThreshold){
+            OVERHEAT=false;
+        }
     }
 
     /// <summary>

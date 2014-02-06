@@ -36,6 +36,8 @@ public class WeaponMain : MonoBehaviour {
 	public int CurrentAmmo { get; protected set;}
     public int CurrentHeat { get{return WeaponSlot.ObjData.HEAT;}}
 
+    public bool Overheat{get{return WeaponSlot.ObjData.OVERHEAT;}}
+
 	public Dictionary<EnemyMain, int> targets { get; private set;}
 
 	public Quaternion targetRotation;
@@ -43,6 +45,8 @@ public class WeaponMain : MonoBehaviour {
 
 	public void SetWeapon(InvEquipmentSlot slot){
         WeaponSlot=slot;
+
+        if (Weapon==slot.Item) return;
         Weapon=slot.Item;
 
         if (Weapon==null) return;
@@ -148,25 +152,23 @@ public class WeaponMain : MonoBehaviour {
 
 	public void Shoot()
 	{
-		if (CurrentHeat >= 100 || CurrentAmmo <= 0)
-			return;
-
-        IncreaseHeat();
-
 		foreach(KeyValuePair<EnemyMain, int> enemyPair in targets)
 		{
 			//shoot all shots at one enemy consecutively
 			for (int i = 0; i < enemyPair.Value; i++)
 			{
+                if (Overheat || CurrentAmmo == 0) return;
+
 				CurrentAmmo--;
+                if (CurrentAmmo<0) CurrentAmmo=0;
+
+                IncreaseHeat();
 
 				if (Accuracy > Subs.RandomPercent())
 				{
                     //hit
 					int dmg = (int)Random.Range(MinDamage, MaxDamage);
 					enemyPair.Key.TakeDamage(dmg);
-                    //add heat
-
 				}
 			}
 		}

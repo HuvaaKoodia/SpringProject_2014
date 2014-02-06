@@ -199,6 +199,9 @@ public class Subs{
 	}
 	
 	public static T GetRandom<T>(IEnumerable<T> enumerable){
+        if (enumerable.Count()==0){
+            Debug.LogError("");
+        }
 		return enumerable.ElementAt(Random.Range(0,enumerable.Count()));
 	}
 

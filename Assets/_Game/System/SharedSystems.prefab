@@ -44,6 +44,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 400004}
   - 114: {fileID: 11400006}
+  - 114: {fileID: 11400004}
   - 114: {fileID: 11400008}
   m_Layer: 0
   m_Name: Databases
@@ -127,7 +128,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4d2ddf9674324f4e9026e8ba772e8e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GDB: {fileID: 11400006}
+  GDB: {fileID: 11400004}
+  XDB: {fileID: 11400006}
   PS: {fileID: 11400008}
   MGen: {fileID: 11400002}
   SGen: {fileID: 11400014}
@@ -145,6 +147,17 @@ MonoBehaviour:
   DEBUG_create_temp_tiles: 0
   XmlMapRead: {fileID: 11400010}
   MapPrefabs: {fileID: 11400008}
+--- !u!114 &11400004
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c9dbb49fd96f3498c2795c24a965e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
