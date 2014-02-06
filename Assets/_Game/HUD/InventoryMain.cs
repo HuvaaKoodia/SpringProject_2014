@@ -49,20 +49,10 @@ public class InventoryMain : MonoBehaviour {
 	{ 
 		InventoryParent.SetActive(false);
 
-		if (!InventoryParent.activeSelf)
-		{
-			//activate weapons
-            Player.ActivateWeapon(WeaponID.LeftHand,UIEquipmentSlot.Slot.WeaponLeftHand);
-            Player.ActivateWeapon(WeaponID.LeftShoulder,UIEquipmentSlot.Slot.WeaponLeftShoulder);
-            Player.ActivateWeapon(WeaponID.RightHand,UIEquipmentSlot.Slot.WeaponRightHand);
-            Player.ActivateWeapon(WeaponID.RightShoulder,UIEquipmentSlot.Slot.WeaponRightShoulder);
-		
-
-			//activate utilities
-			//DEV.TODO
+        Player.ActivateEquippedItems();
 
 		if (LootParent.activeSelf) LootParent.SetActive(false);
-		}
+		
 	}
 
 	public void SetPlayer(PlayerMain player){
