@@ -66,7 +66,8 @@ public class PlayerInputSub : MonoBehaviour {
 				TurnRightInput();
 			}
 		}
-		else if (player.GC.menuHandler.currentMenuState == MenuState.TargetingHUD)
+
+		if (player.GC.menuHandler.currentMenuState != MenuState.InventoryHUD)
 		{
 		 	if (Input.GetKeyDown(KeyCode.Alpha1))
 			{

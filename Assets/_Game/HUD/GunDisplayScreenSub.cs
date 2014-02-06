@@ -9,6 +9,7 @@ public class GunDisplayScreenSub : MonoBehaviour {
 	public WeaponMain weapon;
 
 	public UILabel infoLabel;
+	public UISprite highlight;
 
 	// Use this for initialization
 	void Start () {

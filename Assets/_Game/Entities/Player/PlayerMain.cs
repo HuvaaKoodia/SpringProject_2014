@@ -49,6 +49,7 @@ public class PlayerMain : EntityMain
 		interactSub.CheckForInteractables();
 
         ActivateEquippedItems();
+		GC.menuHandler.gunInfoDisplay.ChangeCurrentHighlight(currentGunID);
 	}
 	
 	// Update is called once per frame
@@ -177,6 +178,7 @@ public class PlayerMain : EntityMain
 		currentGunID = id;
 		targetingSub.CheckGunTargets();
 		GC.menuHandler.CheckTargetingModePanel();
+		GC.menuHandler.gunInfoDisplay.ChangeCurrentHighlight(currentGunID);
 	}
 
 	public WeaponMain GetWeapon (WeaponID id)

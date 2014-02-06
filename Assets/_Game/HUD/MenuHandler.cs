@@ -184,7 +184,7 @@ public class MenuHandler : MonoBehaviour {
 			break;
 		}
 	}
-
+	
 	public void CheckTargetingModePanel()
 	{
 		engageButton.gameObject.SetActive(player.targetingSub.HasAnyTargets());

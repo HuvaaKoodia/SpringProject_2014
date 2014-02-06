@@ -18,7 +18,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 	public Rect TargetingArea 
 	{ 
-		get { return new Rect(60, 40, Screen.width-120, Screen.height-80); }
+		get { return new Rect(150, 80, Screen.width-300, Screen.height-160); }
 	}
 
 	// Use this for initialization
