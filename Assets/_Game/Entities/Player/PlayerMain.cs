@@ -47,6 +47,8 @@ public class PlayerMain : EntityMain
 		GC.menuHandler.UpdateHealthText(maxHealth);
 
 		interactSub.CheckForInteractables();
+
+        ActivateEquippedItems();
 	}
 	
 	// Update is called once per frame
@@ -190,7 +192,7 @@ public class PlayerMain : EntityMain
     /// <summary>
     /// Sets the equipped GameItem weapon to the corresponding WeaponMain for game usage.
     /// </summary>
-    public void ActivateWeapon(WeaponID id,UIEquipmentSlot.Slot slot){
+    public void ActivateEquipment(WeaponID id,UIEquipmentSlot.Slot slot){
         var weapon=GetWeapon(id);
         var item=ObjData.Equipment.GetSlot(slot).Item;
         if (weapon.Weapon!=item){
@@ -200,4 +202,16 @@ public class PlayerMain : EntityMain
 		GC.menuHandler.gunInfoDisplay.SetWeaponToDisplay(id, weapon);
     }
 	
+    public void ActivateEquippedItems()
+    {
+        //activate weapons
+        ActivateEquipment(WeaponID.LeftHand,UIEquipmentSlot.Slot.WeaponLeftHand);
+        ActivateEquipment(WeaponID.LeftShoulder,UIEquipmentSlot.Slot.WeaponLeftShoulder);
+        ActivateEquipment(WeaponID.RightHand,UIEquipmentSlot.Slot.WeaponRightHand);
+        ActivateEquipment(WeaponID.RightShoulder,UIEquipmentSlot.Slot.WeaponRightShoulder);
+        
+        
+        //activate utilities
+        //DEV.TODO
+    }
 }
