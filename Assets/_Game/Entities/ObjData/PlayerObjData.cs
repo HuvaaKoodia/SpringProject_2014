@@ -25,7 +25,7 @@ public class PlayerObjData{
     /// </summary>
     public void TakeDMG(int dmg,int dir){
         //DEV.TODO 
-        EquipmentStorageSlot target=null;
+        InvEquipmentSlot target=null;
         //randomize target
 
         //sides
@@ -75,15 +75,15 @@ public class PlayerObjData{
         }
     }
 
-    private EquipmentStorageSlot GetRandomWeaponLeft(){
+    private InvEquipmentSlot GetRandomWeaponLeft(){
         return GetRandomWeapon(UIEquipmentSlot.Slot.WeaponLeftHand,UIEquipmentSlot.Slot.WeaponLeftShoulder);
     }
 
-    private EquipmentStorageSlot GetRandomWeaponRight(){
+    private InvEquipmentSlot GetRandomWeaponRight(){
         return GetRandomWeapon(UIEquipmentSlot.Slot.WeaponRightHand,UIEquipmentSlot.Slot.WeaponRightShoulder);
     }
 
-    private EquipmentStorageSlot GetRandomWeapon(UIEquipmentSlot.Slot s1,UIEquipmentSlot.Slot s2){
+    private InvEquipmentSlot GetRandomWeapon(UIEquipmentSlot.Slot s1,UIEquipmentSlot.Slot s2){
         var t1=Equipment.GetSlot(s1);
         var t2=Equipment.GetSlot(s2);
         

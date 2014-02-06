@@ -49,7 +49,6 @@ public class PlayerMain : EntityMain
 		interactSub.CheckForInteractables();
 
         ActivateEquippedItems();
-		GC.menuHandler.gunInfoDisplay.ChangeCurrentHighlight(currentGunID);
 	}
 	
 	// Update is called once per frame
@@ -178,7 +177,6 @@ public class PlayerMain : EntityMain
 		currentGunID = id;
 		targetingSub.CheckGunTargets();
 		GC.menuHandler.CheckTargetingModePanel();
-		GC.menuHandler.gunInfoDisplay.ChangeCurrentHighlight(currentGunID);
 	}
 
 	public WeaponMain GetWeapon (WeaponID id)
@@ -196,10 +194,17 @@ public class PlayerMain : EntityMain
     /// </summary>
     public void ActivateEquipment(WeaponID id,UIEquipmentSlot.Slot slot){
         var weapon=GetWeapon(id);
+<<<<<<< HEAD
         var Slot=ObjData.Equipment.GetSlot(slot);
         weapon.SetWeapon(Slot);
+=======
+        var item=ObjData.Equipment.GetSlot(slot).Item;
+        if (weapon.Weapon!=item){
+            weapon.SetWeapon(item);
+        }
 
 		GC.menuHandler.gunInfoDisplay.SetWeaponToDisplay(id, weapon);
+>>>>>>> origin/master
     }
 	
     public void ActivateEquippedItems()

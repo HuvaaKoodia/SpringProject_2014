@@ -17,11 +17,16 @@ public class MechStatisticsHud : MonoBehaviour {
             Player=GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMain>();
         }
 
-        LS.text="LS: "+Player.ObjData.Equipment.GetSlot(UIEquipmentSlot.Slot.WeaponLeftShoulder).ObjData.HP;
-        LH.text="LH: "+Player.ObjData.Equipment.GetSlot(UIEquipmentSlot.Slot.WeaponLeftHand).ObjData.HP;
-        RS.text="RS: "+Player.ObjData.Equipment.GetSlot(UIEquipmentSlot.Slot.WeaponRightShoulder).ObjData.HP;
-        RH.text="RH: "+Player.ObjData.Equipment.GetSlot(UIEquipmentSlot.Slot.WeaponRightHand).ObjData.HP;
+        SetWeaponText(LS,UIEquipmentSlot.Slot.WeaponLeftShoulder);
+        SetWeaponText(LH,UIEquipmentSlot.Slot.WeaponLeftHand);
+        SetWeaponText(RS,UIEquipmentSlot.Slot.WeaponRightShoulder);
+        SetWeaponText(RH,UIEquipmentSlot.Slot.WeaponRightHand);
 
         UT.text="UT: "+Player.ObjData.Equipment.UpperTorso.ObjData.HP;
 	}
+
+    void SetWeaponText(UILabel label,UIEquipmentSlot.Slot slot){
+        var data=Player.ObjData.Equipment.GetSlot(slot).ObjData;
+        label.text="LS: "+data.HP+", "+data.HEAT;
+    }
 }
