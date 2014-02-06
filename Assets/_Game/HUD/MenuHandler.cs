@@ -18,11 +18,9 @@ public class MenuHandler : MonoBehaviour {
 	
 	public UISprite engageButton;
 
-    public UILabel healthText;
-
 	public UIPanel targetMarkPanel;
 
-	public GunInfoDisplay gunInfoDisplay;
+	public GunDisplayMain gunInfoDisplay;
 
 	public MenuState currentMenuState;
 
@@ -194,6 +192,5 @@ public class MenuHandler : MonoBehaviour {
 
 	public void UpdateHealthText (int health)
 	{
-		healthText.text = ""+health;
 	}
 }

@@ -5,9 +5,18 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 
+public enum WeaponID
+{
+	LeftShoulder = 0,
+	LeftHand = 1,
+	RightShoulder = 2,
+	RightHand = 3,
+}
+
 public class WeaponMain : MonoBehaviour {
 
 	public PlayerMain player;
+	public WeaponID weaponID;
 
 	public InvGameItem Weapon{get;private set;}
 
