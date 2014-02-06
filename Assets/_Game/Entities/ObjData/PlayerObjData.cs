@@ -28,23 +28,27 @@ public class PlayerObjData{
         InvEquipmentSlot target=null;
         //randomize target
 
+        target=Equipment.UpperTorso;
+
         //sides
         if (dir==0){
             if (Subs.RandomPercent()<30){
-                target=Equipment.UpperTorso;
+                //torso
             }
             else
             {
-                target=GetRandomWeaponRight();
+                var w=GetRandomWeaponRight();
+                if (w!=null) target=w;
             }
         }
         else
         if (dir==2){
             if (Subs.RandomPercent()<30){
-                target=Equipment.UpperTorso;
+                //torso
             }
             else {
-                target=GetRandomWeaponLeft();
+                var w=GetRandomWeaponLeft();
+                if (w!=null) target=w;
             }
         }
         else//front and back
@@ -53,10 +57,12 @@ public class PlayerObjData{
                 target=Equipment.UpperTorso;
             }
             else if (Subs.RandomPercent()<50){
-                target=GetRandomWeaponRight();
+                var w=GetRandomWeaponRight();
+                if (w!=null) target=w;
             }
             else{
-                target=GetRandomWeaponLeft();
+                var w=GetRandomWeaponLeft();
+                if (w!=null) target=w;
             }
         }
 

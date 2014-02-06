@@ -39,7 +39,5 @@ public class XmlDatabase : MonoBehaviour
 		}
 
         XMLDataLoader.ReadConstants();
-
-        Debug.Log("statics "+OverheatDissipateThreshold+" "+WeaponChangeableHeatThreshold);
     }
 }

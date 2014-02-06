@@ -43,6 +43,10 @@ public class WeaponMain : MonoBehaviour {
 	public Quaternion targetRotation;
 	public float rotationSpeed;
 
+    public bool Usable(){
+        return Weapon!=null&&!Overheat;
+    }
+
 	public void SetWeapon(InvEquipmentSlot slot){
         WeaponSlot=slot;
 

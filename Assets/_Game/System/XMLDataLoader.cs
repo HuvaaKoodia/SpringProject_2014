@@ -101,5 +101,13 @@ public class XMLDataLoader : XML_Loader
     public static void ReadConstants()
     {
         readAutoFileStatic("Data","Constants",typeof(XmlDatabase),"Constants");
+
+        var Doc=GetXmlDocument("Data/ShipGenerator.xml");
+        var root=Doc["RoomIndices"];
+        ShipGenerator.RoomIndices=new Dictionary<string, string>();
+        for(int a=0;a<root.Attributes.Count;a++){
+            var att=root.Attributes[a];
+            ShipGenerator.RoomIndices.Add(att.Name,att.Value);
+        }
     }
 }

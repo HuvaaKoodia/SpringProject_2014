@@ -96,17 +96,19 @@ public class PlayerInputSub : MonoBehaviour {
 		}
 #if UNITY_EDITOR
         //DEV.DEBUG damage
+        var x=playerMovement.currentGridX;
+        var y=playerMovement.currentGridY;
         if (Input.GetKeyDown(KeyCode.Keypad6)){
-            player.TakeDamage(10,1,0);
+            player.TakeDamage(10,x+1,y+0);
         }
         if (Input.GetKeyDown(KeyCode.Keypad8)){
-            player.TakeDamage(10,0,1);
+            player.TakeDamage(10,x+0,y+1);
         }
         if (Input.GetKeyDown(KeyCode.Keypad4)){
-            player.TakeDamage(10,-1,0);
+            player.TakeDamage(10,x-1,y+0);
         }
         if (Input.GetKeyDown(KeyCode.Keypad2)){
-            player.TakeDamage(10,0,-1);
+            player.TakeDamage(10,x+0,y-1);
         }
 #endif
 
