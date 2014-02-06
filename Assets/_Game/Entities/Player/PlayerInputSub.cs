@@ -92,6 +92,12 @@ public class PlayerInputSub : MonoBehaviour {
 		{
 			TargetingModeInput();
 		}
+
+		if (Input.GetButtonDown("Interact"))
+		{
+			InteractInput(false);
+		}
+
 #if UNITY_EDITOR
         //DEV.DEBUG damage
         var x=playerMovement.currentGridX;
@@ -197,8 +203,8 @@ public class PlayerInputSub : MonoBehaviour {
 
 		if (player.targetingMode)
 			player.EndTargetingMode();
-		else
-			player.StartTargetingMode();
+		else if (!player.StartTargetingMode())
+			return;
 
 		player.GC.menuHandler.ToggleTargetingHUD();
 	}

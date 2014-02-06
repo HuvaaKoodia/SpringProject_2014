@@ -48,7 +48,16 @@ public class PlayerInteractSub : MonoBehaviour {
 
 		if (interactableInfront != null)
 		{
+			
+			if (player.ap < PlayerMain.interactCost)
+				return;
+			
+			player.ap -= PlayerMain.interactCost;
+
 			interactableInfront.Interact();
+
+			if (player.ap == 0)
+				player.EndPlayerPhase();
 		}
 	}
 

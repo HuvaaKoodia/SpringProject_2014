@@ -21,10 +21,10 @@ public class PlayerMain : EntityMain
 	public bool INVINCIBLE=false;
 
 	public int ap;
-	const int apMax = 2;
-	const int movementCost = 1;
-    const int lootPickupCost = 1;
-	const int attackCost = 2;
+	public const int apMax = 2;
+	public const int movementCost = 1;
+	public const int interactCost = 1;
+	public const int attackCost = 2;
 
     public void SetObjData(PlayerObjData data){
         ObjData=data;
@@ -49,9 +49,6 @@ public class PlayerMain : EntityMain
 		interactSub.CheckForInteractables();
 
         ActivateEquippedItems();
-
-		if (GetCurrentWeapon().Weapon != null)
-			GC.menuHandler.gunInfoDisplay.ChangeCurrentHighlight(currentGunID);
 	}
 	
 	// Update is called once per frame
@@ -121,7 +118,7 @@ public class PlayerMain : EntityMain
 		if (ap == 0)
 			EndPlayerPhase();
 	}
-
+	/*
     public void PickupLoot(LootCrateMain loot)
     {
         if (ap < lootPickupCost)
@@ -131,6 +128,8 @@ public class PlayerMain : EntityMain
 		GC.Inventory.ToggleInventory();
 		loot.Looted();
     }
+    */
+
     /// <summary>
     /// Inflicts damage from grid position x,y
     /// </summary>
@@ -161,24 +160,29 @@ public class PlayerMain : EntityMain
 		}
 	}
 
-	public void StartTargetingMode()
+	public bool StartTargetingMode()
 	{
         //check for usable weapons
         if (!GetCurrentWeapon().Usable()){
+			bool foundWeapon = false;
             for(int i=0;i<4;i++){
                 var w=gunList[i];
                 if (w.Usable()){
                     ChangeWeapon((WeaponID)i);
+					foundWeapon = true;
                     break;
                 }
             }
 
-            return;
+			if (!foundWeapon)
+				return false;
         }
 
 		targetingMode = true;
 		targetingSub.CheckTargetableEnemies(Camera.main.transform.position);
 		GC.menuHandler.CheckTargetingModePanel();
+		GC.menuHandler.gunInfoDisplay.ChangeCurrentHighlight(currentGunID);
+		return true;
 	}
 
 	public void EndTargetingMode()
@@ -191,7 +195,8 @@ public class PlayerMain : EntityMain
 	public void ChangeWeapon(WeaponID id)
 	{
         var weapon=gunList[(int)id];
-        if (!weapon.Usable()) return;
+        if (!weapon.Usable()) 
+			return;
 
 		GetCurrentWeapon().Unselected();
 		currentGunID = id;
@@ -230,7 +235,7 @@ public class PlayerMain : EntityMain
         ActivateEquipment(WeaponID.RightHand,UIEquipmentSlot.Slot.WeaponRightHand);
         ActivateEquipment(WeaponID.RightShoulder,UIEquipmentSlot.Slot.WeaponRightShoulder);
         
-		if (GetCurrentWeapon().Weapon != null)
+		if (GetCurrentWeapon().Usable())
 			GC.menuHandler.gunInfoDisplay.ChangeCurrentHighlight(currentGunID);
 
 		foreach(WeaponMain weapon in gunList)

@@ -73,7 +73,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 			}
 		}
 
-		ShowTargetMarks(player.GetCurrentWeapon().Weapon != null);
+		ShowTargetMarks(player.GetCurrentWeapon().Usable());
 	}
 
 	public void UnsightAllEnemies()

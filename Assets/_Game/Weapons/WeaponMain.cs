@@ -239,6 +239,9 @@ public class WeaponMain : MonoBehaviour {
 
 			targetRotation = Quaternion.LookRotation((mouseToWorld - transform.position));
 		}
+		else
+			targetRotation = transform.rotation = 
+				Quaternion.RotateTowards(transform.rotation, player.transform.rotation, Time.deltaTime*rotationSpeed);
 
 		transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime*rotationSpeed);
 	}
