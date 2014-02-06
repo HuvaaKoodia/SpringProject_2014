@@ -133,7 +133,7 @@ public class PlayerMain : EntityMain
 	{
 		if (INVINCIBLE) return;
 
-		Health -= damage;
+		//calculate correct attack direction
         int dir=0;
         int xo=x-movement.currentGridX,yo=y-movement.currentGridY;
 
@@ -143,16 +143,21 @@ public class PlayerMain : EntityMain
         else{
             dir=yo>0?dir=1:dir=3;
         }
+        //rotate according to player rotation
+        var rot=Mathf.FloorToInt(transform.rotation.eulerAngles.y/90f);
+        dir=(dir+rot)%3;
 
-        Debug.Log("Damage from dir: "+dir);
+
+        Debug.Log("Damage from dir: "+dir+" rot "+rot);
         ObjData.TakeDMG(damage,dir);
 
-		GC.menuHandler.UpdateHealthText(Health);
+
+        Health = ObjData.Equipment.UpperTorso.ObjData.HP;
+        GC.menuHandler.UpdateHealthText(Health);
 
         if (Health <= 0)
 		{
 			Debug.Log("Kuoli saatana");
-            Health = 100;
 			GC.EngCont.Restart();
 		}
 	}
@@ -173,6 +178,8 @@ public class PlayerMain : EntityMain
 
 	public void ChangeWeapon(WeaponID id)
 	{
+        if (gunList[(int)id].Overheat) return;
+
 		GetCurrentWeapon().Unselected();
 		currentGunID = id;
 		targetingSub.CheckGunTargets();

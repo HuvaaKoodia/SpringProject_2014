@@ -126,11 +126,39 @@ public class XML_Loader{
 		}
 	}
 
+    public static void readAutoStatic(XmlNode node,Type type){
+        XmlAttribute att;
+        foreach (var f in type.GetFields()){
+            if (f.IsStatic&&f.IsPublic){
+                att=node.Attributes[f.Name];
+                if (att!=null){
+                    f.SetValue(null,Convert.ChangeType(att.Value,f.FieldType));
+                }
+            }
+        }
+    }
+
 	public static void writeAuto(XmlElement element,object obj){
 		foreach (var f in obj.GetType().GetFields()){
 			addElement(element,f.Name,f.GetValue(obj).ToString());
 		}
 	}
+
+    /// <summary>
+    /// Reads an xml doc and assigns its parameters to the public static values of the type
+    /// </summary>
+    public static void readAutoFileStatic(string path,string file,Type type,string rootNode){
+        if (Directory.Exists(path)){
+            file=@"\"+file+".xml";
+            
+            var Xdoc=new XmlDocument();
+            Xdoc.Load(path+file);
+            
+            var root=Xdoc[rootNode];
+            
+            readAutoStatic(root,type);
+        }
+    }
 
     /// <summary>
     /// Reads an automatically created xml doc and assigns its innards to the object.
@@ -148,7 +176,6 @@ public class XML_Loader{
 			
 			readAuto(root,obj);
 		}
-		
 	}
     /// <summary>
     /// Takes an object and autimagically transform it into an xml doc
@@ -183,6 +210,34 @@ public class XML_Loader{
 		return File.Exists(path);
 	}
 
+    static bool LoadFromDisc(){
+        bool LoadFromDisc=true;
+        #if UNITY_ANDROID||UNITY_WEBPLAYER
+        LoadFromDisc=false;
+        #endif
+        return LoadFromDisc;
+    }
+    
+    /// <summary>
+    /// Gets an XML Documents from a path.
+    /// From disc if PC. From resources if Android or Webplayer
+    /// </summary>
+    public static XmlDocument GetXmlDocument(string path){
+        var Xdoc=new XmlDocument();
+        
+        if (LoadFromDisc()){
+            Xdoc.Load(path);
+        }
+        else{
+            //load from resources
+            var asset=Resources.Load(path);
+
+            TextAsset text_asset=(TextAsset)asset;
+            Xdoc.Load(text_asset.text.ToStream());
+        }
+        return Xdoc;
+    }
+
 	/// <summary>
 	/// Gets all XML Documents from a path recursively.
 	/// From disc if PC. From resources if Android or Webplayer
@@ -190,14 +245,7 @@ public class XML_Loader{
 	public static List<XmlDocument> GetAllXmlDocuments(string path){
 		List<XmlDocument> DOX=new List<XmlDocument>();
 
-		bool LoadFromDisc=true;
-
-#if UNITY_ANDROID||UNITY_WEBPLAYER
-		LoadFromDisc=false;
-#endif
-
-		if (LoadFromDisc){
-			//load from disc
+		if (LoadFromDisc()){
 			XML_Loader.checkFolder(path);
 			var files=Directory.GetFiles(path,"*.xml",SearchOption.AllDirectories);
 			

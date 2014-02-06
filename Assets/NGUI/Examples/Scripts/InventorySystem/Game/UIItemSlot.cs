@@ -113,7 +113,6 @@ public abstract class UIItemSlot : MonoBehaviour
 	void OnDrop (GameObject go)
 	{
 		InvGameItem item = Replace(mDraggedItem);
-
 		UICamera.current.ResetTooltipDelay();
 
 		if (mDraggedItem == item){
@@ -129,7 +128,8 @@ public abstract class UIItemSlot : MonoBehaviour
 	void StartDraggingItem(InvGameItem item){
 		mDraggedItem = item;
 		UpdateCursor();
-        if (OnDragStart!=null)
+
+        if (mDraggedItem!=null&&OnDragStart!=null)
             OnDragStart(item);
 	}
 

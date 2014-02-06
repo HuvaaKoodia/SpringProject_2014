@@ -14,6 +14,12 @@ public class XmlDatabase : MonoBehaviour
 	public InvDatabase ItemDB;
 	public UIAtlas ItemAtlas;
 
+    //Game Constants
+    public static int
+        OverheatDissipateThreshold,
+        WeaponChangeableHeatThreshold
+        ;
+
 	// Use this for initialization
 	void Awake()
     {
@@ -31,5 +37,9 @@ public class XmlDatabase : MonoBehaviour
 			//add to visual database for debugging
 			if (ItemDB!=null) ItemDB.items.Add(i);
 		}
-	}
+
+        XMLDataLoader.ReadConstants();
+
+        Debug.Log("statics "+OverheatDissipateThreshold+" "+WeaponChangeableHeatThreshold);
+    }
 }

@@ -13,16 +13,17 @@ public class XMLDataLoader : XML_Loader
 		foreach (var Xdoc in DOX)
         {
             var root = Xdoc["Root"];
+            if (root==null) continue;
 
             foreach (XmlNode node in root)
             {
 				#region Player
 				if (node.Name == "Player")
                 {
-                    int playerHealth = XML_Loader.getAttInt(node, "Health");
+                    int playerHealth = getAttInt(node, "Health");
 
-                    float movementSpeed = XML_Loader.getAttFlt(node, "MovementSpeed");
-                    float turnSpeed = XML_Loader.getAttFlt(node, "TurnSpeed");
+                    float movementSpeed = getAttFlt(node, "MovementSpeed");
+                    float turnSpeed = getAttFlt(node, "TurnSpeed");
 
                     PlayerXmlData newPlayer = new PlayerXmlData(playerHealth, movementSpeed, turnSpeed);
                     database.players.Add(newPlayer);
@@ -34,10 +35,10 @@ public class XMLDataLoader : XML_Loader
 				#region Enemy
 				if (node.Name == "Enemy")
                 {
-                    string enemyType = XML_Loader.getAttStr(node, "Type");
+                    string enemyType = getAttStr(node, "Type");
 
-                    int health = XML_Loader.getAttInt(node, "Health");
-                    int damage = XML_Loader.getAttInt(node, "Damage");
+                    int health = getAttInt(node, "Health");
+                    int damage = getAttInt(node, "Damage");
 
                     EnemyXmlData newEnemy = new EnemyXmlData(enemyType, health, damage);
                     database.enemies.Add(newEnemy);
@@ -46,9 +47,9 @@ public class XMLDataLoader : XML_Loader
 				#region Obstacle
                 if (node.Name == "Obstacle")
                 {
-                    string obstacleType = XML_Loader.getAttStr(node, "Type");
+                    string obstacleType = getAttStr(node, "Type");
 
-                    int health = XML_Loader.getAttInt(node, "Health");
+                    int health = getAttInt(node, "Health");
 
                     ObstacleXmlData newObstacle = new ObstacleXmlData(obstacleType, health);
                     database.obstacles.Add(newObstacle);
@@ -71,12 +72,12 @@ public class XMLDataLoader : XML_Loader
 			foreach(var t in Subs.EnumValues<InvStat.Type>()){
 				AddStat(node,item,t);
 			}
-			/*string weaponType = XML_Loader.getAttStr(node, "Type");
-                    string weaponName = XML_Loader.getAttStr(node, "Name");
+			/*string weaponType = getAttStr(node, "Type");
+                    string weaponName = getAttStr(node, "Name");
 
-                    int damage = XML_Loader.getAttInt(node, "Damage");
-                    int accuracy = XML_Loader.getAttInt(node, "Accuracy");
-                    int heat = XML_Loader.getAttInt(node, "Heat");
+                    int damage = getAttInt(node, "Damage");
+                    int accuracy = getAttInt(node, "Accuracy");
+                    int heat = getAttInt(node, "Heat");
 
                     WeaponXmlData newWeapon = new WeaponXmlData(weaponType, weaponName, damage, accuracy, heat);
                     database.weapons.Add(newWeapon);
@@ -96,4 +97,9 @@ public class XMLDataLoader : XML_Loader
 			item.stats.Add(stat);
 		}
 	}
+
+    public static void ReadConstants()
+    {
+        readAutoFileStatic("Data","Constants",typeof(XmlDatabase),"Constants");
+    }
 }
