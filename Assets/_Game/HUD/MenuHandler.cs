@@ -122,7 +122,12 @@ public class MenuHandler : MonoBehaviour {
 		ChangeMenuState(MenuState.TargetingHUD);
 	}
 
-	public void ToggleInventoryHUD()
+	public void DeactivateInventoryHUD()
+	{
+		ChangeMenuState(MenuState.NothingSelected);
+	}
+
+	public void ActivateInventoryHUD()
 	{
 		ChangeMenuState(MenuState.InventoryHUD);
 	}
@@ -154,7 +159,10 @@ public class MenuHandler : MonoBehaviour {
 			EndHud.SetActive(true);
 			MovementHud.SetActive(false);
 			TargetingHud.SetActive(false);
-			InventoryHud.DeactivateInventory();
+
+			if (InventoryHud.InventoryParent.activeSelf)
+				InventoryHud.DeactivateInventory();
+
 			GC.Player.EndTargetingMode();
 			SetInteractVisibility(true);
 			break;
@@ -163,7 +171,10 @@ public class MenuHandler : MonoBehaviour {
 			EndHud.SetActive(false);
 			MovementHud.SetActive(true);
 			TargetingHud.SetActive(false);
-			InventoryHud.DeactivateInventory();
+
+			if (InventoryHud.InventoryParent.activeSelf)
+				InventoryHud.DeactivateInventory();
+
 			GC.Player.EndTargetingMode();
 			break;
 
@@ -171,7 +182,10 @@ public class MenuHandler : MonoBehaviour {
 			EndHud.SetActive(false);
 			MovementHud.SetActive(false);
 			TargetingHud.SetActive(true);
-			InventoryHud.DeactivateInventory();
+
+			if (InventoryHud.InventoryParent.activeSelf)
+				InventoryHud.DeactivateInventory();
+
 			SetInteractVisibility(false);
 			break;
 

@@ -49,7 +49,9 @@ public class PlayerMain : EntityMain
 		interactSub.CheckForInteractables();
 
         ActivateEquippedItems();
-		GC.menuHandler.gunInfoDisplay.ChangeCurrentHighlight(currentGunID);
+
+		if (GetCurrentWeapon().Weapon != null)
+			GC.menuHandler.gunInfoDisplay.ChangeCurrentHighlight(currentGunID);
 	}
 	
 	// Update is called once per frame
@@ -114,6 +116,8 @@ public class PlayerMain : EntityMain
 			}
 		}
 
+		GC.menuHandler.gunInfoDisplay.UpdateAllDisplays();
+
 		if (ap == 0)
 			EndPlayerPhase();
 	}
@@ -174,6 +178,9 @@ public class PlayerMain : EntityMain
 
 	public void ChangeWeapon(WeaponID id)
 	{
+		if (GetWeapon(id).Weapon == null)
+			return;
+
 		GetCurrentWeapon().Unselected();
 		currentGunID = id;
 		targetingSub.CheckGunTargets();
@@ -210,7 +217,13 @@ public class PlayerMain : EntityMain
         ActivateEquipment(WeaponID.RightHand,UIEquipmentSlot.Slot.WeaponRightHand);
         ActivateEquipment(WeaponID.RightShoulder,UIEquipmentSlot.Slot.WeaponRightShoulder);
         
-        
+		if (GetCurrentWeapon().Weapon != null)
+			GC.menuHandler.gunInfoDisplay.ChangeCurrentHighlight(currentGunID);
+
+		foreach(WeaponMain weapon in gunList)
+		{
+			weapon.gameObject.SetActive(weapon.Weapon != null);
+		}
         //activate utilities
         //DEV.TODO
     }

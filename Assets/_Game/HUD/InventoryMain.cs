@@ -31,13 +31,13 @@ public class InventoryMain : MonoBehaviour {
 		if (InventoryParent.activeSelf)
 		{
 			DeactivateInventory();
+			HUD.DeactivateInventoryHUD();
 		}
 		else
 		{
 			ActivateInventory();
+			HUD.ActivateInventoryHUD();
 		}
-
-		HUD.ToggleInventoryHUD();
 	}
 
 	public void ActivateInventory()
@@ -69,7 +69,9 @@ public class InventoryMain : MonoBehaviour {
 	//DEV.TODO
 	public void SetLoot(LootCrateMain loot){
 		LootParent.SetActive(true);
-
 		LootStorage.ChangeItemStorage(loot.Items);
+
+		ActivateInventory();
+		HUD.ActivateInventoryHUD();
 	}
 }

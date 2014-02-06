@@ -37,7 +37,7 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Camera))]
 public class UICamera : MonoBehaviour
 {
-	public bool MenuButtonPressed;
+	public static bool MenuButtonPressed;
 	public enum ControlScheme
 	{
 		Mouse,

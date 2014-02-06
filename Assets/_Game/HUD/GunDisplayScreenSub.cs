@@ -22,31 +22,35 @@ public class GunDisplayScreenSub : MonoBehaviour {
 
 	public void UpdateGunInfo()
 	{
-		if (weapon == null)
+
+		InvGameItem gun = weapon.Weapon;
+		if (gun != null)
+		{
+			string info = weapon.GunName;
+
+			info += "\n";
+
+			info += "ammo: " + weapon.CurrentAmmo + "/" + weapon.MaxAmmo;
+
+			info += "\n";
+
+			info += "heat: " + weapon.CurrentHeat + "/100";
+
+			info += "\n";
+		
+			info += "ROF: " + weapon.GetNumShotsTargetedTotal() + "/" + weapon.RateOfFire;
+
+			infoLabel.text = info;
+		}
+		else
 		{
 			infoLabel.text = "";
-			return;
+			SetHighlightColor(displayMain.inActiveColor);
 		}
-
-		string info = weapon.GunName;
-
-		info += "\n";
-
-		info += "ammo: " + weapon.CurrentAmmo + "/" + weapon.MaxAmmo;
-
-		info += "\n";
-
-		info += "heat: " + weapon.CurrentHeat + "/100";
-
-		info += "\n";
-	
-		info += "ROF: " + weapon.GetNumShotsTargetedTotal() + "/" + weapon.RateOfFire;
-
-		infoLabel.text = info;
 	}
 
-	public Color GetGunColor(WeaponID id)
+	public void SetHighlightColor(Color color)
 	{
-		return Color.white;//return weaponSelectionButtons[(int)id].color;
+		highlight.color = color;
 	}
 }

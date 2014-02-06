@@ -7,8 +7,8 @@ public class GunDisplayMain : MonoBehaviour {
 	public GameController GC;
 	public List<GunDisplayScreenSub> gunInfoScreens;
 
-	public Color[] weaponColors;
-	public Color inActiveColor;
+	public Color[] weaponColors { get; private set; }
+	public Color inActiveColor { get; private set; }
 
 	// Use this for initialization
 	void Awake()
@@ -51,8 +51,8 @@ public class GunDisplayMain : MonoBehaviour {
 	public void ChangeCurrentHighlight(WeaponID currentWeapon)
 	{
 		foreach(GunDisplayScreenSub screen in gunInfoScreens)
-			screen.highlight.color = inActiveColor;
+			screen.SetHighlightColor(inActiveColor);
 
-		gunInfoScreens[(int)currentWeapon].highlight.color = weaponColors[(int)currentWeapon];
+		gunInfoScreens[(int)currentWeapon].SetHighlightColor(weaponColors[(int)currentWeapon]);
 	}
 }

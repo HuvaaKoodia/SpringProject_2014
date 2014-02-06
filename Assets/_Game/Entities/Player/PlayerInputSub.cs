@@ -20,13 +20,13 @@ public class PlayerInputSub : MonoBehaviour {
         {
             HotkeyInput();
 
-			if (!player.GC.NGUICamera.MenuButtonPressed)
+			if (!UICamera.MenuButtonPressed)
             	MouseInput();
 
 			//player.GC.menuHandler.gunInfoDisplay.UpdateGunInfo();
         }
 
-		player.GC.NGUICamera.MenuButtonPressed = false;
+		UICamera.MenuButtonPressed = false;
 	}
 
     void HotkeyInput()
@@ -67,28 +67,25 @@ public class PlayerInputSub : MonoBehaviour {
 			}
 		}
 
-		if (player.GC.menuHandler.currentMenuState != MenuState.InventoryHUD)
+	 	if (Input.GetKeyDown(KeyCode.Alpha1))
 		{
-		 	if (Input.GetKeyDown(KeyCode.Alpha1))
-			{
-				ChangeWeaponInput(WeaponID.LeftShoulder);
-			}
-			else if (Input.GetKeyDown(KeyCode.Alpha2))
-			{
-				ChangeWeaponInput(WeaponID.LeftHand);
-			}
-			else if (Input.GetKeyDown(KeyCode.Alpha3))
-			{
-				ChangeWeaponInput(WeaponID.RightShoulder);
-			}
-			else if (Input.GetKeyDown(KeyCode.Alpha4))
-			{
-				ChangeWeaponInput(WeaponID.RightHand);
-			}
-			else if (Input.GetButtonDown("Engage Combat"))
-			{
-				EngageCombatInput();
-			}
+			ChangeWeaponInput(WeaponID.LeftShoulder);
+		}
+		else if (Input.GetKeyDown(KeyCode.Alpha2))
+		{
+			ChangeWeaponInput(WeaponID.LeftHand);
+		}
+		else if (Input.GetKeyDown(KeyCode.Alpha3))
+		{
+			ChangeWeaponInput(WeaponID.RightShoulder);
+		}
+		else if (Input.GetKeyDown(KeyCode.Alpha4))
+		{
+			ChangeWeaponInput(WeaponID.RightHand);
+		}
+		else if (Input.GetButtonDown("Engage Combat"))
+		{
+			EngageCombatInput();
 		}
 
 		if (Input.GetButtonDown("Targeting mode"))
@@ -120,22 +117,20 @@ public class PlayerInputSub : MonoBehaviour {
 			if (player.targetingMode)
 			{
 				player.targetingSub.TargetAtMousePosition(true);
+				player.GC.menuHandler.CheckTargetingModePanel();
 			}
 			else
 			{
 				InteractInput(true);
 			}
-			
-			player.GC.menuHandler.CheckTargetingModePanel();
 		}
 		else if (Input.GetMouseButtonDown(1))
 		{
 			if (player.targetingMode)
 			{
 				player.targetingSub.TargetAtMousePosition(false);
-			}
-			else
 				player.GC.menuHandler.CheckTargetingModePanel();
+			}
 		}
 	}
 	
@@ -218,7 +213,8 @@ public class PlayerInputSub : MonoBehaviour {
     
     public void ChangeWeaponInput(WeaponID id)
 	{
-		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving)
+		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving
+		    || player.GC.menuHandler.currentMenuState == MenuState.InventoryHUD)
 			return;
 
 		player.ChangeWeapon(id);

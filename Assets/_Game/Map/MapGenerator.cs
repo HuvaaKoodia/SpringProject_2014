@@ -140,7 +140,9 @@ public class MapGenerator : MonoBehaviour
                         var LootCrate = GameObject.Instantiate(MapPrefabs.LootCratePrefab, tile_pos, Quaternion.identity) as GameObject;
                         //LootCrate.transform.parent = object_container.transform;
 
-                        GC.LootCrates.Add(LootCrate.GetComponent<LootCrateMain>());
+						LootCrateMain crate = LootCrate.GetComponent<LootCrateMain>();
+						crate.GC = GC;
+						GC.LootCrates.Add(crate);
                         tile.TileObject=LootCrate;
                         tile.TileObject.transform.parent = tile.transform;
 
