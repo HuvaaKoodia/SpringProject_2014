@@ -23,7 +23,7 @@ public class PlayerInputSub : MonoBehaviour {
 			if (!player.GC.NGUICamera.MenuButtonPressed)
             	MouseInput();
 
-			player.GC.menuHandler.gunInfoDisplay.UpdateGunInfo();
+			//player.GC.menuHandler.gunInfoDisplay.UpdateGunInfo();
         }
 
 		player.GC.NGUICamera.MenuButtonPressed = false;
@@ -31,7 +31,7 @@ public class PlayerInputSub : MonoBehaviour {
 
     void HotkeyInput()
     {
-		if (!player.targetingMode)
+		if (!player.targetingMode && player.GC.menuHandler.currentMenuState != MenuState.InventoryHUD)
 		{
 	        float verticalAxis = Input.GetAxis("Vertical");
 	        float horizontalAxis = Input.GetAxis("Horizontal");

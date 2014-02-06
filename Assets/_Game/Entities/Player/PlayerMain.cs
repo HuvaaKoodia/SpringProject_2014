@@ -3,13 +3,7 @@ using System.Collections;
 
 using System.Collections.Generic;
 
-public enum WeaponID
-{
-	LeftShoulder = 0,
-	LeftHand = 1,
-	RightShoulder = 2,
-	RightHand = 3
-}
+
 
 public class PlayerMain : EntityMain
 {
@@ -139,7 +133,7 @@ public class PlayerMain : EntityMain
 	{
 		if (INVINCIBLE) return;
 
-		//Health -= damage;
+		Health -= damage;
         int dir=0;
         int xo=x-movement.currentGridX,yo=y-movement.currentGridY;
 
@@ -202,6 +196,8 @@ public class PlayerMain : EntityMain
         var weapon=GetWeapon(id);
         var Slot=ObjData.Equipment.GetSlot(slot);
         weapon.SetWeapon(Slot);
+
+		GC.menuHandler.gunInfoDisplay.SetWeaponToDisplay(id, weapon);
     }
 	
     public void ActivateEquippedItems()

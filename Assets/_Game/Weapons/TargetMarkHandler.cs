@@ -42,7 +42,7 @@ public class TargetMarkHandler
 			label.transform.parent = parentObject.transform;
 			label.transform.localScale = new Vector3(0.0025f, 0.0025f, 0.0025f);
 			label.transform.position += crosshair.transform.position + labelPosOffsetDirs[i]*0.08f;
-			label.color = GC.menuHandler.gunInfoDisplay.GetGunColor((WeaponID)i);
+			//label.color = GC.menuHandler.gunInfoDisplay.GetGunColor((WeaponID)i);
 			label.enabled = true;
 
 			numShotsLabels.Add(label);
