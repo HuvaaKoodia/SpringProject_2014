@@ -95,21 +95,37 @@ public class MenuHandler : MonoBehaviour {
 	void LeftHandWeaponPressed()
 	{
 		player.inputSub.ChangeWeaponInput(WeaponID.LeftHand);
+
+		if (currentMenuState != MenuState.InventoryHUD 
+		    && currentMenuState != MenuState.TargetingHUD)
+			player.inputSub.TargetingModeInput();
 	}
 
 	void LeftShoulderWeaponPressed()
 	{
 		player.inputSub.ChangeWeaponInput(WeaponID.LeftShoulder);
+
+		if (currentMenuState != MenuState.InventoryHUD 
+		    && currentMenuState != MenuState.TargetingHUD)
+			player.inputSub.TargetingModeInput();
 	}
 
 	void RightHandWeaponPressed()
 	{
 		player.inputSub.ChangeWeaponInput(WeaponID.RightHand);
+
+		if (currentMenuState != MenuState.InventoryHUD 
+		    && currentMenuState != MenuState.TargetingHUD)
+			player.inputSub.TargetingModeInput();
 	}
 
 	void RightShoulderWeaponPressed()
 	{
 		player.inputSub.ChangeWeaponInput(WeaponID.RightShoulder);
+
+		if (currentMenuState != MenuState.InventoryHUD 
+		    && currentMenuState != MenuState.TargetingHUD)
+			player.inputSub.TargetingModeInput();
 	}
 
 	public void ToggleMovementHUD()

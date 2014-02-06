@@ -53,6 +53,7 @@ public class GunDisplayMain : MonoBehaviour {
 		foreach(GunDisplayScreenSub screen in gunInfoScreens)
 			screen.SetHighlightColor(inActiveColor);
 
-		gunInfoScreens[(int)currentWeapon].SetHighlightColor(weaponColors[(int)currentWeapon]);
+		if (GC.Player.GetCurrentWeapon().Weapon != null)
+			gunInfoScreens[(int)currentWeapon].SetHighlightColor(weaponColors[(int)currentWeapon]);
 	}
 }

@@ -72,6 +72,8 @@ public class PlayerTargetingSub : MonoBehaviour {
 				}
 			}
 		}
+
+		ShowTargetMarks(player.GetCurrentWeapon().Weapon != null);
 	}
 
 	public void UnsightAllEnemies()
@@ -108,7 +110,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 		{
 			EnemyMain enemyTargeted = target.transform.gameObject.GetComponent<EnemyMain>();
 
-			if (targetableEnemies.ContainsKey(enemyTargeted))
+			if (targetableEnemies.ContainsKey(enemyTargeted) && player.GetCurrentWeapon().Weapon != null)
 			{
 				player.GetCurrentWeapon().ToggleTarget(enemyTargeted,left_click);
 
@@ -121,6 +123,9 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 	public void CheckGunTargets()
 	{
+		if (player.GetCurrentWeapon().Weapon == null)
+			return;
+
 		foreach(KeyValuePair<EnemyMain, TargetMarkHandler> enemyPair in targetableEnemies)
 		{
 			enemyPair.Value.ChangeNumShots(player.currentGunID, 
@@ -137,5 +142,10 @@ public class PlayerTargetingSub : MonoBehaviour {
 		}
 
 		return false;
+	}
+
+	public void ShowTargetMarks(bool show)
+	{
+		player.GC.menuHandler.targetMarkPanel.gameObject.SetActive(show);
 	}
 }

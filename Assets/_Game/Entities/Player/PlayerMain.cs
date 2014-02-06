@@ -186,21 +186,21 @@ public class PlayerMain : EntityMain
 		if (GetWeapon(id).Weapon == null || gunList[(int)id].Overheat)
 			return;
 
-		GetCurrentWeapon().Unselected();
 		currentGunID = id;
 		targetingSub.CheckGunTargets();
 		GC.menuHandler.CheckTargetingModePanel();
 		GC.menuHandler.gunInfoDisplay.ChangeCurrentHighlight(currentGunID);
+		targetingSub.ShowTargetMarks(GetCurrentWeapon().Weapon != null);
 	}
 
 	public WeaponMain GetWeapon (WeaponID id)
 	{
-		return gunList[(int)id];
+			return gunList[(int)id];
 	}
 	
 	public WeaponMain GetCurrentWeapon()
 	{
-		return gunList[(int)currentGunID];
+			return gunList[(int)currentGunID];
 	}
 
     /// <summary>
