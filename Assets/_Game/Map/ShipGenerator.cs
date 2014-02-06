@@ -7,13 +7,10 @@ using System.Collections.Generic;
 /// </summary>
 public class ShipGenerator : MonoBehaviour 
 {
-	private Dictionary<string,string> RoomStartIndexes=
-	new Dictionary<string,string>{
-		{"R","room"},{"A","airlock"}
-	};
+    public static Dictionary<string,string> RoomIndices;
 
 	bool IsRoomStartIndex(string index){
-		foreach(var i in RoomStartIndexes){
+        foreach(var i in RoomIndices){
 			if (i.Key==index)
 				return true;
 		}
@@ -22,7 +19,7 @@ public class ShipGenerator : MonoBehaviour
 
 	void FitRoom(string room_index,CellData cell){
 
-		string room_name=RoomStartIndexes[room_index];
+		string room_name=RoomIndices[room_index];
 
 		int c=0;
 		MapXmlData rroom;

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 using System.Collections.Generic;
@@ -142,20 +142,14 @@ public class PlayerMain : EntityMain
         int dir=0;
         int xo=x-movement.currentGridX,yo=y-movement.currentGridY;
 
-        if (yo==0){
-            dir=xo>0?dir=0:dir=2;
-        }
-        else{
-            dir=yo>0?dir=1:dir=3;
-        }
+        if (yo==0){ dir=xo>0?dir=0:dir=2;}
+        else{ dir=yo>0?dir=1:dir=3;}
         //rotate according to player rotation
         var rot=Mathf.FloorToInt(transform.rotation.eulerAngles.y/90f);
-        dir=(dir+rot)%3;
+        dir=(dir+rot)%4;
 
-
-        Debug.Log("Damage from dir: "+dir+" rot "+rot);
+        //Debug.Log("Damage from dir: "+dir+" rot "+rot);
         ObjData.TakeDMG(damage,dir);
-
 
         Health = ObjData.Equipment.UpperTorso.ObjData.HP;
         GC.menuHandler.UpdateHealthText(Health);
@@ -169,6 +163,19 @@ public class PlayerMain : EntityMain
 
 	public void StartTargetingMode()
 	{
+        //check for usable weapons
+        if (!GetCurrentWeapon().Usable()){
+            for(int i=0;i<4;i++){
+                var w=gunList[i];
+                if (w.Usable()){
+                    ChangeWeapon((WeaponID)i);
+                    break;
+                }
+            }
+
+            return;
+        }
+
 		targetingMode = true;
 		targetingSub.CheckTargetableEnemies(Camera.main.transform.position);
 		GC.menuHandler.CheckTargetingModePanel();
@@ -183,9 +190,10 @@ public class PlayerMain : EntityMain
 
 	public void ChangeWeapon(WeaponID id)
 	{
-		if (GetWeapon(id).Weapon == null || gunList[(int)id].Overheat)
-			return;
+        var weapon=gunList[(int)id];
+        if (!weapon.Usable()) return;
 
+		GetCurrentWeapon().Unselected();
 		currentGunID = id;
 		targetingSub.CheckGunTargets();
 		GC.menuHandler.CheckTargetingModePanel();
