@@ -15,7 +15,6 @@ public class Arbalest : WeaponMain {
 		
 		HeatGeneration = 30;
 		CoolingRate = 20;
-		CurrentHeat = 0;
 		
 		MaxAmmo = 20;
 		CurrentAmmo = MaxAmmo;

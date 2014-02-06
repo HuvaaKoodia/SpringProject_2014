@@ -200,10 +200,8 @@ public class PlayerMain : EntityMain
     /// </summary>
     public void ActivateEquipment(WeaponID id,UIEquipmentSlot.Slot slot){
         var weapon=GetWeapon(id);
-        var item=ObjData.Equipment.GetSlot(slot).Item;
-        if (weapon.Weapon!=item){
-            weapon.SetWeapon(item);
-        }
+        var Slot=ObjData.Equipment.GetSlot(slot);
+        weapon.SetWeapon(Slot);
     }
 	
     public void ActivateEquippedItems()

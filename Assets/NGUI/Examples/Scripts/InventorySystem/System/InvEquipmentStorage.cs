@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class EquipmentStorageSlot{
+public class InvEquipmentSlot{
 	public UIEquipmentSlot.Slot Slot {get;private set;}
 	public List<InvBaseItem.Type> TypeList {get;private set;}
 	public InvGameItem Item;
 
-	public EquipmentStorageSlot(UIEquipmentSlot.Slot slot,params InvBaseItem.Type[] types){
+    public InvEquipmentSlot(UIEquipmentSlot.Slot slot,params InvBaseItem.Type[] types){
 		Slot=slot;
 
 		TypeList=new List<InvBaseItem.Type>();
@@ -29,9 +29,9 @@ public class EquipmentStorageSlot{
 
 public class InvEquipmentStorage
 {
-    public EquipmentStorageSlot UpperTorso{get;private set;}
-    public EquipmentStorageSlot LowerTorso{get;private set;}
-	public EquipmentStorageSlot[] EquipmentSlots {get;private set;}
+    public InvEquipmentSlot UpperTorso{get;private set;}
+    public InvEquipmentSlot LowerTorso{get;private set;}
+    public InvEquipmentSlot[] EquipmentSlots {get;private set;}
 	InvAttachmentPoint[] mAttachments;
 
     public InvEquipmentStorage(){
@@ -40,7 +40,7 @@ public class InvEquipmentStorage
 
 	void Awake(){
 		//Inventory Slots
-		EquipmentSlots=new EquipmentStorageSlot[8];
+        EquipmentSlots=new InvEquipmentSlot[8];
 		AddSlot(UIEquipmentSlot.Slot.WeaponLeftHand,InvBaseItem.Type.LightWeapon);
 		AddSlot(UIEquipmentSlot.Slot.WeaponRightHand,InvBaseItem.Type.LightWeapon);
 		AddSlot(UIEquipmentSlot.Slot.WeaponLeftShoulder,InvBaseItem.Type.HeavyWeapon,InvBaseItem.Type.LightWeapon);
@@ -52,15 +52,15 @@ public class InvEquipmentStorage
 		AddSlot(UIEquipmentSlot.Slot.Utility4,InvBaseItem.Type.Utility);
 
         //Hidden slots
-        UpperTorso =new EquipmentStorageSlot(UIEquipmentSlot.Slot.UpperTorso);
-        LowerTorso =new EquipmentStorageSlot(UIEquipmentSlot.Slot.LowerTorso);
+        UpperTorso =new InvEquipmentSlot(UIEquipmentSlot.Slot.UpperTorso);
+        LowerTorso =new InvEquipmentSlot(UIEquipmentSlot.Slot.LowerTorso);
 	}
 
 	private void AddSlot(UIEquipmentSlot.Slot slot,params InvBaseItem.Type[] type){
-		EquipmentSlots[(int)slot]=new EquipmentStorageSlot(slot,type);
+        EquipmentSlots[(int)slot]=new InvEquipmentSlot(slot,type);
 	}
 
-	public EquipmentStorageSlot GetSlot(UIEquipmentSlot.Slot slot){
+    public InvEquipmentSlot GetSlot(UIEquipmentSlot.Slot slot){
 		return EquipmentSlots[(int)slot];
 	}
 
@@ -100,7 +100,7 @@ public class InvEquipmentStorage
 		if (baseItem == null) return item;
 
 		//find first free slot
-		EquipmentStorageSlot Slot=null;
+        InvEquipmentSlot Slot=null;
 		foreach (var slot in EquipmentSlots){
 			if (slot.HasType(item.baseItem.type)&&slot.Item==null){
 				Slot=slot;
@@ -123,7 +123,7 @@ public class InvEquipmentStorage
 		if (baseItem == null) return item;
 
 		//find if item present
-		EquipmentStorageSlot Slot=null;
+        InvEquipmentSlot Slot=null;
 		foreach (var slot in EquipmentSlots){
 			if (slot.Item==item){
 				Slot=slot;

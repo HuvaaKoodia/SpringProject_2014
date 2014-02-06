@@ -10,46 +10,49 @@ public class WeaponMain : MonoBehaviour {
 	public PlayerMain player;
 
 	public InvGameItem Weapon{get;private set;}
+    public InvEquipmentSlot WeaponSlot{get;private set;}
 
 	public string GunName { get;protected set;}
 
 	public int MinDamage { get; protected set;}
 	public int MaxDamage { get; protected set;}
 
+    public int MaxAmmo { get; protected set;}
 	public int RateOfFire { get; protected set;}
-
 	public int Accuracy { get; protected set;}
 
 	public int HeatGeneration { get; protected set;}
 	public int CoolingRate { get; protected set;}
-	public int CurrentHeat { get; protected set;}
-
-	public int MaxAmmo { get; protected set;}
+	
 	public int CurrentAmmo { get; protected set;}
+    public int CurrentHeat { get{return WeaponSlot.ObjData.HEAT;}}
 
 	public Dictionary<EnemyMain, int> targets { get; private set;}
 
 	public Quaternion targetRotation;
 	public float rotationSpeed;
 
-	public void SetWeapon(InvGameItem weapon){
-			Weapon=weapon;
-			GunName=Weapon.baseItem.name;
-			
-			//DEV.temp calc
-			var dam=weapon.GetStat(InvStat.Type.Damage)._amount;
-			MinDamage = dam-2;
-			MaxDamage = dam+2;
-			
-			RateOfFire = weapon.GetStat(InvStat.Type.Firerate)._amount;
-			Accuracy = weapon.GetStat(InvStat.Type.Accuracy)._amount;
-			
-			HeatGeneration = weapon.GetStat(InvStat.Type.Heat)._amount;
-			CoolingRate = weapon.GetStat(InvStat.Type.Cooling)._amount;
-			CurrentHeat = 0;
-			
-			MaxAmmo = 20;
-			CurrentAmmo = MaxAmmo;
+	public void SetWeapon(InvEquipmentSlot slot){
+        WeaponSlot=slot;
+        Weapon=slot.Item;
+
+        if (Weapon==null) return;
+
+		GunName=Weapon.baseItem.name;
+	    
+        var dam=Weapon.GetStat(InvStat.Type.Damage)._amount;
+		MinDamage = dam;
+		MaxDamage = dam;
+		
+        RateOfFire = Weapon.GetStat(InvStat.Type.Firerate)._amount;
+        Accuracy = Weapon.GetStat(InvStat.Type.Accuracy)._amount;
+		
+        HeatGeneration = Weapon.GetStat(InvStat.Type.Heat)._amount;
+        CoolingRate = Weapon.GetStat(InvStat.Type.Cooling)._amount;
+		
+        MaxAmmo = Weapon.GetStat(InvStat.Type.MaxAmmo)._amount;
+		
+        CurrentAmmo = MaxAmmo;
 	}
 
 	public bool HasTargets
@@ -139,28 +142,35 @@ public class WeaponMain : MonoBehaviour {
 		if (CurrentHeat >= 100 || CurrentAmmo <= 0)
 			return;
 
-		CurrentHeat += HeatGeneration;
+        IncreaseHeat();
 
 		foreach(KeyValuePair<EnemyMain, int> enemyPair in targets)
 		{
-			//shoot all shots at one enemy concecutively
+			//shoot all shots at one enemy consecutively
 			for (int i = 0; i < enemyPair.Value; i++)
 			{
 				CurrentAmmo--;
 
 				if (Accuracy > Subs.RandomPercent())
 				{
+                    //hit
 					int dmg = (int)Random.Range(MinDamage, MaxDamage);
-
 					enemyPair.Key.TakeDamage(dmg);
+                    //add heat
+
 				}
 			}
 		}
 	}
 
+    public void IncreaseHeat()
+    {
+        WeaponSlot.ObjData.IncreaseHEAT(Weapon);
+    }
+
 	public void ReduceHeat()
 	{
-		CurrentHeat = Mathf.Max(0, CurrentHeat - CoolingRate);
+        WeaponSlot.ObjData.ReduceHEAT(Weapon);
 	}
 
 	public void AddAmmo(int amount)

@@ -13,6 +13,7 @@ public class InvStat
 		Cooling,
 		Firerate,
 		Accuracy,
+        MaxAmmo,
 		Other
 	}
 
