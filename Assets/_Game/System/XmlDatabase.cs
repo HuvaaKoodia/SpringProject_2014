@@ -17,7 +17,9 @@ public class XmlDatabase : MonoBehaviour
     //Game Constants
     public static int
         OverheatDissipateThreshold,
-        WeaponChangeableHeatThreshold
+        WeaponChangeableHeatThreshold,
+        MissionInfoSuccessRating,
+        MissionInfoFailRating
         ;
 
 	// Use this for initialization

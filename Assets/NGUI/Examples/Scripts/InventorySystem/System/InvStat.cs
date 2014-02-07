@@ -14,6 +14,7 @@ public class InvStat
 		Firerate,
 		Accuracy,
         MaxAmmo,
+        Range,
 		Other
 	}
 

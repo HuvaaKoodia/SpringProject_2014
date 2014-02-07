@@ -29,6 +29,7 @@ public class WeaponMain : MonoBehaviour {
     public int MaxAmmo { get; protected set;}
 	public int RateOfFire { get; protected set;}
 	public int Accuracy { get; protected set;}
+    public int Range { get; protected set;}
 
 	public int HeatGeneration { get; protected set;}
 	public int CoolingRate { get; protected set;}
@@ -44,7 +45,7 @@ public class WeaponMain : MonoBehaviour {
 	public float rotationSpeed;
 
     public bool Usable(){
-        return Weapon!=null&&!Overheat;
+        return Weapon!=null&&!Overheat&&CurrentAmmo>0;
     }
 
 	public void SetWeapon(InvEquipmentSlot slot){
@@ -63,7 +64,8 @@ public class WeaponMain : MonoBehaviour {
 		
         RateOfFire = Weapon.GetStat(InvStat.Type.Firerate)._amount;
         Accuracy = Weapon.GetStat(InvStat.Type.Accuracy)._amount;
-		
+        Range = Weapon.GetStat(InvStat.Type.Range)._amount;
+
         HeatGeneration = Weapon.GetStat(InvStat.Type.Heat)._amount;
         CoolingRate = Weapon.GetStat(InvStat.Type.Cooling)._amount;
 		
@@ -260,4 +262,15 @@ public class WeaponMain : MonoBehaviour {
 			targetRotation = Quaternion.LookRotation((targets.Keys.First().transform.position + Vector3.up *0.6f)- transform.position);
 		}
 	}
+
+    public int HitChancePercent(EnemyMain enemy)
+    {
+        var distance=Vector2.Distance(transform.position,enemy.transform.position);
+        return Accuracy-(int)((distance-MapGenerator.TileSize.x)/(Range*0.01f));
+    }
+
+    public float HitChance(EnemyMain enemy)
+    {
+        return HitChance(enemy)*0.01f;
+    }
 }

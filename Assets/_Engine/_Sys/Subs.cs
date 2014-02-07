@@ -37,7 +37,7 @@ public class Subs{
 	/// <summary>
 	/// Random int from 0 to 100(ex)
 	/// </summary>
-	public static float RandomPercent(){
+	public static int RandomPercent(){
 		return Random.Range(0,100);
 	}
 	
@@ -60,7 +60,10 @@ public class Subs{
 	public static Color RandomColor(float alpha){
 		return new Color(Random.Range(0,1f),Random.Range(0,1f),Random.Range(0,1f),alpha);
 	}
-	
+
+    public static T GetRandomEnum<T>(){
+        return Subs.GetRandom(Subs.EnumValues<T>());
+    }
 	#endregion
 
 	public static void SendMessageRecursive(Transform tform,string message){

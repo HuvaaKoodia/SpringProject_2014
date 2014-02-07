@@ -21,32 +21,34 @@ public class UIEquipmentSlot : UIItemSlot
 	}
 
 	public InvEquipmentStorage equipment;
-    public InventoryMain Inventory;
 	public Slot slot;
 
-	public void UpdateSlotColors(InvGameItem item){
-		foreach (var slot in Inventory.EquipmentSlots){
-            if (slot.slot!=Slot.RecycleBin)
-                slot.SetSlotColor(item);
-		}
-	}
-
-	public void SetSlotColor(InvGameItem item){
-		if (item==null){
-			background.color=Color.white;
-			return;
-		}
-		if (equipment.GetSlot(slot).HasType(item.baseItem.type)){
-			background.color=Color.green;
-		}
-		else{
-			background.color=Color.red;
-		}
-	}
+    //DEv. puukkoa!
+    public static List<UIEquipmentSlot> EquipmentSlots;
+   
+    public void SetSlotColor(InvGameItem item){
+        if (item==null){
+            background.color=Color.white;
+            return;
+        }
+        if (equipment.GetSlot(slot).HasType(item.baseItem.type)){
+            background.color=Color.green;
+        }
+        else{
+            background.color=Color.red;
+        }
+    }
 
 	void Start(){
-        OnDragStart+=UpdateSlotColors;
+        if (EquipmentSlots==null)
+            EquipmentSlots=new List<UIEquipmentSlot>();
+        EquipmentSlots.Add(this);
 	}
+
+    void OnSceneLoad(){
+        if (EquipmentSlots!=null)
+            EquipmentSlots.Clear();
+    }
 
 	override protected InvGameItem observedItem
 	{

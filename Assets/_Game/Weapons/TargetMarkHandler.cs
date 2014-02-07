@@ -59,11 +59,11 @@ public class TargetMarkHandler
 		GameObject.Destroy(parentObject);
 	}
 
-	public void ChangeNumShots(WeaponID gun, int numShots)
+	public void ChangeNumShots(WeaponID gun, int numShots,int hit_percent)
 	{
 		if (numShots != 0)
 		{
-			numShotsLabels[(int)gun].text = numShots.ToString();
+            numShotsLabels[(int)gun].text = numShots.ToString()+"\n"+hit_percent+"%";
 			crosshair.spriteName = "crosshair_red";
 		}
 		else

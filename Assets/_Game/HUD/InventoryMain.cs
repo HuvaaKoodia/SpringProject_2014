@@ -60,7 +60,6 @@ public class InventoryMain : MonoBehaviour {
         InventoryStorage.SetItemStorage(player.ObjData.Items);
 		foreach(var s in EquipmentSlots){
             s.equipment=player.ObjData.Equipment;
-            s.Inventory=this;
 		}
 
 		temp_random_item_button.equipment=player.ObjData.Equipment;

@@ -103,7 +103,7 @@ public class MapGenerator : MonoBehaviour
             for (int y = 0; y < h; y++)
             {   
                 //tile
-                int y_pos = h - 1 - y;
+                //int y_pos = h - 1 - y;
 				Vector2 entity_pos =new Vector2( x,y); 
                 var tile_pos = new Vector3(x * TileSize.x, 0, y * TileSize.z);
                 var tile = GC.TileMainMap [x, y] = Instantiate(MapPrefabs.TilePrefab, tile_pos, Quaternion.identity) as TileMain;
@@ -185,11 +185,7 @@ public class MapGenerator : MonoBehaviour
     {
 
         int current_floor = 0;
-        var md = ship.Floors [current_floor];
         var xml_md = ship.XmlData.Floors [current_floor];
-
-        int w = md.W;
-        int h = md.H;
 
         int floor_amount_enemies = Subs.GetRandom(xml_md.EnemyAmountMin, xml_md.EnemyAmountMax);
         int floor_amount_loot = Subs.GetRandom(xml_md.LootAmountMin, xml_md.LootAmountMax);
@@ -361,12 +357,15 @@ public class MapGenerator : MonoBehaviour
         System.Func<TileObjData.Type,bool> FloorOrCorridor =
             obj => {
             return obj == TileObjData.Type.Corridor || obj == TileObjData.Type.Floor || obj == TileObjData.Type.Door;};
+        /*
         System.Func<TileObjData.Type,bool> Floor =
         obj => {
             return obj == TileObjData.Type.Floor;};
-        System.Func<TileObjData.Type,bool> Wall =
+            */
+        /*System.Func<TileObjData.Type,bool> Wall =
             obj => {
             return obj == TileObjData.Type.Wall;};
+            */
 
         switch (tile.Data.TileType)
         {

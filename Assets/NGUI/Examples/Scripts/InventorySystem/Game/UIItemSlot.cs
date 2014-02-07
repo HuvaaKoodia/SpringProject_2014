@@ -18,6 +18,21 @@ public abstract class UIItemSlot : MonoBehaviour
 	InvGameItem mItem;
 	string mText = "";
 
+    //DEV. puukkoa!
+
+    void Start(){
+        //OnDragStart+=UpdateSlotColors;
+    }
+
+    public void UpdateSlotColors(InvGameItem item){
+        foreach (var slot in UIEquipmentSlot.EquipmentSlots){
+            if (slot.slot!=UIEquipmentSlot.Slot.RecycleBin)
+                slot.SetSlotColor(item);
+        }
+    }
+
+    //Dev.end
+
 	static InvGameItem mDraggedItem;
 
 	/// <summary>
@@ -129,8 +144,9 @@ public abstract class UIItemSlot : MonoBehaviour
 		mDraggedItem = item;
 		UpdateCursor();
 
-        if (mDraggedItem!=null&&OnDragStart!=null)
+        if (OnDragStart!=null)
             OnDragStart(item);
+        UpdateSlotColors(item);
 	}
 
 	/// <summary>

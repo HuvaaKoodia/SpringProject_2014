@@ -8,9 +8,7 @@ public enum TurnState
 }
 
 public class GameController : MonoBehaviour {
-	
-	//public List<TileObjData> TileObjects{get;private set;}
-	//public List<TileMain> Tiles{get;private set;}
+
 	public string TestLoadShipName;
 	public bool UseTestMap;
 	public EngineController EngCont;
@@ -44,9 +42,6 @@ public class GameController : MonoBehaviour {
 	// Use this for initialization
 	void Start()
     {
-		//TileObjects=new List<TileObjData>();
-		//Tiles=new List<TileMain>();
-
 		SS=GameObject.FindGameObjectWithTag("SharedSystems").GetComponent<SharedSystemsMain>();
 
 		LootCrates=new List<LootCrateMain>();
@@ -86,6 +81,13 @@ public class GameController : MonoBehaviour {
 	// Update is called once per frame
 	void Update()
     {
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.M)){
+            var mission=MissionGenerator.GenerateMission();
+            Debug.Log("mission: "+mission.Info);
+        }
+#endif
+
 		if (currentTurn != TurnState.PlayerTurn && currentTurn != TurnState.StartPlayerTurn)
 		{
 			aiController.UpdateAI(currentTurn);

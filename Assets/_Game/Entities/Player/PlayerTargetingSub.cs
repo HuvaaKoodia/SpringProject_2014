@@ -12,7 +12,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 	Dictionary<EnemyMain, TargetMarkHandler> targetableEnemies;
 
-	UISprite insightPrefab;
+	//UISprite insightPrefab;
 
 	public LayerMask targetingRayMask;
 
@@ -29,7 +29,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 		targetableEnemies = new Dictionary<EnemyMain, TargetMarkHandler>();
 
-		insightPrefab = player.GC.SS.PS.InsightSprite;
+		//insightPrefab = player.GC.SS.PS.InsightSprite;
 	}
 	
 	// Update is called once per frame
@@ -41,8 +41,8 @@ public class PlayerTargetingSub : MonoBehaviour {
 	{
 		UnsightAllEnemies();
 
-		int screenWidth = (int)Camera.main.pixelWidth;
-		int screenHeight = (int)Camera.main.pixelHeight;
+		//int screenWidth = (int)Camera.main.pixelWidth;
+		//int screenHeight = (int)Camera.main.pixelHeight;
 		
 		Plane[] planes;
 		planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
@@ -142,7 +142,9 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 				targetableEnemies[enemyTargeted].ChangeNumShots(
 					player.currentGunID, 
-					player.GetCurrentWeapon().GetNumShotsAtTarget(enemyTargeted));
+                    player.GetCurrentWeapon().GetNumShotsAtTarget(enemyTargeted),
+                    player.GetCurrentWeapon().HitChancePercent(enemyTargeted)
+                );
 			}
 		}
 	}
@@ -154,8 +156,11 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 		foreach(KeyValuePair<EnemyMain, TargetMarkHandler> enemyPair in targetableEnemies)
 		{
-			enemyPair.Value.ChangeNumShots(player.currentGunID, 
-			               player.GetCurrentWeapon().GetNumShotsAtTarget(enemyPair.Key));
+			enemyPair.Value.ChangeNumShots(
+               player.currentGunID, 
+               player.GetCurrentWeapon().GetNumShotsAtTarget(enemyPair.Key),
+               player.GetCurrentWeapon().HitChancePercent(enemyPair.Key)
+            );
 		}
 	}
 

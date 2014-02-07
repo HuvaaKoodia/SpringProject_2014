@@ -177,7 +177,6 @@ public class InvGameItem
     public static InvGameItem GetRandomItem (XmlDatabase XDB)
 	{
 		int qualityLevels = (int)InvGameItem.Quality._Amount;
-		int index = Random.Range(0, XDB.items.Count);
 		InvBaseItem item = Subs.GetRandom(XDB.items);
 		
 		InvGameItem gi = new InvGameItem(item);
