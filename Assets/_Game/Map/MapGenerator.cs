@@ -9,7 +9,7 @@ using System.Collections.Generic;
 public class MapGenerator : MonoBehaviour
 {
     public static Vector3 TileSize = new Vector3(3, 3, 3);
-    public const string WallIcon = "w", DoorIcon = "d";
+    public const string WallIcon = "w", DoorIcon = "d", CorridorIcon = "c", FloorIcon = ".", SpaceIcon=",";
     public bool DEBUG_create_temp_tiles = false;
     public XMLMapLoader XmlMapRead;
     public PrefabStore MapPrefabs;
@@ -44,16 +44,17 @@ public class MapGenerator : MonoBehaviour
                 var data = GC.TileObjectMap [x, y] = new TileObjData();
                 
                 data.TilePosition = new Vector3(x, 0, y);
-                
+
+                //DEV. create type and obj dictionaries
                 switch (md.map_data [x, y])
                 {
-                    case "c":
+                    case CorridorIcon:
                         data.SetType(TileObjData.Type.Corridor);
                         break;
-                    case ".":
+                    case FloorIcon:
                         data.SetType(TileObjData.Type.Floor);
                         break;
-                    case ",":
+                    case SpaceIcon:
                         data.SetType(TileObjData.Type.Empty);
                         break;
                     case WallIcon:
@@ -138,7 +139,6 @@ public class MapGenerator : MonoBehaviour
 
                     case TileObjData.Obj.Loot:
                         var LootCrate = GameObject.Instantiate(MapPrefabs.LootCratePrefab, tile_pos, Quaternion.identity) as GameObject;
-                        //LootCrate.transform.parent = object_container.transform;
 
 						LootCrateMain crate = LootCrate.GetComponent<LootCrateMain>();
 						crate.GC = GC;
@@ -372,7 +372,19 @@ public class MapGenerator : MonoBehaviour
             case TileObjData.Type.Door:
                 tileobj = MapPrefabs.Corridor_Door;
 
-                if (CheckTypeEqual(FloorOrCorridor, tile_types, 2, 6))
+                if (CheckTypeEqual(FloorOrCorridor, tile_types, 0,4))
+                {
+
+                }
+                else if (CheckTypeEqual(FloorOrCorridor, tile_types, 2, 6))
+                {
+                    rotation = Quaternion.AngleAxis(90, Vector3.up);
+                }
+                else if (CheckTypeEqual(FloorOrCorridor, tile_types, 0)||CheckTypeEqual(FloorOrCorridor, tile_types, 4))
+                {
+
+                }
+                else if (CheckTypeEqual(FloorOrCorridor, tile_types, 2)||CheckTypeEqual(FloorOrCorridor, tile_types, 6))
                 {
                     rotation = Quaternion.AngleAxis(90, Vector3.up);
                 }

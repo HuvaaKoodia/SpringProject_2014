@@ -24,20 +24,30 @@ public class ShipGenerator : MonoBehaviour
 
 		var room_stats=RoomIndices[room_index];
 
-		int c=0;
 		MapXmlData rroom;
+
+        List<MapXmlData> PossibleRooms=new List<MapXmlData>();
+        
+        foreach(var r in XmlMapRead.Rooms[room_stats.type]){
+            PossibleRooms.Add(r);
+        }
+
 		while (true){
-			++c;
-			if (c>100){
+			if (PossibleRooms.Count==0){
 				Debug.LogError("No fitting room in ["+cell.X+", "+cell.Y+"]");
 				break;
 			}
 			
-            rroom=Subs.GetRandom(XmlMapRead.Rooms[room_stats.type]);
-			
+            rroom=Subs.GetRandom(PossibleRooms);
+            PossibleRooms.Remove(rroom);
+			//toobig
 			if (rroom.W>cell.W||rroom.H>cell.H){
 				continue;
 			}
+            //toosmall
+            if (rroom.W<cell.W-2||rroom.H<cell.H-2){
+                continue;
+            }
 			
 			cell.RoomXmlData=rroom;
             cell.roomStats=room_stats;
@@ -121,6 +131,7 @@ public class ShipGenerator : MonoBehaviour
 	//Rooms
 
 		foreach(var room in Rooms){
+            if (!room.roomStats.randomize_pos) continue;
 			//check if offset needs to be tampered with
 			int rw_diff=room.W-room.RoomXmlData.W,rh_diff=room.H-room.RoomXmlData.H;
 
@@ -153,7 +164,7 @@ public class ShipGenerator : MonoBehaviour
 				room.YOFF=(int)r_fix.y;
 			}
 		}
-	
+	    
 		//add rooms to floor plan
 		foreach(var room in Rooms){
 			for (int mx = 0; mx < room.RoomXmlData.W; mx++)
@@ -165,7 +176,7 @@ public class ShipGenerator : MonoBehaviour
 			}
 		}
 
-		//clear room tiles r->.
+		//clear room tiles
 		for(int x=0;x<w;x++)
 		{
 			for(int y=0;y<h;y++)
@@ -182,7 +193,7 @@ public class ShipGenerator : MonoBehaviour
 			for(int y=0;y<h;y++)
 			{
 				var t_index=NewFloorMap.map_data[x,y].ToLower();
-				if (t_index=="c"||t_index==MapGenerator.DoorIcon){
+				if (t_index==MapGenerator.CorridorIcon||t_index==MapGenerator.DoorIcon||t_index==MapGenerator.FloorIcon){
 					int dir=0,xo=0,yo=0;
 					while (dir<4){
 						if (dir==0){ xo=1;yo=0; }
@@ -192,20 +203,19 @@ public class ShipGenerator : MonoBehaviour
 						
 						var index=NewFloorMap.GetIndex(x+xo,y+yo);
 						
-						if (index==","){
+						if (index==MapGenerator.SpaceIcon){
 							NewFloorMap.map_data[x+xo,y+yo]=MapGenerator.WallIcon;
 						}
-						
 						++dir;
 					}
 				}
 			}
 		}
 
-
-	//add doors
-
+	    //add doors
 		foreach(var room in Rooms){
+            if (!room.roomStats.randomize_doors) continue;
+
 			List<Vector2> PossibleDoors=new List<Vector2>();
 			
 			for (var dir=0;dir<4;dir++){
