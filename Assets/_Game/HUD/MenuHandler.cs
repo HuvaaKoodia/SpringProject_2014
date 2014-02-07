@@ -37,6 +37,10 @@ public class MenuHandler : MonoBehaviour {
 		currentMenuState = MenuState.NothingSelected;
 		MovementHud.SetActive(false);
 		TargetingHud.SetActive(false);
+
+        gunInfoDisplay.GC=GC;
+        radar.GC=GC;
+        radar.Init();
 	}
 	
 	// Update is called once per frame

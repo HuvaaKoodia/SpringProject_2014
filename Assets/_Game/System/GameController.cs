@@ -64,7 +64,7 @@ public class GameController : MonoBehaviour {
 		//init menuhandler stuff
 		menuHandler.player = player;
 		menuHandler.CheckTargetingModePanel();
-		menuHandler.radar.Init();
+		
 
 		//link player to hud
 		Inventory.SetPlayer(player);

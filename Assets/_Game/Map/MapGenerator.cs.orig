@@ -103,8 +103,12 @@ public class MapGenerator : MonoBehaviour
             for (int y = 0; y < h; y++)
             {   
                 //tile
-                //int y_pos = h - 1 - y;
+<<<<<<< HEAD
+                int y_pos = h - 1 - y;
 				Vector2 entity_pos =new Vector2( x,y); 
+=======
+                //int y_pos = h - 1 - y;
+>>>>>>> Weapon hit chance + Mission generator
                 var tile_pos = new Vector3(x * TileSize.x, 0, y * TileSize.z);
                 var tile = GC.TileMainMap [x, y] = Instantiate(MapPrefabs.TilePrefab, tile_pos, Quaternion.identity) as TileMain;
                 tile.SetData(GC.TileObjectMap [x, y]);
@@ -147,7 +151,6 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
-        if (player_tiles.Count>0)
 		{
 			//DEV.TEMP. random player pos
 			var StartPos = Subs.GetRandom (player_tiles);
@@ -160,9 +163,6 @@ public class MapGenerator : MonoBehaviour
 			player.movement.SetPositionInGrid (StartPos);
 			player.transform.parent = clone_container.transform;
 		}
-        else{
-            Debug.LogError("No Player pos!");
-        }
     }
     /// <summary>
     /// Generates loot to the loot containers.
