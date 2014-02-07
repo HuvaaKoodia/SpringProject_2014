@@ -110,7 +110,7 @@ public class ShipGenerator : MonoBehaviour
 							break;
 						}
                         if (nindex.ToLower()=="t"){
-                            cell.W+=1;
+                            cell.H+=1;
                             break;
                         }
 						if (nindex=="r"){

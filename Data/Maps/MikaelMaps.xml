@@ -1,0 +1,191 @@
+<Root>
+<!--
+-Room XML attributes-
+loot_a=amount of loot crates in this room (min,max)
+enemy_a=amount of enemies in this room (min,max)
+
+-Room Legend-
+, = space
+. = floor
+w = wall
+e = elevator
+
+*Extra
+d = door
+p = player 
+
+-Ship XML attributes-
+loot_a=amount of loot items in this ship floor (min,max)
+enemy_a=amount of enemies in this ship floor (min,max)
+
+-Ship Legend-
+, = space
+c = corridor
+r = room
+R = room start (top left corner)
+T = room end (use if rooms right next to each other)
+A = airlock start
+E = elevator start
+-->
+
+<Room type="commandbridge1" loot_a="0,2" enemy_a="0,5">
+, , w w w w , ,
+, , w . . w , ,
+, w w . . w w ,
+, w . . . . w ,
+w w . . . . w w
+w . . . . . . w
+w . . . . . . w
+w . . . . . . w
+w w d w w d w w
+</Room>
+
+<Room type="engine" loot_a="0,6" enemy_a="0,8">
+w w w w w w w w w w
+w . . . . . . . . w
+w . . . . . . . . w
+w . . w w w w . . w
+w . . . . . . . . w
+w . . w w w w . . w
+w . . . . . . . . w
+w . . w w w w . . w
+w . . . . . . . . w
+w . . . . . . . . w
+w w w w w w w w w w
+</Room>
+
+<Room type="engine1" loot_a="0,6" enemy_a="0,8">
+w d w w w w w w d w
+w . . . . . . . . w
+w . . . . . . . . w
+w . . w w w w . . w
+w . . . . . . . . w
+w . . w w w w . . w
+w . . . . . . . . w
+w . . w w w w . . w
+w . . . . . . . . w
+w . . . . . . . . w
+w w w w w w w w w w
+</Room>
+
+<Room type="cargoLargeLR" loot_a="6,20" enemy_a="0,10">
+w w w w w w w w w w
+d . . . . . . . . d
+w . . . . . . . . w
+w . . . . . . . . w
+w . . . . . . . . w
+d . . . . . . . . d
+w . . . . . . . . w
+w . . . . . . . . w
+w . . . . . . . . w
+d . . . . . . . . d
+w w w w w w w w w w
+</Room>
+
+<Room type="room" loot_a="0,3" enemy_a="2,6">
+w w w w w w w
+w . . . . . w
+w . . . . . w
+w . . . . . w
+w w w w w w w
+</Room>
+
+<Room type="room" loot_a="0,3" enemy_a="2,6">
+w w w w w
+w . . . w
+w . . . w
+w . . . w
+w w w w w
+</Room>
+ 
+<Room type="room" loot_a="0,3" enemy_a="2,6">
+w w w w w w w w w w w
+w . . . . . . . . . w
+w . . . . . . . . . w
+w . . . . . . . . . w
+w . . . . . . . . . w
+w . . . . . . . . . w
+w w w w w w w w w w w
+</Room>
+ 
+<Room type="room" loot_a="0,3" enemy_a="2,6">
+w w w w w w w w w
+w . . . w . . . w
+w . . . w . . . w
+w . . . . . . . w
+w . . . w . . . w
+w . . . w . . . w
+w w w w w w w w w
+</Room>
+ 
+<Room type="room" loot_a="0,3" enemy_a="2,6">
+w w w w w w w w w w w
+w . . . . . . . . . w
+w . . . . . . . . . w
+w . . . . . . w w w w
+w . . . . . . w . . w
+w . . . . . . . . . w
+w w w w w w w w w w w
+</Room>
+ 
+<Room type="room" loot_a="0,3" enemy_a="2,6">
+w w w w w w w w w w w
+w . . . . . . . . . w
+w . . . . . . . . . w
+w . . . . . . . . . w
+w w w . . . . . . . w
+, , w . . w w w w . w
+, , w w w w , , w w w
+</Room>
+ 
+ <Ship type="mercurius1" floor="0" loot_a="10,25" enemy_a="0,15">
+, , , , , , , , K1 r r r r r r r , , , , , , , ,
+, , , , , , , , r r r r r r r r , , , , , , , ,
+, , , , , , , , r r r r r r r r , , , , , , , ,
+, , , , , , , , r r r r r r r r , , , , , , , ,
+, , , , , , , , r r r r r r r r , , , , , , , ,
+, , , , , , , , r r r r r r r r , , , , , , , ,
+, , , , , , , , r r r r r r r r , , , , , , , ,
+, , , , , , , , r r r r r r r r , , , , , , , ,
+, , , , , , , , r r r r r r r r , , , , , , , ,
+, , , , , , , , , , c c c c , , , , , , , , , ,
+, , , , , , , , A2 r r c c A2 r r , , , , , , , ,
+, , , , , , , , r r r c c r r r , , , , , , , ,
+, , , , , , , , r r r c c r r r , , , , , , , ,
+, , , , , c c c c c d c c d c c c c c , , , , ,
+, , , , , d R r r r r c c R r r r r d , , , , ,
+R r r r r c r r r r r c c r r r r r c R r r r r
+r r r r r c r r r r r c c r r r r r c r r r r r
+r r r r r c r r r r r c c r r r r r c r r r r r
+r r r r r c r r r r r c c r r r r r c r r r r r
+r r r r r c r r r r r c c r r r r r c r r r r r
+, , , , , d r r r r r c c r r r r r d , , , , ,
+, , , , , c c c c c d c c d c c c c c , , , , ,
+, , , , , , , , , , , c c , , , , , , , , , , ,
+, , , A1 r r c c c c d c c d c c c c A1 r r , , ,
+, , , r r r c V4 r r r r r r r r r c r r r , , ,
+, , , t r r c r r r r r r r r r r c t r r , , ,
+, , , R r r c r r r r r r r r r r c A1 r r , , ,
+, , , r r r c r r r r r r r r r r c r r r , , ,
+, , , r r r c r r r r r r r r r r c r r r , , ,
+, , , , , , c r r r r r r r r r r c , , , , , ,
+, , , A1 r r c r r r r r r r r r r c A1 r r , , ,
+, , , r r r c r r r r r r r r r r c r r r , , ,
+, , , t r r c r r r r r r r r r r c t r r , , ,
+, , , A1 r r c r r r r r r r r r r c A1 r r , , ,
+, , , r r r c r r r r r r r r r r c r r r , , ,
+, , , r r r c d c c c c c c c c d c r r r , , ,
+, , , , , , , E1 r r r r r r r r r , , , , , , ,
+, , , , , , , r r r r r r r r r r , , , , , , ,
+, , , , , , , r r r r r r r r r r , , , , , , ,
+, , , , , , , r r r r r r r r r r , , , , , , ,
+, , , , , , , r r r r r r r r r r , , , , , , ,
+, , , , , , , r r r r r r r r r r , , , , , , ,
+, , , , , , , r r r r r r r r r r , , , , , , ,
+, , , , , , , r r r r r r r r r r , , , , , , ,
+, , , , , , , r r r r r r r r r r , , , , , , ,
+, , , , , , , r r r r r r r r r r , , , , , , ,
+, , , , , , , r r r r r r r r r r , , , , , , ,
+
+</Ship>
+</Root>

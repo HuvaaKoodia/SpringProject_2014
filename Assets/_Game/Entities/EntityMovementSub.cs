@@ -59,11 +59,11 @@ public class EntityMovementSub : MonoBehaviour
 		}
 	}
 
-    public void SetPositionInGrid(int[] position)
+    public void SetPositionInGrid(Vector2 pos)
     {
-        currentGridX = position[0];
-        currentGridY = position[1];
-		transform.position = new Vector3(position[0]*MapGenerator.TileSize.x, transform.position.y, position[1]*MapGenerator.TileSize.z);
+		currentGridX = (int)pos.x;
+		currentGridY = (int)pos.y;
+		transform.position = new Vector3(currentGridX*MapGenerator.TileSize.x, transform.position.y, currentGridY*MapGenerator.TileSize.z);
     }
 
     public bool MoveForward()

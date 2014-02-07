@@ -96,12 +96,15 @@ public class MapGenerator : MonoBehaviour
         
         GC.TileMainMap = new TileMain[w, h];
         
+		List<Vector2> player_tiles=new List<Vector2>();
+
         for (int x = 0; x < w; x++)
         {
             for (int y = 0; y < h; y++)
             {   
                 //tile
                 int y_pos = h - 1 - y;
+				Vector2 entity_pos =new Vector2( x,y); 
                 var tile_pos = new Vector3(x * TileSize.x, 0, y * TileSize.z);
                 var tile = GC.TileMainMap [x, y] = Instantiate(MapPrefabs.TilePrefab, tile_pos, Quaternion.identity) as TileMain;
                 tile.SetData(GC.TileObjectMap [x, y]);
@@ -113,19 +116,12 @@ public class MapGenerator : MonoBehaviour
                     tile.TileGraphics.transform.parent = tile.transform;
 
                 //game objects
-                int[] entity_pos = { x, y };
+
 
                 switch (tile.Data.ObjType)
                 {
                     case TileObjData.Obj.Player:
-                        var player = GameObject.Instantiate(MapPrefabs.PlayerPrefab, tile_pos, Quaternion.identity) as PlayerMain;
-                        player.name = "Player";
-
-                        GC.Player = player;
-
-                        player.movement.SetPositionInGrid(entity_pos);
-
-                        player.transform.parent = clone_container.transform;
+					player_tiles.Add(entity_pos);
                         break;
                                         
                     case TileObjData.Obj.Enemy:
@@ -150,6 +146,19 @@ public class MapGenerator : MonoBehaviour
                 }
             }
         }
+
+		{
+			//DEV.TEMP. random player pos
+			var StartPos = Subs.GetRandom (player_tiles);
+			var tile_pos = new Vector3 (StartPos.x * TileSize.x, 0, StartPos.y * TileSize.z);
+			var player = GameObject.Instantiate (MapPrefabs.PlayerPrefab, tile_pos, Quaternion.identity) as PlayerMain;
+			player.name = "Player";
+
+			GC.Player = player;
+
+			player.movement.SetPositionInGrid (StartPos);
+			player.transform.parent = clone_container.transform;
+		}
     }
     /// <summary>
     /// Generates loot to the loot containers.
