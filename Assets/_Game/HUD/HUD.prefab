@@ -3306,7 +3306,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a92b5d748695fd44aac9feef17ba415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MenuButtonPressed: 0
   eventType: 1
   eventReceiverMask:
     serializedVersion: 2
@@ -3726,9 +3725,8 @@ MonoBehaviour:
   NGUICamera: {fileID: 2000000}
   turnText: {fileID: 11400120}
   engageButton: {fileID: 11400018}
-  healthText: {fileID: 11400100}
   targetMarkPanel: {fileID: 11400130}
-  gunInfoDisplay: {fileID: 11400146}
+  gunInfoDisplay: {fileID: 0}
   currentMenuState: 0
   EndHud: {fileID: 0}
   MovementHud: {fileID: 0}
@@ -4849,14 +4847,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75cb1629a8c94bf4ba041c77fcdc5dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuHandler: {fileID: 11400090}
+  displayMain: {fileID: 0}
+  weapon: {fileID: 0}
   infoLabel: {fileID: 11400142}
-  selectionHighlight: {fileID: 11400228}
-  weaponSelectionButtons:
-  - {fileID: 11400220}
-  - {fileID: 11400178}
-  - {fileID: 11400188}
-  - {fileID: 11400116}
+  highlight: {fileID: 0}
 --- !u!114 &11400148
 MonoBehaviour:
   m_ObjectHideFlags: 1

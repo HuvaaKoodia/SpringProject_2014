@@ -11,8 +11,11 @@ public class GunDisplayScreenSub : MonoBehaviour {
 	public UILabel infoLabel;
 	public UISprite highlight;
 
+	public UISprite overheat;
+
 	// Use this for initialization
 	void Start () {
+		overheat.enabled = false;
 	}
 	
 	// Update is called once per frame
@@ -34,8 +37,16 @@ public class GunDisplayScreenSub : MonoBehaviour {
 
 			info += "\n";
 
-			info += "heat: " + weapon.CurrentHeat + "/100";
-
+			if (!weapon.WeaponSlot.ObjData.OVERHEAT)
+			{
+				info += "heat: " + weapon.CurrentHeat + "/100";
+				overheat.enabled = false;
+			}
+			else
+			{
+				info += "[FF0000]OVERHEAT![FFFFFF]";
+				overheat.enabled = true;
+			}
 			info += "\n";
 		
 			info += "ROF: " + weapon.GetNumShotsTargetedTotal() + "/" + weapon.RateOfFire;

@@ -70,6 +70,8 @@ public class PlayerMain : EntityMain
 		{
 			gun.ReduceHeat();
 		}
+
+		GC.menuHandler.gunInfoDisplay.UpdateAllDisplays();
         StartTurn();
     }
 
