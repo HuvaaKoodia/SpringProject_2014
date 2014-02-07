@@ -9,6 +9,11 @@ public class TargetMarkHandler
 	GameObject parentObject;
 	UISprite crosshair;
 	List<UILabel> numShotsLabels;
+
+	public bool IsVisible
+	{
+		get { return crosshair.enabled; }
+	}
 	
 	public TargetMarkHandler(GameController gameController, Vector3 crosshairPosition)
 	{
@@ -66,5 +71,10 @@ public class TargetMarkHandler
 			numShotsLabels[(int)gun].text = "";
 			crosshair.spriteName = "crosshair_gray";
 		}
+	}
+
+	public void SetCrosshairVisible(bool visible)
+	{
+		crosshair.enabled = visible;
 	}
 }

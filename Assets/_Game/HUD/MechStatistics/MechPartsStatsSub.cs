@@ -8,7 +8,8 @@ public class MechPartsStatsSub : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		if (overheatSprite != null)
+			overheatSprite.enabled = false;
 	}
 	
 	// Update is called once per frame

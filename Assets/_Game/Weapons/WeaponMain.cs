@@ -180,12 +180,14 @@ public class WeaponMain : MonoBehaviour {
 
     public void IncreaseHeat()
     {
-        WeaponSlot.ObjData.IncreaseHEAT(Weapon);
+		if (WeaponSlot != null)
+        	WeaponSlot.ObjData.IncreaseHEAT(Weapon);
     }
 
 	public void ReduceHeat()
 	{
-        WeaponSlot.ObjData.ReduceHEAT(Weapon);
+		if (WeaponSlot != null)
+       		WeaponSlot.ObjData.ReduceHEAT(Weapon);
 	}
 
 	public void AddAmmo(int amount)

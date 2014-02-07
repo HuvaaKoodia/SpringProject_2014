@@ -37,7 +37,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 	
 	}
 
-	public void CheckTargetableEnemies(Vector3 gunPosition)
+	public void CheckTargetableEnemies(Vector3 playerPosition)
 	{
 		UnsightAllEnemies();
 
@@ -59,7 +59,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 			//check if enemy can be seen
 			if (GeometryUtility.TestPlanesAABB(planes, enemy.collider.bounds))
 			{
-				Ray ray = new Ray(gunPosition, adjustedEnemyPos - gunPosition);
+				Ray ray = new Ray(playerPosition, adjustedEnemyPos - playerPosition);
 				RaycastHit hitInfo;
 				
 				Debug.DrawRay(ray.origin, ray.direction * 20, Color.red, 2.0f);
@@ -74,6 +74,29 @@ public class PlayerTargetingSub : MonoBehaviour {
 		}
 
 		ShowTargetMarks(player.GetCurrentWeapon().Usable());
+	}
+
+	public void CheckGunSightToEnemies(Vector3 gunPosition)
+	{
+		foreach(KeyValuePair<EnemyMain, TargetMarkHandler> enemyPair in targetableEnemies)
+		{
+			Vector3 adjustedEnemyPos = enemyPair.Key.transform.position + Vector3.up*0.6f;
+
+			Ray ray = new Ray(gunPosition, adjustedEnemyPos - gunPosition);
+			RaycastHit hitInfo;
+
+			Debug.DrawRay(ray.origin, ray.direction * 20, Color.red, 2.0f);
+			if (Physics.Raycast(ray, out hitInfo, 20, targetingRayMask))
+			{
+				if (hitInfo.transform == enemyPair.Key.transform)
+				{
+					enemyPair.Value.SetCrosshairVisible(true);
+					continue;
+				}
+			}
+
+			enemyPair.Value.SetCrosshairVisible(false);
+		}
 	}
 
 	public void UnsightAllEnemies()
@@ -112,6 +135,9 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 			if (targetableEnemies.ContainsKey(enemyTargeted) && player.GetCurrentWeapon().Weapon != null)
 			{
+				if (!targetableEnemies[enemyTargeted].IsVisible)
+					return;
+
 				player.GetCurrentWeapon().ToggleTarget(enemyTargeted,left_click);
 
 				targetableEnemies[enemyTargeted].ChangeNumShots(

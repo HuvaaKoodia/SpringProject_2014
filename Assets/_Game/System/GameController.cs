@@ -66,15 +66,16 @@ public class GameController : MonoBehaviour {
 		SS.MGen.GenerateSceneMap(this);
 		SS.MGen.GenerateLoot(this,ship_objdata);
 
+		//init menuhandler stuff
 		menuHandler.player = player;
 		menuHandler.CheckTargetingModePanel();
+		menuHandler.radar.Init();
 
 		//link player to hud
 		Inventory.SetPlayer(player);
 
         var ec=GetComponent<EngineController>();
         ec.AfterRestart+=SS.GDB.StartNewGame;
-
 
         //DEV.DEBUG random equipment
         for (int i=0;i<7;i++){

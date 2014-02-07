@@ -218,6 +218,17 @@ public class PlayerInputSub : MonoBehaviour {
 
         player.GC.menuHandler.ToggleTargetingHUD();
     }
+
+	public void DisperseHeatInput()
+	{
+		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving)
+			return;
+
+		for (int i = 0; i < 3; i++)
+			player.DisperseWeaponHeat();
+
+		player.EndPlayerPhase();
+	}
     
     public void ChangeWeaponInput(WeaponID id)
 	{

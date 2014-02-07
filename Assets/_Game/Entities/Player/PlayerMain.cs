@@ -25,6 +25,7 @@ public class PlayerMain : EntityMain
 	public const int movementCost = 1;
 	public const int interactCost = 1;
 	public const int attackCost = 2;
+	public const int disperseHeatCost = 1;
 
     public void SetObjData(PlayerObjData data){
         ObjData=data;
@@ -66,10 +67,7 @@ public class PlayerMain : EntityMain
     public void StartPlayerPhase()
     {
 		ap = apMax;
-		foreach(WeaponMain gun in gunList)
-		{
-			gun.ReduceHeat();
-		}
+		DisperseWeaponHeat();
 
 		GC.menuHandler.gunInfoDisplay.UpdateAllDisplays();
         StartTurn();
@@ -182,6 +180,7 @@ public class PlayerMain : EntityMain
 
 		targetingMode = true;
 		targetingSub.CheckTargetableEnemies(Camera.main.transform.position);
+		targetingSub.CheckGunSightToEnemies(GetCurrentWeapon().transform.position);
 		GC.menuHandler.CheckTargetingModePanel();
 		GC.menuHandler.gunInfoDisplay.ChangeCurrentHighlight(currentGunID);
 		return true;
@@ -194,6 +193,16 @@ public class PlayerMain : EntityMain
 		GC.menuHandler.CheckTargetingModePanel();
 	}
 
+	public void DisperseWeaponHeat()
+	{
+		foreach(WeaponMain gun in gunList)
+		{
+			gun.ReduceHeat();
+		}
+
+		GC.menuHandler.gunInfoDisplay.UpdateAllDisplays();
+	}
+
 	public void ChangeWeapon(WeaponID id)
 	{
         var weapon=gunList[(int)id];
@@ -203,6 +212,7 @@ public class PlayerMain : EntityMain
 		GetCurrentWeapon().Unselected();
 		currentGunID = id;
 		targetingSub.CheckGunTargets();
+		targetingSub.CheckGunSightToEnemies(GetCurrentWeapon().transform.position);
 		GC.menuHandler.CheckTargetingModePanel();
 		GC.menuHandler.gunInfoDisplay.ChangeCurrentHighlight(currentGunID);
 		targetingSub.ShowTargetMarks(GetCurrentWeapon().Weapon != null);

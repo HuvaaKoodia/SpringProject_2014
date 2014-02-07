@@ -21,6 +21,7 @@ public class MenuHandler : MonoBehaviour {
 	public UIPanel targetMarkPanel;
 
 	public GunDisplayMain gunInfoDisplay;
+	public Radar radar;
 
 	public MenuState currentMenuState;
 
@@ -90,6 +91,11 @@ public class MenuHandler : MonoBehaviour {
 	void EngageCombatPressed()
 	{
 		player.inputSub.EngageCombatInput();
+	}
+
+	void DisperseHeatPressed()
+	{
+		player.inputSub.DisperseHeatInput();
 	}
 
 	void LeftHandWeaponPressed()
