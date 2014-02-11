@@ -30,6 +30,7 @@ public class MenuHandler : MonoBehaviour {
 	public GameObject TargetingHud;
 	public GameObject InteractHud;
 	public InventoryMain InventoryHud;
+    public MissionBriefMain MissionBriefing;
 
 	// Use this for initialization
 	void Start()
@@ -230,7 +231,7 @@ public class MenuHandler : MonoBehaviour {
 		engageButton.gameObject.SetActive(player.targetingSub.HasAnyTargets());
 	}
 
-	public void UpdateHealthText (int health)
-	{
-	}
+    void MissionLogPressed(){
+        MissionBriefing.gameObject.SetActive(!MissionBriefing.gameObject.activeSelf);
+    }
 }
