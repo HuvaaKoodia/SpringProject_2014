@@ -64,28 +64,32 @@ public class InvGameItem
 	/// calculating the effective multiplier is as simple as itemLevel/maxLevel.
 	/// </summary>
 
-	public float statMultiplier
+	public int StatValue(InvStat stat)
 	{
-		get
-		{
-			float mult = 0f;
-
-			switch (quality)
-			{
-				case Quality.Inferior:	mult = .5f;	break;
-				case Quality.Normal:	mult = 1f;	break;
-				case Quality.Superior:	mult = 1.5f;break;
-			}
-
-			// Take item's level into account
-			float linear = (float)itemLevel / baseItem.maxItemLevel;
-
-			// Add a curve for more interesting results
-			mult *= Mathf.Lerp(linear, linear * linear, 0.5f);
-			return mult;
-		}
+		float itemStat =
+			(Mathf.Pow ((1 - (itemLevel / 10f)), 2) * stat.min_amount) + 
+			(2 * (1 - (itemLevel / 10f)) * (itemLevel/10f) * ControllerMultiplier (stat)) + 
+			(Mathf.Pow (((itemLevel / 10f)), 2) * stat.max_amount);
+		return Mathf.CeilToInt(itemStat);
 	}
+	public float ControllerMultiplier(InvStat stat)
+	{
+		float ctrlMultiplier = 0.5f;
 
+		switch(stat.type) 
+		{
+		case InvStat.Type.Damage: 	ctrlMultiplier = 0.9f; break;
+		case InvStat.Type.Accuracy: ctrlMultiplier = 0.6f; break;
+		case InvStat.Type.Range: 	ctrlMultiplier = 1.0f; break;
+		case InvStat.Type.Firerate:	ctrlMultiplier = 0.5f; break;
+		case InvStat.Type.Heat: 	ctrlMultiplier = 0.8f; break;
+		case InvStat.Type.Cooling: 	ctrlMultiplier = 0.4f; break;
+		case InvStat.Type.MaxAmmo: 	ctrlMultiplier = 0.8f; break;
+		}
+
+		return stat.min_amount + ((stat.max_amount - stat.min_amount) * ctrlMultiplier);
+
+	}
 	/// <summary>
 	/// Item's color based on quality. You will likely want to change this to your own colors.
 	/// </summary>
@@ -135,13 +139,15 @@ public class InvGameItem
 
 		if (baseItem != null)
 		{
-			float mult = statMultiplier;
+
 			List<InvStat> baseStats = baseItem.stats;
 
 			for (int i = 0, imax = baseStats.Count; i < imax; ++i)
 			{
+
 				InvStat bs = baseStats[i];
-				int amount = bs.min_amount+Mathf.RoundToInt(mult * (bs.max_amount-bs.min_amount));
+
+				int amount = StatValue(bs);
 				if (amount == 0) continue;
 
 				bool found = false;
@@ -152,7 +158,7 @@ public class InvGameItem
 
 					if (s.type== bs.type && s.modifier == bs.modifier)
 					{
-						s._amount += amount;
+						s._amount = amount;
 						found = true;
 						break;
 					}
