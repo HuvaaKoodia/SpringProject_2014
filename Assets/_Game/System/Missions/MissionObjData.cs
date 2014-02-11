@@ -13,7 +13,7 @@ public class MissionObjData {
 
     public enum InformationRating{None,Something,Everything}
 
-    public string Info;
+    public string Briefing,Objectives;
 
     //stats
     public Type MissionType;

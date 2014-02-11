@@ -53,6 +53,7 @@ public class UICursor : MonoBehaviour
 	{
 		if (mSprite.atlas != null)
 		{
+            var z=transform.position.z;
 			Vector3 pos = Input.mousePosition;
 
 			if (uiCamera != null)
@@ -81,6 +82,8 @@ public class UICursor : MonoBehaviour
 				pos.y = Mathf.Round(pos.y);
 				mTrans.localPosition = pos;
 			}
+
+            //transform.localPosition=new Vector3(transform.position.x,transform.position.y,transform.position.z);
 		}
 	}
 

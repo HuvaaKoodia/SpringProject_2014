@@ -41,7 +41,8 @@ public class MissionGenerator{
                 break;
         }
 
-        mission.Info=MissionDebriefText(mission);
+        mission.Briefing=MissionDebriefText(mission);
+        mission.Objectives=MissionObjectivesText(mission);
         return mission;
     }
 
@@ -51,7 +52,6 @@ public class MissionGenerator{
         if (ScanningRating>=XmlDatabase.MissionInfoSuccessRating) return MissionObjData.InformationRating.Everything;
         return MissionObjData.InformationRating.Something;
     }
-
 
     /// <summary>
     /// Swich case from hell!
@@ -67,24 +67,24 @@ public class MissionGenerator{
                 break;
                 
             case MissionObjData.Type.RetrieveCargo:
-                base_text="We've been contracted to retrieve a certain valuable item from a abandoned vessel.\n" +
+                base_text="We've been contracted to retrieve a certain valuable item from an abandoned vessel.\n" +
                     "Anything else you find is a for us to keep.";
                 break;
                 
             case MissionObjData.Type.ExploreVessel:
-                base_text="We've spotted a derelict vessel.\n" +
+                base_text="We've spotted a derelict vessel.\n\n" +
                     "Loot and explore!";
                 break;
                 
             case MissionObjData.Type.EmergencyBeacon:
-                base_text="We've received an emergency message from deep space.\n" +
+                base_text="We've received an emergency message from deep space.\n\n" +
                     "Investigate and explore!";
                 break;
         }
 
-        base_text+="\n";
+        base_text+="\n\nAdditional Info:\n\n";
 
-        string info_text="";
+        string info_text="- ";
 
         switch(mission.InfoAlienAmount){
             case MissionObjData.InformationRating.None:
@@ -97,7 +97,7 @@ public class MissionGenerator{
                 info_text+=MissionAlienInfoEverything(mission);
                 break;
         }
-        info_text+="\n";
+        info_text+="\n- ";
         switch(mission.InfoSecuritySystem){
             case MissionObjData.InformationRating.None:
                 info_text+="We were unable to determine the security system status.";
@@ -109,7 +109,7 @@ public class MissionGenerator{
                 info_text+=MissionSecurityInfoEverything(mission);
                 break;
         }
-        info_text+="\n";
+        info_text+="\n- ";
         switch(mission.InfoShipPower){
             case MissionObjData.InformationRating.None:
             case MissionObjData.InformationRating.Something:
@@ -119,7 +119,7 @@ public class MissionGenerator{
                 info_text+=MissionPowerInfoEverything(mission);
                 break;
         }
-        info_text+="\n";
+        info_text+="\n- ";
         switch(mission.InfoShipConditions){
             case MissionObjData.InformationRating.None:
                 info_text+="We were unable to determine the ship condition.";
@@ -222,5 +222,22 @@ public class MissionGenerator{
                 return "The ship is badly damaged.";
         }
         return "";
+    }
+
+    static string MissionObjectivesText(MissionObjData mission)
+    {
+        var text="Primary:\n";
+        foreach (var o in mission.PrimaryObjectives){
+            text+=o.ToString()+"\n";
+        }
+        if (mission.PrimaryObjectives.Count==0){
+            text+="NONE\n";
+        }
+        
+        text+="\n\nSecondary:\n";
+        foreach (var o in mission.SecondaryObjectives){
+            text+=o.ToString();
+        }
+        return text;
     }
 }

@@ -31,6 +31,8 @@ public class GameController : MonoBehaviour {
 	
     PlayerMain player;
 
+    MissionObjData CurrentMission;//DEV.temp
+
     public PlayerMain Player{
         get{return player;}
         set{
@@ -76,6 +78,10 @@ public class GameController : MonoBehaviour {
         for (int i=0;i<7;i++){
             InvEquipmentStorage.EquipRandomItem(player.ObjData.Equipment,SS.XDB);
         }
+
+        //DEV.DEBUG generate mission
+        CurrentMission=MissionGenerator.GenerateMission();
+        menuHandler.MissionBriefing.SetMission(CurrentMission);
 	}
 
 	// Update is called once per frame
@@ -84,7 +90,7 @@ public class GameController : MonoBehaviour {
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.M)){
             var mission=MissionGenerator.GenerateMission();
-            Debug.Log("mission: "+mission.Info);
+            Debug.Log("mission: "+mission.Briefing);
         }
 #endif
 

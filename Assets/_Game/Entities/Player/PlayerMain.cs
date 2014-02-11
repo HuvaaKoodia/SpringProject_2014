@@ -45,8 +45,6 @@ public class PlayerMain : EntityMain
 	void Start()
     {
 		ap = apMax;
-		GC.menuHandler.UpdateHealthText(maxHealth);
-
 		interactSub.CheckForInteractables();
 
         ActivateEquippedItems();
@@ -151,8 +149,6 @@ public class PlayerMain : EntityMain
         ObjData.TakeDMG(damage,dir);
 
         Health = ObjData.Equipment.UpperTorso.ObjData.HP;
-        GC.menuHandler.UpdateHealthText(Health);
-
         if (Health <= 0)
 		{
 			Debug.Log("Kuoli saatana");
