@@ -46,6 +46,7 @@ GameObject:
   - 114: {fileID: 11400006}
   - 114: {fileID: 11400004}
   - 114: {fileID: 11400008}
+  - 114: {fileID: 11400016}
   m_Layer: 0
   m_Name: Databases
   m_TagString: Untagged
@@ -128,7 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4d2ddf9674324f4e9026e8ba772e8e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GDB: {fileID: 11400004}
+  GDB: {fileID: 11400016}
   XDB: {fileID: 11400006}
   PS: {fileID: 11400008}
   MGen: {fileID: 11400002}
@@ -209,6 +210,9 @@ MonoBehaviour:
   Corridor_Door: {fileID: 100000, guid: 57e21dd772560de408ee73b478f5c434, type: 2}
   InsightSprite: {fileID: 11400000, guid: b225bf727f92d1f4ea3729003a238644, type: 2}
   TargetedSprite: {fileID: 11400000, guid: 3a4a67f0bbf1b1c498a4c6b6993d7532, type: 2}
+  PlayerBlipSprite: {fileID: 11400000, guid: 2e6f3a91ba46dbb46848dfc80a6075b9, type: 2}
+  EnemyBlipSprite: {fileID: 11400000, guid: 6518989b222409e4fb43118a107a2cff, type: 2}
+  LootBlipSprite: {fileID: 11400000, guid: 05d6d0dc331c22e42b91bf78bcad44fe, type: 2}
   NumShotsLabel: {fileID: 11400000, guid: 60f0360bfe15a2f4cb50624539b2c99a, type: 2}
 --- !u!114 &11400010
 MonoBehaviour:
@@ -245,6 +249,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   XmlMapRead: {fileID: 11400010}
   MapPrefabs: {fileID: 11400008}
+--- !u!114 &11400016
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c9dbb49fd96f3498c2795c24a965e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11400018
 MonoBehaviour:
   m_ObjectHideFlags: 1
