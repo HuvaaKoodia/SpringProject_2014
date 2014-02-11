@@ -57,95 +57,49 @@ using System.Collections.Generic;
 
 public class Radar : MonoBehaviour
 {
-	public float BlipSize = 6;
-	public float CenterIconSize = 6;
-	public int bgBorderWidth = 10;
-
 	public GameController GC;
+	public Transform radarPanelTransform;
 
-	public enum RadarTypes : int {Textured, Round, Transparent};
-	public enum RadarLocations : int {TopLeft, TopCenter, TopRight, BottomLeft, BottomCenter, BottomRight, Left, Center, Right, Custom};
-	
+	public List<UISprite> blips;
+	public int currentBlip = 0;
+
+	public GameObject blipParent;
+
 	// Display Location
-	public RadarLocations radarLocation = RadarLocations.BottomCenter;
-	public Vector2 radarLocationCustom;
-	public RadarTypes radarType = RadarTypes.Round;
-	public Color radarBackgroundA = new Color(255, 255, 0);
-	public Color radarBackgroundB = new Color(0, 255, 255);
-	public Texture2D radarTexture;
-	public float radarSize = 0.20f;  // The amount of the screen the radar will use
 	public float radarZoom = 0.60f;
 	
 	// Center Object information
 	public bool   radarCenterActive;
-	public Color  radarCenterColor = new Color(255, 255, 255);
-	public string radarCenterTag;
 	
 	// Blip information
 	public bool   enemyBlipActive;
-	public Color  enemyBlipColor = new Color(0, 0, 255);
 	List<EnemyMain> enemies;
 	
 	public bool   lootBlipActive;
-	public Color  lootBlipColor = new Color(0, 255, 0);
 	List<LootCrateMain> lootCrates;
-	
-	public bool   radarBlip3Active;
-	public Color  radarBlip3Color = new Color(255, 0, 0);
-	public string radarBlip3Tag;
-	
-	public bool   radarBlip4Active;
-	public Color  radarBlip4Color = new Color(255, 0, 255);
-	public string radarBlip4Tag;
-	
+
 	// Internal vars
 	private GameObject _centerObject;
-	private int        _radarWidth;
-	private int        _radarHeight;
-	private Vector2    _radarCenter;
-	private Texture2D  _radarCenterTexture;
-	private Texture2D  enemyBlipTexture;
-	private Texture2D  lootBlipTexture;
-	private Texture2D  _radarBlip3Texture;
-	private Texture2D  _radarBlip4Texture;
+	private UISprite  _radarCenterTexture;
+	private UISprite  enemyBlipTexture;
+	private UISprite  lootBlipTexture;
 
 	bool initialized = false;
 
 	// Initialize the radar
 	public void Init()
-	{
-		// Determine the size of the radar
-		_radarWidth = (int)(Screen.width * radarSize);
-		_radarHeight = _radarWidth;
-		
-		// Get the location of the radar
-		setRadarLocation();
-		
-		// Create the blip textures
-		_radarCenterTexture = new Texture2D(3, 3, TextureFormat.RGB24, false);
-		enemyBlipTexture = new Texture2D(3, 3, TextureFormat.RGB24, false);
-		lootBlipTexture = new Texture2D(3, 3, TextureFormat.RGB24, false);
-		_radarBlip3Texture = new Texture2D(3, 3, TextureFormat.RGB24, false);
-		_radarBlip4Texture = new Texture2D(3, 3, TextureFormat.RGB24, false);
-		
-		CreateBlipTexture(_radarCenterTexture, radarCenterColor);
-		CreateBlipTexture(enemyBlipTexture, enemyBlipColor);
-		CreateBlipTexture(lootBlipTexture, lootBlipColor);
-		CreateBlipTexture(_radarBlip3Texture, radarBlip3Color);
-		CreateBlipTexture(_radarBlip4Texture, radarBlip4Color);
-		
-		// Setup the radar background texture
-		if (radarType != RadarTypes.Textured)
-		{
-			radarTexture = new Texture2D(_radarWidth, _radarHeight, TextureFormat.RGB24, false);
-			CreateRoundTexture(radarTexture, radarBackgroundA, radarBackgroundB);
-		}
-		
+	{	
 		// Get our center object
 		_centerObject = GC.Player.gameObject;
 
 		enemies = GC.aiController.enemies;
 		lootCrates = GC.LootCrates;
+
+		blips = new List<UISprite>();
+
+		_radarCenterTexture = GC.SS.PS.PlayerBlipSprite;
+		enemyBlipTexture = GC.SS.PS.EnemyBlipSprite;
+		lootBlipTexture = GC.SS.PS.LootBlipSprite;
 
 		initialized = true;
 	}
@@ -156,15 +110,8 @@ public class Radar : MonoBehaviour
 		if (!initialized)
 			return;
 
-		GameObject[] gos;
-		
-		// Draw th radar background
-		if (radarType != RadarTypes.Transparent)
-		{
-			Rect radarRect = new Rect(_radarCenter.x - _radarWidth / 2, _radarCenter.y - _radarHeight / 2, _radarWidth, _radarHeight);
-			GUI.DrawTexture(radarRect, radarTexture);
-		}
-		
+		currentBlip = 0;
+
 		// Draw blips
 		if (enemyBlipActive)
 		{
@@ -172,6 +119,7 @@ public class Radar : MonoBehaviour
 			foreach (EnemyMain enemy in enemies)
 			{
 				drawBlip(enemy.gameObject, enemyBlipTexture);
+				currentBlip++;
 			}
 		}
 		if (lootBlipActive)
@@ -179,37 +127,23 @@ public class Radar : MonoBehaviour
 			foreach (LootCrateMain loot in lootCrates)
 			{
 				drawBlip(loot.gameObject, lootBlipTexture);
-			}
-		}
-		if (radarBlip3Active)
-		{
-			gos = GameObject.FindGameObjectsWithTag(radarBlip3Tag); 
-			
-			foreach (GameObject go in gos)
-			{
-				drawBlip(go, _radarBlip3Texture);
-			}
-		}
-		if (radarBlip4Active)
-		{
-			gos = GameObject.FindGameObjectsWithTag(radarBlip4Tag); 
-			
-			foreach (GameObject go in gos)
-			{
-				drawBlip(go, _radarBlip4Texture);
+				currentBlip++;
 			}
 		}
 		
 		// Draw center oject
 		if (radarCenterActive)
 		{
-			Rect centerRect = new Rect(_radarCenter.x - 1.5f, _radarCenter.y - 1.5f, CenterIconSize, CenterIconSize);
-			GUI.DrawTexture(centerRect, _radarCenterTexture);
+			drawBlip(_centerObject, _radarCenterTexture);
+			currentBlip++;
 		}
+
+		for (int i = currentBlip; i < blips.Count; i++)
+			blips[i].enabled = false;
 	}
 	
 	// Draw a blip for an object
-	void drawBlip(GameObject go, Texture2D blipTexture)
+	void drawBlip(GameObject go, UISprite blipTexture)
 	{
 		if (_centerObject)
 		{
@@ -234,118 +168,38 @@ public class Radar : MonoBehaviour
 			bX = bX * radarZoom;
 			bY = bY * radarZoom;
 
-			bX = -bX;
-			
-			// For a round radar, make sure we are within the circle
-			if (dist <= (_radarWidth - 2) * 0.5 / radarZoom)
-			{
-				Rect clipRect = new Rect(_radarCenter.x - bX - 1.5f, _radarCenter.y + bY - 1.5f, BlipSize, BlipSize);
-				GUI.DrawTexture(clipRect, blipTexture);
-			}
-		}
-	}
-	
-	// Create the blip textures
-	void CreateBlipTexture(Texture2D tex, Color c)
-	{
-		Color[] cols = new Color[tex.width * tex.height];
-		for (int i = 0; i < cols.Length; i++)
-		{
-			cols[i] = c;
-		}
+			//bX = -bX;
+			bY = -bY;
 
-		tex.SetPixels(cols, 0);
-		tex.Apply();
-	}
-	
-	// Create a round bullseye texture
-	void CreateRoundTexture(Texture2D tex, Color a, Color b)
-	{
-		Color c = Color.clear;
-		int size = (int)((_radarWidth / 2) / 4);
-		
-		// Clear the texture
-		for (int x = 0; x < _radarWidth; x++)
-		{
-			for (int y = 0; y < _radarWidth; y++)
+			if (blips.Count <= currentBlip)
 			{
-				tex.SetPixel(x, y, c);
+				createBlip();
 			}
-		}
-		
-		for (int r = 4; r > 0; r--)
-		{
-			if (r % 2 == 0)
-			{
-				c = a;
-			}
-			else
-			{
-				c = b;
-			}
-			DrawFilledCircle(tex, (int)(_radarWidth / 2), (int)(_radarHeight / 2), (r * size), c);
-		}
-		
-		tex.Apply();
-	}
-	
-	// Draw a filled colored circle onto a texture
-	void DrawFilledCircle(Texture2D tex, int cx, int cy, int r, Color c)
-	{
-		for (int x = -r; x < r ; x++)
-		{
-			int height = (int)Mathf.Sqrt(r * r - x * x);
-			
-			for (int y = -height; y < height; y++)
-				tex.SetPixel(x + cx, y + cy, c);
+
+			blips[currentBlip].spriteName = blipTexture.spriteName;
+
+			Vector3 posOffset = new Vector3(bX, bY, 0);
+
+			posOffset.x *= radarZoom;
+			posOffset.y *= radarZoom;
+
+			blips[currentBlip].transform.localPosition = blipParent.transform.localPosition + posOffset;
+			blips[currentBlip].enabled = true;
 		}
 	}
-	
-	// Figure out where to put the radar
-	void setRadarLocation()
+
+	void createBlip()
 	{
-		// Sets radarCenter based on enum selection
-		if(radarLocation == RadarLocations.TopLeft)
-		{
-			_radarCenter = new Vector2(_radarWidth / 2, _radarHeight / 2);
-		}
-		else if(radarLocation == RadarLocations.TopCenter)
-		{
-			_radarCenter = new Vector2(Screen.width / 2, _radarHeight / 2);
-		}
-		else if(radarLocation == RadarLocations.TopRight)
-		{
-			_radarCenter = new Vector2(Screen.width - _radarWidth / 2, _radarHeight / 2);
-		}
-		else if(radarLocation == RadarLocations.Left)
-		{
-			_radarCenter = new Vector2(_radarWidth / 2, Screen.height / 2);
-		}
-		else if(radarLocation == RadarLocations.Center)
-		{
-			_radarCenter = new Vector2(Screen.width / 2, Screen.height / 2);
-		}
-		else if(radarLocation == RadarLocations.Right)
-		{
-			_radarCenter = new Vector2(Screen.width - _radarWidth / 2, Screen.height / 2);
-		}
-		else if(radarLocation == RadarLocations.BottomLeft)
-		{
-			_radarCenter = new Vector2(_radarWidth / 2, Screen.height - _radarHeight / 2);
-		}
-		else if(radarLocation == RadarLocations.BottomCenter)
-		{
-			_radarCenter = new Vector2(Screen.width / 2, Screen.height - _radarHeight / 2);
-		}
-		else if(radarLocation == RadarLocations.BottomRight)
-		{
-			_radarCenter = new Vector2(Screen.width - _radarWidth / 2 - 10, Screen.height - _radarHeight / 2 - 20);
-		}
-		else if(radarLocation == RadarLocations.Custom)
-		{
-			_radarCenter = radarLocationCustom;
-		}
-	} 
-	
-	
+		UISprite blip = GameObject.Instantiate(GC.SS.PS.EnemyBlipSprite) as UISprite;
+
+		blip.name = "radarBlip";
+
+		blip.transform.parent = blipParent.transform;
+		blip.transform.position = blipParent.transform.position;
+		blip.transform.rotation = blipParent.transform.rotation;
+
+		blip.transform.localScale = Vector3.one * 1.25f;
+
+		blips.Add (blip);
+	}
 }

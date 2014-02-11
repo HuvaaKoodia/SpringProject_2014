@@ -35,7 +35,10 @@ public class PrefabStore : MonoBehaviour {
 
 	public UISprite
 		InsightSprite,
-		TargetedSprite
+		TargetedSprite,
+		PlayerBlipSprite,
+		EnemyBlipSprite,
+		LootBlipSprite
 		;
 
 	public UILabel
