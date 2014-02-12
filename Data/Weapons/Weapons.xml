@@ -18,30 +18,82 @@
 		TODO
 	-->
 
-	<Weapon type = "LightWeapon" name = "Vandal Scattergun" sprite = "Orc Armor - Bracers">
-		<Description>Vandal Scattergun</Description>
+	<Weapon type = "LightWeapon" name = "Arbalest" sprite = "Orc Armor - Bracers">
+		<Description>Good basic weapon for all kinds of situations</Description>
 		<Level min ="1" max="10"/>
+		<Damage min="20" max="40"/>
+		<Accuracy min="60" max="90"/>
+		<Range min="40" max="70"/>
+		<Firerate min="1" max="2"/>
+		<Heat min="15" max="35"/>
+		<Cooling min="10" max="30"/>
+		<MaxAmmo min="8" max="16"/>
 		<Value min ="10" max="100"/>
+	</Weapon>
+	
+	<Weapon type = "HeavyWeapon" name = "Hades" sprite = "Orc Armor - Shoulders">
+		<Description>Railgun that deals high damage but also generates lots of heat</Description>
+		<Level min ="1" max="10"/>
+		<Damage min="40" max="100"/>
+		<Accuracy min="60" max="80"/>
+		<Range min="80" max="100"/>
+		<Firerate min="1" max="1"/>
+		<Heat min="40" max="70"/>
+		<Cooling min="10" max="30"/>
+		<MaxAmmo min="3" max="8"/>
+		<Value min ="10" max="100"/>
+	</Weapon>
+	
+	<Weapon type = "LightWeapon" name = "Nemesis" sprite = "Orc Armor - Bracers">
+		<Description>Rapid-fire weapon capable of targeting multiple targets</Description>
+		<Level min ="1" max="10"/>
+		<Damage min="7" max="25"/>
+		<Accuracy min="40" max="60"/>
+		<Range min="30" max="50"/>
+		<Firerate min="2" max="4"/>
+		<Heat min="10" max="15"/>
+		<Cooling min="10" max="25"/>
+		<MaxAmmo min="20" max="30"/>
+		<Value min ="10" max="100"/>
+	</Weapon>
+	
+	<Weapon type = "LightWeapon" name = "Vandal" sprite = "Orc Armor - Bracers">
+		<Description>Scattergun for close quarter combat</Description>
+		<Level min ="1" max="10"/>
 		<Damage min="20" max="40"/>
 		<Accuracy min="60" max="80"/>
 		<Range min="10" max="25"/>
-		<Firerate min="0" max="3"/>
+		<Firerate min="1" max="3"/>
 		<Heat min="20" max="30"/>
 		<Cooling min="10" max="20"/>
 		<MaxAmmo min="6" max="20"/>
+		<Value min ="10" max="100"/>
 	</Weapon>
 	
-	<Weapon type = "HeavyWeapon" name = "HE Missiles" sprite = "Orc Armor - Shoulders">
-		<Description>High-Explosive Missile rack</Description>
+	<Weapon type = "LightWeapon" name = "Gladius" sprite = "Orc Armor - Bracers">
+		<Description>Hydraulic melee weapon for close quarter combat</Description>
 		<Level min ="1" max="10"/>
+		<Damage min="15" max="50"/>
+		<Accuracy min="70" max="90"/>
+		<Range min="3" max="3"/>
+		<Firerate min="1" max="2"/>
+		<Heat min="10" max="15"/>
+		<Cooling min="10" max="15"/>
+		<MaxAmmo min="1" max="1"/>
 		<Value min ="10" max="100"/>
+	</Weapon>
+	
+	<Weapon type = "HeavyWeapon" name = "Mjolnir" sprite = "Orc Armor - Shoulders">
+		<Description>High-Explosive missile rack</Description>
+		<Level min ="1" max="10"/>
 		<Damage min="45" max="110"/>
 		<Accuracy min="85" max="100"/>
+		<Range min="50" max="70"/>
 		<Firerate min="2" max="5"/>
 		<Heat min="40" max="72"/>
 		<Cooling min="5" max="20"/>
 		<MaxAmmo min="10" max="20"/>
-		<Range min="50" max="70"/>
+		<Value min ="10" max="100"/>
 	</Weapon>
 	
 	<Weapon type = "Utility" name = "Radar" sprite = "Orc Armor - Boots">
@@ -49,4 +101,35 @@
 		<Level min ="1" max="1"/>
 		<Value min ="100" max="100"/>
 	</Weapon>
+	
+	<Weapon type = "Utility" name = "Navigator" sprite = "Orc Armor - Boots">
+		<Description>Map unit</Description>
+		<Level min ="1" max="1"/>
+		<Value min ="100" max="100"/>
+	</Weapon>
+	
+	<Weapon type = "Utility" name = "Heat Sink" sprite = "Orc Armor - Boots">
+		<Description>All systems cool faster</Description>
+		<Level min ="1" max="10"/>
+		<Value min ="10" max="100"/>
+	</Weapon>
+	
+	<Weapon type = "Utility" name = "Aim Computer" sprite = "Orc Armor - Boots">
+		<Description>Increases accuracy of all weapon systems</Description>
+		<Level min ="1" max="10"/>
+		<Value min ="10" max="100"/>
+	</Weapon>
+	
+	<Weapon type = "Utility" name = "Ablative Armor Plating" sprite = "Orc Armor - Boots">
+		<Description>Increases hull health</Description>
+		<Level min ="1" max="10"/>
+		<Value min ="10" max="100"/>
+	</Weapon>
+	
+	<Weapon type = "Utility" name = "Hydraulic Booster" sprite = "Orc Armor - Boots">
+		<Description>Increases all melee weapon damage</Description>
+		<Level min ="1" max="10"/>
+		<Value min ="10" max="100"/>
+	</Weapon>
+	
 </Root>
