@@ -10,7 +10,7 @@ public enum TurnState
 public class GameController : MonoBehaviour {
 
 	public string TestLoadShipName;
-	public bool UseTestMap;
+	public bool UseTestMap,OverrideMissionShip=false;
 	public EngineController EngCont;
 	
 	public SharedSystemsMain SS {get;private set;}
@@ -49,19 +49,32 @@ public class GameController : MonoBehaviour {
 		LootCrates=new List<LootCrateMain>();
 		aiController = new AIcontroller(this);
 		ShipObjData ship_objdata=null;
+
+        //DEV.DEBUG generate mission
+        CurrentMission=MissionGenerator.GenerateMission(SS.XDB);
+        menuHandler.MissionBriefing.SetMission(CurrentMission);
+
 		if (UseTestMap)
 		{
 			ship_objdata=SS.SGen.GenerateShipObjectData("testship");
 		}
 		else
 		{
-			ship_objdata=SS.SGen.GenerateShipObjectData(TestLoadShipName);
+
+            if (OverrideMissionShip){
+			    ship_objdata=SS.SGen.GenerateShipObjectData(TestLoadShipName);
+            }
+            else{
+                var mission_ship=Subs.GetRandom(CurrentMission.XmlData.ShipsTypes);
+                ship_objdata=SS.SGen.GenerateShipObjectData(mission_ship);
+            }
 		}
 
 		SS.MGen.GenerateObjectDataMap(this,ship_objdata.Floors[0]);
-		SS.MGen.GenerateShipItems(this,ship_objdata);
+		SS.SDGen.GenerateShipItems(this,ship_objdata);
 		SS.MGen.GenerateSceneMap(this);
-		SS.MGen.GenerateLoot(this,ship_objdata);
+        SS.SDGen.GenerateLoot(this,ship_objdata);
+        SS.SDGen.GenerateMissionObjectives(this,CurrentMission,ship_objdata);
 
 		//init menuhandler stuff
 		menuHandler.player = player;
@@ -78,21 +91,11 @@ public class GameController : MonoBehaviour {
         for (int i=0;i<7;i++){
             InvEquipmentStorage.EquipRandomItem(player.ObjData.Equipment,SS.XDB);
         }
-
-        //DEV.DEBUG generate mission
-        CurrentMission=MissionGenerator.GenerateMission();
-        menuHandler.MissionBriefing.SetMission(CurrentMission);
 	}
 
 	// Update is called once per frame
 	void Update()
     {
-#if UNITY_EDITOR
-        if (Input.GetKeyDown(KeyCode.M)){
-            var mission=MissionGenerator.GenerateMission();
-            Debug.Log("mission: "+mission.Briefing);
-        }
-#endif
 
 		if (currentTurn != TurnState.PlayerTurn && currentTurn != TurnState.StartPlayerTurn)
 		{

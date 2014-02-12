@@ -153,16 +153,12 @@ public class XML_Loader{
     /// Reads an xml doc and assigns its parameters to the public static values of the type
     /// </summary>
     public static void readAutoFileStatic(string path,string file,Type type,string rootNode){
-        if (Directory.Exists(path)){
-            file=@"\"+file+".xml";
-            
-            var Xdoc=new XmlDocument();
-            Xdoc.Load(path+file);
-            
-            var root=Xdoc[rootNode];
-            
-            readAutoStatic(root,type);
-        }
+
+        var Xdoc=GetXmlDocument(path,file);
+        var root=Xdoc[rootNode];
+        
+        readAutoStatic(root,type);
+
     }
 
     /// <summary>
@@ -227,11 +223,11 @@ public class XML_Loader{
     /// Gets an XML Documents from a path.
     /// From disc if PC. From resources if Android or Webplayer
     /// </summary>
-    public static XmlDocument GetXmlDocument(string path){
+    public static XmlDocument GetXmlDocument(string path,string file){
         var Xdoc=new XmlDocument();
-        
+        path=path+"/"+file;
         if (LoadFromDisc()){
-            Xdoc.Load(path);
+            Xdoc.Load(path+".xml");
         }
         else{
             //load from resources

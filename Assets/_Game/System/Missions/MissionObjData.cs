@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class MissionObjData {
+
+    public MissionXmlData XmlData{get;set;}
+
     public enum Type{TradeVesselInfo,RetrieveCargo,EmergencyBeacon,ExploreVessel}
     public enum AlienAmount{None,Small,Medium,Large}
     public enum SecuritySystems{None,Small,Medium,Large}
@@ -10,7 +13,7 @@ public class MissionObjData {
     public enum ShipPower{On,Off}
 
     public enum Objective{FindLogs,FindItem,Explore,Loot}
-
+   
     public enum InformationRating{None,Something,Everything}
 
     public string Briefing,Objectives;

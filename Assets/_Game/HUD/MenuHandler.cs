@@ -21,7 +21,8 @@ public class MenuHandler : MonoBehaviour {
 	public UIPanel targetMarkPanel;
 
 	public GunDisplayMain gunInfoDisplay;
-	public Radar radar;
+	public RadarMain radar;
+	public HudMapMain map;
 
 	public MenuState currentMenuState;
 
@@ -42,6 +43,9 @@ public class MenuHandler : MonoBehaviour {
         gunInfoDisplay.GC=GC;
         radar.GC=GC;
         radar.Init();
+
+		map.GC = GC;
+		map.Init();
 	}
 	
 	// Update is called once per frame
