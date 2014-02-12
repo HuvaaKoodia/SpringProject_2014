@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 400000}
   - 114: {fileID: 11400002}
   - 114: {fileID: 11400014}
+  - 114: {fileID: 11400024}
   m_Layer: 0
   m_Name: MapSystems
   m_TagString: Untagged
@@ -135,7 +136,7 @@ MonoBehaviour:
   PS: {fileID: 11400008}
   MGen: {fileID: 11400002}
   SGen: {fileID: 11400014}
-  SDGen: {fileID: 0}
+  SDGen: {fileID: 11400024}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -311,6 +312,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c9dbb49fd96f3498c2795c24a965e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11400024
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 945f97eb2773d5a4d93aa35ead2e2073, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MapPrefabs: {fileID: 11400008}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
