@@ -57,7 +57,7 @@ public abstract class UIItemSlot : MonoBehaviour
 
 			if (bi != null)
 			{
-				string t = "[" + NGUIText.EncodeColor(item.color) + "]" + item.name_long + "[-]\n";
+				string t = "[" + NGUIText.EncodeColor(item.color) + "]" + item.name + "[-]\n";
 
 				t += "[AFAFAF]MK." + item.itemLevel + " " + bi.type;
 
@@ -181,7 +181,7 @@ public abstract class UIItemSlot : MonoBehaviour
 
 			if (label != null)
 			{
-				string itemName = (i != null) ? i.name_linefeed : null;
+				string itemName = (i != null) ? i.name : null;
 				if (string.IsNullOrEmpty(mText)) mText = label.text;
 				label.text = (itemName != null) ? itemName : mText;
 			}
