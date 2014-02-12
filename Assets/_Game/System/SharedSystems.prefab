@@ -47,6 +47,7 @@ GameObject:
   - 114: {fileID: 11400004}
   - 114: {fileID: 11400008}
   - 114: {fileID: 11400016}
+  - 114: {fileID: 11400022}
   m_Layer: 0
   m_Name: Databases
   m_TagString: Untagged
@@ -129,11 +130,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4d2ddf9674324f4e9026e8ba772e8e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GDB: {fileID: 11400016}
+  GDB: {fileID: 11400022}
   XDB: {fileID: 11400006}
   PS: {fileID: 11400008}
   MGen: {fileID: 11400002}
   SGen: {fileID: 11400014}
+  SDGen: {fileID: 0}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -146,7 +148,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DEBUG_create_temp_tiles: 0
-  XmlMapRead: {fileID: 11400010}
   MapPrefabs: {fileID: 11400008}
 --- !u!114 &11400004
 MonoBehaviour:
@@ -213,6 +214,23 @@ MonoBehaviour:
   PlayerBlipSprite: {fileID: 11400000, guid: 2e6f3a91ba46dbb46848dfc80a6075b9, type: 2}
   EnemyBlipSprite: {fileID: 11400000, guid: 6518989b222409e4fb43118a107a2cff, type: 2}
   LootBlipSprite: {fileID: 11400000, guid: 05d6d0dc331c22e42b91bf78bcad44fe, type: 2}
+  FloorSprite: {fileID: 11400000, guid: 2f107d28a9aa4c248bbdcbfa35b7f9e5, type: 2}
+  OneWallSprite: {fileID: 11400000, guid: e7a2c5affadf2564f831d83d29611c13, type: 2}
+  TwoWallsSprite: {fileID: 11400000, guid: 69e4f051a28822e4089977913134fce7, type: 2}
+  RoomCornerSprite: {fileID: 11400000, guid: 3d7dc2b889af17847ab5f1b51c80e11d, type: 2}
+  CorridorCornerSprite: {fileID: 11400000, guid: 989fb361aa8a0584d851e56ea3ae2952,
+    type: 2}
+  CrossroadSprite: {fileID: 11400000, guid: 9b1af61d763a6584ab36ccdf350a2a8a, type: 2}
+  DeadendSprite: {fileID: 11400000, guid: 6a1406f87ed83d849ae1f4bbb0498108, type: 2}
+  Floor1EdgeSprite: {fileID: 11400000, guid: aefb2441116dce2488527579883895f2, type: 2}
+  Floor2EdgesSprite: {fileID: 11400000, guid: cda41debc0c16dc489f2714dff515485, type: 2}
+  Floor3EdgesSprite: {fileID: 11400000, guid: a111fc135b69b304b92b0ffa7cf1a4b7, type: 2}
+  OppositeEdgesSprite: {fileID: 11400000, guid: af88435447b54324caafdf855e1669a3,
+    type: 2}
+  TCrossingSprite: {fileID: 11400000, guid: 80fe1885fef491b4488721b96af9d704, type: 2}
+  WallCornerSprite: {fileID: 11400000, guid: 92e3b3f9b09aa044cbe64512754d2d89, type: 2}
+  WallCornerMirroredSprite: {fileID: 11400000, guid: 3ba1a914cd89a7f498db72f3a0d53472,
+    type: 2}
   NumShotsLabel: {fileID: 11400000, guid: 60f0360bfe15a2f4cb50624539b2c99a, type: 2}
 --- !u!114 &11400010
 MonoBehaviour:
@@ -280,6 +298,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e68899065bf52fb48a372bc7a7d9edb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11400022
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c9dbb49fd96f3498c2795c24a965e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &100100000

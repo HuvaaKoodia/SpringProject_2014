@@ -148,6 +148,11 @@ public class ShipDetailGenerator : MonoBehaviour
             } 
             var room=Subs.GetRandom(LegitRooms);
 
+            //DEV.HAX.WEIRD
+            foreach(var l in GC.LootCrates){
+
+            }
+
         }
     }
 
