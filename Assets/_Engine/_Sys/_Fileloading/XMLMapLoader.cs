@@ -39,7 +39,6 @@ public class MapXmlData:GameXMLMapDataAttributes{
 		}
 		return "";
 	}
-
 	//game specific data
 }
 
@@ -105,34 +104,11 @@ public class XMLMapLoader : MonoBehaviour{
 				}
 			}
 		}
-		/*DEBUG
-		Debug.Log("Ships: ");
-		foreach(var ship in Ships){
-			Debug.Log("Name "+ship.Key+" floors: "+ship.Value.Floors.Count);
-			
-			foreach(var floor in ship.Value.Floors){
-				int w=floor.Value.map_data.GetLength(0);
-				int h=floor.Value.map_data.GetLength(1);
-				
-				for (int y = 0; y < h; y++)
-					{
-					string line="";
-					for (int x = 0; x < w; x++)
-					{
-						line+=floor.Value.map_data[x,y]+" ";	
-					}
-					Debug.Log(line+"\n");
-				}
-			}
-		}
-		*/
 	}
 	
 	MapXmlData readMapData(XmlNode node){
 				
-		//int 
-		//	width=XML_Loader.getAttInt(node,"w"),
-		//	height=XML_Loader.getAttInt(node,"h");
+        //calculate width and height
 		var text = node.InnerText.Trim ();
 		var lines=Subs.Split(text.Replace("\r","").Replace("\t",""),"\n");
 		var indexes=Subs.Split(lines[0]," ");

@@ -4,27 +4,9 @@ using System.Collections.Generic;
 [System.Serializable]
 public class InvGameItem
 {
-	public enum Quality
-	{
-		Inferior,
-		Normal,
-		Superior,
-		_Amount,
-	}
-
-	// ID of the base item used to create this game item
-	//[SerializeField] int mBaseItemID = 0;
-
-	/// <summary>
-	/// Item quality -- applies a penalty or bonus to all base stats.
-	/// </summary>
-
-	public Quality quality = Quality.Normal;
-
 	/// <summary>
 	/// Item's effective level.
 	/// </summary>
-
 	public int itemLevel = 1;
 
 	// Cached for speed
@@ -39,21 +21,12 @@ public class InvGameItem
 		}
 	}
 
-	public string name_long
+	public string name
 	{
 		get
 		{
 			if (baseItem == null) return null;
-			return "[" + NGUIText.EncodeColor(color) + "]"+quality.ToString() + " [FFFFFF]" + baseItem.name;
-		}
-	}
-
-	public string name_linefeed
-	{
-		get
-		{
-			if (baseItem == null) return null;
-			return "[" + NGUIText.EncodeColor(color) + "]"+quality.ToString() + "\n[FFFFFF]" + baseItem.name;
+			return baseItem.name;
 		}
 	}
 
@@ -100,12 +73,6 @@ public class InvGameItem
 		{
 			Color c = Color.white;
 
-			switch (quality)
-			{
-				case Quality.Inferior:	c = Color.red; break;
-				case Quality.Normal:	c = Color.cyan; break;
-				case Quality.Superior:	c = Color.green; break;
-			}
 			return c;
 		}
 	}
@@ -182,11 +149,9 @@ public class InvGameItem
 
     public static InvGameItem GetRandomItem (XmlDatabase XDB)
 	{
-		int qualityLevels = (int)InvGameItem.Quality._Amount;
 		InvBaseItem item = Subs.GetRandom(XDB.items);
 		
 		InvGameItem gi = new InvGameItem(item);
-		gi.quality = (InvGameItem.Quality)Random.Range(0, qualityLevels);
 		gi.itemLevel = NGUITools.RandomRange(item.minItemLevel, item.maxItemLevel);
         gi.RecalculateStats();
 		return gi;

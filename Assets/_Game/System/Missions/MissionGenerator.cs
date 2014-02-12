@@ -3,10 +3,12 @@ using System.Collections;
 
 public class MissionGenerator{
 
-    public static MissionObjData GenerateMission(){
+    public static MissionObjData GenerateMission(XmlDatabase XDB){
         var mission=new MissionObjData();
 
         mission.MissionType=            Subs.GetRandomEnum<MissionObjData.Type>();
+        mission.XmlData=XDB.Missions[mission.MissionType];
+
         mission.MissionAlienAmount=     Subs.GetRandomEnum<MissionObjData.AlienAmount>();
         mission.MissionSecuritySystem=  Subs.GetRandomEnum<MissionObjData.SecuritySystems>();
         mission.MissionShipPower=       Subs.GetRandomEnum<MissionObjData.ShipPower>();
@@ -58,29 +60,7 @@ public class MissionGenerator{
     /// </summary>
     static string MissionDebriefText(MissionObjData mission){
 
-        string base_text="";
-
-        switch(mission.MissionType){
-            case MissionObjData.Type.TradeVesselInfo:
-                base_text="We've been contracted to investigate the fate of a trade vessel.\nFind out what happened.\n\n" +
-                    "The client doesn't care about the cargo. Grab whatever you can.";
-                break;
-                
-            case MissionObjData.Type.RetrieveCargo:
-                base_text="We've been contracted to retrieve a certain valuable item from an abandoned vessel.\n" +
-                    "Anything else you find is a for us to keep.";
-                break;
-                
-            case MissionObjData.Type.ExploreVessel:
-                base_text="We've spotted a derelict vessel.\n\n" +
-                    "Loot and explore!";
-                break;
-                
-            case MissionObjData.Type.EmergencyBeacon:
-                base_text="We've received an emergency message from deep space.\n\n" +
-                    "Investigate and explore!";
-                break;
-        }
+        string base_text=mission.XmlData.Description;
 
         base_text+="\n\nAdditional Info:\n\n";
 
