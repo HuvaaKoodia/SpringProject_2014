@@ -55,7 +55,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Radar : MonoBehaviour
+public class RadarMain : MonoBehaviour
 {
 	public GameController GC;
 	public Transform radarPanelTransform;
@@ -63,14 +63,18 @@ public class Radar : MonoBehaviour
 	public List<UISprite> blips;
 	public int currentBlip = 0;
 
+	public UISprite radarViewSprite;
 	public GameObject blipParent;
 
 	// Display Location
 	public float radarZoom = 0.60f;
 	
 	// Center Object information
-	public bool   radarCenterActive;
-	
+	public bool radarCenterActive;
+
+	public bool rotateWithCenter = true;
+	public float returnRotationSpeed = 100.0f;
+
 	// Blip information
 	public bool   enemyBlipActive;
 	List<EnemyMain> enemies;
@@ -105,7 +109,7 @@ public class Radar : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void OnGUI ()
+	void Update()
 	{
 		if (!initialized)
 			return;
@@ -140,6 +144,47 @@ public class Radar : MonoBehaviour
 
 		for (int i = currentBlip; i < blips.Count; i++)
 			blips[i].enabled = false;
+
+
+		float playerRot = GC.Player.transform.rotation.eulerAngles.y;
+		float radarRot = blipParent.transform.rotation.eulerAngles.z;
+
+		if (rotateWithCenter)
+		{	
+			if (Mathf.Abs(playerRot - radarRot) < 3.0f)
+			{
+				Quaternion rot = Quaternion.Euler(0.0f, 0.0f, playerRot);
+				blipParent.transform.rotation = rot;
+			}
+			else
+			{
+				Quaternion rot = blipParent.transform.rotation;
+				rot = Quaternion.RotateTowards(rot, Quaternion.Euler(0, 0, playerRot), returnRotationSpeed * Time.deltaTime);
+				blipParent.transform.rotation = rot;
+			}
+
+			if (Mathf.Abs(playerRot - radarViewSprite.transform.rotation.z) < 3.0f)
+			{
+				radarViewSprite.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+			}
+			else
+			{
+				Quaternion rot = Quaternion.RotateTowards(radarViewSprite.transform.rotation, Quaternion.Euler(0, 0, 0), returnRotationSpeed * Time.deltaTime);
+				radarViewSprite.transform.rotation = rot;
+			}
+		}
+		else 
+		{
+			if (blipParent.transform.rotation.eulerAngles != Vector3.zero)
+			{
+				Quaternion rot = blipParent.transform.rotation;
+				rot = Quaternion.RotateTowards(rot, Quaternion.Euler(0, 0, 0), returnRotationSpeed * Time.deltaTime);
+				blipParent.transform.rotation = rot;
+			}
+
+			Quaternion viewSpriteRot = Quaternion.RotateTowards(radarViewSprite.transform.rotation, Quaternion.Euler(0, 0, 360 - playerRot), returnRotationSpeed * Time.deltaTime);
+			radarViewSprite.transform.rotation = viewSpriteRot;
+		}
 	}
 	
 	// Draw a blip for an object
@@ -148,28 +193,19 @@ public class Radar : MonoBehaviour
 		if (_centerObject)
 		{
 			Vector3 centerPos = _centerObject.transform.position;
-			Vector3 extPos = go.transform.position;
-			
-			// Get the distance to the object from the centerObject
-			float dist = Vector3.Distance(centerPos, extPos);
+			Vector3 extPos = go.transform.position;		
 			
 			// Get the object's offset from the centerObject
 			float dx = centerPos.x - extPos.x;
 			float dy = centerPos.z - extPos.z;
-
-			// what's the angle to turn to face the enemy - compensating for the player's turning?
-			float deltay = Mathf.Atan2(dx, dy) * Mathf.Rad2Deg - 270 - _centerObject.transform.eulerAngles.y;
 			
 			// just basic trigonometry to find the point x,y (enemy's location) given the angle deltay
-			float bX = dist * Mathf.Cos(deltay * Mathf.Deg2Rad);
-			float bY = dist * Mathf.Sin(deltay * Mathf.Deg2Rad);
+			float bX = -dx;
+			float bY = -dy;
 
 			// Scale the objects position to fit within the radar
 			bX = bX * radarZoom;
 			bY = bY * radarZoom;
-
-			//bX = -bX;
-			bY = -bY;
 
 			if (blips.Count <= currentBlip)
 			{
@@ -184,6 +220,7 @@ public class Radar : MonoBehaviour
 			posOffset.y *= radarZoom;
 
 			blips[currentBlip].transform.localPosition = blipParent.transform.localPosition + posOffset;
+			blips[currentBlip].transform.localScale = Vector3.one * radarZoom;
 			blips[currentBlip].enabled = true;
 		}
 	}
@@ -201,5 +238,10 @@ public class Radar : MonoBehaviour
 		blip.transform.localScale = Vector3.one * 1.25f;
 
 		blips.Add (blip);
+	}
+
+	public void ToggleRotateWithCenter()
+	{
+		rotateWithCenter = !rotateWithCenter;
 	}
 }
