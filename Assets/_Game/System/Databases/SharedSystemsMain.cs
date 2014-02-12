@@ -8,4 +8,5 @@ public class SharedSystemsMain : MonoBehaviour {
 	public PrefabStore PS;
 	public MapGenerator MGen;
 	public ShipGenerator SGen;
+    public ShipDetailGenerator SDGen;
 }

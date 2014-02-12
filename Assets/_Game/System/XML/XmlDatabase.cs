@@ -9,6 +9,8 @@ public class XmlDatabase : MonoBehaviour
 	public List<InvBaseItem> items{get;private set;}
     public List<EnemyXmlData> enemies { get; private set; }
     public List<ObstacleXmlData> obstacles { get; private set; }
+    public Dictionary<MissionObjData.Type,MissionXmlData> Missions{ get; private set; }
+
 
 	//item specific stuff
 	public InvDatabase ItemDB;
@@ -25,6 +27,7 @@ public class XmlDatabase : MonoBehaviour
 	// Use this for initialization
 	void Awake()
     {
+        Missions =new Dictionary<MissionObjData.Type, MissionXmlData>();
         players = new List<PlayerXmlData>();
 	    //weapons = new List<WeaponXmlData>();
         enemies = new List<EnemyXmlData>();

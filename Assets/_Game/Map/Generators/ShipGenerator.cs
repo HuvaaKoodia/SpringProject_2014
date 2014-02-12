@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 public class RoomStats{
-    public string index,type;
+    public string index,type,name;
     public bool randomize_pos=false,randomize_doors=false;
 }
 /// <summary>
@@ -28,7 +28,7 @@ public class ShipGenerator : MonoBehaviour
 
         List<MapXmlData> PossibleRooms=new List<MapXmlData>();
         
-        foreach(var r in XmlMapRead.Rooms[room_stats.type]){
+        foreach(var r in XmlMapRead.Rooms[room_stats.name]){
             PossibleRooms.Add(r);
         }
 
@@ -58,10 +58,10 @@ public class ShipGenerator : MonoBehaviour
 	public XMLMapLoader XmlMapRead;
 	public PrefabStore MapPrefabs;
 
-	public ShipObjData GenerateShipObjectData(string TestLoadShipName)
+	public ShipObjData GenerateShipObjectData(string ship_name)
 	{
 		//randomize ship type
-		ShipMapXmlData ship_xml_data=XmlMapRead.Ships[TestLoadShipName];
+        ShipMapXmlData ship_xml_data=XmlMapRead.Ships[ship_name];
 		//DEV.temp just the first floor
 		MapXmlData CurrentFloor=ship_xml_data.Floors[0];
 
@@ -80,7 +80,7 @@ public class ShipGenerator : MonoBehaviour
 
 				if (IsRoomStartIndex(index)){
 					//random room
-					var cell=new CellData("R");
+					var cell=new CellData();
 					cell.X=x;cell.Y=y;
 					cell.W=1;cell.H=1;
 
@@ -329,8 +329,8 @@ public class ShipGenerator : MonoBehaviour
 		return Vector2.zero;
 	}
 	/// <summary>
-	/// Checks the legit walls, which can be used to create doors, for random buildings.
-	/// DEV. imp a more adv algorithm
+	/// Checks the legit walls, which can be used to create doors randomly.
+	/// DEV. imp a more adv. algorithm
 	/// </summary>
 	private void CheckLegitWalls(CellData cell,MapXmlData floor){
 		cell.corridor_dirs.Clear();
@@ -363,56 +363,13 @@ public class ShipGenerator : MonoBehaviour
 
 
 public class CellData{
-	//public TileType Type;
-	public string TileIndex;
-	public bool IsEmpty=true;
-	public int X,Y,W=0,H=0,LOCK_W=0,LOCK_H=0;
-	MapXmlData room;
+    public int X,Y,W=0,H=0,XOFF,YOFF;
 	public List<int> corridor_dirs=new List<int>();
+	
+    public RoomStats roomStats {get;set;}
+    public MapXmlData RoomXmlData {get;set;}
 
-	int xoff,yoff;
-	
-	public bool XOFFchanged{get;private set;}
-	public bool YOFFchanged{get;private set;}
-	
-	public int XOFF{
-		get{return xoff;}
-		set{
-			xoff=value;
-			XOFFchanged=true;
-		}
-	}
-	public int YOFF{
-		get{return yoff;}
-		set{
-			yoff=value;
-			YOFFchanged=true;
-		}
-	}
-	
-	 public MapXmlData RoomXmlData{
-		get 
-		{
-			return room;	
-		}
-		set
-		{
-			IsEmpty=false;
-			room=value;
-			//SetSize(room.W,room.H);
-		}
-	}
-	
-    public RoomStats roomStats;
-
-	public void SetSize(int w,int h){
-		IsEmpty=false;	
-		W=w;
-		H=h;
-	}
-	
-	public CellData(string index){
-		SetSize(1,1);
-		TileIndex=index;
+	public CellData(){
+        W=H=1;
 	}
 }

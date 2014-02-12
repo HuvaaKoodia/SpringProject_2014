@@ -11,21 +11,8 @@ public class MapGenerator : MonoBehaviour
     public static Vector3 TileSize = new Vector3(3, 3, 3);
     public const string WallIcon = "w", DoorIcon = "d", CorridorIcon = "c", FloorIcon = ".", SpaceIcon=",";
     public bool DEBUG_create_temp_tiles = false;
-    public XMLMapLoader XmlMapRead;
     public PrefabStore MapPrefabs;
-    
-    /// <summary>
-    /// Generates the TileObjectDataMap from a XMLMapData file.
-    /// DEV. Debug.
-    /// </summary>
-    public void GenerateObjectDataMap(GameController GC)
-    {
-        
-        //random generate map
-        var md = XmlMapRead.Rooms ["room"] [0];
-            
-        GenerateObjectDataMap(GC, md);
-    }
+
     /// <summary>
     /// Generates the TileObjectDataMap from a XMLMapData file.
     /// </summary>
@@ -103,12 +90,8 @@ public class MapGenerator : MonoBehaviour
             for (int y = 0; y < h; y++)
             {   
                 //tile
-<<<<<<< HEAD
-                int y_pos = h - 1 - y;
-				Vector2 entity_pos =new Vector2( x,y); 
-=======
                 //int y_pos = h - 1 - y;
->>>>>>> Weapon hit chance + Mission generator
+				Vector2 entity_pos =new Vector2( x,y); 
                 var tile_pos = new Vector3(x * TileSize.x, 0, y * TileSize.z);
                 var tile = GC.TileMainMap [x, y] = Instantiate(MapPrefabs.TilePrefab, tile_pos, Quaternion.identity) as TileMain;
                 tile.SetData(GC.TileObjectMap [x, y]);
@@ -151,6 +134,7 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
+        if (player_tiles.Count>0)
 		{
 			//DEV.TEMP. random player pos
 			var StartPos = Subs.GetRandom (player_tiles);
@@ -163,133 +147,8 @@ public class MapGenerator : MonoBehaviour
 			player.movement.SetPositionInGrid (StartPos);
 			player.transform.parent = clone_container.transform;
 		}
-    }
-    /// <summary>
-    /// Generates loot to the loot containers.
-    /// DEV.
-    /// </summary>
-    public void GenerateLoot(GameController GC, ShipObjData ship)
-    {
-        foreach (var c in GC.LootCrates)
-        {
-            int a = Subs.GetRandom(1, 5);
-            for (int i=0; i<a; i++)
-            {
-                c.Items.Add(InvGameItem.GetRandomItem(GC.SS.XDB));
-            }
-        }
-    }
-    
-    /// <summary>
-    /// Generates items (loot & enemies) to the room and corridors of the ship to the TileObjectMap
-    /// Call after GenerateObjectDataMap and before GenerateSceneMap
-    /// </summary>
-
-    public void GenerateShipItems(GameController GC, ShipObjData ship)
-    {
-
-        int current_floor = 0;
-        var xml_md = ship.XmlData.Floors [current_floor];
-
-        int floor_amount_enemies = Subs.GetRandom(xml_md.EnemyAmountMin, xml_md.EnemyAmountMax);
-        int floor_amount_loot = Subs.GetRandom(xml_md.LootAmountMin, xml_md.LootAmountMax);
-
-        //rooms
-        List<TileObjData> free_tiles = new List<TileObjData>();
-        var rooms_list = ship.FloorRooms [current_floor];
-        foreach (var room in rooms_list)
-        {
-
-            //loot crates
-            GetFreeTilesOfType(GC, TileObjData.Type.Floor, free_tiles);
-            int l_amount = Subs.GetRandom(room.RoomXmlData.LootAmountMin, room.RoomXmlData.LootAmountMax);
-            
-            while (free_tiles.Count>0)
-            {
-                if (floor_amount_loot == 0 || l_amount == 0)
-                    break;
-                
-                var tile = Subs.GetRandom(free_tiles);
-                free_tiles.Remove(tile);
-                
-                l_amount--;
-                floor_amount_loot--;
-                
-                tile.SetObj(TileObjData.Obj.Loot);
-            }
-
-            //enemies
-            GetFreeTilesOfType(GC, TileObjData.Type.Floor, free_tiles);
-            int e_amount = Subs.GetRandom(room.RoomXmlData.EnemyAmountMin, room.RoomXmlData.EnemyAmountMax);
-
-            while (free_tiles.Count>0)
-            {
-
-                if (e_amount == 0 || floor_amount_enemies == 0)
-                    break;
-
-                var tile = Subs.GetRandom(free_tiles);
-                free_tiles.Remove(tile);
-
-                e_amount--;
-                floor_amount_enemies--;
-
-                tile.SetObj(TileObjData.Obj.Enemy);
-            }
-        }
-
-        //add remaining enemies to corridors
-        if (floor_amount_loot > 0)
-        {
-            GetFreeTilesOfType(GC, TileObjData.Type.Floor, free_tiles);
-            while (free_tiles.Count>0)
-            {
-                if (floor_amount_loot == 0)
-                    break;
-                
-                var tile = Subs.GetRandom(free_tiles);
-                free_tiles.Remove(tile);
-
-                floor_amount_loot--;
-                
-                tile.SetObj(TileObjData.Obj.Loot);
-            }
-        }
-
-        //add remaining loot to random rooms
-        if (floor_amount_enemies > 0)
-        {
-            GetFreeTilesOfType(GC, TileObjData.Type.Corridor, free_tiles);
-            while (free_tiles.Count>0)
-            {
-                
-                if (floor_amount_enemies == 0)
-                    break;
-                
-                var tile = Subs.GetRandom(free_tiles);
-                free_tiles.Remove(tile);
-                
-                floor_amount_enemies--;
-                
-                tile.SetObj(TileObjData.Obj.Enemy);
-            }
-        }
-    }
-
-    void GetFreeTilesOfType(GameController GC, TileObjData.Type type, List<TileObjData> free_tiles)
-    {
-        free_tiles.Clear();
-
-        for (int x = 0; x < GC.TileObjectMap.GetLength(0); x++)
-        {
-            for (int y = 0; y < GC.TileObjectMap.GetLength(1); y++)
-            {
-                var tile = GC.TileObjectMap [x, y];
-                if (tile.TileType == type && tile.ObjType == TileObjData.Obj.None)
-                {
-                    free_tiles.Add(tile);
-                }
-            }
+        else{
+            Debug.LogError("No Player pos!");
         }
     }
     /// <summary>

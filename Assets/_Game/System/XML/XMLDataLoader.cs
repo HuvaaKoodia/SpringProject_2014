@@ -30,8 +30,6 @@ public class XMLDataLoader : XML_Loader
                 }
 				#endregion
 
-				ReadWeapon(node,database);
-
 				#region Enemy
 				if (node.Name == "Enemy")
                 {
@@ -55,6 +53,10 @@ public class XMLDataLoader : XML_Loader
                     database.obstacles.Add(newObstacle);
                 }
 				#endregion
+
+                
+                ReadWeapon(node,database);
+                ReadMission(node,database);
             }
 		}
     }
@@ -87,6 +89,27 @@ public class XMLDataLoader : XML_Loader
 
 	}
 
+    static void ReadMission (XmlNode node, XmlDatabase database)
+    {
+        if (node.Name == "Mission")
+        {
+            var mission=new MissionXmlData();
+            var type=(MissionObjData.Type)System.Enum.Parse(typeof(MissionObjData.Type),getAttStr(node,"type"),true);
+            mission.Description=getStr(node,"Description").Replace("\\n","\n");
+
+            var ships=node["Ships"];
+            var text=ships.InnerText.Trim().Replace("\t","").Replace("\r","");
+            var spl=Subs.Split(text,"\n");
+            
+           foreach(var s in spl){
+                Debug.Log(s);
+                mission.ShipsTypes.Add(s);
+            }
+
+            database.Missions.Add(type,mission);
+        }
+    }
+
 	static void AddStat(XmlNode node,InvBaseItem item,InvStat.Type type){
 		var n1=node[type.ToString()];
 		if (n1!=null){
@@ -102,7 +125,7 @@ public class XMLDataLoader : XML_Loader
     {
         readAutoFileStatic("Data","Constants",typeof(XmlDatabase),"Constants");
 
-        var Doc=GetXmlDocument("Data/ShipGenerator.xml");
+        var Doc=GetXmlDocument("Data","ShipGenerator");
         var root=Doc["RoomIndices"];
         ShipGenerator.RoomIndices=new Dictionary<string, RoomStats>();
 
@@ -111,6 +134,7 @@ public class XMLDataLoader : XML_Loader
 
             var stats=new RoomStats();
             stats.index=tag.Attributes["index"].Value;
+            stats.name=tag.Attributes["name"].Value;
             stats.type=tag.Attributes["type"].Value;
 
             if (tag.Attributes["random_pos"]!=null){
