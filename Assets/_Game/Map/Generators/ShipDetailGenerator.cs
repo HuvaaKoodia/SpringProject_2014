@@ -136,9 +136,23 @@ public class ShipDetailGenerator : MonoBehaviour
         }
     }
 
-    public void GenerateMissionObjectives(MissionObjData mission){
+    public void GenerateMissionObjectives(GameController GC,MissionObjData mission,ShipObjData ship){
         if (ContainsObjective(mission,MissionObjData.Objective.FindItem)){
             //generate item somewhere in ship
+            List<CellData> LegitRooms=new List<CellData>();
+            foreach(var r in ship.FloorRooms[0]){
+                if (r.roomStats.type==mission.XmlData.ObjectiveRoom) LegitRooms.Add(r);
+            }
+            if (LegitRooms.Count==0){
+                Debug.LogError("Mission: "+mission.MissionType+" failed to create objective item in ship type "+ship.Name);
+            } 
+            var room=Subs.GetRandom(LegitRooms);
+
+            //DEV.HAX.WEIRD
+            foreach(var l in GC.LootCrates){
+
+            }
+
         }
     }
 

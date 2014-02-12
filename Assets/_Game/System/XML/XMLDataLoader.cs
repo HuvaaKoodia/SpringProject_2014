@@ -97,6 +97,11 @@ public class XMLDataLoader : XML_Loader
             var type=(MissionObjData.Type)System.Enum.Parse(typeof(MissionObjData.Type),getAttStr(node,"type"),true);
             mission.Description=getStr(node,"Description").Replace("\\n","\n");
 
+            if (node["ObjectiveRoom"]==null)
+                mission.ObjectiveRoom="room";//DEFAULT
+            else
+                mission.ObjectiveRoom=getStr(node,"ObjectiveRoom");
+
             var ships=node["Ships"];
             var text=ships.InnerText.Trim().Replace("\t","").Replace("\r","");
             var spl=Subs.Split(text,"\n");
@@ -127,12 +132,12 @@ public class XMLDataLoader : XML_Loader
 
         var Doc=GetXmlDocument("Data","ShipGenerator");
         var root=Doc["RoomIndices"];
-        ShipGenerator.RoomIndices=new Dictionary<string, RoomStats>();
+        ShipGenerator.RoomIndices=new Dictionary<string, RoomXmlIndex>();
 
         var tags=getChildrenByTag(root,"Tag");
         foreach(var tag in tags){
 
-            var stats=new RoomStats();
+            var stats=new RoomXmlIndex();
             stats.index=tag.Attributes["index"].Value;
             stats.name=tag.Attributes["name"].Value;
             stats.type=tag.Attributes["type"].Value;

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-public class RoomStats{
+public class RoomXmlIndex{
     public string index,type,name;
     public bool randomize_pos=false,randomize_doors=false;
 }
@@ -10,7 +10,7 @@ public class RoomStats{
 /// </summary>
 public class ShipGenerator : MonoBehaviour 
 {
-    public static Dictionary<string,RoomStats> RoomIndices;
+    public static Dictionary<string,RoomXmlIndex> RoomIndices;
 
 	bool IsRoomStartIndex(string index){
         foreach(var i in RoomIndices){
@@ -366,7 +366,7 @@ public class CellData{
     public int X,Y,W=0,H=0,XOFF,YOFF;
 	public List<int> corridor_dirs=new List<int>();
 	
-    public RoomStats roomStats {get;set;}
+    public RoomXmlIndex roomStats {get;set;}
     public MapXmlData RoomXmlData {get;set;}
 
 	public CellData(){

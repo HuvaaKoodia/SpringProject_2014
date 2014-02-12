@@ -38,7 +38,21 @@ public class PrefabStore : MonoBehaviour {
 		TargetedSprite,
 		PlayerBlipSprite,
 		EnemyBlipSprite,
-		LootBlipSprite
+		LootBlipSprite,
+		FloorSprite,
+		OneWallSprite,
+		TwoWallsSprite,
+		RoomCornerSprite,
+		CorridorCornerSprite,
+		CrossroadSprite,
+		DeadendSprite,
+		Floor1EdgeSprite,
+		Floor2EdgesSprite,
+		Floor3EdgesSprite,
+		OppositeEdgesSprite,
+		TCrossingSprite,
+		WallCornerSprite,
+		WallCornerMirroredSprite
 		;
 
 	public UILabel

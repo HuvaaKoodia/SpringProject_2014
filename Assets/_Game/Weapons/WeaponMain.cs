@@ -265,7 +265,7 @@ public class WeaponMain : MonoBehaviour {
 
     public int HitChancePercent(EnemyMain enemy)
     {
-        var distance=Vector2.Distance(transform.position,enemy.transform.position);
+        var distance=Vector3.Distance(transform.position,enemy.transform.position);
         return Accuracy-(int)((distance-MapGenerator.TileSize.x)/(Range*0.01f));
     }
 

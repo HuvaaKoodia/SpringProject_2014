@@ -43,7 +43,8 @@ public class InvGameItem
 			(Mathf.Pow ((1 - (itemLevel / 10f)), 2) * stat.min_amount) + 
 			(2 * (1 - (itemLevel / 10f)) * (itemLevel/10f) * ControllerMultiplier (stat)) + 
 			(Mathf.Pow (((itemLevel / 10f)), 2) * stat.max_amount);
-		return Mathf.CeilToInt(itemStat);
+
+		return Mathf.RoundToInt(itemStat);
 	}
 	public float ControllerMultiplier(InvStat stat)
 	{

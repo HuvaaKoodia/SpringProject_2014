@@ -50,7 +50,6 @@ public class GameController : MonoBehaviour {
 		aiController = new AIcontroller(this);
 		ShipObjData ship_objdata=null;
 
-        
         //DEV.DEBUG generate mission
         CurrentMission=MissionGenerator.GenerateMission(SS.XDB);
         menuHandler.MissionBriefing.SetMission(CurrentMission);
@@ -75,6 +74,7 @@ public class GameController : MonoBehaviour {
 		SS.SDGen.GenerateShipItems(this,ship_objdata);
 		SS.MGen.GenerateSceneMap(this);
         SS.SDGen.GenerateLoot(this,ship_objdata);
+        SS.SDGen.GenerateMissionObjectives(this,CurrentMission,ship_objdata);
 
 		//init menuhandler stuff
 		menuHandler.player = player;
