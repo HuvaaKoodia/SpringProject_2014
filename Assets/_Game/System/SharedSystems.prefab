@@ -47,8 +47,6 @@ GameObject:
   - 114: {fileID: 11400006}
   - 114: {fileID: 11400004}
   - 114: {fileID: 11400008}
-  - 114: {fileID: 11400016}
-  - 114: {fileID: 11400022}
   m_Layer: 0
   m_Name: Databases
   m_TagString: Untagged
@@ -131,7 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4d2ddf9674324f4e9026e8ba772e8e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GDB: {fileID: 11400022}
+  GDB: {fileID: 11400004}
   XDB: {fileID: 11400006}
   PS: {fileID: 11400008}
   MGen: {fileID: 11400002}
@@ -233,6 +231,7 @@ MonoBehaviour:
   WallCornerMirroredSprite: {fileID: 11400000, guid: 3ba1a914cd89a7f498db72f3a0d53472,
     type: 2}
   NumShotsLabel: {fileID: 11400000, guid: 60f0360bfe15a2f4cb50624539b2c99a, type: 2}
+  RadarBlip: {fileID: 11400002, guid: d75796e28e6683d479d65379c1cf997a, type: 2}
 --- !u!114 &11400010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -268,17 +267,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   XmlMapRead: {fileID: 11400010}
   MapPrefabs: {fileID: 11400008}
---- !u!114 &11400016
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58c9dbb49fd96f3498c2795c24a965e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11400018
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -299,17 +287,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e68899065bf52fb48a372bc7a7d9edb5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &11400022
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58c9dbb49fd96f3498c2795c24a965e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &11400024
