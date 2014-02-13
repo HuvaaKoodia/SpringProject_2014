@@ -18,7 +18,9 @@ public class HudMapMain : MonoBehaviour {
 
 	public bool rotateWithPlayer = true;
 	public float returnRotationSpeed = 100.0f;
+
 	public UILabel northIndicator;
+	public UISprite playerIndicator;
 
 	// Use this for initialization
 	void Start()
@@ -51,10 +53,10 @@ public class HudMapMain : MonoBehaviour {
 				UpdateSpritePosition(x, y, mapSprites[x,y]);
 			}
 		}
-	
+
+		float playerRot = player.transform.rotation.eulerAngles.y;
 		if (rotateWithPlayer)
-		{
-			float playerRot = player.transform.rotation.eulerAngles.y;
+		{	
 			float mapRot = spriteParent.transform.rotation.eulerAngles.z;
 
 			if (Mathf.Abs(playerRot - mapRot) < 3.0f)
@@ -69,8 +71,11 @@ public class HudMapMain : MonoBehaviour {
 				spriteParent.transform.rotation = rot;
 			}
 
-			northIndicator.enabled = true;
+			Quaternion playerIndicatorRot = 
+				Quaternion.RotateTowards(playerIndicator.transform.rotation, Quaternion.Euler(0, 0, 0), returnRotationSpeed * Time.deltaTime);
+			playerIndicator.transform.rotation = playerIndicatorRot;
 
+			northIndicator.enabled = true;
 		}
 		else
 		{
@@ -79,12 +84,15 @@ public class HudMapMain : MonoBehaviour {
 				Quaternion rot = spriteParent.transform.rotation;
 				rot = Quaternion.RotateTowards(rot, Quaternion.Euler(0, 0, 0), returnRotationSpeed * Time.deltaTime);
 				spriteParent.transform.rotation = rot;
-
 			}
 			else
 			{
 				northIndicator.enabled = false;
 			}
+
+			Quaternion playerIndicatorRot = 
+				Quaternion.RotateTowards(playerIndicator.transform.rotation, Quaternion.Euler(0, 0, (360 -playerRot)), returnRotationSpeed * Time.deltaTime);
+			playerIndicator.transform.rotation = playerIndicatorRot;
 		}
 	}
 

@@ -58,4 +58,6 @@ public class PrefabStore : MonoBehaviour {
 	public UILabel
 		NumShotsLabel
 		;
+
+	public RadarBlipSub RadarBlip;
 }

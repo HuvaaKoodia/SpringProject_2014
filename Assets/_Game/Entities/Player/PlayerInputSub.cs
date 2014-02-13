@@ -224,8 +224,7 @@ public class PlayerInputSub : MonoBehaviour {
 		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving)
 			return;
 
-		for (int i = 0; i < 3; i++)
-			player.DisperseWeaponHeat();
+		player.DisperseWeaponHeat(PlayerMain.DisperseHeatButtonMultiplier);
 
 		player.EndPlayerPhase();
 	}

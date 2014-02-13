@@ -27,6 +27,8 @@ public class PlayerMain : EntityMain
 	public const int attackCost = 2;
 	public const int disperseHeatCost = 1;
 
+	public const int DisperseHeatButtonMultiplier = 3;
+
     public void SetObjData(PlayerObjData data){
         ObjData=data;
     }
@@ -65,7 +67,7 @@ public class PlayerMain : EntityMain
     public void StartPlayerPhase()
     {
 		ap = apMax;
-		DisperseWeaponHeat();
+		DisperseWeaponHeat(1);
 
 		GC.menuHandler.gunInfoDisplay.UpdateAllDisplays();
         StartTurn();
@@ -189,13 +191,15 @@ public class PlayerMain : EntityMain
 		GC.menuHandler.CheckTargetingModePanel();
 	}
 
-	public void DisperseWeaponHeat()
+	public void DisperseWeaponHeat(int multiplier)
 	{
-		foreach(WeaponMain gun in gunList)
+		for (int i = 0; i < multiplier; i++)
 		{
-			gun.ReduceHeat();
+			foreach(WeaponMain gun in gunList)
+			{
+				gun.ReduceHeat();
+			}
 		}
-
 		GC.menuHandler.gunInfoDisplay.UpdateAllDisplays();
 	}
 

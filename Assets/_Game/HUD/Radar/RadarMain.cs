@@ -60,13 +60,16 @@ public class RadarMain : MonoBehaviour
 	public GameController GC;
 	public Transform radarPanelTransform;
 
-	public List<UISprite> blips;
+	public List<RadarBlipSub> blips;
 	public int currentBlip = 0;
 
 	public UISprite radarViewSprite;
 	public GameObject blipParent;
 
-	// Display Location
+	//background
+	public UISprite radarBG;
+
+	// Display size
 	public float radarZoom = 0.60f;
 	
 	// Center Object information
@@ -82,11 +85,18 @@ public class RadarMain : MonoBehaviour
 	public bool   lootBlipActive;
 	List<LootCrateMain> lootCrates;
 
+	//circle scan
+	public UISprite circleScanSprite;
+	public bool circleScanActive = true;
+	public float scanSpeed = 1.0f;
+	float scanRadius;
+
 	// Internal vars
 	private GameObject _centerObject;
 	private UISprite  _radarCenterTexture;
 	private UISprite  enemyBlipTexture;
 	private UISprite  lootBlipTexture;
+	private float BGWidth;
 
 	bool initialized = false;
 
@@ -96,14 +106,18 @@ public class RadarMain : MonoBehaviour
 		// Get our center object
 		_centerObject = GC.Player.gameObject;
 
+		BGWidth = radarBG.width;
+
 		enemies = GC.aiController.enemies;
 		lootCrates = GC.LootCrates;
 
-		blips = new List<UISprite>();
+		blips = new List<RadarBlipSub>();
 
 		_radarCenterTexture = GC.SS.PS.PlayerBlipSprite;
 		enemyBlipTexture = GC.SS.PS.EnemyBlipSprite;
 		lootBlipTexture = GC.SS.PS.LootBlipSprite;
+
+		circleScanSprite.transform.localScale = Vector3.zero;
 
 		initialized = true;
 	}
@@ -113,6 +127,24 @@ public class RadarMain : MonoBehaviour
 	{
 		if (!initialized)
 			return;
+
+		if (circleScanActive)
+		{
+			circleScanSprite.enabled = true;
+			circleScanSprite.transform.localScale += Vector3.one * scanSpeed * Time.deltaTime;
+			scanRadius = circleScanSprite.transform.localScale.x * (BGWidth / 2.0f);
+			if (scanRadius > (BGWidth / 2.0f))
+			{
+				circleScanSprite.transform.localScale = Vector3.zero;
+				scanRadius = 0;
+
+				ResetBlipCycles();
+			}
+		}
+		else
+		{
+			circleScanSprite.enabled = false;
+		}
 
 		currentBlip = 0;
 
@@ -212,22 +244,32 @@ public class RadarMain : MonoBehaviour
 				createBlip();
 			}
 
-			blips[currentBlip].spriteName = blipTexture.spriteName;
-
 			Vector3 posOffset = new Vector3(bX, bY, 0);
 
 			posOffset.x *= radarZoom;
 			posOffset.y *= radarZoom;
 
-			blips[currentBlip].transform.localPosition = blipParent.transform.localPosition + posOffset;
-			blips[currentBlip].transform.localScale = Vector3.one * radarZoom;
-			blips[currentBlip].enabled = true;
+			if (posOffset.magnitude <= scanRadius || !circleScanActive)
+			{
+				blips[currentBlip].transform.localPosition = blipParent.transform.localPosition + posOffset;
+				blips[currentBlip].transform.localScale = Vector3.one * radarZoom;
+				blips[currentBlip].enabled = true;
+				blips[currentBlip].SetSpriteName(blipTexture.spriteName);
+
+				if (blipTexture.spriteName == "playerBlip" || !circleScanActive)
+				{
+					blips[currentBlip].fades = false;
+					blips[currentBlip].ResetCycle();
+				}
+				else
+					blips[currentBlip].fades = true;
+			}
 		}
 	}
 
 	void createBlip()
 	{
-		UISprite blip = GameObject.Instantiate(GC.SS.PS.EnemyBlipSprite) as UISprite;
+		RadarBlipSub blip = GameObject.Instantiate(GC.SS.PS.RadarBlip) as RadarBlipSub;
 
 		blip.name = "radarBlip";
 
@@ -235,11 +277,18 @@ public class RadarMain : MonoBehaviour
 		blip.transform.position = blipParent.transform.position;
 		blip.transform.rotation = blipParent.transform.rotation;
 
-		blip.transform.localScale = Vector3.one * 1.25f;
+		blip.transform.localScale = Vector3.one * radarZoom;
 
-		blips.Add (blip);
+		blips.Add(blip);
 	}
 
+	void ResetBlipCycles()
+	{
+		foreach(RadarBlipSub blip in blips)
+		{
+			blip.ResetCycle();
+		}
+	}
 	public void ToggleRotateWithCenter()
 	{
 		rotateWithCenter = !rotateWithCenter;
