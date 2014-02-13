@@ -7,6 +7,10 @@ public class MissionGenerator{
         var mission=new MissionObjData();
 
         mission.MissionType=            Subs.GetRandomEnum<MissionObjData.Type>();
+
+        //DEV.TEMP force type
+        mission.MissionType= MissionObjData.Type.RetrieveCargo;
+
         mission.XmlData=XDB.Missions[mission.MissionType];
 
         mission.MissionAlienAmount=     Subs.GetRandomEnum<MissionObjData.AlienAmount>();

@@ -74,7 +74,7 @@ public class GameController : MonoBehaviour {
 		SS.SDGen.GenerateShipItems(this,ship_objdata);
 		SS.MGen.GenerateSceneMap(this);
         SS.SDGen.GenerateLoot(this,ship_objdata);
-        SS.SDGen.GenerateMissionObjectives(this,CurrentMission,ship_objdata);
+        SS.SDGen.GenerateMissionObjectives(this,CurrentMission,ship_objdata,SS.XDB);
 
 		//init menuhandler stuff
 		menuHandler.player = player;
@@ -91,6 +91,10 @@ public class GameController : MonoBehaviour {
         for (int i=0;i<7;i++){
             InvEquipmentStorage.EquipRandomItem(player.ObjData.Equipment,SS.XDB);
         }
+
+        menuHandler.SetGC(this);
+
+        player.ActivateEquippedItems();
 	}
 
 	// Update is called once per frame

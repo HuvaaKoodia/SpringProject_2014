@@ -27,6 +27,7 @@ public class XMLDataLoader : XML_Loader
 
                     PlayerXmlData newPlayer = new PlayerXmlData(playerHealth, movementSpeed, turnSpeed);
                     database.players.Add(newPlayer);
+                    continue;
                 }
 				#endregion
 
@@ -40,6 +41,7 @@ public class XMLDataLoader : XML_Loader
 
                     EnemyXmlData newEnemy = new EnemyXmlData(enemyType, health, damage);
                     database.enemies.Add(newEnemy);
+                    continue;
                 }
 				#endregion
 				#region Obstacle
@@ -51,17 +53,18 @@ public class XMLDataLoader : XML_Loader
 
                     ObstacleXmlData newObstacle = new ObstacleXmlData(obstacleType, health);
                     database.obstacles.Add(newObstacle);
+                    continue;
                 }
 				#endregion
 
-                
-                ReadWeapon(node,database);
-                ReadMission(node,database);
+                if (ReadWeapon(node,database)) continue;
+                if (ReadQuestItems(node,database)) continue;
+                if (ReadMission(node,database)) continue;
             }
 		}
     }
 
-    static void ReadWeapon (XmlNode node, XmlDatabase database)
+    static bool ReadWeapon (XmlNode node, XmlDatabase database)
 	{
 		if (node.Name == "Weapon")
 		{
@@ -74,22 +77,29 @@ public class XMLDataLoader : XML_Loader
 			foreach(var t in Subs.EnumValues<InvStat.Type>()){
 				AddStat(node,item,t);
 			}
-			/*string weaponType = getAttStr(node, "Type");
-                    string weaponName = getAttStr(node, "Name");
-
-                    int damage = getAttInt(node, "Damage");
-                    int accuracy = getAttInt(node, "Accuracy");
-                    int heat = getAttInt(node, "Heat");
-
-                    WeaponXmlData newWeapon = new WeaponXmlData(weaponType, weaponName, damage, accuracy, heat);
-                    database.weapons.Add(newWeapon);
-			 */
 			database.items.Add(item);
+            return true;
 		}
-
+        return false;
 	}
 
-    static void ReadMission (XmlNode node, XmlDatabase database)
+    static bool ReadQuestItems (XmlNode node, XmlDatabase database)
+    {
+        if (node.Name == "Item")
+        {
+            InvBaseItem item=new InvBaseItem();
+            item.name=getAttStr(node,"name");
+            item.type=(InvBaseItem.Type)System.Enum.Parse(typeof(InvBaseItem.Type),getAttStr(node,"type"),true);
+            item.description=getStr(node,"Description");
+            item.iconName=getAttStr(node,"sprite");
+            
+            database.QuestItems.Add(item.name,item);
+            return true;
+        }
+        return false;
+    }
+
+    static bool ReadMission (XmlNode node, XmlDatabase database)
     {
         if (node.Name == "Mission")
         {
@@ -107,13 +117,15 @@ public class XMLDataLoader : XML_Loader
             var spl=Subs.Split(text,"\n");
             
            foreach(var s in spl){
-                Debug.Log(s);
                 mission.ShipsTypes.Add(s);
             }
 
             database.Missions.Add(type,mission);
+            return true;
         }
+        return false;
     }
+
 
 	static void AddStat(XmlNode node,InvBaseItem item,InvStat.Type type){
 		var n1=node[type.ToString()];

@@ -10,7 +10,7 @@ public class XmlDatabase : MonoBehaviour
     public List<EnemyXmlData> enemies { get; private set; }
     public List<ObstacleXmlData> obstacles { get; private set; }
     public Dictionary<MissionObjData.Type,MissionXmlData> Missions{ get; private set; }
-
+    public Dictionary<string,InvBaseItem> QuestItems=new Dictionary<string,InvBaseItem>();
 
 	//item specific stuff
 	public InvDatabase ItemDB;
@@ -36,6 +36,10 @@ public class XmlDatabase : MonoBehaviour
 		items=new List<InvBaseItem>();
 
         XMLDataLoader.Read(this);
+
+        foreach (var i in QuestItems){
+            i.Value.iconAtlas=ItemAtlas;
+        }
 
 		foreach (var i in items){
 			i.iconAtlas=ItemAtlas;

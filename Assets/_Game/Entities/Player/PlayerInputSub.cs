@@ -126,6 +126,7 @@ public class PlayerInputSub : MonoBehaviour {
 			{
 				player.targetingSub.TargetAtMousePosition(true);
 				player.GC.menuHandler.CheckTargetingModePanel();
+                player.GC.menuHandler.gunInfoDisplay.UpdateAllDisplays();
 			}
 			else
 			{
@@ -138,13 +139,14 @@ public class PlayerInputSub : MonoBehaviour {
 			{
 				player.targetingSub.TargetAtMousePosition(false);
 				player.GC.menuHandler.CheckTargetingModePanel();
+                player.GC.menuHandler.gunInfoDisplay.UpdateAllDisplays();
 			}
 		}
 	}
 	
 	public void MoveForwardInput()
 	{
-		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving || player.targetingMode)
+		if (NotUsable() || player.targetingMode)
 			return;
 
 		if (playerMovement.MoveForward())
@@ -153,7 +155,7 @@ public class PlayerInputSub : MonoBehaviour {
 
 	public void MoveBackwardInput()
 	{
-		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving || player.targetingMode)
+        if (NotUsable() || player.targetingMode)
 			return;
 		
 		if (playerMovement.MoveBackward())
@@ -162,7 +164,7 @@ public class PlayerInputSub : MonoBehaviour {
 
 	public void MoveLeftInput()
 	{
-		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving || player.targetingMode)
+        if (NotUsable() || player.targetingMode)
 			return;
 		
 		if (playerMovement.MoveLeft())
@@ -171,7 +173,7 @@ public class PlayerInputSub : MonoBehaviour {
 
 	public void MoveRightInput()
 	{
-		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving || player.targetingMode)
+        if (NotUsable() || player.targetingMode)
 			return;
 		
 		if (playerMovement.MoveRight())
@@ -180,7 +182,7 @@ public class PlayerInputSub : MonoBehaviour {
 
 	public void TurnLeftInput()
 	{
-		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving || player.targetingMode)
+        if (NotUsable() || player.targetingMode)
 			return;
 		
 		playerMovement.TurnLeft();
@@ -189,7 +191,7 @@ public class PlayerInputSub : MonoBehaviour {
 
 	public void TurnRightInput()
 	{
-		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving || player.targetingMode)
+        if (NotUsable() || player.targetingMode)
 			return;
 		
 		playerMovement.TurnRight();
@@ -198,15 +200,15 @@ public class PlayerInputSub : MonoBehaviour {
 
 	public void TargetingModeInput()
 	{
-		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving)
-			return;
+        if (NotUsable()) return;
 
-		if (player.targetingMode)
+		if (player.targetingMode){
 			player.EndTargetingMode();
-		else if (!player.StartTargetingMode())
-			return;
-
-		player.GC.menuHandler.ToggleTargetingHUD();
+            player.GC.menuHandler.ToggleTargetingHUD();
+        }
+        else{
+            if (player.StartTargetingMode()) player.GC.menuHandler.ToggleTargetingHUD();
+        }
 	}
 
 	public void EngageCombatInput()
@@ -221,8 +223,7 @@ public class PlayerInputSub : MonoBehaviour {
 
 	public void DisperseHeatInput()
 	{
-		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving)
-			return;
+        if (NotUsable()) return;
 
 		player.DisperseWeaponHeat(PlayerMain.DisperseHeatButtonMultiplier);
 
@@ -231,8 +232,7 @@ public class PlayerInputSub : MonoBehaviour {
     
     public void ChangeWeaponInput(WeaponID id)
 	{
-		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving
-		    || player.GC.menuHandler.currentMenuState == MenuState.InventoryHUD)
+		if (NotUsable()|| player.GC.menuHandler.currentMenuState == MenuState.InventoryHUD)
 			return;
 
 		player.ChangeWeapon(id);
@@ -240,19 +240,21 @@ public class PlayerInputSub : MonoBehaviour {
 
 	public void EndTurnInput()
 	{
-		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving)
-			return;
+        if (NotUsable()) return;
 
 		player.EndPlayerPhase();
 	}
 
 	public void InteractInput(bool screenClick)
 	{
-		if (this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving)
-			return;
+        if (NotUsable()) return;
 
 		if (player.GC.menuHandler.currentMenuState == MenuState.NothingSelected || 
 		    player.GC.menuHandler.currentMenuState == MenuState.MovementHUD)
 			player.interactSub.Interact(screenClick);
 	}
+
+    bool NotUsable(){
+        return this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving;
+    }
 }

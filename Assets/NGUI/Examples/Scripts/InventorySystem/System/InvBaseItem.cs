@@ -10,6 +10,7 @@ public class InvBaseItem
 		LightWeapon,
 		HeavyWeapon,
 		Utility,
+        QuestItem,
 		_Amount
 	}
 

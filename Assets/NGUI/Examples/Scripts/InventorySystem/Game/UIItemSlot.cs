@@ -5,7 +5,6 @@ public delegate void OnDragStartEvent(InvGameItem item);
 
 public abstract class UIItemSlot : MonoBehaviour
 {
-
     protected OnDragStartEvent OnDragStart;
 	public UISprite icon;
 	public UIWidget background;
@@ -181,7 +180,7 @@ public abstract class UIItemSlot : MonoBehaviour
 
 			if (label != null)
 			{
-				string itemName = (i != null) ? i.name : null;
+				string itemName = (i != null) ? (i.name + "\nLvl."+i.itemLevel): null;
 				if (string.IsNullOrEmpty(mText)) mText = label.text;
 				label.text = (itemName != null) ? itemName : mText;
 			}

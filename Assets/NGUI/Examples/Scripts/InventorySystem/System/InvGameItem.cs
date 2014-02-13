@@ -91,6 +91,7 @@ public class InvGameItem
 	public InvGameItem (InvBaseItem bi) 
 	{ 
 		mBaseItem = bi; 
+        Stats=new List<InvStat>();
 	}
 
     public void RecalculateStats(){

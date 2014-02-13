@@ -75,7 +75,7 @@ public class XMLMapLoader : MonoBehaviour{
 			foreach (XmlNode node in root){
 				if (node.Name=="Room")
 				{
-					string name=node.Attributes["type"].Value;
+					string name=node.Attributes["name"].Value;
 					
 					if (!Rooms.ContainsKey(name))
 					{

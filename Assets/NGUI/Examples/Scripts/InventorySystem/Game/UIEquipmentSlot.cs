@@ -65,6 +65,8 @@ public class UIEquipmentSlot : UIItemSlot
 	override protected InvGameItem Replace (InvGameItem item)
 	{
 		if (slot==Slot.RecycleBin){
+            if (item.baseItem.type==InvBaseItem.Type.QuestItem)
+                return item;
 			return null;
 		}
 		return (equipment != null) ? equipment.Replace(slot, item) : item;

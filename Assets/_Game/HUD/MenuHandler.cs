@@ -40,13 +40,17 @@ public class MenuHandler : MonoBehaviour {
 		MovementHud.SetActive(false);
 		TargetingHud.SetActive(false);
 
-        gunInfoDisplay.GC=GC;
-        radar.GC=GC;
+        SetGC(GC);
         radar.Init();
-
-		map.GC = GC;
 		map.Init();
 	}
+
+    public void SetGC(GameController gc){
+        GC=gc;
+        gunInfoDisplay.GC=GC;
+        radar.GC=GC;
+        map.GC = GC;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -82,11 +86,6 @@ public class MenuHandler : MonoBehaviour {
 		player.inputSub.TurnRightInput();
 	}
 
-	void TargetingModeButtonPressed()
-	{
-		player.inputSub.TargetingModeInput();
-	}
-
 	void EndTurnButtonPressed()
 	{
 		player.inputSub.EndTurnInput();
@@ -109,39 +108,41 @@ public class MenuHandler : MonoBehaviour {
 
 	void LeftHandWeaponPressed()
 	{
-		player.inputSub.ChangeWeaponInput(WeaponID.LeftHand);
-
-		if (currentMenuState != MenuState.InventoryHUD 
-		    && currentMenuState != MenuState.TargetingHUD)
-			player.inputSub.TargetingModeInput();
+        WeaponPressed(WeaponID.LeftHand);
 	}
 
 	void LeftShoulderWeaponPressed()
 	{
-		player.inputSub.ChangeWeaponInput(WeaponID.LeftShoulder);
-
-		if (currentMenuState != MenuState.InventoryHUD 
-		    && currentMenuState != MenuState.TargetingHUD)
-			player.inputSub.TargetingModeInput();
+        WeaponPressed(WeaponID.LeftShoulder);
 	}
 
 	void RightHandWeaponPressed()
 	{
-		player.inputSub.ChangeWeaponInput(WeaponID.RightHand);
-
-		if (currentMenuState != MenuState.InventoryHUD 
-		    && currentMenuState != MenuState.TargetingHUD)
-			player.inputSub.TargetingModeInput();
+        WeaponPressed(WeaponID.RightHand);
 	}
 
 	void RightShoulderWeaponPressed()
 	{
-		player.inputSub.ChangeWeaponInput(WeaponID.RightShoulder);
-
-		if (currentMenuState != MenuState.InventoryHUD 
-		    && currentMenuState != MenuState.TargetingHUD)
-			player.inputSub.TargetingModeInput();
+        WeaponPressed(WeaponID.RightShoulder);
 	}
+
+    void WeaponPressed(WeaponID id){
+        if (player.currentGunID==id){
+            player.inputSub.TargetingModeInput();
+        }
+        else{
+            player.inputSub.ChangeWeaponInput(id);
+            
+            if (currentMenuState != MenuState.InventoryHUD 
+                && currentMenuState != MenuState.TargetingHUD)
+                player.inputSub.TargetingModeInput();
+        }
+    }
+
+    void TargetingModeButtonPressed()
+    {
+        player.inputSub.TargetingModeInput();
+    }
 
 	public void ToggleMovementHUD()
 	{

@@ -34,7 +34,7 @@ public class ShipGenerator : MonoBehaviour
 
 		while (true){
 			if (PossibleRooms.Count==0){
-				Debug.LogError("No fitting room in ["+cell.X+", "+cell.Y+"]");
+                Debug.LogError("No fitting room in ["+cell.X+", "+cell.Y+"] "+room_index);
 				break;
 			}
 			
