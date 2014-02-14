@@ -1,0 +1,60 @@
+<Root>
+<!--
+-Room XML attributes-
+loot_a=amount of loot crates in this room (min,max)
+enemy_a=amount of enemies in this room (min,max)
+
+-Room Legend-
+, = space
+. = floor
+w = wall
+e = elevator
+
+*Extra
+d = door
+p = player 
+
+-Ship XML attributes-
+loot_a=amount of loot items in this ship floor (min,max)
+enemy_a=amount of enemies in this ship floor (min,max)
+
+-Ship Legend-
+, = space
+c = corridor
+r = room
+R = room start (top left corner)
+T = room end (use if rooms right next to each other)
+A = airlock start
+E = elevator start
+-->
+
+ 
+ <Ship type="snapper1" floor="0" loot_a="5,10" enemy_a="0,8">
+, , , , , , , R r r r r r r r r r , , , , , , ,
+, , , , , , , r r r r r r r r r r , , , , , , ,
+, , , , , , , r r r r r r r r r r , , , , , , ,
+, , , , , , , r r r r r r r r r r , , , , , , ,
+, , , , , , , r r r r r r r r r r , , , , , , ,
+, , , , , , , r r r r r r r r r r , , , , , , ,
+, , , A1 r r c c c c c c c c c c c c A1 r r , , ,
+, , , r r r c R r r r r r r r r r c r r r , , ,
+, , , t r r c r r r r r r r r r r c r r r , , ,
+R r r r r r c r r r r r r r r r r c R r r r r r
+r r r r r r c r r r r r r r r r r c r r r r r r
+r r r r r r c r r r r r r r r r r c r r r r r r
+r r r r r r c r r r r r r r r r r c r r r r r r
+r r r r r r c r r r r r r r r r r c r r r r r r
+r r r r r r c r r r r r r r r r r c r r r r r r
+r r r r r r c r r r r r r r r r r c r r r r r r
+r r r r r r c r r r r r r r r r r c r r r r r r
+, , , A1 r r c r r r r r r r r r r c A1 r r , , ,
+, , , r r r c c c c c c c c c c c c r r r , , ,
+, , , r r r c , R r r r r r r r , c r r r , , ,
+, , , A1 r r d , r r r r r r r r , d A1 r r , , ,
+, , , r r r c , r r r r r r r r , c r r r , , ,
+, , , r r r c , r r r r r r r r , c r r r , , ,
+, , , A1 r r c , r r r r r r r r , c A1 r r , , ,
+, , , r r r c , r r r r r r r r , c r r r , , ,
+, , , r r r c , , , , , , , , , , c r r r , , ,
+</Ship>
+</Root>

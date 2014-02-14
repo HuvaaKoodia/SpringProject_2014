@@ -53,7 +53,6 @@ public class UICursor : MonoBehaviour
 	{
 		if (mSprite.atlas != null)
 		{
-            var z=transform.position.z;
 			Vector3 pos = Input.mousePosition;
 
 			if (uiCamera != null)

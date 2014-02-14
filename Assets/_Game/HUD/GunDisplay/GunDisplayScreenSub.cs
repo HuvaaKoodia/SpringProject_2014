@@ -28,7 +28,6 @@ public class GunDisplayScreenSub : MonoBehaviour {
 
 		if (weapon.Weapon != null)
 		{
-			InvGameItem gun = weapon.Weapon;
 			string info = weapon.GunName;
 
 			info += "\n";

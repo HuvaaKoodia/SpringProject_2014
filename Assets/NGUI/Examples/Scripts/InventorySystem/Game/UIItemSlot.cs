@@ -52,42 +52,85 @@ public abstract class UIItemSlot : MonoBehaviour
 
 		if (item != null)
 		{
-			InvBaseItem bi = item.baseItem;
-
-			if (bi != null)
-			{
-				string t = "[" + NGUIText.EncodeColor(item.color) + "]" + item.name + "[-]\n";
-
-				t += "[AFAFAF]MK." + item.itemLevel + " " + bi.type;
-
-				List<InvStat> stats = item.Stats;
-
-				for (int i = 0, imax = stats.Count; i < imax; ++i)
-				{
-					InvStat stat = stats[i];
-					if (stat._amount == 0) continue;
-
-					if (stat._amount < 0)
-					{
-						t += "\n[FF0000]" + stat._amount;
-					}
-					else
-					{
-						t += "\n[00FF00]+" + stat._amount;
-					}
-
-					if (stat.modifier == InvStat.Modifier.Percent) t += "%";
-					t += " " + stat.type;
-					t += "[-]";
-				}
-
-				if (!string.IsNullOrEmpty(bi.description)) t += "\n[FF9900]" + bi.description;
-				UITooltip.ShowText(t);
-				return;
-			}
+            var t1=GetTooltipText(item);
+            if (mDraggedItem!=null){
+                t1=GetTooltipText(item,mDraggedItem);
+                var t2=GetTooltipText(mDraggedItem,item);
+                UITooltip.ShowText(t1,t2);
+            }
+            else{
+                UITooltip.ShowText(t1);
+            }
+			
+			return;
+			
 		}
-		UITooltip.ShowText(null);
+        UITooltip.ClearTexts();
 	}
+
+    string GetTooltipText(InvGameItem item){
+        string t = "[" + NGUIText.EncodeColor(item.color) + "]" + item.name + "[-]\n";
+        
+        t += "[AFAFAF]MK." + item.itemLevel + " " + item.baseItem.type;
+        
+        List<InvStat> stats = item.Stats;
+        
+        for (int i = 0, imax = stats.Count; i < imax; ++i)
+        {
+            InvStat stat = stats[i];
+            if (stat._amount == 0) continue;
+            
+            if (stat._amount < 0)
+            {
+                t += "\n[FF0000]" + stat._amount;
+            }
+            else
+            {
+                t += "\n[00FF00]+" + stat._amount;
+            }
+            
+            if (stat.modifier == InvStat.Modifier.Percent) t += "%";
+            t += " " + stat.type;
+            t += "[-]";
+        }
+        
+        if (!string.IsNullOrEmpty(item.baseItem.description)) t += "\n[FF9900]" + item.baseItem.description;
+        return t;
+    }
+
+    
+    string GetTooltipText(InvGameItem item,InvGameItem compare){
+        string t = "[" + NGUIText.EncodeColor(item.color) + "]" + item.name + "[-]\n";
+        
+        t += "[AFAFAF]MK." + item.itemLevel + " " + item.baseItem.type;
+        
+        List<InvStat> stats = item.Stats;
+        
+        for (int i = 0, imax = stats.Count; i < imax; ++i)
+        {
+            InvStat stat = stats[i];
+            InvStat c_stat=null;
+            foreach (var s in compare.Stats){
+                if (s.type==stat.type){
+                    c_stat=s;
+                }
+            }
+            if (stat._amount == 0) continue;
+
+            string color="00FF00";//green
+            if (c_stat!=null&&stat._amount<c_stat._amount) color="FF0000";//red
+            if (c_stat!=null&&stat._amount==c_stat._amount) color="00C6FF";//blue
+
+            t += "\n["+color+"]+" + stat._amount;
+            
+            if (stat.modifier == InvStat.Modifier.Percent) t += "%";
+            t += " " + stat.type;
+            t += "[-]";
+        }
+        
+        if (!string.IsNullOrEmpty(item.baseItem.description)) t += "\n[FF9900]" + item.baseItem.description;
+        return t;
+    }
 
 	/// <summary>
 	/// Allow to move objects around via drag & drop.

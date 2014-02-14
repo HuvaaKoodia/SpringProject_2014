@@ -2,7 +2,8 @@
 using System.Collections;
 
 public class Auto_DisableOnAwake : MonoBehaviour {
+    public GameObject Target;
 	void Awake () {
-		gameObject.SetActive(false);
+        Target.SetActive(false);
 	}
 }

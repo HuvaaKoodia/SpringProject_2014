@@ -12,7 +12,7 @@ public class PlayerInteractSub : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+        CheckForInteractables();
 	}
 	
 	// Update is called once per frame

@@ -48,11 +48,13 @@ public class InvItemStorage
 		return item;
 	}
 
-	public void Add(InvGameItem item){
+	public bool Add(InvGameItem item){
 		for (int i=0;i<maxItemCount;i++){
 			if (GetItem(i)==null){
-				if (Replace(i,item)!=item) break;
+                Replace(i,item);
+                return true;
 			}
 		}
+        return false;
 	}
 }

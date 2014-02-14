@@ -60,7 +60,6 @@ public class GameController : MonoBehaviour {
 		}
 		else
 		{
-
             if (OverrideMissionShip){
 			    ship_objdata=SS.SGen.GenerateShipObjectData(TestLoadShipName);
             }
@@ -74,7 +73,9 @@ public class GameController : MonoBehaviour {
 		SS.SDGen.GenerateShipItems(this,ship_objdata);
 		SS.MGen.GenerateSceneMap(this);
         SS.SDGen.GenerateLoot(this,ship_objdata);
-        SS.SDGen.GenerateMissionObjectives(this,CurrentMission,ship_objdata,SS.XDB);
+
+        if (!OverrideMissionShip)
+            SS.SDGen.GenerateMissionObjectives(this,CurrentMission,ship_objdata,SS.XDB);
 
 		//init menuhandler stuff
 		menuHandler.player = player;

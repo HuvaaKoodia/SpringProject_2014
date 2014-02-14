@@ -73,4 +73,17 @@ public class InventoryMain : MonoBehaviour {
 		ActivateInventory();
 		HUD.ActivateInventoryHUD();
 	}
+
+    public void LootAll(){
+        for(int i=0;i<LootStorage.ItemStorage.maxItemCount;i++){
+            var item=LootStorage.ItemStorage.GetItem(i);
+            if (item==null) continue;
+            if (Player.ObjData.Items.Add(item)){
+                LootStorage.ItemStorage.Replace(i,null);
+            }
+            else{
+                break;//player inventory full
+            }
+        }
+    }
 }

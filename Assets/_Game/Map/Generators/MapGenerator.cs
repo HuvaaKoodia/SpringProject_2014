@@ -18,7 +18,6 @@ public class MapGenerator : MonoBehaviour
     /// </summary>
     public void GenerateObjectDataMap(GameController GC, MapXmlData md)
     {
-        
         int w = md.W;
         int h = md.H;
             
@@ -108,7 +107,7 @@ public class MapGenerator : MonoBehaviour
                 switch (tile.Data.ObjType)
                 {
                     case TileObjData.Obj.Player:
-					player_tiles.Add(entity_pos);
+					    player_tiles.Add(entity_pos);
                         break;
                                         
                     case TileObjData.Obj.Enemy:
@@ -146,11 +145,41 @@ public class MapGenerator : MonoBehaviour
 
 			player.movement.SetPositionInGrid (StartPos);
 			player.transform.parent = clone_container.transform;
+
+            //rotate player
+            for(int i=0;i<4;i++){
+                int x=(int)StartPos.x,y=(int)StartPos.y;
+                int xx=0,yy=0;
+                if (i==0){xx=1;yy=0;}
+                else if (i==1){xx=0;yy=1;}
+                else if (i==2){xx=-1;yy=0;}
+                else if (i==3){xx=0;yy=-1;}
+
+                var t=GetTileObj(GC,x+xx,y+yy);
+                if (t==null||t.TileType!=TileObjData.Type.Door) continue;
+                t=GetTileObj(GC,x+xx*2,y+yy*2);
+                if (t==null) continue;
+                if (t.TileType==TileObjData.Type.Corridor||t.TileType==TileObjData.Type.Floor){
+                    //good door
+                    var dir=Mathf.Atan2(yy,xx);
+                    dir=Mathf.Rad2Deg*dir+90;
+                    player.transform.rotation=Quaternion.AngleAxis(dir,Vector3.up);
+                    break;
+                }
+            }
 		}
         else{
             Debug.LogError("No Player pos!");
         }
     }
+
+    TileObjData GetTileObj(GameController GC,int x,int y){
+        if (Subs.insideArea(x,y,0,0,GC.TileObjectMap.GetLength(0),GC.TileObjectMap.GetLength(1))){
+            return GC.TileObjectMap[x,y];
+        }
+        return null;
+    }
+
     /// <summary>
     /// Sets the correct graphics to tiles.
     /// </summary>

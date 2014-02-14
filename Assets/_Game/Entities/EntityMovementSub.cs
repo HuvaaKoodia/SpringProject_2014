@@ -33,7 +33,7 @@ public class EntityMovementSub : MonoBehaviour
     {
 		parentTransform = transform;
         parentEntity = transform.gameObject.GetComponent<EntityMain>();
-
+        
 		tilemap = parentEntity.GC.TileMainMap;
         
         mapWidth = tilemap.GetLength(0);
@@ -45,6 +45,8 @@ public class EntityMovementSub : MonoBehaviour
 
     void Start(){
         UpdateTileEntityToThis();
+
+        targetRotationAngle=(int)parentEntity.transform.rotation.eulerAngles.y;
     }
 
 	// Update is called once per frame

@@ -997,38 +997,43 @@ public class UICamera : MonoBehaviour
 
 		// Is any button currently pressed?
 		bool isPressed = false;
+        bool left_pressed=false;
 
 		for (int i = 0; i < 3; ++i)
 		{
 			if (Input.GetMouseButton(i))
 			{
 				currentScheme = ControlScheme.Mouse;
+                if (i==0) left_pressed=true;
 				isPressed = true;
 				break;
 			}
 		}
+        //DEV.HAX.DONT COUNT LEFT BUTTON
+        if (!left_pressed){
+    		if (isPressed)
+    		{
+    			// A button was pressed -- cancel the tooltip
+                mTooltipTime = 0f;
+    		}
+    		else if (posChanged && (!stickyTooltip || highlightChanged))
+    		{
+    			if (mTooltipTime != 0f)
+    			{
+    				// Delay the tooltip
+    				ResetTooltipDelay();
 
-		if (isPressed)
-		{
-			// A button was pressed -- cancel the tooltip
-			mTooltipTime = 0f;
-		}
-		else if (posChanged && (!stickyTooltip || highlightChanged))
-		{
-			if (mTooltipTime != 0f)
-			{
-				// Delay the tooltip
-				ResetTooltipDelay();
-			}
-			else if (mTooltip != null)
-			{
-				// Hide the tooltip
-				ShowTooltip(false);
-			}
-		}
+    			}
+    			else if (mTooltip != null)
+    			{
+    				// Hide the tooltip
+    				ShowTooltip(false);
+    			}
+    		}
+        }
 
 		// The button was released over a different object -- remove the highlight from the previous
-		if (!isPressed && mHover != null && highlightChanged)
+		if (mHover != null && highlightChanged)
 		{
 			currentScheme = ControlScheme.Mouse;
 			if (mTooltip != null) ShowTooltip(false);
@@ -1059,7 +1064,7 @@ public class UICamera : MonoBehaviour
 		currentTouch = null;
 
 		// If nothing is pressed and there is an object under the touch, highlight it
-		if (!isPressed && highlightChanged)
+        if (highlightChanged)
 		{
 			currentScheme = ControlScheme.Mouse;
 			ResetTooltipDelay();
@@ -1300,7 +1305,7 @@ public class UICamera : MonoBehaviour
 		// Send out the press message
 		if (pressed)
 		{
-			if (mTooltip != null) ShowTooltip(false);
+			//if (mTooltip != null) ShowTooltip(false);
 
 			currentTouch.pressStarted = true;
 			Notify(currentTouch.pressed, "OnPress", false);
@@ -1321,7 +1326,7 @@ public class UICamera : MonoBehaviour
 			// Clear the selection
 			if (currentTouch.pressed != mCurrentSelection)
 			{
-				if (mTooltip != null) ShowTooltip(false);
+				//if (mTooltip != null) ShowTooltip(false);
 				currentScheme = ControlScheme.Touch;
 				selectedObject = null;
 			}
@@ -1354,7 +1359,7 @@ public class UICamera : MonoBehaviour
 			// If we're dragging the touch, send out drag events
 			if (currentTouch.dragStarted)
 			{
-				if (mTooltip != null) ShowTooltip(false);
+				//if (mTooltip != null) ShowTooltip(false);
 
 				isDragging = true;
 				bool isDisabled = (currentTouch.clickNotification == ClickNotification.None);
@@ -1392,7 +1397,7 @@ public class UICamera : MonoBehaviour
 		if (unpressed)
 		{
 			currentTouch.pressStarted = false;
-			if (mTooltip != null) ShowTooltip(false);
+			//if (mTooltip != null) ShowTooltip(false);
 
 			if (currentTouch.pressed != null)
 			{
