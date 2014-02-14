@@ -32,6 +32,7 @@ public class MenuHandler : MonoBehaviour {
 	public GameObject InteractHud;
 	public InventoryMain InventoryHud;
     public MissionBriefMain MissionBriefing;
+    public GameObject EndMissionPanel;
 
 	// Use this for initialization
 	void Start()
@@ -238,5 +239,17 @@ public class MenuHandler : MonoBehaviour {
 
     void MissionLogPressed(){
         MissionBriefing.gameObject.SetActive(!MissionBriefing.gameObject.activeSelf);
+    }
+
+    public void OpenEndMissionPanel(){
+        EndMissionPanel.SetActive(true);
+    }
+
+    public void CloseEndMissionPanel(){
+        EndMissionPanel.SetActive(false);
+    }
+
+    public void EndMission(){
+        //DEV.TODO!
     }
 }

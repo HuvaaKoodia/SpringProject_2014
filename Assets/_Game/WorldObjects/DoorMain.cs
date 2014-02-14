@@ -3,11 +3,14 @@ using System.Collections;
 
 public class DoorMain : InteractableMain {
 
+    public GameController GC;
 	public bool IsOpen{get;private set;}
 	public string open_animation,close_animation;
 	public GameObject graphics;
 
 	public GameObject doorCollider;
+
+    public bool isAirlockOutsideDoor=false;
 
 	bool anim_on;
 
@@ -33,7 +36,12 @@ public class DoorMain : InteractableMain {
 
 	public void Toggle ()
 	{
-		Open(!IsOpen);
+        if (isAirlockOutsideDoor){
+            GC.menuHandler.OpenEndMissionPanel();
+        }
+        else{
+		    Open(!IsOpen);
+        }
 	}
 
     IEnumerator ToggleTimer(bool open,float delay){

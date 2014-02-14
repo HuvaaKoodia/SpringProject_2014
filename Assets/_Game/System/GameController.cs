@@ -88,11 +88,6 @@ public class GameController : MonoBehaviour {
         var ec=GetComponent<EngineController>();
         ec.AfterRestart+=SS.GDB.StartNewGame;
 
-        //DEV.DEBUG random equipment
-        for (int i=0;i<7;i++){
-            InvEquipmentStorage.EquipRandomItem(player.ObjData.Equipment,SS.XDB);
-        }
-
         menuHandler.SetGC(this);
 
         player.ActivateEquippedItems();

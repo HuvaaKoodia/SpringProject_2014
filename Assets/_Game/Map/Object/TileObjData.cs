@@ -18,9 +18,4 @@ public class TileObjData
 	public void SetObj(Obj obj){
 		ObjType=obj;
 	}
-	
-	public TileObjData(){
-	}
-	
-	
 }

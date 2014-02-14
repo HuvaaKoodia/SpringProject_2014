@@ -9,6 +9,7 @@ using System.Collections.Generic;
 public class UITooltip : MonoBehaviour
 {
 	static protected UITooltipInstance mInstance,mInstance2;
+    public static float y_off=-60;
 
     public UITooltipInstance Tooltip1,Tooltip2;
 
@@ -22,14 +23,14 @@ public class UITooltip : MonoBehaviour
 	
 	static public void ShowText (string tooltipText)
 	{
-		if (mInstance != null) mInstance.SetText(tooltipText,Vector3.zero);
+        if (mInstance != null) mInstance.SetText(tooltipText,new Vector3(0,y_off));
 	}
 
     static public void ShowText (string tooltipText,string compareString)
     {
         if (mInstance == null||mInstance2==null) return;
 
-        mInstance.SetText(tooltipText,Vector3.left*110);
-        mInstance2.SetText(compareString,Vector3.zero);
+        mInstance.SetText(tooltipText,new Vector3(-1,y_off));
+        mInstance2.SetText(compareString,new Vector3(0,y_off));
     }
 }

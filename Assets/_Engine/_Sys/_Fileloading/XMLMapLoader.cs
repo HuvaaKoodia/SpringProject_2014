@@ -56,17 +56,12 @@ public class XMLMapLoader : MonoBehaviour{
 	
 	public Dictionary<string,List<MapXmlData>> Rooms {get;private set;}
 	public Dictionary<string,ShipMapXmlData> Ships {get;private set;}
-	
-	public void Awake()
+
+	public void LoadData()
 	{
-		Ships=new Dictionary<string, ShipMapXmlData>();
-		Rooms=new Dictionary<string, List<MapXmlData>>();
-		
-		XML_sys.OnRead+=read;
-	}
-	
-	void read()
-	{
+        Ships=new Dictionary<string, ShipMapXmlData>();
+        Rooms=new Dictionary<string, List<MapXmlData>>();
+
 		var DOX=XML_Loader.GetAllXmlDocuments("Data/Maps");
 		foreach (var Xdoc in DOX)
 		{

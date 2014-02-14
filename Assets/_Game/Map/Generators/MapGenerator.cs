@@ -97,7 +97,7 @@ public class MapGenerator : MonoBehaviour
                 tile.transform.parent = tile_container.transform;
 
                 //tile mesh
-                SetTileGraphics(x, y, tile, GC.TileObjectMap);
+                SetTileGraphics(x, y, tile, GC.TileObjectMap,GC);
                 if (tile.TileGraphics != null)
                     tile.TileGraphics.transform.parent = tile.transform;
 
@@ -183,7 +183,7 @@ public class MapGenerator : MonoBehaviour
     /// <summary>
     /// Sets the correct graphics to tiles.
     /// </summary>
-    void SetTileGraphics(int x, int y, TileMain tile, TileObjData[,] grid)
+    void SetTileGraphics(int x, int y, TileMain tile, TileObjData[,] grid,GameController GC)
     {
         var rotation = Quaternion.identity;
         GameObject tileobj = null;//if floor or corridor
@@ -195,46 +195,14 @@ public class MapGenerator : MonoBehaviour
         int xx = 0, yy = 0;
         for (int i=0; i<8; i++)
         {
-            if (i == 0)
-            {
-                xx = 1;
-                yy = 0;
-            }
-            if (i == 1)
-            {
-                xx = 1;
-                yy = 1;
-            }
-            if (i == 2)
-            {
-                xx = 0;
-                yy = 1;
-            }
-            if (i == 3)
-            {
-                xx = -1;
-                yy = 1;
-            }
-            if (i == 4)
-            {
-                xx = -1;
-                yy = 0;
-            }
-            if (i == 5)
-            {
-                xx = -1;
-                yy = -1;
-            }
-            if (i == 6)
-            {
-                xx = 0;
-                yy = -1;
-            }
-            if (i == 7)
-            {
-                xx = 1;
-                yy = -1;
-            }
+            if (i == 0){xx = 1;yy = 0;}
+            if (i == 1){xx = 1;yy = 1;}
+            if (i == 2){xx = 0;yy = 1;}
+            if (i == 3){xx = -1;yy = 1;}
+            if (i == 4){xx = -1;yy = 0;}
+            if (i == 5){xx = -1;yy = -1;}
+            if (i == 6){xx = 0;yy = -1;}
+            if (i == 7){ xx = 1;yy = -1;}
 
             if (Subs.insideArea(x + xx, y + yy, 0, 0, grid.GetLength(0), grid.GetLength(1)))
             {
@@ -268,28 +236,6 @@ public class MapGenerator : MonoBehaviour
             case TileObjData.Type.Empty:
                 if (DEBUG_create_temp_tiles)
                     tileobj = MapPrefabs.BasicEmpty;
-                break;
-            case TileObjData.Type.Door:
-                tileobj = MapPrefabs.Corridor_Door;
-
-                if (CheckTypeEqual(FloorOrCorridor, tile_types, 0,4))
-                {
-
-                }
-                else if (CheckTypeEqual(FloorOrCorridor, tile_types, 2, 6))
-                {
-                    rotation = Quaternion.AngleAxis(90, Vector3.up);
-                }
-                else if (CheckTypeEqual(FloorOrCorridor, tile_types, 0)||CheckTypeEqual(FloorOrCorridor, tile_types, 4))
-                {
-
-                }
-                else if (CheckTypeEqual(FloorOrCorridor, tile_types, 2)||CheckTypeEqual(FloorOrCorridor, tile_types, 6))
-                {
-                    rotation = Quaternion.AngleAxis(90, Vector3.up);
-                }
-
-                add_as_tileobject_as_well=true;
                 break;
             case TileObjData.Type.Floor:
             case TileObjData.Type.Corridor:
@@ -513,11 +459,45 @@ public class MapGenerator : MonoBehaviour
                 }
 
                 break;
+
+            case TileObjData.Type.Door:
+                tileobj = MapPrefabs.Corridor_Door;
+                
+                if (CheckTypeEqual(FloorOrCorridor, tile_types, 0,4))
+                {
+                    
+                }
+                else if (CheckTypeEqual(FloorOrCorridor, tile_types, 2, 6))
+                {
+                    rotation = Quaternion.AngleAxis(90, Vector3.up);
+                }
+                else if (CheckTypeEqual(FloorOrCorridor, tile_types, 0)||CheckTypeEqual(FloorOrCorridor, tile_types, 4))
+                {
+                    
+                }
+                else if (CheckTypeEqual(FloorOrCorridor, tile_types, 2)||CheckTypeEqual(FloorOrCorridor, tile_types, 6))
+                {
+                    rotation = Quaternion.AngleAxis(90, Vector3.up);
+                }
+                
+                add_as_tileobject_as_well=true;
+                break;
         }
         if (tileobj != null){
             tile.TileGraphics = Instantiate(tileobj, tile.transform.position, rotation) as GameObject;
             if (add_as_tileobject_as_well){
                 tile.TileObject=tile.TileGraphics;
+            }
+
+            if (tile.Data.TileType==TileObjData.Type.Door){
+                var door=tile.TileGraphics.GetComponent<DoorMain>();
+
+                door.GC=GC;
+                if (CheckTypeAmount(FloorOrCorridor, tile_types, 0,2,4,6)==1)
+                {
+                    //only one floor/corridor around -> leads outside
+                    door.isAirlockOutsideDoor=true;
+                }
             }
         }
     }
@@ -532,6 +512,19 @@ public class MapGenerator : MonoBehaviour
             }
         }
         return true;
+    }
+
+    int CheckTypeAmount(System.Func<TileObjData.Type,bool> test, TileObjData.Type[] tile_types, params int[] dirs)
+    {
+        int a=0;
+        foreach (var dir in dirs)
+        {
+            if (test(tile_types [dir]))
+            {
+                ++a;
+            }
+        }
+        return a;
     }
 }
 

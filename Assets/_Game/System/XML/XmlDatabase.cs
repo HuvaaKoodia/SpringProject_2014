@@ -25,7 +25,7 @@ public class XmlDatabase : MonoBehaviour
         ;
 
 	// Use this for initialization
-	void Awake()
+	public void LoadData()
     {
         Missions =new Dictionary<MissionObjData.Type, MissionXmlData>();
         players = new List<PlayerXmlData>();

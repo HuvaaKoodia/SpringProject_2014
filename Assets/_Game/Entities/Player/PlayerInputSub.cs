@@ -57,11 +57,11 @@ public class PlayerInputSub : MonoBehaviour {
 	            return;
 	        }
 			
-			if (Input.GetButtonDown("TurnLeft"))
+			if (Input.GetButton("TurnLeft"))
 			{
 				TurnLeftInput();
 			}
-			else if (Input.GetButtonDown("TurnRight"))
+			else if (Input.GetButton("TurnRight"))
 			{
 				TurnRightInput();
 			}

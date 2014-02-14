@@ -79,7 +79,7 @@ public class UITooltipInstance : MonoBehaviour
 			text.text = tooltipText;
 
 			// Orthographic camera positioning is trivial
-            mPos = Input.mousePosition+mouse_offset;
+            mPos = Input.mousePosition;
 
 			if (background != null)
 			{
@@ -115,10 +115,11 @@ public class UITooltipInstance : MonoBehaviour
 
 				// Calculate the maximum on-screen size of the tooltip window
 				Vector2 max = new Vector2(ratio * mSize.x / Screen.width, ratio * mSize.y / Screen.height);
+                Vector2 max_offset = new Vector2(ratio * mouse_offset.x / Screen.width, ratio * mouse_offset.y / Screen.height);
 
 				// Limit the tooltip to always be visible
-				mPos.x = Mathf.Min(mPos.x, 1f - max.x);
-				mPos.y = Mathf.Max(mPos.y, max.y);
+                mPos.x = Mathf.Min(mPos.x, 1f - max.x)+mouse_offset.x*max.x;
+                mPos.y = Mathf.Max(mPos.y, max.y)+max_offset.y;
 
 				// Update the absolute position and save the local one
 				mTrans.position = uiCamera.ViewportToWorldPoint(mPos);
