@@ -56,7 +56,10 @@ public class XML_Loader{
 
     public static bool getAttBool(XmlNode node,string name){
         return getAttStr(node,name).ToLower()=="true"?true:false;
+    }
 
+    public static bool HasAtt(XmlNode element,string name){
+        return element.Attributes[name]!=null;
     }
 	
 	//adding elements

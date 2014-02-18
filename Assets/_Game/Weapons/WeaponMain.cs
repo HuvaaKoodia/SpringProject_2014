@@ -44,6 +44,8 @@ public class WeaponMain : MonoBehaviour {
 	public Quaternion targetRotation;
 	public float rotationSpeed;
 
+    public bool NoAmmoConsumption{get;private set;}
+
     public bool Usable(){
         return Weapon!=null&&!Overheat&&CurrentAmmo>0;
     }
@@ -70,8 +72,14 @@ public class WeaponMain : MonoBehaviour {
         CoolingRate = Weapon.GetStat(InvStat.Type.Cooling)._amount;
 		
         MaxAmmo = Weapon.GetStat(InvStat.Type.MaxAmmo)._amount;
-		
-        CurrentAmmo = MaxAmmo;
+        if(MaxAmmo==-1){
+            NoAmmoConsumption=true;
+            CurrentAmmo=MaxAmmo=1;
+        }
+        else{
+            NoAmmoConsumption=false;
+            CurrentAmmo = MaxAmmo;
+        }
 	}
 
 	public bool HasTargets
@@ -165,7 +173,7 @@ public class WeaponMain : MonoBehaviour {
 			{
                 if (Overheat || CurrentAmmo == 0) return;
 
-				CurrentAmmo--;
+                if (!NoAmmoConsumption) CurrentAmmo--;
                 if (CurrentAmmo<0) CurrentAmmo=0;
 
                 IncreaseHeat();
@@ -194,6 +202,7 @@ public class WeaponMain : MonoBehaviour {
 
 	public void AddAmmo(int amount)
 	{
+        if (NoAmmoConsumption) return;
 		CurrentAmmo = Mathf.Min(CurrentAmmo+amount, MaxAmmo);
 	}
 
@@ -266,7 +275,7 @@ public class WeaponMain : MonoBehaviour {
     public int HitChancePercent(EnemyMain enemy)
     {
         var distance=Vector3.Distance(transform.position,enemy.transform.position);
-        return Accuracy-(int)((distance-MapGenerator.TileSize.x)/(Range*0.01f));
+        return Mathf.Clamp(Accuracy-(int)((distance-MapGenerator.TileSize.x)/(Range*0.01f)),0,100);
     }
 
     public float HitChance(EnemyMain enemy)

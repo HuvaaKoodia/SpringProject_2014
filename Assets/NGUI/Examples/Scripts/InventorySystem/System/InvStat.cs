@@ -41,7 +41,7 @@ public class InvStat
 	{
 		switch (i)
 		{
-		case Type.Damage:			return "Amount of damage done per hit.";
+	    case Type.Damage:		return "Amount of damage done per hit.";
 		case Type.Crit:			return "Increases critical hit chance.";
 		case Type.Heat:			return "Amount of heat generated per use.";
 		}

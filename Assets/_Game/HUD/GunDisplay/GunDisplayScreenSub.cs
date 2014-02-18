@@ -32,7 +32,10 @@ public class GunDisplayScreenSub : MonoBehaviour {
 
 			info += "\n";
 
-			info += "ammo: " + weapon.CurrentAmmo + "/" + weapon.MaxAmmo;
+            if (weapon.NoAmmoConsumption)
+                info += "";
+            else
+			    info += "ammo: " + weapon.CurrentAmmo + "/" + weapon.MaxAmmo;
 
 			info += "\n";
 

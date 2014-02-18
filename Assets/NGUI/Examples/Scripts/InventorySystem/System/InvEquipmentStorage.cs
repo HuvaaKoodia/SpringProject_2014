@@ -178,15 +178,28 @@ public class InvEquipmentStorage
 		return null;
 	}
 
+    public bool HasEmptySlots(){
+        foreach (var slot in EquipmentSlots){
+            if (slot.Item==null){
+                return true;
+            }
+        }
+        return false;
+    }
 
     //statics
 
+    /// <summary>
+    /// DEV. WARNING WARNING infinite loop running the world!
+    /// </summary>
     public static void EquipRandomItem(InvEquipmentStorage equipment,XmlDatabase XDB){
         if (equipment == null) return;
         if (XDB.items.Count == 0) return;
-        
-        var gi=InvGameItem.GetRandomItem(XDB);
-        equipment.Equip(gi);
+        if (!equipment.HasEmptySlots()) return;
+
+        while(true){
+            var gi=InvGameItem.GetRandomItem(XDB);
+            if (equipment.Equip(gi)==null) break;
+        }
     }
-    
 }
