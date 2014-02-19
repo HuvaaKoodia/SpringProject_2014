@@ -57,4 +57,20 @@ public class InvItemStorage
 		}
         return false;
 	}
+   
+
+    public bool HasItem(System.Func<InvGameItem,bool> test){
+        foreach(var i in mItems){
+            if (test(i)) return true;
+        }
+        return false;
+    }
+
+    public List<InvGameItem> GetItems(System.Func<InvGameItem,bool> test){
+        List<InvGameItem> _items=new List<InvGameItem>();
+        foreach(var i in mItems){
+            if (i!=null&&test(i)) _items.Add(i);
+        }
+        return _items;
+    }
 }

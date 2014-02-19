@@ -11,6 +11,7 @@ public class XmlDatabase : MonoBehaviour
     public List<ObstacleXmlData> obstacles { get; private set; }
     public Dictionary<MissionObjData.Type,MissionXmlData> Missions{ get; private set; }
     public Dictionary<string,InvBaseItem> QuestItems=new Dictionary<string,InvBaseItem>();
+    public Dictionary<MissionObjData.Objective,ObjectiveXmlData> Objectives=new Dictionary<MissionObjData.Objective,ObjectiveXmlData>();
 
 	//item specific stuff
 	public InvDatabase ItemDB;

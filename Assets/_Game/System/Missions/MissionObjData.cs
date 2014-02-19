@@ -39,4 +39,8 @@ public class MissionObjData {
 
     }
 
+    public bool ContainsObjective(MissionObjData.Objective o){
+        return PrimaryObjectives.Contains(o)||SecondaryObjectives.Contains(o);
+    }
+
 }

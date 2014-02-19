@@ -79,17 +79,19 @@ public abstract class UIItemSlot : MonoBehaviour
         {
             InvStat stat = stats[i];
             if (stat._amount == 0) continue;
-            
+            //DEV.HAX
+            if (stat.type==InvStat.Type.MaxAmmo&&stat._amount==-1) continue;
+
             if (stat._amount < 0)
             {
                 t += "\n[FF0000]" + stat._amount;
             }
             else
             {
-                t += "\n[00FF00]+" + stat._amount;
+                t += "\n[00FF00]" + stat._amount;
             }
             
-            if (stat.modifier == InvStat.Modifier.Percent) t += "%";
+            //if (stat.modifier == InvStat.Modifier.Percent) t += "%";
             t += " " + stat.type;
             t += "[-]";
         }
@@ -108,6 +110,7 @@ public abstract class UIItemSlot : MonoBehaviour
         
         for (int i = 0, imax = stats.Count; i < imax; ++i)
         {
+            string tt="";
             InvStat stat = stats[i];
             InvStat c_stat=null;
             foreach (var s in compare.Stats){
@@ -116,16 +119,23 @@ public abstract class UIItemSlot : MonoBehaviour
                 }
             }
             if (stat._amount == 0) continue;
+            //DEV.HAX
+            if (stat.type==InvStat.Type.MaxAmmo&&stat._amount==-1) continue;
 
             string color="00FF00";//green
-            if (c_stat!=null&&stat._amount<c_stat._amount) color="FF0000";//red
+            string sign="+";
+            if (c_stat!=null&&stat._amount<c_stat._amount){
+                color="FF0000";//red
+                sign="-";
+            }
             if (c_stat!=null&&stat._amount==c_stat._amount) color="00C6FF";//blue
 
-            t += "\n["+color+"]+" + stat._amount;
-            
-            if (stat.modifier == InvStat.Modifier.Percent) t += "%";
-            t += " " + stat.type;
-            t += "[-]";
+            string type=stat.type.ToString();
+
+            tt +=stat._amount+" " + type;
+           // tt =tt.PadRight(20,' ');
+            //tt+=sign;
+            t+="\n["+color+"] "+sign+" "+tt+"[-]";
         }
         
         if (!string.IsNullOrEmpty(item.baseItem.description)) t += "\n[FF9900]" + item.baseItem.description;

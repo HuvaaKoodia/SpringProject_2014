@@ -60,6 +60,7 @@ public class XMLDataLoader : XML_Loader
                 if (ReadWeapon(node,database)) continue;
                 if (ReadQuestItems(node,database)) continue;
                 if (ReadMission(node,database)) continue;
+                if (ReadObjective(node,database)) continue;
             }
 		}
     }
@@ -107,17 +108,31 @@ public class XMLDataLoader : XML_Loader
             var type=(MissionObjData.Type)System.Enum.Parse(typeof(MissionObjData.Type),getAttStr(node,"type"),true);
             mission.Description=getStr(node,"Description").Replace("\\n","\n");
 
-            if (node["ObjectiveRoom"]==null)
-                mission.ObjectiveRoom="room";//DEFAULT
-            else
-                mission.ObjectiveRoom=getStr(node,"ObjectiveRoom");
+            string[] spl;
 
-            var ships=node["Ships"];
-            var text=ships.InnerText.Trim().Replace("\t","").Replace("\r","");
-            var spl=Subs.Split(text,"\n");
+            var strs=node["PrimaryObjectives"];
+            if (strs!=null){
+                spl=Subs.SplitAndTrim(strs.InnerText,"\n");
+                
+                foreach(var n in spl){
+                    mission.PrimaryObjectives.Add(n);
+                }
+            }
+
+            strs=node["SecondaryObjectives"];
+            if (strs!=null){
+                spl=Subs.SplitAndTrim(strs.InnerText,"\n");
+                
+                foreach(var n in spl){
+                    mission.SecondaryObjectives.Add(n);
+                }
+            }
+
+            strs=node["Ships"];
+            spl=Subs.SplitAndTrim(strs.InnerText,"\n");
             
-           foreach(var s in spl){
-                mission.ShipsTypes.Add(s);
+            foreach(var n in spl){
+                mission.ShipsTypes.Add(n);
             }
 
             database.Missions.Add(type,mission);
@@ -126,6 +141,30 @@ public class XMLDataLoader : XML_Loader
         return false;
     }
 
+    
+    static bool ReadObjective (XmlNode node, XmlDatabase database)
+    {
+        if (node.Name == "Objective")
+        {
+            var data=new ObjectiveXmlData();
+            var type=(MissionObjData.Objective)System.Enum.Parse(typeof(MissionObjData.Objective),getAttStr(node,"type"),true);
+            data.Name=getAttStr(node,"Name");
+            
+            if (node["Room"]==null)
+                data.Room="room";//DEFAULT
+            else
+                data.Room=getStr(node,"Room");
+
+            if (node["Item"]==null)
+                data.Item="";//DEFAULT
+            else
+                data.Item=getStr(node,"Item");
+            
+            database.Objectives.Add(type,data);
+            return true;
+        }
+        return false;
+    }
 
 	static void AddStat(XmlNode node,InvBaseItem item,InvStat.Type type){
 		var n1=node[type.ToString()];

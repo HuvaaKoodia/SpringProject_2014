@@ -2,7 +2,12 @@
 
 <Mission type="TradeVesselInfo">
 	<Description>We've been contracted to investigate the fate of a trade vessel.\nFind out what happened.\n\nThe client doesn't care about the cargo. Grab whatever you can.</Description>
-	<ObjectiveRoom>commandbridge</ObjectiveRoom>
+	<PrimaryObjectives>
+		FindLogs
+	</PrimaryObjectives>
+	<SecondaryObjectives>
+		Loot
+	</SecondaryObjectives>
 	<Ships>
 		blackone
 		mercurius1
@@ -11,26 +16,43 @@
 
 <Mission type="RetrieveCargo">
 <Description>We've been contracted to retrieve a certain valuable item from an abandoned vessel.\nAnything else you find is a for us to keep.</Description>
-	<ObjectiveRoom>cargohold</ObjectiveRoom>
+	<PrimaryObjectives>
+		FindItem
+	</PrimaryObjectives>
+	<SecondaryObjectives>
+		Loot
+	</SecondaryObjectives>
 	<Ships>
 		mercurius1b
 	</Ships>
 </Mission>
 
-<Mission type="EmergencyBeacon">
-	<Description>We've spotted a derelict vessel.\n\nLoot and explore!"</Description>
+<Mission type="ExploreVessel">
+	<Description>We've received an emergency message from deep space.\n\nInvestigate and explore!</Description>
+	<PrimaryObjectives>
+		Explore
+		Loot
+	</PrimaryObjectives>
 	<Ships>
 		blackone
 		mercurius1
 	</Ships>
 </Mission>
 
-<Mission type="ExploreVessel">
-	<Description>We've received an emergency message from deep space.\n\nInvestigate and explore!</Description>
+<Mission type="EmergencyBeacon">
+	<Description>We've spotted a derelict vessel.\n\nLoot and explore!</Description>
+	<PrimaryObjectives>
+		FindLogs
+	</PrimaryObjectives>
+	<SecondaryObjectives>
+		Explore
+	</SecondaryObjectives>
 	<Ships>
 		blackone
 		mercurius1
 	</Ships>
 </Mission>
+
+
 
 </Root>

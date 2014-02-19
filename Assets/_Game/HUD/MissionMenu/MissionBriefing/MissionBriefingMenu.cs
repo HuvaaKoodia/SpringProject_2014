@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MissionBriefMain : MonoBehaviour {
+public class MissionBriefingMenu : MonoBehaviour {
 
     public UILabel BriefingLabel,ObjectivesLabel;
 

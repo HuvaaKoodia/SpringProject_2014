@@ -31,8 +31,6 @@ public class GameController : MonoBehaviour {
 	
     PlayerMain player;
 
-    MissionObjData CurrentMission;//DEV.temp
-
     public PlayerMain Player{
         get{return player;}
         set{
@@ -51,8 +49,10 @@ public class GameController : MonoBehaviour {
 		ShipObjData ship_objdata=null;
 
         //DEV.DEBUG generate mission
-        CurrentMission=MissionGenerator.GenerateMission(SS.XDB);
-        menuHandler.MissionBriefing.SetMission(CurrentMission);
+        if (SS.GDB.CurrentMission==null){
+            SS.GDB.CurrentMission=MissionGenerator.GenerateMission(SS.XDB);
+        }
+        menuHandler.MissionBriefing.SetMission(SS.GDB.CurrentMission);
 
 		if (UseTestMap)
 		{
@@ -64,7 +64,7 @@ public class GameController : MonoBehaviour {
 			    ship_objdata=SS.SGen.GenerateShipObjectData(TestLoadShipName);
             }
             else{
-                var mission_ship=Subs.GetRandom(CurrentMission.XmlData.ShipsTypes);
+                var mission_ship=Subs.GetRandom(SS.GDB.CurrentMission.XmlData.ShipsTypes);
                 ship_objdata=SS.SGen.GenerateShipObjectData(mission_ship);
             }
 		}
@@ -75,7 +75,7 @@ public class GameController : MonoBehaviour {
         SS.SDGen.GenerateLoot(this,ship_objdata);
 
         if (!OverrideMissionShip)
-            SS.SDGen.GenerateMissionObjectives(this,CurrentMission,ship_objdata,SS.XDB);
+            SS.SDGen.GenerateMissionObjectives(this,SS.GDB.CurrentMission,ship_objdata,SS.XDB);
 
 		//init menuhandler stuff
 		menuHandler.player = player;

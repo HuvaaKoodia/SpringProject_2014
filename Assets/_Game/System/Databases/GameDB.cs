@@ -9,7 +9,19 @@ public class GameDB : MonoBehaviour {
     public PlayerObjData PlayerData{get;private set;}
     public List<MissionObjData> AvailableMissions;
 
+    public MissionObjData CurrentMission{get;set;}
+
+    public bool GOTO_DEBRIEF{get;set;}
+    public bool GameStarted{get;set;}
+
+    public void Awake(){
+        GOTO_DEBRIEF=false;
+        GameStarted=false;
+    }
+
     public void StartNewGame(){
+        GameStarted=true;
+
         AvailableMissions=new List<MissionObjData>();
         PlayerData=new PlayerObjData();
 
@@ -23,6 +35,21 @@ public class GameDB : MonoBehaviour {
         for (int i=0;i<3;++i){
             AvailableMissions.Add(MissionGenerator.GenerateMission(SS.XDB));
         }
+    }
 
+    public void SetCurrentMission(MissionObjData mission)
+    {
+        CurrentMission=mission;
+    }
+
+    public void PlayMission()
+    {
+        Application.LoadLevel("TestScene_Ilkka");
+    }
+
+    public void EndMission()
+    {
+        GOTO_DEBRIEF=true;
+        Application.LoadLevel("MissionSelectScene");
     }
 }

@@ -31,7 +31,7 @@ public class MenuHandler : MonoBehaviour {
 	public GameObject TargetingHud;
 	public GameObject InteractHud;
 	public InventoryMain InventoryHud;
-    public MissionBriefMain MissionBriefing;
+    public MissionBriefingMenu MissionBriefing;
     public GameObject EndMissionPanel;
 
 	// Use this for initialization
@@ -250,6 +250,6 @@ public class MenuHandler : MonoBehaviour {
     }
 
     public void EndMission(){
-        //DEV.TODO!
+        GC.SS.GDB.EndMission();
     }
 }

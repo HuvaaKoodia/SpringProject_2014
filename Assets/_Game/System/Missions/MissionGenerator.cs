@@ -9,7 +9,7 @@ public class MissionGenerator{
         mission.MissionType=            Subs.GetRandomEnum<MissionObjData.Type>();
 
         //DEV.TEMP force type
-        mission.MissionType= MissionObjData.Type.RetrieveCargo;
+        //mission.MissionType= MissionObjData.Type.RetrieveCargo;
 
         mission.XmlData=XDB.Missions[mission.MissionType];
 
@@ -24,27 +24,13 @@ public class MissionGenerator{
         mission.InfoShipConditions=GetRandomInfo();
 
         //objectives
-        switch (mission.MissionType){
-            case MissionObjData.Type.TradeVesselInfo:
-                mission.PrimaryObjectives.Add(MissionObjData.Objective.FindLogs);
-                mission.SecondaryObjectives.Add(MissionObjData.Objective.Loot);
-                break;
-                
-            case MissionObjData.Type.RetrieveCargo:
-                mission.PrimaryObjectives.Add(MissionObjData.Objective.FindItem);
-                mission.SecondaryObjectives.Add(MissionObjData.Objective.Loot);
-                break;
 
-            case MissionObjData.Type.ExploreVessel:
-                mission.PrimaryObjectives.Add(MissionObjData.Objective.Loot);
-                mission.PrimaryObjectives.Add(MissionObjData.Objective.Explore);
-                break;
+        foreach(var o in mission.XmlData.PrimaryObjectives){
+            mission.PrimaryObjectives.Add((MissionObjData.Objective)System.Enum.Parse(typeof(MissionObjData.Objective),o,true));
+        }
 
-            case MissionObjData.Type.EmergencyBeacon:
-                mission.PrimaryObjectives.Add(MissionObjData.Objective.FindLogs);
-                mission.SecondaryObjectives.Add(MissionObjData.Objective.Explore);
-                mission.SecondaryObjectives.Add(MissionObjData.Objective.Loot);
-                break;
+        foreach(var o in mission.XmlData.SecondaryObjectives){
+            mission.SecondaryObjectives.Add((MissionObjData.Objective)System.Enum.Parse(typeof(MissionObjData.Objective),o,true));
         }
 
         mission.Briefing=MissionDebriefText(mission);
@@ -137,7 +123,7 @@ public class MissionGenerator{
             case MissionObjData.AlienAmount.None:
                 return "The ship has no organic signatures.";
             case MissionObjData.AlienAmount.Small:
-                return "The ship a small organic signature.";
+                return "The ship has a small organic signature.";
             case MissionObjData.AlienAmount.Medium:
                 return "The ship has a medium organic signature.";
             case MissionObjData.AlienAmount.Large:
@@ -222,6 +208,42 @@ public class MissionGenerator{
         foreach (var o in mission.SecondaryObjectives){
             text+=o.ToString();
         }
+        return text;
+    }
+
+    public static string MissionDebriefText(MissionObjData mission,PlayerObjData player,XmlDatabase XDB){
+        string text="";
+
+        var quest_items=player.Items.GetItems(item=>{return item.baseItem.type==InvBaseItem.Type.QuestItem;});
+        text+="Primary objectives:\n\n";
+        foreach (var o in mission.PrimaryObjectives){
+            var objective=XDB.Objectives[o];
+            text+="-Objective "+objective.Name;
+            bool notcompleted=true;
+            if (o==MissionObjData.Objective.FindItem){
+               
+                foreach(var qi in quest_items){
+                    if (qi.baseItem.name==objective.Item){
+                        text+=": COMPLETED\n";
+                        notcompleted=false;
+                        break;
+                    }
+                }
+            }
+            else{
+
+            }
+
+            if (notcompleted) text+=": NOT COMPLETED.\n";
+        }
+        text+="\n\nSecondary objectives:\n\n";
+        foreach (var o in mission.SecondaryObjectives){
+            var objective=XDB.Objectives[o];
+
+            text+="-Objective "+objective.Name;
+            text+=": NOT COMPLETED.\n";
+        }
+
         return text;
     }
 }

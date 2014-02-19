@@ -194,6 +194,13 @@ public class Subs{
 	public static string[] Split(string str,string separator){
 		return str.Split(new string[]{separator},System.StringSplitOptions.RemoveEmptyEntries);
 	}
+    /// <summary>
+    /// Splits the string and trim all whitespace, tabs and such away.
+    /// </summary>
+    public static string[] SplitAndTrim(string str,string separator){
+        str=str.Trim().Replace("\t","").Replace("\r","");
+        return str.Split(new string[]{separator},System.StringSplitOptions.RemoveEmptyEntries);
+    }
 
 	//templates
 	

@@ -146,10 +146,11 @@ public class ShipDetailGenerator : MonoBehaviour
     }
 
     public void GenerateMissionObjectives(GameController GC,MissionObjData mission,ShipObjData ship,XmlDatabase XDB){
-        string obj_room=mission.XmlData.ObjectiveRoom;
 
-        if (ContainsObjective(mission,MissionObjData.Objective.FindItem)){
+        if (mission.ContainsObjective(MissionObjData.Objective.FindItem)){
+            var objective=XDB.Objectives[MissionObjData.Objective.FindItem];
             //generate item somewhere in ship
+            string obj_room=objective.Room;
             List<CellData> LegitRooms=new List<CellData>();
             foreach(var r in ship.FloorRooms[0]){
                 if (r.roomStats.type==obj_room) LegitRooms.Add(r);
@@ -181,14 +182,11 @@ public class ShipDetailGenerator : MonoBehaviour
                 return;
             }
 
+            //DEV. temp mission item type to xml objective data
             var l=Subs.GetRandom(loot);
-            var item=new InvGameItem(XDB.QuestItems["Blackbox"]);
+            var item=new InvGameItem(XDB.QuestItems[objective.Item]);
             l.Items.Add(item);
         }
-    }
-
-    bool ContainsObjective(MissionObjData m,MissionObjData.Objective o){
-        return m.PrimaryObjectives.Contains(o)||m.PrimaryObjectives.Contains(o);
     }
 }
 
