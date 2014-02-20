@@ -6,24 +6,27 @@ public class MissionMenuHud : MonoBehaviour {
     public GameObject MissionMenu;
     public MissionDebriefingMenu MissionDebrief;
     public MissionBriefingMenu MissionBrief;
+    public VendorMenu _VendorMenu;
+    public MechanicalMenu _MechanicMenu;
+
     public Transform MissionButtonsParent;
-    SharedSystemsMain SS;
     public MissionButtonMain MButtonPrefab;
 
+    SharedSystemsMain SS;
     GameObject[] menus;
-
     MissionObjData Mission;
 
 	// Use this for initialization
 	void Start () {
 	    
-        menus=new GameObject[]{MissionMenu,MissionDebrief.gameObject,MissionBrief.gameObject};
+        menus=new GameObject[]{MissionMenu,MissionDebrief.gameObject,MissionBrief.gameObject,_VendorMenu.gameObject,_MechanicMenu.gameObject};
         SS=GameObject.FindGameObjectWithTag("SharedSystems").GetComponent<SharedSystemsMain>();
 
         //Dev.temp
         if (!SS.GDB.GameStarted)
             SS.GDB.StartNewGame();
 
+        //create mission buttons
         int i=0;
         foreach(var m in SS.GDB.AvailableMissions){
             var button=Instantiate(MButtonPrefab) as MissionButtonMain;
@@ -37,6 +40,14 @@ public class MissionMenuHud : MonoBehaviour {
             button.Menu=this;
             button.SetMission(m);
         }
+
+        //set references
+        _VendorMenu.SetPlayer(SS.GDB.PlayerData);
+        _VendorMenu.SetVendor(SS.GDB.VendorStore);
+
+        _MechanicMenu.SetPlayer(SS.GDB.PlayerData);
+
+        //open correct menu
 
         if (SS.GDB.GOTO_DEBRIEF){
             SS.GDB.GOTO_DEBRIEF=false;
@@ -71,6 +82,13 @@ public class MissionMenuHud : MonoBehaviour {
 
     public void OpenMissionSelect(){
         ActivateMenu(MissionMenu);
+    }
+    public void OpenVendor(){
+        ActivateMenu(_VendorMenu.gameObject);
+    }
+
+    public void OpenMechanic(){
+        ActivateMenu(_MechanicMenu.gameObject);
     }
 
     public void PlayMission(){

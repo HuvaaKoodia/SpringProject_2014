@@ -7,6 +7,10 @@ public class PlayerObjData{
     public InvItemStorage Items{get;set;}
     public InvEquipmentStorage Equipment{get;set;}
 
+    public int Money{get;set;}
+
+
+
 	// Use this for initialization
 	public PlayerObjData(){
         Items=new InvItemStorage(8,4,2);

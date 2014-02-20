@@ -65,7 +65,6 @@ public class InventoryMain : MonoBehaviour {
 		temp_random_item_button.equipment=player.ObjData.Equipment;
 	}
 
-	//DEV.TODO
 	public void SetLoot(LootCrateMain loot){
 		LootParent.SetActive(true);
 		LootStorage.ChangeItemStorage(loot.Items);

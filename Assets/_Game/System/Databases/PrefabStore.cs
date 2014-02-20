@@ -9,10 +9,8 @@ public class PrefabStore : MonoBehaviour {
 	public GameObject LootCratePrefab;
 	
 	public GameObject 
-			BasicFloor,
 			BasicWall,
-			BasicEmpty,
-			BasicDoor
+			BasicEmpty
 		;
 
 	public GameObject 

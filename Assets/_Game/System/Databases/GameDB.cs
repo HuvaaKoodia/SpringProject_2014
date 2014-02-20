@@ -10,9 +10,12 @@ public class GameDB : MonoBehaviour {
     public List<MissionObjData> AvailableMissions;
 
     public MissionObjData CurrentMission{get;set;}
+    public InvItemStorage VendorStore{get;set;}
 
     public bool GOTO_DEBRIEF{get;set;}
     public bool GameStarted{get;set;}
+
+    public string HQScene="MissionSelectScene",GameScene="TestScene_Ilkka";
 
     public void Awake(){
         GOTO_DEBRIEF=false;
@@ -24,17 +27,22 @@ public class GameDB : MonoBehaviour {
 
         AvailableMissions=new List<MissionObjData>();
         PlayerData=new PlayerObjData();
+        VendorStore=new InvItemStorage(8,4,2);
+
+        PlayerData.Money=1000;
 
         //DEV.DEBUG random equipment
-        for (int i=0;i<7;i++){
+        for (int i=0;i<4;i++){
             InvEquipmentStorage.EquipRandomItem(PlayerData.Equipment,SS.XDB);
         }
 
-        //generate 3 new missions
-        AvailableMissions.Clear();
-        for (int i=0;i<3;++i){
-            AvailableMissions.Add(MissionGenerator.GenerateMission(SS.XDB));
+        //DEV.DEBUG random vendor items
+        for (int i=0;i<6;i++){
+            InvEquipmentStorage.EquipRandomItem(PlayerData.Equipment,SS.XDB);
+            VendorStore.Add(InvGameItem.GetRandomItem(SS.XDB));
         }
+
+        GenerateNewMissions();
     }
 
     public void SetCurrentMission(MissionObjData mission)
@@ -44,12 +52,21 @@ public class GameDB : MonoBehaviour {
 
     public void PlayMission()
     {
-        Application.LoadLevel("TestScene_Ilkka");
+        Application.LoadLevel(GameScene);
     }
 
     public void EndMission()
     {
         GOTO_DEBRIEF=true;
-        Application.LoadLevel("MissionSelectScene");
+        GenerateNewMissions();
+        Application.LoadLevel(HQScene);
+    }
+
+    void GenerateNewMissions()
+    {
+        AvailableMissions.Clear();
+        for (int i=0;i<3;++i){
+            AvailableMissions.Add(MissionGenerator.GenerateMission(SS.XDB));
+        }
     }
 }

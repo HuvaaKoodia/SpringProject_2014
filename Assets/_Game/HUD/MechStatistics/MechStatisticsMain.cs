@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class MechStatisticsMain : MonoBehaviour {
 
-    public UILabel LS,LH,RS,RH,UT;
-    PlayerMain Player;
+   // public UILabel LS,LH,RS,RH,UT;
+    PlayerObjData PlayerData;
 
 	public Color FullHealthColor = Color.green;
 	public Color DamagedColor = Color.yellow;
@@ -21,10 +21,15 @@ public class MechStatisticsMain : MonoBehaviour {
 		lowerTorso.ChangePartColor(FullHealthColor);
 	}
 	
+    public void SetPlayer(PlayerObjData player){
+        PlayerData=player;
+    }
+
 	// Update is called once per frame
 	void Update (){
-        if (Player==null){
-            Player=GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMain>();
+        if (PlayerData==null){
+            var Player=GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMain>();
+            PlayerData=Player.ObjData;
         }
 		/*
         SetWeaponText("LS: ",LS,UIEquipmentSlot.Slot.WeaponLeftShoulder);
@@ -39,60 +44,46 @@ public class MechStatisticsMain : MonoBehaviour {
 		SetPartInfo(weaponSlots[(int)WeaponID.RightShoulder], UIEquipmentSlot.Slot.WeaponRightShoulder);
 		SetPartInfo(weaponSlots[(int)WeaponID.RightHand], UIEquipmentSlot.Slot.WeaponRightHand);
 
-		SetPartInfo(upperTorso, Player.ObjData.Equipment.UpperTorso);
+        SetPartInfo(upperTorso, PlayerData.Equipment.UpperTorso);
 
 	}
 
     void SetWeaponText(string text,UILabel label,UIEquipmentSlot.Slot slot){
-        var data=Player.ObjData.Equipment.GetSlot(slot).ObjData;
+        var data=PlayerData.Equipment.GetSlot(slot).ObjData;
         label.text=text+data.HP+", "+data.HEAT+" "+(data.OVERHEAT?"OVERHEAT":"");
     }
 
 	void SetPartInfo(MechPartsStatsSub part, UIEquipmentSlot.Slot slot)
 	{
-		var data = Player.ObjData.Equipment.GetSlot(slot).ObjData;
-
-		part.ShowOverheat(data.OVERHEAT);
-
-		if (data.HP == 0)
-		{
-			part.ChangePartColor(CriticalColor);
-		}
-		else if (data.HP <= 30)
-		{
-			part.ChangePartColor(CriticalColor);
-		}
-		else if (data.HP <= 60)
-		{
-			part.ChangePartColor(DamagedColor);
-		}
-		else
-		{
-			part.ChangePartColor(FullHealthColor);
-		}
+        SetPartInfo(part,PlayerData.Equipment.GetSlot(slot).ObjData);
 	}
 
 	void SetPartInfo(MechPartsStatsSub part, InvEquipmentSlot slot)
 	{
-		part.ShowOverheat(slot.ObjData.OVERHEAT);
-
-		int hp = slot.ObjData.HP;
-
-		if (hp == 0)
-		{
-			part.ChangePartColor(CriticalColor);
-		}
-		else if (hp <= 30)
-		{
-			part.ChangePartColor(CriticalColor);
-		}
-		else if (hp <= 60)
-		{
-			part.ChangePartColor(DamagedColor);
-		}
-		else
-		{
-			part.ChangePartColor(FullHealthColor);
-		}
+        SetPartInfo(part,slot.ObjData);
 	}
+
+    void SetPartInfo(MechPartsStatsSub part, MechaPartObjData data)
+    {
+        part.ShowOverheat(data.OVERHEAT);
+        
+        int hp = data.HP;
+        
+        if (hp == 0)
+        {
+            part.ChangePartColor(CriticalColor);
+        }
+        else if (hp <= 30)
+        {
+            part.ChangePartColor(CriticalColor);
+        }
+        else if (hp <= 60)
+        {
+            part.ChangePartColor(DamagedColor);
+        }
+        else
+        {
+            part.ChangePartColor(FullHealthColor);
+        }
+    }
 }

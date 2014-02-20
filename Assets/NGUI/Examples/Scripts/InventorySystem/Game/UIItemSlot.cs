@@ -72,15 +72,14 @@ public abstract class UIItemSlot : MonoBehaviour
         string t = "[" + NGUIText.EncodeColor(item.color) + "]" + item.name + "[-]\n";
         
         t += "[AFAFAF]MK." + item.itemLevel + " " + item.baseItem.type;
-        
-        List<InvStat> stats = item.Stats;
-        
-        for (int i = 0, imax = stats.Count; i < imax; ++i)
+
+        for (int i = 0, imax = item.Stats.Count; i < imax; ++i)
         {
-            InvStat stat = stats[i];
+            InvStat stat = item.Stats[i];
             if (stat._amount == 0) continue;
             //DEV.HAX
             if (stat.type==InvStat.Type.MaxAmmo&&stat._amount==-1) continue;
+            if (stat.type==InvStat.Type.Range||stat.type==InvStat.Type.Value) continue;
 
             if (stat._amount < 0)
             {
@@ -95,12 +94,13 @@ public abstract class UIItemSlot : MonoBehaviour
             t += " " + stat.type;
             t += "[-]";
         }
+
+        t+="\n"+GetSellPriceText(item);
         
-        if (!string.IsNullOrEmpty(item.baseItem.description)) t += "\n[FF9900]" + item.baseItem.description;
+        t += "\n"+GetItemDescription(item);
         return t;
     }
 
-    
     string GetTooltipText(InvGameItem item,InvGameItem compare){
         string t = "[" + NGUIText.EncodeColor(item.color) + "]" + item.name + "[-]\n";
         
@@ -121,6 +121,7 @@ public abstract class UIItemSlot : MonoBehaviour
             if (stat._amount == 0) continue;
             //DEV.HAX
             if (stat.type==InvStat.Type.MaxAmmo&&stat._amount==-1) continue;
+            if (stat.type==InvStat.Type.Range||stat.type==InvStat.Type.Value) continue;
 
             string color="00FF00";//green
             string sign="+";
@@ -137,9 +138,21 @@ public abstract class UIItemSlot : MonoBehaviour
             //tt+=sign;
             t+="\n["+color+"] "+sign+" "+tt+"[-]";
         }
-        
-        if (!string.IsNullOrEmpty(item.baseItem.description)) t += "\n[FF9900]" + item.baseItem.description;
+
+        t+="\n"+GetSellPriceText(item);
+        t += "\n"+GetItemDescription(item);
         return t;
+    }
+
+    string GetItemDescription(InvGameItem item){
+        if (!string.IsNullOrEmpty(item.baseItem.description)) return "[FF0066]" + item.baseItem.description;
+        return "";
+    }
+
+    string GetSellPriceText(InvGameItem item)
+    {
+        var stat=item.Stats.Find(s=>s.type==InvStat.Type.Value);
+        return "[FFCC00]Price: " + stat._amount+" BC[-]";
     }
 
 	/// <summary>

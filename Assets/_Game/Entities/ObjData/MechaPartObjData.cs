@@ -9,8 +9,14 @@ public class MechaPartObjData{
     public bool USABLE{get{return HP>0;}}
     public bool CHANGABLE{get{return HEAT<XmlDatabase.WeaponChangeableHeatThreshold;}}
 
+    public static int MaxHP=100;
+
     public MechaPartObjData(){
-        HP=100;
+        ResetHP();
+    }
+
+    public void ResetHP(){
+        HP=MaxHP;
     }
 
     public void TakeDMG(int dmg){
