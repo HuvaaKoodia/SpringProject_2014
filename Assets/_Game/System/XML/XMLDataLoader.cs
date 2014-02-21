@@ -57,10 +57,11 @@ public class XMLDataLoader : XML_Loader
                 }
 				#endregion
 
-                if (ReadWeapon(node,database)) continue;
-                if (ReadQuestItems(node,database)) continue;
-                if (ReadMission(node,database)) continue;
-                if (ReadObjective(node,database)) continue;
+                if (ReadWeapon(node,database))      continue;
+                if (ReadQuestItem(node,database))   continue;
+                if (ReadMission(node,database))     continue;
+                if (ReadObjective(node,database))   continue;
+                if (ReadAmmo(node,database))        continue;
             }
 		}
     }
@@ -74,6 +75,7 @@ public class XMLDataLoader : XML_Loader
 			item.type=(InvBaseItem.Type)System.Enum.Parse(typeof(InvBaseItem.Type),getAttStr(node,"type"),true);
 			item.description=getStr(node,"Description");
 			item.iconName=getAttStr(node,"sprite");
+            item.ammotype=getStr(node,"Ammo");
 
 			foreach(var t in Subs.EnumValues<InvStat.Type>()){
 				AddStat(node,item,t);
@@ -84,7 +86,25 @@ public class XMLDataLoader : XML_Loader
         return false;
 	}
 
-    static bool ReadQuestItems (XmlNode node, XmlDatabase database)
+    static bool ReadAmmo(XmlNode node, XmlDatabase database)
+    {
+        if (node.Name == "Ammo")
+        {
+            var data=new AmmoXmlData();
+            data.Type=getAttStr(node,"type");
+            data.Name=getAttStr(node,"name");
+            data.MaxAmount=getAttInt(node,"maxamount");
+
+            data.StartAmount=getAttInt(node,"startamount",data.MaxAmount);
+            data.ShowInGame=getAttBool(node,"showingame",true);
+
+            database.AmmoTypes.Add(data.Type,data);
+            return true;
+        }
+        return false;
+    }
+
+    static bool ReadQuestItem(XmlNode node, XmlDatabase database)
     {
         if (node.Name == "Item")
         {
@@ -149,16 +169,9 @@ public class XMLDataLoader : XML_Loader
             var data=new ObjectiveXmlData();
             var type=(MissionObjData.Objective)System.Enum.Parse(typeof(MissionObjData.Objective),getAttStr(node,"type"),true);
             data.Name=getAttStr(node,"Name");
-            
-            if (node["Room"]==null)
-                data.Room="room";//DEFAULT
-            else
-                data.Room=getStr(node,"Room");
 
-            if (node["Item"]==null)
-                data.Item="";//DEFAULT
-            else
-                data.Item=getStr(node,"Item");
+            data.Room=getStr(node,"Room","room");
+            data.Item=getStr(node,"Item","");
             
             database.Objectives.Add(type,data);
             return true;
@@ -194,12 +207,8 @@ public class XMLDataLoader : XML_Loader
             stats.name=tag.Attributes["name"].Value;
             stats.type=tag.Attributes["type"].Value;
 
-            if (tag.Attributes["random_pos"]!=null){
-                stats.randomize_pos=getAttBool(tag,"random_pos");
-            }
-            if (tag.Attributes["random_doors"]!=null){
-                stats.randomize_doors=getAttBool(tag,"random_doors");
-            }
+            stats.randomize_pos=getAttBool(tag,"random_pos",false);
+            stats.randomize_doors=getAttBool(tag,"random_doors",false);
 
             ShipGenerator.RoomIndices.Add(stats.index,stats);
         }

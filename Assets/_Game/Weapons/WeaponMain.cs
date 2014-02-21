@@ -71,14 +71,14 @@ public class WeaponMain : MonoBehaviour {
         HeatGeneration = Weapon.GetStat(InvStat.Type.Heat)._amount;
         CoolingRate = Weapon.GetStat(InvStat.Type.Cooling)._amount;
 		
-        MaxAmmo = Weapon.GetStat(InvStat.Type.MaxAmmo)._amount;
+        MaxAmmo = player.ObjData.GetAmmoData(Weapon.baseItem.ammotype).MaxAmount;
         if(MaxAmmo==-1){
             NoAmmoConsumption=true;
             CurrentAmmo=MaxAmmo=1;
         }
         else{
             NoAmmoConsumption=false;
-            CurrentAmmo = MaxAmmo;
+            CurrentAmmo = player.ObjData.GetAmmoData(Weapon.baseItem.ammotype).StartAmount;
         }
 	}
 

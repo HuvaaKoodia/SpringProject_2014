@@ -4,6 +4,7 @@ using System.Collections.Generic;
 [System.Serializable]
 public class InvGameItem
 {
+    public bool VendorItem=false;
 	/// <summary>
 	/// Item's effective level.
 	/// </summary>
@@ -58,7 +59,7 @@ public class InvGameItem
 		case InvStat.Type.Firerate:	ctrlMultiplier = 0.5f; break;
 		case InvStat.Type.Heat: 	ctrlMultiplier = 0.8f; break;
 		case InvStat.Type.Cooling: 	ctrlMultiplier = 0.4f; break;
-		case InvStat.Type.MaxAmmo: 	ctrlMultiplier = 0.8f; break;
+		//case InvStat.Type.MaxAmmo: 	ctrlMultiplier = 0.8f; break;
 		}
 
 		return stat.min_amount + ((stat.max_amount - stat.min_amount) * ctrlMultiplier);

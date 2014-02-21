@@ -24,42 +24,75 @@ public class XML_Loader{
 //XML subs
 
     //getting values
-	public static string getStr(XmlNode element,string name){
-		if (element[name]==null) return "";
-		return element[name].InnerText;
-	}
-	
-	public static int getInt(XmlNode element,string name){
-		if (element[name]==null) return 0;
-		return int.Parse(element[name].InnerText);
-	}
-	
-	public static float getFlt(XmlNode element,string name){
-		if (element[name]==null) return 0f;
-		return float.Parse(element[name].InnerText);
-	}
-	
-	public static string getAttStr(XmlNode element,string name){
-		if (element.Attributes[name]==null) return "";
-		return element.Attributes[name].Value;
-	}
-	
-	public static int getAttInt(XmlNode element,string name){
-		if (element.Attributes[name]==null) return 0;
-		return int.Parse(element.Attributes[name].Value);
-	}
-	
-	public static float getAttFlt(XmlNode element,string name){
-		if (element.Attributes[name]==null) return 0f;
-		return float.Parse(element.Attributes[name].Value);
-	}
 
-    public static bool getAttBool(XmlNode node,string name){
-        return getAttStr(node,name).ToLower()=="true"?true:false;
+    //basic innertext
+	public static string getStr(XmlNode node,string name){
+        return getStr(node,name,"");
+	}
+	
+	public static int getInt(XmlNode node,string name){
+        return getInt(node,name,0);
+	}
+	
+	public static float getFlt(XmlNode node,string name){
+        return getFlt(node,name,0f);
+	}
+    //defaults
+
+    public static string getStr(XmlNode node,string name,string def){
+        if (node[name]==null) return def;
+        return node[name].InnerText;
+    }
+    
+    public static int getInt(XmlNode node,string name,int def){
+        if (node[name]==null) return def;
+        return int.Parse(node[name].InnerText);
+    }
+    
+    public static float getFlt(XmlNode node,string name,float def){
+        if (node[name]==null) return def;
+        return float.Parse(node[name].InnerText);
     }
 
-    public static bool HasAtt(XmlNode element,string name){
-        return element.Attributes[name]!=null;
+    //basic attributes
+    public static string getAttStr(XmlNode node,string name){
+        return getAttStr(node,name,"");
+    }
+    
+    public static int getAttInt(XmlNode node,string name){
+        return getAttInt(node,name,0);
+    }
+    
+    public static float getAttFlt(XmlNode node,string name){
+        return getAttFlt(node,name,0f);
+    }
+    
+    public static bool getAttBool(XmlNode node,string name){
+        return getAttBool(node,name,false);
+    }
+    //defaults
+	public static string getAttStr(XmlNode node,string name,string def){
+		if (node.Attributes[name]==null) return def;
+		return node.Attributes[name].Value;
+	}
+	
+    public static int getAttInt(XmlNode node,string name,int def){
+        if (node.Attributes[name]==null) return def;
+		return int.Parse(node.Attributes[name].Value);
+	}
+	
+	public static float getAttFlt(XmlNode node,string name,float def){
+		if (node.Attributes[name]==null) return def;
+		return float.Parse(node.Attributes[name].Value);
+	}
+
+    public static bool getAttBool(XmlNode node,string name,bool def){
+        if (node.Attributes[name]==null) return def;
+        return node.Attributes[name].Value.ToLower()=="true"?true:false;
+    }
+
+    public static bool HasAtt(XmlNode node,string name){
+        return node.Attributes[name]!=null;
     }
 	
 	//adding elements
@@ -274,4 +307,29 @@ public class XML_Loader{
 		}
 		return DOX;
 	}
+
+
+    /* Correct Defaults
+    public static string getAttStr(XmlNode node,string name,string def=""){
+        if (node.Attributes[name]==null) return def;
+        return node.Attributes[name].Value;
+    }
+    
+    public static int getAttInt(XmlNode node,string name,int def=0){
+        if (node.Attributes[name]==null) return def;
+        return int.Parse(node.Attributes[name].Value);
+    }
+    
+    public static float getAttFlt(XmlNode node,string name,float def=0f){
+        if (node.Attributes[name]==null) return def;
+        return float.Parse(node.Attributes[name].Value);
+    }
+
+    public static bool getAttBool(XmlNode node,string name,bool def=false){
+        if (node.Attributes[name]==null) return def;
+        return node.Attributes[name].Value.ToLower()=="true"?true:false;
+    }
+
+
+    */
 }

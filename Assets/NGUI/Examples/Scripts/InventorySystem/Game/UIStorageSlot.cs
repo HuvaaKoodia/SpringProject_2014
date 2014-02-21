@@ -29,6 +29,13 @@ public class UIStorageSlot : UIItemSlot
 
 	override protected InvGameItem Replace (InvGameItem item)
 	{
+        if (CheckVendorSlotItemInteractions(item)) return item;
+
+        if (OnItemReplaceEvent!=null){
+            if (OnItemReplaceEvent(item)) return item;
+        }
+
 		return (storage != null) ? storage.Replace(slot, item) : item;
 	}
+
 }

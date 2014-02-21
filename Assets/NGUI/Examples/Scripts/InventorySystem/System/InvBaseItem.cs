@@ -14,8 +14,8 @@ public class InvBaseItem
 		_Amount
 	}
 
-	public string name;
-	public string description;
+    public string name,description,ammotype;
+    public AmmoXmlData AmmoData;
 	public Type type = Type.None;
 
 	public int minItemLevel = 1;

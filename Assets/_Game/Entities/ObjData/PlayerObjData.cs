@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerObjData{
 
@@ -9,12 +10,20 @@ public class PlayerObjData{
 
     public int Money{get;set;}
 
+    public Dictionary<string,int> Ammo{get;set;}
 
+    XmlDatabase rXDB;
 
 	// Use this for initialization
-	public PlayerObjData(){
+	public PlayerObjData(XmlDatabase XDB){
+        rXDB=XDB;
+
         Items=new InvItemStorage(8,4,2);
         Equipment=new InvEquipmentStorage();
+        Ammo=new Dictionary<string ,int>();
+        foreach(var a in XDB.AmmoTypes){
+            Ammo.Add(a.Key,a.Value.StartAmount);
+        }
 	}
 
     /// <summary>
@@ -106,4 +115,13 @@ public class PlayerObjData{
         return null;
     }
 
+    public int GetAmmoAmount(string ammotype)
+    {
+        return Ammo[ammotype];
+    }
+
+    public AmmoXmlData GetAmmoData(string ammotype)
+    {
+        return rXDB.AmmoTypes[ammotype];
+    }
 }

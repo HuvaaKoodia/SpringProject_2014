@@ -64,29 +64,43 @@ public class InvEquipmentStorage
 		return EquipmentSlots[(int)slot];
 	}
 
+    public InvGameItem Replace (UIEquipmentSlot.Slot slot, InvGameItem item)
+    {
+        var Slot=EquipmentSlots[(int)slot];
+        
+        if (item==null){
+            var prev=Slot.Item;
+            Slot.Item=null;
+            return prev;
+        }
+        else{
+            // If the item is not of appropriate type, we shouldn't do anything
+            if (!Slot.HasType(item.baseItem.type)) return item;
+            
+            // Equip this item
+            var prev = Slot.Item;
+            Slot.Item=item;
+            
+            return prev;
+        }
+    }
+
 	/// <summary>
 	/// Equip the specified item automatically replacing an existing one.
 	/// </summary>
 
-	public InvGameItem Replace (UIEquipmentSlot.Slot slot, InvGameItem item)
+	public bool CanReplace (UIEquipmentSlot.Slot slot, InvGameItem item)
 	{
 		var Slot=EquipmentSlots[(int)slot];
 
 		if (item==null){
-			var prev=Slot.Item;
-			Slot.Item=null;
-			return prev;
+			return true;
 		}
 		else{
 			// If the item is not of appropriate type, we shouldn't do anything
-			if (!Slot.HasType(item.baseItem.type)) return item;
-
-			// Equip this item
-			var prev = Slot.Item;
-			Slot.Item=item;
-
-			return prev;
+			if (!Slot.HasType(item.baseItem.type)) return false;
 		}
+        return true;
 	}
 
 	/// <summary>

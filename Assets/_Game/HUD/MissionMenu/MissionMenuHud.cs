@@ -44,6 +44,7 @@ public class MissionMenuHud : MonoBehaviour {
         //set references
         _VendorMenu.SetPlayer(SS.GDB.PlayerData);
         _VendorMenu.SetVendor(SS.GDB.VendorStore);
+        _VendorMenu.Init();
 
         _MechanicMenu.SetPlayer(SS.GDB.PlayerData);
 
@@ -53,6 +54,7 @@ public class MissionMenuHud : MonoBehaviour {
             SS.GDB.GOTO_DEBRIEF=false;
             MissionDebrief.SetMission(SS.GDB,SS.XDB);
             OpenMissionDebrief();
+            SS.GDB.RemoveQuestItems();
         }
         else{
             OpenMissionSelect();

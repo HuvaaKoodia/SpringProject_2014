@@ -1,8 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public delegate void OnItemReplace(InvGameItem item);
-
 public class UIEquipmentSlot : UIItemSlot
 {
 	public enum Slot
@@ -21,7 +19,6 @@ public class UIEquipmentSlot : UIItemSlot
 		RecycleBin,
 		_Amount
 	}
-    public OnItemReplace OnItemReplaceEvent;
 	public InvEquipmentStorage equipment;
 	public Slot slot;
 
@@ -66,8 +63,11 @@ public class UIEquipmentSlot : UIItemSlot
 
 	override protected InvGameItem Replace (InvGameItem item)
 	{
+        if (equipment!=null&&!equipment.CanReplace(slot, item)) return item;
+        if (CheckVendorSlotItemInteractions(item)) return item;
+
         if (OnItemReplaceEvent!=null){
-            OnItemReplaceEvent(item);
+            if (OnItemReplaceEvent(item)) return item;
         }
 
 		if (slot==Slot.RecycleBin){

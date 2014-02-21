@@ -1,11 +1,13 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public delegate void OnDragStartEvent(InvGameItem item);
+public delegate bool GameItemDelegate(InvGameItem item);
 
 public abstract class UIItemSlot : MonoBehaviour
 {
-    protected OnDragStartEvent OnDragStart;
+    public bool VendorSlot=false;
+
+    public GameItemDelegate OnDragStart,OnItemDroppedToVendorSlot,OnItemReplaceEvent;
 	public UISprite icon;
 	public UIWidget background;
 	public UILabel label;
@@ -15,6 +17,7 @@ public abstract class UIItemSlot : MonoBehaviour
 	public AudioClip errorSound;
 
 	InvGameItem mItem;
+    public InvGameItem Item{get;private set;}
 	string mText = "";
 
     //DEV. puukkoa!
@@ -72,13 +75,15 @@ public abstract class UIItemSlot : MonoBehaviour
         string t = "[" + NGUIText.EncodeColor(item.color) + "]" + item.name + "[-]\n";
         
         t += "[AFAFAF]MK." + item.itemLevel + " " + item.baseItem.type;
+        if (item.baseItem.AmmoData!=null&&item.baseItem.AmmoData.ShowInGame){
+            t += "\n[AFAFAF]AmmoType: " + item.baseItem.AmmoData.Name + "[-]";
+        }
 
         for (int i = 0, imax = item.Stats.Count; i < imax; ++i)
         {
             InvStat stat = item.Stats[i];
             if (stat._amount == 0) continue;
             //DEV.HAX
-            if (stat.type==InvStat.Type.MaxAmmo&&stat._amount==-1) continue;
             if (stat.type==InvStat.Type.Range||stat.type==InvStat.Type.Value) continue;
 
             if (stat._amount < 0)
@@ -120,7 +125,6 @@ public abstract class UIItemSlot : MonoBehaviour
             }
             if (stat._amount == 0) continue;
             //DEV.HAX
-            if (stat.type==InvStat.Type.MaxAmmo&&stat._amount==-1) continue;
             if (stat.type==InvStat.Type.Range||stat.type==InvStat.Type.Value) continue;
 
             string color="00FF00";//green
@@ -152,6 +156,7 @@ public abstract class UIItemSlot : MonoBehaviour
     string GetSellPriceText(InvGameItem item)
     {
         var stat=item.Stats.Find(s=>s.type==InvStat.Type.Value);
+        if (stat==null) return "";
         return "[FFCC00]Price: " + stat._amount+" BC[-]";
     }
 
@@ -273,4 +278,21 @@ public abstract class UIItemSlot : MonoBehaviour
 			}*/
 		}
 	}
+
+    
+    /// <summary>
+    /// Checks the vendor slot item interactions.
+    /// Returns true if vendor slot and not vendor item.
+    /// </summary>
+    protected bool CheckVendorSlotItemInteractions(InvGameItem item)
+    {
+        if (item==null) return false;
+        if (VendorSlot&&!item.VendorItem) return true;
+        if (!VendorSlot&&item.VendorItem){
+            if (OnItemDroppedToVendorSlot!=null){
+                OnItemDroppedToVendorSlot(item);
+            }
+        }
+        return false;
+    }
 }

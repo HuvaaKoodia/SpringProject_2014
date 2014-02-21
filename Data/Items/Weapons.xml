@@ -12,7 +12,6 @@
 		Heat
 		Firerate
 		Cooling
-		MaxAmmo
 		Range
 	Sprites:
 		TODO
@@ -20,6 +19,7 @@
 
 	<Weapon type = "LightWeapon" name = "Arbalest" sprite = "Minigun">
 		<Description>Good basic weapon for all kinds of situations</Description>
+		<Ammo>HeavySlug</Ammo>
 		<Level min ="1" max="10"/>
 		<Damage min="20" max="40"/>
 		<Accuracy min="60" max="90"/>
@@ -27,12 +27,13 @@
 		<Firerate min="1" max="2"/>
 		<Heat min="15" max="35"/>
 		<Cooling min="10" max="30"/>
-		<MaxAmmo min="8" max="16"/>
+		<!--<MaxAmmo min="8" max="16"/>-->
 		<Value min ="10" max="100"/>
 	</Weapon>
 	
 	<Weapon type = "HeavyWeapon" name = "Hades" sprite = "Missilerack">
 		<Description>Railgun that deals high damage but also generates lots of heat</Description>
+		<Ammo>LightSlug</Ammo>
 		<Level min ="1" max="10"/>
 		<Damage min="40" max="100"/>
 		<Accuracy min="60" max="80"/>
@@ -40,12 +41,13 @@
 		<Firerate min="1" max="1"/>
 		<Heat min="40" max="70"/>
 		<Cooling min="10" max="30"/>
-		<MaxAmmo min="3" max="8"/>
+		<!--<MaxAmmo min="3" max="8"/>-->
 		<Value min ="10" max="100"/>
 	</Weapon>
 	
 	<Weapon type = "LightWeapon" name = "Nemesis" sprite = "Minigun">
 		<Description>Rapid-fire weapon capable of targeting multiple tangos</Description>
+		<Ammo>LightSlug</Ammo>
 		<Level min ="1" max="10"/>
 		<Damage min="7" max="25"/>
 		<Accuracy min="40" max="60"/>
@@ -53,12 +55,13 @@
 		<Firerate min="2" max="4"/>
 		<Heat min="10" max="15"/>
 		<Cooling min="10" max="25"/>
-		<MaxAmmo min="20" max="30"/>
+		<!--<MaxAmmo min="20" max="30"/>-->
 		<Value min ="10" max="100"/>
 	</Weapon>
 	
 	<Weapon type = "LightWeapon" name = "Vandal" sprite = "Minigun">
 		<Description>Scattergun for close quarter combat</Description>
+		<Ammo>ScatterShot</Ammo>
 		<Level min ="1" max="10"/>
 		<Damage min="20" max="40"/>
 		<Accuracy min="60" max="80"/>
@@ -66,12 +69,13 @@
 		<Firerate min="1" max="3"/>
 		<Heat min="20" max="30"/>
 		<Cooling min="10" max="20"/>
-		<MaxAmmo min="6" max="20"/>
+		<!--<MaxAmmo min="6" max="20"/>-->
 		<Value min ="10" max="100"/>
 	</Weapon>
 	
 	<Weapon type = "LightWeapon" name = "Gladius" sprite = "Minigun">
 		<Description>Hydraulic melee weapon for close quarter combat</Description>
+		<Ammo>Melee</Ammo>
 		<Level min ="1" max="10"/>
 		<Damage min="15" max="50"/>
 		<Accuracy min="70" max="90"/>
@@ -79,12 +83,13 @@
 		<Firerate min="1" max="2"/>
 		<Heat min="10" max="15"/>
 		<Cooling min="10" max="15"/>
-		<MaxAmmo minmax="-1"/>
+		<!--<MaxAmmo minmax="-1"/>-->
 		<Value min ="10" max="100"/>
 	</Weapon>
 	
 	<Weapon type = "HeavyWeapon" name = "Mjolnir" sprite = "Missilerack">
 		<Description>High-Explosive missile rack</Description>
+		<Ammo>Missile</Ammo>
 		<Level min ="1" max="10"/>
 		<Damage min="45" max="110"/>
 		<Accuracy min="85" max="100"/>
@@ -92,7 +97,7 @@
 		<Firerate min="2" max="5"/>
 		<Heat min="40" max="72"/>
 		<Cooling min="5" max="20"/>
-		<MaxAmmo min="10" max="20"/>
+		<!--<MaxAmmo min="10" max="20"/>-->
 		<Value min ="10" max="100"/>
 	</Weapon>
 	

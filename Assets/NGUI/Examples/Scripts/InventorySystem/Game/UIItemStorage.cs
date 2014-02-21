@@ -38,11 +38,11 @@ public class UIItemStorage : MonoBehaviour
 	/// Initialize the container and create an appropriate number of UI slots.
 	/// </summary>
 
-	List<UIStorageSlot> Slots;
+	public List<UIStorageSlot> Slots;
 
 	void Start ()
 	{
-		UpdateSlots();
+		//UpdateSlots();
 
 	}
 

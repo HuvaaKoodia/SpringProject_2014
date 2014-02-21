@@ -26,7 +26,7 @@ public class GameDB : MonoBehaviour {
         GameStarted=true;
 
         AvailableMissions=new List<MissionObjData>();
-        PlayerData=new PlayerObjData();
+        PlayerData=new PlayerObjData(SS.XDB);
         VendorStore=new InvItemStorage(8,4,2);
 
         PlayerData.Money=1000;
@@ -60,6 +60,18 @@ public class GameDB : MonoBehaviour {
         GOTO_DEBRIEF=true;
         GenerateNewMissions();
         Application.LoadLevel(HQScene);
+    }
+
+    public void RemoveQuestItems()
+    {
+        for(int i=0;i<PlayerData.Items.maxItemCount;++i){
+            var item=PlayerData.Items.GetItem(i);
+            if (item==null) continue;
+            if (item.baseItem.type==InvBaseItem.Type.QuestItem){
+                PlayerData.Items.Replace(i,null);
+                --i;
+            }
+        }
     }
 
     void GenerateNewMissions()

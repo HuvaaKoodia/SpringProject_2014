@@ -11,6 +11,7 @@ public class XmlDatabase : MonoBehaviour
     public List<ObstacleXmlData> obstacles { get; private set; }
     public Dictionary<MissionObjData.Type,MissionXmlData> Missions{ get; private set; }
     public Dictionary<string,InvBaseItem> QuestItems=new Dictionary<string,InvBaseItem>();
+    public Dictionary<string,AmmoXmlData> AmmoTypes=new Dictionary<string,AmmoXmlData>();
     public Dictionary<MissionObjData.Objective,ObjectiveXmlData> Objectives=new Dictionary<MissionObjData.Objective,ObjectiveXmlData>();
 
 	//item specific stuff
@@ -44,6 +45,9 @@ public class XmlDatabase : MonoBehaviour
 
 		foreach (var i in items){
 			i.iconAtlas=ItemAtlas;
+            if(i.ammotype!=""){
+                i.AmmoData=AmmoTypes[i.ammotype];
+            }
 			//add to visual database for debugging
 			if (ItemDB!=null) ItemDB.items.Add(i);
 		}
