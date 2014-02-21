@@ -119,6 +119,19 @@ public class RadarMain : MonoBehaviour
 
 		circleScanSprite.transform.localScale = Vector3.zero;
 
+		float playerRot = GC.Player.transform.rotation.eulerAngles.y;
+		float radarRot = blipParent.transform.rotation.eulerAngles.z;
+
+		if (rotateWithCenter)
+		{
+			Quaternion rot = Quaternion.Euler(0.0f, 0.0f, playerRot);
+			blipParent.transform.rotation = rot;
+		}
+		else
+		{
+			Quaternion viewSpriteRot = Quaternion.RotateTowards(radarViewSprite.transform.rotation, Quaternion.Euler(0, 0, 360 - playerRot), 360);
+			radarViewSprite.transform.rotation = viewSpriteRot;
+		}
 		initialized = true;
 	}
 	
@@ -251,10 +264,26 @@ public class RadarMain : MonoBehaviour
 
 			if (posOffset.magnitude <= scanRadius || !circleScanActive)
 			{
-				blips[currentBlip].transform.localPosition = blipParent.transform.localPosition + posOffset;
-				blips[currentBlip].transform.localScale = Vector3.one * radarZoom;
-				blips[currentBlip].enabled = true;
-				blips[currentBlip].SetSpriteName(blipTexture.spriteName);
+				Vector3 position = blipParent.transform.localPosition + posOffset;
+
+				bool onTopOfOther = false;
+
+				for (int i = 0; i < currentBlip; i++)
+				{
+					if (blips[i].transform.localPosition == position)
+					{
+						onTopOfOther = true;
+						break;
+					}
+				}
+
+				if (!onTopOfOther || blipTexture.spriteName == "playerBlip")
+				{
+					blips[currentBlip].transform.localPosition = position;
+					blips[currentBlip].transform.localScale = Vector3.one * radarZoom;
+					blips[currentBlip].enabled = true;
+					blips[currentBlip].SetSpriteName(blipTexture.spriteName);
+				}
 
 				if (blipTexture.spriteName == "playerBlip" || !circleScanActive)
 				{
