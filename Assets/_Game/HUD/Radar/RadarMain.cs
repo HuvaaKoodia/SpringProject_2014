@@ -120,7 +120,6 @@ public class RadarMain : MonoBehaviour
 		circleScanSprite.transform.localScale = Vector3.zero;
 
 		float playerRot = GC.Player.transform.rotation.eulerAngles.y;
-		float radarRot = blipParent.transform.rotation.eulerAngles.z;
 
 		if (rotateWithCenter)
 		{

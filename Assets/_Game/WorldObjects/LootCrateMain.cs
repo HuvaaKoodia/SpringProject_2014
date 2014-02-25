@@ -6,15 +6,21 @@ public class LootCrateMain : InteractableMain {
 	public GameController GC;
     public InvItemStorage Items{get;private set;}
 	public GameObject graphics;
-	public void Looted ()
+	public bool Looted ()
 	{
-		if (!GC.Inventory.LootParent.gameObject.activeSelf)
-			GC.Inventory.SetLoot(this);
-		else
-			GC.menuHandler.DeactivateInventoryHUD();
-
 		graphics.transform.localScale=new Vector3(graphics.transform.localScale.x,1*0.8f,graphics.transform.localScale.z);
 		graphics.renderer.material.color=Color.black;
+
+		if (!GC.Inventory.LootParent.gameObject.activeSelf)
+		{
+			GC.Inventory.SetLoot(this);
+			return true;
+		}
+		else
+		{
+			GC.menuHandler.DeactivateInventoryHUD();
+			return false;
+		}
 	}
 
 	// Use this for initialization
@@ -27,8 +33,8 @@ public class LootCrateMain : InteractableMain {
 	
 	}
 
-	public override void Interact()
+	public override bool Interact()
 	{
-		Looted();
+		return Looted();
 	}
 }

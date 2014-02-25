@@ -1,8 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AIBase : MonoBehaviour
+using TreeSharp;
+
+public abstract class AIBase : MonoBehaviour
 {
-	public virtual void PlayAITurn(){}
-	public virtual void StartMoving(){}
+	protected EnemyMain parent;
+	
+	protected TileMain[,] tilemap;
+	protected PlayerMain player;
+
+	protected Composite behaviourTree;
+
+	public virtual void PlayMovementPhase(){}
+	public virtual void PlayAttackPhase(){}
+	protected abstract void CreateBehaviourTree();
 }

@@ -112,24 +112,24 @@ public class TestAI : MonoBehaviour
         }
         else
         {
-            waitedForOthersToMoveThisTurn = true;
+            //waitedForOthersToMoveThisTurn = true;
             EntityMain entityBlocking = tilemap[path.next.position.X, path.next.position.Y].entityOnTile;
             //Debug.Log(entityBlocking.tag + " is blocking " + path.next.position);
             if (entityBlocking != null)
             {
 				//vähän rikki niin kommenteissa, korjataan kun tärkeämpää asiaa saatu alta pois
-                if (!waitedForOthersToMoveThisTurn)
-                {
+                //if (!waitedForOthersToMoveThisTurn)
+                //{
                     if (entityBlocking.tag == "Player")
                     {
                         HasUsedTurn = true;
                         parent.FinishedMoving(true);
                     }
-                }
+                /*}
                 else
                 {
                     HasUsedTurn = true;
-                }
+                }*/
 			}
 		}
     }
@@ -156,10 +156,9 @@ public class TestAI : MonoBehaviour
 
 	private void RandomMovement()
 	{
-		int rand = Subs.GetRandom(3);
-		switch (rand)
+		int rand = Subs.GetRandom(100);
+		if (rand >= 30)
 		{
-		case 0:
             if (movement.MoveForward())
             {
                 //Debug.Log("forward");
@@ -167,21 +166,22 @@ public class TestAI : MonoBehaviour
                 HasUsedTurn = true;
                 foundMove = true;
             }
-			break;
-		case 1:
+		}
+		else if (rand > 15 && rand < 30)
+		{
             //Debug.Log("right");
             ap--;
             HasUsedTurn = true;
             foundMove = true;
 			movement.TurnRight();
-			break;
-		case 2:
+		}
+		else
+		{
             //Debug.Log("left");
             ap--;
             HasUsedTurn = true;
             foundMove = true;
 			movement.TurnLeft();
-			break;
 		}
 	}
 }

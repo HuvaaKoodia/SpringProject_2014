@@ -59,8 +59,16 @@ public class DoorMain : InteractableMain {
         }
 	}
 
-	public override void Interact()
+	public override bool Interact()
 	{
-		Toggle();
+		if (isAirlockOutsideDoor)
+		{
+			GC.menuHandler.OpenEndMissionPanel();
+			return false;
+		}
+		else
+		{
+			return Open(!IsOpen);
+		}
 	}
 }
