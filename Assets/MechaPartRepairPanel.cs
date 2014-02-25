@@ -6,8 +6,9 @@ public class MechaPartRepairPanel : MonoBehaviour {
     PlayerObjData Player;
     MechaPartObjData Part;
     public UILabel Condition,Name,Cost;
-    public string _Name;
+    public UIButton Button;
 
+    public string _Name;
     public float cost_multi=2f;
 
     int cost;
@@ -30,15 +31,17 @@ public class MechaPartRepairPanel : MonoBehaviour {
         Condition.text=con+"%";
         Cost.text="Cost: "+cost;
 
-        if (cost==0)
+        if (cost==0){
+            Button.gameObject.SetActive(false);
             Cost.gameObject.SetActive(false);
+        }
     }
 
     public void Repair(){
-        Part.ResetHP();
         if (Player.Money>=cost){
             Player.Money-=cost;
+            Part.ResetHP();
+            UpdateStats();
         }
-        UpdateStats();
     }
 }
