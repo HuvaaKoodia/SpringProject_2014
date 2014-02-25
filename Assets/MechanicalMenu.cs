@@ -6,7 +6,9 @@ public class MechanicalMenu : MonoBehaviour {
     public MechStatisticsMain Statistics;
     public MechaPartRepairPanel LH,RH,LS,RS,UT,LT;
     public UILabel MoneyLabel;
-   
+
+    public AmmoPanelMain AmmoPanel;
+
     PlayerObjData player;
 
     public void SetPlayer(PlayerObjData player){
@@ -21,6 +23,8 @@ public class MechanicalMenu : MonoBehaviour {
         UT.SetPlayer(player,player.Equipment.UpperTorso.ObjData);
         if (LT!=null)
             LT.SetPlayer(player,player.Equipment.LowerTorso.ObjData);
+
+        AmmoPanel.SetPlayer(player);
     }
 
     void Update(){

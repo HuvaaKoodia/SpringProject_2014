@@ -77,7 +77,7 @@ public class GameDB : MonoBehaviour {
     void GenerateNewMissions()
     {
         AvailableMissions.Clear();
-        for (int i=0;i<3;++i){
+        for (int i=0;i<4;++i){
             AvailableMissions.Add(MissionGenerator.GenerateMission(SS.XDB));
         }
     }

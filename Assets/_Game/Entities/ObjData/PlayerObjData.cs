@@ -124,4 +124,9 @@ public class PlayerObjData{
     {
         return rXDB.AmmoTypes[ammotype];
     }
+
+    public void FillAmmo(string ammotype)
+    {
+        Ammo[ammotype]=rXDB.AmmoTypes[ammotype].MaxAmount;
+    }
 }
