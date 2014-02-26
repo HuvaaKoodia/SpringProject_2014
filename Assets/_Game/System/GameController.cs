@@ -81,7 +81,6 @@ public class GameController : MonoBehaviour {
 		menuHandler.player = player;
 		menuHandler.CheckTargetingModePanel();
 		
-
 		//link player to hud
 		Inventory.SetPlayer(player);
 
@@ -138,4 +137,21 @@ public class GameController : MonoBehaviour {
 	{
 		player.StartPlayerPhase();
 	}
+
+    public TileObjData GetTileObj(int x,int y){
+        if (Subs.insideArea(x,y,0,0,TileMapW,TileMapH)){
+            return TileObjectMap[x,y];
+        }
+        return null;
+    }
+
+    public TileMain GetTileMain(int x,int y){
+        if (Subs.insideArea(x,y,0,0,TileMapW,TileMapH)){
+            return TileMainMap[x,y];
+        }
+        return null;
+    }
+
+    public int TileMapW{get{return TileObjectMap.GetLength(0);}}
+    public int TileMapH{get{return TileObjectMap.GetLength(1);}}
 }

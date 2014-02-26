@@ -77,8 +77,8 @@ public class MapGenerator : MonoBehaviour
         tile_container.transform.parent = clone_container.transform;
 
         //map loading
-        int w = GC.TileObjectMap.GetLength(0);
-        int h = GC.TileObjectMap.GetLength(1);
+        int w = GC.TileMapW;
+        int h = GC.TileMapH;
         
         GC.TileMainMap = new TileMain[w, h];
         
@@ -102,8 +102,6 @@ public class MapGenerator : MonoBehaviour
                     tile.TileGraphics.transform.parent = tile.transform;
 
                 //game objects
-
-
                 switch (tile.Data.ObjType)
                 {
                     case TileObjData.Obj.Player:
@@ -146,7 +144,7 @@ public class MapGenerator : MonoBehaviour
 			player.movement.SetPositionInGrid (StartPos);
 			player.transform.parent = clone_container.transform;
 
-            //rotate player
+            //rotate player towards non airlock door
             for(int i=0;i<4;i++){
                 int x=(int)StartPos.x,y=(int)StartPos.y;
                 int xx=0,yy=0;
@@ -155,12 +153,13 @@ public class MapGenerator : MonoBehaviour
                 else if (i==2){xx=-1;yy=0;}
                 else if (i==3){xx=0;yy=-1;}
 
-                var t=GetTileObj(GC,x+xx,y+yy);
-                if (t==null||t.TileType!=TileObjData.Type.Door) continue;
-                t=GetTileObj(GC,x+xx*2,y+yy*2);
-                if (t==null) continue;
-                if (t.TileType==TileObjData.Type.Corridor||t.TileType==TileObjData.Type.Floor){
-                    //good door
+                var t=GC.GetTileMain(x+xx,y-yy);
+                if (t!=null&&t.Data.TileType==TileObjData.Type.Door){
+                    bool isairlock=t.TileObject.GetComponent<DoorMain>().isAirlockOutsideDoor;
+
+                    if (isairlock) continue;
+
+                    //Not Airlock -> rotate towards this
                     var dir=Mathf.Atan2(yy,xx);
                     dir=Mathf.Rad2Deg*dir+90;
                     player.transform.rotation=Quaternion.AngleAxis(dir,Vector3.up);
@@ -171,13 +170,6 @@ public class MapGenerator : MonoBehaviour
         else{
             Debug.LogError("No Player pos!");
         }
-    }
-
-    TileObjData GetTileObj(GameController GC,int x,int y){
-        if (Subs.insideArea(x,y,0,0,GC.TileObjectMap.GetLength(0),GC.TileObjectMap.GetLength(1))){
-            return GC.TileObjectMap[x,y];
-        }
-        return null;
     }
 
     /// <summary>
@@ -490,13 +482,24 @@ public class MapGenerator : MonoBehaviour
             }
 
             if (tile.Data.TileType==TileObjData.Type.Door){
-                var door=tile.TileGraphics.GetComponent<DoorMain>();
+                var door=tile.TileObject.GetComponent<DoorMain>();
 
                 door.GC=GC;
-                if (CheckTypeAmount(FloorOrCorridor, tile_types, 0,2,4,6)==1)
-                {
-                    //only one floor/corridor around -> leads outside
-                    door.isAirlockOutsideDoor=true;
+
+                //is airlock door
+                for(int i=0;i<2;i++){
+                    int x1=0,y1=0,x2=0,y2=0;
+
+                    if (i==0)       {x1=1;  y1=0;x2=-1;  y2=0;}
+                    else if (i==1)  {x1=0;  y1=1;x2=0;  y2=-1;}
+                    
+                    var t1=GC.GetTileObj(x+x1,y+y1);
+                    var t2=GC.GetTileObj(x+x2,y+y2);
+                    bool t1ok=(t1!=null&&(t1.TileType==TileObjData.Type.Corridor||t1.TileType==TileObjData.Type.Floor));
+                    bool t2ok=(t2!=null&&(t2.TileType==TileObjData.Type.Corridor||t2.TileType==TileObjData.Type.Floor));
+
+                    door.isAirlockOutsideDoor=!(t1ok&&t2ok);
+                    if (!door.isAirlockOutsideDoor) break;
                 }
             }
         }

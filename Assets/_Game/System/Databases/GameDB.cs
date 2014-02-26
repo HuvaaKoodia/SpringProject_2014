@@ -15,7 +15,7 @@ public class GameDB : MonoBehaviour {
     public bool GOTO_DEBRIEF{get;set;}
     public bool GameStarted{get;set;}
 
-    public string HQScene="MissionSelectScene",GameScene="TestScene_Ilkka";
+    public string HQScene="MissionSelectScene",GameScene="GameScene";
 
     public void Awake(){
         GOTO_DEBRIEF=false;

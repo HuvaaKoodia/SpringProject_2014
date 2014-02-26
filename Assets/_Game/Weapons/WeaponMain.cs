@@ -7,10 +7,10 @@ using System.Collections.Generic;
 
 public enum WeaponID
 {
-	LeftShoulder = 0,
-	LeftHand = 1,
-	RightShoulder = 2,
-	RightHand = 3,
+    LeftHand,
+	LeftShoulder,
+    RightHand,
+	RightShoulder
 }
 
 public class WeaponMain : MonoBehaviour {
@@ -34,7 +34,17 @@ public class WeaponMain : MonoBehaviour {
 	public int HeatGeneration { get; protected set;}
 	public int CoolingRate { get; protected set;}
 	
-	public int CurrentAmmo { get; protected set;}
+    public int CurrentAmmo { 
+        get{
+            if (NoAmmoConsumption) return 1;
+            return player.ObjData.GetAmmoAmount(Weapon.baseItem.ammotype);
+        }
+        protected set{
+            if (!NoAmmoConsumption){
+                player.ObjData.SetAmmoAmount(Weapon.baseItem.ammotype,value);
+            }
+        }
+    }
     public int CurrentHeat { get{return WeaponSlot.ObjData.HEAT;}}
 
     public bool Overheat{get{return WeaponSlot.ObjData.OVERHEAT;}}
@@ -74,11 +84,9 @@ public class WeaponMain : MonoBehaviour {
         MaxAmmo = player.ObjData.GetAmmoData(Weapon.baseItem.ammotype).MaxAmount;
         if(MaxAmmo==-1){
             NoAmmoConsumption=true;
-            CurrentAmmo=MaxAmmo=1;
         }
         else{
             NoAmmoConsumption=false;
-            CurrentAmmo = player.ObjData.GetAmmoData(Weapon.baseItem.ammotype).StartAmount;
         }
 	}
 
@@ -98,60 +106,50 @@ public class WeaponMain : MonoBehaviour {
 	void Update () {
 	}
 
-	//return true if added, false if removed
-	public virtual bool ToggleTarget(EnemyMain enemy,bool left_click)
+    public virtual void TargetEnemy(EnemyMain enemy,bool increase_amount)
 	{
-		if (targets.ContainsKey(enemy))
+        if (increase_amount)
 		{
-			if (left_click)
-			{
-				if (GetNumShotsTargetedTotal() < RateOfFire)
-					IncreaseShotsAtTarget(enemy);
-				else
-					RemoveTarget(enemy);
-			}
-			else if (!left_click)
-				DecreaseShotsAtTarget(enemy);
-
-			SetTargetRotation();
-			return false;
+			IncreaseShotsAtTarget(enemy);
 		}
-		else
-		{
-			AddTarget(enemy);
-
-			if (!left_click)
-			{
-				while(GetNumShotsTargetedTotal() < RateOfFire)
-				{
-					IncreaseShotsAtTarget(enemy);
-				}
-			}
-
-			SetTargetRotation();
-			return true;
-		}
-	}
-
-	protected void AddTarget(EnemyMain enemy)
-	{
-		if (GetNumShotsTargetedTotal() < RateOfFire)
-		{
-			targets.Add(enemy, 1);
-		}
+        else{
+			DecreaseShotsAtTarget(enemy);
+        }
+		SetTargetRotation();
 	}
 
 	protected void IncreaseShotsAtTarget(EnemyMain enemy)
 	{
-		targets[enemy]++;
+        if (targets.ContainsKey(enemy)){
+            if (GetNumShotsTargetedTotal() < RateOfFire)
+                targets[enemy]++;
+            else
+                RemoveTarget(enemy);
+        }
+        else{
+            if (GetNumShotsTargetedTotal() < RateOfFire){
+                targets.Add(enemy, 0);
+                targets[enemy]++;
+            }
+        }
 	}
 
 	protected void DecreaseShotsAtTarget(EnemyMain enemy)
 	{
-		targets[enemy]--;
-		if (targets[enemy]<=0){
-			RemoveTarget(enemy);
-		}
+        if (targets.ContainsKey(enemy)){
+
+            if (targets[enemy]>1){
+                targets[enemy]--;
+            }
+            else
+                RemoveTarget(enemy);
+        }
+        else{
+            if (GetNumShotsTargetedTotal() < RateOfFire){
+                targets.Add(enemy, 0);
+                targets[enemy]=RateOfFire-GetNumShotsTargetedTotal();
+            }
+        }
 	}
 
 	protected void RemoveTarget(EnemyMain enemy)
@@ -275,7 +273,8 @@ public class WeaponMain : MonoBehaviour {
     public int HitChancePercent(EnemyMain enemy)
     {
         var distance=Vector3.Distance(transform.position,enemy.transform.position);
-        return Mathf.Clamp(Accuracy-(int)((distance-MapGenerator.TileSize.x)/(Range*0.01f)),0,100);
+        var multi=WeaponSlot.ObjData.GetAccuracyMulti();
+        return (int)Mathf.Clamp((Accuracy-((distance-MapGenerator.TileSize.x)/(Range*0.01f)))*multi,0,100);
     }
 
     public float HitChance(EnemyMain enemy)

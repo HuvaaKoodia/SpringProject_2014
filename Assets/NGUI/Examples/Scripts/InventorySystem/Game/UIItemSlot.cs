@@ -127,13 +127,21 @@ public abstract class UIItemSlot : MonoBehaviour
             //DEV.HAX
             if (stat.type==InvStat.Type.Range||stat.type==InvStat.Type.Value) continue;
 
+            bool reverse_comparison=false;
+
+            //DEV.HAX
+            if (stat.type==InvStat.Type.Heat) reverse_comparison=true;
+
             string color="00FF00";//green
-            string sign="+";
-            if (c_stat!=null&&stat._amount<c_stat._amount){
+            string sign=":<better>";
+            if (c_stat!=null&&((!reverse_comparison&&stat._amount<c_stat._amount)||(reverse_comparison&&stat._amount>c_stat._amount))){
                 color="FF0000";//red
-                sign="-";
+                sign=":<worse>";
             }
-            if (c_stat!=null&&stat._amount==c_stat._amount) color="00C6FF";//blue
+            if (c_stat!=null&&stat._amount==c_stat._amount){
+                color="00C6FF";//blue
+                sign=":<equal>";
+            }
 
             string type=stat.type.ToString();
 
@@ -239,7 +247,7 @@ public abstract class UIItemSlot : MonoBehaviour
 	/// Keep an eye on the item and update the icon when it changes.
 	/// </summary>
 
-	void Update ()
+	public void Update ()
 	{
 		InvGameItem i = observedItem;
 

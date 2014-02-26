@@ -101,7 +101,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 	public void UnsightAllEnemies()
 	{
-		foreach(WeaponMain gun in player.gunList)
+		foreach(WeaponMain gun in player.weaponList)
 		{
 			gun.ClearTargets();
 		}
@@ -111,6 +111,15 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 		targetableEnemies.Clear();
 	}
+
+    public void UnsightWeapon(WeaponMain weapon)
+    {
+        weapon.ClearTargets();
+
+        foreach (var enemyPair in targetableEnemies){
+            enemyPair.Value.ChangeNumShots(weapon.weaponID,0,0);
+        }
+    }
 	
 	public void AddEnemyToTargetables(EnemyMain enemy, Vector3 enemyPosInScreen)
 	{
@@ -126,7 +135,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 		targetableEnemies.Add(enemy, tmHandler);
 	}
 
-	public void TargetAtMousePosition(bool left_click)
+	public void TargetAtMousePosition(bool increase_amount)
 	{
 		Component target;
 		if (player.targetingMode && Subs.GetObjectMousePos(out target, 20, "Enemy"))
@@ -138,10 +147,10 @@ public class PlayerTargetingSub : MonoBehaviour {
 				if (!targetableEnemies[enemyTargeted].IsVisible)
 					return;
 
-				player.GetCurrentWeapon().ToggleTarget(enemyTargeted,left_click);
+                player.GetCurrentWeapon().TargetEnemy(enemyTargeted,increase_amount);
 
 				targetableEnemies[enemyTargeted].ChangeNumShots(
-					player.currentGunID, 
+					player.currentWeaponID, 
                     player.GetCurrentWeapon().GetNumShotsAtTarget(enemyTargeted),
                     player.GetCurrentWeapon().HitChancePercent(enemyTargeted)
                 );
@@ -157,7 +166,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 		foreach(KeyValuePair<EnemyMain, TargetMarkHandler> enemyPair in targetableEnemies)
 		{
 			enemyPair.Value.ChangeNumShots(
-               player.currentGunID, 
+               player.currentWeaponID, 
                player.GetCurrentWeapon().GetNumShotsAtTarget(enemyPair.Key),
                player.GetCurrentWeapon().HitChancePercent(enemyPair.Key)
             );
@@ -166,7 +175,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 	public bool HasAnyTargets()
 	{
-		foreach (WeaponMain gun in player.gunList)
+		foreach (WeaponMain gun in player.weaponList)
 		{
 			if (gun.HasTargets)
 				return true;

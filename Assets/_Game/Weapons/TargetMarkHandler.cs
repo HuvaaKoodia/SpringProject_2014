@@ -33,10 +33,10 @@ public class TargetMarkHandler
 		numShotsLabels = new List<UILabel>();
 		Vector3[] labelPosOffsetDirs =
 		{
+            new Vector3(Mathf.Cos(150 * Mathf.Deg2Rad), Mathf.Sin(150 * Mathf.Deg2Rad), 0),
 			new Vector3(Mathf.Cos(110 * Mathf.Deg2Rad), Mathf.Sin(110 * Mathf.Deg2Rad), 0),
-			new Vector3(Mathf.Cos(150 * Mathf.Deg2Rad), Mathf.Sin(150 * Mathf.Deg2Rad), 0),
-			new Vector3(Mathf.Cos(70 * Mathf.Deg2Rad), Mathf.Sin(70 * Mathf.Deg2Rad), 0),
-			new Vector3(Mathf.Cos(30 * Mathf.Deg2Rad), Mathf.Sin(30 * Mathf.Deg2Rad), 0)
+            new Vector3(Mathf.Cos(30 * Mathf.Deg2Rad), Mathf.Sin(30 * Mathf.Deg2Rad), 0),
+			new Vector3(Mathf.Cos(70 * Mathf.Deg2Rad), Mathf.Sin(70 * Mathf.Deg2Rad), 0)
 		};
 		
 		for(int i = 0; i < 4; i++)
