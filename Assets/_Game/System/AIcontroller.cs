@@ -10,31 +10,31 @@ public class AIcontroller
 	int finishedEnemies = 0;
 	int enemiesWontMoveAnymore = 0;
 	public List<EnemyMain> enemies;
+	List<EnemyMain> didntUseTurn;
 
 	public AIcontroller(GameController gc)
 	{
 		this.GC = gc;
 		enemies = new List<EnemyMain>();
+		didntUseTurn = new List<EnemyMain>();
 	}
 	// Update is called once per frame
 	public void UpdateAI(TurnState currentTurn)
 	{
 		if (currentTurn == TurnState.AIMovement)
 		{
-            while (true)
-            {
-                int enemiesUsedTurn = 0;
-                foreach (EnemyMain enemy in enemies)
-                {
-                    enemy.PlayMovementTurn();
+	        foreach (EnemyMain enemy in enemies)
+	        {
+	            enemy.PlayMovementTurn();
 
-                    if (enemy.HasUsedTurn())
-                        enemiesUsedTurn++;
-                }
+	            if (enemy.HasUsedTurn())
+					didntUseTurn.Add(enemy);
+	        }
 
-                if (enemiesUsedTurn >= enemies.Count)
-                    break;
-            }
+			for (int i = didntUseTurn.Count-1; i >= 0; i--)
+				didntUseTurn[i].PlayMovementTurn();
+
+			didntUseTurn.Clear();
 
             foreach (EnemyMain enemy in enemies)
             {

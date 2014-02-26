@@ -4,7 +4,7 @@ using System.Collections;
 public class EnemyMain : EntityMain {
 
 	AIcontroller aiController;
-	public TestAI ai;
+	public AIBase ai;
 
     public bool waitingForAttackPhase;
 
@@ -19,7 +19,7 @@ public class EnemyMain : EntityMain {
 		meshRenderer = graphics.GetComponent<MeshRenderer>();
 
 		aiController = GC.aiController;
-		ai = transform.root.GetComponent<TestAI>();
+		ai = transform.root.GetComponent<AIBase>();
 	}
 
 	void Start ()
@@ -44,8 +44,8 @@ public class EnemyMain : EntityMain {
     {
         if (!ai.HasUsedTurn)
         {
-            if (ai.ap > 0)
-                ai.PlayMovementPhase();
+            if (ai.AP > 0)
+				ai.PlayMovementPhase();
             else
                 OutOfAP();
         }
@@ -53,20 +53,12 @@ public class EnemyMain : EntityMain {
 
     public void StartMoving()
     {
-        if (ai.foundMove)
-        {
-            movement.StartMoving();
-        }
-        else
-        {
-            FinishedMoving(true);
-        }
+    	movement.StartMoving();
 
-        if (ai.ap <= 0)
+        if (ai.AP <= 0)
             FinishedMoving(true);
 
         ai.HasUsedTurn = false;
-        ai.waitedForOthersToMoveThisTurn = false;
         ai.foundMove = false;
     }
 
@@ -78,6 +70,9 @@ public class EnemyMain : EntityMain {
 
 	public override void FinishedMoving(bool wontMoveAnymore)
     {
+		if (ai.AP <= 0)
+			wontMoveAnymore = true;
+
 		aiController.EnemyFinishedMoving(wontMoveAnymore);
 
         if (wontMoveAnymore)

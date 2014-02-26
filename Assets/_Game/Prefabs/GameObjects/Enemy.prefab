@@ -29,6 +29,8 @@ GameObject:
   - 114: {fileID: 11400002}
   - 114: {fileID: 11400000}
   - 65: {fileID: 6500004}
+  - 114: {fileID: 11400006}
+  - 114: {fileID: 11400008}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: AI
@@ -162,7 +164,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41fef1899d7ba6c4dbbf1a155839d1fc, type: 3}
   m_Name: 
@@ -206,11 +208,45 @@ MonoBehaviour:
   GC: {fileID: 0}
   movement: {fileID: 11400002}
   maxHealth: 100
-  ai: {fileID: 11400000}
+  ai: {fileID: 0}
   waitingForAttackPhase: 0
   graphics: {fileID: 100000}
-  renderer: {fileID: 0}
-  currentTargetState: 0
+  meshRenderer: {fileID: 0}
+--- !u!114 &11400006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b00fe0da295e86e41829b469fced2eff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AP: 0
+  HasUsedTurn: 0
+  foundMove: 0
+  waitedForOthersToMoveThisTurn: 0
+  blackboard: {fileID: 11400008}
+  Damage: 20
+  PlayerCheckMask:
+    serializedVersion: 2
+    m_Bits: 1024
+--- !u!114 &11400008
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30f71e0667d98354786c969534e48f87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  owner: {fileID: 11400006}
+  AwareOfPlayer: 0
+  LatestPathType: 0
+  Berserk: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

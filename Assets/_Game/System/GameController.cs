@@ -99,7 +99,9 @@ public class GameController : MonoBehaviour {
 
 		if (currentTurn != TurnState.PlayerTurn && currentTurn != TurnState.StartPlayerTurn)
 		{
+			//Profiler.BeginSample("AI");
 			aiController.UpdateAI(currentTurn);
+			//Profiler.EndSample();
 		}
 		else if (currentTurn == TurnState.StartPlayerTurn)
 		{
