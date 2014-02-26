@@ -125,7 +125,7 @@ public class ShipDetailGenerator : MonoBehaviour
     {
         free_tiles.Clear();
 
-        int rx=0,ry=0,rw=GC.TileObjectMap.GetLength(0),rh=GC.TileObjectMap.GetLength(1);
+        int rx=0,ry=0,rw=GC.TileMapW,rh=GC.TileMapH;
 
         if (room!=null){
             rx=room.X+room.XOFF;ry=room.Y+room.YOFF;

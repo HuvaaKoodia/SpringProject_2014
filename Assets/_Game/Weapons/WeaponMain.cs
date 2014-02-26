@@ -7,10 +7,10 @@ using System.Collections.Generic;
 
 public enum WeaponID
 {
-	LeftShoulder = 0,
-	LeftHand = 1,
-	RightShoulder = 2,
-	RightHand = 3,
+    LeftHand,
+	LeftShoulder,
+    RightHand,
+	RightShoulder
 }
 
 public class WeaponMain : MonoBehaviour {
@@ -98,60 +98,50 @@ public class WeaponMain : MonoBehaviour {
 	void Update () {
 	}
 
-	//return true if added, false if removed
-	public virtual bool ToggleTarget(EnemyMain enemy,bool left_click)
+    public virtual void TargetEnemy(EnemyMain enemy,bool increase_amount)
 	{
-		if (targets.ContainsKey(enemy))
+        if (increase_amount)
 		{
-			if (left_click)
-			{
-				if (GetNumShotsTargetedTotal() < RateOfFire)
-					IncreaseShotsAtTarget(enemy);
-				else
-					RemoveTarget(enemy);
-			}
-			else if (!left_click)
-				DecreaseShotsAtTarget(enemy);
-
-			SetTargetRotation();
-			return false;
+			IncreaseShotsAtTarget(enemy);
 		}
-		else
-		{
-			AddTarget(enemy);
-
-			if (!left_click)
-			{
-				while(GetNumShotsTargetedTotal() < RateOfFire)
-				{
-					IncreaseShotsAtTarget(enemy);
-				}
-			}
-
-			SetTargetRotation();
-			return true;
-		}
-	}
-
-	protected void AddTarget(EnemyMain enemy)
-	{
-		if (GetNumShotsTargetedTotal() < RateOfFire)
-		{
-			targets.Add(enemy, 1);
-		}
+        else{
+			DecreaseShotsAtTarget(enemy);
+        }
+		SetTargetRotation();
 	}
 
 	protected void IncreaseShotsAtTarget(EnemyMain enemy)
 	{
-		targets[enemy]++;
+        if (targets.ContainsKey(enemy)){
+            if (GetNumShotsTargetedTotal() < RateOfFire)
+                targets[enemy]++;
+            else
+                RemoveTarget(enemy);
+        }
+        else{
+            if (GetNumShotsTargetedTotal() < RateOfFire){
+                targets.Add(enemy, 0);
+                targets[enemy]++;
+            }
+        }
 	}
 
 	protected void DecreaseShotsAtTarget(EnemyMain enemy)
 	{
-		targets[enemy]--;
-		if (targets[enemy]<=0){
-			RemoveTarget(enemy);
-		}
+        if (targets.ContainsKey(enemy)){
+
+            if (targets[enemy]>1){
+                targets[enemy]--;
+            }
+            else
+                RemoveTarget(enemy);
+        }
+        else{
+            if (GetNumShotsTargetedTotal() < RateOfFire){
+                targets.Add(enemy, 0);
+                targets[enemy]=RateOfFire-GetNumShotsTargetedTotal();
+            }
+        }
 	}
 
 	protected void RemoveTarget(EnemyMain enemy)

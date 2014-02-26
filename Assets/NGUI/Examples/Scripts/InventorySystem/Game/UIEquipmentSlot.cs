@@ -22,7 +22,9 @@ public class UIEquipmentSlot : UIItemSlot
 	public InvEquipmentStorage equipment;
 	public Slot slot;
 
-    //DEv. puukkoa!
+    public GameObject DisabledSprite;
+
+    //DEv. puukkoa! Color all slots
     public static List<UIEquipmentSlot> EquipmentSlots;
    
     public void SetSlotColor(InvGameItem item){
@@ -37,6 +39,7 @@ public class UIEquipmentSlot : UIItemSlot
             background.color=Color.red;
         }
     }
+    //DEV. puukko end
 
 	void Start(){
         if (EquipmentSlots==null)
@@ -63,6 +66,9 @@ public class UIEquipmentSlot : UIItemSlot
 
 	override protected InvGameItem Replace (InvGameItem item)
 	{
+        if (equipment!=null){
+            if (!equipment.GetSlot(slot).ObjData.USABLE) return item;
+        }
         if (equipment!=null&&!equipment.CanReplace(slot, item)) return item;
         if (CheckVendorSlotItemInteractions(item)) return item;
 
@@ -78,4 +84,16 @@ public class UIEquipmentSlot : UIItemSlot
 
 		return (equipment != null) ? equipment.Replace(slot, item) : item;
 	}
+    
+    new public void Update(){
+        base.Update();
+        UpdateSlotCondition();
+    }
+
+    void UpdateSlotCondition(){
+        if (equipment==null) return;
+        var s=equipment.GetSlot(slot);
+        if (s!=null)
+            DisabledSprite.SetActive(!s.ObjData.USABLE);
+    }
 }

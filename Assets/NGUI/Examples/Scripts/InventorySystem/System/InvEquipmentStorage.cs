@@ -41,8 +41,8 @@ public class InvEquipmentStorage
 	void Awake(){
 		//Inventory Slots
         EquipmentSlots=new InvEquipmentSlot[8];
-		AddSlot(UIEquipmentSlot.Slot.WeaponLeftHand,InvBaseItem.Type.LightWeapon);
-		AddSlot(UIEquipmentSlot.Slot.WeaponRightHand,InvBaseItem.Type.LightWeapon);
+		AddSlot(UIEquipmentSlot.Slot.WeaponLeftHand,InvBaseItem.Type.LightWeapon,InvBaseItem.Type.MeleeWeapon);
+        AddSlot(UIEquipmentSlot.Slot.WeaponRightHand,InvBaseItem.Type.LightWeapon,InvBaseItem.Type.MeleeWeapon);
 		AddSlot(UIEquipmentSlot.Slot.WeaponLeftShoulder,InvBaseItem.Type.HeavyWeapon,InvBaseItem.Type.LightWeapon);
 		AddSlot(UIEquipmentSlot.Slot.WeaponRightShoulder,InvBaseItem.Type.HeavyWeapon,InvBaseItem.Type.LightWeapon);
 

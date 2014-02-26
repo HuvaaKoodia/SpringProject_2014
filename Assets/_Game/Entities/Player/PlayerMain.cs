@@ -13,8 +13,8 @@ public class PlayerMain : EntityMain
 	public PlayerTargetingSub targetingSub;
 	public PlayerInteractSub interactSub;
 
-	public List<WeaponMain> gunList;
-	public WeaponID currentGunID;
+	public List<WeaponMain> weaponList;
+	public WeaponID currentWeaponID;
 	
 	public bool targetingMode { get; private set; }
 
@@ -50,12 +50,16 @@ public class PlayerMain : EntityMain
 		interactSub.CheckForInteractables();
 
         ActivateEquippedItems();
+
+        for (int i=0;i<4;++i){
+            weaponList[i].weaponID=(WeaponID)i;
+        }
 	}
 	
 	// Update is called once per frame
 	void Update()
     {
-		foreach (WeaponMain weapon in gunList)
+        foreach (WeaponMain weapon in weaponList)
 		{
 			if (targetingMode && !weapon.HasTargets && weapon == GetCurrentWeapon())
 				weapon.LookAtMouse(targetingSub.TargetingArea);
@@ -105,11 +109,11 @@ public class PlayerMain : EntityMain
     {
 		ap = 0;
 
-		foreach(WeaponMain gun in gunList)
+        foreach(WeaponMain weapon in weaponList)
 		{
-			if (gun.HasTargets)
+            if (weapon.HasTargets)
 			{
-				gun.Shoot();
+                weapon.Shoot();
 			}
 		}
 
@@ -164,7 +168,7 @@ public class PlayerMain : EntityMain
         if (!GetCurrentWeapon().Usable()){
 			bool foundWeapon = false;
             for(int i=0;i<4;i++){
-                var w=gunList[i];
+                var w=weaponList[i];
                 if (w.Usable()){
                     ChangeWeapon((WeaponID)i);
 					foundWeapon = true;
@@ -180,7 +184,7 @@ public class PlayerMain : EntityMain
 		targetingSub.CheckTargetableEnemies(Camera.main.transform.position);
 		targetingSub.CheckGunSightToEnemies(GetCurrentWeapon().transform.position);
 		GC.menuHandler.CheckTargetingModePanel();
-		GC.menuHandler.gunInfoDisplay.ChangeCurrentHighlight(currentGunID);
+		GC.menuHandler.gunInfoDisplay.ChangeCurrentHighlight(currentWeaponID);
 		return true;
 	}
 
@@ -195,7 +199,7 @@ public class PlayerMain : EntityMain
 	{
 		for (int i = 0; i < multiplier; i++)
 		{
-			foreach(WeaponMain gun in gunList)
+            foreach(WeaponMain gun in weaponList)
 			{
 				gun.ReduceHeat();
 			}
@@ -205,27 +209,27 @@ public class PlayerMain : EntityMain
 
 	public void ChangeWeapon(WeaponID id)
 	{
-        var weapon=gunList[(int)id];
+        var weapon=weaponList[(int)id];
         if (!weapon.Usable()) 
 			return;
 
 		GetCurrentWeapon().Unselected();
-		currentGunID = id;
+		currentWeaponID = id;
 		targetingSub.CheckGunTargets();
 		targetingSub.CheckGunSightToEnemies(GetCurrentWeapon().transform.position);
 		GC.menuHandler.CheckTargetingModePanel();
-		GC.menuHandler.gunInfoDisplay.ChangeCurrentHighlight(currentGunID);
+		GC.menuHandler.gunInfoDisplay.ChangeCurrentHighlight(currentWeaponID);
 		targetingSub.ShowTargetMarks(GetCurrentWeapon().Weapon != null);
 	}
 
 	public WeaponMain GetWeapon (WeaponID id)
 	{
-			return gunList[(int)id];
+        return weaponList[(int)id];
 	}
 	
 	public WeaponMain GetCurrentWeapon()
 	{
-			return gunList[(int)currentGunID];
+        return weaponList[(int)currentWeaponID];
 	}
 
     /// <summary>
@@ -248,9 +252,9 @@ public class PlayerMain : EntityMain
         ActivateEquipment(WeaponID.RightShoulder,UIEquipmentSlot.Slot.WeaponRightShoulder);
         
 		if (GetCurrentWeapon().Usable())
-			GC.menuHandler.gunInfoDisplay.ChangeCurrentHighlight(currentGunID);
+			GC.menuHandler.gunInfoDisplay.ChangeCurrentHighlight(currentWeaponID);
 
-		foreach(WeaponMain weapon in gunList)
+		foreach(WeaponMain weapon in weaponList)
 		{
 			weapon.gameObject.SetActive(weapon.Weapon != null);
 		}

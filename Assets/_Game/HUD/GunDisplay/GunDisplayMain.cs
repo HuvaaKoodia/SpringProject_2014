@@ -38,7 +38,7 @@ public class GunDisplayMain : MonoBehaviour {
 		}
 
 		if (!GC.Player.GetCurrentWeapon().Usable())
-			gunInfoScreens[(int)GC.Player.currentGunID].SetHighlightColor(inActiveColor);
+            gunInfoScreens[(int)GC.Player.currentWeaponID].SetHighlightColor(inActiveColor);
 	}
 
 	public void UpdateDisplay(WeaponID id)

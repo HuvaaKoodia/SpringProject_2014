@@ -128,15 +128,19 @@ public class MenuHandler : MonoBehaviour {
 	}
 
     void WeaponPressed(WeaponID id){
-        if (player.currentGunID==id){
-            player.inputSub.TargetingModeInput();
+
+        if (currentMenuState == MenuState.InventoryHUD) return;
+
+        if (currentMenuState == MenuState.TargetingHUD){
+            if (player.currentWeaponID==id){
+                player.targetingSub.UnsightWeapon(player.GetWeapon(id));
+                return;
+            }
+            player.inputSub.ChangeWeaponInput(id);
         }
         else{
+            player.inputSub.TargetingModeInput();
             player.inputSub.ChangeWeaponInput(id);
-            
-            if (currentMenuState != MenuState.InventoryHUD 
-                && currentMenuState != MenuState.TargetingHUD)
-                player.inputSub.TargetingModeInput();
         }
     }
 

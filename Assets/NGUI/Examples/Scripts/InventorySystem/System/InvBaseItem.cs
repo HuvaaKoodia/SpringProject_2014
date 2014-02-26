@@ -9,6 +9,7 @@ public class InvBaseItem
 		None,
 		LightWeapon,
 		HeavyWeapon,
+        MeleeWeapon,
 		Utility,
         QuestItem,
 		_Amount
