@@ -157,8 +157,6 @@ public class MapGenerator : MonoBehaviour
                 if (t!=null&&t.Data.TileType==TileObjData.Type.Door){
                     bool isairlock=t.TileObject.GetComponent<DoorMain>().isAirlockOutsideDoor;
 
-                    Debug.Log("Door CHECK is airlock: "+isairlock+"pos:"+x+","+y+",  "+xx+","+yy);
-
                     if (isairlock) continue;
 
                     //Not Airlock -> rotate towards this

@@ -129,7 +129,6 @@ public class InvEquipmentStorage
 	/// <summary>
 	/// Unequip the specified item, returning it if the operation was successful.
 	/// </summary>
-
 	public InvGameItem Unequip (InvGameItem item)
 	{
 		if (item == null) return item;

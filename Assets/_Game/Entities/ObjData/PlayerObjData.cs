@@ -119,6 +119,10 @@ public class PlayerObjData{
     {
         return Ammo[ammotype];
     }
+    public int SetAmmoAmount(string ammotype,int amount)
+    {
+        return Ammo[ammotype]=amount;
+    }
 
     public AmmoXmlData GetAmmoData(string ammotype)
     {

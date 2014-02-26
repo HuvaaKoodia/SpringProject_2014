@@ -34,7 +34,17 @@ public class WeaponMain : MonoBehaviour {
 	public int HeatGeneration { get; protected set;}
 	public int CoolingRate { get; protected set;}
 	
-	public int CurrentAmmo { get; protected set;}
+    public int CurrentAmmo { 
+        get{
+            if (NoAmmoConsumption) return 1;
+            return player.ObjData.GetAmmoAmount(Weapon.baseItem.ammotype);
+        }
+        protected set{
+            if (!NoAmmoConsumption){
+                player.ObjData.SetAmmoAmount(Weapon.baseItem.ammotype,value);
+            }
+        }
+    }
     public int CurrentHeat { get{return WeaponSlot.ObjData.HEAT;}}
 
     public bool Overheat{get{return WeaponSlot.ObjData.OVERHEAT;}}
@@ -74,11 +84,9 @@ public class WeaponMain : MonoBehaviour {
         MaxAmmo = player.ObjData.GetAmmoData(Weapon.baseItem.ammotype).MaxAmount;
         if(MaxAmmo==-1){
             NoAmmoConsumption=true;
-            CurrentAmmo=MaxAmmo=1;
         }
         else{
             NoAmmoConsumption=false;
-            CurrentAmmo = player.ObjData.GetAmmoData(Weapon.baseItem.ammotype).StartAmount;
         }
 	}
 
@@ -265,7 +273,8 @@ public class WeaponMain : MonoBehaviour {
     public int HitChancePercent(EnemyMain enemy)
     {
         var distance=Vector3.Distance(transform.position,enemy.transform.position);
-        return Mathf.Clamp(Accuracy-(int)((distance-MapGenerator.TileSize.x)/(Range*0.01f)),0,100);
+        var multi=WeaponSlot.ObjData.GetAccuracyMulti();
+        return (int)Mathf.Clamp((Accuracy-((distance-MapGenerator.TileSize.x)/(Range*0.01f)))*multi,0,100);
     }
 
     public float HitChance(EnemyMain enemy)

@@ -51,4 +51,14 @@ public class MechaPartObjData{
         if (weapon==null) return;
         AddHEAT(-weapon.GetStat(InvStat.Type.Cooling)._amount);
     }
+
+    //effects
+
+    public float GetAccuracyMulti()
+    {
+        if (HP<MaxHP*0.5f){
+            return 0.6f;
+        }
+        return 1f;
+    }
 }
