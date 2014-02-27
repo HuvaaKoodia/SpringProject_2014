@@ -62,6 +62,19 @@ public class GameDB : MonoBehaviour {
         Application.LoadLevel(HQScene);
     }
 
+    public int CalculateQuestReward()
+    {
+        int reward=0;
+        for(int i=0;i<PlayerData.Items.maxItemCount;++i){
+            var item=PlayerData.Items.GetItem(i);
+            if (item==null) continue;
+            if (item.baseItem.type==InvBaseItem.Type.QuestItem){
+                reward+=item.GetStat(InvStat.Type.Value)._amount;
+            }
+        }
+        return reward;
+    }
+
     public void RemoveQuestItems()
     {
         for(int i=0;i<PlayerData.Items.maxItemCount;++i){
