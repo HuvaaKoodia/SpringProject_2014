@@ -32,7 +32,8 @@ public class MapGenerator : MonoBehaviour
                 data.TilePosition = new Vector3(x, 0, y);
 
                 //DEV. create type and obj dictionaries
-                switch (md.map_data [x, y])
+                var index=md.map_data [x, y];
+                switch (index)
                 {
                     case CorridorIcon:
                         data.SetType(TileObjData.Type.Corridor);
@@ -49,14 +50,11 @@ public class MapGenerator : MonoBehaviour
                     case DoorIcon:
                         data.SetType(TileObjData.Type.Door);
                         break;
-                    case "p":
-                        data.SetType(TileObjData.Type.Floor);
-                        data.SetObj(TileObjData.Obj.Player);
-                        break;
-                    case "e":
-                        data.SetType(TileObjData.Type.Floor);
-                        data.SetObj(TileObjData.Obj.Enemy); 
-                        break;
+                }
+                var obj_index=ShipGenerator.GetObjectIndices(index);
+                if (obj_index!=null){
+                    data.SetType(TileObjData.Type.Floor);
+                    data.SetObj(obj_index);
                 }
             }
         }
@@ -107,7 +105,7 @@ public class MapGenerator : MonoBehaviour
                     case TileObjData.Obj.Player:
 					    player_tiles.Add(entity_pos);
                         break;
-                                        
+
                     case TileObjData.Obj.Enemy:
                         var newEnemy = GameObject.Instantiate(MapPrefabs.EnemyPrefab, tile_pos, Quaternion.identity) as EnemyMain;
                         newEnemy.name = "Enemy";
@@ -125,7 +123,6 @@ public class MapGenerator : MonoBehaviour
 						GC.LootCrates.Add(crate);
                         tile.TileObject=LootCrate;
                         tile.TileObject.transform.parent = tile.transform;
-
                         break;
                 }
             }

@@ -114,6 +114,12 @@ public class PlayerInputSub : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Keypad2)){
             player.TakeDamage(10,x+0,y-1);
         }
+
+        if (Input.GetKeyDown(KeyCode.L)){
+            player.ap=200;
+            player.movement.movementSpeed=10;
+            player.movement.turnSpeed=360;
+        }
 #endif
 
 	}

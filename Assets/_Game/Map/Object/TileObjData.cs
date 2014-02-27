@@ -5,17 +5,26 @@ using System.Collections.Generic;
 public class TileObjData
 {
 	public enum Type {Floor,Wall,Empty,Door,Corridor};
-	public enum Obj {None,Player,Enemy,Loot};
+    public enum Obj {None,Player,Enemy,Loot,Obstacle,LootArea};
 	
+    Obj _obj;
 	public Vector3 TilePosition;
 	public Type TileType{get;private set;}
-	public Obj ObjType{get;private set;}
+    public Obj ObjType{get{return _obj;}}
+    public ObjectXmlIndex ObjXml{get;private set;}
 	
 	public void SetType(Type type){
 		TileType=type;
 	}
 	
-	public void SetObj(Obj obj){
-		ObjType=obj;
+    public void SetObj(Obj obj){
+        _obj=obj;
+    }
+
+    public void SetObj(ObjectXmlIndex obj){
+        ObjXml=obj;
+        _obj=obj.type;
+        Debug.Log("TypeSet: "+_obj);
 	}
+
 }

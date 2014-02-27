@@ -77,17 +77,15 @@ public class GameController : MonoBehaviour {
         if (!OverrideMissionShip)
             SS.SDGen.GenerateMissionObjectives(this,SS.GDB.CurrentMission,ship_objdata,SS.XDB);
 
-		//init menuhandler stuff
+		//init hud
 		menuHandler.player = player;
 		menuHandler.CheckTargetingModePanel();
-		
-		//link player to hud
+        menuHandler.SetGC(this);
+
 		Inventory.SetPlayer(player);
 
         var ec=GetComponent<EngineController>();
         ec.AfterRestart+=SS.GDB.StartNewGame;
-
-        menuHandler.SetGC(this);
 
         player.ActivateEquippedItems();
 	}
@@ -95,7 +93,6 @@ public class GameController : MonoBehaviour {
 	// Update is called once per frame
 	void Update()
     {
-
 		if (currentTurn != TurnState.PlayerTurn && currentTurn != TurnState.StartPlayerTurn)
 		{
 			//Profiler.BeginSample("AI");

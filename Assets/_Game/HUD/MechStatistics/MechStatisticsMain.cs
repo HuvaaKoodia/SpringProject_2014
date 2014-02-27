@@ -27,10 +27,6 @@ public class MechStatisticsMain : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update (){
-        if (PlayerData==null){
-            var Player=GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMain>();
-            PlayerData=Player.ObjData;
-        }
 		/*
         SetWeaponText("LS: ",LS,UIEquipmentSlot.Slot.WeaponLeftShoulder);
         SetWeaponText("LH: ",LH,UIEquipmentSlot.Slot.WeaponLeftHand);

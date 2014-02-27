@@ -52,6 +52,6 @@ public class XmlDatabase : MonoBehaviour
 			if (ItemDB!=null) ItemDB.items.Add(i);
 		}
 
-        XMLDataLoader.ReadConstants();
+        XMLDataLoader.ReadDataFiles();
     }
 }

@@ -33,6 +33,7 @@ public class MenuHandler : MonoBehaviour {
 	public InventoryMain InventoryHud;
     public MissionBriefingMenu MissionBriefing;
     public GameObject EndMissionPanel;
+    public MechStatisticsMain MechStats;
 
 	// Use this for initialization
 	void Start()
@@ -51,6 +52,7 @@ public class MenuHandler : MonoBehaviour {
         gunInfoDisplay.GC=GC;
         radar.GC=GC;
         map.GC = GC;
+        MechStats.SetPlayer(player.ObjData);
     }
 	
 	// Update is called once per frame

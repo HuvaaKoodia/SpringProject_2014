@@ -127,6 +127,8 @@ public class XMLDataLoader : XML_Loader
             var mission=new MissionXmlData();
             var type=(MissionObjData.Type)System.Enum.Parse(typeof(MissionObjData.Type),getAttStr(node,"type"),true);
             mission.Description=getStr(node,"Description").Replace("\\n","\n");
+            mission.Reward=getAttInt(node,"reward",0);
+
 
             string[] spl;
 
@@ -172,7 +174,7 @@ public class XMLDataLoader : XML_Loader
 
             data.Room=getStr(node,"Room","room");
             data.Item=getStr(node,"Item","");
-            
+
             database.Objectives.Add(type,data);
             return true;
         }
@@ -191,26 +193,55 @@ public class XMLDataLoader : XML_Loader
 		}
 	}
 
-    public static void ReadConstants()
+    public static void ReadDataFiles()
+    {
+        ReadConstants();
+        ReadObjectIndices();
+        ReadRoomIndices();
+    }
+
+    static void ReadConstants()
     {
         readAutoFileStatic("Data","Constants",typeof(XmlDatabase),"Constants");
+    }
 
+    static void ReadRoomIndices()
+    {
         var Doc=GetXmlDocument("Data","ShipGenerator");
-        var root=Doc["RoomIndices"];
+        var root=Doc["ShipGenerator"]["RoomIndices"];
         ShipGenerator.RoomIndices=new Dictionary<string, RoomXmlIndex>();
-
+        
         var tags=getChildrenByTag(root,"Tag");
         foreach(var tag in tags){
-
+            
             var stats=new RoomXmlIndex();
             stats.index=tag.Attributes["index"].Value;
             stats.name=tag.Attributes["name"].Value;
             stats.type=tag.Attributes["type"].Value;
-
+            
             stats.randomize_pos=getAttBool(tag,"random_pos",false);
             stats.randomize_doors=getAttBool(tag,"random_doors",false);
-
+            
             ShipGenerator.RoomIndices.Add(stats.index,stats);
+        }
+    }
+
+    static void ReadObjectIndices()
+    {
+        var Doc=GetXmlDocument("Data","ShipGenerator");
+
+        var root=Doc["ShipGenerator"]["ObjectIndices"];
+        ShipGenerator.ObjectIndices=new Dictionary<string, ObjectXmlIndex>();
+        
+        var tags=getChildrenByTag(root,"Tag");
+        foreach(var tag in tags){
+            var stats=new ObjectXmlIndex();
+            stats.index=tag.Attributes["index"].Value;
+            stats.type=(TileObjData.Obj)System.Enum.Parse(typeof(TileObjData.Obj),tag.Attributes["type"].Value);
+            
+            stats.rotation=getAttInt(root,"rotation",0);
+            
+            ShipGenerator.ObjectIndices.Add(stats.index,stats);
         }
     }
 }

@@ -1,9 +1,15 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+
 public class RoomXmlIndex{
     public string index,type,name;
     public bool randomize_pos=false,randomize_doors=false;
+}
+public class ObjectXmlIndex{
+    public string index;
+    public int rotation;
+    public TileObjData.Obj type;
 }
 /// <summary>
 /// Generates ShipObjectData from ShipMapData.
@@ -11,6 +17,14 @@ public class RoomXmlIndex{
 public class ShipGenerator : MonoBehaviour 
 {
     public static Dictionary<string,RoomXmlIndex> RoomIndices;
+    public static Dictionary<string,ObjectXmlIndex> ObjectIndices;
+
+    public static ObjectXmlIndex GetObjectIndices(string index)
+    {
+        ObjectXmlIndex out_index=null;
+        ObjectIndices.TryGetValue(index,out out_index);
+        return out_index;
+    }
 
 	bool IsRoomStartIndex(string index){
         foreach(var i in RoomIndices){

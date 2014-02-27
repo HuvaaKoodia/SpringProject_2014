@@ -1,4 +1,5 @@
 <!--
+-RoomIndices-
 Attributes:
 index = Index used in map files
 name = Name of a specific room layout
@@ -14,30 +15,53 @@ engine
 commandbridge
 cargohold
 armory
--->
-<RoomIndices>
-	<Tag index="R"  name="room" 				type="room" 			random_pos="true" random_doors="true"/>
-	                
-	<Tag index="A1" name="airlockHorizontal" 	type="airlock"/>
-	<Tag index="A2" name="airlockVertical" 		type="airlock"/>
-	                
-	<Tag index="E"  name="engine" 				type="engine" 			random_pos="true" random_doors="true"/>
-	<Tag index="E1" name="engine1"				type="engine"/>
-	                
-	<Tag index="K1" name="commandbridge1"		type="commandbridge"/>
-	<Tag index="K2" name="commandbridge2"       type="commandbridge"/>
-	<Tag index="K3" name="commandbridge3"       type="commandbridge"/>
-	               
-	<Tag index="V"  name="cargo" 				type="cargohold" 		random_pos="true" random_doors="true"/>
-	<Tag index="V1" name="cargoHorizontal"		type="cargohold"/>
-	<Tag index="V2" name="cargoVerticalLeft"	type="cargohold"/>
-	<Tag index="V3" name="cargoVerticalRight"	type="cargohold"/>
-	<Tag index="V4" name="cargoLargeLR"			type="cargohold"/>
-	                
-	<Tag index="M"  name="armory" 				type="armory" 			random_pos="true" random_doors="true"/>
-	<Tag index="M1" name="armoryHorizontal"		type="armory"/>
-	<Tag index="M2" name="armoryVerticalLeft"	type="armory"/>
-	<Tag index="M3" name="armoryVerticalRight"	type="armory"/>
-	
-</RoomIndices>
 
+-ObjectIndices-
+Attributes:
+index = Index used in map files
+type = The type used in game to distinguish between object
+
+rotation = start rotation in game (default=0, -1=random rotation, Overridden for player and enemies)
+
+Possible types:
+Player
+Enemy
+Loot
+Obstacle
+-->
+
+<ShipGenerator>
+	<RoomIndices>
+		<Tag index="R"  name="room" 				type="room" 			random_pos="true" random_doors="true"/>
+						
+		<Tag index="A1" name="airlockHorizontal" 	type="airlock"/>
+		<Tag index="A2" name="airlockVertical" 		type="airlock"/>
+						
+		<Tag index="E"  name="engine" 				type="engine" 			random_pos="true" random_doors="true"/>
+		<Tag index="E1" name="engine1"				type="engine"/>
+						
+		<Tag index="K1" name="commandbridge1"		type="commandbridge"/>
+		<Tag index="K2" name="commandbridge2"       type="commandbridge"/>
+		<Tag index="K3" name="commandbridge3"       type="commandbridge"/>
+					   
+		<Tag index="V"  name="cargo" 				type="cargohold" 		random_pos="true" random_doors="true"/>
+		<Tag index="V1" name="cargoHorizontal"		type="cargohold"/>
+		<Tag index="V2" name="cargoVerticalLeft"	type="cargohold"/>
+		<Tag index="V3" name="cargoVerticalRight"	type="cargohold"/>
+		<Tag index="V4" name="cargoLargeLR"			type="cargohold"/>
+						
+		<Tag index="M"  name="armory" 				type="armory" 			random_pos="true" random_doors="true"/>
+		<Tag index="M1" name="armoryHorizontal"		type="armory"/>
+		<Tag index="M2" name="armoryVerticalLeft"	type="armory"/>
+		<Tag index="M3" name="armoryVerticalRight"	type="armory"/>
+		
+	</RoomIndices>
+
+	<ObjectIndices>
+		<Tag index="p"	type="Player"/>
+		<Tag index="e"	type="Enemy"/>
+		<Tag index="l"	type="Loot"/>
+		<Tag index="o"	type="Obstacle"/>
+		<Tag index=":"	type="LootArea"/>
+	</ObjectIndices>
+</ShipGenerator>

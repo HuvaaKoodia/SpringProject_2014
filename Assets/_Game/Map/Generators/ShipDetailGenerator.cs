@@ -42,7 +42,7 @@ public class ShipDetailGenerator : MonoBehaviour
         foreach (var room in rooms_list)
         {
             //loot crates
-            GetFreeTilesOfType(GC,room, TileObjData.Type.Floor, free_tiles);
+            GetTilesOfTypeWithObject(GC,room, TileObjData.Type.Floor,TileObjData.Obj.LootArea, free_tiles);
             int l_amount = Subs.GetRandom(room.RoomXmlData.LootAmountMin, room.RoomXmlData.LootAmountMax);
             
             while (free_tiles.Count>0)
@@ -55,7 +55,7 @@ public class ShipDetailGenerator : MonoBehaviour
                 
                 l_amount--;
                 floor_amount_loot--;
-                
+                    
                 tile.SetObj(TileObjData.Obj.Loot);
             }
 
@@ -79,8 +79,8 @@ public class ShipDetailGenerator : MonoBehaviour
         }
 
 
-        //add remaining loot to random floors on the map (floor tiles outside rooms included)
-        if (floor_amount_loot > 0)
+        //add remaining loot to random lootareas on the map (floor tiles outside rooms included)
+        /*if (floor_amount_loot > 0)
         {
             GetFreeTilesOfType(GC,null, TileObjData.Type.Floor, free_tiles);
             while (free_tiles.Count>0)
@@ -95,7 +95,7 @@ public class ShipDetailGenerator : MonoBehaviour
                 
                 tile.SetObj(TileObjData.Obj.Loot);
             }
-        }
+        }*/
 
         //add remaining enemies to corridors
         if (floor_amount_enemies > 0)
@@ -123,21 +123,30 @@ public class ShipDetailGenerator : MonoBehaviour
     /// </summary>
     void GetFreeTilesOfType(GameController GC,CellData room, TileObjData.Type type, List<TileObjData> free_tiles)
     {
+        GetTilesOfTypeWithObject(GC,room,type,TileObjData.Obj.None,free_tiles);
+    }
+
+    /// <summary>
+    /// Returns all tiles of a certain type inside a room which have an object.
+    /// If room is null the whole map is scanned.
+    /// </summary>
+    void GetTilesOfTypeWithObject(GameController GC,CellData room, TileObjData.Type type,TileObjData.Obj obj, List<TileObjData> free_tiles)
+    {
         free_tiles.Clear();
-
+        
         int rx=0,ry=0,rw=GC.TileMapW,rh=GC.TileMapH;
-
+        
         if (room!=null){
             rx=room.X+room.XOFF;ry=room.Y+room.YOFF;
             rw=room.W;rh=room.H;
         }
-
+        
         for (int x = 0; x < rw; x++)
         {
             for (int y = 0; y < rh; y++)
             {
                 var tile = GC.TileObjectMap [rx+x, ry+y];
-                if (tile.TileType == type && tile.ObjType == TileObjData.Obj.None)
+                if (tile.TileType == type && tile.ObjType == obj)
                 {
                     free_tiles.Add(tile);
                 }
@@ -145,7 +154,7 @@ public class ShipDetailGenerator : MonoBehaviour
         }
     }
 
-    public void GenerateMissionObjectives(GameController GC,MissionObjData mission,ShipObjData ship,XmlDatabase XDB){
+    public void GenerateMissionObjectives(GameController GC, MissionObjData mission, ShipObjData ship, XmlDatabase XDB){
 
         if (mission.ContainsObjective(MissionObjData.Objective.FindItem)){
             var objective=XDB.Objectives[MissionObjData.Objective.FindItem];
