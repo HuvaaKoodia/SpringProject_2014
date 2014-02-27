@@ -11,6 +11,9 @@ public class EnemyMain : EntityMain {
 	public GameObject graphics;
 	public MeshRenderer meshRenderer;
 
+	public int rangedRange = 3;
+	public int rangedAngleMax = 50;
+
 	// Use this for initialization
 	public override void Awake()
 	{
@@ -35,20 +38,35 @@ public class EnemyMain : EntityMain {
 
 	public void StartEnemyTurn()
 	{
-		ai.ResetAP();
+		ai.Reset();
         waitingForAttackPhase = false;
         //Debug.Log("new ai turn");
 	}
 
-    public void PlayMovementTurn()
+    public void PlayTurn()
     {
         if (!ai.HasUsedTurn)
         {
             if (ai.AP > 0)
-				ai.PlayMovementPhase();
+			{
+				ai.PlayAiTurn();
+
+				if (movement.currentMovement == MovementState.NotMoving)
+				{
+					FinishedMoving(false);
+				}
+				else
+				{
+					StartMoving();
+				}
+			}
             else
                 OutOfAP();
         }
+		else
+		{
+			FinishTurn();
+		}
     }
 
     public void StartMoving()
@@ -65,24 +83,20 @@ public class EnemyMain : EntityMain {
     void OutOfAP()
     {
         ai.HasUsedTurn = true;
-        FinishedMoving(true);
+		FinishTurn();
     }
 
 	public override void FinishedMoving(bool wontMoveAnymore)
     {
-		if (ai.AP <= 0)
-			wontMoveAnymore = true;
-
-		aiController.EnemyFinishedMoving(wontMoveAnymore);
-
-        if (wontMoveAnymore)
-		{
-			//graphics.SetActive(false);
-            waitingForAttackPhase = true;
-		}
+		FinishTurn();
     }
 
+	public void FinishedAttacking()
+	{
+		FinishTurn();
+	}
 
+	/*
     public void PlayAttackingPhase()
     {
 		ai.PlayAttackPhase();
@@ -92,6 +106,7 @@ public class EnemyMain : EntityMain {
 	{
         aiController.EnemyFinishedAttacking();
 	}
+	*/
 
 	public override void TakeDamage(int damage)
 	{
@@ -120,4 +135,9 @@ public class EnemyMain : EntityMain {
     {
         return ai.HasUsedTurn;
     }
+
+	void FinishTurn()
+	{
+		aiController.EnemyFinishedTurn(this);
+	}
 }

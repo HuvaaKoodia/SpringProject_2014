@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public enum TurnState
 {
-    StartPlayerTurn, PlayerTurn, StartAITurn, AIMovement, AIAttack, WaitingAIToFinish
+    StartPlayerTurn, PlayerTurn, StartAITurn, AITurn, WaitingAIToFinish
 }
 
 public class GameController : MonoBehaviour {

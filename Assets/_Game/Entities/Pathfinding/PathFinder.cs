@@ -148,9 +148,8 @@ public static class PathFinder
 				return FindPath(world, startPoint, best.position, -1);
 			}
 			
-			if (CanSeeFromTileToTile(avoider, toAvoid, distance, 
+			if (!CanSeeFromTileToTile(toAvoid, current.position, distance, 
 			                         1 << LayerMask.NameToLayer("Wall") 
-			                         | 1 << LayerMask.NameToLayer("Enemy")
 			                         | 1 << LayerMask.NameToLayer("Player")))
 			{
 				return FindPath(world, startPoint, current.position, -1);
@@ -186,10 +185,13 @@ public static class PathFinder
 		return null; //no path found
 	}
 
-	public static bool CanSeeFromTileToTile(EntityMain toAvoid, EntityMain avoider, int checkRadius, LayerMask mask)
+	public static bool CanSeeFromTileToTile(EntityMain toAvoid, Point3D tileToCheck, int checkRadius, LayerMask mask)
 	{
 		Vector3 adjustedtoAvoidPos = toAvoid.transform.position + Vector3.up*0.6f;
-		Vector3 adjustedAvoiderPos = avoider.transform.position + Vector3.up*0.6f;
+		Vector3 adjustedAvoiderPos = 
+			new Vector3(tileToCheck.X * MapGenerator.TileSize.x,
+			           	0.6f,
+			            tileToCheck.Y * MapGenerator.TileSize.z);
 		
 		Ray ray = new Ray(adjustedAvoiderPos, adjustedtoAvoidPos - adjustedAvoiderPos);
 		RaycastHit hitInfo;

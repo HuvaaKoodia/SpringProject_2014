@@ -3,6 +3,7 @@ using System.Collections;
 
 public class TestAI : MonoBehaviour
 {
+	/*
     EnemyMain parent;
     EntityMovementSub movement;
 	
@@ -125,11 +126,11 @@ public class TestAI : MonoBehaviour
                         HasUsedTurn = true;
                         parent.FinishedMoving(true);
                     }
-                /*}
+                ((}
                 else
                 {
                     HasUsedTurn = true;
-                }*/
+                }
 			}
 		}
     }
@@ -184,4 +185,5 @@ public class TestAI : MonoBehaviour
 			movement.TurnLeft();
 		}
 	}
+	*/
 }

@@ -169,11 +169,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41fef1899d7ba6c4dbbf1a155839d1fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HasUsedTurn: 0
-  foundMove: 0
-  waitedForOthersToMoveThisTurn: 0
-  ap: 0
-  damage: 20
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -212,6 +207,7 @@ MonoBehaviour:
   waitingForAttackPhase: 0
   graphics: {fileID: 100000}
   meshRenderer: {fileID: 0}
+  rangedRange: 3
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -226,12 +222,14 @@ MonoBehaviour:
   AP: 0
   HasUsedTurn: 0
   foundMove: 0
-  waitedForOthersToMoveThisTurn: 0
   blackboard: {fileID: 11400008}
   Damage: 20
   PlayerCheckMask:
     serializedVersion: 2
     m_Bits: 1024
+  numPhasesWaited: 0
+  NeedsPathfinding: 1
+  test: 0
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1

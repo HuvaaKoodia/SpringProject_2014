@@ -20,8 +20,11 @@ public class AlienAI : AIBase {
 
 	public const int FleeHealth = 30;
 
+	public int numPhasesWaited = 0;
 	public bool NeedsPathfinding = true;
 	public bool test = false;
+
+	bool readyToAttack = false;
 
 	// Use this for initialization
 	void Start()
@@ -43,40 +46,45 @@ public class AlienAI : AIBase {
 		behaviourTree.Start (null);
 	}
 
-	public override void ResetAP ()
+	public override void Reset()
 	{
 		AP = APmax;
+		HasUsedTurn = false;
+		foundMove = false;
 		NeedsPathfinding = true;
+		readyToAttack = false;
+		numPhasesWaited = 0;
 	}
 
-	public override void PlayMovementPhase()
+	public override void PlayAiTurn()
 	{
-		//checks for possibility of ranged attack
-
-		UpdateAI();
+		if ((AP <= AttackCost || readyToAttack) && CanAttack())
+		{
+			Attack();
+		}
+		else
+		{
+			behaviourTree.Tick(blackboard);
+			
+			if (behaviourTree.LastStatus != RunStatus.Running)
+			{
+				behaviourTree.Stop(blackboard);
+				behaviourTree.Start(blackboard);
+			}
+		}
 	}
-
+	/*
 	public override void PlayAttackPhase ()
 	{
 		if (AP > AttackCost && movement.GetTileInFront().entityOnTile == player)
 		{
+			AP -= AttackCost;
 			player.TakeDamage(Damage, movement.currentGridX, movement.currentGridY);
 		}
 
-		parent.FinishedAttacking();
+		//parent.FinishedAttacking();
 	}
-
-	// Update is called once per frame
-	void UpdateAI()
-	{
-		behaviourTree.Tick(blackboard);
-
-		if (behaviourTree.LastStatus != RunStatus.Running)
-		{
-			behaviourTree.Stop(blackboard);
-			behaviourTree.Start(blackboard);
-		}
-	}
+	*/
 
 	private void MoveToNextTile()
 	{
@@ -89,7 +97,8 @@ public class AlienAI : AIBase {
 		if (blackboard.Path == null || blackboard.Path.next == null)
 		{
 			HasUsedTurn = true;
-			parent.FinishedMoving(true);
+			AP = 0;
+			//parent.FinishedMoving(true);
 			return;
 		}
 		
@@ -110,22 +119,38 @@ public class AlienAI : AIBase {
 		}
 		else
 		{
-			NeedsPathfinding = true;
-			//waitedForOthersToMoveThisTurn = true;
-			//EntityMain entityBlocking = tilemap[blackboard.Path.next.position.X, blackboard.Path.next.position.Y].entityOnTile;
+
+			if (numPhasesWaited > 2)
+			{
+				HasUsedTurn = true;
+				AP = 0;
+
+				if (blackboard.LatestPathType == AlienAiState.Flee)
+					blackboard.Berserk = true;
+
+				return;
+			}
+			else if (numPhasesWaited > 1)
+         	{
+				NeedsPathfinding = true;
+			}
+
+			numPhasesWaited++;
+			readyToAttack = true;
+
+			EntityMain entityBlocking = tilemap[blackboard.Path.next.position.X, blackboard.Path.next.position.Y].entityOnTile;
 			//Debug.Log(entityBlocking.tag + " is blocking " + path.next.position);
-			//if (entityBlocking != null)
-			//{
+			if (entityBlocking != null)
+			{
 				//vähän rikki niin kommenteissa, korjataan kun tärkeämpää asiaa saatu alta pois
 				//if (!waitedForOthersToMoveThisTurn)
 				//{
-				//if (entityBlocking.tag == "Player")
-				//{
-					//HasUsedTurn = true;
-					//parent.FinishedMoving(true);
-				//}
-				/*}
-                else
+				if (entityBlocking.tag == "Player")
+				{
+					readyToAttack = true;
+				}
+			}
+                /*else
                 {
                     HasUsedTurn = true;
                 }*/
@@ -154,6 +179,13 @@ public class AlienAI : AIBase {
 		}
 		else
 		{
+			//DEV NÄMÄ POIS, JOSSEI PELAAJAA LÖYDY NIIN TEE JOTAIN MAHD JÄRKEVÄÄ
+			AP = 0;
+			HasUsedTurn = true;
+			//parent.FinishedMoving(true);
+			//DEV
+
+
 			blackboard.Destination = null;
 			return RunStatus.Failure;
 		}
@@ -227,6 +259,9 @@ public class AlienAI : AIBase {
 			return RunStatus.Success;
 		}
 
+		blackboard.AwareOfPlayer = false;
+		blackboard.LastKnownPlayerPosition = null;
+
 		return RunStatus.Failure;
 	}
 
@@ -242,8 +277,8 @@ public class AlienAI : AIBase {
 			return RunStatus.Failure;
 
 		//if player can't see us, we're OK already
-		if (!PathFinder.CanSeeFromTileToTile(player, parent, PlayerCheckRadiusAware, 
-             	1 << LayerMask.NameToLayer("Enemy") | 1 << LayerMask.NameToLayer("Player") | 1 << LayerMask.NameToLayer("Wall")))
+		if (!PathFinder.CanSeeFromTileToTile(player, currentPos, PlayerCheckRadiusAware, 
+             	1 << LayerMask.NameToLayer("Player") | 1 << LayerMask.NameToLayer("Wall")))
 			return RunStatus.Success;
 
 		Point3D playerPos = new Point3D(player.movement.currentGridX, player.movement.currentGridY);
@@ -287,7 +322,7 @@ public class AlienAI : AIBase {
 		if (angleBetween >  50)
 			return false;
 	
-		if (PathFinder.CanSeeFromTileToTile(player, parent, PlayerCheckRadiusAware, 
+		if (PathFinder.CanSeeFromTileToTile(player, position, PlayerCheckRadiusAware, 
                       1 << LayerMask.NameToLayer("Wall") 
             		| 1 << LayerMask.NameToLayer("Enemy")
                     | 1 << LayerMask.NameToLayer("Player")))
@@ -381,15 +416,13 @@ public class AlienAI : AIBase {
 		{
 			SearchNode temp = pathToCover;
 			
-			while (temp.next != null)
-			{
-				temp = temp.next;
-			}
-			
+			if (temp == null)
+				return RunStatus.Failure;
+
 			//path to safety isn't actually in cover but just further away
-			if (PathFinder.CanSeeFromTileToTile(parent, player, PlayerCheckRadiusAware,
+			if (PathFinder.CanSeeFromTileToTile(player, PathFinder.LatestDestination,
+			                                    PlayerCheckRadiusAware*3,
 			                                    1 << LayerMask.NameToLayer("Wall") 
-			                                    | 1 << LayerMask.NameToLayer("Enemy")
 			                                    | 1 << LayerMask.NameToLayer("Player")))
 			{
 				return RunStatus.Failure;    
@@ -402,6 +435,53 @@ public class AlienAI : AIBase {
 		}
 		
 		return RunStatus.Failure;
+	}
+
+	bool CanAttack()
+	{
+		if (AP < AttackCost)
+			return false;
+
+		//check if directly looking at player
+		Quaternion myRot = transform.rotation;
+		Vector3 playerInRelationToMe =
+			player.transform.position - parent.transform.position;
+
+		Quaternion playerRelationRotation = Quaternion.LookRotation(playerInRelationToMe);
+
+		float angle = Quaternion.Angle(myRot, playerRelationRotation);
+
+		if (angle < parent.rangedAngleMax)
+		{
+			float distance = playerInRelationToMe.magnitude / MapGenerator.TileSize.x;
+
+			//check both next tile and ranged if ranged == 0 (which means no ranged <'',) )
+			if (distance < 1.5f || distance <= parent.rangedRange)
+				return true;
+
+		}
+
+		return false;
+	}
+
+	void Attack()
+	{
+		if (movement.GetTileInFront().entityOnTile == player)
+			AttackMelee();
+		else
+			AttackRanged();
+
+		AP -= AttackCost;
+	}
+
+	void AttackRanged()
+	{
+		player.TakeDamage(Damage / 2, movement.currentGridX, movement.currentGridY);
+	}
+
+	void AttackMelee()
+	{
+		player.TakeDamage(Damage, movement.currentGridX, movement.currentGridY);
 	}
 
 	protected override void CreateBehaviourTree()
@@ -460,6 +540,12 @@ public class AlienAI : AIBase {
 		Sequence attackSequence = new Sequence(findPathToPlayerAction, tactiqueSelector);
 		
 		#endregion
+
+		#region Search player
+
+		Action SearchPlayerAction = new Action(action => SearchPlayer());
+
+		#endregion
 		
 		#region Random movement
 		
@@ -472,14 +558,18 @@ public class AlienAI : AIBase {
 		
 		//root
 		Action checkPlayerPresenceAction = new Action(action => CheckForPlayerPresence());
-		
+
+		//player present
 		//return success to make sure that randomness isn't triggered when player is present
 		Action returnSuccessAction = new Action(action => SuccessReturner());
 		
 		PrioritySelector playerFoundSelector = new PrioritySelector(damagedSelector, attackSequence/*, ei löydetty */, returnSuccessAction);
 		Sequence playerPresentSequence = new Sequence(checkPlayerPresenceAction, playerFoundSelector);
+
+		//player not present
+		PrioritySelector playerNotFoundSelector = new PrioritySelector(SearchPlayerAction, randomMovementSequence);
 		
-		PrioritySelector root = new PrioritySelector(playerPresentSequence, randomMovementSequence);
+		PrioritySelector root = new PrioritySelector(playerPresentSequence, playerNotFoundSelector);
 		
 		behaviourTree = root;
 	}

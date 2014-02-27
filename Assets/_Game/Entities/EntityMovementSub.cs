@@ -248,7 +248,7 @@ public class EntityMovementSub : MonoBehaviour
             #region 360/0
             case 360:
             case 0:
-                if (tile.Y - currentGridY == 1)
+                if (tile.Y - currentGridY > 0)
                 {
                     return MoveForward() ? MovementState.Moving : MovementState.NotMoving;
                 }
@@ -265,7 +265,7 @@ public class EntityMovementSub : MonoBehaviour
             #endregion
             #region 180
             case 180:
-                if (currentGridY - tile.Y == 1)
+                if (currentGridY - tile.Y > 0)
                 {
                     return MoveForward() ? MovementState.Moving : MovementState.NotMoving;
                 }
@@ -282,7 +282,7 @@ public class EntityMovementSub : MonoBehaviour
             #endregion
             #region 90
             case 90:
-                if (tile.X - currentGridX == 1)
+                if (tile.X - currentGridX > 0)
                 {
                     return MoveForward() ? MovementState.Moving : MovementState.NotMoving;
                 }
@@ -299,7 +299,7 @@ public class EntityMovementSub : MonoBehaviour
             #endregion
             #region 270
             case 270:
-                if (currentGridX - tile.X == 1)
+                if (currentGridX - tile.X > 0)
                 {
                     return MoveForward() ? MovementState.Moving : MovementState.NotMoving;
                 }
