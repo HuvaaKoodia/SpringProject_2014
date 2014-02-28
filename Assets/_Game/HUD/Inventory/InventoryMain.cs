@@ -4,55 +4,68 @@ using System.Collections.Generic;
 
 public class InventoryMain : MonoBehaviour {
 
-	public bool InventoryOpen{get{return InventoryParent.activeSelf;}}
+	public bool InventoryOpen{get{return InventoryPanel.activeSelf;}}
 
 	public MenuHandler HUD;
-	public GameObject InventoryParent,LootParent;
+	public GameObject InventoryPanel,LootParent;
 	public UIItemStorage InventoryStorage,LootStorage;
 	public List<UIEquipmentSlot> EquipmentSlots;
 	public EquipRandomItem temp_random_item_button;
 
+    public MenuTabController Tabs;
+    public MechanicalMenu Mechaninc;
+
 	PlayerMain Player;
 
 	// Use this for initialization
-	void Start () {
-		InventoryParent.SetActive(false);
-
+	void Start (){
+        InventoryPanel.SetActive(false);
 		temp_random_item_button.XDB=GameObject.FindGameObjectWithTag("SharedSystems").GetComponent<SharedSystemsMain>().XDB;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
-	public void ToggleInventory()
-	{
-		if (InventoryParent.activeSelf)
-		{
-			DeactivateInventory();
-			HUD.DeactivateInventoryHUD();
-		}
-		else
-		{
-			ActivateInventory();
-			HUD.ActivateInventoryHUD();
-		}
+
 	}
+    
+    public void OpenInventory(){
+        //ActivateInventory();
+        Tabs.OpenTab1();
+    }
+
+    public void OpenStatus(){
+        //ActivateInventory();
+        Tabs.OpenTab2();
+    }
+
+    public void OpenLog(){
+        //ActivateInventory();
+        Tabs.OpenTab3();
+    }
+
+    public void ToggleInventory()
+    {
+        if (InventoryOpen)
+        {
+            DeactivateInventory();
+            HUD.DeactivateInventoryHUD();
+        }
+        else
+        {
+            ActivateInventory();
+            HUD.ActivateInventoryHUD();
+        }
+    }
 
 	public void ActivateInventory()
 	{ 
-		InventoryParent.SetActive(true);
-	}
+        InventoryPanel.SetActive(true);
+        OpenInventory();
+    }
 
 	public void DeactivateInventory()
 	{ 
-		InventoryParent.SetActive(false);
-
+        InventoryPanel.SetActive(false);
         Player.ActivateEquippedItems();
 
 		if (LootParent.activeSelf) LootParent.SetActive(false);
-		
 	}
 
 	public void SetPlayer(PlayerMain player){
@@ -63,6 +76,8 @@ public class InventoryMain : MonoBehaviour {
 		}
 
 		temp_random_item_button.equipment=player.ObjData.Equipment;
+
+        Mechaninc.SetPlayer(player.ObjData);
 	}
 
 	public void SetLoot(LootCrateMain loot){

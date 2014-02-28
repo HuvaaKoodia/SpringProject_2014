@@ -197,13 +197,14 @@ public class PlayerMain : EntityMain
 
 	public void DisperseWeaponHeat(int multiplier)
 	{
-		for (int i = 0; i < multiplier; i++)
+
+        foreach(WeaponMain gun in weaponList)
 		{
-            foreach(WeaponMain gun in weaponList)
-			{
-				gun.ReduceHeat();
-			}
+            gun.ReduceHeat(multiplier);
 		}
+		
+        ObjData.Equipment.UpperTorso.ObjData.AddHEAT(-10*multiplier);
+
 		GC.menuHandler.gunInfoDisplay.UpdateAllDisplays();
 	}
 

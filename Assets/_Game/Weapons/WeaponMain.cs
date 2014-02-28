@@ -174,7 +174,7 @@ public class WeaponMain : MonoBehaviour {
                 if (!NoAmmoConsumption) CurrentAmmo--;
                 if (CurrentAmmo<0) CurrentAmmo=0;
 
-                IncreaseHeat();
+                IncreaseHeat(1);
 
 				if (Accuracy > Subs.RandomPercent())
 				{
@@ -186,16 +186,16 @@ public class WeaponMain : MonoBehaviour {
 		}
 	}
 
-    public void IncreaseHeat()
+    public void IncreaseHeat(float multi)
     {
 		if (WeaponSlot != null)
-        	WeaponSlot.ObjData.IncreaseHEAT(Weapon);
+        	WeaponSlot.ObjData.IncreaseHEAT(Weapon,multi);
     }
 
-	public void ReduceHeat()
+	public void ReduceHeat(float multi)
 	{
 		if (WeaponSlot != null)
-       		WeaponSlot.ObjData.ReduceHEAT(Weapon);
+       		WeaponSlot.ObjData.ReduceHEAT(Weapon,multi);
 	}
 
 	public void AddAmmo(int amount)

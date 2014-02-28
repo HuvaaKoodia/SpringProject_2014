@@ -29,7 +29,8 @@ public class MapGenerator : MonoBehaviour
             {
                 var data = GC.TileObjectMap [x, y] = new TileObjData();
                 
-                data.TilePosition = new Vector3(x, 0, y);
+                data.X = x;
+                data.Y=y;
 
                 //DEV. create type and obj dictionaries
                 var index=md.map_data [x, y];
@@ -144,11 +145,7 @@ public class MapGenerator : MonoBehaviour
             //rotate player towards non airlock door
             for(int i=0;i<4;i++){
                 int x=(int)StartPos.x,y=(int)StartPos.y;
-                int xx=0,yy=0;
-                if (i==0){xx=1;yy=0;}
-                else if (i==1){xx=0;yy=1;}
-                else if (i==2){xx=-1;yy=0;}
-                else if (i==3){xx=0;yy=-1;}
+                int xx=GetCardinalX(i),yy=GetCardinalY(i);
 
                 var t=GC.GetTileMain(x+xx,y-yy);
                 if (t!=null&&t.Data.TileType==TileObjData.Type.Door){
@@ -525,6 +522,23 @@ public class MapGenerator : MonoBehaviour
             }
         }
         return a;
+    }
+
+    public static int GetCardinalX(int dir)
+    {
+        if (dir==0)return 1;
+        if (dir==1)return 0;
+        if (dir==2)return -1;
+        if (dir==3)return 0;
+        return 0;
+    }
+    public static int GetCardinalY(int dir)
+    {
+        if (dir==0)return 0;
+        if (dir==1)return 1;
+        if (dir==2)return 0;
+        if (dir==3)return -1;
+        return 0;
     }
 }
 

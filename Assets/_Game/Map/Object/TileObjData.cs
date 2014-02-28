@@ -8,7 +8,7 @@ public class TileObjData
     public enum Obj {None,Player,Enemy,Loot,Obstacle,LootArea};
 	
     Obj _obj;
-	public Vector3 TilePosition;
+    public int X,Y;
 	public Type TileType{get;private set;}
     public Obj ObjType{get{return _obj;}}
     public ObjectXmlIndex ObjXml{get;private set;}
@@ -24,7 +24,5 @@ public class TileObjData
     public void SetObj(ObjectXmlIndex obj){
         ObjXml=obj;
         _obj=obj.type;
-        Debug.Log("TypeSet: "+_obj);
 	}
-
 }

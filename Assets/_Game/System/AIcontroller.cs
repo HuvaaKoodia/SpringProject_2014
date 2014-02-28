@@ -125,7 +125,7 @@ public class AIcontroller
 		enemiesFinishedTurn++;
 		finishedEnemies.Add(enemy);
 
-		Debug.Log("Enemy finished at pos " + enemy.movement.currentGridX + "," + enemy.movement.currentGridY);
+		//Debug.Log("Enemy finished at pos " + enemy.movement.currentGridX + "," + enemy.movement.currentGridY);
 	}
 
 	/*

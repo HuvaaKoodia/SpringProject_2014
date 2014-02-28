@@ -264,76 +264,39 @@ public class ShipGenerator : MonoBehaviour
 	/// </summary>
 	private Vector2 GetRandomDoorPos(CellData room,MapXmlData map,int dir){
 		var temp_door_list=new List<Vector2>();//DEV. unnec list
-		if (dir==0){
+		
+        int x=0,y=0;//,x1=0,y1=0,x2=0,y2=0;
+        if (dir==0){
 			for (int i=0;i<room.RoomXmlData.H;i++){
-				int 
-					x=room.X+room.XOFF+room.RoomXmlData.W-1,
-				y=room.Y+room.YOFF+i;
+				
+                x=room.X+room.XOFF+room.RoomXmlData.W-1;
+			    y=room.Y+room.YOFF+i;
 
-				var oi=map.GetIndex(x+1,y);
-				if (oi=="c"){
-					oi=map.GetIndex(x,y);
-					if (oi==MapGenerator.WallIcon){
-						oi=map.GetIndex(x-1,y);
-						if (oi=="."){
-							temp_door_list.Add(new Vector2(x,y));
-						}
-					}
-				}
+                if (IsPosGoodForADoor(map,x,y,1,0,-1,0)) temp_door_list.Add(new Vector2(x,y));
 			}
 		}else
 		if (dir==1){
 			for (int i=0;i<room.RoomXmlData.W;i++){
-				int 
-					x=room.X+room.XOFF+i,
-					y=room.Y+room.YOFF;
+                x=room.X+room.XOFF+i;
+				y=room.Y+room.YOFF;
 				
-				var oi=map.GetIndex(x,y-1);
-				if (oi=="c"){
-					oi=map.GetIndex(x,y);
-					if (oi==MapGenerator.WallIcon){
-						oi=map.GetIndex(x,y+1);
-						if (oi=="."){
-							temp_door_list.Add(new Vector2(x,y));
-						}
-					}
-				}
+                if (IsPosGoodForADoor(map,x,y,0,-1,0,1)) temp_door_list.Add(new Vector2(x,y));
 			}
 		}else
 		if (dir==2){
 			for (int i=0;i<room.RoomXmlData.H;i++){
-				int 
-					x=room.X+room.XOFF,
-					y=room.Y+room.YOFF+i;
+                x=room.X+room.XOFF;
+				y=room.Y+room.YOFF+i;
 				
-				var oi=map.GetIndex(x-1,y);
-				if (oi=="c"){
-					oi=map.GetIndex(x,y);
-					if (oi==MapGenerator.WallIcon){
-						oi=map.GetIndex(x+1,y);
-						if (oi=="."){
-							temp_door_list.Add(new Vector2(x,y));
-						}
-					}
-				}
+                if (IsPosGoodForADoor(map,x,y,-1,0,1,0)) temp_door_list.Add(new Vector2(x,y));
 			}
 		}else 
 		if (dir==3){
 			for (int i=0;i<room.RoomXmlData.W;i++){
-				int 
-					x=room.X+room.XOFF+i,
-					y=room.Y+room.YOFF+room.RoomXmlData.H-1;
+                x=room.X+room.XOFF+i;
+				y=room.Y+room.YOFF+room.RoomXmlData.H-1;
 				
-				var oi=map.GetIndex(x,y+1);
-				if (oi=="c"){
-					oi=map.GetIndex(x,y);
-					if (oi==MapGenerator.WallIcon){
-						oi=map.GetIndex(x,y-1);
-						if (oi=="."){
-							temp_door_list.Add(new Vector2(x,y));
-						}
-					}
-				}
+                if (IsPosGoodForADoor(map,x,y,0,1,0,-1)) temp_door_list.Add(new Vector2(x,y));
 			}
 		}
 
@@ -342,6 +305,21 @@ public class ShipGenerator : MonoBehaviour
 		}
 		return Vector2.zero;
 	}
+
+    private bool IsPosGoodForADoor(MapXmlData map,int x,int y,int x1,int y1,int x2,int y2){
+        var oi=map.GetIndex(x+x1,y+y1);
+        if (oi=="c"){
+            oi=map.GetIndex(x,y);
+            if (oi==MapGenerator.WallIcon){
+                oi=map.GetIndex(x+x2,y+y2);
+                if (oi=="."||oi==":"){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 	/// <summary>
 	/// Checks the legit walls, which can be used to create doors randomly.
 	/// DEV. imp a more adv. algorithm

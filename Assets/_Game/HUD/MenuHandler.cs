@@ -15,7 +15,6 @@ public class MenuHandler : MonoBehaviour {
 	public Camera NGUICamera;
 
 	public UISprite turnText;
-	
 	public UISprite engageButton;
 
 	public UIPanel targetMarkPanel;
@@ -199,7 +198,7 @@ public class MenuHandler : MonoBehaviour {
 			MovementHud.SetActive(false);
 			TargetingHud.SetActive(false);
 
-			if (InventoryHud.InventoryParent.activeSelf)
+            if (InventoryHud.InventoryOpen)
 				InventoryHud.DeactivateInventory();
 
 			GC.Player.EndTargetingMode();
@@ -211,7 +210,7 @@ public class MenuHandler : MonoBehaviour {
 			MovementHud.SetActive(true);
 			TargetingHud.SetActive(false);
 
-			if (InventoryHud.InventoryParent.activeSelf)
+            if (InventoryHud.InventoryOpen)
 				InventoryHud.DeactivateInventory();
 
 			GC.Player.EndTargetingMode();
@@ -222,7 +221,7 @@ public class MenuHandler : MonoBehaviour {
 			MovementHud.SetActive(false);
 			TargetingHud.SetActive(true);
 
-			if (InventoryHud.InventoryParent.activeSelf)
+            if (InventoryHud.InventoryOpen)
 				InventoryHud.DeactivateInventory();
 
 			SetInteractVisibility(false);

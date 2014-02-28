@@ -12,14 +12,13 @@ public class MissionMenuHud : MonoBehaviour {
     public Transform MissionButtonsParent;
     public MissionButtonMain MButtonPrefab;
 
+    public MenuTabController Tabs;
+
     SharedSystemsMain SS;
-    GameObject[] menus;
     MissionObjData Mission;
 
 	// Use this for initialization
 	void Start () {
-	    
-        menus=new GameObject[]{MissionMenu,MissionDebrief.gameObject,MissionBrief.gameObject,_VendorMenu.gameObject,_MechanicMenu.gameObject};
         SS=GameObject.FindGameObjectWithTag("SharedSystems").GetComponent<SharedSystemsMain>();
 
         //Dev.temp
@@ -77,32 +76,26 @@ public class MissionMenuHud : MonoBehaviour {
     }
 
     public void OpenMissionBrief(){
-        ActivateMenu(MissionBrief.gameObject);
+        Tabs.ActivateMenu(MissionBrief.gameObject);
     }
 
     public void OpenMissionDebrief(){
-        ActivateMenu(MissionDebrief.gameObject);
+        Tabs. ActivateMenu(MissionDebrief.gameObject);
     }
 
     public void OpenMissionSelect(){
-        ActivateMenu(MissionMenu);
+        Tabs.ActivateMenu(MissionMenu);
     }
     public void OpenVendor(){
-        ActivateMenu(_VendorMenu.gameObject);
+        Tabs.ActivateMenu(_VendorMenu.gameObject);
     }
 
     public void OpenMechanic(){
-        ActivateMenu(_MechanicMenu.gameObject);
+        Tabs.ActivateMenu(_MechanicMenu.gameObject);
     }
 
     public void PlayMission(){
         SS.GDB.SetCurrentMission(Mission);
         SS.GDB.PlayMission();
-    }
-
-    void ActivateMenu(GameObject menu){
-        foreach (var m in menus){
-            m.SetActive(m==menu?true:false);
-        }
     }
 }

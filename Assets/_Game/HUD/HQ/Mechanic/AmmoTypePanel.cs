@@ -8,7 +8,7 @@ public class AmmoTypePanel : MonoBehaviour {
     public UIButton Button;
 
     public float cost_multi=2f;
-
+    public bool AllowBuying=true;
   
     int cost;
     string index;
@@ -33,7 +33,7 @@ public class AmmoTypePanel : MonoBehaviour {
         Amount.text=amount+"/"+data.MaxAmount;
         Cost.text=""+cost+" BC";
 
-        if (cost==0){
+        if (!AllowBuying||cost==0){
             Button.gameObject.SetActive(false);
             Cost.gameObject.SetActive(false);
         }

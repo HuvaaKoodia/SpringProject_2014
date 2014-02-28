@@ -21,7 +21,7 @@ Attributes:
 index = Index used in map files
 type = The type used in game to distinguish between object
 
-rotation = start rotation in game (default=0, -1=random rotation, Overridden for player and enemies)
+rotation = start rotation in game (default=0, -1=random rotation)
 
 Possible types:
 Player
@@ -58,10 +58,14 @@ Obstacle
 	</RoomIndices>
 
 	<ObjectIndices>
+		<!--hardcoded start DON'T CHANGE-->
 		<Tag index="p"	type="Player"/>
 		<Tag index="e"	type="Enemy"/>
+		<Tag index=":"	type="LootArea"/>
+		<!--hardcoded end-->
+		
 		<Tag index="l"	type="Loot"/>
 		<Tag index="o"	type="Obstacle"/>
-		<Tag index=":"	type="LootArea"/>
+		
 	</ObjectIndices>
 </ShipGenerator>

@@ -20,11 +20,15 @@ public class XmlDatabase : MonoBehaviour
 
     //Game Constants
     public static int
-        OverheatDissipateThreshold,
+        WeaponOverheatDisperseThreshold,
         WeaponChangeableHeatThreshold,
+        HullOverheatDisperseThreshold,
         MissionInfoSuccessRating,
         MissionInfoFailRating
         ;
+    public static float
+        HullHeatMultiplier
+    ;
 
 	// Use this for initialization
 	public void LoadData()

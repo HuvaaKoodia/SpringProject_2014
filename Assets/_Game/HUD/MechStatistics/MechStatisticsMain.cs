@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class MechStatisticsMain : MonoBehaviour {
 
-   // public UILabel LS,LH,RS,RH,UT;
     PlayerObjData PlayerData;
 
 	public Color FullHealthColor = Color.green;
@@ -27,21 +26,12 @@ public class MechStatisticsMain : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update (){
-		/*
-        SetWeaponText("LS: ",LS,UIEquipmentSlot.Slot.WeaponLeftShoulder);
-        SetWeaponText("LH: ",LH,UIEquipmentSlot.Slot.WeaponLeftHand);
-        SetWeaponText("RS: ",RS,UIEquipmentSlot.Slot.WeaponRightShoulder);
-        SetWeaponText("RH: ",RH,UIEquipmentSlot.Slot.WeaponRightHand);
-
-        UT.text="UT: "+Player.ObjData.Equipment.UpperTorso.ObjData.HP;
-		*/
 		SetPartInfo(weaponSlots[(int)WeaponID.LeftShoulder], UIEquipmentSlot.Slot.WeaponLeftShoulder);
 		SetPartInfo(weaponSlots[(int)WeaponID.LeftHand], UIEquipmentSlot.Slot.WeaponLeftHand);
 		SetPartInfo(weaponSlots[(int)WeaponID.RightShoulder], UIEquipmentSlot.Slot.WeaponRightShoulder);
 		SetPartInfo(weaponSlots[(int)WeaponID.RightHand], UIEquipmentSlot.Slot.WeaponRightHand);
 
         SetPartInfo(upperTorso, PlayerData.Equipment.UpperTorso);
-
 	}
 
     void SetWeaponText(string text,UILabel label,UIEquipmentSlot.Slot slot){

@@ -6,7 +6,7 @@ public class InvEquipmentSlot{
 	public List<InvBaseItem.Type> TypeList {get;private set;}
 	public InvGameItem Item;
 
-    public InvEquipmentSlot(UIEquipmentSlot.Slot slot,params InvBaseItem.Type[] types){
+    public InvEquipmentSlot(UIEquipmentSlot.Slot slot,bool weapon,params InvBaseItem.Type[] types){
 		Slot=slot;
 
 		TypeList=new List<InvBaseItem.Type>();
@@ -14,7 +14,7 @@ public class InvEquipmentSlot{
 			TypeList.Add(t);
 		}
 
-        ObjData=new MechaPartObjData();
+        ObjData=new MechaPartObjData(weapon);
 	}
 
 	public bool HasType(InvBaseItem.Type type)
@@ -29,10 +29,10 @@ public class InvEquipmentSlot{
 
 public class InvEquipmentStorage
 {
-    public InvEquipmentSlot UpperTorso{get;private set;}
-    public InvEquipmentSlot LowerTorso{get;private set;}
-    public InvEquipmentSlot[] EquipmentSlots {get;private set;}
-	InvAttachmentPoint[] mAttachments;
+    //serializable data
+    public InvEquipmentSlot UpperTorso{get; set;}
+    public InvEquipmentSlot LowerTorso{get; set;}
+    public InvEquipmentSlot[] EquipmentSlots {get; set;}
 
     public InvEquipmentStorage(){
         Awake();
@@ -41,23 +41,32 @@ public class InvEquipmentStorage
 	void Awake(){
 		//Inventory Slots
         EquipmentSlots=new InvEquipmentSlot[8];
-		AddSlot(UIEquipmentSlot.Slot.WeaponLeftHand,InvBaseItem.Type.LightWeapon,InvBaseItem.Type.MeleeWeapon);
-        AddSlot(UIEquipmentSlot.Slot.WeaponRightHand,InvBaseItem.Type.LightWeapon,InvBaseItem.Type.MeleeWeapon);
-		AddSlot(UIEquipmentSlot.Slot.WeaponLeftShoulder,InvBaseItem.Type.HeavyWeapon,InvBaseItem.Type.LightWeapon);
-		AddSlot(UIEquipmentSlot.Slot.WeaponRightShoulder,InvBaseItem.Type.HeavyWeapon,InvBaseItem.Type.LightWeapon);
+        AddSlot(UIEquipmentSlot.Slot.WeaponLeftHand,true,InvBaseItem.Type.LightWeapon,InvBaseItem.Type.MeleeWeapon);
+        AddSlot(UIEquipmentSlot.Slot.WeaponRightHand,true,InvBaseItem.Type.LightWeapon,InvBaseItem.Type.MeleeWeapon);
+        AddSlot(UIEquipmentSlot.Slot.WeaponLeftShoulder,true,InvBaseItem.Type.HeavyWeapon,InvBaseItem.Type.LightWeapon);
+        AddSlot(UIEquipmentSlot.Slot.WeaponRightShoulder,true,InvBaseItem.Type.HeavyWeapon,InvBaseItem.Type.LightWeapon);
 
-		AddSlot(UIEquipmentSlot.Slot.Utility1,InvBaseItem.Type.Utility);
-		AddSlot(UIEquipmentSlot.Slot.Utility2,InvBaseItem.Type.Utility);
-		AddSlot(UIEquipmentSlot.Slot.Utility3,InvBaseItem.Type.Utility);
-		AddSlot(UIEquipmentSlot.Slot.Utility4,InvBaseItem.Type.Utility);
+        AddSlot(UIEquipmentSlot.Slot.Utility1,false,InvBaseItem.Type.Utility);
+        AddSlot(UIEquipmentSlot.Slot.Utility2,false,InvBaseItem.Type.Utility);
+        AddSlot(UIEquipmentSlot.Slot.Utility3,false,InvBaseItem.Type.Utility);
+        AddSlot(UIEquipmentSlot.Slot.Utility4,false,InvBaseItem.Type.Utility);
 
         //Hidden slots
-        UpperTorso =new InvEquipmentSlot(UIEquipmentSlot.Slot.UpperTorso);
-        LowerTorso =new InvEquipmentSlot(UIEquipmentSlot.Slot.LowerTorso);
+        UpperTorso =new InvEquipmentSlot(UIEquipmentSlot.Slot.UpperTorso,false);
+        LowerTorso =new InvEquipmentSlot(UIEquipmentSlot.Slot.LowerTorso,false);
+
+        foreach(var s in EquipmentSlots){
+            s.ObjData.TakeHeat+=HullTakeHeat;
+        }
 	}
 
-	private void AddSlot(UIEquipmentSlot.Slot slot,params InvBaseItem.Type[] type){
-        EquipmentSlots[(int)slot]=new InvEquipmentSlot(slot,type);
+    private void HullTakeHeat(int heat){
+        UpperTorso.ObjData.AddHEAT(heat*XmlDatabase.HullHeatMultiplier);
+        Debug.Log("Torso heat: "+UpperTorso.ObjData.HEAT);
+    }
+
+    private void AddSlot(UIEquipmentSlot.Slot slot,bool weapon,params InvBaseItem.Type[] types){
+        EquipmentSlots[(int)slot]=new InvEquipmentSlot(slot,weapon,types);
 	}
 
     public InvEquipmentSlot GetSlot(UIEquipmentSlot.Slot slot){

@@ -1,17 +1,36 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public delegate void IntEvent(int value);
+
 public class MechaPartObjData{
-    public int HP{get;private set;}
-    public int HEAT{get;private set;}
 
-    public bool OVERHEAT{get;private set;}
+    public static int MaxHP=100;//DEV.MAGNUM
+
+    //serializable data
+    public int HP{get; set;}
+    public int HEAT{get; set;}
+
+    public bool OVERHEAT{get; set;}
+    public bool IsWeapon{get; set;}
+
+    //getters
     public bool USABLE{get{return HP>0;}}
-    public bool CHANGABLE{get{return HEAT<XmlDatabase.WeaponChangeableHeatThreshold;}}
+    public bool CHANGEABLE{get{return HEAT<XmlDatabase.WeaponChangeableHeatThreshold;}}
+    public int OVERHEAT_DISPERSE_THRESHOLD{
+        get{
+            if (IsWeapon)
+                return XmlDatabase.WeaponOverheatDisperseThreshold;
+            else
+                return XmlDatabase.HullOverheatDisperseThreshold;
+        }
+    }
 
-    public static int MaxHP=100;
+    public IntEvent TakeHeat;
 
-    public MechaPartObjData(){
+    public MechaPartObjData(){}//serializer constructor
+
+    public MechaPartObjData(bool Weapon){
         ResetHP();
     }
 
@@ -26,28 +45,33 @@ public class MechaPartObjData{
         }
     }
 
+    public void AddHEAT(float heat){
+        AddHEAT((int)heat);
+    }
+
     public void AddHEAT(int heat){
         HEAT+=heat;
         HEAT=Mathf.Clamp(HEAT,0,100);
         if (HEAT==100){
             OVERHEAT=true;
         }
-        if (HEAT<XmlDatabase.OverheatDissipateThreshold){
+        if (HEAT<OVERHEAT_DISPERSE_THRESHOLD){
             OVERHEAT=false;
         }
+        if (heat>0&&TakeHeat!=null) TakeHeat(heat); 
     }
 
     /// <summary>
     /// Increases HEAT based on the weapons heat value
     /// </summary>
-    public void IncreaseHEAT(InvGameItem weapon){
+    public void IncreaseHEAT(InvGameItem weapon,float multi){
         if (weapon==null) return;
-        AddHEAT(weapon.GetStat(InvStat.Type.Heat)._amount);
+        AddHEAT(weapon.GetStat(InvStat.Type.Heat)._amount*multi);
     }
     /// <summary>
     /// Reduces HEAT based on the weapons cooling value
     /// </summary>
-    public void ReduceHEAT(InvGameItem weapon){
+    public void ReduceHEAT(InvGameItem weapon,float multi){
         if (weapon==null) return;
         AddHEAT(-weapon.GetStat(InvStat.Type.Cooling)._amount);
     }

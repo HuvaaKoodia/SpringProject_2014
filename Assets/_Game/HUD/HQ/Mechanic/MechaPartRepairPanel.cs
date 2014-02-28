@@ -10,6 +10,7 @@ public class MechaPartRepairPanel : MonoBehaviour {
 
     public string _Name;
     public float cost_multi=2f;
+    public bool AllowBuying=true;
 
     int cost;
 
@@ -17,9 +18,10 @@ public class MechaPartRepairPanel : MonoBehaviour {
         Name.text=_Name;
     }
 
-    public void SetPlayer(PlayerObjData player,MechaPartObjData part){
+    public void SetPlayer(PlayerObjData player,MechaPartObjData part,bool allow_buying){
         Player=player;
         Part=part;
+        AllowBuying=allow_buying;
 
         UpdateStats();
     }
@@ -31,7 +33,7 @@ public class MechaPartRepairPanel : MonoBehaviour {
         Condition.text=con+"%";
         Cost.text="Cost: "+cost;
 
-        if (cost==0){
+        if (!AllowBuying||cost==0){
             Button.gameObject.SetActive(false);
             Cost.gameObject.SetActive(false);
         }
