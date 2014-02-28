@@ -208,6 +208,7 @@ MonoBehaviour:
   graphics: {fileID: 100000}
   meshRenderer: {fileID: 0}
   rangedRange: 3
+  rangedAngleMax: 50
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -224,9 +225,12 @@ MonoBehaviour:
   foundMove: 0
   blackboard: {fileID: 11400008}
   Damage: 20
-  PlayerCheckMask:
+  PlayerHearMask:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 5120
+  PlayerSeeMask:
+    serializedVersion: 2
+    m_Bits: 5120
   numPhasesWaited: 0
   NeedsPathfinding: 1
   test: 0

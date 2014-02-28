@@ -14,9 +14,14 @@ public class AlienAI : AIBase {
 
 	public int Damage = 20;
 
-	public LayerMask PlayerCheckMask;
-	public const int PlayerCheckRadiusUnaware = 20;
-	public const int PlayerCheckRadiusAware = 30;
+	public LayerMask PlayerHearMask;
+	public LayerMask PlayerSeeMask;
+
+	public const int PlayerHearRadiusUnaware = 15;
+	public const int PlayerHearRadiusAware = 20;
+
+	public const int PlayerSeeRadiusUnaware = 20;
+	public const int PlayerSeeRadiusAware = 30;
 
 	public const int FleeHealth = 30;
 
@@ -25,6 +30,8 @@ public class AlienAI : AIBase {
 	public bool test = false;
 
 	bool readyToAttack = false;
+
+	Point3D MyPosition;
 
 	// Use this for initialization
 	void Start()
@@ -58,6 +65,8 @@ public class AlienAI : AIBase {
 
 	public override void PlayAiTurn()
 	{
+		MyPosition = new Point3D(movement.currentGridX, movement.currentGridY);
+
 		if ((AP <= AttackCost || readyToAttack) && CanAttack())
 		{
 			Attack();
@@ -166,7 +175,7 @@ public class AlienAI : AIBase {
 		NeedsPathfinding = false;
 		blackboard.LatestPathType = AlienAiState.Chase;
 
-		Point3D currentPos = new Point3D(movement.currentGridX, movement.currentGridY);
+		Point3D currentPos = MyPosition;
 		Point3D playerPos = new Point3D(player.movement.currentGridX, player.movement.currentGridY);
 		
 		if (playerPos != blackboard.Destination)
@@ -207,7 +216,7 @@ public class AlienAI : AIBase {
 		
 		Point3D destination = new Point3D(nextX, nextY);
 		
-		blackboard.Path = PathFinder.FindPath(tilemap, new Point3D(movement.currentGridX, movement.currentGridY), destination, 10);
+		blackboard.Path = PathFinder.FindPath(tilemap, MyPosition, destination, 10);
 		
 		if (blackboard.Path != null)
 			blackboard.Destination = destination;
@@ -217,14 +226,33 @@ public class AlienAI : AIBase {
 
 	private RunStatus CheckForPlayerPresence()
 	{
-		Vector3 adjustedAIPos = parent.transform.position + Vector3.up*0.6f;
-		Vector3 adjustedPlayerPos = player.transform.position + Vector3.up*0.6f;
+		//Hear
+		int checkRadius = blackboard.AwareOfPlayer ? PlayerHearRadiusAware : PlayerHearRadiusUnaware;
 
-		Ray ray = new Ray(adjustedAIPos, adjustedPlayerPos - adjustedAIPos);
-		RaycastHit hitInfo;
+		if (PathFinder.CanHearFromTileToTile(player, MyPosition, checkRadius,
+		                                     2, PlayerHearMask))
+	    {
+			blackboard.AwareOfPlayer = true;
+			blackboard.TurnsWithoutPlayerAwareness = 0;
+			blackboard.LastKnownPlayerPosition = new Point3D(player.movement.currentGridX, player.movement.currentGridY);
+			
+			return RunStatus.Success;
+		}
+
+		//See
+		Quaternion myRot = transform.rotation;
+		Vector3 playerInRelationToMe =
+			player.transform.position - parent.transform.position;
 		
-		int checkRadius = blackboard.AwareOfPlayer ? PlayerCheckRadiusAware : PlayerCheckRadiusUnaware;
-		Debug.DrawLine(ray.origin, ray.origin + ray.direction*checkRadius, Color.red, 5.0f);
+		Quaternion playerRelationRotation = Quaternion.LookRotation(playerInRelationToMe);
+		
+		float angle = Quaternion.Angle(myRot, playerRelationRotation);
+		
+		if (angle < parent.rangedAngleMax)
+		{
+			//PathFinder.CanSeeFromTileToTile(player, 
+		}
+		/*Debug.DrawLine(ray.origin, ray.origin + ray.direction*checkRadius, Color.red, 5.0f);
 		if (Physics.Raycast(ray, out hitInfo, checkRadius, PlayerCheckMask))
 		{
 			if (hitInfo.transform == player.transform)
@@ -235,7 +263,7 @@ public class AlienAI : AIBase {
 
 				return RunStatus.Success;
 			}
-		}
+		}*/
 
 		blackboard.AwareOfPlayer = false;
 		blackboard.TurnsWithoutPlayerAwareness++;
@@ -270,22 +298,22 @@ public class AlienAI : AIBase {
 		if (!NeedsPathfinding && blackboard.Path != null)
 			return RunStatus.Success;
 
-		Point3D currentPos = new Point3D(movement.currentGridX, movement.currentGridY);
+		Point3D currentPos = MyPosition;;
 		blackboard.LatestPathType = AlienAiState.Flee;
 
 		if (blackboard.LastKnownPlayerPosition == null)//how do you run away from something when you don't pos of that something?
 			return RunStatus.Failure;
 
-		//if player can't see us, we're OK already
-		if (!PathFinder.CanSeeFromTileToTile(player, currentPos, PlayerCheckRadiusAware, 
-             	1 << LayerMask.NameToLayer("Player") | 1 << LayerMask.NameToLayer("Wall")))
+		//if player can't see us, we're OK already. Hearmask because we don't want to hide behind other enemies
+		if (!PathFinder.CanSeeFromTileToTile(player, parent, currentPos, PlayerSeeRadiusAware, 
+             	PlayerHearMask))
 			return RunStatus.Success;
 
 		Point3D playerPos = new Point3D(player.movement.currentGridX, player.movement.currentGridY);
 
 		blackboard.Path = 
 			PathFinder.FindPathToSafety(tilemap, currentPos, 
-				playerPos, parent, player, PlayerCheckRadiusAware);
+                    	playerPos, parent, player, PlayerSeeRadiusAware, PlayerHearMask);
 
 		if (blackboard.Path != null)
 			blackboard.Destination = PathFinder.LatestDestination;
@@ -322,10 +350,8 @@ public class AlienAI : AIBase {
 		if (angleBetween >  50)
 			return false;
 	
-		if (PathFinder.CanSeeFromTileToTile(player, position, PlayerCheckRadiusAware, 
-                      1 << LayerMask.NameToLayer("Wall") 
-            		| 1 << LayerMask.NameToLayer("Enemy")
-                    | 1 << LayerMask.NameToLayer("Player")))
+		if (PathFinder.CanSeeFromTileToTile(player, parent, position, PlayerSeeRadiusAware, 
+                      PlayerSeeMask))
 		{
 			return true;
 		}
@@ -361,30 +387,37 @@ public class AlienAI : AIBase {
 
 	/// <summary>
 	/// </summary>
-	/// <returns>Success if player sees over 3 tiles on the path, Failure otherwise</returns>
+	/// <returns>Success if player sees over 2 tiles on the path, Failure otherwise</returns>
 	RunStatus CheckIfPathIsHeadon()
 	{
 		int tilesPlayerCanSee = 0;
 		
 		SearchNode current = blackboard.Path;
-		
-		while (current.next != null && current.position != blackboard.LastKnownPlayerPosition)
+		int pathLength = 0;
+
+		while (current != null && current.position != blackboard.LastKnownPlayerPosition)
 		{
 			if (CanPlayerSee(current.position))
 				tilesPlayerCanSee++;
-			
+
+			pathLength++;
 			current = current.next;
 		}
 		
-		if (tilesPlayerCanSee >= 3)
-			return RunStatus.Success;
-		else
-			return RunStatus.Failure;
+		if (tilesPlayerCanSee >= 2)
+		{
+			if (pathLength < 3 && tilesPlayerCanSee == 2)
+				return RunStatus.Failure;
+	
+				return RunStatus.Success;
+		}
+	
+		return RunStatus.Failure;
 	}
 
 	RunStatus CheckIfAlreadyBehindCover()
 	{
-		if (!CanPlayerSee(new Point3D(movement.currentGridX, movement.currentGridY)))
+		if (!CanPlayerSee(MyPosition))
 			return RunStatus.Success;
 		
 		return RunStatus.Failure;
@@ -395,8 +428,12 @@ public class AlienAI : AIBase {
 		int nextX = blackboard.Path.next.position.X;
 		int nextY = blackboard.Path.next.position.Y;
 
+		int twoStepsX = blackboard.Path.next.next.position.X;
+		int twoStepsY = blackboard.Path.next.next.position.Y;
+
 		//move if turning needed or player can't see
-		if (movement.GetTileInFront() != tilemap[nextX, nextY] || !CanPlayerSee(new Point3D(nextX, nextY)))
+		if (movement.GetTileInFront() != tilemap[nextX, nextY] || 
+		    (!CanPlayerSee(new Point3D(nextX, nextY))) && !CanPlayerSee(new Point3D(twoStepsX, twoStepsY)))
 		{
 			MoveToNextTile();
 		}
@@ -406,11 +443,11 @@ public class AlienAI : AIBase {
 
 	RunStatus CanHide()
 	{
-		Point3D currentPos = new Point3D(movement.currentGridX, movement.currentGridY);
+		Point3D currentPos = MyPosition;
 		Point3D playerPos = blackboard.LastKnownPlayerPosition;
 		
 		SearchNode pathToCover = 
-			PathFinder.FindPathToSafety(tilemap, currentPos, playerPos, parent, player, PlayerCheckRadiusAware);
+			PathFinder.FindPathToSafety(tilemap, currentPos, playerPos, parent, player, PlayerHearRadiusAware, PlayerHearMask);
 		
 		if (pathToCover != null)
 		{
@@ -420,10 +457,10 @@ public class AlienAI : AIBase {
 				return RunStatus.Failure;
 
 			//path to safety isn't actually in cover but just further away
-			if (PathFinder.CanSeeFromTileToTile(player, PathFinder.LatestDestination,
-			                                    PlayerCheckRadiusAware*3,
-			                                    1 << LayerMask.NameToLayer("Wall") 
-			                                    | 1 << LayerMask.NameToLayer("Player")))
+			//again hearmask because we don't want to hide behind others
+			if (PathFinder.CanSeeFromTileToTile(player, parent, PathFinder.LatestDestination,
+			                                    PlayerHearRadiusAware*3,
+			                                    PlayerHearMask))
 			{
 				return RunStatus.Failure;    
 			}
@@ -456,7 +493,9 @@ public class AlienAI : AIBase {
 			float distance = playerInRelationToMe.magnitude / MapGenerator.TileSize.x;
 
 			//check both next tile and ranged if ranged == 0 (which means no ranged <'',) )
-			if (distance < 1.5f || distance <= parent.rangedRange)
+			if ((distance < 1.5f || distance <= parent.rangedRange) &&
+			    PathFinder.CanSeeFromTileToTile(player, parent, MyPosition, 
+                	Mathf.Max(1.5f, parent.rangedRange), PlayerSeeMask))
 				return true;
 
 		}
@@ -476,12 +515,12 @@ public class AlienAI : AIBase {
 
 	void AttackRanged()
 	{
-		player.TakeDamage(Damage / 2, movement.currentGridX, movement.currentGridY);
+		player.TakeDamage(Damage / 2, MyPosition.X, MyPosition.Y);
 	}
 
 	void AttackMelee()
 	{
-		player.TakeDamage(Damage, movement.currentGridX, movement.currentGridY);
+		player.TakeDamage(Damage, MyPosition.X, MyPosition.Y);
 	}
 
 	protected override void CreateBehaviourTree()

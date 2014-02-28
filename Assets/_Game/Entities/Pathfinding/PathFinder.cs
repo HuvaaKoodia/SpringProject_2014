@@ -110,7 +110,7 @@ public static class PathFinder
 	/// <param name="distance">0 if no restricted distance</param>
 	/// <returns></returns>
 	public static SearchNode FindPathToSafety(TileMain[,] world, Point3D startPoint, 
-                  Point3D pointToAvoid, EntityMain avoider, EntityMain toAvoid,int distance)
+                  Point3D pointToAvoid, EntityMain avoider, EntityMain toAvoid, int distance, LayerMask layerMask)
 	{
 		SearchNode startNode = new SearchNode(startPoint, 0, 0, null);
 		
@@ -148,9 +148,8 @@ public static class PathFinder
 				return FindPath(world, startPoint, best.position, -1);
 			}
 			
-			if (!CanSeeFromTileToTile(toAvoid, current.position, distance, 
-			                         1 << LayerMask.NameToLayer("Wall") 
-			                         | 1 << LayerMask.NameToLayer("Player")))
+			if (!CanSeeFromTileToTile(toAvoid, avoider, current.position, distance, 
+			                          layerMask))
 			{
 				return FindPath(world, startPoint, current.position, -1);
 			}
@@ -185,26 +184,98 @@ public static class PathFinder
 		return null; //no path found
 	}
 
-	public static bool CanSeeFromTileToTile(EntityMain toAvoid, Point3D tileToCheck, int checkRadius, LayerMask mask)
+	public static bool CanSeeFromTileToTile(EntityMain toSee, EntityMain watcher, Point3D tileToCheck, float checkRadius, LayerMask mask)
 	{
-		Vector3 adjustedtoAvoidPos = toAvoid.transform.position + Vector3.up*0.6f;
-		Vector3 adjustedAvoiderPos = 
+		Vector3 adjustedtoToSeePos = toSee.transform.position + Vector3.up*0.6f;
+		Vector3 adjustedWatcherPos = 
 			new Vector3(tileToCheck.X * MapGenerator.TileSize.x,
 			           	0.6f,
 			            tileToCheck.Y * MapGenerator.TileSize.z);
-		
-		Ray ray = new Ray(adjustedAvoiderPos, adjustedtoAvoidPos - adjustedAvoiderPos);
+
+		Vector3 rightOffsetCheck = watcher.transform.right *0.5f;
+		Vector3 leftOffsetCheck = -watcher.transform.right *0.5f;
+
+		//adjustedWatcherPos += (adjustedtoToSeePos - adjustedWatcherPos).normalized * 2.8f;
+		Ray[] rays ={ new Ray(adjustedWatcherPos, adjustedtoToSeePos - adjustedWatcherPos),
+					  new Ray(adjustedWatcherPos+rightOffsetCheck, (adjustedtoToSeePos+rightOffsetCheck)-(adjustedWatcherPos+rightOffsetCheck)),
+					  new Ray(adjustedWatcherPos+leftOffsetCheck, (adjustedtoToSeePos+leftOffsetCheck)-(adjustedWatcherPos+leftOffsetCheck))
+		};
+
+		Color[] rayColors = { Color.magenta, Color.blue, Color.cyan };
 		RaycastHit hitInfo;
 
-		if (Physics.Raycast(ray, out hitInfo, checkRadius, mask))
-		{ 
-			//ray hit the entity to avoid -> can see!
-			if (hitInfo.transform == toAvoid.transform)
+		for (int i = 0; i < 3; i++)
+		{
+			Debug.DrawLine(rays[i].origin, rays[i].origin + rays[i].direction*checkRadius, rayColors[i], 5.0f);
+			if (Physics.Raycast(rays[i], out hitInfo, checkRadius, mask))
+			{ 
+				//ray hit the entity to avoid -> can see!
+				if (hitInfo.transform == toSee.transform)
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public static bool CanHearFromTileToTile(EntityMain toHear, Point3D tileToCheck, float checkRadius, int wallTolerance, LayerMask mask)
+	{
+		Vector3 adjustedtoAvoidPos = toHear.transform.position + Vector3.up*0.6f;
+		Vector3 adjustedAvoiderPos = 
+			new Vector3(tileToCheck.X * MapGenerator.TileSize.x,
+			            0.6f,
+			            tileToCheck.Y * MapGenerator.TileSize.z);
+		
+		Ray ray = new Ray(adjustedAvoiderPos, adjustedtoAvoidPos - adjustedAvoiderPos);
+		RaycastHit[] hits = Physics.RaycastAll(ray, checkRadius, mask);
+
+		//check if toHear was hit at all and cache the distance
+		float distanceToObject = 0;
+		bool wasToHearHit = false;
+		for (int i = 0; i < hits.Count(); i++)
+		{
+			if (hits[i].transform == toHear.transform)
 			{
-				return true;
+				wasToHearHit = true;
+				distanceToObject = hits[i].distance; 
+				break;
 			}
 		}
 
+		if (!wasToHearHit)
+			return false;
+
+		//check number of walls between object to hear and guy listening
+		int walls = 0;
+		LayerMask wallLayer = LayerMask.NameToLayer("Wall");
+		for (int i = 0; i < hits.Count(); i++)
+		{
+			if (hits[i].distance < distanceToObject && hits[i].transform.gameObject.layer == wallLayer)
+			{
+				//double checking for hitting two pieces of same continuous wall
+				bool tooClose = false;
+				for (int j = 0; j < i; j++)
+				{
+					if (Mathf.Abs(hits[i].distance - hits[j].distance) < 0.6f)
+					{
+						tooClose = true;
+						break;
+					}
+				}
+
+				if (!tooClose)
+					walls++;
+			}
+		}
+
+		if (walls <= wallTolerance)
+		{
+			Debug.DrawLine(ray.origin, ray.origin + ray.direction*checkRadius, Color.green, 5.0f);
+			return true;
+		}
+
+		Debug.DrawLine(ray.origin, ray.origin + ray.direction*checkRadius, Color.red, 5.0f);
 		return false;
 	}
 
