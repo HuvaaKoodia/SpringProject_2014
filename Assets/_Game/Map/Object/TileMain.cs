@@ -11,10 +11,19 @@ public class TileMain : MonoBehaviour
 
 	public bool BlockedForMovement{
 		get{
+            if (entityOnTile != null)
+                return true;
+
+            if (Data.TileType==TileObjData.Type.Door){
+                var door=GetDoor();
+                if (door.IsOpen)
+                    return false;
+                return true;
+            }
+
 			return !((Data.TileType == TileObjData.Type.Floor
 			        ||Data.TileType == TileObjData.Type.Corridor
-			        ||Data.TileType==TileObjData.Type.Door
-			        )&& entityOnTile == null);
+                      )&& TileObject==null);
 		}
 	}
 

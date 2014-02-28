@@ -72,12 +72,7 @@ public abstract class UIItemSlot : MonoBehaviour
 	}
 
     string GetTooltipText(InvGameItem item){
-        string t = "[" + NGUIText.EncodeColor(item.color) + "]" + item.name + "[-]\n";
-        
-        t += "[AFAFAF]MK." + item.itemLevel + " " + item.baseItem.type;
-        if (item.baseItem.AmmoData!=null&&item.baseItem.AmmoData.ShowInGame){
-            t += "\n[AFAFAF]AmmoType: " + item.baseItem.AmmoData.Name + "[-]";
-        }
+        string t = GetItemBaseToolTip(item);
 
         for (int i = 0, imax = item.Stats.Count; i < imax; ++i)
         {
@@ -106,11 +101,25 @@ public abstract class UIItemSlot : MonoBehaviour
         return t;
     }
 
+    string GetItemBaseToolTip(InvGameItem item)
+    {
+        var t="[" + NGUIText.EncodeColor(item.color) + "]" + item.name + "[-]\n";
+        
+        if (item.baseItem.type!=InvBaseItem.Type.QuestItem)
+            t += "[AFAFAF]MK." + item.itemLevel + " ";
+        
+        t+=item.baseItem.type;
+
+        if (item.baseItem.AmmoData!=null&&item.baseItem.AmmoData.ShowInGame){
+            t += "\n[AFAFAF]AmmoType: " + item.baseItem.AmmoData.Name + "[-]";
+        }
+
+        return t;
+    }
+
     string GetTooltipText(InvGameItem item,InvGameItem compare){
-        string t = "[" + NGUIText.EncodeColor(item.color) + "]" + item.name + "[-]\n";
-        
-        t += "[AFAFAF]MK." + item.itemLevel + " " + item.baseItem.type;
-        
+        string t = GetItemBaseToolTip(item);
+
         List<InvStat> stats = item.Stats;
         
         for (int i = 0, imax = stats.Count; i < imax; ++i)

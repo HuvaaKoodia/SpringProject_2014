@@ -207,16 +207,7 @@ public class EntityMovementSub : MonoBehaviour
             return false;
         }
         TileMain nextTile = tilemap[x, y];
-
-        var door=nextTile.GetDoor();
-        if (door!=null&&!door.IsOpen) 
-			return false;
-        
-        if (nextTile.BlockedForMovement)
-            return false;
-        else
-            return true;
-
+        return !nextTile.BlockedForMovement;
     }
 
     int GetNextTileX(int direction, int currentX)

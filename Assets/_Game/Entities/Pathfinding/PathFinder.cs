@@ -229,14 +229,7 @@ public static class PathFinder
 			Debug.Log(position + " is out of map range");
 		}
 
-		var door=nextTile.GetDoor();
-		if (door!=null&&!door.IsOpen) 
-			return false;
-		
-		if (nextTile.BlockedForMovement)
-			return false;
-		else
-			return true;
+        return !nextTile.BlockedForMovement;
     }
 
 	private static bool PositionIsWalkable(Point3D position, TileMain[,] world, int mapWidth, int mapHeight, int mapDepth)
@@ -259,22 +252,11 @@ public static class PathFinder
 		{
 			Debug.Log(position + " is out of map range");
 		}
-		
-		var door=nextTile.GetDoor();
-		if (door!=null&&!door.IsOpen) 
-			return false;
-		
-		if (nextTile.BlockedForMovement)
-		{
-			if (nextTile.entityOnTile == null)
-				return false;
-			else
-			{
-				return true;
-			}
-		}
-		else
-			return true;
+
+        if (nextTile.entityOnTile != null)
+            return true;
+
+        return !nextTile.BlockedForMovement;
 	}
 
     class Surr
