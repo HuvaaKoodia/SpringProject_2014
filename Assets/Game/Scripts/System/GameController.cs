@@ -26,10 +26,11 @@ public class GameController : MonoBehaviour {
 	public InventoryMain Inventory;
 
 	public List<LootCrateMain> LootCrates {get;private set;}
-
-	public UICamera NGUICamera;
 	
+
     PlayerMain player;
+
+	public HaxKnifeCulling culling_system;
 
     public PlayerMain Player{
         get{return player;}
@@ -89,7 +90,7 @@ public class GameController : MonoBehaviour {
 
         player.ActivateEquippedItems();
 	}
-
+	bool do_culling=false;
 	// Update is called once per frame
 	void Update()
     {
@@ -104,6 +105,18 @@ public class GameController : MonoBehaviour {
 			StartPlayerTurn();
 			ChangeTurn(TurnState.PlayerTurn);
 		}
+
+		if (do_culling) culling_system.CullBasedOnCamera(player.GameCamera,this);
+#if UNITY_EDITOR
+		if (Input.GetKeyDown(KeyCode.C)){
+			do_culling=!do_culling;
+			if (!do_culling) culling_system.ResetCulling(this);
+		}
+		if (Input.GetKeyDown(KeyCode.V)){
+			culling_system.CullBasedOnCamera(player.GameCamera,this);
+		}
+
+#endif
 	}
 
 	/// <summary>

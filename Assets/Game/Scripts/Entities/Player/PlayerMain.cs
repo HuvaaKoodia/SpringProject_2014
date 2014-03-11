@@ -29,6 +29,8 @@ public class PlayerMain : EntityMain
 
 	public const int DisperseHeatButtonMultiplier = 3;
 
+	public Camera GameCamera;
+
     public void SetObjData(PlayerObjData data){
         ObjData=data;
     }

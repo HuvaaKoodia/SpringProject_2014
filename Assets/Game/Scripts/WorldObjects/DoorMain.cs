@@ -8,7 +8,7 @@ public class DoorMain : InteractableMain {
 	public string open_animation,close_animation;
 	public GameObject graphics;
 
-	public GameObject doorCollider;
+	public BoxCollider doorCollider;
 
     public bool isAirlockOutsideDoor=false;
 
@@ -47,7 +47,8 @@ public class DoorMain : InteractableMain {
     IEnumerator ToggleTimer(bool open,float delay){
         if (!open){
             IsOpen=open;
-            doorCollider.SetActive(!open);
+            doorCollider.enabled=!open;
+			Debug.Log("open enabled"+(!open));
         }
 		anim_on=true;
 		yield return new WaitForSeconds(delay);
@@ -55,7 +56,8 @@ public class DoorMain : InteractableMain {
 
         if (open){
     		IsOpen=open;
-            doorCollider.SetActive(!open);
+			doorCollider.enabled=!open;
+			Debug.Log("open enabled"+(!open));
         }
 	}
 

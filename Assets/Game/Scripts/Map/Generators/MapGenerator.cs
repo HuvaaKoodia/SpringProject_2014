@@ -470,9 +470,11 @@ public class MapGenerator : MonoBehaviour
                 break;
         }
         if (tileobj != null){
-            tile.TileGraphics = Instantiate(tileobj, tile.transform.position, rotation) as GameObject;
+            var go= Instantiate(tileobj, tile.transform.position, rotation) as GameObject;
+			tile.TileGraphics= go.GetComponent<TileGraphicsSub>();
+
             if (add_as_tileobject_as_well){
-                tile.TileObject=tile.TileGraphics;
+                tile.TileObject=tile.TileGraphics.gameObject;
             }
 
             if (tile.Data.TileType==TileObjData.Type.Door){

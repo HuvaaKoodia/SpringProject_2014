@@ -5,7 +5,8 @@ using System.Collections.Generic;
 public class TileMain : MonoBehaviour 
 {
 	public TileObjData Data{get;private set;}
-    public GameObject TileGraphics,TileObject;
+	public TileGraphicsSub TileGraphics;
+	public GameObject TileObject;
 
     public EntityMain entityOnTile {get; private set;}
 
@@ -45,4 +46,18 @@ public class TileMain : MonoBehaviour
         if (TileObject==null) return null;
         return TileObject.GetComponent<DoorMain>();
     }
+
+	/// <summary>
+	/// Does a null check HUZZAA!
+	/// </summary>
+	public void ShowGraphicsSafe(bool show){
+		if (TileGraphics!=null) TileGraphics.GraphicsObject.SetActive(show);
+	}
+
+	/// <summary>
+	/// Doesn't null check BEWARE!
+	/// </summary>
+	public void ShowGraphicsUnsafe(bool show){
+		TileGraphics.GraphicsObject.SetActive(show);
+	}
 }
