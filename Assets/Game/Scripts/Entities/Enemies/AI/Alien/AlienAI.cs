@@ -17,8 +17,8 @@ public class AlienAI : AIBase {
 	public LayerMask PlayerHearMask;
 	public LayerMask PlayerSeeMask;
 
-	public const int PlayerHearRadiusUnaware = 15;
-	public const int PlayerHearRadiusAware = 20;
+	public const int PlayerHearRadiusUnaware = 10;
+	public const int PlayerHearRadiusAware = 18;
 
 	public const int PlayerSeeRadiusUnaware = 20;
 	public const int PlayerSeeRadiusAware = 30;
@@ -178,7 +178,7 @@ public class AlienAI : AIBase {
 		Point3D currentPos = MyPosition;
 		Point3D playerPos = new Point3D(player.movement.currentGridX, player.movement.currentGridY);
 		
-		if (playerPos != blackboard.Destination)
+		if (playerPos != blackboard.Destination || blackboard.Path.pathCost > 300)
 			blackboard.Path = PathFinder.FindPath(tilemap, currentPos, playerPos, -1);
 		
 		if (blackboard.Path != null)
@@ -230,7 +230,7 @@ public class AlienAI : AIBase {
 		int checkRadius = blackboard.AwareOfPlayer ? PlayerHearRadiusAware : PlayerHearRadiusUnaware;
 
 		if (PathFinder.CanHearFromTileToTile(player, MyPosition, checkRadius,
-		                                     2, PlayerHearMask))
+		                                     5, PlayerHearMask))
 	    {
 			blackboard.AwareOfPlayer = true;
 			blackboard.TurnsWithoutPlayerAwareness = 0;
@@ -433,7 +433,7 @@ public class AlienAI : AIBase {
 
 		//move if turning needed or player can't see
 		if (movement.GetTileInFront() != tilemap[nextX, nextY] || 
-		    (!CanPlayerSee(new Point3D(nextX, nextY))) && !CanPlayerSee(new Point3D(twoStepsX, twoStepsY)))
+		    (!CanPlayerSee(new Point3D(nextX, nextY))))// && !CanPlayerSee(new Point3D(twoStepsX, twoStepsY)))
 		{
 			MoveToNextTile();
 		}

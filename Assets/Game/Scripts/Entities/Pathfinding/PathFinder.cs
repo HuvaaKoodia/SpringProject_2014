@@ -85,7 +85,7 @@ public static class PathFinder
 
 					//if someone is blocking the way, make sure that this route
 					//doesn't get picked unless its only reasonable route
-					if (world[tmp.X, tmp.Y].entityOnTile != null)
+						if (world[tmp.X, tmp.Y].BlockedForMovement)
 							cost += 300;
 
                     SearchNode node = new SearchNode(tmp, cost, pathCost, current);
@@ -326,6 +326,10 @@ public static class PathFinder
 
         if (nextTile.entityOnTile != null)
             return true;
+
+		if (nextTile.Data.TileType==TileObjData.Type.Door){
+			return true;
+		}
 
         return !nextTile.BlockedForMovement;
 	}
