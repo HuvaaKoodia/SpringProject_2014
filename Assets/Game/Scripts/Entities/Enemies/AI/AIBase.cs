@@ -5,12 +5,14 @@ using TreeSharp;
 
 public abstract class AIBase : MonoBehaviour
 {
-	protected EnemyMain parent;
+	public EnemyMain parent;
 	
 	protected TileMain[,] tilemap;
 	protected PlayerMain player;
 
 	protected Composite behaviourTree;
+
+	public AiLookupTable blackboard;
 
 	public int AP;
 

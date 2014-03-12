@@ -37,7 +37,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 	
 	}
 
-	public void CheckTargetableEnemies(Vector3 playerPosition)
+	public void CheckTargetableEnemies()
 	{
 		UnsightAllEnemies();
 
@@ -46,6 +46,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 		
 		Plane[] planes;
 		planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
+		
 		foreach(EnemyMain enemy in allEnemies)
 		{
 			Vector3 adjustedEnemyPos = enemy.transform.position + Vector3.up*0.6f;
@@ -59,15 +60,20 @@ public class PlayerTargetingSub : MonoBehaviour {
 			//check if enemy can be seen
 			if (GeometryUtility.TestPlanesAABB(planes, enemy.collider.bounds))
 			{
-				Ray ray = new Ray(playerPosition, adjustedEnemyPos - playerPosition);
-				RaycastHit hitInfo;
-				
-				Debug.DrawRay(ray.origin, ray.direction * 20, Color.red, 2.0f);
-				if (Physics.Raycast(ray, out hitInfo, 20, targetingRayMask))
+				for (int i = 0; i < 4; ++i)
 				{
-					if (hitInfo.transform == enemy.transform)
+					Vector3 gunPosition = player.GetWeapon((WeaponID)i).transform.position;
+
+					Ray ray = new Ray(gunPosition, adjustedEnemyPos - gunPosition);
+					RaycastHit hitInfo;
+					
+					Debug.DrawRay(ray.origin, ray.direction * 20, Color.red, 2.0f);
+					if (Physics.Raycast(ray, out hitInfo, 20, targetingRayMask))
 					{
-						AddEnemyToTargetables(enemy, enemyPosInScreen);
+						if (hitInfo.transform == enemy.transform)
+						{
+							AddEnemyToTargetables(enemy, enemyPosInScreen);
+						}
 					}
 				}
 			}
@@ -131,6 +137,10 @@ public class PlayerTargetingSub : MonoBehaviour {
 		targetSprite.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
 		targetSprite.transform.position = player.GC.menuHandler.NGUICamera.ScreenToWorldPoint(enemyPosInScreen);
 		targetSprite.enabled = true;*/
+
+		if (targetableEnemies.ContainsKey(enemy))
+			return;
+
 		TargetMarkHandler tmHandler = new TargetMarkHandler(player.GC, enemyPosInScreen);
 		targetableEnemies.Add(enemy, tmHandler);
 	}

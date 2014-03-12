@@ -57,7 +57,7 @@ namespace TreeSharp
 		{
 			if (context != null)
 			{
-				AlienLookupTable bb = context as AlienLookupTable;
+				AiLookupTable bb = context as AiLookupTable;
 				
 				if (bb != null && myState != 0)
 				{

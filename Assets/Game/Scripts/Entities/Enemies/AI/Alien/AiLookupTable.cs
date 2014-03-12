@@ -6,11 +6,12 @@ public enum AlienAiState
 	Flee = 1, Chase = 2, Rand = 3
 }
 
-public class AlienLookupTable : MonoBehaviour {
+public class AiLookupTable : MonoBehaviour {
 
 	public AlienAI owner;
 
 	public bool AwareOfPlayer = false;
+	public bool InformedOfPlayer = false;
 	public uint TurnsWithoutPlayerAwareness = 0;
 
 	public Point3D LastKnownPlayerPosition = null;

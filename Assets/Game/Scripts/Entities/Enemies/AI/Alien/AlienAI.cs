@@ -6,8 +6,6 @@ using TreeSharp;
 public class AlienAI : AIBase {
 	EntityMovementSub movement;
 
-	public AlienLookupTable blackboard;
-	
 	public const int APmax = 3;
 	public const int MovementCost = 1;
 	public const int AttackCost = 2;
@@ -16,6 +14,7 @@ public class AlienAI : AIBase {
 
 	public LayerMask PlayerHearMask;
 	public LayerMask PlayerSeeMask;
+	public LayerMask CommunicationMask;
 
 	public const int PlayerHearRadiusUnaware = 10;
 	public const int PlayerHearRadiusAware = 18;
@@ -28,6 +27,8 @@ public class AlienAI : AIBase {
 	public int numPhasesWaited = 0;
 	public bool NeedsPathfinding = true;
 	public bool test = false;
+
+	public float communicationRange = 3;
 
 	bool readyToAttack = false;
 
@@ -178,7 +179,7 @@ public class AlienAI : AIBase {
 		Point3D currentPos = MyPosition;
 		Point3D playerPos = new Point3D(player.movement.currentGridX, player.movement.currentGridY);
 		
-		if (playerPos != blackboard.Destination || blackboard.Path.pathCost > 300)
+		if (playerPos != blackboard.Destination || blackboard.Path.pathCost > 100)
 			blackboard.Path = PathFinder.FindPath(tilemap, currentPos, playerPos, -1);
 		
 		if (blackboard.Path != null)
@@ -226,8 +227,15 @@ public class AlienAI : AIBase {
 
 	private RunStatus CheckForPlayerPresence()
 	{
+		if (blackboard.InformedOfPlayer == true)
+		{
+			blackboard.AwareOfPlayer = true;
+			blackboard.TurnsWithoutPlayerAwareness = 0;
+			return RunStatus.Success;
+		}
+
 		//Hear
-		int checkRadius = blackboard.AwareOfPlayer ? PlayerHearRadiusAware : PlayerHearRadiusUnaware;
+		int checkRadius = (blackboard.AwareOfPlayer || player.ShotLastTurn) ? PlayerHearRadiusAware : PlayerHearRadiusUnaware;
 
 		if (PathFinder.CanHearFromTileToTile(player, MyPosition, checkRadius,
 		                                     5, PlayerHearMask))
@@ -240,30 +248,24 @@ public class AlienAI : AIBase {
 		}
 
 		//See
-		Quaternion myRot = transform.rotation;
-		Vector3 playerInRelationToMe =
-			player.transform.position - parent.transform.position;
+		Vector3 posInRelationToPlayer = parent.transform.position - player.transform.position;
+		Quaternion playerToEnemyRot = Quaternion.LookRotation(posInRelationToPlayer);
 		
-		Quaternion playerRelationRotation = Quaternion.LookRotation(playerInRelationToMe);
-		
-		float angle = Quaternion.Angle(myRot, playerRelationRotation);
-		
-		if (angle < parent.rangedAngleMax)
+		//check that enemy is facing general direction of player
+		float angleBetween = Quaternion.Angle(parent.transform.rotation, playerToEnemyRot);
+		if (angleBetween < parent.rangedAngleMax)
 		{
-			//PathFinder.CanSeeFromTileToTile(player, 
-		}
-		/*Debug.DrawLine(ray.origin, ray.origin + ray.direction*checkRadius, Color.red, 5.0f);
-		if (Physics.Raycast(ray, out hitInfo, checkRadius, PlayerCheckMask))
-		{
-			if (hitInfo.transform == player.transform)
+			checkRadius = (blackboard.AwareOfPlayer || player.ShotLastTurn) ? PlayerSeeRadiusAware : PlayerSeeRadiusUnaware;
+
+			if (PathFinder.CanSeeFromTileToTile(player, parent, MyPosition, checkRadius, PlayerSeeMask))
 			{
 				blackboard.AwareOfPlayer = true;
 				blackboard.TurnsWithoutPlayerAwareness = 0;
 				blackboard.LastKnownPlayerPosition = new Point3D(player.movement.currentGridX, player.movement.currentGridY);
-
+				
 				return RunStatus.Success;
 			}
-		}*/
+		}
 
 		blackboard.AwareOfPlayer = false;
 		blackboard.TurnsWithoutPlayerAwareness++;
@@ -278,7 +280,8 @@ public class AlienAI : AIBase {
 		{
 			MoveToNextTile();
 
-			if (blackboard.Path.position == blackboard.LastKnownPlayerPosition)
+			if (blackboard.Path.position == blackboard.LastKnownPlayerPosition
+			    || movement.currentMovement == MovementState.NotMoving)
 			{
 				blackboard.AwareOfPlayer = false;
 				blackboard.LastKnownPlayerPosition = null;
@@ -375,11 +378,9 @@ public class AlienAI : AIBase {
 			return RunStatus.Failure;
 	}
 
-	bool CheckIfBerserk(object context)
+	bool CheckIfBerserk()
 	{
-		AlienLookupTable bb = context as AlienLookupTable;
-		
-		if (bb.Berserk)
+		if (blackboard.Berserk)
 			return true;
 		else
 			return false;
@@ -402,6 +403,9 @@ public class AlienAI : AIBase {
 
 			pathLength++;
 			current = current.next;
+
+			if (tilesPlayerCanSee > 2)
+				break;
 		}
 		
 		if (tilesPlayerCanSee >= 2)
@@ -523,6 +527,29 @@ public class AlienAI : AIBase {
 		player.TakeDamage(Damage, MyPosition.X, MyPosition.Y);
 	}
 
+	void InformPlayerPosToOthers()
+	{
+		if (!blackboard.AwareOfPlayer)
+			return;
+
+		float rayDistance = communicationRange * MapGenerator.TileSize.x + 1.5f;
+
+		for (int i = 0; i < parent.GC.aiController.enemies.Count; i++)
+		{
+			AIBase otherAgent = parent.GC.aiController.enemies[i].ai;
+
+			if (!otherAgent.blackboard.AwareOfPlayer)
+			{
+				if (PathFinder.CanHearFromTileToTile(otherAgent.parent, 
+                             	MyPosition, rayDistance, 1, CommunicationMask))
+				{
+					otherAgent.blackboard.LastKnownPlayerPosition = blackboard.LastKnownPlayerPosition;
+					otherAgent.blackboard.InformedOfPlayer = true;
+				}
+			}
+		}
+	}
+
 	protected override void CreateBehaviourTree()
 	{
 		Action moveAction = new Action(action => MoveToNextTile());
@@ -535,7 +562,7 @@ public class AlienAI : AIBase {
 		//CounterDecorator fleePathfindTreshold = new CounterDecorator(3, AlienAiState.Flee, findPathAwayFromPlayerAction);
 		
 		Sequence fleeSequence = new Sequence(fleeCheckAction, findPathAwayFromPlayerAction, moveAction);
-		DecoratorCondition deadendBerserkFuse = new DecoratorCondition(runFunc => CheckIfBerserk(blackboard), fleeSequence);
+		DecoratorCondition deadendBerserkFuse = new DecoratorCondition(runFunc => CheckIfBerserk(), fleeSequence);
 		
 		//attack headon otherwise
 		Action findPathToPlayerAction = new Action(action => FindPathToLastKnownPlayerPosition());
@@ -550,6 +577,7 @@ public class AlienAI : AIBase {
 		#region Attack player
 		
 		//go here always
+		Action informOthersAction = new Action(action => InformPlayerPosToOthers());
 		findPathToPlayerAction = new Action(action => FindPathToLastKnownPlayerPosition());
 		//playerPathfindTreshold = new CounterDecorator(3, AlienAiState.Chase, findPathToPlayerAction);
 		//end
@@ -576,7 +604,7 @@ public class AlienAI : AIBase {
 		PrioritySelector tactiqueSelector = new PrioritySelector(flankHideSequence, moveAction);
 		
 		//the main sequence
-		Sequence attackSequence = new Sequence(findPathToPlayerAction, tactiqueSelector);
+		Sequence attackSequence = new Sequence(informOthersAction, findPathToPlayerAction, tactiqueSelector);
 		
 		#endregion
 

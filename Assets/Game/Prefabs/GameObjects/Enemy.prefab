@@ -220,10 +220,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00fe0da295e86e41829b469fced2eff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parent: {fileID: 0}
+  blackboard: {fileID: 11400008}
   AP: 0
   HasUsedTurn: 0
   foundMove: 0
-  blackboard: {fileID: 11400008}
   Damage: 20
   PlayerHearMask:
     serializedVersion: 2
@@ -231,9 +232,13 @@ MonoBehaviour:
   PlayerSeeMask:
     serializedVersion: 2
     m_Bits: 5120
+  CommunicationMask:
+    serializedVersion: 2
+    m_Bits: 4352
   numPhasesWaited: 0
   NeedsPathfinding: 1
   test: 0
+  communicationRange: 3
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -247,6 +252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owner: {fileID: 11400006}
   AwareOfPlayer: 0
+  InformedOfPlayer: 0
   LatestPathType: 0
   Berserk: 0
 --- !u!1001 &100100000

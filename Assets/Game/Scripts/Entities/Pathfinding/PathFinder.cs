@@ -17,6 +17,9 @@ public static class PathFinder
 {             
 	public static Point3D LatestDestination = null;
 
+	const int blockedPenaltyStart = 100;
+	const int blockedPenaltyIncrease = 10;
+
     /// <summary>
     /// Method that switfly finds the best path from start to end.
 	/// -1 maxChecks checks for all possible paths
@@ -34,6 +37,7 @@ public static class PathFinder
     /// <returns>The end breadcrump where each .next is a step back)</returns>
     private static SearchNode FindPathReversed(TileMain[,] world, Point3D start, Point3D end, int maxChecks)
     {
+		int currentBlockedPenalty = blockedPenaltyStart;
 
         SearchNode startNode = new SearchNode(start, 0, 0, null);
 
@@ -76,21 +80,25 @@ public static class PathFinder
 
                 int brWorldIdx = tmp.X + (tmp.Y + tmp.Z * sy) * sx;
 
-				try{
-                if (PositionIsWalkable(tmp, world, sx, sy, sz) && brWorld[brWorldIdx] == false)
-                {
-                    brWorld[brWorldIdx] = true;
-                    int pathCost = current.pathCost + surr.Cost;
-                    int cost = pathCost + tmp.GetDistanceSquared(end);
+				try
+				{
+	                if (PositionIsWalkable(tmp, world, sx, sy, sz) && brWorld[brWorldIdx] == false)
+	                {
+	                    brWorld[brWorldIdx] = true;
+	                    int pathCost = current.pathCost + surr.Cost;
+	                    int cost = pathCost + tmp.GetDistanceSquared(end);
 
-					//if someone is blocking the way, make sure that this route
-					//doesn't get picked unless its only reasonable route
-						if (world[tmp.X, tmp.Y].BlockedForMovement)
-							cost += 300;
+						//if someone is blocking the way, make sure that this route
+						//doesn't get picked unless its only reasonable route
+							if (world[tmp.X, tmp.Y].BlockedForMovement)
+							{
+								cost += currentBlockedPenalty;
+								currentBlockedPenalty += blockedPenaltyIncrease;
+							}
 
-                    SearchNode node = new SearchNode(tmp, cost, pathCost, current);
-                    openList.Add(node);
-                }
+	                    SearchNode node = new SearchNode(tmp, cost, pathCost, current);
+	                    openList.Add(node);
+	                }
 				}
 				catch{
 					Debug.Log("brWorldIdx out of range: " + brWorldIdx + " max is: " + brWorld.GetLength(0) + " X: " + tmp.X + " Y: " + tmp.Y);

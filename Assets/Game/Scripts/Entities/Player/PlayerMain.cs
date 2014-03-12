@@ -17,6 +17,7 @@ public class PlayerMain : EntityMain
 	public WeaponID currentWeaponID;
 	
 	public bool targetingMode { get; private set; }
+	public bool ShotLastTurn = false;
 
 	public bool INVINCIBLE=false;
 
@@ -49,6 +50,7 @@ public class PlayerMain : EntityMain
 	void Start()
     {
 		ap = apMax;
+		ShotLastTurn = false;
 		interactSub.CheckForInteractables();
 
         ActivateEquippedItems();
@@ -119,6 +121,7 @@ public class PlayerMain : EntityMain
 			}
 		}
 
+		ShotLastTurn = true;
 		GC.menuHandler.gunInfoDisplay.UpdateAllDisplays();
 
 		if (ap == 0)
@@ -183,7 +186,7 @@ public class PlayerMain : EntityMain
         }
 
 		targetingMode = true;
-		targetingSub.CheckTargetableEnemies(Camera.main.transform.position);
+		targetingSub.CheckTargetableEnemies();
 		targetingSub.CheckGunSightToEnemies(GetCurrentWeapon().transform.position);
 		GC.menuHandler.CheckTargetingModePanel();
 		GC.menuHandler.gunInfoDisplay.ChangeCurrentHighlight(currentWeaponID);

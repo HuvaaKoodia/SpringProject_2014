@@ -53,6 +53,7 @@ public class EnemyMain : EntityMain {
 
 				if (movement.currentMovement == MovementState.NotMoving)
 				{
+
 					FinishedMoving(false);
 				}
 				else
@@ -138,6 +139,7 @@ public class EnemyMain : EntityMain {
 
 	void FinishTurn()
 	{
+		ai.blackboard.InformedOfPlayer = false;
 		aiController.EnemyFinishedTurn(this);
 	}
 }
