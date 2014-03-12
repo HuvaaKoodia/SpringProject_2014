@@ -26,9 +26,9 @@ public class GameController : MonoBehaviour {
 	public InventoryMain Inventory;
 
 	public List<LootCrateMain> LootCrates {get;private set;}
-	
 
     PlayerMain player;
+	bool do_culling=true;
 
 	public HaxKnifeCulling culling_system;
 
@@ -90,7 +90,7 @@ public class GameController : MonoBehaviour {
 
         player.ActivateEquippedItems();
 	}
-	bool do_culling=false;
+
 	// Update is called once per frame
 	void Update()
     {
@@ -106,16 +106,11 @@ public class GameController : MonoBehaviour {
 			ChangeTurn(TurnState.PlayerTurn);
 		}
 
-		if (do_culling) culling_system.CullBasedOnCamera(player.GameCamera,this);
 #if UNITY_EDITOR
 		if (Input.GetKeyDown(KeyCode.C)){
 			do_culling=!do_culling;
 			if (!do_culling) culling_system.ResetCulling(this);
 		}
-		if (Input.GetKeyDown(KeyCode.V)){
-			culling_system.CullBasedOnCamera(player.GameCamera,this);
-		}
-
 #endif
 	}
 
@@ -164,4 +159,9 @@ public class GameController : MonoBehaviour {
 
     public int TileMapW{get{return TileObjectMap.GetLength(0);}}
     public int TileMapH{get{return TileObjectMap.GetLength(1);}}
+
+	public void CullWorld (Vector3 position, Vector3 targetPosition,float max_distance)
+	{
+		if (do_culling) culling_system.CullBasedOnPositions(position,targetPosition,max_distance,this);
+	}
 }

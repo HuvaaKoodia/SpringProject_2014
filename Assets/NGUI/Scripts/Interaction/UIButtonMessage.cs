@@ -20,6 +20,7 @@ public class UIButtonMessage : MonoBehaviour
 		OnPress,
 		OnRelease,
 		OnDoubleClick,
+		OnDown,
 	}
 
 	public GameObject target;
@@ -48,6 +49,17 @@ public class UIButtonMessage : MonoBehaviour
 		{
 			if (((isPressed && trigger == Trigger.OnPress) ||
 				(!isPressed && trigger == Trigger.OnRelease))) Send();
+
+			if (trigger == Trigger.OnDown) Send();
+		}
+	}
+
+	void OnDown (bool isPressed)
+	{
+		if (enabled)
+		{
+			Debug.Log("DOWN!!!");
+			if (trigger == Trigger.OnDown) Send();
 		}
 	}
 

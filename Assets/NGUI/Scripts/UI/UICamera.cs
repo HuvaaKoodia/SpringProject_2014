@@ -1044,6 +1044,7 @@ public class UICamera : MonoBehaviour
 		// Process all 3 mouse buttons as individual touches
 		for (int i = 0; i < 3; ++i)
 		{
+			bool down=Input.GetMouseButton(i);
 			bool pressed = Input.GetMouseButtonDown(i);
 			bool unpressed = Input.GetMouseButtonUp(i);
 
@@ -1058,7 +1059,7 @@ public class UICamera : MonoBehaviour
 			else if (currentTouch.pressed != null) currentCamera = currentTouch.pressedCam;
 	
 			// Process the mouse events
-			ProcessTouch(pressed, unpressed);
+			ProcessTouch(pressed, unpressed,down);
 			currentKey = KeyCode.None;
 		}
 		currentTouch = null;
@@ -1096,6 +1097,7 @@ public class UICamera : MonoBehaviour
 			currentTouchID = allowMultiTouch ? touch.fingerId : 1;
 			currentTouch = GetTouch(currentTouchID);
 
+			bool down=touch.phase == TouchPhase.Stationary;
 			bool pressed = (touch.phase == TouchPhase.Began) || currentTouch.touchBegan;
 			bool unpressed = (touch.phase == TouchPhase.Canceled) || (touch.phase == TouchPhase.Ended);
 			currentTouch.touchBegan = false;
@@ -1119,7 +1121,7 @@ public class UICamera : MonoBehaviour
 			if (touch.tapCount > 1) currentTouch.clickTime = RealTime.time;
 
 			// Process the events from this touch
-			ProcessTouch(pressed, unpressed);
+			ProcessTouch(pressed, unpressed,down);
 
 			// If the touch has ended, remove it from the list
 			if (unpressed) RemoveTouch(currentTouchID);
@@ -1172,7 +1174,7 @@ public class UICamera : MonoBehaviour
 			else if (currentTouch.pressed != null) currentCamera = currentTouch.pressedCam;
 
 			// Process the events from this touch
-			ProcessTouch(pressed, unpressed);
+			ProcessTouch(pressed, unpressed,held);
 
 			// If the touch has ended, remove it from the list
 			if (unpressed) RemoveTouch(currentTouchID);
@@ -1225,7 +1227,7 @@ public class UICamera : MonoBehaviour
 			currentScheme = ControlScheme.Controller;
 			currentTouch.last = currentTouch.current;
 			currentTouch.current = mCurrentSelection;
-			ProcessTouch(submitKeyDown, submitKeyUp);
+			ProcessTouch(submitKeyDown, submitKeyUp,submitKeyDown);
 			currentTouch.last = null;
 		}
 
@@ -1295,18 +1297,21 @@ public class UICamera : MonoBehaviour
 	/// Process the events of the specified touch.
 	/// </summary>
 
-	public void ProcessTouch (bool pressed, bool unpressed)
+	public void ProcessTouch (bool pressed, bool unpressed,bool down)
 	{
 		// Whether we're using the mouse
 		bool isMouse = (currentScheme == ControlScheme.Mouse);
 		float drag   = isMouse ? mouseDragThreshold : touchDragThreshold;
 		float click  = isMouse ? mouseClickThreshold : touchClickThreshold;
-
 		// Send out the press message
+
+		if (down){
+			Notify(currentTouch.pressed, "OnDown", true);
+		}
+
 		if (pressed)
 		{
 			//if (mTooltip != null) ShowTooltip(false);
-
 			currentTouch.pressStarted = true;
 			Notify(currentTouch.pressed, "OnPress", false);
 			currentTouch.pressed = currentTouch.current;
@@ -1333,6 +1338,7 @@ public class UICamera : MonoBehaviour
 		}
 		else if (currentTouch.pressed != null && (currentTouch.delta.magnitude != 0f || currentTouch.current != currentTouch.last))
 		{
+
 			// Keep track of the total movement
 			currentTouch.totalDelta += currentTouch.delta;
 			float mag = currentTouch.totalDelta.magnitude;
