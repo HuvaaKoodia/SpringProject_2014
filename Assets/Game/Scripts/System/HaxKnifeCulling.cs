@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class HaxKnifeCulling : MonoBehaviour {
 
@@ -8,14 +9,14 @@ public class HaxKnifeCulling : MonoBehaviour {
 	void Start () {
 		mask=1<<LayerMask.NameToLayer("Wall");
 	}
-
-	bool is_legit=true;
+	
 	int legit_walls;
 	RaycastHit WallHit,WallHit2;
 	Ray ray;
 	RaycastHit[] WallHits;
 	Plane[] planes;
 	TileMain tile;
+
 	public void CullBasedOnCamera(Camera cam,GameController GC){
 		planes=GeometryUtility.CalculateFrustumPlanes(cam);
 		Debug.Log("---StartCull!!:");
@@ -61,15 +62,72 @@ public class HaxKnifeCulling : MonoBehaviour {
 					tile.ShowGraphicsUnsafe(true);
 				}
 				//o.ShowGraphics(false);
-	        //}
+	        	//}
 		}
 	}
 
-	
+	public void CullBasedOnPositions(Vector3 pos1,Vector3 pos2,float detect_radius,GameController GC){
+		//Debug.Log("Start Culling.");
+		for(int y=0;y<GC.TileMapH;++y){
+			for(int x=0;x<GC.TileMapW;++x){
+				tile = GC.TileMainMap[x,y];
+				if (tile.TileGraphics==null) continue;
+				if (IsCullable(tile,pos1,detect_radius)&&IsCullable(tile,pos2,detect_radius)){
+					tile.ShowGraphicsUnsafe(false);
+				}
+				else{
+					tile.ShowGraphicsUnsafe(true);
+				}
+			}
+		}
+
+//		for (int i=0;i<TilesToCull.Count;++i){
+//			var tile=TilesToCull[i];
+//			tile.ShowGraphicsUnsafe(false);
+//		}
+	}
+
+	private static Vector3[] Positions={new Vector3(0,0,0),new Vector3(1,1,0),new Vector3(1,-1,0),new Vector3(-1,-1,0),new Vector3(-1,1,0)};
+
+	//DEV. todo optimize
+	private bool IsCullable(TileMain tile,Vector3 position,float detect_radius){
+		bool cull_this=true;
+
+		position+=Vector3.up;
+		if (Vector3.Distance(tile.transform.position,position)>detect_radius){
+			return true;
+		}
+
+		for(int i=0;i<5;++i){
+			var tile_pos=Vector3.up+tile.transform.position+Positions[i]*1f;
+			var direction=tile_pos-position;
+			ray=new Ray(position,direction);
+			WallHits=Physics.RaycastAll(ray,direction.magnitude,mask);
+
+			legit_walls=0;
+			legit_walls=WallHits.Length;
+//			for (int w=0;w<WallHits.Length;w++){
+//				WallHit=WallHits[w];
+//
+//				//if (tile.TileObject!=null) continue;//has door
+//				//if (tile.TileGraphics.Colliders==WallHit.transform.gameObject) continue;//collider part of last tile
+//				
+//				++legit_walls;
+//			}
+			if (legit_walls<=1){
+				cull_this=false;
+				//Debug.DrawLine(ray.origin,tile_pos,Color.green,5);
+				break;
+			}else{
+				//Debug.DrawLine(ray.origin,tile_pos,Color.red,5);
+			}
+		}
+		return cull_this;
+	}
+
 	public void ResetCulling(GameController GC){
 
 		foreach(var o in GC.TileMainMap){
-
 			o.ShowGraphicsSafe(true);
 		}
 	}

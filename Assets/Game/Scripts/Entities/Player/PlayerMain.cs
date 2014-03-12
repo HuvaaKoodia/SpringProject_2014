@@ -58,6 +58,8 @@ public class PlayerMain : EntityMain
         for (int i=0;i<4;++i){
             weaponList[i].weaponID=(WeaponID)i;
         }
+
+		GC.CullWorld(transform.position,movement.targetPosition,GameCamera.farClipPlane);
 	}
 	
 	// Update is called once per frame
@@ -105,6 +107,10 @@ public class PlayerMain : EntityMain
 
 	public void StartedMoving()
 	{
+		if (transform.position!=movement.targetPosition){
+			GC.CullWorld(transform.position,movement.targetPosition,GameCamera.farClipPlane);
+		}
+
 		inputSub.enabled = false;
 		ap -= movementCost;
 	}
