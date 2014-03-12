@@ -283,8 +283,9 @@ public class XML_Loader{
 		List<XmlDocument> DOX=new List<XmlDocument>();
 
 		if (LoadFromDisc()){
+			#if !UNITY_WEBPLAYER
 			XML_Loader.checkFolder(path);
-			var files=Directory.GetFiles(path,"*.xml",SearchOption.AllDirectories);
+			string[] files=Directory.GetFiles(path,"*.xml",SearchOption.AllDirectories);
 			
 			foreach (var f in files)
 			{
@@ -292,6 +293,7 @@ public class XML_Loader{
 				Xdoc.Load(f);
 				DOX.Add(Xdoc);
 			}
+			#endif
 		}
 		else{
 			//load from resources
