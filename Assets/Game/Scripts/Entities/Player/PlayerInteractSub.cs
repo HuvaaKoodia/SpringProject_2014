@@ -7,6 +7,8 @@ public class PlayerInteractSub : MonoBehaviour {
 
 	InteractableMain interactableInfront;
 
+	public bool WaitingInteractToFinish = false;
+
 	public bool HasInteractable
 	{ get { return interactableInfront != null; }}
 
@@ -49,12 +51,19 @@ public class PlayerInteractSub : MonoBehaviour {
 		if (interactableInfront != null)
 		{
 			
-			if (player.ap < PlayerMain.interactCost)
+			if (player.ap < interactableInfront.InteractCost)
 				return;
 
+			WaitingInteractToFinish = true;
 
-			if (interactableInfront.Interact())
-				player.ap -= PlayerMain.interactCost;
+			if (interactableInfront.Interact(this))
+			{
+				player.ap -= interactableInfront.InteractCost;
+			}
+			else
+			{
+				WaitingInteractToFinish = false;
+			}
 
 			if (player.ap == 0)
 				player.EndPlayerPhase();
@@ -73,5 +82,13 @@ public class PlayerInteractSub : MonoBehaviour {
 			return true;
 
 		return false;
+	}
+
+	public void InteractFinished()
+	{
+		WaitingInteractToFinish = false;
+
+		if (player.Finished)
+			player.EndPlayerPhase();
 	}
 }

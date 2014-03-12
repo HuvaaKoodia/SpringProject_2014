@@ -17,14 +17,15 @@ public class PlayerMain : EntityMain
 	public WeaponID currentWeaponID;
 	
 	public bool targetingMode { get; private set; }
+
 	public bool ShotLastTurn = false;
+	public bool Finished = false;
 
 	public bool INVINCIBLE=false;
 
 	public int ap;
 	public const int apMax = 2;
 	public const int movementCost = 1;
-	public const int interactCost = 1;
 	public const int attackCost = 2;
 	public const int disperseHeatCost = 1;
 
@@ -51,6 +52,7 @@ public class PlayerMain : EntityMain
     {
 		ap = apMax;
 		ShotLastTurn = false;
+		Finished = false;
 		interactSub.CheckForInteractables();
 
         ActivateEquippedItems();
@@ -75,6 +77,7 @@ public class PlayerMain : EntityMain
     public void StartPlayerPhase()
     {
 		ap = apMax;
+		Finished = false;
 		DisperseWeaponHeat(1);
 
 		GC.menuHandler.gunInfoDisplay.UpdateAllDisplays();
@@ -88,9 +91,12 @@ public class PlayerMain : EntityMain
 
     public void EndPlayerPhase()
     {
+		Finished = true;
 		inputSub.enabled = false;
 		EndTargetingMode();
-		GC.ChangeTurn(TurnState.StartAITurn);
+
+		if (!interactSub.WaitingInteractToFinish)
+			GC.ChangeTurn(TurnState.StartAITurn);
     }
 
     public override void FinishedMoving(bool wontMoveAnymore)

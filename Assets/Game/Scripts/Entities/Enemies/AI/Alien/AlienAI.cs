@@ -246,13 +246,12 @@ public class AlienAI : AIBase {
 			
 			return RunStatus.Success;
 		}
-
+		/*
 		//See
-		Vector3 posInRelationToPlayer = parent.transform.position - player.transform.position;
-		Quaternion playerToEnemyRot = Quaternion.LookRotation(posInRelationToPlayer);
-		
+		Vector3 agentPosInRelationToPlayer = parent.transform.position - player.transform.position;
+
 		//check that enemy is facing general direction of player
-		float angleBetween = Quaternion.Angle(parent.transform.rotation, playerToEnemyRot);
+		float angleBetween = Vector3.Angle(parent.transform.forward, agentPosInRelationToPlayer);
 		if (angleBetween < parent.rangedAngleMax)
 		{
 			checkRadius = (blackboard.AwareOfPlayer || player.ShotLastTurn) ? PlayerSeeRadiusAware : PlayerSeeRadiusUnaware;
@@ -265,8 +264,9 @@ public class AlienAI : AIBase {
 				
 				return RunStatus.Success;
 			}
+			AP = 0;
 		}
-
+		*/
 		blackboard.AwareOfPlayer = false;
 		blackboard.TurnsWithoutPlayerAwareness++;
 		blackboard.Berserk = false;

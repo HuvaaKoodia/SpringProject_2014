@@ -2,9 +2,13 @@
 using System.Collections;
 
 public class InteractableMain : MonoBehaviour {
-	
-	public virtual bool Interact()
+
+	public PlayerInteractSub interactor;
+	public int InteractCost;
+
+	public virtual bool Interact(PlayerInteractSub interactSub)
 	{
+		interactSub.InteractFinished();
 		return false;
 	}
 }

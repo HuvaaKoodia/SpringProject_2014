@@ -26,6 +26,7 @@ public class LootCrateMain : InteractableMain {
 	// Use this for initialization
 	void Awake () {
         Items=new InvItemStorage(8,4,2);
+		InteractCost = 0;
 	}
 	
 	// Update is called once per frame
@@ -33,8 +34,9 @@ public class LootCrateMain : InteractableMain {
 	
 	}
 
-	public override bool Interact()
+	public override bool Interact(PlayerInteractSub interactSub)
 	{
+		interactSub.InteractFinished();
 		return Looted();
 	}
 }

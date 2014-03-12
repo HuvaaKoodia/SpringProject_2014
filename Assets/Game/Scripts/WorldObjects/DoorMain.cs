@@ -15,6 +15,7 @@ public class DoorMain : InteractableMain {
 	bool anim_on;
 
 	void Start(){
+		InteractCost = 1;
 		IsOpen=false;
 	}
 
@@ -53,7 +54,7 @@ public class DoorMain : InteractableMain {
 		anim_on=true;
 		yield return new WaitForSeconds(delay);
 		anim_on=false;
-
+		interactor.InteractFinished();
         if (open){
     		IsOpen=open;
 			doorCollider.enabled=!open;
@@ -61,8 +62,10 @@ public class DoorMain : InteractableMain {
         }
 	}
 
-	public override bool Interact()
+	public override bool Interact(PlayerInteractSub interactSub)
 	{
+		interactor = interactSub;
+
 		if (isAirlockOutsideDoor)
 		{
 			GC.menuHandler.OpenEndMissionPanel();
