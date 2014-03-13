@@ -9,6 +9,8 @@ public class EnemyMain : EntityMain {
     public bool waitingForAttackPhase;
 
 	public GameObject graphics;
+	public BoxCollider hitbox;
+
 	public MeshRenderer meshRenderer;
 
 	public int rangedRange = 3;

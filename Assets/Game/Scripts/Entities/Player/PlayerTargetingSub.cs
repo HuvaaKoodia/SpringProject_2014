@@ -49,7 +49,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 		
 		foreach(EnemyMain enemy in allEnemies)
 		{
-			Vector3 adjustedEnemyPos = enemy.transform.position + Vector3.up*0.6f;
+			Vector3 adjustedEnemyPos = enemy.hitbox.bounds.center;
 
 			Vector3 enemyPosInScreen = Camera.main.WorldToScreenPoint(adjustedEnemyPos);
 		
@@ -58,7 +58,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 				continue;
 
 			//check if enemy can be seen
-			if (GeometryUtility.TestPlanesAABB(planes, enemy.collider.bounds))
+			if (GeometryUtility.TestPlanesAABB(planes, enemy.hitbox.bounds))
 			{
 				for (int i = 0; i < 4; ++i)
 				{
@@ -70,7 +70,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 					Debug.DrawRay(ray.origin, ray.direction * 20, Color.red, 2.0f);
 					if (Physics.Raycast(ray, out hitInfo, 20, targetingRayMask))
 					{
-						if (hitInfo.transform == enemy.transform)
+						if (hitInfo.transform == enemy.hitbox.transform)
 						{
 							AddEnemyToTargetables(enemy, enemyPosInScreen);
 						}
@@ -86,7 +86,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 	{
 		foreach(KeyValuePair<EnemyMain, TargetMarkHandler> enemyPair in targetableEnemies)
 		{
-			Vector3 adjustedEnemyPos = enemyPair.Key.transform.position + Vector3.up*0.6f;
+			Vector3 adjustedEnemyPos = enemyPair.Key.hitbox.bounds.center;
 
 			Ray ray = new Ray(gunPosition, adjustedEnemyPos - gunPosition);
 			RaycastHit hitInfo;
@@ -94,7 +94,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 			Debug.DrawRay(ray.origin, ray.direction * 20, Color.red, 2.0f);
 			if (Physics.Raycast(ray, out hitInfo, 20, targetingRayMask))
 			{
-				if (hitInfo.transform == enemyPair.Key.transform)
+				if (hitInfo.transform == enemyPair.Key.hitbox.transform)
 				{
 					enemyPair.Value.SetCrosshairVisible(true);
 					continue;
@@ -150,7 +150,14 @@ public class PlayerTargetingSub : MonoBehaviour {
 		Component target;
 		if (player.targetingMode && Subs.GetObjectMousePos(out target, 20, "Enemy"))
 		{
-			EnemyMain enemyTargeted = target.transform.gameObject.GetComponent<EnemyMain>();
+			Transform trans = target.transform;
+			EnemyMain enemyTargeted = trans.gameObject.GetComponent<EnemyMain>();
+
+			while (enemyTargeted == null)
+			{
+				enemyTargeted = trans.gameObject.GetComponent<EnemyMain>();
+				trans = trans.parent;
+			}
 
 			if (targetableEnemies.ContainsKey(enemyTargeted) && player.GetCurrentWeapon().Weapon != null)
 			{

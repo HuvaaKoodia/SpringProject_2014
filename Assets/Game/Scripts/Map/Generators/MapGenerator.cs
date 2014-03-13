@@ -127,10 +127,12 @@ public class MapGenerator : MonoBehaviour
                         break;
 
 					case TileObjData.Obj.GatlingGun:
-						var gatlingTurret = GameObject.Instantiate(MapPrefabs.GatlingTurretPrefab) as EnemyMain;
+						var gatlingTurret = GameObject.Instantiate(MapPrefabs.GatlingTurretPrefab) as GatlingEnemySub;
 
 						gatlingTurret.name = "GatlingTurret";
-						gatlingTurret.transform.position += tile_pos + Vector3.up * MapGenerator.TileSize.y;
+						gatlingTurret.GC = GC;
+						gatlingTurret.transform.position = tile_pos + Vector3.up * (MapGenerator.TileSize.y - 0.34f);
+						gatlingTurret.movement.SetPositionInGrid(entity_pos);
 						GC.aiController.AddEnemy(gatlingTurret);
 
 						gatlingTurret.transform.parent = enemy_container.transform;
