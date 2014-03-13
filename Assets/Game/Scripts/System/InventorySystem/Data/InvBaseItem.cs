@@ -11,6 +11,8 @@ public class InvBaseItem
 		HeavyWeapon,
         MeleeWeapon,
 		Utility,
+		Radar,
+		Navigator,
         QuestItem,
 		_Amount
 	}

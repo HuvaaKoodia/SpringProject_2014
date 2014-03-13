@@ -65,6 +65,8 @@ public class InventoryMain : MonoBehaviour {
         InventoryPanel.SetActive(false);
         Player.ActivateEquippedItems();
 
+	HUD.SetHudToPlayerStats();
+
 		if (LootParent.activeSelf) LootParent.SetActive(false);
 	}
 

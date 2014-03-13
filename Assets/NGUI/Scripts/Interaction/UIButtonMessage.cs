@@ -58,7 +58,6 @@ public class UIButtonMessage : MonoBehaviour
 	{
 		if (enabled)
 		{
-			Debug.Log("DOWN!!!");
 			if (trigger == Trigger.OnDown) Send();
 		}
 	}

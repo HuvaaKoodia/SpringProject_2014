@@ -59,6 +59,7 @@ public class RadarMain : MonoBehaviour
 {
 	public GameController GC;
 	public Transform radarPanelTransform;
+	public GameObject RadarThingsPanel;
 
 	public List<RadarBlipSub> blips;
 	public int currentBlip = 0;
@@ -100,6 +101,8 @@ public class RadarMain : MonoBehaviour
 
 	bool initialized = false;
 
+	bool _disabled=false;
+
 	// Initialize the radar
 	public void Init()
 	{	
@@ -137,7 +140,7 @@ public class RadarMain : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (!initialized)
+		if (!initialized||_disabled)
 			return;
 
 		if (circleScanActive)
@@ -320,5 +323,11 @@ public class RadarMain : MonoBehaviour
 	public void ToggleRotateWithCenter()
 	{
 		rotateWithCenter = !rotateWithCenter;
+	}
+
+	public void SetDisabled(bool disabled){
+		_disabled=disabled;
+		
+		RadarThingsPanel.SetActive(!disabled);
 	}
 }

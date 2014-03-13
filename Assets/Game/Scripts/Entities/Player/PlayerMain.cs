@@ -264,7 +264,10 @@ public class PlayerMain : EntityMain
 
 		GC.menuHandler.gunInfoDisplay.SetWeaponToDisplay(id, weapon);
     }
-	
+
+	public bool HasRadar{get;private set;}
+	public bool HasMap{get;private set;}
+
     public void ActivateEquippedItems()
     {
         //activate weapons
@@ -281,6 +284,19 @@ public class PlayerMain : EntityMain
 			weapon.gameObject.SetActive(weapon.Weapon != null);
 		}
         //activate utilities
-        //DEV.TODO
+		HasRadar=false;
+		HasMap=false;
+		foreach (var s in ObjData.Equipment.EquipmentSlots){
+			if (s.Item==null) continue;
+			if (s.Item.baseItem.type==InvBaseItem.Type.Utility){
+
+			}
+			else if (s.Item.baseItem.type==InvBaseItem.Type.Navigator){
+				HasMap=true;
+			}
+			else if (s.Item.baseItem.type==InvBaseItem.Type.Radar){
+				HasRadar=true;
+			}
+		}
     }
 }
