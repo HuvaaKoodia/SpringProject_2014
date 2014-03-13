@@ -14,7 +14,12 @@ public class InvStat
 		Firerate,
 		Accuracy,
         Range,
-		Other
+		SystemCooling,
+		HullOverheatLimit,
+		HullArmor,
+		RadarRange,
+		AccuracyBoost,
+		MeleeDamage,
 	}
 
 	/// <summary>
@@ -34,17 +39,6 @@ public class InvStat
 	static public string GetName (Type i)
 	{
 		return i.ToString();
-	}
-
-	static public string GetDescription (Type i)
-	{
-		switch (i)
-		{
-	    case Type.Damage:		return "Amount of damage done per hit.";
-		case Type.Crit:			return "Increases critical hit chance.";
-		case Type.Heat:			return "Amount of heat generated per use.";
-		}
-		return null;
 	}
 
 	/// <summary>

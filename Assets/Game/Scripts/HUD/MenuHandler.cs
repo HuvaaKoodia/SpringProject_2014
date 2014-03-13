@@ -47,6 +47,8 @@ public class MenuHandler : MonoBehaviour {
         SetGC(GC);
         radar.Init();
 		map.Init();
+
+		SetHudToPlayerStats();
 	}
 
     public void SetGC(GameController gc){
@@ -66,30 +68,7 @@ public class MenuHandler : MonoBehaviour {
 	void Update () {
 		#if UNITY_ANDROID
 		if (ShowFPSonAndroid) {
-			timeleft -= Time.deltaTime;
-			accum += Time.timeScale/Time.deltaTime;
-			++frames;
-			
-			// Interval ended - update GUI text and start new interval
-			if( timeleft <= 0.0 )
-			{
-				// display two fractional digits (f2 format)
-				float fps = accum/frames;
-				string format = System.String.Format("{0:F2} FPS",fps);
-
-				var color="[008009]";//green
-				if(fps < 30)
-					color="[e5ff00]";//yellow
-				else if(fps < 10)
-					color="[ff0000]";//red
-				//	DebugConsole.Log(format,level);
-
-				FPS.text = color+format;
-
-				timeleft = updateInterval;
-				accum = 0.0F;
-				frames = 0;
-			}
+			DrawFPS();
 		}
 	#endif
 	}
@@ -272,7 +251,12 @@ public class MenuHandler : MonoBehaviour {
 			break;
 		}
 	}
-	
+
+	public void SetHudToPlayerStats(){
+		radar.SetDisabled(!player.HasRadar);
+		map.SetDisabled(!player.HasMap);
+	}
+
 	public void CheckTargetingModePanel()
 	{
 		engageButton.gameObject.SetActive(player.targetingSub.HasAnyTargets());
@@ -293,4 +277,31 @@ public class MenuHandler : MonoBehaviour {
     public void EndMission(){
         GC.SS.GDB.EndMission();
     }
+
+	void DrawFPS(){
+		timeleft -= Time.deltaTime;
+		accum += Time.timeScale/Time.deltaTime;
+		++frames;
+		
+		// Interval ended - update GUI text and start new interval
+		if( timeleft <= 0.0 )
+		{
+			// display two fractional digits (f2 format)
+			float fps = accum/frames;
+			string format = System.String.Format("{0:F2} FPS",fps);
+			
+			var color="[008009]";//green
+			if(fps < 30)
+				color="[e5ff00]";//yellow
+			else if(fps < 10)
+				color="[ff0000]";//red
+			//	DebugConsole.Log(format,level);
+			
+			FPS.text = color+format;
+			
+			timeleft = updateInterval;
+			accum = 0.0F;
+			frames = 0;
+		}
+	}
 }

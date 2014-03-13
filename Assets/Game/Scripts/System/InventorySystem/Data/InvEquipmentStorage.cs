@@ -46,10 +46,10 @@ public class InvEquipmentStorage
         AddSlot(UIEquipmentSlot.Slot.WeaponLeftShoulder,true,InvBaseItem.Type.HeavyWeapon,InvBaseItem.Type.LightWeapon);
         AddSlot(UIEquipmentSlot.Slot.WeaponRightShoulder,true,InvBaseItem.Type.HeavyWeapon,InvBaseItem.Type.LightWeapon);
 
-        AddSlot(UIEquipmentSlot.Slot.Utility1,false,InvBaseItem.Type.Utility);
-        AddSlot(UIEquipmentSlot.Slot.Utility2,false,InvBaseItem.Type.Utility);
-        AddSlot(UIEquipmentSlot.Slot.Utility3,false,InvBaseItem.Type.Utility);
-        AddSlot(UIEquipmentSlot.Slot.Utility4,false,InvBaseItem.Type.Utility);
+		AddSlot(UIEquipmentSlot.Slot.Utility1,false,InvBaseItem.Type.Utility,InvBaseItem.Type.Radar,InvBaseItem.Type.Navigator);
+		AddSlot(UIEquipmentSlot.Slot.Utility2,false,InvBaseItem.Type.Utility,InvBaseItem.Type.Radar,InvBaseItem.Type.Navigator);
+		AddSlot(UIEquipmentSlot.Slot.Utility3,false,InvBaseItem.Type.Utility,InvBaseItem.Type.Radar,InvBaseItem.Type.Navigator);
+		AddSlot(UIEquipmentSlot.Slot.Utility4,false,InvBaseItem.Type.Utility,InvBaseItem.Type.Radar,InvBaseItem.Type.Navigator);
 
         //Hidden slots
         UpperTorso =new InvEquipmentSlot(UIEquipmentSlot.Slot.UpperTorso,false);

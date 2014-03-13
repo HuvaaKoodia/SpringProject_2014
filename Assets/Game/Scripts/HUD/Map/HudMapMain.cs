@@ -22,6 +22,8 @@ public class HudMapMain : MonoBehaviour {
 	public UILabel northIndicator;
 	public UISprite playerIndicator;
 
+	bool _disabled=false;
+
 	// Use this for initialization
 	void Start()
 	{ }
@@ -48,7 +50,7 @@ public class HudMapMain : MonoBehaviour {
 	// Update is called once per frame
 	void Update()
 	{
-		if (!initialized)
+		if (!initialized||_disabled)
 			return;
 
 		int mapWidth = mapSprites.GetLength(0);
@@ -240,5 +242,11 @@ public class HudMapMain : MonoBehaviour {
 	public void ToggleRotateWithPlayer()
 	{
 		rotateWithPlayer = !rotateWithPlayer;
+	}
+
+	public void SetDisabled(bool disabled){
+		_disabled=disabled;
+
+		spriteParent.SetActive(!disabled);
 	}
 }

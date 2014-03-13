@@ -5,15 +5,25 @@
 		HeavyWeapon
 		MeleeWeapon
 		Utility
+		Radar
+		Navigator
+		QuestItem
 	Stats:
 		Level
 		Value
 		Damage
 		Crit
 		Heat
-		Firerate
 		Cooling
-		Range
+		Firerate
+		Accuracy
+        Range
+		SystemCooling
+		HullOverheatLimit
+		HullArmor
+		RadarRange
+		AccuracyBoost
+		MeleeDamage
 	Sprites:
 		TODO
 	-->
@@ -102,40 +112,59 @@
 		<Value min ="10" max="100"/>
 	</Weapon>
 	
-	<Weapon type = "Utility" name = "Radar" sprite = "Item">
-		<Description>Radar unit</Description>
+	<Weapon type = "Radar" name = "Radar" sprite = "Item">
+		<Description>Radar unit. Not cumulative.</Description>
 		<Level minmax="1"/>
-		<Value minmax="100"/>
+		<Value min="100" max="400"/>
+		
+		<RadarRange min="2" max="6"/>
 	</Weapon>
 	
-	<Weapon type = "Utility" name = "Navigator" sprite = "Item">
-		<Description>Map unit</Description>
+	<Weapon type = "Navigator" name = "Navigator" sprite = "Item">
+		<Description>Map unit. Not cumulative.</Description>
 		<Level minmax="1"/>
 		<Value minmax="100"/>
 	</Weapon>
 	
 	<Weapon type = "Utility" name = "Heat Sink" sprite = "Item">
-		<Description>All systems cool faster</Description>
+		<Description>Increases Hull overheat limit. Cumulative effect.</Description>
 		<Level min ="1" max="10"/>
 		<Value min ="10" max="100"/>
+		
+		<HullOverheatLimit min="5" max="20"/>
+	</Weapon>
+	
+	<Weapon type = "Utility" name = "Radiator" sprite = "Item">
+		<Description>All systems cool faster. Cumulative effect.</Description>
+		<Level min ="1" max="10"/>
+		<Value min ="10" max="100"/>
+		
+		<SystemCooling min="5" max="20"/>
 	</Weapon>
 	
 	<Weapon type = "Utility" name = "Aim Computer" sprite = "Item">
-		<Description>Increases accuracy of all weapon systems</Description>
+		<Description>Increases accuracy of all weapon systems. Cumulative effect.</Description>
 		<Level min ="1" max="10"/>
 		<Value min ="10" max="100"/>
+		
+		<AccuracyBoost min="14" max="30"/>
 	</Weapon>
 	
-	<Weapon type = "Utility" name = "Ablative Armor Plating" sprite = "Item">
-		<Description>Increases hull health</Description>
+	<Weapon type = "Utility" name = "Armor Plating" sprite = "Item">
+		<Description>Deacreases hull damage. Cumulative effect.</Description>
 		<Level min ="1" max="10"/>
 		<Value min ="10" max="100"/>
+		
+		<HullArmor min="5" max="10"/>
 	</Weapon>
 	
 	<Weapon type = "Utility" name = "Hydraulic Booster" sprite = "Item">
-		<Description>Increases all melee weapon damage</Description>
+		<Description>Increases all melee weapon damage. Cumulative effect.</Description>
 		<Level min ="1" max="10"/>
 		<Value min ="10" max="100"/>
+		
+		<MeleeDamage min="10" max="50"/>
 	</Weapon>
+	
 	
 </Root>
