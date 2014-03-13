@@ -9,8 +9,6 @@ public enum MenuState
 
 public class MenuHandler : MonoBehaviour {
 
-
-
 	public GameController GC;
 	public PlayerMain player;
 
@@ -37,6 +35,7 @@ public class MenuHandler : MonoBehaviour {
     public MechStatisticsMain MechStats;
 
 	public UILabel FPS;
+	public bool ShowFPSonAndroid=true;
 
 	// Use this for initialization
 	void Start()
@@ -65,7 +64,8 @@ public class MenuHandler : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (FPS!=null) {
+		#if UNITY_ANDROID
+		if (ShowFPSonAndroid) {
 			timeleft -= Time.deltaTime;
 			accum += Time.timeScale/Time.deltaTime;
 			++frames;
@@ -91,6 +91,7 @@ public class MenuHandler : MonoBehaviour {
 				frames = 0;
 			}
 		}
+	#endif
 	}
 
 	void MoveBackwardButtonPressed()

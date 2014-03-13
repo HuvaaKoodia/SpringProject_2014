@@ -109,7 +109,14 @@ public class GameController : MonoBehaviour {
 #if UNITY_EDITOR
 		if (Input.GetKeyDown(KeyCode.C)){
 			do_culling=!do_culling;
-			if (!do_culling) culling_system.ResetCulling(this);
+			if (do_culling)
+				Player.CullWorld();
+			else
+				culling_system.ResetCulling(this);
+		}
+
+		if (Input.GetKeyDown(KeyCode.V)){
+			Player.CullWorld();
 		}
 #endif
 	}
