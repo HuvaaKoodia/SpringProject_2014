@@ -114,6 +114,9 @@ public class PlayerInputSub : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Keypad2)){
             player.TakeDamage(10,x+0,y-1);
         }
+		if (Input.GetKeyDown(KeyCode.Keypad5)){
+			player.ObjData.Equipment.UpperTorso.ObjData.AddHEAT(25);
+		}
 
         if (Input.GetKeyDown(KeyCode.L)){
             player.ap=200;
@@ -152,7 +155,7 @@ public class PlayerInputSub : MonoBehaviour {
 	
 	public void MoveForwardInput()
 	{
-		if (NotUsable() || player.targetingMode)
+		if (NotUsableWorldInteractions())
 			return;
 
 		if (playerMovement.MoveForward())
@@ -161,7 +164,7 @@ public class PlayerInputSub : MonoBehaviour {
 
 	public void MoveBackwardInput()
 	{
-        if (NotUsable() || player.targetingMode)
+		if (NotUsableWorldInteractions())
 			return;
 		
 		if (playerMovement.MoveBackward())
@@ -170,7 +173,7 @@ public class PlayerInputSub : MonoBehaviour {
 
 	public void MoveLeftInput()
 	{
-        if (NotUsable() || player.targetingMode)
+		if (NotUsableWorldInteractions())
 			return;
 		
 		if (playerMovement.MoveLeft())
@@ -179,7 +182,7 @@ public class PlayerInputSub : MonoBehaviour {
 
 	public void MoveRightInput()
 	{
-        if (NotUsable() || player.targetingMode)
+		if (NotUsableWorldInteractions())
 			return;
 		
 		if (playerMovement.MoveRight())
@@ -188,7 +191,7 @@ public class PlayerInputSub : MonoBehaviour {
 
 	public void TurnLeftInput()
 	{
-        if (NotUsable() || player.targetingMode)
+		if (NotUsableWorldInteractions())
 			return;
 		
 		playerMovement.TurnLeft();
@@ -197,7 +200,7 @@ public class PlayerInputSub : MonoBehaviour {
 
 	public void TurnRightInput()
 	{
-        if (NotUsable() || player.targetingMode)
+		if (NotUsableWorldInteractions())
 			return;
 		
 		playerMovement.TurnRight();
@@ -263,4 +266,8 @@ public class PlayerInputSub : MonoBehaviour {
     bool NotUsable(){
         return this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving;
     }
+
+	bool NotUsableWorldInteractions(){
+		return NotUsable()|| player.targetingMode||player.ObjData.Equipment.UpperTorso.ObjData.OVERHEAT;
+	}
 }

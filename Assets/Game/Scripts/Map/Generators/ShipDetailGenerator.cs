@@ -56,7 +56,7 @@ public class ShipDetailGenerator : MonoBehaviour
                     if (index.TileType==TileObjData.Type.Door){
                         free_tiles.Remove(tile);
                         --t;
-						if (t==free_tiles.Count) break;
+						break;
                     }
                 }
             }
