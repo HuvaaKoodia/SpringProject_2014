@@ -170,6 +170,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2030714353}
+  - {fileID: 954771086}
   m_Father: {fileID: 0}
 --- !u!114 &29139786
 MonoBehaviour:
@@ -4963,6 +4964,7 @@ GameObject:
   - 4: {fileID: 453917345}
   - 114: {fileID: 453917344}
   - 114: {fileID: 453917343}
+  - 114: {fileID: 453917346}
   m_Layer: 0
   m_Name: GameSystems
   m_TagString: Untagged
@@ -4996,14 +4998,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8491d5bbfde51a34a89da7bd6480fb55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TestLoadShipName: blackone
-  UseTestMap: 0
+  TestLoadShipName: whitemansburden
+  UseTestMap: 1
   OverrideMissionShip: 0
   EngCont: {fileID: 453917343}
   currentTurn: 0
   menuHandler: {fileID: 1208657778}
   Inventory: {fileID: 2068029783}
-  culling_system: {fileID: 0}
+  culling_system: {fileID: 453917346}
 --- !u!4 &453917345
 Transform:
   m_ObjectHideFlags: 0
@@ -5015,6 +5017,17 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+--- !u!114 &453917346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 453917342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b2572ac6d9b2e946a8667c74fb27bb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &455470615
 GameObject:
   m_ObjectHideFlags: 0
@@ -7312,6 +7325,11 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400008, guid: 4e352aa64cbc07a40b14dd522f0506fb, type: 2}
+      propertyPath: GatlingTurretPrefab
+      value: 
+      objectReference: {fileID: 11400000, guid: b7ca0c90a098039419896ad8950ea670,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4e352aa64cbc07a40b14dd522f0506fb, type: 2}
   m_RootGameObject: {fileID: 682935425}
@@ -9752,7 +9770,7 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 29139785}
     m_Modifications:
     - target: {fileID: 400020, guid: b7ca0c90a098039419896ad8950ea670, type: 2}
       propertyPath: m_LocalPosition.x
@@ -9760,7 +9778,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400020, guid: b7ca0c90a098039419896ad8950ea670, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -1.22623587
+      value: -1.72623587
       objectReference: {fileID: 0}
     - target: {fileID: 400020, guid: b7ca0c90a098039419896ad8950ea670, type: 2}
       propertyPath: m_LocalPosition.z
@@ -9789,6 +9807,10 @@ Prefab:
     - target: {fileID: 12200000, guid: b7ca0c90a098039419896ad8950ea670, type: 2}
       propertyPath: m_Color.rgba
       value: 4284987508
+      objectReference: {fileID: 0}
+    - target: {fileID: 11100000, guid: b7ca0c90a098039419896ad8950ea670, type: 2}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b7ca0c90a098039419896ad8950ea670, type: 2}
@@ -11700,8 +11722,11 @@ GameObject:
   m_Component:
   - 4: {fileID: 954771086}
   - 111: {fileID: 954771087}
+  - 114: {fileID: 954771089}
+  - 114: {fileID: 954771088}
+  - 114: {fileID: 954771090}
   m_Layer: 0
-  m_Name: gatling_gun_UV
+  m_Name: GatlingTurret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11714,7 +11739,7 @@ Transform:
   m_PrefabInternal: {fileID: 811464138}
   m_GameObject: {fileID: 954771085}
   m_LocalRotation: {x: .5, y: -.5, z: -.5, w: .5}
-  m_LocalPosition: {x: 5.45052814, y: -1.22623587, z: 49.7827339}
+  m_LocalPosition: {x: 5.45052814, y: -1.72623587, z: 49.7827339}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1476119734}
@@ -11724,7 +11749,7 @@ Transform:
   - {fileID: 773796283}
   - {fileID: 1907581463}
   - {fileID: 476512822}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 29139785}
 --- !u!111 &954771087
 Animation:
   m_ObjectHideFlags: 0
@@ -11742,6 +11767,66 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &954771088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400002, guid: b7ca0c90a098039419896ad8950ea670,
+    type: 2}
+  m_PrefabInternal: {fileID: 811464138}
+  m_GameObject: {fileID: 954771085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f97f53613db15f4e955f00208b445c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parent: {fileID: 954771089}
+  blackboard: {fileID: 954771090}
+  AP: 0
+  HasUsedTurn: 0
+  foundMove: 0
+  Damage: 20
+  numPhasesWaited: 0
+  NeedsPathfinding: 1
+  test: 0
+  communicationRange: 3
+--- !u!114 &954771089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: b7ca0c90a098039419896ad8950ea670,
+    type: 2}
+  m_PrefabInternal: {fileID: 811464138}
+  m_GameObject: {fileID: 954771085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4347da1de9e2df14f8961d6c276a543a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GC: {fileID: 0}
+  movement: {fileID: 0}
+  maxHealth: 100
+  ai: {fileID: 0}
+  waitingForAttackPhase: 0
+  graphics: {fileID: 0}
+  meshRenderer: {fileID: 0}
+  rangedRange: 3
+  rangedAngleMax: 50
+--- !u!114 &954771090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400004, guid: b7ca0c90a098039419896ad8950ea670,
+    type: 2}
+  m_PrefabInternal: {fileID: 811464138}
+  m_GameObject: {fileID: 954771085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30f71e0667d98354786c969534e48f87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  owner: {fileID: 0}
+  AwareOfPlayer: 0
+  InformedOfPlayer: 0
+  LatestPathType: 0
+  Berserk: 0
 --- !u!1 &955909262
 GameObject:
   m_ObjectHideFlags: 0
@@ -12272,6 +12357,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerPrefab: {fileID: 11400000, guid: bbc62e18456a7dc41a85be0653d92e94, type: 2}
   EnemyPrefab: {fileID: 11400004, guid: b974757ce80de5e4dbf0e505f383b32f, type: 2}
+  GatlingTurretPrefab: {fileID: 11400000, guid: b7ca0c90a098039419896ad8950ea670,
+    type: 2}
   TilePrefab: {fileID: 11400000, guid: 9bfb3d436ce996c47a3e71a8160380a7, type: 2}
   LootCratePrefab: {fileID: 100002, guid: 4da49c52a07bcb442849f3c68c3d1116, type: 2}
   BasicWall: {fileID: 100000, guid: 61a5c8fb07519b54a83facebee526035, type: 2}
@@ -14130,20 +14217,12 @@ Prefab:
       value: 
       objectReference: {fileID: 2068029783}
     - target: {fileID: 11400002, guid: 6344377a7c1aac8468eb70319349a8a3, type: 2}
-      propertyPath: NGUICamera
+      propertyPath: culling_system
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400002, guid: 6344377a7c1aac8468eb70319349a8a3, type: 2}
-      propertyPath: TestLoadShipName
-      value: blackone
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 453917346}
     - target: {fileID: 11400002, guid: 6344377a7c1aac8468eb70319349a8a3, type: 2}
       propertyPath: UseTestMap
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400002, guid: 6344377a7c1aac8468eb70319349a8a3, type: 2}
-      propertyPath: OverrideMissionShip
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6344377a7c1aac8468eb70319349a8a3, type: 2}
@@ -15372,6 +15451,8 @@ MonoBehaviour:
   MissionBriefing: {fileID: 655531937}
   EndMissionPanel: {fileID: 113633003}
   MechStats: {fileID: 1909347182}
+  FPS: {fileID: 0}
+  updateInterval: .5
 --- !u!1 &1208856815
 GameObject:
   m_ObjectHideFlags: 0

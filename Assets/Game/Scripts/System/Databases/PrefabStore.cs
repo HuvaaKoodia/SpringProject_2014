@@ -4,7 +4,10 @@ using System.Collections;
 public class PrefabStore : MonoBehaviour {
 	
 	public PlayerMain PlayerPrefab;
+
 	public EnemyMain EnemyPrefab;
+	public EnemyMain GatlingTurretPrefab;
+
 	public TileMain TilePrefab;
 	public GameObject LootCratePrefab;
 	

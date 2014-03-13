@@ -179,8 +179,11 @@ GameObject:
   m_Component:
   - 4: {fileID: 400020}
   - 111: {fileID: 11100000}
+  - 114: {fileID: 11400000}
+  - 114: {fileID: 11400002}
+  - 114: {fileID: 11400004}
   m_Layer: 0
-  m_Name: gatling_gun_UV
+  m_Name: GatlingTurret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -341,7 +344,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100020}
   m_LocalRotation: {x: .5, y: -.5, z: -.5, w: .5}
-  m_LocalPosition: {x: 5.45052814, y: -1.22623587, z: 49.7827339}
+  m_LocalPosition: {x: 0, y: .360000014, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400018}
@@ -740,6 +743,63 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4347da1de9e2df14f8961d6c276a543a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GC: {fileID: 0}
+  movement: {fileID: 0}
+  maxHealth: 100
+  ai: {fileID: 0}
+  waitingForAttackPhase: 0
+  graphics: {fileID: 0}
+  meshRenderer: {fileID: 0}
+  rangedRange: 3
+  rangedAngleMax: 50
+--- !u!114 &11400002
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f97f53613db15f4e955f00208b445c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parent: {fileID: 11400000}
+  blackboard: {fileID: 11400004}
+  AP: 0
+  HasUsedTurn: 0
+  foundMove: 0
+  Damage: 20
+  numPhasesWaited: 0
+  NeedsPathfinding: 1
+  test: 0
+  communicationRange: 3
+--- !u!114 &11400004
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30f71e0667d98354786c969534e48f87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  owner: {fileID: 0}
+  AwareOfPlayer: 0
+  InformedOfPlayer: 0
+  LatestPathType: 0
+  Berserk: 0
 --- !u!122 &12200000
 Halo:
   m_ObjectHideFlags: 1

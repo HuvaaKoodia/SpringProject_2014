@@ -8,7 +8,7 @@ public enum AlienAiState
 
 public class AiLookupTable : MonoBehaviour {
 
-	public AlienAI owner;
+	public AIBase owner;
 
 	public bool AwareOfPlayer = false;
 	public bool InformedOfPlayer = false;

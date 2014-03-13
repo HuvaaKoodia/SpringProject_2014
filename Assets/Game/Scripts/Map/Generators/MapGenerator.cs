@@ -125,6 +125,17 @@ public class MapGenerator : MonoBehaviour
                         tile.TileObject=LootCrate;
                         tile.TileObject.transform.parent = tile.transform;
                         break;
+
+					case TileObjData.Obj.GatlingGun:
+						var gatlingTurret = GameObject.Instantiate(MapPrefabs.GatlingTurretPrefab) as EnemyMain;
+
+						gatlingTurret.name = "GatlingTurret";
+						gatlingTurret.transform.position += tile_pos + Vector3.up * MapGenerator.TileSize.y;
+						GC.aiController.AddEnemy(gatlingTurret);
+
+						gatlingTurret.transform.parent = enemy_container.transform;
+
+						break;
                 }
             }
         }

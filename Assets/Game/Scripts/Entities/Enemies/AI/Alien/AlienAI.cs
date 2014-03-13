@@ -432,8 +432,8 @@ public class AlienAI : AIBase {
 		int nextX = blackboard.Path.next.position.X;
 		int nextY = blackboard.Path.next.position.Y;
 
-		int twoStepsX = blackboard.Path.next.next.position.X;
-		int twoStepsY = blackboard.Path.next.next.position.Y;
+		//int twoStepsX = blackboard.Path.next.next.position.X;
+		//int twoStepsY = blackboard.Path.next.next.position.Y;
 
 		//move if turning needed or player can't see
 		if (movement.GetTileInFront() != tilemap[nextX, nextY] || 
