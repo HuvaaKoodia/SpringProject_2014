@@ -246,7 +246,8 @@ public class AlienAI : AIBase {
 			
 			return RunStatus.Success;
 		}
-		/*
+		 
+
 		//See
 		Vector3 agentPosInRelationToPlayer = parent.transform.position - player.transform.position;
 
@@ -266,7 +267,7 @@ public class AlienAI : AIBase {
 			}
 			AP = 0;
 		}
-		*/
+
 		blackboard.AwareOfPlayer = false;
 		blackboard.TurnsWithoutPlayerAwareness++;
 		blackboard.Berserk = false;
@@ -432,8 +433,8 @@ public class AlienAI : AIBase {
 		int nextX = blackboard.Path.next.position.X;
 		int nextY = blackboard.Path.next.position.Y;
 
-		int twoStepsX = blackboard.Path.next.next.position.X;
-		int twoStepsY = blackboard.Path.next.next.position.Y;
+		//int twoStepsX = blackboard.Path.next.next.position.X;
+		//int twoStepsY = blackboard.Path.next.next.position.Y;
 
 		//move if turning needed or player can't see
 		if (movement.GetTileInFront() != tilemap[nextX, nextY] || 
@@ -644,36 +645,5 @@ public class AlienAI : AIBase {
 	public RunStatus SuccessReturner()
 	{
 		return RunStatus.Success;
-	}
-
-	private void RandomMovement()
-	{/*
-		int rand = Subs.GetRandom(100);
-		if (rand >= 66)
-		{
-			if (movement.MoveForward())
-			{
-				//Debug.Log("forward");
-				AP--;
-				HasUsedTurn = true;
-				foundMove = true;
-			}
-		}
-		else if (rand > 33 && rand < 66)
-		{
-			//Debug.Log("right");
-			AP--;
-			HasUsedTurn = true;
-			foundMove = true;
-			movement.TurnRight();
-		}
-		else
-		{*/
-			//Debug.Log("left");
-			AP--;
-			HasUsedTurn = true;
-			foundMove = true;
-			movement.TurnLeft();
-		//}
 	}
 }

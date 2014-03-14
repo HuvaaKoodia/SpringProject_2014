@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public enum MovementState
@@ -31,7 +31,9 @@ public class EntityMovementSub : MonoBehaviour
 	// Use this for initialization
 	void Awake()
     {
-		parentTransform = transform;
+		if (parentTransform == null)
+			parentTransform = transform;
+
         parentEntity = transform.gameObject.GetComponent<EntityMain>();
         
 		tilemap = parentEntity.GC.TileMainMap;
@@ -134,7 +136,7 @@ public class EntityMovementSub : MonoBehaviour
         Turn(target);
     }
 
-    void Turn(int nextTarget)
+    public void Turn(int nextTarget)
     {
         if (currentMovement == MovementState.NotMoving)
         {
@@ -183,7 +185,11 @@ public class EntityMovementSub : MonoBehaviour
             //Debug.Log("direction: "+ direction + " distance: " + distance);
             if (Mathf.Abs(direction * Time.deltaTime * turnSpeed) < Mathf.Abs(distance))
             {
-				parentTransform.Rotate(parentTransform.transform.up, direction * Time.deltaTime * turnSpeed);
+				parentTransform.rotation = Quaternion.Euler(
+					parentTransform.rotation.eulerAngles.x, 
+					parentTransform.rotation.eulerAngles.y + (direction * Time.deltaTime * turnSpeed),
+					parentTransform.rotation.eulerAngles.z);
+				//parentTransform.Rotate(parentTransform.transform.up, direction * Time.deltaTime * turnSpeed);
             }
             else
             {

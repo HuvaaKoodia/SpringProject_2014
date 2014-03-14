@@ -238,6 +238,9 @@ public static class PathFinder
 		Ray ray = new Ray(adjustedAvoiderPos, adjustedtoAvoidPos - adjustedAvoiderPos);
 		RaycastHit[] hits = Physics.RaycastAll(ray, checkRadius, mask);
 
+		
+		Debug.DrawLine(ray.origin, ray.origin + ray.direction*checkRadius, Color.yellow, 5.0f);
+
 		//check if toHear was hit at all and cache the distance
 		float distanceToObject = 0;
 		bool wasToHearHit = false;
@@ -282,8 +285,7 @@ public static class PathFinder
 			Debug.DrawLine(ray.origin, ray.origin + ray.direction*checkRadius, Color.green, 5.0f);
 			return true;
 		}
-
-		Debug.DrawLine(ray.origin, ray.origin + ray.direction*checkRadius, Color.red, 5.0f);
+	
 		return false;
 	}
 

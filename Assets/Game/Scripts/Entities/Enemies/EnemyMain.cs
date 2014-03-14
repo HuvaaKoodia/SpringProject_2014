@@ -9,6 +9,8 @@ public class EnemyMain : EntityMain {
     public bool waitingForAttackPhase;
 
 	public GameObject graphics;
+	public BoxCollider hitbox;
+
 	public MeshRenderer meshRenderer;
 
 	public int rangedRange = 3;
@@ -19,7 +21,8 @@ public class EnemyMain : EntityMain {
 	{
 		base.Awake();
 
-		meshRenderer = graphics.GetComponent<MeshRenderer>();
+		if (graphics != null)
+			meshRenderer = graphics.GetComponent<MeshRenderer>();
 
 		aiController = GC.aiController;
 		ai = transform.root.GetComponent<AIBase>();
@@ -114,10 +117,12 @@ public class EnemyMain : EntityMain {
 		Health -= damage;
 
 		//temp
-        Color oldColor = meshRenderer.material.color;
-		Color newColor = new Color(oldColor.r, oldColor.g-0.2f, oldColor.b-0.2f);
-
-		meshRenderer.material.color = newColor;
+		if (meshRenderer != null)
+		{
+	        Color oldColor = meshRenderer.material.color;
+			Color newColor = new Color(oldColor.r, oldColor.g-0.2f, oldColor.b-0.2f);
+				meshRenderer.material.color = newColor;
+		}
 
         if (Health <= 0)
 		{
