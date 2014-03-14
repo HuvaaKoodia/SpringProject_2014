@@ -268,6 +268,6 @@ public class PlayerInputSub : MonoBehaviour {
     }
 
 	bool NotUsableWorldInteractions(){
-		return NotUsable()|| player.targetingMode||player.ObjData.Equipment.UpperTorso.ObjData.OVERHEAT;
+		return NotUsable()|| player.targetingMode||player.ObjData.UpperTorso.OVERHEAT;
 	}
 }

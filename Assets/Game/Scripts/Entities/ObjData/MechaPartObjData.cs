@@ -5,7 +5,9 @@ public delegate void IntEvent(int value);
 
 public class MechaPartObjData{
 
-    public static int MaxHP=100;//DEV.MAGNUM
+	public static int MaxHP=100;//DEV.MAGNUM
+
+	public UIEquipmentSlot.Slot Slot {get;set;}
 
     //serializable data
     public int HP{get; set;}
@@ -26,11 +28,16 @@ public class MechaPartObjData{
         }
     }
 
+	//gamedata
+	public int Overheat_limit_bonus;
+	public float armor_multi,cooling_multi,attack_multi;
+
     public IntEvent TakeHeat;
 
     public MechaPartObjData(){}//serializer constructor
 
     public MechaPartObjData(bool Weapon){
+		IsWeapon=Weapon;
         ResetHP();
     }
 
@@ -39,7 +46,7 @@ public class MechaPartObjData{
     }
 
     public void TakeDMG(int dmg){
-        HP-=dmg;
+		HP-=(int)(dmg*(1-armor_multi));
         if(HP<0){
             HP=0;
         }

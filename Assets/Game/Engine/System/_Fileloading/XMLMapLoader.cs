@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 using System.Collections.Generic;
@@ -88,6 +88,9 @@ public class XMLMapLoader : MonoBehaviour{
 					if (Ships.ContainsKey(name))
 					{
 						Ships.TryGetValue(name,out ship);
+
+						Debug.Log("Multiple floors aren't yet supported. Ship name: "+ship);
+						continue;
 					}
 					else
 					{

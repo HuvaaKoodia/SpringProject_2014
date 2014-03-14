@@ -44,10 +44,12 @@ public class MenuHandler : MonoBehaviour {
 		MovementHud.SetActive(false);
 		TargetingHud.SetActive(false);
 
-        SetGC(GC);
-        radar.Init();
+        //SetGC(GC);
+		MechStats.SetPlayer(player.ObjData);
+		
+		radar.Init();
 		map.Init();
-
+		
 		SetHudToPlayerStats();
 	}
 
@@ -56,7 +58,7 @@ public class MenuHandler : MonoBehaviour {
         gunInfoDisplay.GC=GC;
         radar.GC=GC;
         map.GC = GC;
-        MechStats.SetPlayer(player.ObjData);
+        
     }
 
 	public  float updateInterval = 0.5F;

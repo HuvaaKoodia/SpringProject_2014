@@ -175,7 +175,7 @@ public class PlayerMain : EntityMain
         //Debug.Log("Damage from dir: "+dir+" rot "+rot);
         ObjData.TakeDMG(damage,dir);
 
-        Health = ObjData.Equipment.UpperTorso.ObjData.HP;
+        Health = ObjData.UpperTorso.HP;
         if (Health <= 0)
 		{
 			Debug.Log("Kuoli saatana");
@@ -224,7 +224,7 @@ public class PlayerMain : EntityMain
             gun.ReduceHeat(multiplier);
 		}
 		
-        ObjData.Equipment.UpperTorso.ObjData.AddHEAT(-10*multiplier);
+        ObjData.UpperTorso.AddHEAT(-10*multiplier);
 
 		GC.menuHandler.gunInfoDisplay.UpdateAllDisplays();
 	}

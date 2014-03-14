@@ -6,17 +6,17 @@ public class UIEquipmentSlot : UIItemSlot
 	public enum Slot
 	{
 		None=-1,
-		WeaponRightHand,
-		WeaponLeftHand,
-		WeaponRightShoulder,
-		WeaponLeftShoulder,
-		Utility1,
-		Utility2,
-		Utility3,
-		Utility4,
-        UpperTorso,
-        LowerTorso,
-		RecycleBin,
+		WeaponRightHand=0,
+		WeaponLeftHand=1,
+		WeaponRightShoulder=2,
+		WeaponLeftShoulder=3,
+		Utility1=4,
+		Utility2=5,
+		Utility3=6,
+		Utility4=7,
+		UpperTorso=8,
+        LowerTorso=9,
+		RecycleBin=10,
 		_Amount
 	}
 	public InvEquipmentStorage equipment;

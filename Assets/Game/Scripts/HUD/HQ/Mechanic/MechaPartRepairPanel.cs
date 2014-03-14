@@ -18,9 +18,9 @@ public class MechaPartRepairPanel : MonoBehaviour {
         Name.text=_Name;
     }
 
-    public void SetPlayer(PlayerObjData player,MechaPartObjData part,bool allow_buying){
+    public void SetPlayer(PlayerObjData player,MechaPartObjData part, bool allow_buying){
         Player=player;
-        Part=part;
+		Part=part;
         AllowBuying=allow_buying;
 
         UpdateStats();

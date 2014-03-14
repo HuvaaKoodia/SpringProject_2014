@@ -11,21 +11,49 @@ public class PlayerObjData{
     public int Money{get;set;}
 
     public Dictionary<string,int> Ammo{get;set;}
+	public MechaPartObjData[] MechParts {get; set;}
+	public MechaPartObjData UpperTorso{get;set;}
 
     XmlDatabase rXDB;
-
-	// Use this for initialization
+	
 	public PlayerObjData(XmlDatabase XDB){
         rXDB=XDB;
 
         Items=new InvItemStorage(8,4,2);
-        Equipment=new InvEquipmentStorage();
+        
         Ammo=new Dictionary<string ,int>();
         foreach(var a in XDB.AmmoTypes){
             Ammo.Add(a.Key,a.Value.StartAmount);
         }
+
+		//Inventory Slots
+		MechParts=new MechaPartObjData[8];
+		AddPart(UIEquipmentSlot.Slot.WeaponLeftHand,true);
+		AddPart(UIEquipmentSlot.Slot.WeaponRightHand,true);
+		AddPart(UIEquipmentSlot.Slot.WeaponLeftShoulder,true);
+		AddPart(UIEquipmentSlot.Slot.WeaponRightShoulder,true);
+		
+		AddPart(UIEquipmentSlot.Slot.Utility1,false);
+		AddPart(UIEquipmentSlot.Slot.Utility2,false);
+		AddPart(UIEquipmentSlot.Slot.Utility3,false);
+		AddPart(UIEquipmentSlot.Slot.Utility4,false);
+		
+		//Hidden slots
+		UpperTorso =new MechaPartObjData(false);
+
+		Equipment=new InvEquipmentStorage(this);
+		//LowerTorso =new InvEquipmentSlot(UIEquipmentSlot.Slot.LowerTorso,false);
 	}
 
+	private void AddPart(UIEquipmentSlot.Slot slot,bool weapon){
+		MechParts[(int)slot]=new MechaPartObjData(weapon);
+	}
+
+	public MechaPartObjData GetPart (UIEquipmentSlot.Slot slot)
+	{
+		return MechParts[(int)slot];
+	}
+	
     /// <summary>
     /// Takes damage from a certain direction.
     /// Uses absolute directions.
@@ -38,10 +66,10 @@ public class PlayerObjData{
     /// </summary>
     public void TakeDMG(int dmg,int dir){
         //DEV.TODO 
-        InvEquipmentSlot target=null;
+        MechaPartObjData target=null;
         //randomize target
 
-        target=Equipment.UpperTorso;
+        target=UpperTorso;
 
         //sides
         if (dir==0){
@@ -67,7 +95,7 @@ public class PlayerObjData{
         else//front and back
         if (dir==1||dir==3){
             if (Subs.RandomPercent()<50){
-                target=Equipment.UpperTorso;
+                target=UpperTorso;
             }
             else if (Subs.RandomPercent()<50){
                 var w=GetRandomWeaponRight();
@@ -75,41 +103,41 @@ public class PlayerObjData{
             }
             else{
                 var w=GetRandomWeaponLeft();
-                if (w!=null) target=w;
+				if (w!=null) target=w;
             }
         }
 
-        target.ObjData.TakeDMG(dmg);
+        target.TakeDMG(dmg);
 
         if (target.Slot==UIEquipmentSlot.Slot.UpperTorso){
             //Randomly damage utility slots
             if (Subs.RandomPercent()<25){
-                var util=Equipment.GetSlot(
+                var util=GetPart(
                     Subs.GetRandom(new UIEquipmentSlot.Slot[]
                     {UIEquipmentSlot.Slot.Utility1,UIEquipmentSlot.Slot.Utility2,UIEquipmentSlot.Slot.Utility3,UIEquipmentSlot.Slot.Utility4}
                 ));
 
-                util.ObjData.TakeDMG(35);
+                util.TakeDMG(35);
             }
         }
     }
 
-    private InvEquipmentSlot GetRandomWeaponLeft(){
+	private MechaPartObjData GetRandomWeaponLeft(){
         return GetRandomWeapon(UIEquipmentSlot.Slot.WeaponLeftHand,UIEquipmentSlot.Slot.WeaponLeftShoulder);
     }
 
-    private InvEquipmentSlot GetRandomWeaponRight(){
+	private MechaPartObjData GetRandomWeaponRight(){
         return GetRandomWeapon(UIEquipmentSlot.Slot.WeaponRightHand,UIEquipmentSlot.Slot.WeaponRightShoulder);
     }
 
-    private InvEquipmentSlot GetRandomWeapon(UIEquipmentSlot.Slot s1,UIEquipmentSlot.Slot s2){
-        var t1=Equipment.GetSlot(s1);
-        var t2=Equipment.GetSlot(s2);
+    private MechaPartObjData GetRandomWeapon(UIEquipmentSlot.Slot s1,UIEquipmentSlot.Slot s2){
+        var t1=GetPart(s1);
+		var t2=GetPart(s2);
         
-        if (t1.ObjData.USABLE&&Subs.RandomPercent()<50){
+        if (t1.USABLE&&Subs.RandomPercent()<50){
             return t1;
         }
-        else if (t2.ObjData.USABLE){
+        else if (t2.USABLE){
             return t2;
         }
         return null;

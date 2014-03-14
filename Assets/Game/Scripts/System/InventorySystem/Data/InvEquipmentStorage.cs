@@ -2,29 +2,26 @@
 using System.Collections.Generic;
 
 public class InvEquipmentSlot{
-	public UIEquipmentSlot.Slot Slot {get;private set;}
+	public UIEquipmentSlot.Slot Slot {get{return ObjData.Slot;}}
 	public List<InvBaseItem.Type> TypeList {get;private set;}
 	public InvGameItem Item;
 
-    public InvEquipmentSlot(UIEquipmentSlot.Slot slot,bool weapon,params InvBaseItem.Type[] types){
-		Slot=slot;
+	//reference
+	public MechaPartObjData ObjData{get;private set;}
+
+	public InvEquipmentSlot(MechaPartObjData data,params InvBaseItem.Type[] types){
+		ObjData=data;
 
 		TypeList=new List<InvBaseItem.Type>();
 		foreach (var t in types){
 			TypeList.Add(t);
 		}
-
-        ObjData=new MechaPartObjData(weapon);
 	}
 
 	public bool HasType(InvBaseItem.Type type)
 	{
 		return TypeList.Contains(type);
 	}
-
-    //stats
-
-    public MechaPartObjData ObjData{get;private set;}
 }
 
 public class InvEquipmentStorage
@@ -34,30 +31,30 @@ public class InvEquipmentStorage
     public InvEquipmentSlot LowerTorso{get; set;}
     public InvEquipmentSlot[] EquipmentSlots {get; set;}
 
-    public InvEquipmentStorage(){
-        Awake();
-    }
-
-	void Awake(){
+    public InvEquipmentStorage(PlayerObjData player){
 		//Inventory Slots
         EquipmentSlots=new InvEquipmentSlot[8];
-        AddSlot(UIEquipmentSlot.Slot.WeaponLeftHand,true,InvBaseItem.Type.LightWeapon,InvBaseItem.Type.MeleeWeapon);
-        AddSlot(UIEquipmentSlot.Slot.WeaponRightHand,true,InvBaseItem.Type.LightWeapon,InvBaseItem.Type.MeleeWeapon);
-        AddSlot(UIEquipmentSlot.Slot.WeaponLeftShoulder,true,InvBaseItem.Type.HeavyWeapon,InvBaseItem.Type.LightWeapon);
-        AddSlot(UIEquipmentSlot.Slot.WeaponRightShoulder,true,InvBaseItem.Type.HeavyWeapon,InvBaseItem.Type.LightWeapon);
+        AddSlot(player.GetPart(UIEquipmentSlot.Slot.WeaponLeftHand),InvBaseItem.Type.LightWeapon,InvBaseItem.Type.MeleeWeapon);
+		AddSlot(player.GetPart(UIEquipmentSlot.Slot.WeaponRightHand),InvBaseItem.Type.LightWeapon,InvBaseItem.Type.MeleeWeapon);
+        AddSlot(player.GetPart(UIEquipmentSlot.Slot.WeaponLeftShoulder),InvBaseItem.Type.HeavyWeapon,InvBaseItem.Type.LightWeapon);
+        AddSlot(player.GetPart(UIEquipmentSlot.Slot.WeaponRightShoulder),InvBaseItem.Type.HeavyWeapon,InvBaseItem.Type.LightWeapon);
 
-		AddSlot(UIEquipmentSlot.Slot.Utility1,false,InvBaseItem.Type.Utility,InvBaseItem.Type.Radar,InvBaseItem.Type.Navigator);
-		AddSlot(UIEquipmentSlot.Slot.Utility2,false,InvBaseItem.Type.Utility,InvBaseItem.Type.Radar,InvBaseItem.Type.Navigator);
-		AddSlot(UIEquipmentSlot.Slot.Utility3,false,InvBaseItem.Type.Utility,InvBaseItem.Type.Radar,InvBaseItem.Type.Navigator);
-		AddSlot(UIEquipmentSlot.Slot.Utility4,false,InvBaseItem.Type.Utility,InvBaseItem.Type.Radar,InvBaseItem.Type.Navigator);
+        AddSlot(player.GetPart(UIEquipmentSlot.Slot.Utility2),InvBaseItem.Type.Utility,InvBaseItem.Type.Radar,InvBaseItem.Type.Navigator);
+        AddSlot(player.GetPart(UIEquipmentSlot.Slot.Utility3),InvBaseItem.Type.Utility,InvBaseItem.Type.Radar,InvBaseItem.Type.Navigator);
+        AddSlot(player.GetPart(UIEquipmentSlot.Slot.Utility4),InvBaseItem.Type.Utility,InvBaseItem.Type.Radar,InvBaseItem.Type.Navigator);
+        AddSlot(player.GetPart(UIEquipmentSlot.Slot.Utility1),InvBaseItem.Type.Utility,InvBaseItem.Type.Radar,InvBaseItem.Type.Navigator);
 
         //Hidden slots
-        UpperTorso =new InvEquipmentSlot(UIEquipmentSlot.Slot.UpperTorso,false);
-        LowerTorso =new InvEquipmentSlot(UIEquipmentSlot.Slot.LowerTorso,false);
+        UpperTorso =new InvEquipmentSlot(player.UpperTorso);
+        //LowerTorso =new InvEquipmentSlot(UIEquipmentSlot.Slot.LowerTorso,false);
 
         foreach(var s in EquipmentSlots){
+			Debug.Log("odat:" +s.ObjData);
             s.ObjData.TakeHeat+=HullTakeHeat;
+			Debug.Log("DONE:" +s.ObjData);
         }
+
+		Debug.Log("asdasd");
 	}
 
     private void HullTakeHeat(int heat){
@@ -65,8 +62,8 @@ public class InvEquipmentStorage
         Debug.Log("Torso heat: "+UpperTorso.ObjData.HEAT);
     }
 
-    private void AddSlot(UIEquipmentSlot.Slot slot,bool weapon,params InvBaseItem.Type[] types){
-        EquipmentSlots[(int)slot]=new InvEquipmentSlot(slot,weapon,types);
+    private void AddSlot(MechaPartObjData data,params InvBaseItem.Type[] types){
+		EquipmentSlots[(int)data.Slot]=new InvEquipmentSlot(data,types);
 	}
 
     public InvEquipmentSlot GetSlot(UIEquipmentSlot.Slot slot){
@@ -209,7 +206,7 @@ public class InvEquipmentStorage
         return false;
     }
 
-    //statics
+    //static
 
     /// <summary>
     /// DEV. WARNING WARNING infinite loop running the world!

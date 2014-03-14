@@ -17,14 +17,14 @@ public class MechanicalMenu : MonoBehaviour {
         this.player=player;
         Statistics.SetPlayer(player);
 
-        LH.SetPlayer(player,player.Equipment.GetSlot(UIEquipmentSlot.Slot.WeaponLeftHand).ObjData,allow_buying);
-        RH.SetPlayer(player,player.Equipment.GetSlot(UIEquipmentSlot.Slot.WeaponRightHand).ObjData,allow_buying);
-        LS.SetPlayer(player,player.Equipment.GetSlot(UIEquipmentSlot.Slot.WeaponLeftShoulder).ObjData,allow_buying);
-        RS.SetPlayer(player,player.Equipment.GetSlot(UIEquipmentSlot.Slot.WeaponRightShoulder).ObjData,allow_buying);
+		LH.SetPlayer(player,player.GetPart(UIEquipmentSlot.Slot.WeaponLeftHand),allow_buying);
+		RH.SetPlayer(player,player.GetPart(UIEquipmentSlot.Slot.WeaponRightHand),allow_buying);
+		LS.SetPlayer(player,player.GetPart(UIEquipmentSlot.Slot.WeaponLeftShoulder),allow_buying);
+		RS.SetPlayer(player,player.GetPart(UIEquipmentSlot.Slot.WeaponRightShoulder),allow_buying);
 
         UT.SetPlayer(player,player.Equipment.UpperTorso.ObjData,allow_buying);
-        if (LT!=null)
-            LT.SetPlayer(player,player.Equipment.LowerTorso.ObjData,allow_buying);
+        //if (LT!=null)
+            //LT.SetPlayer(player,player.Equipment.LowerTorso,allow_buying);
 
         AmmoPanel.SetPlayer(player,allow_buying);
         UpdateStats();
