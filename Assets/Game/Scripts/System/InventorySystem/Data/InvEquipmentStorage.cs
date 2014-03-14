@@ -30,7 +30,7 @@ public class InvEquipmentStorage
     public InvEquipmentSlot UpperTorso{get; set;}
     public InvEquipmentSlot LowerTorso{get; set;}
     public InvEquipmentSlot[] EquipmentSlots {get; set;}
-
+	
     public InvEquipmentStorage(PlayerObjData player){
 		//Inventory Slots
         EquipmentSlots=new InvEquipmentSlot[8];
@@ -49,21 +49,19 @@ public class InvEquipmentStorage
         //LowerTorso =new InvEquipmentSlot(UIEquipmentSlot.Slot.LowerTorso,false);
 
         foreach(var s in EquipmentSlots){
-			Debug.Log("odat:" +s.ObjData);
             s.ObjData.TakeHeat+=HullTakeHeat;
-			Debug.Log("DONE:" +s.ObjData);
         }
-
-		Debug.Log("asdasd");
 	}
+
 
     private void HullTakeHeat(int heat){
         UpperTorso.ObjData.AddHEAT(heat*XmlDatabase.HullHeatMultiplier);
-        Debug.Log("Torso heat: "+UpperTorso.ObjData.HEAT);
     }
 
     private void AddSlot(MechaPartObjData data,params InvBaseItem.Type[] types){
-		EquipmentSlots[(int)data.Slot]=new InvEquipmentSlot(data,types);
+		var eqp=new InvEquipmentSlot(data,types);
+		EquipmentSlots[(int)data.Slot]=eqp;
+		data.Equipment=eqp;
 	}
 
     public InvEquipmentSlot GetSlot(UIEquipmentSlot.Slot slot){

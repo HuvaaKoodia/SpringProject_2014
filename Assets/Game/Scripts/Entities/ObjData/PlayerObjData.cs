@@ -39,14 +39,14 @@ public class PlayerObjData{
 		AddPart(UIEquipmentSlot.Slot.Utility4,false);
 		
 		//Hidden slots
-		UpperTorso =new MechaPartObjData(false);
+		UpperTorso =new MechaPartObjData(UIEquipmentSlot.Slot.UpperTorso,false);
 
 		Equipment=new InvEquipmentStorage(this);
 		//LowerTorso =new InvEquipmentSlot(UIEquipmentSlot.Slot.LowerTorso,false);
 	}
 
 	private void AddPart(UIEquipmentSlot.Slot slot,bool weapon){
-		MechParts[(int)slot]=new MechaPartObjData(weapon);
+		MechParts[(int)slot]=new MechaPartObjData(slot,weapon);
 	}
 
 	public MechaPartObjData GetPart (UIEquipmentSlot.Slot slot)

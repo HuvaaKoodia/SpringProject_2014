@@ -9,6 +9,9 @@ public class MechaPartObjData{
 
 	public UIEquipmentSlot.Slot Slot {get;set;}
 
+	//lazy reference
+	public InvEquipmentSlot Equipment;
+
     //serializable data
     public int HP{get; set;}
     public int HEAT{get; set;}
@@ -29,14 +32,15 @@ public class MechaPartObjData{
     }
 
 	//gamedata
-	public int Overheat_limit_bonus;
-	public float armor_multi,cooling_multi,attack_multi;
+	public int Overheat_limit_bonus=0;
+	public float armor_multi=0,cooling_multi=0,attack_multi=0,accuracy_multi=0;
 
     public IntEvent TakeHeat;
 
     public MechaPartObjData(){}//serializer constructor
 
-    public MechaPartObjData(bool Weapon){
+	public MechaPartObjData(UIEquipmentSlot.Slot slot,bool Weapon){
+		Slot=slot;
 		IsWeapon=Weapon;
         ResetHP();
     }
@@ -46,20 +50,25 @@ public class MechaPartObjData{
     }
 
     public void TakeDMG(int dmg){
-		HP-=(int)(dmg*(1-armor_multi));
+		HP-=(int)(dmg*(1f-armor_multi));
         if(HP<0){
             HP=0;
         }
     }
 
+	public int GetDamage(){
+		return (int)(Equipment.Item.GetStat(InvStat.Type.Damage)._amount*(1f+attack_multi));
+	}
+	
     public void AddHEAT(float heat){
         AddHEAT((int)heat);
     }
 
     public void AddHEAT(int heat){
         HEAT+=heat;
-        HEAT=Mathf.Clamp(HEAT,0,100);
-        if (HEAT==100){
+		var overheatlimit=100+Overheat_limit_bonus;
+		HEAT=Mathf.Clamp(HEAT,0,overheatlimit);
+		if (HEAT==overheatlimit){
             OVERHEAT=true;
         }
         if (HEAT<OVERHEAT_DISPERSE_THRESHOLD){
@@ -80,16 +89,16 @@ public class MechaPartObjData{
     /// </summary>
     public void ReduceHEAT(InvGameItem weapon,float multi){
         if (weapon==null) return;
-        AddHEAT(-weapon.GetStat(InvStat.Type.Cooling)._amount);
-    }
+		AddHEAT(-weapon.GetStat(InvStat.Type.Cooling)._amount*(1f+cooling_multi));
+	}
 
     //effects
 
     public float GetAccuracyMulti()
     {
         if (HP<MaxHP*0.5f){
-            return 0.6f;
-        }
-        return 1f;
+			return 0.6f+accuracy_multi;
+		}
+		return 1f+accuracy_multi;
     }
 }

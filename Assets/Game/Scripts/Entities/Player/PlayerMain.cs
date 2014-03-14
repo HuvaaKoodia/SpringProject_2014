@@ -267,6 +267,7 @@ public class PlayerMain : EntityMain
 
 	public bool HasRadar{get;private set;}
 	public bool HasMap{get;private set;}
+	public int RadarRange{get;private set;}
 
     public void ActivateEquippedItems()
     {
@@ -286,10 +287,31 @@ public class PlayerMain : EntityMain
         //activate utilities
 		HasRadar=false;
 		HasMap=false;
+		RadarRange=0;
+		int overheat_limit=0;
+		float accu_multi=0,def_multi=0,melee_multi=0,cooling_multi=0;
 		foreach (var s in ObjData.Equipment.EquipmentSlots){
 			if (s.Item==null) continue;
 			if (s.Item.baseItem.type==InvBaseItem.Type.Utility){
-
+				int value;
+				if (GetStatValue(s.Item,InvStat.Type.AccuracyBoost,out value)){
+					accu_multi+=value;
+				}
+				else if (GetStatValue(s.Item,InvStat.Type.HullArmor,out value)){
+					def_multi+=value;
+				}
+				else if (GetStatValue(s.Item,InvStat.Type.HullOverheatLimit,out value)){
+					overheat_limit+=value;
+				}
+				else if (GetStatValue(s.Item,InvStat.Type.MeleeDamage,out value)){
+					melee_multi+=value;
+				}
+				else if (GetStatValue(s.Item,InvStat.Type.RadarRange,out value)){
+					if (value>RadarRange) RadarRange=value;
+				}
+				else if (GetStatValue(s.Item,InvStat.Type.SystemCooling,out value)){
+					cooling_multi+=value;
+				}
 			}
 			else if (s.Item.baseItem.type==InvBaseItem.Type.Navigator){
 				HasMap=true;
@@ -298,5 +320,26 @@ public class PlayerMain : EntityMain
 				HasRadar=true;
 			}
 		}
+
+		ObjData.UpperTorso.armor_multi=def_multi;
+		ObjData.UpperTorso.Overheat_limit_bonus=overheat_limit;
+
+		foreach(var w in ObjData.MechParts){
+			if (w.IsWeapon){
+				w.cooling_multi=cooling_multi*0.01f;
+				w.accuracy_multi=accu_multi*0.01f;
+
+				if (w.Equipment.Item.baseItem.type==InvBaseItem.Type.MeleeWeapon)
+					w.attack_multi=melee_multi*0.01f;
+			}
+		}
     }
+
+	private bool GetStatValue(InvGameItem item,InvStat.Type type,out int value){
+		var stat=item.GetStat(type);
+		value=0;
+		if (stat==null) return false;
+		value=stat._amount;
+		return true;
+	}
 }

@@ -49,7 +49,6 @@ public class DoorMain : InteractableMain {
         if (!open){
             IsOpen=open;
             doorCollider.enabled=!open;
-			Debug.Log("open enabled"+(!open));
         }
 		anim_on=true;
 		yield return new WaitForSeconds(delay);
@@ -58,7 +57,6 @@ public class DoorMain : InteractableMain {
         if (open){
     		IsOpen=open;
 			doorCollider.enabled=!open;
-			Debug.Log("open enabled"+(!open));
         }
 	}
 

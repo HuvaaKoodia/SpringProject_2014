@@ -70,7 +70,7 @@ public class WeaponMain : MonoBehaviour {
 
 		GunName=Weapon.baseItem.name;
 	    
-        var dam=Weapon.GetStat(InvStat.Type.Damage)._amount;
+		var dam=WeaponSlot.ObjData.GetDamage();
 		MinDamage = dam;
 		MaxDamage = dam;
 		

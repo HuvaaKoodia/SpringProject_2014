@@ -40,10 +40,11 @@ public class InvGameItem
 
 	public int StatValue(InvStat stat)
 	{
+		float multi=((itemLevel-1) / 9f);
 		float itemStat =
-			(Mathf.Pow ((1 - (itemLevel / 10f)), 2) * stat.min_amount) + 
-			(2 * (1 - (itemLevel / 10f)) * (itemLevel/10f) * ControllerMultiplier (stat)) + 
-			(Mathf.Pow (((itemLevel / 10f)), 2) * stat.max_amount);
+			(Mathf.Pow ((1 - multi), 2) * stat.min_amount) + 
+				(2 * (1 - multi) * multi * ControllerMultiplier (stat)) + 
+				(Mathf.Pow ((multi), 2) * stat.max_amount);
 
 		return Mathf.RoundToInt(itemStat);
 	}
