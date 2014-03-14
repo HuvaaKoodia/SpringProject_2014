@@ -6,14 +6,10 @@ public class GameDB : MonoBehaviour {
 
     public SharedSystemsMain SS;
 
-    public PlayerObjData PlayerData{get;private set;}
-    public List<MissionObjData> AvailableMissions;
+	public GameObjData GameData;
 
-    public MissionObjData CurrentMission{get;set;}
-    public InvItemStorage VendorStore{get;set;}
-
-    public bool GOTO_DEBRIEF{get;set;}
-    public bool GameStarted{get;set;}
+	public bool GOTO_DEBRIEF;
+    public bool GameStarted{get;private set;}
 
     public string HQScene="MissionSelectScene",GameScene="GameScene";
 
@@ -24,30 +20,46 @@ public class GameDB : MonoBehaviour {
 
     public void StartNewGame(){
         GameStarted=true;
-
-        AvailableMissions=new List<MissionObjData>();
-        PlayerData=new PlayerObjData(SS.XDB);
-        VendorStore=new InvItemStorage(8,4,2);
-
-        PlayerData.Money=1000;
-
-        //DEV.DEBUG random equipment
-        for (int i=0;i<4;i++){
-            InvEquipmentStorage.EquipRandomItem(PlayerData.Equipment,SS.XDB);
-        }
-
-        //DEV.DEBUG random vendor items
-        for (int i=0;i<6;i++){
-            InvEquipmentStorage.EquipRandomItem(PlayerData.Equipment,SS.XDB);
-            VendorStore.Add(InvGameItem.GetRandomItem(SS.XDB));
-        }
-
+		GameData=new GameObjData(SS.XDB);
         GenerateNewMissions();
     }
 
+#if UNITY_EDITOR 
+	public void Update(){
+		if (Input.GetKeyDown(KeyCode.F5)){
+			SaveLoadSys.SaveGame("Save",GameData);
+		}
+
+		if (Input.GetKeyDown(KeyCode.F9)){
+			LoadGame(SS.XDB);
+		}
+	}
+#endif
+	public void LoadGame(XmlDatabase XDB){
+		GameStarted=true;
+
+		GameData=SaveLoadSys.LoadGame("Save");
+
+		//init GameData
+		GameData.PlayerData.rXDB=XDB;
+		
+		foreach(var e in GameData.VendorStore.items){
+			if (e!=null) e.InitBaseItem(XDB);
+		}
+		foreach(var e in GameData.PlayerData.Items.items){
+			if (e!=null) e.InitBaseItem(XDB);
+		}
+
+		foreach(var e in GameData.PlayerData.Equipment.EquipmentSlots){
+			if (e.Item!=null) e.Item.InitBaseItem(XDB);
+		}
+
+		Application.LoadLevel(HQScene);
+	}
+
     public void SetCurrentMission(MissionObjData mission)
     {
-        CurrentMission=mission;
+        GameData.CurrentMission=mission;
     }
 
     public void PlayMission()
@@ -65,17 +77,17 @@ public class GameDB : MonoBehaviour {
     public int CalculateQuestReward()
     {
         int reward=0;
-        reward+=CurrentMission.XmlData.Reward;
+        reward+=GameData.CurrentMission.XmlData.Reward;
         return reward;
     }
 
     public void RemoveQuestItems()
     {
-        for(int i=0;i<PlayerData.Items.maxItemCount;++i){
-            var item=PlayerData.Items.GetItem(i);
+		for(int i=0;i<GameData.PlayerData.Items.maxItemCount;++i){
+			var item=GameData.PlayerData.Items.GetItem(i);
             if (item==null) continue;
             if (item.baseItem.type==InvBaseItem.Type.QuestItem){
-                PlayerData.Items.Replace(i,null);
+				GameData.PlayerData.Items.Replace(i,null);
                 --i;
             }
         }
@@ -83,9 +95,39 @@ public class GameDB : MonoBehaviour {
 
     void GenerateNewMissions()
     {
-        AvailableMissions.Clear();
+		GameData.AvailableMissions.Clear();
         for (int i=0;i<4;++i){
-            AvailableMissions.Add(MissionGenerator.GenerateMission(SS.XDB));
+			GameData.AvailableMissions.Add(MissionGenerator.GenerateMission(SS.XDB));
         }
     }
+}
+
+public class GameObjData{
+	public PlayerObjData PlayerData{get; set;}
+	public List<MissionObjData> AvailableMissions{get; set;}
+	
+	public MissionObjData CurrentMission{get;set;}
+	public InvItemStorage VendorStore{get;set;}
+
+	public GameObjData(){}
+
+	public GameObjData(XmlDatabase XDB){
+		AvailableMissions=new List<MissionObjData>();
+		PlayerData=new PlayerObjData(XDB);
+		VendorStore=new InvItemStorage(8,4,2);
+
+		PlayerData.Money=1000;
+		
+		//DEV.DEBUG random equipment
+		for (int i=0;i<4;i++){
+			InvEquipmentStorage.EquipRandomItem(PlayerData.Equipment,XDB);
+		}
+		
+		//DEV.DEBUG random vendor items
+		for (int i=0;i<6;i++){
+			InvEquipmentStorage.EquipRandomItem(PlayerData.Equipment,XDB);
+			VendorStore.Add(InvGameItem.GetRandomItem(XDB));
+		}
+
+	}
 }

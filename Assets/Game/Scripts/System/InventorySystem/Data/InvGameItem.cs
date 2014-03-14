@@ -4,15 +4,15 @@ using System.Collections.Generic;
 [System.Serializable]
 public class InvGameItem
 {
-    public bool VendorItem=false;
+	public bool VendorItem{get;set;}
 	/// <summary>
 	/// Item's effective level.
 	/// </summary>
-	public int itemLevel = 1;
+	public int itemLevel{get;set;}
 
 	// Cached for speed
 	InvBaseItem mBaseItem;
-
+	public string BaseItemName {get;set;}
 
 	public InvBaseItem baseItem
 	{
@@ -89,11 +89,24 @@ public class InvGameItem
 		}
 		return null;
 	}
-	
+
+	public InvGameItem (){} 
+
 	public InvGameItem (InvBaseItem bi) 
 	{ 
+		VendorItem=false;
+		itemLevel = 1;
+
 		mBaseItem = bi; 
+		BaseItemName=mBaseItem.name;
         Stats=new List<InvStat>();
+	}
+
+	public void InitBaseItem(XmlDatabase XDB){
+		mBaseItem=XDB.GetBaseItem(BaseItemName);
+		BaseItemName=mBaseItem.name;
+
+		RecalculateStats();
 	}
 
     public void RecalculateStats(){

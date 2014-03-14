@@ -20,14 +20,19 @@ public class XmlDatabase : MonoBehaviour
 
     //Game Constants
     public static int
-        WeaponOverheatDisperseThreshold,
+		WeaponOverheatEndThreshold,
         WeaponChangeableHeatThreshold,
-        HullOverheatDisperseThreshold,
+		HullOverheatEndThreshold,
         MissionInfoSuccessRating,
-        MissionInfoFailRating
+        MissionInfoFailRating,
+		HullHeatDisperseConstant
         ;
     public static float
-        HullHeatMultiplier
+        HullHeatAddMultiplier,
+		WeaponHeatDisperseCoolingMultiplier,
+		WeaponHeatDisperseHeatMultiplier,
+		DisperseHeatMultiplier,
+		HullHeatDisperseHeatMultiplier
     ;
 
 	// Use this for initialization
@@ -58,4 +63,11 @@ public class XmlDatabase : MonoBehaviour
 
         XMLDataLoader.ReadDataFiles();
     }
+
+	public InvBaseItem GetBaseItem(string name){
+		foreach (var i in items){
+			if (i.name==name) return i;
+		}
+		return null;
+	}
 }

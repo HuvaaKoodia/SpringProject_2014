@@ -14,8 +14,10 @@ public class PlayerObjData{
 	public MechaPartObjData[] MechParts {get; set;}
 	public MechaPartObjData UpperTorso{get;set;}
 
-    XmlDatabase rXDB;
-	
+    public XmlDatabase rXDB;
+
+	public PlayerObjData(){}
+
 	public PlayerObjData(XmlDatabase XDB){
         rXDB=XDB;
 

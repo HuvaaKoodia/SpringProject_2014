@@ -16,27 +16,29 @@ public class MissionObjData {
    
     public enum InformationRating{None,Something,Everything}
 
-    public string Briefing,Objectives;
+	public string Briefing{get;set;}
+	public string Objectives{get;set;}
 
     //stats
-    public Type MissionType;
-    public AlienAmount      MissionAlienAmount;
-    public SecuritySystems  MissionSecuritySystem;
-    public ShipCondition    MissionShipConditions;
-    public ShipPower        MissionShipPower;
+	public Type				MissionType	{get;set;}
+	public AlienAmount      MissionAlienAmount {get;set;}
+	public SecuritySystems  MissionSecuritySystem {get;set;}
+	public ShipCondition    MissionShipConditions {get;set;}
+	public ShipPower        MissionShipPower {get;set;}
 
     //info
-    public InformationRating InfoAlienAmount;
-    public InformationRating InfoSecuritySystem;
-    public InformationRating InfoShipConditions;
-    public InformationRating InfoShipPower;
+	public InformationRating InfoAlienAmount {get;set;}
+	public InformationRating InfoSecuritySystem {get;set;}
+	public InformationRating InfoShipConditions {get;set;}
+	public InformationRating InfoShipPower {get;set;}
 
     //objectives
-    public List<Objective> PrimaryObjectives=new List<Objective>();
-    public List<Objective> SecondaryObjectives=new List<Objective>();
+	public List<Objective> PrimaryObjectives{get;set;}
+	public List<Objective> SecondaryObjectives{get;set;}
 
     public MissionObjData(){
-
+		PrimaryObjectives=new List<Objective>();
+		SecondaryObjectives=new List<Objective>();
     }
 
     public bool ContainsObjective(MissionObjData.Objective o){

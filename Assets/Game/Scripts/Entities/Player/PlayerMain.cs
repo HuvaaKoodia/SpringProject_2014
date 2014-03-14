@@ -29,8 +29,6 @@ public class PlayerMain : EntityMain
 	public const int attackCost = 2;
 	public const int disperseHeatCost = 1;
 
-	public const int DisperseHeatButtonMultiplier = 3;
-
 	public Camera GameCamera;
 
     public void SetObjData(PlayerObjData data){
@@ -216,7 +214,7 @@ public class PlayerMain : EntityMain
 		GC.menuHandler.CheckTargetingModePanel();
 	}
 
-	public void DisperseWeaponHeat(int multiplier)
+	public void DisperseWeaponHeat(float multiplier)
 	{
 
         foreach(WeaponMain gun in weaponList)
@@ -224,7 +222,7 @@ public class PlayerMain : EntityMain
             gun.ReduceHeat(multiplier);
 		}
 		
-        ObjData.UpperTorso.AddHEAT(-10*multiplier);
+		ObjData.UpperTorso.AddHEAT(-(XmlDatabase.HullHeatDisperseConstant+XmlDatabase.HullHeatDisperseHeatMultiplier*ObjData.UpperTorso.HEAT)*multiplier);
 
 		GC.menuHandler.gunInfoDisplay.UpdateAllDisplays();
 	}

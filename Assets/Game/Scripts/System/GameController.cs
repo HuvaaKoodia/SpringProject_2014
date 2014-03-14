@@ -36,7 +36,7 @@ public class GameController : MonoBehaviour {
         get{return player;}
         set{
             player=value;
-            player.SetObjData(SS.GDB.PlayerData);
+            player.SetObjData(SS.GDB.GameData.PlayerData);
         }
     }
 
@@ -50,10 +50,10 @@ public class GameController : MonoBehaviour {
 		ShipObjData ship_objdata=null;
 
         //DEV.DEBUG generate mission
-        if (SS.GDB.CurrentMission==null){
-            SS.GDB.CurrentMission=MissionGenerator.GenerateMission(SS.XDB);
+        if (SS.GDB.GameData.CurrentMission==null){
+			SS.GDB.GameData.CurrentMission=MissionGenerator.GenerateMission(SS.XDB);
         }
-        menuHandler.MissionBriefing.SetMission(SS.GDB.CurrentMission);
+		menuHandler.MissionBriefing.SetMission(SS.GDB.GameData.CurrentMission);
 
 		if (UseTestMap)
 		{
@@ -65,7 +65,7 @@ public class GameController : MonoBehaviour {
 			    ship_objdata=SS.SGen.GenerateShipObjectData(TestLoadShipName);
             }
             else{
-                var mission_ship=Subs.GetRandom(SS.GDB.CurrentMission.XmlData.ShipsTypes);
+				var mission_ship=Subs.GetRandom(SS.GDB.GameData.CurrentMission.XmlData.ShipsTypes);
                 ship_objdata=SS.SGen.GenerateShipObjectData(mission_ship);
             }
 		}
@@ -76,7 +76,7 @@ public class GameController : MonoBehaviour {
         SS.SDGen.GenerateLoot(this,ship_objdata);
 
         if (!OverrideMissionShip)
-            SS.SDGen.GenerateMissionObjectives(this,SS.GDB.CurrentMission,ship_objdata,SS.XDB);
+			SS.SDGen.GenerateMissionObjectives(this,SS.GDB.GameData.CurrentMission,ship_objdata,SS.XDB);
 
 		//init hud
 		menuHandler.player = player;

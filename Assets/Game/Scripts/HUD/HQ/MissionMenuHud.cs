@@ -27,7 +27,7 @@ public class MissionMenuHud : MonoBehaviour {
 
         //create mission buttons
         int i=0;
-        foreach(var m in SS.GDB.AvailableMissions){
+        foreach(var m in SS.GDB.GameData.AvailableMissions){
             var button=Instantiate(MButtonPrefab) as MissionButtonMain;
             button.transform.parent=MissionButtonsParent;
 
@@ -41,18 +41,18 @@ public class MissionMenuHud : MonoBehaviour {
         }
 
         //set references
-        _VendorMenu.SetPlayer(SS.GDB.PlayerData);
-        _VendorMenu.SetVendor(SS.GDB.VendorStore);
+        _VendorMenu.SetPlayer(SS.GDB.GameData.PlayerData);
+		_VendorMenu.SetVendor(SS.GDB.GameData.VendorStore);
         _VendorMenu.Init();
 
-        _MechanicMenu.SetPlayer(SS.GDB.PlayerData);
+		_MechanicMenu.SetPlayer(SS.GDB.GameData.PlayerData);
 
         //open correct menu
 
         if (SS.GDB.GOTO_DEBRIEF){
             SS.GDB.GOTO_DEBRIEF=false;
             int reward=SS.GDB.CalculateQuestReward();
-            SS.GDB.PlayerData.Money+=reward;
+			SS.GDB.GameData.PlayerData.Money+=reward;
             MissionDebrief.SetMission(SS.GDB,SS.XDB,reward);
             OpenMissionDebrief();
             SS.GDB.RemoveQuestItems();

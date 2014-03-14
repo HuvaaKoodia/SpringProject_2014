@@ -3,11 +3,13 @@ using System.Collections.Generic;
 
 public class InvEquipmentSlot{
 	public UIEquipmentSlot.Slot Slot {get{return ObjData.Slot;}}
-	public List<InvBaseItem.Type> TypeList {get;private set;}
-	public InvGameItem Item;
+	public List<InvBaseItem.Type> TypeList {get; set;}
+	public InvGameItem Item{get;set;}
 
 	//reference
-	public MechaPartObjData ObjData{get;private set;}
+	public MechaPartObjData ObjData{get; set;}
+
+	public InvEquipmentSlot(){}
 
 	public InvEquipmentSlot(MechaPartObjData data,params InvBaseItem.Type[] types){
 		ObjData=data;
@@ -30,7 +32,9 @@ public class InvEquipmentStorage
     public InvEquipmentSlot UpperTorso{get; set;}
     public InvEquipmentSlot LowerTorso{get; set;}
     public InvEquipmentSlot[] EquipmentSlots {get; set;}
-	
+
+	public InvEquipmentStorage(){}
+
     public InvEquipmentStorage(PlayerObjData player){
 		//Inventory Slots
         EquipmentSlots=new InvEquipmentSlot[8];
@@ -55,7 +59,7 @@ public class InvEquipmentStorage
 
 
     private void HullTakeHeat(int heat){
-        UpperTorso.ObjData.AddHEAT(heat*XmlDatabase.HullHeatMultiplier);
+        UpperTorso.ObjData.AddHEAT(heat*XmlDatabase.HullHeatAddMultiplier);
     }
 
     private void AddSlot(MechaPartObjData data,params InvBaseItem.Type[] types){

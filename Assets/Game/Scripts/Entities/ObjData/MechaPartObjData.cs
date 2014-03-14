@@ -25,10 +25,10 @@ public class MechaPartObjData{
     public int OVERHEAT_DISPERSE_THRESHOLD{
         get{
             if (IsWeapon)
-                return XmlDatabase.WeaponOverheatDisperseThreshold;
+                return XmlDatabase.WeaponOverheatEndThreshold;
             else
-                return XmlDatabase.HullOverheatDisperseThreshold;
-        }
+				return XmlDatabase.HullOverheatEndThreshold;
+		}
     }
 
 	//gamedata
@@ -90,6 +90,14 @@ public class MechaPartObjData{
     public void ReduceHEAT(InvGameItem weapon,float multi){
         if (weapon==null) return;
 		AddHEAT(-weapon.GetStat(InvStat.Type.Cooling)._amount*(1f+cooling_multi));
+	}
+
+	/// <summary>
+	/// Disperses HEAT based on the weapons cooling value
+	/// </summary>
+	public void DisperseHEAT(InvGameItem weapon,float multi){
+		if (weapon==null) return;
+		AddHEAT(-(XmlDatabase.WeaponHeatDisperseCoolingMultiplier*(1f+cooling_multi)*weapon.GetStat(InvStat.Type.Cooling)._amount)+HEAT*XmlDatabase.WeaponHeatDisperseHeatMultiplier);
 	}
 
     //effects

@@ -234,7 +234,7 @@ public class PlayerInputSub : MonoBehaviour {
 	{
         if (NotUsable()) return;
 
-		player.DisperseWeaponHeat(PlayerMain.DisperseHeatButtonMultiplier);
+		player.DisperseWeaponHeat(XmlDatabase.DisperseHeatMultiplier);
 
 		player.EndPlayerPhase();
 	}

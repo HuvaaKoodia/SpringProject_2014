@@ -6,24 +6,22 @@ using System.Collections.Generic;
 /// </summary>
 public class InvItemStorage
 {
-	public int maxItemCount = 8;
-	
-	public int maxRows = 4;
-	public int maxColumns = 4;
+	public int maxItemCount{get;set;}
+	public int maxRows {get;set;}
+	public int maxColumns {get;set;}
 
-    void Awake(){
-        mItems = new List<InvGameItem>();
-    }
+	public List<InvGameItem> mItems{get;set;}
+
+	public InvItemStorage(){}
 
     public InvItemStorage(int itemcount,int rows,int columns){
         maxItemCount=itemcount;
         maxRows=rows;
         maxColumns=columns;
 
-        Awake();
+		mItems = new List<InvGameItem>();
     }
 
-    List<InvGameItem> mItems;
 	public List<InvGameItem> items { get { while (mItems.Count < maxItemCount) mItems.Add(null); return mItems; } }
 
 	/// <summary>
