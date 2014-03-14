@@ -30,71 +30,66 @@
 
 	<Weapon type = "LightWeapon" name = "Arbalest" sprite = "Minigun">
 		<Description>Good basic weapon for all kinds of situations</Description>
-		<Ammo>HeavySlug</Ammo>
+		<Ammo>Standard</Ammo>
 		<Level min ="1" max="10"/>
-		<Damage min="20" max="40"/>
-		<Accuracy min="60" max="90"/>
-		<Range min="40" max="70"/>
+		<Damage min="25" max="50"/>
+		<Accuracy min="65" max="90"/>
+		<Range min="60" max="90"/>
 		<Firerate min="1" max="2"/>
-		<Heat min="15" max="35"/>
+		<Heat min="18" max="30"/>
 		<Cooling min="10" max="30"/>
-		<!--<MaxAmmo min="8" max="16"/>-->
 		<Value min ="10" max="100"/>
 	</Weapon>
 	
 	<Weapon type = "HeavyWeapon" name = "Hades" sprite = "Missilerack">
 		<Description>Railgun that deals high damage but also generates lots of heat</Description>
-		<Ammo>HeavySlug</Ammo>
+		<Ammo>Heavy</Ammo>
 		<Level min ="1" max="10"/>
-		<Damage min="40" max="100"/>
+		<Damage min="50" max="100"/>
 		<Accuracy min="60" max="80"/>
-		<Range min="80" max="100"/>
+		<Range min="85" max="100"/>
 		<Firerate min="1" max="1"/>
-		<Heat min="40" max="70"/>
-		<Cooling min="10" max="30"/>
-		<!--<MaxAmmo min="3" max="8"/>-->
+		<Heat min="53" max="70"/>
+		<Cooling min="15" max="30"/>
 		<Value min ="10" max="100"/>
 	</Weapon>
 	
 	<Weapon type = "LightWeapon" name = "Nemesis" sprite = "Minigun">
-		<Description>Rapid-fire weapon capable of targeting multiple tangos</Description>
-		<Ammo>LightSlug</Ammo>
+		<Description>Rapid-fire weapon capable of targeting multiple targets</Description>
+		<Ammo>Light</Ammo>
 		<Level min ="1" max="10"/>
-		<Damage min="7" max="25"/>
-		<Accuracy min="40" max="60"/>
-		<Range min="30" max="50"/>
+		<Damage min="15" max="40"/>
+		<Accuracy min="45" max="70"/>
+		<Range min="45" max="60"/>
 		<Firerate min="2" max="4"/>
-		<Heat min="10" max="15"/>
-		<Cooling min="10" max="25"/>
-		<!--<MaxAmmo min="20" max="30"/>-->
+		<Heat min="16" max="19"/>
+		<Cooling min="11" max="25"/>
 		<Value min ="10" max="100"/>
 	</Weapon>
 	
 	<Weapon type = "LightWeapon" name = "Vandal" sprite = "Minigun">
 		<Description>Scattergun for close quarter combat</Description>
-		<Ammo>ScatterShot</Ammo>
+		<Ammo>Scatter</Ammo>
 		<Level min ="1" max="10"/>
-		<Damage min="20" max="40"/>
-		<Accuracy min="60" max="80"/>
-		<Range min="10" max="25"/>
+		<Damage min="30" max="45"/>
+		<Accuracy min="70" max="85"/>
+		<Range min="10" max="20"/>
 		<Firerate min="1" max="3"/>
-		<Heat min="20" max="30"/>
+		<Heat min="21" max="24"/>
 		<Cooling min="10" max="20"/>
-		<!--<MaxAmmo min="6" max="20"/>-->
 		<Value min ="10" max="100"/>
 	</Weapon>
 	
 	<Weapon type = "MeleeWeapon" name = "Gladius" sprite = "Minigun">
-		<Description>Hydraulic melee weapon for close quarter combat</Description>
+		<Description>Hydraulic melee weapon for close quarter combat that requires no ammo</Description>
 		<Ammo>Melee</Ammo>
 		<Level min ="1" max="10"/>
-		<Damage min="15" max="50"/>
-		<Accuracy min="70" max="90"/>
+		<Damage min="20" max="50"/>
+		<Accuracy min="75" max="90"/>
 		<Range min="3" max="3"/>
 		<Firerate min="1" max="2"/>
-		<Heat min="10" max="15"/>
-		<Cooling min="10" max="15"/>
-		<!--<MaxAmmo minmax="-1"/>-->
+		<Heat min="10" max="14"/>
+		<Cooling min="5" max="10"/>
 		<Value min ="10" max="100"/>
 	</Weapon>
 	
@@ -102,18 +97,17 @@
 		<Description>High-Explosive missile rack</Description>
 		<Ammo>Missile</Ammo>
 		<Level min ="1" max="10"/>
-		<Damage min="45" max="110"/>
-		<Accuracy min="85" max="100"/>
-		<Range min="50" max="70"/>
-		<Firerate min="2" max="5"/>
-		<Heat min="40" max="72"/>
-		<Cooling min="5" max="20"/>
-		<!--<MaxAmmo min="10" max="20"/>-->
+		<Damage min="45" max="90"/>
+		<Accuracy min="55" max="90"/>
+		<Range min="75" max="90"/>
+		<Firerate min="1" max="3"/>
+		<Heat min="30" max="30"/>
+		<Cooling min="12" max="30"/>
 		<Value min ="10" max="100"/>
 	</Weapon>
 	
 	<Weapon type = "Radar" name = "Radar" sprite = "Item">
-		<Description>Radar unit. Not cumulative.</Description>
+		<Description>Radar that reveals moving enemies. Effect does not stack.</Description>
 		<Level minmax="1"/>
 		<Value min="100" max="400"/>
 		
@@ -121,13 +115,13 @@
 	</Weapon>
 	
 	<Weapon type = "Navigator" name = "Navigator" sprite = "Item">
-		<Description>Map unit. Not cumulative.</Description>
+		<Description>Navigator map unit. Effect does not stack.</Description>
 		<Level minmax="1"/>
 		<Value minmax="100"/>
 	</Weapon>
 	
 	<Weapon type = "Utility" name = "Heat Sink" sprite = "Item">
-		<Description>Increases Hull overheat limit. Cumulative effect.</Description>
+		<Description>Increases main hull overheat limit.</Description>
 		<Level min ="1" max="10"/>
 		<Value min ="10" max="100"/>
 		
@@ -135,35 +129,35 @@
 	</Weapon>
 	
 	<Weapon type = "Utility" name = "Radiator" sprite = "Item">
-		<Description>All systems cool faster. Cumulative effect.</Description>
+		<Description>All weapon systems cool faster.</Description>
 		<Level min ="1" max="10"/>
 		<Value min ="10" max="100"/>
 		
-		<SystemCooling min="5" max="20"/>
+		<SystemCooling min="5" max="10"/>
 	</Weapon>
 	
 	<Weapon type = "Utility" name = "Aim Computer" sprite = "Item">
-		<Description>Increases accuracy of all weapon systems. Cumulative effect.</Description>
+		<Description>Increases accuracy of all weapon systems.</Description>
 		<Level min ="1" max="10"/>
 		<Value min ="10" max="100"/>
 		
-		<AccuracyBoost min="14" max="30"/>
+		<AccuracyBoost min="5" max="20"/>
 	</Weapon>
 	
 	<Weapon type = "Utility" name = "Armor Plating" sprite = "Item">
-		<Description>Deacreases hull damage. Cumulative effect.</Description>
+		<Description>Decreases all damage taken to the main hull.</Description>
 		<Level min ="1" max="10"/>
 		<Value min ="10" max="100"/>
 		
-		<HullArmor min="5" max="10"/>
+		<HullArmor min="5" max="15"/>
 	</Weapon>
 	
 	<Weapon type = "Utility" name = "Hydraulic Booster" sprite = "Item">
-		<Description>Increases all melee weapon damage. Cumulative effect.</Description>
+		<Description>Increases all melee weapon damage.</Description>
 		<Level min ="1" max="10"/>
 		<Value min ="10" max="100"/>
 		
-		<MeleeDamage min="10" max="50"/>
+		<MeleeDamage min="10" max="25"/>
 	</Weapon>
 	
 	
