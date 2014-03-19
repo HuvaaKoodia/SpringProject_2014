@@ -13,27 +13,33 @@ public class MapGenerator : MonoBehaviour
     public bool DEBUG_create_temp_tiles = false;
     public PrefabStore MapPrefabs;
 
+	GameObject clone_container;
+
+	void Awake(){
+		clone_container = new GameObject("WorldObjects");
+	}
+
     /// <summary>
     /// Generates the TileObjectDataMap from a XMLMapData file.
     /// </summary>
-    public void GenerateObjectDataMap(GameController GC, MapXmlData md)
+    public void GenerateObjectDataMap(FloorObjData floor, MapXmlData md)
     {
         int w = md.W;
         int h = md.H;
             
-        GC.ResetTileObjectMap(w, h);
+		floor.ResetTileObjectMap(w, h);
 
         for (int x = 0; x < w; x++)
         {
             for (int y = 0; y < h; y++)
             {
-                var data = GC.TileObjectMap [x, y] = new TileObjData();
+				var data = floor.TileObjectMap [x, y] = new TileObjData();
                 
                 data.X = x;
-                data.Y=y;
+                data.Y = y;
 
                 //DEV. create type and obj dictionaries
-                var index=md.map_data [x, y];
+                var index=md.map_data[x, y];
                 switch (index)
                 {
                     case CorridorIcon:
@@ -64,22 +70,26 @@ public class MapGenerator : MonoBehaviour
     /// <summary>
     /// Generates the 3d world objects to the scene from the ObjectDataMap.
     /// </summary>
-    public void GenerateSceneMap(GameController GC)
+	public void GenerateSceneMap(GameController GC,FloorObjData floor)
     {
-        //ObjectContainers
-        var clone_container = new GameObject("WorldObjects");
-        var tile_container = new GameObject("Tiles");
-        var enemy_container = new GameObject("Enemies");
-        var object_container = new GameObject("Objects");
-        object_container.transform.parent = clone_container.transform;
-        enemy_container.transform.parent = clone_container.transform;
-        tile_container.transform.parent = clone_container.transform;
-
         //map loading
-        int w = GC.TileMapW;
-        int h = GC.TileMapH;
+		int w = floor.TileMapW;
+		int h = floor.TileMapH;
         
-        GC.TileMainMap = new TileMain[w, h];
+		var floor_container = new GameObject("Floor "+floor.FloorIndex);
+		var tile_container = new GameObject("Tiles");
+		var enemy_container = new GameObject("Enemies");
+		var object_container = new GameObject("Objects");
+
+		GC.FloorContainers.Add(floor_container);
+
+		floor_container.transform.parent = clone_container.transform;
+
+		object_container.transform.parent = floor_container.transform;
+		enemy_container.transform.parent = floor_container.transform;
+		tile_container.transform.parent = floor_container.transform;
+
+		floor.ResetTileMainMap(w,h);
         
 		List<Vector2> player_tiles=new List<Vector2>();
 
@@ -91,12 +101,12 @@ public class MapGenerator : MonoBehaviour
                 //int y_pos = h - 1 - y;
 				Vector2 entity_pos =new Vector2( x,y); 
                 var tile_pos = new Vector3(x * TileSize.x, 0, y * TileSize.z);
-                var tile = GC.TileMainMap [x, y] = Instantiate(MapPrefabs.TilePrefab, tile_pos, Quaternion.identity) as TileMain;
-                tile.SetData(GC.TileObjectMap [x, y]);
+				var tile = floor.TileMainMap [x, y] = Instantiate(MapPrefabs.TilePrefab, tile_pos, Quaternion.identity) as TileMain;
+				tile.SetData(floor.TileObjectMap [x, y]);
                 tile.transform.parent = tile_container.transform;
 
                 //tile mesh
-                SetTileGraphics(x, y, tile, GC.TileObjectMap,GC);
+				SetTileGraphics(x, y, tile, floor.TileObjectMap,GC,floor);
                 if (tile.TileGraphics != null)
                     tile.TileGraphics.transform.parent = tile.transform;
 
@@ -104,14 +114,16 @@ public class MapGenerator : MonoBehaviour
                 switch (tile.Data.ObjType)
                 {
                     case TileObjData.Obj.Player:
-					    player_tiles.Add(entity_pos);
+						floor.AirlockPositions.Add(entity_pos);
                         break;
 
                     case TileObjData.Obj.Enemy:
                         var newEnemy = GameObject.Instantiate(MapPrefabs.EnemyPrefab, tile_pos, Quaternion.identity) as EnemyMain;
                         newEnemy.name = "Enemy";
                         newEnemy.movement.SetPositionInGrid(entity_pos);
-                        GC.aiController.AddEnemy(newEnemy);
+						floor.Enemies.Add(newEnemy);
+
+						newEnemy.CurrentFloorIndex=floor.FloorIndex;
                         
                         newEnemy.transform.parent = enemy_container.transform;
                         break;
@@ -121,7 +133,8 @@ public class MapGenerator : MonoBehaviour
 
 						LootCrateMain crate = LootCrate.GetComponent<LootCrateMain>();
 						crate.GC = GC;
-						GC.LootCrates.Add(crate);
+
+						floor.LootCrates.Add(crate);
                         tile.TileObject=LootCrate;
                         tile.TileObject.transform.parent = tile.transform;
                         break;
@@ -131,9 +144,11 @@ public class MapGenerator : MonoBehaviour
 
 						gatlingTurret.name = "GatlingTurret";
 						//gatlingTurret.GC = GC;
+						gatlingTurret.CurrentFloorIndex=floor.FloorIndex;
+
 						gatlingTurret.transform.position = tile_pos + Vector3.up * (MapGenerator.TileSize.y - 0.34f);
 						gatlingTurret.movement.SetPositionInGrid(entity_pos);
-						GC.aiController.AddEnemy(gatlingTurret);
+						floor.Enemies.Add(gatlingTurret);
 
 						gatlingTurret.transform.parent = enemy_container.transform;
 
@@ -141,48 +156,44 @@ public class MapGenerator : MonoBehaviour
                 }
             }
         }
-
-        if (player_tiles.Count>0)
-		{
-			//DEV.TEMP. random player pos
-			var StartPos = Subs.GetRandom (player_tiles);
-			var tile_pos = new Vector3 (StartPos.x * TileSize.x, 0, StartPos.y * TileSize.z);
-			var player = GameObject.Instantiate (MapPrefabs.PlayerPrefab, tile_pos, Quaternion.identity) as PlayerMain;
-			player.name = "Player";
-
-			GC.Player = player;
-
-			player.movement.SetPositionInGrid (StartPos);
-			player.transform.parent = clone_container.transform;
-
-            //rotate player towards non airlock door
-            for(int i=0;i<4;i++){
-                int x=(int)StartPos.x,y=(int)StartPos.y;
-                int xx=GetCardinalX(i),yy=GetCardinalY(i);
-
-                var t=GC.GetTileMain(x+xx,y-yy);
-                if (t!=null&&t.Data.TileType==TileObjData.Type.Door){
-                    bool isairlock=t.TileObject.GetComponent<DoorMain>().isAirlockOutsideDoor;
-
-                    if (isairlock) continue;
-
-                    //Not Airlock -> rotate towards this
-                    var dir=Mathf.Atan2(yy,xx);
-                    dir=Mathf.Rad2Deg*dir+90;
-                    player.transform.rotation=Quaternion.AngleAxis(dir,Vector3.up);
-                    break;
-                }
-            }
-		}
-        else{
-            Debug.LogError("No Player pos!");
-        }
     }
+
+	public PlayerMain CreatePlayer(FloorObjData floor){
+
+		var StartPos = Subs.GetRandom (floor.AirlockPositions);
+		var tile_pos = new Vector3 (StartPos.x * TileSize.x, 0, StartPos.y * TileSize.z);
+		var player = GameObject.Instantiate (MapPrefabs.PlayerPrefab, tile_pos, Quaternion.identity) as PlayerMain;
+		player.name = "Player";
+		player.CurrentFloorIndex=floor.FloorIndex;
+		
+		player.movement.SetPositionInGrid (StartPos);
+		player.transform.parent = clone_container.transform;
+		
+		//rotate player towards non airlock door
+		for(int i=0;i<4;i++){
+			int x=(int)StartPos.x,y=(int)StartPos.y;
+			int xx=GetCardinalX(i),yy=GetCardinalY(i);
+			
+			var t=floor.GetTileMain(x+xx,y-yy);
+			if (t!=null&&t.Data.TileType==TileObjData.Type.Door){
+				bool isairlock=t.TileObject.GetComponent<DoorMain>().isAirlockOutsideDoor;
+				
+				if (isairlock) continue;
+				
+				//Not Airlock -> rotate towards this
+				var dir=Mathf.Atan2(yy,xx);
+				dir=Mathf.Rad2Deg*dir+90;
+				player.transform.rotation=Quaternion.AngleAxis(dir,Vector3.up);
+				break;
+			}
+		}
+		return player;
+	}
 
     /// <summary>
     /// Sets the correct graphics to tiles.
     /// </summary>
-    void SetTileGraphics(int x, int y, TileMain tile, TileObjData[,] grid,GameController GC)
+    void SetTileGraphics(int x, int y, TileMain tile, TileObjData[,] grid,GameController GC,FloorObjData floor)
     {
         var rotation = Quaternion.identity;
         GameObject tileobj = null;//if floor or corridor
@@ -502,8 +513,8 @@ public class MapGenerator : MonoBehaviour
                     if (i==0)       {x1=1;  y1=0;x2=-1;  y2=0;}
                     else if (i==1)  {x1=0;  y1=1;x2=0;  y2=-1;}
                     
-                    var t1=GC.GetTileObj(x+x1,y+y1);
-                    var t2=GC.GetTileObj(x+x2,y+y2);
+					var t1=floor.GetTileObj(x+x1,y+y1);
+					var t2=floor.GetTileObj(x+x2,y+y2);
                     bool t1ok=(t1!=null&&(t1.TileType==TileObjData.Type.Corridor||t1.TileType==TileObjData.Type.Floor));
                     bool t2ok=(t2!=null&&(t2.TileType==TileObjData.Type.Corridor||t2.TileType==TileObjData.Type.Floor));
 

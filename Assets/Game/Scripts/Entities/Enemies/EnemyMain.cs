@@ -133,7 +133,7 @@ public class EnemyMain : EntityMain {
 	void Die()
 	{
 		movement.GetCurrenTile().LeaveTile();
-		GC.aiController.enemies.Remove(this);
+		CurrentFloor.Enemies.Remove(this);
 		Destroy(this.gameObject);
 	}
 

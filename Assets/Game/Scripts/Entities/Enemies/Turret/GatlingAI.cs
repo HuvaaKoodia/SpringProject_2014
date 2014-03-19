@@ -45,7 +45,7 @@ public class GatlingAI : AIBase {
 	void Start()
 	{
 		parent = gameObject.GetComponent<EnemyMain>();
-		tilemap = parent.GC.TileMainMap;
+		tilemap = parent.CurrentFloor.TileMainMap;
 		
 		movement = parent.movement;
 		

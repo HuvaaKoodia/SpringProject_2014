@@ -108,7 +108,7 @@ public class HudMapMain : MonoBehaviour {
 
 	void CreateMap()
 	{
-		TileMain[,] mapTiles = GC.TileMainMap;
+		TileMain[,] mapTiles = GC.CurrentFloorData.TileMainMap;
 		int mapWidth = mapTiles.GetLength(0);
 		int mapHeight = mapTiles.GetLength(1);
 

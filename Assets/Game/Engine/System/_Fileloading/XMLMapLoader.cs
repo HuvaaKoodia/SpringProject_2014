@@ -23,6 +23,7 @@ public class GameXMLMapDataAttributes{
 
 //DEV. rename to RoomXMLData and ShipXMLData
 public class MapXmlData:GameXMLMapDataAttributes{
+	public int FloorIndex;
 	public string[,] map_data;
 	public int X{get;set;}
 	public int Y{get;set;}
@@ -82,23 +83,24 @@ public class XMLMapLoader : MonoBehaviour{
 				if (node.Name=="Ship")
 				{
 					string name=node.Attributes["type"].Value;
-					int floor=XML_Loader.getAttInt(node,"floor");
+					int floorIndex=XML_Loader.getAttInt(node,"floor");
 
 					ShipMapXmlData ship=null;
 					if (Ships.ContainsKey(name))
 					{
 						Ships.TryGetValue(name,out ship);
 
-						Debug.Log("Multiple floors aren't yet supported. Ship name: "+ship);
-						continue;
+						//Debug.Log("Multiple floors aren't yet supported. Ship name: "+ship);
+						//continue;
 					}
 					else
 					{
 						ship=new ShipMapXmlData(name);
 						Ships.Add(name,ship);
 					}
-					
-					ship.Floors.Add(floor,readMapData(node));
+					var map=readMapData(node);
+					map.FloorIndex=floorIndex;
+					ship.Floors.Add(floorIndex,map);
 				}
 			}
 		}

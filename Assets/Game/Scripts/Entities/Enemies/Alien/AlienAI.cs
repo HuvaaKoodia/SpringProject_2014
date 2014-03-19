@@ -38,7 +38,7 @@ public class AlienAI : AIBase {
 	void Start()
 	{
 		parent = gameObject.GetComponent<EnemyMain>();
-		tilemap = parent.GC.TileMainMap;
+		tilemap = parent.CurrentFloor.TileMainMap;
 
 		movement = parent.movement;
 
@@ -539,9 +539,9 @@ public class AlienAI : AIBase {
 
 		float rayDistance = communicationRange * MapGenerator.TileSize.x + 1.5f;
 
-		for (int i = 0; i < parent.GC.aiController.enemies.Count; i++)
+		for (int i = 0; i < parent.CurrentFloor.Enemies.Count; i++)
 		{
-			AIBase otherAgent = parent.GC.aiController.enemies[i].ai;
+			AIBase otherAgent = parent.CurrentFloor.Enemies[i].ai;
 
 			if (!otherAgent.blackboard.AwareOfPlayer)
 			{

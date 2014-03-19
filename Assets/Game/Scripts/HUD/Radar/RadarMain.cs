@@ -111,8 +111,8 @@ public class RadarMain : MonoBehaviour
 
 		BGWidth = radarBG.width;
 
-		enemies = GC.aiController.enemies;
-		lootCrates = GC.LootCrates;
+		enemies = GC.CurrentFloorData.Enemies;
+		lootCrates = GC.CurrentFloorData.LootCrates;
 
 		blips = new List<RadarBlipSub>();
 

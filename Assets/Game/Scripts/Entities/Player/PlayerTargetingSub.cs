@@ -21,15 +21,13 @@ public class PlayerTargetingSub : MonoBehaviour {
 		get { return new Rect(150, 80, Screen.width-300, Screen.height-160); }
 	}
 
-	// Use this for initialization
-	void Awake () {
+	void Awake() {
 		player = gameObject.GetComponent<PlayerMain>();
-
-		allEnemies = player.GC.aiController.enemies;
-
 		targetableEnemies = new Dictionary<EnemyMain, TargetMarkHandler>();
+	}
 
-		//insightPrefab = player.GC.SS.PS.InsightSprite;
+	void Start() {
+		allEnemies = player.GC.CurrentFloorData.Enemies;
 	}
 	
 	// Update is called once per frame

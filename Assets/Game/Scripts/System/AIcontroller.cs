@@ -6,7 +6,7 @@ public class AIcontroller
 {
 	GameController GC;
 
-	public List<EnemyMain> enemies;
+	List<EnemyMain> enemies;
 	int enemiesFinishedTurn;
 
 	public const int MaxTurnsPerPhase = 5;
@@ -136,29 +136,7 @@ public class AIcontroller
 		//Debug.Log("Enemy finished at pos " + enemy.movement.currentGridX + "," + enemy.movement.currentGridY);
 	}
 
-	/*
-    public void EnemyFinishedAttacking()
-    {
-        currentAttacker++;
-        if (currentAttacker < enemies.Count)
-            enemies[currentAttacker].PlayAttackingPhase();
-    }
-
-    bool CheckForMovingEnemies()
-    {
-        foreach (EnemyMain enemy in enemies)
-        {
-            if (enemy.movement.currentMovement != MovementState.NotMoving)
-                return true;
-        }
-
-        return false;
-    }
-	*/
-
-	public void AddEnemy (EnemyMain enemy)
-	{
-		enemies.Add(enemy);
-		enemy.GC=GC;
+	public void SetFloor(FloorObjData floor){
+		enemies=floor.Enemies;
 	}
 }

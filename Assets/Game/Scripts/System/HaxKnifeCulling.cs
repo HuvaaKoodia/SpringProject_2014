@@ -20,7 +20,7 @@ public class HaxKnifeCulling : MonoBehaviour {
 	public bool DEBUG_ShowRays=true;
 
 	public float TileCornerPosRadius=1f;
-
+	/*
 	public void CullBasedOnCamera(Camera cam,GameController GC){
 		planes=GeometryUtility.CalculateFrustumPlanes(cam);
 		Debug.Log("---StartCull!!:");
@@ -69,12 +69,21 @@ public class HaxKnifeCulling : MonoBehaviour {
 	        	}
 		}
 	}
+*/
+	public void DisableOtherFloors(int index,GameController GC){
+		for(int f=0;f<GC.Floors.Count;++f){
+			var floor=GC.Floors[f];
+
+			GC.FloorContainers[f].SetActive(index==f);
+		}
+	}
 
 	public void CullBasedOnPositions(Vector3 pos1,Vector3 pos2,float detect_radius,GameController GC){
 		//Debug.Log("Start Culling.");
-		for(int y=0;y<GC.TileMapH;++y){
-			for(int x=0;x<GC.TileMapW;++x){
-				tile = GC.TileMainMap[x,y];
+
+		for(int y=0;y<GC.CurrentFloorData.TileMapH;++y){
+			for(int x=0;x<GC.CurrentFloorData.TileMapW;++x){
+				tile = GC.CurrentFloorData.TileMainMap[x,y];
 				if (tile.TileGraphics==null) continue;
 				if (IsCullable(tile,pos1,detect_radius)&&IsCullable(tile,pos2,detect_radius)){
 					tile.ShowGraphicsUnsafe(false);
@@ -120,7 +129,7 @@ public class HaxKnifeCulling : MonoBehaviour {
 	}
 
 	public void ResetCulling(GameController GC){
-		foreach(var o in GC.TileMainMap){
+		foreach(var o in GC.CurrentFloorData.TileMainMap){
 			o.ShowGraphicsSafe(true);
 		}
 	}

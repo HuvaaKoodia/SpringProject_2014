@@ -3,8 +3,6 @@ using System.Collections;
 
 using System.Collections.Generic;
 
-
-
 public class PlayerMain : EntityMain
 {
     public PlayerObjData ObjData{get;private set;}
@@ -51,6 +49,7 @@ public class PlayerMain : EntityMain
 		ap = apMax;
 		ShotLastTurn = false;
 		Finished = false;
+		movement.UpdateFloor();
 		interactSub.CheckForInteractables();
 
         ActivateEquippedItems();

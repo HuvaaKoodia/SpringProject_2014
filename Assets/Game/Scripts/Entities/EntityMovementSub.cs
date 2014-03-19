@@ -36,20 +36,23 @@ public class EntityMovementSub : MonoBehaviour
 
         parentEntity = transform.gameObject.GetComponent<EntityMain>();
         
-		tilemap = parentEntity.GC.TileMainMap;
-        
-        mapWidth = tilemap.GetLength(0);
-        mapHeight = tilemap.GetLength(1);
-
 		waitBeforeMoving = false;
 	}
-	
 
     void Start(){
-        UpdateTileEntityToThis();
-
-        targetRotationAngle=(int)parentEntity.transform.rotation.eulerAngles.y;
+		UpdateFloor();
+		
+		UpdateTileEntityToThis();
     }
+
+	public void UpdateFloor()
+	{
+		tilemap = parentEntity.CurrentFloor.TileMainMap;
+		mapWidth = tilemap.GetLength(0);
+		mapHeight = tilemap.GetLength(1);
+
+		targetRotationAngle=(int)parentEntity.transform.rotation.eulerAngles.y;
+	}
 
 	// Update is called once per frame
 	void Update ()

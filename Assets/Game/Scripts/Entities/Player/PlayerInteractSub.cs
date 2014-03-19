@@ -12,16 +12,6 @@ public class PlayerInteractSub : MonoBehaviour {
 	public bool HasInteractable
 	{ get { return interactableInfront != null; }}
 
-	// Use this for initialization
-	void Start () {
-        CheckForInteractables();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
 	public void CheckForInteractables()
 	{
 		interactableInfront = null;

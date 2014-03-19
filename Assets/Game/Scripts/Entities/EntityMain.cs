@@ -6,6 +6,19 @@ public class EntityMain : MonoBehaviour
     public GameController GC;
     public EntityMovementSub movement;
 
+	int floor_index=0;
+	public int CurrentFloorIndex{
+		get{return floor_index;}
+		set{
+			floor_index=value;
+			movement.UpdateFloor();
+		}
+	}
+
+	public FloorObjData CurrentFloor{
+		get{return GC.GetFloor(CurrentFloorIndex);}
+	}
+
     private int health;
     public int Health
     {
@@ -15,6 +28,7 @@ public class EntityMain : MonoBehaviour
             health = Mathf.Clamp(value, 0, maxHealth);
         }
     }
+
     public int maxHealth = 100;
 
 	// Use this for initialization
@@ -23,19 +37,8 @@ public class EntityMain : MonoBehaviour
         health = maxHealth;
         GC = GameObject.Find("GameSystems").GetComponent<GameController>();
 	}
-	
-	// Update is called once per frame
-	void Update()
-    {
-	
-	}
 
-    public virtual void FinishedMoving(bool wontMoveAnymore) 
-    { 
-    }
+    public virtual void FinishedMoving(bool wontMoveAnymore){}
 
-	public virtual void TakeDamage(int damage)
-	{
-
-	}
+	public virtual void TakeDamage(int damage){}
 }
