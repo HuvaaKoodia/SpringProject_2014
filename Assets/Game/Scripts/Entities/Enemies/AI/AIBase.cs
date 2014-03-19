@@ -19,8 +19,20 @@ public abstract class AIBase : MonoBehaviour
 	public bool HasUsedTurn;
 	public bool foundMove;	
 
+	public bool Animating;
+
 	public virtual void PlayAiTurn(){}
 
 	public virtual void Reset(){}
 	protected abstract void CreateBehaviourTree();
+
+	protected RunStatus SuccessReturner()
+	{
+		return RunStatus.Success;
+	}
+	
+	protected void AnimationFinished()
+	{
+		Animating = false;
+	}
 }

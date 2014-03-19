@@ -47,6 +47,7 @@ public class AlienAI : AIBase {
 
 		HasUsedTurn = false;
 		foundMove = false;
+		Animating = false;
 		
 		AP = APmax;
 
@@ -66,6 +67,9 @@ public class AlienAI : AIBase {
 
 	public override void PlayAiTurn()
 	{
+		if (AP == 0)
+			return;
+
 		MyPosition = new Point3D(movement.currentGridX, movement.currentGridY);
 
 		if ((AP <= AttackCost || readyToAttack) && CanAttack())
@@ -640,10 +644,5 @@ public class AlienAI : AIBase {
 		PrioritySelector root = new PrioritySelector(playerPresentSequence, playerNotFoundSelector);
 		
 		behaviourTree = root;
-	}
-	
-	public RunStatus SuccessReturner()
-	{
-		return RunStatus.Success;
 	}
 }

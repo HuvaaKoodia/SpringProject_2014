@@ -9,6 +9,7 @@ public class AIcontroller
 	public List<EnemyMain> enemies;
 	int enemiesFinishedTurn;
 
+	public const int MaxTurnsPerPhase = 5;
 	int	turnsPlayed;
 
 	public List<EnemyMain> finishedEnemies;
@@ -71,19 +72,26 @@ public class AIcontroller
 		}*/
 		if (currentTurn == TurnState.AITurn)
 		{
+			bool enemyAnimating = false;
+
 			foreach(EnemyMain enemy in enemies)
 			{
 				enemy.PlayTurn();
+
+				if (enemy.ai.Animating)
+					enemyAnimating = true;
 			}
 
-			turnsPlayed++;
+			if (!enemyAnimating)
+				turnsPlayed++;
+
 			GC.ChangeTurn(TurnState.WaitingAIToFinish);
 		}
 		else if (currentTurn == TurnState.WaitingAIToFinish)
 		{
 			if (enemiesFinishedTurn >= enemies.Count)
 			{
-				if (turnsPlayed < 5)
+				if (turnsPlayed < MaxTurnsPerPhase)
 				{
 					Debug.Log("AI new turn");
 					enemiesFinishedTurn = 0;

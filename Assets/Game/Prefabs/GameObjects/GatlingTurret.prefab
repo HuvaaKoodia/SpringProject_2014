@@ -898,15 +898,25 @@ MonoBehaviour:
   AP: 0
   HasUsedTurn: 0
   foundMove: 0
+  Animating: 0
   Damage: 20
+  TurnsBeforeClose: 2
   PlayerSeeMask:
     serializedVersion: 2
     m_Bits: 5120
   baseAnimation: {fileID: 11100004}
   turretAnimation: {fileID: 11100002}
   appearAnimation: Appear
-  hideAnimation: 
+  hideAnimation: Appear
   shootAnimation: Shooting
+  spotLightObject: {fileID: 100016}
+  spotLight: {fileID: 10800002}
+  spotColorPlayerSeen: {r: .647058845, g: .956862748, b: .776470602, a: 1}
+  spotColorPlayerNotSeen: {r: 1, g: .507352948, b: .507352948, a: 0}
+  pointLight: {fileID: 10800000}
+  pointColorPlayerSeen: {r: .345098048, g: .823529422, b: .113725491, a: 1}
+  pointColorPlayerNotSeen: {r: .838235259, g: 0, b: 0, a: 0}
+  turretTransform: {fileID: 400004}
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1

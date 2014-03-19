@@ -12,9 +12,11 @@ public class GatlingAI : AIBase {
 	
 	public int Damage = 20;
 
-	public const int PlayerSeeRadius = 16;
-	public LayerMask PlayerSeeMask;
+	public int TurnsBeforeClose = 2;
 
+	public const int AttackRadius = 16;
+	public LayerMask PlayerSeeMask;
+	
 	Point3D MyPosition;
 
 	bool open;
@@ -26,6 +28,18 @@ public class GatlingAI : AIBase {
 	public string hideAnimation;
 
 	public string shootAnimation;
+	
+	public GameObject spotLightObject;
+	public Light spotLight;
+	public Color spotColorPlayerSeen;
+	public Color spotColorPlayerNotSeen;
+
+	public Light pointLight;
+	public Color pointColorPlayerSeen;
+	public Color pointColorPlayerNotSeen;
+
+	Quaternion lookToPlayerRot;
+	public Transform turretTransform;
 
 	// Use this for initialization
 	void Start()
@@ -40,32 +54,31 @@ public class GatlingAI : AIBase {
 		
 		HasUsedTurn = false;
 		foundMove = false;
+		Animating = false;
 
 		AP = APmax;
 
 		open = false;
 
 		MyPosition = new Point3D(movement.currentGridX, movement.currentGridY);
+
+		LightsOff();
 		
 		CreateBehaviourTree();
-		//behaviourTree.Start (null);
+		behaviourTree.Start (null);
 	}
 
 	public override void PlayAiTurn()
 	{
-		/*
+		if (AP == 0 || Animating)
+			return;
+
 		behaviourTree.Tick(blackboard);
 		
 		if (behaviourTree.LastStatus != RunStatus.Running)
 		{
 			behaviourTree.Stop(blackboard);
 			behaviourTree.Start(blackboard);
-		}
-*/
-		if (open)
-		{
-			Quaternion lookToPlayerRot = Quaternion.LookRotation(player.transform.position - parent.transform.position);
-			movement.Turn((int)lookToPlayerRot.eulerAngles.y - 90);
 		}
 	}
 	
@@ -78,11 +91,13 @@ public class GatlingAI : AIBase {
 
 	private RunStatus CheckForPlayerPresence()
 	{
-		if (PathFinder.CanSeeFromTileToTile(player, parent, MyPosition, PlayerSeeRadius, PlayerSeeMask))
+		if (PathFinder.CanSeeFromTileToTile(player, parent, MyPosition, AttackRadius, PlayerSeeMask))
 		{
 			blackboard.AwareOfPlayer = true;
 			blackboard.TurnsWithoutPlayerAwareness = 0;
 			blackboard.LastKnownPlayerPosition = new Point3D(player.movement.currentGridX, player.movement.currentGridY);
+			spotLight.color = spotColorPlayerSeen;
+			pointLight.color = pointColorPlayerSeen;
 
 			return RunStatus.Success;
 		}
@@ -90,6 +105,11 @@ public class GatlingAI : AIBase {
 		blackboard.AwareOfPlayer = false;
 		blackboard.TurnsWithoutPlayerAwareness++;
 		blackboard.Berserk = false;
+		AP = 0;
+
+		spotLight.color = spotColorPlayerNotSeen;
+		pointLight.color = pointColorPlayerNotSeen;
+
 		return RunStatus.Failure;
 	}
 
@@ -98,7 +118,10 @@ public class GatlingAI : AIBase {
 		if (!open)
 		{
 			open = true;
-			
+			Animating = true;
+			Invoke("AnimationFinished", turretAnimation[appearAnimation].clip.length);
+			Invoke("LightsOn", turretAnimation[appearAnimation].clip.length - 0.2f);
+
 			baseAnimation[appearAnimation].normalizedTime = 0;
 			baseAnimation[appearAnimation].speed = 1;
 			baseAnimation.Play(appearAnimation);
@@ -106,9 +129,19 @@ public class GatlingAI : AIBase {
 			turretAnimation[appearAnimation].normalizedTime = 0;
 			turretAnimation[appearAnimation].speed = 1;
 			turretAnimation.Play(appearAnimation);
-
+	
 			AP -= AppearCost;
 		}
+	}
+
+	RunStatus NeedsClosing()
+	{
+		if (open && blackboard.TurnsWithoutPlayerAwareness > TurnsBeforeClose)
+		{
+			return RunStatus.Success;
+		}
+
+		return RunStatus.Failure;
 	}
 
 	void Close()
@@ -116,14 +149,18 @@ public class GatlingAI : AIBase {
 		if (open)
 		{
 			open = false;
+			Animating = true;
+			Invoke("AnimationFinished", turretAnimation[hideAnimation].clip.length);
+
+			baseAnimation[hideAnimation].normalizedTime = 1;
+			baseAnimation[hideAnimation].speed = -1;
+			baseAnimation.Play(hideAnimation);
 			
-			baseAnimation[appearAnimation].normalizedTime = 1;
-			baseAnimation[appearAnimation].speed = -1;
-			baseAnimation.Play(appearAnimation);
-			
-			turretAnimation[appearAnimation].normalizedTime = 1;
-			turretAnimation[appearAnimation].speed = -1;
-			turretAnimation.Play(appearAnimation);
+			turretAnimation[hideAnimation].normalizedTime = 1;
+			turretAnimation[hideAnimation].speed = -1;
+			turretAnimation.Play(hideAnimation);
+
+			LightsOff();
 		}
 		
 		AP = 0;
@@ -131,30 +168,89 @@ public class GatlingAI : AIBase {
 
 	void Shoot()
 	{
+		Animating = true;
+		Invoke("AnimationFinished", turretAnimation[shootAnimation].clip.length);
+		turretAnimation[shootAnimation].normalizedTime = 0;
+		turretAnimation[shootAnimation].speed = 1;
+		turretAnimation.Play(shootAnimation);
 
+		Invoke("DamagePlayer", turretAnimation[shootAnimation].clip.length / 2.0f);
+		AP -= AttackCost;
+	}
+
+	void DamagePlayer()
+	{
+		player.TakeDamage(Damage, MyPosition.X, MyPosition.Y);
+	}
+
+	RunStatus IsOpen()
+	{
+		if (open)
+			return RunStatus.Success;
+		else
+			return RunStatus.Failure;
+	}
+
+	void FacePlayer()
+	{
+		lookToPlayerRot = Quaternion.LookRotation(player.transform.position - turretTransform.position);
+
+		if (movement.currentMovement == MovementState.NotMoving)
+			movement.Turn((int)lookToPlayerRot.eulerAngles.y - 90);
+
+		//StartCoroutine(RotateVertically());
+	}
+
+	RunStatus FacingPlayer()
+	{
+		lookToPlayerRot = Quaternion.LookRotation(player.transform.position - turretTransform.position);
+
+		if (movement.parentTransform.rotation.eulerAngles.y == lookToPlayerRot.eulerAngles.y)
+			return RunStatus.Success;
+
+		return RunStatus.Failure;
+	}
+
+	void LightsOff()
+	{
+		spotLightObject.SetActive(false);
+		pointLight.enabled = false;
+	}
+
+	void LightsOn()
+	{
+		spotLightObject.SetActive(true);
+		pointLight.enabled = true;
 	}
 
 	protected override void CreateBehaviourTree()
-	{/*
+	{
 		Action CheckPlayerPresenceAction = new Action(action => CheckForPlayerPresence());
 
-		Action CheckIfOpenAction = new Action(action => open == true);
+		Action CheckIfOpenAction = new Action(action => IsOpen());
+		Action CheckIfFacingPlayer = new Action(action => FacingPlayer());
 		Action ShootAction = new Action(action => Shoot());
 
-		Action OpenAction = new Action(action => Open);
+		Action OpenAction = new Action(action => Open());
+		Action FacePlayerAction = new Action(action => FacePlayer());
 
-		Sequence PlayerPresentSequence = new Sequence(CheckIfOpenAction, ShootAction);
-		PrioritySelector PlayerPresentSelector = new PrioritySelector(PlayerPresentSequence, OpenAction);
+		Sequence AttackSequence = new Sequence(CheckIfOpenAction, CheckIfFacingPlayer, ShootAction);
+		Sequence PrepareForAttackSequence = new Sequence(OpenAction, FacePlayerAction);
 
-		Sequence PlayerPresentCheck = new Sequence(CheckPlayerPresenceAction, PlayerPresentSelector);
+		PrioritySelector AttackOrOpenSelector = new PrioritySelector(AttackSequence, PrepareForAttackSequence);
 
+		Sequence PlayerPresentSequence = new Sequence(CheckPlayerPresenceAction, AttackOrOpenSelector);
 
-		//Sequence playerPresentSequence = new Sequence
-		behaviourTree = new Action(action => CheckForPlayerPresence());*/
+		Action CheckClosingConditions = new Action(action => NeedsClosing());
+		Action CloseAction = new Action(action => Close());
+
+		Sequence PlayerNotPresentSequence = new Sequence(CheckClosingConditions, CloseAction);
+
+		behaviourTree = new PrioritySelector(PlayerPresentSequence, PlayerNotPresentSequence, new Action(action => SuccessReturner()));
 	}
 
-	RunStatus SuccessReturner()
+	IEnumerator RotateVertically()
 	{
-		return RunStatus.Success;
+		return null;
 	}
 }

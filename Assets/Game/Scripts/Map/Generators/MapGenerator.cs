@@ -130,7 +130,7 @@ public class MapGenerator : MonoBehaviour
 						var gatlingTurret = GameObject.Instantiate(MapPrefabs.GatlingTurretPrefab) as GatlingEnemySub;
 
 						gatlingTurret.name = "GatlingTurret";
-						gatlingTurret.GC = GC;
+						//gatlingTurret.GC = GC;
 						gatlingTurret.transform.position = tile_pos + Vector3.up * (MapGenerator.TileSize.y - 0.34f);
 						gatlingTurret.movement.SetPositionInGrid(entity_pos);
 						GC.aiController.AddEnemy(gatlingTurret);

@@ -5,7 +5,7 @@ public class GatlingEnemySub : EnemyMain {
 
 	public Transform TurretTransform;
 	public Transform BaseTransform;
-
+	
 	// Use this for initialization
 	void Start () {
 	
