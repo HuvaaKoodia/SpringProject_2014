@@ -125,6 +125,7 @@ public class HudMapMain : MonoBehaviour {
 
 	void AddTileSprite(int x, int y, TileMain tile)
 	{
+		var str=tile.Data.TileType.ToString();
 		if (tile.Data.TileType == TileObjData.Type.Empty
 		    || tile.Data.TileType == TileObjData.Type.Wall)
 			return;
@@ -196,6 +197,10 @@ public class HudMapMain : MonoBehaviour {
 			break;
 
 		case "Door":
+			sprite.spriteName = GC.SS.PS.TwoWallsSprite.spriteName;
+			break;
+		
+		case "ElevatorDoor":
 			sprite.spriteName = GC.SS.PS.TwoWallsSprite.spriteName;
 			break;
 

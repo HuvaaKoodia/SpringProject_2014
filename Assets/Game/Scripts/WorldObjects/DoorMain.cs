@@ -10,7 +10,7 @@ public class DoorMain : InteractableMain {
 
 	public BoxCollider doorCollider;
 
-    public bool isAirlockOutsideDoor=false;
+    public bool isAirlockDoor=false;
 
 	bool anim_on;
 
@@ -35,16 +35,6 @@ public class DoorMain : InteractableMain {
 		return true;
 	}
 
-	public void Toggle ()
-	{
-        if (isAirlockOutsideDoor){
-            GC.menuHandler.OpenEndMissionPanel();
-        }
-        else{
-		    Open(!IsOpen);
-        }
-	}
-
     IEnumerator ToggleTimer(bool open,float delay){
         if (!open){
             IsOpen=open;
@@ -64,7 +54,7 @@ public class DoorMain : InteractableMain {
 	{
 		interactor = interactSub;
 
-		if (isAirlockOutsideDoor)
+		if (isAirlockDoor)
 		{
 			GC.menuHandler.OpenEndMissionPanel();
 			return false;

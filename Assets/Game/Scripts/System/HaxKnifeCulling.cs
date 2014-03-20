@@ -72,8 +72,6 @@ public class HaxKnifeCulling : MonoBehaviour {
 */
 	public void DisableOtherFloors(int index,GameController GC){
 		for(int f=0;f<GC.Floors.Count;++f){
-			var floor=GC.Floors[f];
-
 			GC.FloorContainers[f].SetActive(index==f);
 		}
 	}
