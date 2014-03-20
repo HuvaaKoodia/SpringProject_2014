@@ -9,7 +9,7 @@ using System.Collections.Generic;
 public class MapGenerator : MonoBehaviour
 {
     public static Vector3 TileSize = new Vector3(3, 3, 3);
-    public const string WallIcon = "w", DoorIcon = "d", CorridorIcon = "c", FloorIcon = ".", SpaceIcon=",";
+	public const string WallIcon = "w", DoorIcon = "d", CorridorIcon = "c", FloorIcon = ".", SpaceIcon=",",ElevatorIcon="el";
     public bool DEBUG_create_temp_tiles = false;
     public PrefabStore MapPrefabs;
 
@@ -57,6 +57,9 @@ public class MapGenerator : MonoBehaviour
                     case DoorIcon:
                         data.SetType(TileObjData.Type.Door);
                         break;
+					case ElevatorIcon:
+						data.SetType(TileObjData.Type.Elevator);
+						break;
                 }
                 var obj_index=ShipGenerator.GetObjectIndices(index);
                 if (obj_index!=null){
@@ -90,8 +93,6 @@ public class MapGenerator : MonoBehaviour
 		tile_container.transform.parent = floor_container.transform;
 
 		floor.ResetTileMainMap(w,h);
-        
-		List<Vector2> player_tiles=new List<Vector2>();
 
         for (int x = 0; x < w; x++)
         {
@@ -143,7 +144,6 @@ public class MapGenerator : MonoBehaviour
 						var gatlingTurret = GameObject.Instantiate(MapPrefabs.GatlingTurretPrefab) as GatlingEnemySub;
 
 						gatlingTurret.name = "GatlingTurret";
-						//gatlingTurret.GC = GC;
 						gatlingTurret.CurrentFloorIndex=floor.FloorIndex;
 
 						gatlingTurret.transform.position = tile_pos + Vector3.up * (MapGenerator.TileSize.y - 0.34f);
@@ -176,7 +176,7 @@ public class MapGenerator : MonoBehaviour
 			
 			var t=floor.GetTileMain(x+xx,y-yy);
 			if (t!=null&&t.Data.TileType==TileObjData.Type.Door){
-				bool isairlock=t.TileObject.GetComponent<DoorMain>().isAirlockOutsideDoor;
+				bool isairlock=t.TileObject.GetComponent<DoorMain>().isAirlockDoor;
 				
 				if (isairlock) continue;
 				
@@ -226,7 +226,7 @@ public class MapGenerator : MonoBehaviour
         //test functions
         System.Func<TileObjData.Type,bool> FloorOrCorridor =
             obj => {
-            return obj == TileObjData.Type.Corridor || obj == TileObjData.Type.Floor || obj == TileObjData.Type.Door;};
+			return obj == TileObjData.Type.Corridor || obj == TileObjData.Type.Floor || obj == TileObjData.Type.Door|| obj == TileObjData.Type.Elevator;;};
         /*
         System.Func<TileObjData.Type,bool> Floor =
         obj => {
@@ -470,20 +470,26 @@ public class MapGenerator : MonoBehaviour
 
                 break;
 
+			case TileObjData.Type.Elevator:
+				tileobj = MapPrefabs.Corridor_ElevatorDoor;
+				
+				if (CheckTypeEqual(FloorOrCorridor, tile_types, 2, 6))
+				{
+					rotation = Quaternion.AngleAxis(90, Vector3.up);
+				}
+				else if (CheckTypeEqual(FloorOrCorridor, tile_types, 2)||CheckTypeEqual(FloorOrCorridor, tile_types, 6))
+				{
+					rotation = Quaternion.AngleAxis(90, Vector3.up);
+				}
+				
+				add_as_tileobject_as_well=true;
+				break;
             case TileObjData.Type.Door:
                 tileobj = MapPrefabs.Corridor_Door;
                 
-                if (CheckTypeEqual(FloorOrCorridor, tile_types, 0,4))
-                {
-                    
-                }
-                else if (CheckTypeEqual(FloorOrCorridor, tile_types, 2, 6))
+                if (CheckTypeEqual(FloorOrCorridor, tile_types, 2, 6))
                 {
                     rotation = Quaternion.AngleAxis(90, Vector3.up);
-                }
-                else if (CheckTypeEqual(FloorOrCorridor, tile_types, 0)||CheckTypeEqual(FloorOrCorridor, tile_types, 4))
-                {
-                    
                 }
                 else if (CheckTypeEqual(FloorOrCorridor, tile_types, 2)||CheckTypeEqual(FloorOrCorridor, tile_types, 6))
                 {
@@ -518,10 +524,15 @@ public class MapGenerator : MonoBehaviour
                     bool t1ok=(t1!=null&&(t1.TileType==TileObjData.Type.Corridor||t1.TileType==TileObjData.Type.Floor));
                     bool t2ok=(t2!=null&&(t2.TileType==TileObjData.Type.Corridor||t2.TileType==TileObjData.Type.Floor));
 
-                    door.isAirlockOutsideDoor=!(t1ok&&t2ok);
-                    if (!door.isAirlockOutsideDoor) break;
+                    door.isAirlockDoor=!(t1ok&&t2ok);
+                    if (!door.isAirlockDoor) break;
                 }
             }
+			if (tile.Data.TileType==TileObjData.Type.Elevator){
+				var door=tile.TileObject.GetComponent<ElevatorMain>();
+				
+				door.GC=GC;
+			}
         }
     }
 

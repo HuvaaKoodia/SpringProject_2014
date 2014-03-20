@@ -202,10 +202,10 @@ public class GameController : MonoBehaviour {
 		}
 
 		if (Input.GetKeyDown(KeyCode.Alpha8)){
-			SetFloor(Mathf.Max(0,CurrentFloorIndex-1));
+			SetFloor(CurrentFloorIndex-1);
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha9)){
-			SetFloor(Mathf.Min(Floors.Count-1,CurrentFloorIndex+1));
+			SetFloor(CurrentFloorIndex+1);
 		}
 #endif
 	}
@@ -232,9 +232,21 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void SetFloor(int index){
+		                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+		index=Mathf.Max(0,Mathf.Min(Floors.Count-1,index));
+
 		player.CurrentFloorIndex=index;
 		culling_system.DisableOtherFloors(index,this);
 		aiController.SetFloor(CurrentFloorData);
 		player.interactSub.CheckForInteractables();
+	}
+
+	public void UseElevator ()
+	{
+		//Dev.Mega HAX!
+		if (CurrentFloorIndex==0)
+			SetFloor(CurrentFloorIndex+1);
+		else
+			SetFloor(CurrentFloorIndex-1);
 	}
 }

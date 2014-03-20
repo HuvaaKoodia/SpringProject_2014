@@ -339,4 +339,9 @@ public class PlayerMain : EntityMain
 		value=stat._amount;
 		return true;
 	}
+
+	protected override void UpdateFloor(){
+		base.UpdateFloor();
+		//targetingSub.Update
+	}
 }

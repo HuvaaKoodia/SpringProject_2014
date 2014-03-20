@@ -11,7 +11,7 @@ public class EntityMain : MonoBehaviour
 		get{return floor_index;}
 		set{
 			floor_index=value;
-			movement.UpdateFloor();
+			UpdateFloor();
 		}
 	}
 
@@ -41,4 +41,8 @@ public class EntityMain : MonoBehaviour
     public virtual void FinishedMoving(bool wontMoveAnymore){}
 
 	public virtual void TakeDamage(int damage){}
+
+	protected virtual void UpdateFloor(){
+		movement.UpdateFloor();
+	}
 }

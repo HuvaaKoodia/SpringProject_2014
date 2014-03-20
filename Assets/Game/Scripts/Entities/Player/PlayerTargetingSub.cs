@@ -8,7 +8,10 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 	PlayerMain player;
 
-	List<EnemyMain> allEnemies;
+	List<EnemyMain> allEnemies{get{
+			return player.GC.CurrentFloorData.Enemies;
+		}
+	}
 
 	Dictionary<EnemyMain, TargetMarkHandler> targetableEnemies;
 
@@ -17,19 +20,19 @@ public class PlayerTargetingSub : MonoBehaviour {
 	public LayerMask targetingRayMask;
 
 	public Rect TargetingArea 
-	{ 
+	{
 		get { return new Rect(150, 80, Screen.width-300, Screen.height-160); }
 	}
 
-	void Awake() {
+	void Awake(){
 		player = gameObject.GetComponent<PlayerMain>();
 		targetableEnemies = new Dictionary<EnemyMain, TargetMarkHandler>();
 	}
 
 	void Start() {
-		allEnemies = player.GC.CurrentFloorData.Enemies;
+
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 	
