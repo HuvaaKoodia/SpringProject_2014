@@ -41,6 +41,8 @@ public class GatlingAI : AIBase {
 	Quaternion lookToPlayerRot;
 	public Transform turretTransform;
 
+	public Animator gunAnimator;
+
 	// Use this for initialization
 	void Start()
 	{
@@ -63,7 +65,9 @@ public class GatlingAI : AIBase {
 		MyPosition = new Point3D(movement.currentGridX, movement.currentGridY);
 
 		LightsOff();
-		
+
+		gunAnimator.SetLayerWeight(1, 1.0f);
+
 		CreateBehaviourTree();
 		behaviourTree.Start (null);
 	}
@@ -119,9 +123,11 @@ public class GatlingAI : AIBase {
 		{
 			open = true;
 			Animating = true;
-			Invoke("AnimationFinished", turretAnimation[appearAnimation].clip.length);
-			Invoke("LightsOn", turretAnimation[appearAnimation].clip.length - 0.2f);
+			Invoke("AnimationFinished", 0.8f);// turretAnimation[appearAnimation].clip.length);
+			Invoke("LightsOn",1);// turretAnimation[appearAnimation].clip.length - 0.2f);
 
+			gunAnimator.SetBool("Appear", true);
+			/*
 			baseAnimation[appearAnimation].normalizedTime = 0;
 			baseAnimation[appearAnimation].speed = 1;
 			baseAnimation.Play(appearAnimation);
@@ -129,7 +135,7 @@ public class GatlingAI : AIBase {
 			turretAnimation[appearAnimation].normalizedTime = 0;
 			turretAnimation[appearAnimation].speed = 1;
 			turretAnimation.Play(appearAnimation);
-	
+			*/
 			AP -= AppearCost;
 		}
 	}
@@ -150,8 +156,9 @@ public class GatlingAI : AIBase {
 		{
 			open = false;
 			Animating = true;
-			Invoke("AnimationFinished", turretAnimation[hideAnimation].clip.length);
-
+			gunAnimator.SetBool("Hide", true);
+			Invoke("AnimationFinished",0.9f);// turretAnimation[hideAnimation].clip.length);
+			/*
 			baseAnimation[hideAnimation].normalizedTime = 1;
 			baseAnimation[hideAnimation].speed = -1;
 			baseAnimation.Play(hideAnimation);
@@ -159,7 +166,7 @@ public class GatlingAI : AIBase {
 			turretAnimation[hideAnimation].normalizedTime = 1;
 			turretAnimation[hideAnimation].speed = -1;
 			turretAnimation.Play(hideAnimation);
-
+			*/
 			LightsOff();
 		}
 		
@@ -169,12 +176,14 @@ public class GatlingAI : AIBase {
 	void Shoot()
 	{
 		Animating = true;
-		Invoke("AnimationFinished", turretAnimation[shootAnimation].clip.length);
+		gunAnimator.SetBool("Shoot", true);
+		Invoke("AnimationFinished",0.8f);// turretAnimation[shootAnimation].clip.length);
+		/*
 		turretAnimation[shootAnimation].normalizedTime = 0;
 		turretAnimation[shootAnimation].speed = 1;
 		turretAnimation.Play(shootAnimation);
-
-		Invoke("DamagePlayer", turretAnimation[shootAnimation].clip.length / 2.0f);
+		*/
+		Invoke("DamagePlayer", 0.5f);// turretAnimation[shootAnimation].clip.length / 2.0f);
 		AP -= AttackCost;
 	}
 
@@ -193,7 +202,10 @@ public class GatlingAI : AIBase {
 
 	void FacePlayer()
 	{
-		lookToPlayerRot = Quaternion.LookRotation(player.transform.position - turretTransform.position);
+		lookToPlayerRot = Quaternion.LookRotation((player.transform.position + Vector3.up) - turretTransform.position);
+		lookToPlayerRot = Quaternion.Euler((int)lookToPlayerRot.eulerAngles.x - 90,
+		                                   (int)lookToPlayerRot.eulerAngles.y,
+		                                   (int)lookToPlayerRot.z - 90);
 
 		if (movement.currentMovement == MovementState.NotMoving)
 			movement.Turn((int)lookToPlayerRot.eulerAngles.y - 90);
@@ -203,9 +215,15 @@ public class GatlingAI : AIBase {
 
 	RunStatus FacingPlayer()
 	{
-		lookToPlayerRot = Quaternion.LookRotation(player.transform.position - turretTransform.position);
+		return RunStatus.Success;
 
-		if (movement.parentTransform.rotation.eulerAngles.y == lookToPlayerRot.eulerAngles.y)
+		lookToPlayerRot = Quaternion.LookRotation((player.transform.position + Vector3.up) - turretTransform.position);
+		lookToPlayerRot = Quaternion.Euler((int)lookToPlayerRot.eulerAngles.x - 90,
+		                                   (int)lookToPlayerRot.eulerAngles.y,
+		                                   (int)lookToPlayerRot.z - 90);
+
+		if (movement.parentTransform.rotation.eulerAngles.y == lookToPlayerRot.eulerAngles.y - 90 &&
+		    turretTransform.rotation == lookToPlayerRot)
 			return RunStatus.Success;
 
 		return RunStatus.Failure;
@@ -251,6 +269,24 @@ public class GatlingAI : AIBase {
 
 	IEnumerator RotateVertically()
 	{
-		return null;
+		Animating = true;
+		while (turretTransform.rotation != lookToPlayerRot)
+		{
+			turretTransform.rotation = Quaternion.RotateTowards(turretTransform.rotation,
+                            			lookToPlayerRot, 90.0f * Time.deltaTime);
+
+			yield return null;
+		}
+
+		AnimationFinished();
+	}
+
+	protected override void AnimationFinished ()
+	{
+		gunAnimator.SetBool("Appear", false);
+		gunAnimator.SetBool("Hide", false);
+		gunAnimator.SetBool("Shoot", false);
+
+		base.AnimationFinished ();
 	}
 }

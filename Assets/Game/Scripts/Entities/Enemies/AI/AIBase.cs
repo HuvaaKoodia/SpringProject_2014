@@ -31,7 +31,7 @@ public abstract class AIBase : MonoBehaviour
 		return RunStatus.Success;
 	}
 	
-	protected void AnimationFinished()
+	protected virtual void AnimationFinished()
 	{
 		Animating = false;
 	}
