@@ -78,7 +78,7 @@ public class AIcontroller
 			{
 				enemy.PlayTurn();
 
-				if (enemy.ai.Animating)
+				if (enemy.ai.Animating || enemy.ai.Rotating)
 					enemyAnimating = true;
 			}
 

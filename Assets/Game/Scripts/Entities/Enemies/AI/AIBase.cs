@@ -20,6 +20,7 @@ public abstract class AIBase : MonoBehaviour
 	public bool foundMove;	
 
 	public bool Animating;
+	public bool Rotating;
 
 	public virtual void PlayAiTurn(){}
 

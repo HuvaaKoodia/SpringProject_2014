@@ -24,11 +24,13 @@ public class GatlingAI : AIBase {
 	public Animation baseAnimation;
 	public Animation turretAnimation;
 
-	public string appearAnimation;
-	public string hideAnimation;
+	public string GunAppearAnimation;
+	public string GunHideAnimation;
+	public string GunShootAnimation;
 
-	public string shootAnimation;
-	
+	public string BaseOpenAnimation;
+	public string BaseCloseAnimation;
+
 	public GameObject spotLightObject;
 	public Light spotLight;
 	public Color spotColorPlayerSeen;
@@ -38,9 +40,16 @@ public class GatlingAI : AIBase {
 	public Color pointColorPlayerSeen;
 	public Color pointColorPlayerNotSeen;
 
+	public GameObject RedHalo;
+	public GameObject GreenHalo;
+
 	Quaternion lookToPlayerRot;
+
+	public Transform movingPartTransform;
 	public Transform turretTransform;
 
+	Point3D lastTargetedPosition;
+	
 	// Use this for initialization
 	void Start()
 	{
@@ -61,6 +70,7 @@ public class GatlingAI : AIBase {
 		open = false;
 
 		MyPosition = new Point3D(movement.currentGridX, movement.currentGridY);
+		lastTargetedPosition = new Point3D(-1,-1);
 
 		LightsOff();
 		
@@ -70,7 +80,7 @@ public class GatlingAI : AIBase {
 
 	public override void PlayAiTurn()
 	{
-		if (AP == 0 || Animating)
+		if (AP == 0 || Animating || Rotating)
 			return;
 
 		behaviourTree.Tick(blackboard);
@@ -93,6 +103,12 @@ public class GatlingAI : AIBase {
 	{
 		if (PathFinder.CanSeeFromTileToTile(player, parent, MyPosition, AttackRadius, PlayerSeeMask))
 		{
+			if (blackboard.AwareOfPlayer)
+			{
+				GreenHalo.SetActive(true);
+				RedHalo.SetActive(false);
+			}
+
 			blackboard.AwareOfPlayer = true;
 			blackboard.TurnsWithoutPlayerAwareness = 0;
 			blackboard.LastKnownPlayerPosition = new Point3D(player.movement.currentGridX, player.movement.currentGridY);
@@ -109,6 +125,8 @@ public class GatlingAI : AIBase {
 
 		spotLight.color = spotColorPlayerNotSeen;
 		pointLight.color = pointColorPlayerNotSeen;
+		GreenHalo.SetActive(false);
+		RedHalo.SetActive(true);
 
 		return RunStatus.Failure;
 	}
@@ -119,17 +137,19 @@ public class GatlingAI : AIBase {
 		{
 			open = true;
 			Animating = true;
-			Invoke("AnimationFinished", turretAnimation[appearAnimation].clip.length);
-			Invoke("LightsOn", turretAnimation[appearAnimation].clip.length - 0.2f);
+			Invoke("AnimationFinished", turretAnimation[GunAppearAnimation].clip.length);
+			Invoke("LightsOn", turretAnimation[GunAppearAnimation].clip.length - 0.2f);
 
-			baseAnimation[appearAnimation].normalizedTime = 0;
-			baseAnimation[appearAnimation].speed = 1;
-			baseAnimation.Play(appearAnimation);
+			baseAnimation[BaseOpenAnimation].normalizedTime = 0;
+			baseAnimation[BaseOpenAnimation].speed = 1;
+			baseAnimation.Play(BaseOpenAnimation);
 			
-			turretAnimation[appearAnimation].normalizedTime = 0;
-			turretAnimation[appearAnimation].speed = 1;
-			turretAnimation.Play(appearAnimation);
+			turretAnimation[GunAppearAnimation].normalizedTime = 0;
+			turretAnimation[GunAppearAnimation].speed = 1;
+			turretAnimation.Play(GunAppearAnimation);
 	
+			StartCoroutine(MoveDown());
+
 			AP -= AppearCost;
 		}
 	}
@@ -150,15 +170,15 @@ public class GatlingAI : AIBase {
 		{
 			open = false;
 			Animating = true;
-			Invoke("AnimationFinished", turretAnimation[hideAnimation].clip.length);
+			Invoke("AnimationFinished", turretAnimation[GunHideAnimation].clip.length);
 
-			baseAnimation[hideAnimation].normalizedTime = 1;
-			baseAnimation[hideAnimation].speed = -1;
-			baseAnimation.Play(hideAnimation);
-			
-			turretAnimation[hideAnimation].normalizedTime = 1;
-			turretAnimation[hideAnimation].speed = -1;
-			turretAnimation.Play(hideAnimation);
+			/*
+			turretAnimation[GunHideAnimation].normalizedTime = 0;
+			turretAnimation[GunHideAnimation].speed = 1;
+			turretAnimation.Play(GunHideAnimation);
+			*/
+			StartCoroutine(FaceGround());
+			StartCoroutine(MoveUp());
 
 			LightsOff();
 		}
@@ -169,12 +189,12 @@ public class GatlingAI : AIBase {
 	void Shoot()
 	{
 		Animating = true;
-		Invoke("AnimationFinished", turretAnimation[shootAnimation].clip.length);
-		turretAnimation[shootAnimation].normalizedTime = 0;
-		turretAnimation[shootAnimation].speed = 1;
-		turretAnimation.Play(shootAnimation);
+		Invoke("AnimationFinished", turretAnimation[GunShootAnimation].clip.length);
+		turretAnimation[GunShootAnimation].normalizedTime = 0;
+		turretAnimation[GunShootAnimation].speed = 1;
+		turretAnimation.Play(GunShootAnimation);
 
-		Invoke("DamagePlayer", turretAnimation[shootAnimation].clip.length / 2.0f);
+		Invoke("DamagePlayer", turretAnimation[GunShootAnimation].clip.length / 2.0f);
 		AP -= AttackCost;
 	}
 
@@ -193,25 +213,27 @@ public class GatlingAI : AIBase {
 
 	void FacePlayer()
 	{
-		lookToPlayerRot = Quaternion.LookRotation(player.transform.position - turretTransform.position);
-		lookToPlayerRot = Quaternion.Euler(lookToPlayerRot.eulerAngles.x - 90,
+		lastTargetedPosition = blackboard.LastKnownPlayerPosition;
+
+		lookToPlayerRot = Quaternion.LookRotation((player.transform.position + Vector3.up) - turretTransform.position);
+		lookToPlayerRot = Quaternion.Euler(lookToPlayerRot.eulerAngles.x-90,
 		                                   lookToPlayerRot.eulerAngles.y,
-		                                   lookToPlayerRot.eulerAngles.z - 90);
+		                                   lookToPlayerRot.eulerAngles.z-90);
 
 		if (movement.currentMovement == MovementState.NotMoving)
-			movement.Turn((int)lookToPlayerRot.eulerAngles.y - 90);
+			StartCoroutine(RotateHorizontally());
 
-		//StartCoroutine(RotateVertically());
+		StartCoroutine(RotateVertically());
 	}
 
 	RunStatus FacingPlayer()
 	{
-		lookToPlayerRot = Quaternion.LookRotation(player.transform.position - turretTransform.position);
-		lookToPlayerRot = Quaternion.Euler(lookToPlayerRot.eulerAngles.x - 90,
+		lookToPlayerRot = Quaternion.LookRotation((player.transform.position + Vector3.up) - turretTransform.position);
+		lookToPlayerRot = Quaternion.Euler(lookToPlayerRot.eulerAngles.x-90,
 		                                   lookToPlayerRot.eulerAngles.y,
-		                                   lookToPlayerRot.eulerAngles.z - 90);
+		                                   lookToPlayerRot.eulerAngles.z-90);
 
-		if (((int)movement.parentTransform.rotation.eulerAngles.y) == ((int)lookToPlayerRot.eulerAngles.y - 90))
+		if (blackboard.LastKnownPlayerPosition == lastTargetedPosition)
 			return RunStatus.Success;
 
 		return RunStatus.Failure;
@@ -221,12 +243,18 @@ public class GatlingAI : AIBase {
 	{
 		spotLightObject.SetActive(false);
 		pointLight.enabled = false;
+
+		RedHalo.SetActive(false);
+		GreenHalo.SetActive(false);
 	}
 
 	void LightsOn()
 	{
 		spotLightObject.SetActive(true);
 		pointLight.enabled = true;
+
+		GreenHalo.SetActive(true);
+		RedHalo.SetActive(false);
 	}
 
 	protected override void CreateBehaviourTree()
@@ -257,17 +285,116 @@ public class GatlingAI : AIBase {
 
 	IEnumerator RotateVertically()
 	{
-		Animating = true;
+		while (Animating || movement.currentMovement != MovementState.NotMoving)
+			yield return null;
 
-		while (lookToPlayerRot.eulerAngles.x != turretTransform.rotation.eulerAngles.x &&
-		       lookToPlayerRot.eulerAngles.z != turretTransform.rotation.eulerAngles.z)
+		Rotating = true;
+
+		Quaternion verticalRot = Quaternion.LookRotation(player.transform.position - turretTransform.position);
+		Quaternion ninetyCCW = Quaternion.Euler(0, -90, 0);
+		verticalRot *= ninetyCCW;
+
+		while (turretTransform.rotation != verticalRot)
 		{
-			turretTransform.rotation = 
-				Quaternion.RotateTowards(turretTransform.rotation,lookToPlayerRot,
-			                                                    90.0f * Time.deltaTime);
+			turretTransform.rotation = Quaternion.RotateTowards(turretTransform.rotation,
+			                                                    verticalRot, 90.0f * Time.deltaTime);
+			
 			yield return null;
 		}
 
-		AnimationFinished();
+		Rotating = false;
 	}
+
+	IEnumerator MoveDown()
+	{
+		int frames = 40;
+		Vector3 UpPoint = new Vector3(0, 0.8f, 0);
+		Vector3 DownPoint = new Vector3(0, -0.5f, 0);
+
+		for (int i = 0; i < frames; i++)
+		{
+			movingPartTransform.localPosition = Vector3.Lerp(UpPoint, DownPoint, i  / (float)frames);
+			yield return null;
+		}
+	}
+
+	IEnumerator MoveUp()
+	{
+		while (turretAnimation.isPlaying || Rotating)
+		{
+			yield return null;
+		}
+
+		int frames = 20;
+		Vector3 UpPoint = new Vector3(0, 0.8f, 0);
+		Vector3 DownPoint = new Vector3(0, -0.5f, 0);
+
+		for (int i = 0; i < frames; i++)
+		{
+			movingPartTransform.localPosition = Vector3.Lerp(DownPoint, UpPoint, i / (float)frames);
+			yield return null;
+		}
+
+		movingPartTransform.localPosition = new Vector3(0, 0.8f, 0);
+		CloseFrame();
+	}
+
+	IEnumerator RotateHorizontally()
+	{
+		Rotating = true;
+
+		while (Animating)
+			yield return null;
+	
+		movement.Turn((int)lookToPlayerRot.eulerAngles.y - 90);
+
+		Invoke("Rotating", 90 * Time.deltaTime);
+	}
+
+	void CloseFrame()
+	{
+		baseAnimation[BaseCloseAnimation].normalizedTime = 0.0f;
+		baseAnimation[BaseCloseAnimation].speed = 1.0f;
+
+		baseAnimation.Play(BaseCloseAnimation);
+
+		Invoke("ResetRotations", baseAnimation[BaseCloseAnimation].length);
+	}
+
+	IEnumerator FaceGround()
+	{
+		Rotating = true;
+
+		Quaternion lookToGround = Quaternion.LookRotation(Vector3.down, turretTransform.up);
+
+		Quaternion ninetyCCW = Quaternion.Euler(0, -90, 0);
+		lookToGround *= ninetyCCW;
+
+		while (turretTransform.rotation != lookToGround)
+		{
+			turretTransform.rotation = Quaternion.RotateTowards(turretTransform.rotation,
+			                                                    lookToGround, 90.0f * Time.deltaTime);
+			
+			yield return null;
+		}
+
+		Rotating = false;
+	}
+
+	void StopRotating()
+	{
+		Rotating = false;
+	}
+
+	void ResetRotations()
+	{
+		turretAnimation[GunHideAnimation].speed = 10;
+		turretAnimation[GunHideAnimation].normalizedTime = 1;
+
+		turretAnimation.Play(GunHideAnimation);
+
+		Quaternion ninetyCCW = Quaternion.Euler(0,0, 90);
+		turretTransform.rotation *= ninetyCCW;
+	}
+
 }

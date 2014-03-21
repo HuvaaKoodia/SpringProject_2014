@@ -146,7 +146,7 @@ public class MapGenerator : MonoBehaviour
 						gatlingTurret.name = "GatlingTurret";
 						gatlingTurret.CurrentFloorIndex=floor.FloorIndex;
 
-						gatlingTurret.transform.position = tile_pos + Vector3.up * (MapGenerator.TileSize.y - 0.34f);
+						gatlingTurret.transform.position = tile_pos + Vector3.up * (MapGenerator.TileSize.y - 0.1f);
 						gatlingTurret.movement.SetPositionInGrid(entity_pos);
 						floor.Enemies.Add(gatlingTurret);
 
