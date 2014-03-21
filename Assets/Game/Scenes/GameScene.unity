@@ -792,6 +792,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 56719461}
   - 114: {fileID: 56719462}
+  - 114: {fileID: 56719463}
   m_Layer: 0
   m_Name: Corridor_2wall
   m_TagString: Untagged
@@ -826,6 +827,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GraphicsObject: {fileID: 1296645391}
   Colliders: {fileID: 411797889}
+  TileLights: {fileID: 56719463}
+--- !u!114 &56719463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400002, guid: 706d613207f36b54a948f1e8c25681cd,
+    type: 2}
+  m_PrefabInternal: {fileID: 765583616}
+  m_GameObject: {fileID: 56719460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46a4daa2282b9b34f948d527603a44f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  white_lights:
+  - {fileID: 263696927}
+  orange_lights: []
+  light_flicker: 1
+  delay: 1
 --- !u!1 &59440663
 GameObject:
   m_ObjectHideFlags: 0
@@ -1397,7 +1416,7 @@ Transform:
   m_PrefabInternal: {fileID: 1249345968}
   m_GameObject: {fileID: 95803650}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.000797339133, y: 16.7185364, z: -2.38418579e-07}
+  m_LocalPosition: {x: .000117699565, y: 16.7185364, z: -2.38418579e-07}
   m_LocalScale: {x: .00277777785, y: .00277777785, z: .00277777785}
   m_Children:
   - {fileID: 1408072076}
@@ -5440,7 +5459,7 @@ Transform:
   m_PrefabInternal: {fileID: 1249345968}
   m_GameObject: {fileID: 421951741}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.93844986, y: 17.8098106, z: -2.38418579e-07}
+  m_LocalPosition: {x: 1.9402802, y: 17.8098106, z: -2.38418579e-07}
   m_LocalScale: {x: .00277799997, y: .00277799997, z: .00277799997}
   m_Children:
   - {fileID: 849217162}
@@ -5741,6 +5760,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 433596092}
   - 114: {fileID: 433596093}
+  - 114: {fileID: 433596094}
   m_Layer: 0
   m_Name: Corridor_WallCornerMirrored
   m_TagString: Untagged
@@ -5776,6 +5796,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GraphicsObject: {fileID: 2109894232}
   Colliders: {fileID: 2048644889}
+  TileLights: {fileID: 433596094}
+--- !u!114 &433596094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400002, guid: e2a5dc29d595f014d89add45e466b27a,
+    type: 2}
+  m_PrefabInternal: {fileID: 1604646564}
+  m_GameObject: {fileID: 433596091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46a4daa2282b9b34f948d527603a44f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  white_lights:
+  - {fileID: 687839068}
+  orange_lights:
+  - {fileID: 80308200}
+  light_flicker: 1
+  delay: 1
 --- !u!1 &442736602
 GameObject:
   m_ObjectHideFlags: 0
@@ -6842,6 +6881,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 525358883}
   - 114: {fileID: 525358884}
+  - 114: {fileID: 525358885}
   m_Layer: 0
   m_Name: Corridor_TCrossing
   m_TagString: Untagged
@@ -6877,6 +6917,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GraphicsObject: {fileID: 1029549353}
   Colliders: {fileID: 1502615471}
+  TileLights: {fileID: 525358885}
+--- !u!114 &525358885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400002, guid: 85a6973b8fa36a04b9d81a05b47648c3,
+    type: 2}
+  m_PrefabInternal: {fileID: 857010065}
+  m_GameObject: {fileID: 525358882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46a4daa2282b9b34f948d527603a44f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  white_lights:
+  - {fileID: 109902628}
+  orange_lights:
+  - {fileID: 722582501}
+  - {fileID: 1991870064}
+  light_flicker: 1
+  delay: 1
 --- !u!1 &525988119
 GameObject:
   m_ObjectHideFlags: 0
@@ -6886,6 +6946,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 525988120}
   - 114: {fileID: 525988121}
+  - 114: {fileID: 525988122}
   m_Layer: 0
   m_Name: Corridor_Floor3Edges
   m_TagString: Untagged
@@ -6920,6 +6981,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GraphicsObject: {fileID: 399227527}
   Colliders: {fileID: 0}
+  TileLights: {fileID: 525988122}
+--- !u!114 &525988122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400002, guid: d784fd5d9b13bb844adec0c36536682f,
+    type: 2}
+  m_PrefabInternal: {fileID: 1845440886}
+  m_GameObject: {fileID: 525988119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46a4daa2282b9b34f948d527603a44f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  white_lights:
+  - {fileID: 492332197}
+  orange_lights:
+  - {fileID: 1111663456}
+  - {fileID: 1124632302}
+  - {fileID: 2089953480}
+  light_flicker: 1
+  delay: 1
 --- !u!1001 &527384398
 Prefab:
   m_ObjectHideFlags: 0
@@ -7895,7 +7977,7 @@ Transform:
   m_PrefabInternal: {fileID: 1249345968}
   m_GameObject: {fileID: 596967336}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.000797339133, y: 17.8098106, z: -2.38418579e-07}
+  m_LocalPosition: {x: .000117699565, y: 17.8098106, z: -2.38418579e-07}
   m_LocalScale: {x: .00277799997, y: .00277799997, z: .00277799997}
   m_Children:
   - {fileID: 327985711}
@@ -9499,7 +9581,7 @@ Transform:
   m_PrefabInternal: {fileID: 1249345968}
   m_GameObject: {fileID: 702650272}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.000797339133, y: 15.6272602, z: -2.38418579e-07}
+  m_LocalPosition: {x: .000117699565, y: 15.6272602, z: -2.38418579e-07}
   m_LocalScale: {x: .00277777785, y: .00277777785, z: .00277777785}
   m_Children:
   - {fileID: 1417835601}
@@ -9991,7 +10073,7 @@ Transform:
   m_PrefabInternal: {fileID: 1249345968}
   m_GameObject: {fileID: 731787785}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.000797339133, y: 16.7185364, z: -2.38418579e-07}
+  m_LocalPosition: {x: .000117699565, y: 16.7185364, z: -2.38418579e-07}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1854164026}
@@ -11372,6 +11454,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GraphicsObject: {fileID: 1607900046}
   Colliders: {fileID: 1522129591}
+  TileLights: {fileID: 0}
 --- !u!1 &804914323
 GameObject:
   m_ObjectHideFlags: 0
@@ -11665,7 +11748,7 @@ Transform:
   m_PrefabInternal: {fileID: 1249345968}
   m_GameObject: {fileID: 825230679}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.000797339133, y: 16.7185364, z: -2.38418579e-07}
+  m_LocalPosition: {x: .000117699565, y: 16.7185364, z: -2.38418579e-07}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 881668859}
@@ -12896,6 +12979,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GraphicsObject: {fileID: 1309625411}
   Colliders: {fileID: 1174766598}
+  TileLights: {fileID: 0}
 --- !u!114 &893840868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13382,6 +13466,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GraphicsObject: {fileID: 962729232}
   Colliders: {fileID: 1995550590}
+  TileLights: {fileID: 0}
 --- !u!114 &930547380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13486,6 +13571,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GraphicsObject: {fileID: 1822842851}
   Colliders: {fileID: 1491487089}
+  TileLights: {fileID: 0}
 --- !u!1 &954122993
 GameObject:
   m_ObjectHideFlags: 0
@@ -13752,7 +13838,7 @@ Transform:
   m_PrefabInternal: {fileID: 1249345968}
   m_GameObject: {fileID: 970502254}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.93844986, y: 17.8098106, z: -2.38418579e-07}
+  m_LocalPosition: {x: 1.9402802, y: 17.8098106, z: -2.38418579e-07}
   m_LocalScale: {x: .00277799997, y: .00277799997, z: .00277799997}
   m_Children:
   - {fileID: 42863619}
@@ -16166,6 +16252,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1089157442}
   - 114: {fileID: 1089157443}
+  - 114: {fileID: 1089157444}
   m_Layer: 0
   m_Name: Corridor_WallCorner
   m_TagString: Untagged
@@ -16201,6 +16288,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GraphicsObject: {fileID: 1586316714}
   Colliders: {fileID: 710873998}
+  TileLights: {fileID: 1089157444}
+--- !u!114 &1089157444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400002, guid: 531073c858c71ff42b7b7cebf1df2fb9,
+    type: 2}
+  m_PrefabInternal: {fileID: 1809593842}
+  m_GameObject: {fileID: 1089157441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46a4daa2282b9b34f948d527603a44f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  white_lights:
+  - {fileID: 1101530918}
+  orange_lights:
+  - {fileID: 703161211}
+  light_flicker: 1
+  delay: 1
 --- !u!1 &1096243820
 GameObject:
   m_ObjectHideFlags: 0
@@ -16210,6 +16316,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1096243821}
   - 114: {fileID: 1096243822}
+  - 114: {fileID: 1096243823}
   m_Layer: 0
   m_Name: Corridor_Floor1Edge
   m_TagString: Untagged
@@ -16244,6 +16351,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GraphicsObject: {fileID: 146593481}
   Colliders: {fileID: 0}
+  TileLights: {fileID: 1096243823}
+--- !u!114 &1096243823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400002, guid: 20081c7d97a1d3e43874c0f312f0911c,
+    type: 2}
+  m_PrefabInternal: {fileID: 535881230}
+  m_GameObject: {fileID: 1096243820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46a4daa2282b9b34f948d527603a44f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  white_lights:
+  - {fileID: 1581675924}
+  orange_lights:
+  - {fileID: 769060058}
+  light_flicker: 1
+  delay: 1
 --- !u!1 &1101530916
 GameObject:
   m_ObjectHideFlags: 0
@@ -17642,6 +17768,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1179751471}
   - 114: {fileID: 1179751472}
+  - 114: {fileID: 1179751473}
   m_Layer: 0
   m_Name: Corridor_Corner
   m_TagString: Untagged
@@ -17676,6 +17803,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GraphicsObject: {fileID: 1308450987}
   Colliders: {fileID: 1310636087}
+  TileLights: {fileID: 1179751473}
+--- !u!114 &1179751473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400002, guid: 4eaf325f6a34dc94dbd96f04ef782c28,
+    type: 2}
+  m_PrefabInternal: {fileID: 1004697821}
+  m_GameObject: {fileID: 1179751470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46a4daa2282b9b34f948d527603a44f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  white_lights: []
+  orange_lights:
+  - {fileID: 1351938048}
+  light_flicker: 0
+  delay: 0
 --- !u!1 &1187931140
 GameObject:
   m_ObjectHideFlags: 0
@@ -17995,6 +18140,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1208918880}
   - 114: {fileID: 1208918881}
+  - 114: {fileID: 1208918882}
   m_Layer: 0
   m_Name: Corridor_Floor2Edges
   m_TagString: Untagged
@@ -18029,6 +18175,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GraphicsObject: {fileID: 1710733922}
   Colliders: {fileID: 0}
+  TileLights: {fileID: 1208918882}
+--- !u!114 &1208918882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400002, guid: 8ed9991d7d71b5648bc0482028a12dcc,
+    type: 2}
+  m_PrefabInternal: {fileID: 2038641471}
+  m_GameObject: {fileID: 1208918879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46a4daa2282b9b34f948d527603a44f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  white_lights:
+  - {fileID: 686832876}
+  orange_lights:
+  - {fileID: 165719044}
+  - {fileID: 1206071162}
+  light_flicker: 1
+  delay: 1
 --- !u!1 &1209889025
 GameObject:
   m_ObjectHideFlags: 0
@@ -18700,39 +18866,39 @@ Prefab:
       objectReference: {fileID: 1125268380}
     - target: {fileID: 400004, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -.000797339133
+      value: .000117699565
       objectReference: {fileID: 0}
     - target: {fileID: 400042, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 1.93844986
+      value: 1.9402802
       objectReference: {fileID: 0}
     - target: {fileID: 400074, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -.000797339133
+      value: .000117699565
       objectReference: {fileID: 0}
     - target: {fileID: 400094, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -.000797339133
+      value: .000117699565
       objectReference: {fileID: 0}
     - target: {fileID: 400096, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -.000797339133
+      value: .000117699565
       objectReference: {fileID: 0}
     - target: {fileID: 400108, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -.000797339133
+      value: .000117699565
       objectReference: {fileID: 0}
     - target: {fileID: 400134, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 1.93844986
+      value: 1.9402802
       objectReference: {fileID: 0}
     - target: {fileID: 400384, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 1.93845022
+      value: 1.94028056
       objectReference: {fileID: 0}
     - target: {fileID: 400264, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -.000797339133
+      value: .000117699565
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
@@ -19665,6 +19831,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GraphicsObject: {fileID: 1378587535}
   Colliders: {fileID: 1792686336}
+  TileLights: {fileID: 0}
 --- !u!114 &1304922454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20619,7 +20786,7 @@ Transform:
   m_PrefabInternal: {fileID: 1249345968}
   m_GameObject: {fileID: 1358182356}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.93845022, y: 15.6272602, z: 0}
+  m_LocalPosition: {x: 1.94028056, y: 15.6272602, z: 0}
   m_LocalScale: {x: .00208300003, y: .00208300003, z: .00208300003}
   m_Children:
   - {fileID: 2121924365}
@@ -21407,6 +21574,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1405513356}
   - 114: {fileID: 1405513357}
+  - 114: {fileID: 1405513358}
   m_Layer: 0
   m_Name: Corridor_1wall
   m_TagString: Untagged
@@ -21441,6 +21609,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GraphicsObject: {fileID: 937696699}
   Colliders: {fileID: 1516479850}
+  TileLights: {fileID: 1405513358}
+--- !u!114 &1405513358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400002, guid: 4bf5d683ca4441247be27d973b6ac2bf,
+    type: 2}
+  m_PrefabInternal: {fileID: 486312778}
+  m_GameObject: {fileID: 1405513355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46a4daa2282b9b34f948d527603a44f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  white_lights:
+  - {fileID: 1140995848}
+  orange_lights: []
+  light_flicker: 1
+  delay: 1
 --- !u!1 &1408072075
 GameObject:
   m_ObjectHideFlags: 0
@@ -21549,6 +21735,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1415752595}
   - 114: {fileID: 1415752596}
+  - 114: {fileID: 1415752597}
   m_Layer: 0
   m_Name: Corridor_FloorOppositeEdges
   m_TagString: Untagged
@@ -21583,6 +21770,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GraphicsObject: {fileID: 285844455}
   Colliders: {fileID: 0}
+  TileLights: {fileID: 1415752597}
+--- !u!114 &1415752597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400002, guid: 4a0a297bc224e45408b8e344e3e365ba,
+    type: 2}
+  m_PrefabInternal: {fileID: 1736895441}
+  m_GameObject: {fileID: 1415752594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46a4daa2282b9b34f948d527603a44f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  white_lights:
+  - {fileID: 1954388499}
+  orange_lights:
+  - {fileID: 51001053}
+  - {fileID: 12901522}
+  light_flicker: 1
+  delay: 1
 --- !u!1 &1416649453
 GameObject:
   m_ObjectHideFlags: 0
@@ -22335,6 +22542,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1469487485}
   - 114: {fileID: 1469487486}
+  - 114: {fileID: 1469487487}
   m_Layer: 0
   m_Name: Corridor_Floor
   m_TagString: Untagged
@@ -22368,6 +22576,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GraphicsObject: {fileID: 2121743848}
   Colliders: {fileID: 0}
+  TileLights: {fileID: 1469487487}
+--- !u!114 &1469487487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400002, guid: 982e594fb3ea78146b1d555568c0ce70,
+    type: 2}
+  m_PrefabInternal: {fileID: 1333284418}
+  m_GameObject: {fileID: 1469487484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46a4daa2282b9b34f948d527603a44f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  white_lights:
+  - {fileID: 1705070725}
+  orange_lights: []
+  light_flicker: 1
+  delay: 1
 --- !u!1 &1469968547
 GameObject:
   m_ObjectHideFlags: 0
@@ -28923,7 +29149,7 @@ Transform:
   m_PrefabInternal: {fileID: 1249345968}
   m_GameObject: {fileID: 1876214414}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.000797339133, y: 16.7185364, z: -2.38418579e-07}
+  m_LocalPosition: {x: .000117699565, y: 16.7185364, z: -2.38418579e-07}
   m_LocalScale: {x: .00277777785, y: .00277777785, z: .00277777785}
   m_Children:
   - {fileID: 1972494449}
@@ -31290,6 +31516,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 2029105579}
   - 114: {fileID: 2029105580}
+  - 114: {fileID: 2029105581}
   m_Layer: 0
   m_Name: Corridor_Crossroad
   m_TagString: Untagged
@@ -31324,6 +31551,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GraphicsObject: {fileID: 745993883}
   Colliders: {fileID: 0}
+  TileLights: {fileID: 0}
+--- !u!114 &2029105581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400002, guid: d7510d5d1aae4f94fb1d8bdfc954bdca,
+    type: 2}
+  m_PrefabInternal: {fileID: 1536729690}
+  m_GameObject: {fileID: 2029105578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46a4daa2282b9b34f948d527603a44f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  white_lights:
+  - {fileID: 2141644618}
+  orange_lights:
+  - {fileID: 1543085120}
+  - {fileID: 227732673}
+  - {fileID: 1603934623}
+  - {fileID: 2012825462}
+  light_flicker: 1
+  delay: 1
 --- !u!1 &2030714352
 GameObject:
   m_ObjectHideFlags: 0
