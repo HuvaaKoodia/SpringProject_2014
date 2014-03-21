@@ -13,12 +13,21 @@ public class AllLights : MonoBehaviour
 {	
 	public List<Light> white_lights;																			//instantiate a list for the white lights in the various TilePrefabs under TestObjects of GameScene
 	public List<Light> orange_lights;																			//instantiate a list for the orange lights in the various TilePrefabs under TestObjects of GameScene
-	
+<<<<<<< HEAD
+		
 	public bool light_flicker;																					//instantiate boolean to allow light to flicker
 
 	public float delay;																							//instantiate time to delay by in inspector
 	private float ticks;																						//instantiate time since last toggle
 
+=======
+	
+	public bool light_flicker;																					//instantiate boolean to allow light to flicker
+	
+	public float delay;																							//instantiate time to delay by in inspector
+	private float ticks;																						//instantiate time since last toggle
+	
+>>>>>>> Randomize light flicker
 	// Use this for initialization
 	void Start ()
 	{
@@ -31,10 +40,17 @@ public class AllLights : MonoBehaviour
 		//<not needed>
 		//if(light_flicker)
 		//{
+<<<<<<< HEAD
 			//Flicker(delay, 0.0f, Subs.RandomBool(), Environment_Light.WhiteLight);
 		//}
 	}
 
+=======
+		//Flicker(delay, 0.0f, Subs.RandomBool(), Environment_Light.WhiteLight);
+		//}
+	}
+	
+>>>>>>> Randomize light flicker
 	//function to enable the environment lights in TilePrefabs under TestObjects in GameScene depending on boolean passed and Lights selected
 	public void EnableLights(bool on, Environment_Light EL)
 	{
@@ -74,12 +90,19 @@ public class AllLights : MonoBehaviour
 			break;
 		}
 	}
+<<<<<<< HEAD
 
+	//function to enable Lights selected to flicker based on a delay set in the inspector in GameScene
+	public void Flicker(float delay, bool on, Environment_Light EL)
+	{
+=======
+	
 	//function to enable Lights selected to flicker based on a delay set in the inspector in GameScene
 	public void Flicker(float delay, bool on, Environment_Light EL)
 	{
 		Debug.Log("TICKS: " + (int)ticks);																		//display value of ticks
 
+>>>>>>> Randomize light flicker
 		//toggling of enabled value of the environment lights in TilePrefabs under TestObjects in GameScene depending on boolean passed and Lights selected
 		if(ticks >= delay)
 		{
@@ -91,7 +114,11 @@ public class AllLights : MonoBehaviour
 			{
 				on = true;
 			}
+<<<<<<< HEAD
 
+=======
+			
+>>>>>>> Randomize light flicker
 			ticks = 0.0f;
 			EnableLights(on, EL);
 		}
@@ -99,16 +126,22 @@ public class AllLights : MonoBehaviour
 		else
 		{
 			ticks += Time.deltaTime;
+<<<<<<< HEAD
+			//Debug.Log("TICKS: " + ticks);																		//display value of ticks
+		}
+	}
+}
+
+=======
 
 		}
-		
 	}
 
 	//function to set value of light_flicker through code instead of in inspector
 	public void SetFlicker(bool flicker)
 	{
 		light_flicker = flicker;
-}
+	}
 
 	//function to get the value of light_flicker be it set through code or in inspector
 	public bool GetFlicker()
@@ -116,3 +149,4 @@ public class AllLights : MonoBehaviour
 		return light_flicker;
 	}
 }
+>>>>>>> Randomize light flicker
