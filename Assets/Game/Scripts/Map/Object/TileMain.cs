@@ -18,10 +18,11 @@ public class TileMain : MonoBehaviour
 			if(TileGraphics.TileLights != null)
 			{
 				TileGraphics.TileLights.EnableLights(Subs.RandomBool(), Environment_Light.WhiteLight);
+				//TileGraphics.TileLights.SetFlicker(Subs.RandomBool());											//call function if light flickering wants to be randomized
 			}
 		}
 	}
-
+	
 	void Update()
 	{
 		//as long as there are TileGraphs, TileLights and TileLights' light_flicker has been enabled, make lights flicker
@@ -29,7 +30,7 @@ public class TileMain : MonoBehaviour
 		{
 			if(TileGraphics.TileLights != null)
 			{
-				if(TileGraphics.TileLights.light_flicker)
+				if(TileGraphics.TileLights.GetFlicker())
 				{
 					TileGraphics.TileLights.Flicker(TileGraphics.TileLights.delay, Subs.RandomBool(), Environment_Light.WhiteLight);
 				}

@@ -13,7 +13,7 @@ public class AllLights : MonoBehaviour
 {	
 	public List<Light> white_lights;																			//instantiate a list for the white lights in the various TilePrefabs under TestObjects of GameScene
 	public List<Light> orange_lights;																			//instantiate a list for the orange lights in the various TilePrefabs under TestObjects of GameScene
-		
+	
 	public bool light_flicker;																					//instantiate boolean to allow light to flicker
 
 	public float delay;																							//instantiate time to delay by in inspector
@@ -78,6 +78,8 @@ public class AllLights : MonoBehaviour
 	//function to enable Lights selected to flicker based on a delay set in the inspector in GameScene
 	public void Flicker(float delay, bool on, Environment_Light EL)
 	{
+		Debug.Log("TICKS: " + (int)ticks);																		//display value of ticks
+
 		//toggling of enabled value of the environment lights in TilePrefabs under TestObjects in GameScene depending on boolean passed and Lights selected
 		if(ticks >= delay)
 		{
@@ -97,8 +99,19 @@ public class AllLights : MonoBehaviour
 		else
 		{
 			ticks += Time.deltaTime;
-			//Debug.Log("TICKS: " + ticks);																		//display value of ticks
+
 		}
 	}
+
+	//function to set value of light_flicker through code instead of in inspector
+	public void SetFlicker(bool flicker)
+	{
+		light_flicker = flicker;
 }
 
+	//function to get the value of light_flicker be it set through code or in inspector
+	public bool GetFlicker()
+	{
+		return light_flicker;
+	}
+}
