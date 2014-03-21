@@ -10,6 +10,33 @@ public class TileMain : MonoBehaviour
 
     public EntityMain entityOnTile {get; private set;}
 
+	void Start()
+	{
+		//as long as there are TileGraphics and TileLights, turn on 50% of the white lights in the TilePrefabs at random
+		if(TileGraphics != null)
+		{
+			if(TileGraphics.TileLights != null)
+			{
+				TileGraphics.TileLights.EnableLights(Subs.RandomBool(), Environment_Light.WhiteLight);
+			}
+		}
+	}
+
+	void Update()
+	{
+		//as long as there are TileGraphs, TileLights and TileLights' light_flicker has been enabled, make lights flicker
+		if(TileGraphics != null)
+		{
+			if(TileGraphics.TileLights != null)
+			{
+				if(TileGraphics.TileLights.light_flicker)
+				{
+					TileGraphics.TileLights.Flicker(TileGraphics.TileLights.delay, Subs.RandomBool(), Environment_Light.WhiteLight);
+				}
+			}
+		}
+	}
+
 	public bool BlockedForMovement{
 		get{
             if (entityOnTile != null)
