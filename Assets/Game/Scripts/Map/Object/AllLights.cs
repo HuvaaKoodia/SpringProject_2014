@@ -77,7 +77,7 @@ public class AllLights : MonoBehaviour
 
 	//function to enable Lights selected to flicker based on a delay set in the inspector in GameScene
 	public void Flicker(float delay, bool on, Environment_Light EL)
-	{
+	{/*
 		//toggling of enabled value of the environment lights in TilePrefabs under TestObjects in GameScene depending on boolean passed and Lights selected
 		if(ticks >= delay)
 		{
@@ -99,6 +99,7 @@ public class AllLights : MonoBehaviour
 			ticks += Time.deltaTime;
 			//Debug.Log("TICKS: " + ticks);																		//display value of ticks
 		}
+		*/
 	}
 }
 

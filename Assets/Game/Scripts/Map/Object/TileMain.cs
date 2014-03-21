@@ -39,7 +39,7 @@ public class TileMain : MonoBehaviour
 
 	public bool BlockedForMovement{
 		get{
-            if (entityOnTile != null)
+			if (entityOnTile != null && entityOnTile.BlocksMovement)
                 return true;
 
             if (Data.TileType==TileObjData.Type.Door){

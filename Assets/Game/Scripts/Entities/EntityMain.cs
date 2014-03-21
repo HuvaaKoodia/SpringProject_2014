@@ -6,6 +6,8 @@ public class EntityMain : MonoBehaviour
     public GameController GC;
     public EntityMovementSub movement;
 
+	public bool BlocksMovement = true;
+
 	int floor_index=0;
 	public int CurrentFloorIndex{
 		get{return floor_index;}
