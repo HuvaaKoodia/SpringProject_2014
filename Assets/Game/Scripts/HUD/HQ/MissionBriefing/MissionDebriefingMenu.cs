@@ -5,9 +5,9 @@ public class MissionDebriefingMenu : MonoBehaviour {
 
     public UILabel text;
 
-    public void SetMission(GameDB GDB,XmlDatabase XDB,int reward){
-		text.text=MissionGenerator.MissionDebriefText(GDB.GameData.CurrentMission,GDB.GameData.PlayerData,XDB);
+    public void SetMission(GameDB GDB,int reward){
+		text.text=MissionGenerator.MissionDebriefText(GDB.GameData.CurrentMission,GDB.GameData.PlayerData);
 
-        text.text+="\n\nReward: "+reward+" BC";
+		text.text+="\n\nReward: "+reward+" "+XmlDatabase.MoneyUnit;
     }
 }

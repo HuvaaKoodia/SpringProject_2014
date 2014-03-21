@@ -2,8 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class MissionObjData {
+public class MissionObjective{
+	public MissionObjData.Objective Objective{get;private set;}
+	public int status{get;set;}
 
+	public MissionObjective(MissionObjData.Objective obj){
+		Objective=obj;
+	}
+}
+
+public class MissionObjData {
+	
     public MissionXmlData XmlData{get;set;}
 
     public enum Type{TradeVesselInfo,RetrieveCargo,EmergencyBeacon,ExploreVessel}
@@ -16,6 +25,7 @@ public class MissionObjData {
    
     public enum InformationRating{None,Something,Everything}
 
+	public bool NoInfo{get;set;}
 	public string Briefing{get;set;}
 	public string Objectives{get;set;}
 
@@ -33,16 +43,25 @@ public class MissionObjData {
 	public InformationRating InfoShipPower {get;set;}
 
     //objectives
-	public List<Objective> PrimaryObjectives{get;set;}
-	public List<Objective> SecondaryObjectives{get;set;}
+	public List<MissionObjective> PrimaryObjectives{get;set;}
+	public List<MissionObjective> SecondaryObjectives{get;set;}
 
     public MissionObjData(){
-		PrimaryObjectives=new List<Objective>();
-		SecondaryObjectives=new List<Objective>();
+		NoInfo=false;
+		PrimaryObjectives=new List<MissionObjective>();
+		SecondaryObjectives=new List<MissionObjective>();
     }
 
+	public void AddPrimaryObjective(Objective obj){
+		PrimaryObjectives.Add(new MissionObjective(obj));
+	}
+
+	public void AddSecondaryObjective(Objective obj){
+		SecondaryObjectives.Add(new MissionObjective(obj));
+	}
+
     public bool ContainsObjective(MissionObjData.Objective o){
-        return PrimaryObjectives.Contains(o)||SecondaryObjectives.Contains(o);
+		return PrimaryObjectives.Exists(obj=>obj.Objective==o)||SecondaryObjectives.Exists(obj=>obj.Objective==o);
     }
 
 }

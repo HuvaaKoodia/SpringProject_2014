@@ -174,7 +174,7 @@ public abstract class UIItemSlot : MonoBehaviour
     {
         var stat=item.Stats.Find(s=>s.type==InvStat.Type.Value);
         if (stat==null) return "";
-        return "[FFCC00]Price: " + stat._amount+" BC[-]";
+		return "[FFCC00]Price: " + stat._amount+" "+XmlDatabase.MoneyUnit+"[-]";
     }
 
 	/// <summary>

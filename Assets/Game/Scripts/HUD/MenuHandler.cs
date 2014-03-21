@@ -33,6 +33,7 @@ public class MenuHandler : MonoBehaviour {
     public MissionBriefingMenu MissionBriefing;
     public GameObject EndMissionPanel;
     public MechStatisticsMain MechStats;
+	public UISprite FadePanel;
 
 	public UILabel FPS;
 	public bool ShowFPSonAndroid=true;
@@ -306,4 +307,32 @@ public class MenuHandler : MonoBehaviour {
 			frames = 0;
 		}
 	}
+
+	public void FadeIn(){
+		StartCoroutine(Fader(Time.deltaTime));
+	}
+
+	public void FadeOut(){
+		StartCoroutine(Fader(-Time.deltaTime));
+	}
+
+	public bool FadeInProgress{get;private set;}
+
+	IEnumerator Fader(float amount){
+		FadeInProgress=true;
+		while (true){
+			FadePanel.alpha+=amount;
+			if (FadePanel.alpha<=0){
+				FadePanel.alpha=0;
+				break;
+			}
+			else if (FadePanel.alpha>=1){
+				FadePanel.alpha=1;
+				break;
+			}
+			else yield return null;
+		}
+		FadeInProgress=false;
+	}
+
 }

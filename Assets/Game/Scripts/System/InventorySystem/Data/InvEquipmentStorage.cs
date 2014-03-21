@@ -213,13 +213,13 @@ public class InvEquipmentStorage
     /// <summary>
     /// DEV. WARNING WARNING infinite loop running the world!
     /// </summary>
-    public static void EquipRandomItem(InvEquipmentStorage equipment,XmlDatabase XDB){
+    public static void EquipRandomItem(InvEquipmentStorage equipment){
         if (equipment == null) return;
-        if (XDB.items.Count == 0) return;
+		if (XmlDatabase.items.Count == 0) return;
         if (!equipment.HasEmptySlots()) return;
 
         while(true){
-            var gi=InvGameItem.GetRandomItem(XDB);
+            var gi=InvGameItem.GetRandomItem();
             if (equipment.Equip(gi)==null) break;
         }
     }

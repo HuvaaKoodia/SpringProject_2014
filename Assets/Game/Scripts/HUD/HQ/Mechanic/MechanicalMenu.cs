@@ -35,6 +35,6 @@ public class MechanicalMenu : MonoBehaviour {
     }
 
     void UpdateStats(){
-        if (MoneyLabel!=null) MoneyLabel.text="Money: "+player.Money+" BC";
+		if (MoneyLabel!=null) MoneyLabel.text="Money: "+player.Money+" "+XmlDatabase.MoneyUnit;
     }
 }

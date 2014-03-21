@@ -8,6 +8,6 @@ public class EquipRandomItem : MonoBehaviour
 
 	void OnClick()
 	{
-        InvEquipmentStorage.EquipRandomItem(equipment,XDB);
+        InvEquipmentStorage.EquipRandomItem(equipment);
 	}
 }

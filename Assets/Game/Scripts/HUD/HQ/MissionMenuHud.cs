@@ -51,9 +51,10 @@ public class MissionMenuHud : MonoBehaviour {
 
         if (SS.GDB.GOTO_DEBRIEF){
             SS.GDB.GOTO_DEBRIEF=false;
+			MissionGenerator.UpdateMissionObjectiveStatus(SS.GDB.GameData.CurrentMission,SS.GDB.GameData.PlayerData);
             int reward=SS.GDB.CalculateQuestReward();
 			SS.GDB.GameData.PlayerData.Money+=reward;
-            MissionDebrief.SetMission(SS.GDB,SS.XDB,reward);
+			MissionDebrief.SetMission(SS.GDB,reward);
             OpenMissionDebrief();
             SS.GDB.RemoveQuestItems();
         }

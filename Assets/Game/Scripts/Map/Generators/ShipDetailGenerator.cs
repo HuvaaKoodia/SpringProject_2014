@@ -11,14 +11,14 @@ public class ShipDetailGenerator : MonoBehaviour
     /// Call after MapGen.GenerateSceneMap.
     /// DEV.Develop further
     /// </summary>
-	public void GenerateLoot(FloorObjData floor, XmlDatabase XDB)
+	public void GenerateLoot(FloorObjData floor)
     {
 		foreach (var c in floor.LootCrates)
         {
             int a = Subs.GetRandom(1, 5);
             for (int i=0; i<a; i++)
             {
-                c.Items.Add(InvGameItem.GetRandomItem(XDB));
+                c.Items.Add(InvGameItem.GetRandomItem());
             }
         }
     }
@@ -170,10 +170,10 @@ public class ShipDetailGenerator : MonoBehaviour
         }
     }
 
-    public void GenerateMissionObjectives(GameController GC, MissionObjData mission, ShipObjData ship, XmlDatabase XDB){
+    public void GenerateMissionObjectives(GameController GC, MissionObjData mission, ShipObjData ship){
 
         if (mission.ContainsObjective(MissionObjData.Objective.FindItem)){
-            var objective=XDB.Objectives[MissionObjData.Objective.FindItem];
+			var objective=XmlDatabase.Objectives[MissionObjData.Objective.FindItem];
             //generate item somewhere in ship
             string obj_room=objective.Room;
 			Dictionary<int,List<CellData>> LegitRooms=new Dictionary<int,List<CellData>>();
@@ -225,7 +225,7 @@ public class ShipDetailGenerator : MonoBehaviour
 
             //DEV. temp mission item type to xml objective data
             var l=Subs.GetRandom(loot);
-            var item=new InvGameItem(XDB.QuestItems[objective.Item]);
+			var item=new InvGameItem(XmlDatabase.QuestItems[objective.Item]);
             l.Items.Add(item);
         }
     }

@@ -9,10 +9,10 @@ public class AddRandomItems : MonoBehaviour
 	void Start()
 	{
 		if (storage == null) return;
-		if (XDB.items.Count == 0) return;
+		if (XmlDatabase.items.Count == 0) return;
 
 		for (int i=0;i<5;i++){
-            var gi=InvGameItem.GetRandomItem(XDB);
+            var gi=InvGameItem.GetRandomItem();
 			storage.Add(gi);
 		}
 	}

@@ -3228,7 +3228,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400278, guid: 2986cfc147efccc46ab7a96fe5ada06b, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -1.12848341
       objectReference: {fileID: 0}
     - target: {fileID: 400278, guid: 2986cfc147efccc46ab7a96fe5ada06b, type: 2}
       propertyPath: m_LocalPosition.y
@@ -4737,11 +4737,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GDB: {fileID: 1235233739}
   XMAP: {fileID: 576711959}
-  XDB: {fileID: 1235233740}
   PS: {fileID: 1235233737}
   MGen: {fileID: 726234010}
   SGen: {fileID: 726234009}
   SDGen: {fileID: 726234008}
+  ItemAtlas: {fileID: 11400000, guid: f95e07e3d350bf748b0c42b453a69d2e, type: 2}
 --- !u!114 &864114865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7230,7 +7230,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1235233738}
-  - 114: {fileID: 1235233740}
   - 114: {fileID: 1235233739}
   - 114: {fileID: 1235233737}
   m_Layer: 0
@@ -7254,6 +7253,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerPrefab: {fileID: 11400000, guid: bbc62e18456a7dc41a85be0653d92e94, type: 2}
   EnemyPrefab: {fileID: 11400004, guid: b974757ce80de5e4dbf0e505f383b32f, type: 2}
+  GatlingTurretPrefab: {fileID: 0}
   TilePrefab: {fileID: 11400000, guid: 9bfb3d436ce996c47a3e71a8160380a7, type: 2}
   LootCratePrefab: {fileID: 100002, guid: 4da49c52a07bcb442849f3c68c3d1116, type: 2}
   BasicWall: {fileID: 100000, guid: 61a5c8fb07519b54a83facebee526035, type: 2}
@@ -7275,6 +7275,8 @@ MonoBehaviour:
   Corridor_Crossroad: {fileID: 100002, guid: d7510d5d1aae4f94fb1d8bdfc954bdca, type: 2}
   Corridor_Deadend: {fileID: 100002, guid: 399e260600281404889d6460b7681adc, type: 2}
   Corridor_Door: {fileID: 100000, guid: 57e21dd772560de408ee73b478f5c434, type: 2}
+  Corridor_ElevatorDoor: {fileID: 100016, guid: a731fd6ff31d33d40a5a5c257fae9618,
+    type: 2}
   InsightSprite: {fileID: 11400000, guid: b225bf727f92d1f4ea3729003a238644, type: 2}
   TargetedSprite: {fileID: 11400000, guid: 3a4a67f0bbf1b1c498a4c6b6993d7532, type: 2}
   PlayerBlipSprite: {fileID: 11400000, guid: 2e6f3a91ba46dbb46848dfc80a6075b9, type: 2}
@@ -7326,20 +7328,6 @@ MonoBehaviour:
   GOTO_DEBRIEF: 0
   HQScene: MissionSelectScene
   GameScene: GameScene
---- !u!114 &1235233740
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400006, guid: 4e352aa64cbc07a40b14dd522f0506fb,
-    type: 2}
-  m_PrefabInternal: {fileID: 864226926}
-  m_GameObject: {fileID: 1235233736}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da82a1908a6e148419b327bb06cdb783, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ItemDB: {fileID: 0}
-  ItemAtlas: {fileID: 11400000, guid: f95e07e3d350bf748b0c42b453a69d2e, type: 2}
 --- !u!1 &1239725725
 GameObject:
   m_ObjectHideFlags: 0
@@ -11426,7 +11414,7 @@ Transform:
   m_PrefabInternal: {fileID: 513160645}
   m_GameObject: {fileID: 1823142490}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -16.0300007, z: 0}
+  m_LocalPosition: {x: -1.12848341, y: -16.0300007, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2025488368}
