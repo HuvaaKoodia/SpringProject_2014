@@ -14,17 +14,11 @@ public class PlayerObjData{
 	public MechaPartObjData[] MechParts {get; set;}
 	public MechaPartObjData UpperTorso{get;set;}
 
-    public XmlDatabase rXDB;
-
-	public PlayerObjData(){}
-
-	public PlayerObjData(XmlDatabase XDB){
-        rXDB=XDB;
-
+	public PlayerObjData(){
         Items=new InvItemStorage(8,4,2);
         
         Ammo=new Dictionary<string ,int>();
-        foreach(var a in XDB.AmmoTypes){
+		foreach(var a in XmlDatabase.AmmoTypes){
             Ammo.Add(a.Key,a.Value.StartAmount);
         }
 
@@ -156,11 +150,11 @@ public class PlayerObjData{
 
     public AmmoXmlData GetAmmoData(string ammotype)
     {
-        return rXDB.AmmoTypes[ammotype];
+		return XmlDatabase.AmmoTypes[ammotype];
     }
 
     public void FillAmmo(string ammotype)
     {
-        Ammo[ammotype]=rXDB.AmmoTypes[ammotype].MaxAmount;
+		Ammo[ammotype]=XmlDatabase.AmmoTypes[ammotype].MaxAmount;
     }
 }

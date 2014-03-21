@@ -19,7 +19,7 @@ public class VendorMenu : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        MoneyLabel.text="Money: "+_player.Money+" BC";
+		MoneyLabel.text="Money: "+_player.Money+" "+XmlDatabase.MoneyUnit;
 	}
 
 	public void SetPlayer(PlayerObjData player){

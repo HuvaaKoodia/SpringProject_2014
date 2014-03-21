@@ -3,7 +3,7 @@ using System.Collections;
 
 public class MissionGenerator{
 
-    public static MissionObjData GenerateMission(XmlDatabase XDB){
+    public static MissionObjData GenerateMission(){
         var mission=new MissionObjData();
 
         mission.MissionType=            Subs.GetRandomEnum<MissionObjData.Type>();
@@ -11,26 +11,32 @@ public class MissionGenerator{
         //DEV.TEMP force type
         //mission.MissionType= MissionObjData.Type.RetrieveCargo;
 
-        mission.XmlData=XDB.Missions[mission.MissionType];
+		mission.XmlData=XmlDatabase.Missions[mission.MissionType];
 
+		//missions stats
         mission.MissionAlienAmount=     Subs.GetRandomEnum<MissionObjData.AlienAmount>();
         mission.MissionSecuritySystem=  Subs.GetRandomEnum<MissionObjData.SecuritySystems>();
         mission.MissionShipPower=       Subs.GetRandomEnum<MissionObjData.ShipPower>();
         mission.MissionShipConditions=  Subs.GetRandomEnum<MissionObjData.ShipCondition>();
 
-        mission.InfoAlienAmount=GetRandomInfo();
-        mission.InfoSecuritySystem=GetRandomInfo();
-        mission.InfoShipPower=GetRandomInfo();
-        mission.InfoShipConditions=GetRandomInfo();
-
+		bool has_info=true;
+		if (Subs.RandomPercent()<XmlDatabase.MissionCatastrophicIntelFailureChance) has_info=false;
+		mission.NoInfo=true;
+		//info stats
+        if (has_info){
+			mission.InfoAlienAmount=GetRandomInfo();
+        	mission.InfoSecuritySystem=GetRandomInfo();
+        	mission.InfoShipPower=GetRandomInfo();
+        	mission.InfoShipConditions=GetRandomInfo();
+		}
         //objectives
 
         foreach(var o in mission.XmlData.PrimaryObjectives){
-            mission.PrimaryObjectives.Add((MissionObjData.Objective)System.Enum.Parse(typeof(MissionObjData.Objective),o,true));
+            mission.AddPrimaryObjective((MissionObjData.Objective)System.Enum.Parse(typeof(MissionObjData.Objective),o,true));
         }
 
         foreach(var o in mission.XmlData.SecondaryObjectives){
-            mission.SecondaryObjectives.Add((MissionObjData.Objective)System.Enum.Parse(typeof(MissionObjData.Objective),o,true));
+            mission.AddSecondaryObjective((MissionObjData.Objective)System.Enum.Parse(typeof(MissionObjData.Objective),o,true));
         }
 
         mission.Briefing=MissionDebriefText(mission);
@@ -52,56 +58,59 @@ public class MissionGenerator{
 
         string base_text=mission.XmlData.Description;
 
-        base_text+="\n\nAdditional Info:\n\n";
+		string info_text="\n\nAdditional Info:\n\n";
 
-        string info_text="- ";
-
-        switch(mission.InfoAlienAmount){
-            case MissionObjData.InformationRating.None:
-                info_text+="We were unable to determine organic presence.";
-                break;
-            case MissionObjData.InformationRating.Something:
-                info_text+=MissionAlienInfoSomething(mission);
-                break;
-            case MissionObjData.InformationRating.Everything:
-                info_text+=MissionAlienInfoEverything(mission);
-                break;
-        }
-        info_text+="\n- ";
-        switch(mission.InfoSecuritySystem){
-            case MissionObjData.InformationRating.None:
-                info_text+="We were unable to determine the security system status.";
-                break;
-            case MissionObjData.InformationRating.Something:
-                info_text+=MissionSecurityInfoSomething(mission);
-                break;
-            case MissionObjData.InformationRating.Everything:
-                info_text+=MissionSecurityInfoEverything(mission);
-                break;
-        }
-        info_text+="\n- ";
-        switch(mission.InfoShipPower){
-            case MissionObjData.InformationRating.None:
-            case MissionObjData.InformationRating.Something:
-                info_text+="We were unable to determine the power status of the ship.";
-                break;
-            case MissionObjData.InformationRating.Everything:
-                info_text+=MissionPowerInfoEverything(mission);
-                break;
-        }
-        info_text+="\n- ";
-        switch(mission.InfoShipConditions){
-            case MissionObjData.InformationRating.None:
-                info_text+="We were unable to determine the ship condition.";
-                break;
-            case MissionObjData.InformationRating.Something:
-                info_text+=MissionConditionInfoSomething(mission);
-                break;
-            case MissionObjData.InformationRating.Everything:
-                info_text+=MissionConditionInfoEverything(mission);
-                break;
-        }
-
+		if (mission.NoInfo){
+			info_text="No Additional info available:";
+		}
+		else{
+			info_text+="- ";
+			switch(mission.InfoAlienAmount){
+	            case MissionObjData.InformationRating.None:
+	                info_text+="We were unable to determine organic presence.";
+	                break;
+	            case MissionObjData.InformationRating.Something:
+	                info_text+=MissionAlienInfoSomething(mission);
+	                break;
+	            case MissionObjData.InformationRating.Everything:
+	                info_text+=MissionAlienInfoEverything(mission);
+	                break;
+	        }
+	        info_text+="\n- ";
+	        switch(mission.InfoSecuritySystem){
+	            case MissionObjData.InformationRating.None:
+	                info_text+="We were unable to determine the security system status.";
+	                break;
+	            case MissionObjData.InformationRating.Something:
+	                info_text+=MissionSecurityInfoSomething(mission);
+	                break;
+	            case MissionObjData.InformationRating.Everything:
+	                info_text+=MissionSecurityInfoEverything(mission);
+	                break;
+	        }
+	        info_text+="\n- ";
+	        switch(mission.InfoShipPower){
+	            case MissionObjData.InformationRating.None:
+	            case MissionObjData.InformationRating.Something:
+	                info_text+="We were unable to determine the power status of the ship.";
+	                break;
+	            case MissionObjData.InformationRating.Everything:
+	                info_text+=MissionPowerInfoEverything(mission);
+	                break;
+	        }
+	        info_text+="\n- ";
+	        switch(mission.InfoShipConditions){
+	            case MissionObjData.InformationRating.None:
+	                info_text+="We were unable to determine the ship condition.";
+	                break;
+	            case MissionObjData.InformationRating.Something:
+	                info_text+=MissionConditionInfoSomething(mission);
+	                break;
+	            case MissionObjData.InformationRating.Everything:
+	                info_text+=MissionConditionInfoEverything(mission);
+	                break;
+	        }
+		}
 
         return base_text+info_text;
     }
@@ -198,7 +207,7 @@ public class MissionGenerator{
     {
         var text="Primary:\n";
         foreach (var o in mission.PrimaryObjectives){
-            text+=o.ToString()+"\n";
+            text+=o.Objective.ToString()+"\n";
         }
         if (mission.PrimaryObjectives.Count==0){
             text+="NONE\n";
@@ -206,44 +215,43 @@ public class MissionGenerator{
         
         text+="\n\nSecondary:\n";
         foreach (var o in mission.SecondaryObjectives){
-            text+=o.ToString();
+			text+=o.Objective.ToString()+"\n";
         }
         return text;
     }
+	
+	public static void UpdateMissionObjectiveStatus(MissionObjData mission,PlayerObjData player){
+		var quest_items=player.Items.GetItems(item=>{return item.baseItem.type==InvBaseItem.Type.QuestItem;});
 
-    public static string MissionDebriefText(MissionObjData mission,PlayerObjData player,XmlDatabase XDB){
+		foreach (var o in mission.PrimaryObjectives){
+			o.status=0;
+			if (o.Objective==MissionObjData.Objective.FindItem){
+				var objective=XmlDatabase.Objectives[o.Objective];
+				foreach(var qi in quest_items){
+					if (qi.baseItem.name==objective.Item){
+						o.status=1;
+						break;
+					}
+				}
+			}
+		}
+	}
+	
+    public static string MissionDebriefText(MissionObjData mission,PlayerObjData player){
         string text="";
 
-        var quest_items=player.Items.GetItems(item=>{return item.baseItem.type==InvBaseItem.Type.QuestItem;});
-        text+="Primary objectives:\n\n";
-        foreach (var o in mission.PrimaryObjectives){
-            var objective=XDB.Objectives[o];
-            text+="-Objective "+objective.Name;
-            bool notcompleted=true;
-            if (o==MissionObjData.Objective.FindItem){
-               
-                foreach(var qi in quest_items){
-                    if (qi.baseItem.name==objective.Item){
-                        text+=": COMPLETED\n";
-                        notcompleted=false;
-                        break;
-                    }
-                }
-            }
-            else{
-
-            }
-
-            if (notcompleted) text+=": NOT COMPLETED.\n";
-        }
-        text+="\n\nSecondary objectives:\n\n";
-        foreach (var o in mission.SecondaryObjectives){
-            var objective=XDB.Objectives[o];
-
-            text+="-Objective "+objective.Name;
-            text+=": NOT COMPLETED.\n";
-        }
-
-        return text;
+		text+="Primary objectives:\n\n";
+		foreach (var o in mission.PrimaryObjectives){
+			var objective=XmlDatabase.Objectives[o.Objective];
+			text+=objective.Name+": ";
+			if (o.status==0){
+				text+="NOT COMPLETED";
+			}
+			else{
+				text+="COMPLETED";
+			}
+		}
+		
+		return text;
     }
 }

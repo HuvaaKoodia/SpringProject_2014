@@ -19,10 +19,7 @@ public class InventoryMain : MonoBehaviour {
 
 	// Use this for initialization
 	void Start (){
-        InventoryPanel.SetActive(false);
-		temp_random_item_button.XDB=GameObject.FindGameObjectWithTag("SharedSystems").GetComponent<SharedSystemsMain>().XDB;
-
-
+		InventoryPanel.SetActive(false);
 	}
     
     public void OpenInventory(){

@@ -125,7 +125,7 @@ public class HudMapMain : MonoBehaviour {
 
 	void AddTileSprite(int x, int y, TileMain tile)
 	{
-		var str=tile.Data.TileType.ToString();
+		//var str=tile.Data.TileType.ToString();
 		if (tile.Data.TileType == TileObjData.Type.Empty
 		    || tile.Data.TileType == TileObjData.Type.Wall)
 			return;

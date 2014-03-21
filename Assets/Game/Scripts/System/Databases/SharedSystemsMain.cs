@@ -5,15 +5,16 @@ public class SharedSystemsMain : MonoBehaviour {
 
     public GameDB GDB;
     public XMLMapLoader XMAP;
-    public XmlDatabase XDB;
 	public PrefabStore PS;
 	public MapGenerator MGen;
 	public ShipGenerator SGen;
     public ShipDetailGenerator SDGen;
 
+	public UIAtlas ItemAtlas;
+
     void Awake(){
         XMAP.LoadData();
-        XDB.LoadData();
+		XmlDatabase.LoadData(ItemAtlas);
         GDB.StartNewGame();
     }
 }

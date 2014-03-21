@@ -31,7 +31,7 @@ public class AmmoTypePanel : MonoBehaviour {
         cost=(int)((data.MaxAmount-amount)*cost_multi);
 
         Amount.text=amount+"/"+data.MaxAmount;
-        Cost.text=""+cost+" BC";
+		Cost.text=""+cost+" "+XmlDatabase.MoneyUnit;
 
         if (!AllowBuying||cost==0){
             Button.gameObject.SetActive(false);

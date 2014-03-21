@@ -87,6 +87,7 @@ public class GameController : MonoBehaviour {
 	public bool do_culling=false;
 
 	public HaxKnifeCulling culling_system;
+	public MeshCombiner MeshCombi;
 
     public PlayerMain Player{
         get{return player;}
@@ -113,7 +114,7 @@ public class GameController : MonoBehaviour {
 
         //DEV.DEBUG generate mission
         if (SS.GDB.GameData.CurrentMission==null){
-			SS.GDB.GameData.CurrentMission=MissionGenerator.GenerateMission(SS.XDB);
+			SS.GDB.GameData.CurrentMission=MissionGenerator.GenerateMission();
         }
 		menuHandler.MissionBriefing.SetMission(SS.GDB.GameData.CurrentMission);
 
@@ -139,12 +140,12 @@ public class GameController : MonoBehaviour {
 			SS.MGen.GenerateObjectDataMap(floor,ship_objdata.Floors[i]);
 			SS.SDGen.GenerateShipItems(this,floor,ship_objdata);
 			SS.MGen.GenerateSceneMap(this,floor);
-			SS.SDGen.GenerateLoot(floor,SS.XDB);
+			SS.SDGen.GenerateLoot(floor);
 			Debug.Log("Floor: "+i+" loaded");
 		}
 
         if (!OverrideMissionShip)
-			SS.SDGen.GenerateMissionObjectives(this,SS.GDB.GameData.CurrentMission,ship_objdata,SS.XDB);
+			SS.SDGen.GenerateMissionObjectives(this,SS.GDB.GameData.CurrentMission,ship_objdata);
 
 		//create player
 		var legit_floors=new List<FloorObjData>();
@@ -188,7 +189,7 @@ public class GameController : MonoBehaviour {
 			ChangeTurn(TurnState.PlayerTurn);
 		}
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR 
 		if (Input.GetKeyDown(KeyCode.C)){
 			do_culling=!do_culling;
 			if (do_culling)
@@ -201,11 +202,16 @@ public class GameController : MonoBehaviour {
 			Player.CullWorld();
 		}
 
+		//Dev. temp.
+		if (Input.GetKeyDown(KeyCode.B)){
+			MeshCombi.Combine(this,0);
+		}
+
 		if (Input.GetKeyDown(KeyCode.Alpha8)){
-			SetFloor(CurrentFloorIndex-1);
+			GotoFloor(CurrentFloorIndex-1);
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha9)){
-			SetFloor(CurrentFloorIndex+1);
+			GotoFloor(CurrentFloorIndex+1);
 		}
 #endif
 	}
@@ -231,8 +237,14 @@ public class GameController : MonoBehaviour {
 		return Floors[index];
 	}
 
-	public void SetFloor(int index){
-		                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+	public void GotoFloor(int index){
+		if (index<0||index>Floors.Count-1) return;
+		
+		menuHandler.FadeIn();
+		StartCoroutine(GotoFloorTimer(index));
+	}
+
+	public void SetFloor(int index){                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
 		index=Mathf.Max(0,Mathf.Min(Floors.Count-1,index));
 
 		player.CurrentFloorIndex=index;
@@ -241,12 +253,21 @@ public class GameController : MonoBehaviour {
 		player.interactSub.CheckForInteractables();
 	}
 
+	private IEnumerator GotoFloorTimer(int index){
+		while(menuHandler.FadeInProgress){
+			yield return null;
+		}
+		menuHandler.FadeOut();
+		SetFloor(index);
+		//DEV. elevator sound here + some delay
+	}
+
 	public void UseElevator ()
 	{
 		//Dev.Mega HAX!
 		if (CurrentFloorIndex==0)
-			SetFloor(CurrentFloorIndex+1);
+			GotoFloor(CurrentFloorIndex+1);
 		else
-			SetFloor(CurrentFloorIndex-1);
+			GotoFloor(CurrentFloorIndex-1);
 	}
 }

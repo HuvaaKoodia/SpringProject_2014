@@ -102,8 +102,8 @@ public class InvGameItem
         Stats=new List<InvStat>();
 	}
 
-	public void InitBaseItem(XmlDatabase XDB){
-		mBaseItem=XDB.GetBaseItem(BaseItemName);
+	public void InitBaseItem(){
+		mBaseItem=XmlDatabase.GetBaseItem(BaseItemName);
 		BaseItemName=mBaseItem.name;
 
 		RecalculateStats();
@@ -164,9 +164,9 @@ public class InvGameItem
 		return stats;
 	}
 
-    public static InvGameItem GetRandomItem (XmlDatabase XDB)
+    public static InvGameItem GetRandomItem ()
 	{
-		InvBaseItem item = Subs.GetRandom(XDB.items);
+		InvBaseItem item = Subs.GetRandom(XmlDatabase.items);
 		
 		InvGameItem gi = new InvGameItem(item);
 		gi.itemLevel = NGUITools.RandomRange(item.minItemLevel, item.maxItemLevel);

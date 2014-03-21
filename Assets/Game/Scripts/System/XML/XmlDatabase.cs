@@ -2,21 +2,19 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class XmlDatabase : MonoBehaviour
+public class XmlDatabase
 {
-    public List<PlayerXmlData> players { get; private set; }
+    public static List<PlayerXmlData> players { get; private set; }
    // public List<WeaponXmlData> weapons { get; private set; }
-	public List<InvBaseItem> items{get;private set;}
-    public List<EnemyXmlData> enemies { get; private set; }
-    public List<ObstacleXmlData> obstacles { get; private set; }
-    public Dictionary<MissionObjData.Type,MissionXmlData> Missions{ get; private set; }
-    public Dictionary<string,InvBaseItem> QuestItems=new Dictionary<string,InvBaseItem>();
-    public Dictionary<string,AmmoXmlData> AmmoTypes=new Dictionary<string,AmmoXmlData>();
-    public Dictionary<MissionObjData.Objective,ObjectiveXmlData> Objectives=new Dictionary<MissionObjData.Objective,ObjectiveXmlData>();
+	public static List<InvBaseItem> items{get;private set;}
+	public static List<EnemyXmlData> enemies { get; private set; }
+	public static List<ObstacleXmlData> obstacles { get; private set; }
+	public static Dictionary<MissionObjData.Type,MissionXmlData> Missions{ get; private set; }
+	public static Dictionary<string,InvBaseItem> QuestItems=new Dictionary<string,InvBaseItem>();
+	public static Dictionary<string,AmmoXmlData> AmmoTypes=new Dictionary<string,AmmoXmlData>();
+	public static Dictionary<MissionObjData.Objective,ObjectiveXmlData> Objectives=new Dictionary<MissionObjData.Objective,ObjectiveXmlData>();
 
-	//item specific stuff
-	public InvDatabase ItemDB;
-	public UIAtlas ItemAtlas;
+	public static string MoneyUnit="BTC";
 
     //Game Constants
     public static int
@@ -25,7 +23,8 @@ public class XmlDatabase : MonoBehaviour
 		HullOverheatEndThreshold,
         MissionInfoSuccessRating,
         MissionInfoFailRating,
-		HullHeatDisperseConstant
+		HullHeatDisperseConstant,
+		MissionCatastrophicIntelFailureChance
         ;
     public static float
         HullHeatAddMultiplier,
@@ -36,7 +35,7 @@ public class XmlDatabase : MonoBehaviour
     ;
 
 	// Use this for initialization
-	public void LoadData()
+	public static void LoadData(UIAtlas ItemAtlas)
     {
         Missions =new Dictionary<MissionObjData.Type, MissionXmlData>();
         players = new List<PlayerXmlData>();
@@ -46,7 +45,7 @@ public class XmlDatabase : MonoBehaviour
 
 		items=new List<InvBaseItem>();
 
-        XMLDataLoader.Read(this);
+        XMLDataLoader.Read();
 
         foreach (var i in QuestItems){
             i.Value.iconAtlas=ItemAtlas;
@@ -57,14 +56,12 @@ public class XmlDatabase : MonoBehaviour
             if(i.ammotype!=""){
                 i.AmmoData=AmmoTypes[i.ammotype];
             }
-			//add to visual database for debugging
-			if (ItemDB!=null) ItemDB.items.Add(i);
 		}
 
         XMLDataLoader.ReadDataFiles();
     }
 
-	public InvBaseItem GetBaseItem(string name){
+	public static InvBaseItem GetBaseItem(string name){
 		foreach (var i in items){
 			if (i.name==name) return i;
 		}

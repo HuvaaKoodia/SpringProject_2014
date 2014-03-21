@@ -16,7 +16,7 @@ public class MapGenerator : MonoBehaviour
 	GameObject clone_container;
 
 	void Awake(){
-		clone_container = new GameObject("WorldObjects");
+
 	}
 
     /// <summary>
@@ -78,6 +78,8 @@ public class MapGenerator : MonoBehaviour
         //map loading
 		int w = floor.TileMapW;
 		int h = floor.TileMapH;
+
+		if (clone_container==null) clone_container = new GameObject("WorldObjects");
         
 		var floor_container = new GameObject("Floor "+floor.FloorIndex);
 		var tile_container = new GameObject("Tiles");
