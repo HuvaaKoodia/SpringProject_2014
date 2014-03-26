@@ -124,7 +124,7 @@ public class InvGameItem
 		if (baseItem != null)
 		{
 
-			List<InvStat> baseStats = baseItem.stats;
+			List<InvStat> baseStats = baseItem.Stats;
 
 			for (int i = 0, imax = baseStats.Count; i < imax; ++i)
 			{

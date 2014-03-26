@@ -265,6 +265,7 @@ public class PlayerMain : EntityMain
 	public bool HasRadar{get;private set;}
 	public bool HasMap{get;private set;}
 	public int RadarRange{get;private set;}
+	public float RadarRangeMax{get;private set;}
 
     public void ActivateEquippedItems()
     {
@@ -289,7 +290,10 @@ public class PlayerMain : EntityMain
 		float accu_multi=0,def_multi=0,melee_multi=0,cooling_multi=0;
 		foreach (var s in ObjData.Equipment.EquipmentSlots){
 			if (s.Item==null) continue;
-			if (s.Item.baseItem.type==InvBaseItem.Type.Utility){
+			if (s.Item.baseItem.type==InvBaseItem.Type.Utility||
+			    s.Item.baseItem.type==InvBaseItem.Type.Navigator||
+			    s.Item.baseItem.type==InvBaseItem.Type.Radar){
+
 				int value;
 				if (GetStatValue(s.Item,InvStat.Type.AccuracyBoost,out value)){
 					accu_multi+=value;
@@ -309,16 +313,18 @@ public class PlayerMain : EntityMain
 				else if (GetStatValue(s.Item,InvStat.Type.SystemCooling,out value)){
 					cooling_multi+=value;
 				}
-			}
-			else if (s.Item.baseItem.type==InvBaseItem.Type.Navigator){
-				HasMap=true;
-			}
-			else if (s.Item.baseItem.type==InvBaseItem.Type.Radar){
-				HasRadar=true;
+
+				if (s.Item.baseItem.type==InvBaseItem.Type.Navigator){
+					HasMap=true;
+				}
+				else if (s.Item.baseItem.type==InvBaseItem.Type.Radar){
+					HasRadar=true;
+					RadarRangeMax=s.Item.baseItem.GetStat(InvStat.Type.RadarRange).max_amount;
+				}
 			}
 		}
 
-		ObjData.UpperTorso.armor_multi=def_multi;
+		ObjData.UpperTorso.armor_multi=def_multi*0.01f;
 		ObjData.UpperTorso.Overheat_limit_bonus=overheat_limit;
 
 		foreach(var w in ObjData.MechParts){

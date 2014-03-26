@@ -20,6 +20,9 @@ public class InventoryMain : MonoBehaviour {
 	// Use this for initialization
 	void Start (){
 		InventoryPanel.SetActive(false);
+	#if !UNITY_EDITOR
+		temp_random_item_button.gameObject.SetActive(false);	
+	#endif
 	}
     
     public void OpenInventory(){

@@ -173,18 +173,17 @@ public class InvDatabaseInspector : Editor
 					bi.type = item.type;
 					bi.color = item.color;
 					bi.iconName = item.iconName;
-					bi.attachment = item.attachment;
 					bi.minItemLevel = item.minItemLevel;
 					bi.maxItemLevel = item.maxItemLevel;
 
-					foreach (InvStat stat in item.stats)
+					foreach (InvStat stat in item.Stats)
 					{
 						InvStat copy = new InvStat();
 						copy.type = stat.type;
 						copy.min_amount = stat.min_amount;
 						copy.max_amount = stat.max_amount;
 						copy.modifier = stat.modifier;
-						bi.stats.Add(copy);
+						bi.Stats.Add(copy);
 					}
 				}
 				else
@@ -310,7 +309,6 @@ public class InvDatabaseInspector : Editor
 
 				// Game Object attachment field, left of the icon
 				GUILayout.BeginHorizontal();
-				GameObject go = (GameObject)EditorGUILayout.ObjectField("Attachment", item.attachment, typeof(GameObject), false);
 				if (drawIcon) GUILayout.Space(iconSize);
 				GUILayout.EndHorizontal();
 
@@ -330,11 +328,11 @@ public class InvDatabaseInspector : Editor
 				// Item stats
 				NGUIEditorTools.DrawSeparator();
 
-				if (item.stats != null)
+				if (item.Stats != null)
 				{
-					for (int i = 0; i < item.stats.Count; ++i)
+					for (int i = 0; i < item.Stats.Count; ++i)
 					{
-						InvStat stat = item.stats[i];
+						InvStat stat = item.Stats[i];
 
 						GUILayout.BeginHorizontal();
 						{
@@ -358,7 +356,7 @@ public class InvDatabaseInspector : Editor
 							if (GUILayout.Button("X", GUILayout.Width(20f)))
 							{
 								NGUIEditorTools.RegisterUndo("Delete Item Stat", db);
-								item.stats.RemoveAt(i);
+								item.Stats.RemoveAt(i);
 								--i;
 							}
 							else if (iden != stat.type || min_amount != stat.min_amount || max_amount != stat.max_amount || mod != stat.modifier)
@@ -380,13 +378,12 @@ public class InvDatabaseInspector : Editor
 					NGUIEditorTools.RegisterUndo("Add Item Stat", db);
 					InvStat stat = new InvStat();
 					stat.type = InvStat.Type.Value;
-					item.stats.Add(stat);
+					item.Stats.Add(stat);
 				}
 
 				// Save all values
 				if (!itemDesc.Equals(item.description) ||
 					type	!= item.type ||
-					go		!= item.attachment ||
 					color	!= item.color ||
 					min		!= item.minItemLevel ||
 					max		!= item.maxItemLevel ||
@@ -395,7 +392,6 @@ public class InvDatabaseInspector : Editor
 					NGUIEditorTools.RegisterUndo("Item Properties", db);
 					item.description = itemDesc;
 					item.type = type;
-					item.attachment = go;
 					item.color = color;
 					item.iconName = iconName;
 					item.minItemLevel = min;

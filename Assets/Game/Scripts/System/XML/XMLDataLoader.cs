@@ -187,7 +187,7 @@ public class XMLDataLoader : XML_Loader
             if (HasAtt(n1,"min")) stat.min_amount=getAttInt(n1,"min");
             if (HasAtt(n1,"max")) stat.max_amount=getAttInt(n1,"max");
             if (HasAtt(n1,"minmax")) stat.min_amount=stat.max_amount=getAttInt(n1,"minmax");
-			item.stats.Add(stat);
+			item.Stats.Add(stat);
 		}
 	}
 

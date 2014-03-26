@@ -24,7 +24,10 @@ public class XmlDatabase
         MissionInfoSuccessRating,
         MissionInfoFailRating,
 		HullHeatDisperseConstant,
-		MissionCatastrophicIntelFailureChance
+		MissionCatastrophicIntelFailureChance,
+		AttackFrontBackPlayerTorsoHitChance,
+		AttackLeftRightPlayerTorsoHitChance,
+		AttackTorsoUtilityDamageChance
         ;
     public static float
         HullHeatAddMultiplier,

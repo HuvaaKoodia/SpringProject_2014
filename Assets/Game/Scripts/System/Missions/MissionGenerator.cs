@@ -21,7 +21,7 @@ public class MissionGenerator{
 
 		bool has_info=true;
 		if (Subs.RandomPercent()<XmlDatabase.MissionCatastrophicIntelFailureChance) has_info=false;
-		mission.NoInfo=true;
+		mission.NoInfo=!has_info;
 		//info stats
         if (has_info){
 			mission.InfoAlienAmount=GetRandomInfo();
@@ -39,7 +39,7 @@ public class MissionGenerator{
             mission.AddSecondaryObjective((MissionObjData.Objective)System.Enum.Parse(typeof(MissionObjData.Objective),o,true));
         }
 
-        mission.Briefing=MissionDebriefText(mission);
+        mission.Briefing=MissionBriefingText(mission);
         mission.Objectives=MissionObjectivesText(mission);
         return mission;
     }
@@ -52,18 +52,19 @@ public class MissionGenerator{
     }
 
     /// <summary>
-    /// Swich case from hell!
+    /// Switch case from hell!
     /// </summary>
-    static string MissionDebriefText(MissionObjData mission){
+    static string MissionBriefingText(MissionObjData mission){
 
         string base_text=mission.XmlData.Description;
 
-		string info_text="\n\nAdditional Info:\n\n";
+		string info_text="\n\n";
 
 		if (mission.NoInfo){
-			info_text="No Additional info available:";
+			info_text+="No Additional info available:";
 		}
 		else{
+			info_text+="Additional Info:\n\n";
 			info_text+="- ";
 			switch(mission.InfoAlienAmount){
 	            case MissionObjData.InformationRating.None:
@@ -207,7 +208,7 @@ public class MissionGenerator{
     {
         var text="Primary:\n";
         foreach (var o in mission.PrimaryObjectives){
-            text+=o.Objective.ToString()+"\n";
+            text+=XmlDatabase.Objectives[o.Objective].Name+"\n";
         }
         if (mission.PrimaryObjectives.Count==0){
             text+="NONE\n";
@@ -215,7 +216,7 @@ public class MissionGenerator{
         
         text+="\n\nSecondary:\n";
         foreach (var o in mission.SecondaryObjectives){
-			text+=o.Objective.ToString()+"\n";
+			text+=XmlDatabase.Objectives[o.Objective].Name+"\n";
         }
         return text;
     }
