@@ -49,11 +49,12 @@ public class GatlingAI : AIBase {
 	public Transform turretTransform;
 
 	Point3D lastTargetedPosition;
-	
+
 	// Use this for initialization
 	void Start()
 	{
 		parent = gameObject.GetComponent<EnemyMain>();
+
 		tilemap = parent.CurrentFloor.TileMainMap;
 		
 		movement = parent.movement;
@@ -101,7 +102,7 @@ public class GatlingAI : AIBase {
 
 	private RunStatus CheckForPlayerPresence()
 	{
-		if (PathFinder.CanSeeFromTileToTile(player, parent, MyPosition, AttackRadius, PlayerSeeMask))
+		if (PathFinder.CanSeeFromTileToTile(player, parent, MyPosition, AttackRadius, PlayerSeeMask, false))
 		{
 			if (blackboard.AwareOfPlayer)
 			{
@@ -135,6 +136,9 @@ public class GatlingAI : AIBase {
 	{
 		if (!open)
 		{
+			GatlingEnemySub parentGatling = parent as GatlingEnemySub;
+			parentGatling.SwitchHitboxes(true);
+
 			open = true;
 			Animating = true;
 			Invoke("AnimationFinished", turretAnimation[GunAppearAnimation].clip.length);
@@ -168,6 +172,9 @@ public class GatlingAI : AIBase {
 	{
 		if (open)
 		{
+			GatlingEnemySub parentGatling = parent as GatlingEnemySub;
+			parentGatling.SwitchHitboxes(false);
+
 			open = false;
 			Animating = true;
 			Invoke("AnimationFinished", turretAnimation[GunHideAnimation].clip.length);
@@ -348,7 +355,7 @@ public class GatlingAI : AIBase {
 	
 		movement.Turn((int)lookToPlayerRot.eulerAngles.y - 90);
 
-		Invoke("Rotating", 90 * Time.deltaTime);
+		Invoke("StopRotating", 90 * Time.deltaTime);
 	}
 
 	void CloseFrame()
@@ -396,5 +403,4 @@ public class GatlingAI : AIBase {
 		Quaternion ninetyCCW = Quaternion.Euler(0,0, 90);
 		turretTransform.rotation *= ninetyCCW;
 	}
-
 }

@@ -29,6 +29,8 @@ public class TargetMarkHandler
 		crosshair.transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
 		crosshair.transform.position = GC.menuHandler.NGUICamera.ScreenToWorldPoint(crosshairPosition);
 		crosshair.enabled = true;
+
+		//crosshair.gameObject.AddComponent("UIButton");
 		
 		numShotsLabels = new List<UILabel>();
 		Vector3[] labelPosOffsetDirs =
