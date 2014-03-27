@@ -17,8 +17,10 @@ public class TileMain : MonoBehaviour
 		{
 			if(TileGraphics.TileLights != null)
 			{
-				TileGraphics.TileLights.EnableLights(Subs.RandomBool(), Environment_Light.WhiteLight);													//call function to turn on 50% of the white lights in the TilePrefabs at random
-				TileGraphics.TileLights.SetFlicker(false);																				//call function if light flickering wants to be randomized
+				//TileGraphics.TileLights.power_on = Subs.RandomBool();
+				TileGraphics.TileLights.EnableLights(4.0f);													//call function to turn on 50% of the white lights in the TilePrefabs at random
+				//TileGraphics.TileLights.light_flicker = true;																							//call function if light flickering wants to be randomized
+				//TileGraphics.TileLights.SetState(Lighting_State.Flickering);
 				
 			//<NOT NEEDED AT THE MOMENT>//
 				//TileGraphics.TileLights.EnableLights(false, Environment_Light.AllLight);																//call function to turn on or off all the lights in the TilePrefabs
@@ -50,7 +52,7 @@ public class TileMain : MonoBehaviour
 
 	public bool BlockedForMovement{
 		get{
-			if (entityOnTile != null && entityOnTile.BlocksMovement)
+            if (entityOnTile != null)
                 return true;
 
             if (Data.TileType==TileObjData.Type.Door){

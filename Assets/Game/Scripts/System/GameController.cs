@@ -271,93 +271,28 @@ public class GameController : MonoBehaviour {
 			GotoFloor(CurrentFloorIndex-1);
 	}
 
-	//function to enable all lights of a specific type or all lights in a specific TileMain in the environment for a specific floor
-	//switch case handles the types of lights to enable
-	public void EnableLights_FloorNum(int floor_num, int tilemain_X, int tilemain_Y, bool on, Environment_Light EL)
-	{
-		//as long as there are TileGraphics and TileLights
-		if(GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics != null)
-		{
-			if(GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics.TileLights != null)
-			{
-				switch(EL)
-				{
-				case Environment_Light.WhiteLight:
-					GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics.TileLights.EnableLights(on, Environment_Light.WhiteLight);
-					break;
-				case Environment_Light.OrangeLight:
-					GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics.TileLights.EnableLights(on, Environment_Light.OrangeLight);
-					break;
-				case Environment_Light.AllLight:
-					GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics.TileLights.EnableLights(on, Environment_Light.AllLight);
-					break;
-				default:
-					Debug.Log("PASS IN WhiteLight, OrangeLight OR AllLight ONLY");
-					break;
-				}
-			}
-		}
-	}
 
-	//function to enable all lights of a specific type or all lights in the environment for a specific floor
-	public void EnableLights_FloorNum(int floor_num, bool on, Environment_Light EL)
-	{
-		//as long as there are TileMainMaps
-		if(GetFloor(floor_num).TileMainMap != null)
-		{
-			//traverse through all the TileMainMaps
-			for(int x = 0; x < GetFloor(floor_num).TileMainMap.GetLength(0); x++)
-			{
-				for(int y = 0; y < GetFloor(floor_num).TileMainMap.GetLength(1); y++)
-				{
-					EnableLights_FloorNum(floor_num, x, y, on, EL);
-				}
-			}
-		}
-	}
 
-	//function to enable all lights of a specific type or all lights in the environment for all floors
-	public void EnableLights_AllFloors(bool on, Environment_Light EL)
-	{
-		//as long as there are Floors
-		if(Floors != null)
-		{
-			//traverse through all the floors
-			for(int floornum = 0; floornum < Floors.Count; floornum++)
-			{
-				EnableLights_FloorNum(floornum, on, EL);
-			}
-		}
-	}
+
 
 	//function to enable a specific light of a specific type or all lights in a specific TileMain in the environment for a specific floor
 	//switch case handles the types of lights to enable
-	public void EnableLights_FloorNum(int floor_num, int tilemain_X, int tilemain_Y, bool on, Environment_Light EL, int light_num)
+	public void EnableLights_FloorNum(int floor_num, int tilemain_X, int tilemain_Y, float power, Lighting_State LS)
 	{
+		var tilegraphics = GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics;
+		
 		//as long as there are TileGraphics and TileLights
-		if(GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics != null)
+		if(tilegraphics != null)
 		{
-			if(GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics.TileLights != null)
+			if(tilegraphics.TileLights != null)
 			{
-				switch(EL)
-				{
-				case Environment_Light.WhiteLight:
-					GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics.TileLights.EnableLights(on, Environment_Light.WhiteLight, light_num);
-					break;
-				case Environment_Light.OrangeLight:
-					GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics.TileLights.EnableLights(on, Environment_Light.OrangeLight, light_num);
-					break;
-				default:
-					Debug.Log("PASS IN WhiteLight OR OrangeLight ONLY");
-					Debug.Break();
-					break;
-				}
+				tilegraphics.TileLights.EnableLights(power);
 			}
 		}
 	}
-	
+
 	//function to enable a specific light of a specific type or all lights in the environment for a specific floor
-	public void EnableLights_FloorNum(int floor_num, bool on, Environment_Light EL, int light_num)
+	public void EnableLights_FloorNum(int floor_num, float power, Lighting_State LS)
 	{
 		//as long as there are TileMainMaps
 		if(GetFloor(floor_num).TileMainMap != null)
@@ -367,14 +302,14 @@ public class GameController : MonoBehaviour {
 			{
 				for(int y = 0; y < GetFloor(floor_num).TileMainMap.GetLength(1); y++)
 				{
-					EnableLights_FloorNum(floor_num, x, y, on, EL, light_num);
+					EnableLights_FloorNum(floor_num, x, y, power, LS);
 				}
 			}
 		}
 	}
-	
+
 	//function to enable a specific light of a specific type or all lights in the environment for all floors
-	public void EnableLights_AllFloors(bool on, Environment_Light EL, int light_num)
+	public void EnableLights_AllFloors(float power, Lighting_State LS)
 	{
 		//as long as there are Floors
 		if(Floors != null)
@@ -382,211 +317,440 @@ public class GameController : MonoBehaviour {
 			//traverse through all the floors
 			for(int floornum = 0; floornum < Floors.Count; floornum++)
 			{
-				EnableLights_FloorNum(floornum, on, EL, light_num);
+				EnableLights_FloorNum(floornum, power, LS);
 			}
 		}
 	}
 
-	//function to flicker all lights of a specific type or all lights in a specific TileMain in the environment for a specific floor
-	public void Flicker_FloorNum(int floor_num, int tilemain_X, int tilemain_Y, float delay, bool on, Environment_Light EL)
-	{
-		//as long as there are TileGraphs, TileLights and TileLights' light_flicker has been enabled
-		if(GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics != null)
-		{
-			if(GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics.TileLights != null)
-			{
-				if(GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics.TileLights.GetFlicker())
-				{
-					GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics.TileLights.Flicker(delay, on, EL);
-				}
-			}
-		}
-	}
 
-	//function to flicker a specific light of a specific type or all lights in a specific TileMain in the environment for a specific floor
-	public void Flicker_FloorNum(int floor_num, int tilemain_X, int tilemain_Y, float delay, bool on, Environment_Light EL, int light_num)
-	{
-		//as long as there are TileGraphs, TileLights and TileLights' light_flicker has been enabled
-		if(GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics != null)
-		{
-			if(GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics.TileLights != null)
-			{
-				if(GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics.TileLights.GetFlicker())
-				{
-					GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics.TileLights.Flicker(delay, on, EL, light_num);
-				}
-			}
-		}
-	}
 
-	//function to flicker all lights of a specific type or all lights in the environment for a specific floor
-	public void Flicker_FloorNum(int floor_num, float delay, bool on, Environment_Light EL)
-	{
-		//as long as there are TileMainMaps
-		if(GetFloor(floor_num).TileMainMap != null)
-		{
-			//traverse through all the TileMainMaps
-			for(int x = 0; x < GetFloor(floor_num).TileMainMap.GetLength(0); x++)
-			{
-				for(int y = 0; y < GetFloor(floor_num).TileMainMap.GetLength(1); y++)
-				{
-					Flicker_FloorNum(floor_num, x, y, delay, on, EL);
-				}
-			}
-		}
-	}
 
-	//function to flicker a specific light of a specific type or all lights in the environment for a specific floor
-	public void Flicker_FloorNum(int floor_num, float delay, bool on, Environment_Light EL, int light_num)
-	{
-		//as long as there are TileMainMaps
-		if(GetFloor(floor_num).TileMainMap != null)
-		{
-			//traverse through all the TileMainMaps
-			for(int x = 0; x < GetFloor(floor_num).TileMainMap.GetLength(0); x++)
-			{
-				for(int y = 0; y < GetFloor(floor_num).TileMainMap.GetLength(1); y++)
-				{
-					Flicker_FloorNum(floor_num, x, y, delay, on, EL, light_num);
-				}
-			}
-		}
-	}
 
-	//function to flicker all lights of a specific type or all lights in the environment for all floors
-	public void Flicker_AllFloors(float delay, bool on, Environment_Light EL)
+	public Lighting_State RandomizeStartState(int broken_percent, int flickering_percent, int normal_percent)
 	{
-		//as long as there are Floors
-		if(Floors != null)
-		{
-			//traverse through all the floors
-			for(int floornum = 0; floornum < Floors.Count; floornum++)
-			{
-				Flicker_FloorNum(floornum, delay, on, EL);
-			}
-		}
-	}
+		int totalpercent = broken_percent + flickering_percent + normal_percent;
 
-	//function to flicker a specific light of a specific type or all lights in the environment for all floors
-	public void Flicker_AllFloors(float delay, bool on, Environment_Light EL, int light_num)
-	{
-		//as long as there are Floors
-		if(Floors != null)
+		if(totalpercent != 100)
 		{
-			//traverse through all the floors
-			for(int floornum = 0; floornum < Floors.Count; floornum++)
-			{
-				Flicker_FloorNum(floornum, delay, on, EL, light_num);
-			}
+			Debug.Log("Percentages passed in do not add up to 100%");
+			return Lighting_State.Normal;
 		}
-	}
 
-	//function to set flicker for a specific TileMain on a specific floor
-	public void SetFlicker_FloorNum(int floor_num, int tilemain_X, int tilemain_Y, bool flicker)
-	{
-		//as long as there are TileGraphs, TileLights
-		if(GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics != null)
+		int value = Subs.RandomPercent();
+
+		if(value < broken_percent)
 		{
-			if(GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics.TileLights != null)
-			{
-				GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics.TileLights.SetFlicker(flicker);
-			}
+			return Lighting_State.Broken;
 		}
-	}
-
-	//function to set flicker for all TileMains on a specific floor
-	public void SetFlicker_FloorNum(int floor_num, bool flicker)
-	{
-		//as long as there are TileMainMaps
-		if(GetFloor(floor_num).TileMainMap != null)
+		else if(value >= broken_percent && value < flickering_percent)
 		{
-			//traverse through all the TileMainMaps
-			for(int x = 0; x < GetFloor(floor_num).TileMainMap.GetLength(0); x++)
-			{
-				for(int y = 0; y < GetFloor(floor_num).TileMainMap.GetLength(1); y++)
-				{
-					SetFlicker_FloorNum(floor_num, x, y, flicker);
-				}
-			}
+			return Lighting_State.Flickering;
 		}
-	}
-
-	//function to set flicker for all TileMains on all floors
-	public void SetFlicker_AllFloors(bool flicker)
-	{
-		//as long as there are Floors
-		if(Floors != null)
+		else if(value >= flickering_percent && value < normal_percent)
 		{
-			//traverse through all the floors
-			for(int floornum = 0; floornum < Floors.Count; floornum++)
-			{
-				SetFlicker_FloorNum(floornum, flicker);
-			}
-		}
-	}
-
-	//function to set delay for a specific TileMain on a specific floor
-	public void SetDelay_FloorNum(int floor_num, int tilemain_X, int tilemain_Y, float delay)
-	{
-		//as long as there are TileGraphs, TileLights
-		if(GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics != null)
-		{
-			if(GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics.TileLights != null)
-			{
-				GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics.TileLights.SetDelay(delay);
-			}
-		}
-	}
-
-	//function to set delay for all TileMains on a specific floor
-	public void SetDelay_FloorNum(int floor_num, float delay)
-	{
-		//as long as there are TileMainMaps
-		if(GetFloor(floor_num).TileMainMap != null)
-		{
-			//traverse through all the TileMainMaps
-			for(int x = 0; x < GetFloor(floor_num).TileMainMap.GetLength(0); x++)
-			{
-				for(int y = 0; y < GetFloor(floor_num).TileMainMap.GetLength(1); y++)
-				{
-					SetDelay_FloorNum(floor_num, x, y, delay);
-				}
-			}
-		}
-	}
-
-	//function to set delay for all TileMains on all floors
-	public void SetDelay_AllFloors(float delay)
-	{
-		//as long as there are Floors
-		if(Floors != null)
-		{
-			//traverse through all the floors
-			for(int floornum = 0; floornum < Floors.Count; floornum++)
-			{
-				SetDelay_FloorNum(floornum, delay);
-			}
-		}
-	}
-
-	//function to get the enabled state of a specific light of a specific type of a specific TileMain on a specific floor
-	public bool GetEnabledLightsState_FloorNum(int floor_num, int tilemain_X, int tilemain_Y, Environment_Light EL,  int light_num)
-	{
-		//as long as there are TileGraphs, TileLights
-		if(GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics != null)
-		{
-			if(GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics.TileLights != null)
-			{
-				return GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics.TileLights.GetEnableLightsState(EL, light_num);
-			}
-			else
-			{
-				return false;
-			}
+			return Lighting_State.Normal;
 		}
 		else
 		{
-			return false;
+			return Lighting_State.Broken;
 		}
 	}
+
+
+
+
+
+//	//function to enable all lights of a specific type or all lights in a specific TileMain in the environment for a specific floor
+//	//switch case handles the types of lights to enable
+//	public void EnableLights_FloorNum(int floor_num, int tilemain_X, int tilemain_Y, bool on, Environment_Light EL)
+//	{
+//		var tilegraphics = GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics;
+//
+//		//as long as there are TileGraphics and TileLights
+//		if(tilegraphics != null)
+//		{
+//			if(tilegraphics.TileLights != null)
+//			{
+//				switch(EL)
+//				{
+//				case Environment_Light.WhiteLight:
+//					tilegraphics.TileLights.EnableLights(on, Environment_Light.WhiteLight);
+//					break;
+//				case Environment_Light.OrangeLight:
+//					tilegraphics.TileLights.EnableLights(on, Environment_Light.OrangeLight);
+//					break;
+//				case Environment_Light.AllLight:
+//					tilegraphics.TileLights.EnableLights(on, Environment_Light.AllLight);
+//					break;
+//				default:
+//					Debug.Log("PASS IN WhiteLight, OrangeLight OR AllLight ONLY");
+//					break;
+//				}
+//			}
+//		}
+//	}
+//
+//	//function to enable all lights of a specific type or all lights in the environment for a specific floor
+//	public void EnableLights_FloorNum(int floor_num, bool on, Environment_Light EL)
+//	{
+//		//as long as there are TileMainMaps
+//		if(GetFloor(floor_num).TileMainMap != null)
+//		{
+//			//traverse through all the TileMainMaps
+//			for(int x = 0; x < GetFloor(floor_num).TileMainMap.GetLength(0); x++)
+//			{
+//				for(int y = 0; y < GetFloor(floor_num).TileMainMap.GetLength(1); y++)
+//				{
+//					EnableLights_FloorNum(floor_num, x, y, on, EL);
+//				}
+//			}
+//		}
+//	}
+//
+//	//function to enable all lights of a specific type or all lights in the environment for all floors
+//	public void EnableLights_AllFloors(bool on, Environment_Light EL)
+//	{
+//		//as long as there are Floors
+//		if(Floors != null)
+//		{
+//			//traverse through all the floors
+//			for(int floornum = 0; floornum < Floors.Count; floornum++)
+//			{
+//				EnableLights_FloorNum(floornum, on, EL);
+//			}
+//		}
+//	}
+	
+	
+	
+	
+	
+//	//function to enable a specific light of a specific type or all lights in a specific TileMain in the environment for a specific floor
+//	//switch case handles the types of lights to enable
+//	public void EnableLights_FloorNum(int floor_num, int tilemain_X, int tilemain_Y, bool on, Environment_Light EL, int light_num)
+//	{
+//		var tilegraphics = GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics;
+//
+//		//as long as there are TileGraphics and TileLights
+//		if(tilegraphics != null)
+//		{
+//			if(tilegraphics.TileLights != null)
+//			{
+//				switch(EL)
+//				{
+//				case Environment_Light.WhiteLight:
+//					tilegraphics.TileLights.EnableLights(on, Environment_Light.WhiteLight, light_num);
+//					break;
+//				case Environment_Light.OrangeLight:
+//					tilegraphics.TileLights.EnableLights(on, Environment_Light.OrangeLight, light_num);
+//					break;
+//				default:
+//					Debug.Log("PASS IN WhiteLight OR OrangeLight ONLY");
+//					Debug.Break();
+//					break;
+//				}
+//			}
+//		}
+//	}
+
+//	//function to enable a specific light of a specific type or all lights in the environment for a specific floor
+//	public void EnableLights_FloorNum(int floor_num, bool on, Environment_Light EL, int light_num)
+//	{
+//		//as long as there are TileMainMaps
+//		if(GetFloor(floor_num).TileMainMap != null)
+//		{
+//			//traverse through all the TileMainMaps
+//			for(int x = 0; x < GetFloor(floor_num).TileMainMap.GetLength(0); x++)
+//			{
+//				for(int y = 0; y < GetFloor(floor_num).TileMainMap.GetLength(1); y++)
+//				{
+//					EnableLights_FloorNum(floor_num, x, y, on, EL, light_num);
+//				}
+//			}
+//		}
+//	}
+	
+//	//function to enable a specific light of a specific type or all lights in the environment for all floors
+//	public void EnableLights_AllFloors(bool on, Environment_Light EL, int light_num)
+//	{
+//		//as long as there are Floors
+//		if(Floors != null)
+//		{
+//			//traverse through all the floors
+//			for(int floornum = 0; floornum < Floors.Count; floornum++)
+//			{
+//				EnableLights_FloorNum(floornum, on, EL, light_num);
+//			}
+//		}
+//	}
+
+
+
+	
+	
+//	//function to enable a specific light of a specific type or all lights in a specific TileMain in the environment for a specific floor
+//	//switch case handles the types of lights to enable
+//	public void EnableLights_FloorNum(int floor_num, int tilemain_X, int tilemain_Y, float power, Environment_Light EL, int light_num)
+//	{
+//		var tilegraphics = GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics;
+//		
+//		//as long as there are TileGraphics and TileLights
+//		if(tilegraphics != null)
+//		{
+//			if(tilegraphics.TileLights != null)
+//			{
+//				switch(EL)
+//				{
+//				case Environment_Light.WhiteLight:
+//					tilegraphics.TileLights.white_lights[light_num].intensity = power;
+//					break;
+//				case Environment_Light.OrangeLight:
+//					tilegraphics.TileLights.orange_lights[light_num].intensity = power;
+//					break;
+//				default:
+//					Debug.Log("PASS IN WhiteLight OR OrangeLight ONLY");
+//					Debug.Break();
+//					break;
+//				}
+//			}
+//		}
+//	}
+
+//	//function to enable a specific light of a specific type or all lights in the environment for a specific floor
+//	public void EnableLights_FloorNum(int floor_num, float power, Environment_Light EL, int light_num)
+//	{
+//		//as long as there are TileMainMaps
+//		if(GetFloor(floor_num).TileMainMap != null)
+//		{
+//			//traverse through all the TileMainMaps
+//			for(int x = 0; x < GetFloor(floor_num).TileMainMap.GetLength(0); x++)
+//			{
+//				for(int y = 0; y < GetFloor(floor_num).TileMainMap.GetLength(1); y++)
+//				{
+//					EnableLights_FloorNum(floor_num, x, y, power, EL, light_num);
+//				}
+//			}
+//		}
+//	}
+	
+//	//function to enable a specific light of a specific type or all lights in the environment for all floors
+//	public void EnableLights_AllFloors(float power, Environment_Light EL, int light_num)
+//	{
+//		//as long as there are Floors
+//		if(Floors != null)
+//		{
+//			//traverse through all the floors
+//			for(int floornum = 0; floornum < Floors.Count; floornum++)
+//			{
+//				EnableLights_FloorNum(floornum, power, EL, light_num);
+//			}
+//		}
+//	}
+
+
+
+
+
+//	//function to flicker all lights of a specific type or all lights in a specific TileMain in the environment for a specific floor
+//	public void Flicker_FloorNum(int floor_num, int tilemain_X, int tilemain_Y, float delay, bool on, Environment_Light EL)
+//	{
+//		//as long as there are TileGraphs, TileLights and TileLights' light_flicker has been enabled
+//		if(GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics != null)
+//		{
+//			if(GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics.TileLights != null)
+//			{
+//				if(GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics.TileLights.GetFlicker())
+//				{
+//					GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics.TileLights.Flicker(delay, on, EL);
+//				}
+//			}
+//		}
+//	}
+//
+//	//function to flicker a specific light of a specific type or all lights in a specific TileMain in the environment for a specific floor
+//	public void Flicker_FloorNum(int floor_num, int tilemain_X, int tilemain_Y, float delay, bool on, Environment_Light EL, int light_num)
+//	{
+//		//as long as there are TileGraphs, TileLights and TileLights' light_flicker has been enabled
+//		if(GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics != null)
+//		{
+//			if(GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics.TileLights != null)
+//			{
+//				if(GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics.TileLights.GetFlicker())
+//				{
+//					GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics.TileLights.Flicker(delay, on, EL, light_num);
+//				}
+//			}
+//		}
+//	}
+//
+//	//function to flicker all lights of a specific type or all lights in the environment for a specific floor
+//	public void Flicker_FloorNum(int floor_num, float delay, bool on, Environment_Light EL)
+//	{
+//		//as long as there are TileMainMaps
+//		if(GetFloor(floor_num).TileMainMap != null)
+//		{
+//			//traverse through all the TileMainMaps
+//			for(int x = 0; x < GetFloor(floor_num).TileMainMap.GetLength(0); x++)
+//			{
+//				for(int y = 0; y < GetFloor(floor_num).TileMainMap.GetLength(1); y++)
+//				{
+//					Flicker_FloorNum(floor_num, x, y, delay, on, EL);
+//				}
+//			}
+//		}
+//	}
+//
+//	//function to flicker a specific light of a specific type or all lights in the environment for a specific floor
+//	public void Flicker_FloorNum(int floor_num, float delay, bool on, Environment_Light EL, int light_num)
+//	{
+//		//as long as there are TileMainMaps
+//		if(GetFloor(floor_num).TileMainMap != null)
+//		{
+//			//traverse through all the TileMainMaps
+//			for(int x = 0; x < GetFloor(floor_num).TileMainMap.GetLength(0); x++)
+//			{
+//				for(int y = 0; y < GetFloor(floor_num).TileMainMap.GetLength(1); y++)
+//				{
+//					Flicker_FloorNum(floor_num, x, y, delay, on, EL, light_num);
+//				}
+//			}
+//		}
+//	}
+//
+//	//function to flicker all lights of a specific type or all lights in the environment for all floors
+//	public void Flicker_AllFloors(float delay, bool on, Environment_Light EL)
+//	{
+//		//as long as there are Floors
+//		if(Floors != null)
+//		{
+//			//traverse through all the floors
+//			for(int floornum = 0; floornum < Floors.Count; floornum++)
+//			{
+//				Flicker_FloorNum(floornum, delay, on, EL);
+//			}
+//		}
+//	}
+//
+//	//function to flicker a specific light of a specific type or all lights in the environment for all floors
+//	public void Flicker_AllFloors(float delay, bool on, Environment_Light EL, int light_num)
+//	{
+//		//as long as there are Floors
+//		if(Floors != null)
+//		{
+//			//traverse through all the floors
+//			for(int floornum = 0; floornum < Floors.Count; floornum++)
+//			{
+//				Flicker_FloorNum(floornum, delay, on, EL, light_num);
+//			}
+//		}
+//	}
+//
+//	//function to set flicker for a specific TileMain on a specific floor
+//	public void SetFlicker_FloorNum(int floor_num, int tilemain_X, int tilemain_Y, bool flicker)
+//	{
+//		//as long as there are TileGraphs, TileLights
+//		if(GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics != null)
+//		{
+//			if(GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics.TileLights != null)
+//			{
+//				GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics.TileLights.SetFlicker(flicker);
+//			}
+//		}
+//	}
+//
+//	//function to set flicker for all TileMains on a specific floor
+//	public void SetFlicker_FloorNum(int floor_num, bool flicker)
+//	{
+//		//as long as there are TileMainMaps
+//		if(GetFloor(floor_num).TileMainMap != null)
+//		{
+//			//traverse through all the TileMainMaps
+//			for(int x = 0; x < GetFloor(floor_num).TileMainMap.GetLength(0); x++)
+//			{
+//				for(int y = 0; y < GetFloor(floor_num).TileMainMap.GetLength(1); y++)
+//				{
+//					SetFlicker_FloorNum(floor_num, x, y, flicker);
+//				}
+//			}
+//		}
+//	}
+//
+//	//function to set flicker for all TileMains on all floors
+//	public void SetFlicker_AllFloors(bool flicker)
+//	{
+//		//as long as there are Floors
+//		if(Floors != null)
+//		{
+//			//traverse through all the floors
+//			for(int floornum = 0; floornum < Floors.Count; floornum++)
+//			{
+//				SetFlicker_FloorNum(floornum, flicker);
+//			}
+//		}
+//	}
+//
+//	//function to set delay for a specific TileMain on a specific floor
+//	public void SetDelay_FloorNum(int floor_num, int tilemain_X, int tilemain_Y, float delay)
+//	{
+//		//as long as there are TileGraphs, TileLights
+//		if(GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics != null)
+//		{
+//			if(GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics.TileLights != null)
+//			{
+//				GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics.TileLights.SetDelay(delay);
+//			}
+//		}
+//	}
+//
+//	//function to set delay for all TileMains on a specific floor
+//	public void SetDelay_FloorNum(int floor_num, float delay)
+//	{
+//		//as long as there are TileMainMaps
+//		if(GetFloor(floor_num).TileMainMap != null)
+//		{
+//			//traverse through all the TileMainMaps
+//			for(int x = 0; x < GetFloor(floor_num).TileMainMap.GetLength(0); x++)
+//			{
+//				for(int y = 0; y < GetFloor(floor_num).TileMainMap.GetLength(1); y++)
+//				{
+//					SetDelay_FloorNum(floor_num, x, y, delay);
+//				}
+//			}
+//		}
+//	}
+//
+//	//function to set delay for all TileMains on all floors
+//	public void SetDelay_AllFloors(float delay)
+//	{
+//		//as long as there are Floors
+//		if(Floors != null)
+//		{
+//			//traverse through all the floors
+//			for(int floornum = 0; floornum < Floors.Count; floornum++)
+//			{
+//				SetDelay_FloorNum(floornum, delay);
+//			}
+//		}
+//	}
+//
+//	//function to get the enabled state of a specific light of a specific type of a specific TileMain on a specific floor
+//	public bool GetEnabledLightsState_FloorNum(int floor_num, int tilemain_X, int tilemain_Y, Environment_Light EL,  int light_num)
+//	{
+//		//as long as there are TileGraphs, TileLights
+//		if(GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics != null)
+//		{
+//			if(GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics.TileLights != null)
+//			{
+//				return GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics.TileLights.GetEnableLightsState(EL, light_num);
+//			}
+//			else
+//			{
+//				return false;
+//			}
+//		}
+//		else
+//		{
+//			return false;
+//		}
+//	}
 }
