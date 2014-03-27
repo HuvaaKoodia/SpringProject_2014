@@ -1,6 +1,6 @@
 <Root>
 
-<Mission type="TradeVesselInfo" reward="500">
+<Mission type="TradeVesselInfo" rewardClass="1" lootPool="1">
 	<Description>We've been contracted to investigate the fate of a trade vessel.\nFind out what happened.\n\nThe client doesn't care about the cargo. Grab whatever you can.</Description>
 	<PrimaryObjectives>
 		FindLogs
@@ -14,7 +14,7 @@
 	</Ships>
 </Mission>
 
-<Mission type="RetrieveCargo" reward="500">
+<Mission type="RetrieveCargo"  rewardClass="1" lootPool="1">
 <Description>We've been contracted to retrieve a certain valuable item from an abandoned vessel.\nAnything else you find is for us to keep.</Description>
 	<PrimaryObjectives>
 		FindItem
@@ -27,11 +27,10 @@
 	</Ships>
 </Mission>
 
-<Mission type="ExploreVessel" reward="500">
+<Mission type="ExploreVessel" rewardClass="1" lootPool="1">
 	<Description>We've received an emergency message from deep space.\n\nInvestigate and explore!</Description>
 	<PrimaryObjectives>
 		Explore
-		Loot
 	</PrimaryObjectives>
 	<Ships>
 		blackone
@@ -39,8 +38,8 @@
 	</Ships>
 </Mission>
 
-<Mission type="EmergencyBeacon" reward="500">
-	<Description>We've spotted a derelict vessel.\n\nLoot, loot, loot!</Description>
+<Mission type="EmergencyBeacon" rewardClass="1" lootPool="1">
+	<Description>We've spotted a derelict vessel.\nWe'll pay you a small fee if you find out what happened.\n\nOtherwise: loot, loot, loot!</Description>
 	<PrimaryObjectives>
 		FindLogs
 	</PrimaryObjectives>
@@ -53,6 +52,7 @@
 	</Ships>
 </Mission>
 
+<RewardClass name="1" min="400" max="800"/>	
 
 
 </Root>

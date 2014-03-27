@@ -193,6 +193,13 @@ public class MenuHandler : MonoBehaviour {
         ChangeMenuState(MenuState.NothingSelected);
     }
 
+	void DeactivateInventory ()
+	{
+		if (InventoryHud.InventoryOpen) return;
+		
+		InventoryHud.DeactivateInventory();
+	}
+
 	public void SetInteractVisibility(bool visible)
 	{
 		if (currentMenuState == MenuState.InventoryHUD ||
@@ -216,8 +223,7 @@ public class MenuHandler : MonoBehaviour {
 			MovementHud.SetActive(false);
 			TargetingHud.SetActive(false);
 
-            if (InventoryHud.InventoryOpen)
-				InventoryHud.DeactivateInventory();
+			DeactivateInventory();
 
 			GC.Player.EndTargetingMode();
 			SetInteractVisibility(true);
@@ -228,8 +234,7 @@ public class MenuHandler : MonoBehaviour {
 			MovementHud.SetActive(true);
 			TargetingHud.SetActive(false);
 
-            if (InventoryHud.InventoryOpen)
-				InventoryHud.DeactivateInventory();
+			DeactivateInventory();
 
 			GC.Player.EndTargetingMode();
 			break;
@@ -239,8 +244,7 @@ public class MenuHandler : MonoBehaviour {
 			MovementHud.SetActive(false);
 			TargetingHud.SetActive(true);
 
-            if (InventoryHud.InventoryOpen)
-				InventoryHud.DeactivateInventory();
+			DeactivateInventory();
 
 			SetInteractVisibility(false);
 			break;
@@ -258,6 +262,7 @@ public class MenuHandler : MonoBehaviour {
 	public void SetHudToPlayerStats(){
 		radar.SetDisabled(!player.HasRadar);
 		map.SetDisabled(!player.HasMap);
+		radar.radarZoom=2f+1f*(1f-(player.RadarRange/player.RadarRangeMax));
 	}
 
 	public void CheckTargetingModePanel()

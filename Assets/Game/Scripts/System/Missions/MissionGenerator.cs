@@ -3,10 +3,13 @@ using System.Collections;
 
 public class MissionGenerator{
 
-    public static MissionObjData GenerateMission(){
-        var mission=new MissionObjData();
+    public static MissionObjData GenerateMission(string pool){
 
-        mission.MissionType=            Subs.GetRandomEnum<MissionObjData.Type>();
+		var type=Subs.GetRandom(XmlDatabase.MissionPool[pool]);
+        var mission=new MissionObjData();
+		mission.MissionPoolIndex=pool;
+
+		mission.MissionType=(MissionObjData.Type)System.Enum.Parse(typeof(MissionObjData.Type),type);
 
         //DEV.TEMP force type
         //mission.MissionType= MissionObjData.Type.RetrieveCargo;
@@ -21,7 +24,7 @@ public class MissionGenerator{
 
 		bool has_info=true;
 		if (Subs.RandomPercent()<XmlDatabase.MissionCatastrophicIntelFailureChance) has_info=false;
-		mission.NoInfo=true;
+		mission.NoInfo=!has_info;
 		//info stats
         if (has_info){
 			mission.InfoAlienAmount=GetRandomInfo();
@@ -39,7 +42,16 @@ public class MissionGenerator{
             mission.AddSecondaryObjective((MissionObjData.Objective)System.Enum.Parse(typeof(MissionObjData.Objective),o,true));
         }
 
-        mission.Briefing=MissionDebriefText(mission);
+		//time DEV.in xmls
+		mission.TravelTime=Subs.GetRandom(3,8);
+		mission.ExpirationTime=Subs.GetRandom(1,10);
+
+		var rc=XmlDatabase.RewardClasses[mission.XmlData.RewardClass];
+
+		mission.Reward=(int)Mathf.Round(Subs.GetRandom(rc.min,rc.max)/(float)XmlDatabase.MissionRewardRounding)*XmlDatabase.MissionRewardRounding;
+
+		//texts
+        mission.Briefing=MissionBriefingText(mission);
         mission.Objectives=MissionObjectivesText(mission);
         return mission;
     }
@@ -52,18 +64,19 @@ public class MissionGenerator{
     }
 
     /// <summary>
-    /// Swich case from hell!
+    /// Switch case from hell!
     /// </summary>
-    static string MissionDebriefText(MissionObjData mission){
+    static string MissionBriefingText(MissionObjData mission){
 
         string base_text=mission.XmlData.Description;
 
-		string info_text="\n\nAdditional Info:\n\n";
+		string info_text="\n\n";
 
 		if (mission.NoInfo){
-			info_text="No Additional info available:";
+			info_text+="No Additional info available:";
 		}
 		else{
+			info_text+="Additional Info:\n\n";
 			info_text+="- ";
 			switch(mission.InfoAlienAmount){
 	            case MissionObjData.InformationRating.None:
@@ -207,7 +220,7 @@ public class MissionGenerator{
     {
         var text="Primary:\n";
         foreach (var o in mission.PrimaryObjectives){
-            text+=o.Objective.ToString()+"\n";
+            text+=XmlDatabase.Objectives[o.Objective].Name+"\n";
         }
         if (mission.PrimaryObjectives.Count==0){
             text+="NONE\n";
@@ -215,7 +228,7 @@ public class MissionGenerator{
         
         text+="\n\nSecondary:\n";
         foreach (var o in mission.SecondaryObjectives){
-			text+=o.Objective.ToString()+"\n";
+			text+=XmlDatabase.Objectives[o.Objective].Name+"\n";
         }
         return text;
     }
@@ -254,4 +267,25 @@ public class MissionGenerator{
 		
 		return text;
     }
+
+	public static string MissionShortDescription(MissionObjData mission){
+		var text="";
+
+		if (mission.Reward!=0){
+			text+="Reward:\n"+mission.Reward+" "+XmlDatabase.MoneyUnit;
+			text+="\n\n";
+		}
+
+		text+="Travel time:\n"+mission.TravelTime +" days";
+		text+="\n\n";
+		text+="Expires in\n"+mission.ExpirationTime+" days";
+
+		return text;
+	}
+
+	//DEV. temp
+	public static string MissionName (MissionObjData mission)
+	{
+		return mission.MissionType.ToString();
+	}
 }

@@ -17,7 +17,7 @@ public class GameDB : MonoBehaviour {
     public void StartNewGame(){
         GameStarted=true;
 		GameData=new GameObjData();
-        GenerateNewMissions();
+        GenerateNewMissions(0);
     }
 
 #if UNITY_EDITOR 
@@ -65,14 +65,17 @@ public class GameDB : MonoBehaviour {
     public void EndMission()
     {
         GOTO_DEBRIEF=true;
-        GenerateNewMissions();
+
+		GameData.CurrentTime+=GameData.CurrentMission.TravelTime;
+
+		GenerateNewMissions(GameData.CurrentMission.TravelTime);
         Application.LoadLevel(HQScene);
     }
 
     public int CalculateQuestReward()
     {
 		var mission =GameData.CurrentMission;
-		int max_reward=mission.XmlData.Reward;
+		int max_reward=mission.Reward;
 		int max=mission.PrimaryObjectives.Count;
 		float completed=mission.PrimaryObjectives.Count(obj=>obj.status==1);
 		float reward=max_reward*(completed/max);
@@ -91,11 +94,30 @@ public class GameDB : MonoBehaviour {
         }
     }
 
-    void GenerateNewMissions()
+    void GenerateNewMissions(int time_increase)
     {
-		GameData.AvailableMissions.Clear();
-        for (int i=0;i<4;++i){
-			GameData.AvailableMissions.Add(MissionGenerator.GenerateMission());
+		List<string> availablemissionpools=new List<string>();
+
+
+		foreach (var p in XmlDatabase.MissionPool.Keys){
+			availablemissionpools.Add(p);
+		} 
+
+		for (int i=0;i<GameData.AvailableMissions.Count;++i){
+			var m=GameData.AvailableMissions[i];
+			m.ExpirationTime-=time_increase;
+			if (m.ExpirationTime<=0){
+				GameData.AvailableMissions.Remove(m);
+				--i;
+				continue;
+			}
+			availablemissionpools.Remove(m.MissionPoolIndex);
+		}
+
+        while (GameData.AvailableMissions.Count<4){
+			var index=Subs.GetRandom(availablemissionpools);
+			GameData.AvailableMissions.Add(MissionGenerator.GenerateMission(index));
+			availablemissionpools.Remove(index);
         }
     }
 }
@@ -106,8 +128,11 @@ public class GameObjData{
 	
 	public MissionObjData CurrentMission{get;set;}
 	public InvItemStorage VendorStore{get;set;}
-	
+
+	public int CurrentTime{get;set;}
+
 	public GameObjData(){
+		CurrentTime=1;
 		AvailableMissions=new List<MissionObjData>();
 		PlayerData=new PlayerObjData();
 		VendorStore=new InvItemStorage(8,4,2);

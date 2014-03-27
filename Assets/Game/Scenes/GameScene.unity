@@ -842,8 +842,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   white_lights:
   - {fileID: 263696927}
-  orange_lights: []
-  light_flicker: 1
   delay: 1
 --- !u!1 &59440663
 GameObject:
@@ -1838,7 +1836,7 @@ Transform:
   m_PrefabInternal: {fileID: 904906279}
   m_GameObject: {fileID: 113633003}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -7694.3999, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1486936418}
@@ -5811,9 +5809,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   white_lights:
   - {fileID: 687839068}
-  orange_lights:
-  - {fileID: 80308200}
-  light_flicker: 1
   delay: 1
 --- !u!1 &442736602
 GameObject:
@@ -6050,6 +6045,7 @@ MonoBehaviour:
   Inventory: {fileID: 2068029783}
   do_culling: 1
   culling_system: {fileID: 453917346}
+  MeshCombi: {fileID: 0}
 --- !u!4 &453917345
 Transform:
   m_ObjectHideFlags: 0
@@ -6517,7 +6513,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 491159775}
-  - 95: {fileID: 491159776}
   m_Layer: 14
   m_Name: Corridor_Straight_UV
   m_TagString: Untagged
@@ -6538,21 +6533,6 @@ Transform:
   - {fileID: 1530571237}
   - {fileID: 778197734}
   m_Father: {fileID: 1296645392}
---- !u!95 &491159776
-Animator:
-  serializedVersion: 2
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 9500000, guid: 706d613207f36b54a948f1e8c25681cd,
-    type: 2}
-  m_PrefabInternal: {fileID: 591014201}
-  m_GameObject: {fileID: 491159774}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 952efc3aebd6edf42a55f23557e85ec4, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_ApplyRootMotion: 1
-  m_AnimatePhysics: 0
-  m_HasTransformHierarchy: 1
 --- !u!1 &492332195
 GameObject:
   m_ObjectHideFlags: 0
@@ -6907,10 +6887,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   white_lights:
   - {fileID: 109902628}
-  orange_lights:
-  - {fileID: 722582501}
-  - {fileID: 1991870064}
-  light_flicker: 1
   delay: 1
 --- !u!1 &525988119
 GameObject:
@@ -6971,11 +6947,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   white_lights:
   - {fileID: 492332197}
-  orange_lights:
-  - {fileID: 1111663456}
-  - {fileID: 1124632302}
-  - {fileID: 2089953480}
-  light_flicker: 1
   delay: 1
 --- !u!1001 &527384398
 Prefab:
@@ -9029,11 +9000,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GDB: {fileID: 985648499}
   XMAP: {fileID: 1976899284}
-  XDB: {fileID: 985648497}
   PS: {fileID: 985648498}
   MGen: {fileID: 456725369}
   SGen: {fileID: 456725368}
   SDGen: {fileID: 456725367}
+  ItemAtlas: {fileID: 11400000, guid: f95e07e3d350bf748b0c42b453a69d2e, type: 2}
 --- !u!1 &686832874
 GameObject:
   m_ObjectHideFlags: 0
@@ -12980,7 +12951,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 646fca1f4356ca24e9cee27b0432ab47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  XDB: {fileID: 0}
 --- !u!65 &892141751
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13692,6 +13662,75 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .5, y: 1.5, z: 1.5}
   m_Center: {x: 0, y: 1.5, z: 0}
+--- !u!1 &934691202
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 100596, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
+  m_PrefabInternal: {fileID: 904906279}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 934691203}
+  - 114: {fileID: 934691204}
+  m_Layer: 13
+  m_Name: BG
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &934691203
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 400596, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
+  m_PrefabInternal: {fileID: 904906279}
+  m_GameObject: {fileID: 934691202}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1123097776}
+--- !u!114 &934691204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400846, guid: 043c7f41ae0d0374187e4c88b7d9edb9,
+    type: 2}
+  m_PrefabInternal: {fileID: 904906279}
+  m_GameObject: {fileID: 934691202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b3dc54f924693f41b5cbecb267e647a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftAnchor:
+    target: {fileID: 0}
+    relative: 0
+    absolute: 0
+  rightAnchor:
+    target: {fileID: 0}
+    relative: 1
+    absolute: 0
+  bottomAnchor:
+    target: {fileID: 0}
+    relative: 0
+    absolute: 0
+  topAnchor:
+    target: {fileID: 0}
+    relative: 1
+    absolute: 0
+  mColor: {r: 0, g: 0, b: 0, a: 1}
+  mPivot: 4
+  mWidth: 817
+  mHeight: 488
+  mDepth: 0
+  autoResizeBoxCollider: 0
+  hideIfOffScreen: 0
+  mAtlas: {fileID: 11400000, guid: f95e07e3d350bf748b0c42b453a69d2e, type: 2}
+  mSpriteName: Smooth
+  mFillCenter: 1
+  mType: 1
+  mFillDirection: 4
+  mFillAmount: 1
+  mInvert: 0
 --- !u!1 &937696699
 GameObject:
   m_ObjectHideFlags: 0
@@ -14690,7 +14729,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 985648496}
-  - 114: {fileID: 985648497}
   - 114: {fileID: 985648499}
   - 114: {fileID: 985648498}
   m_Layer: 0
@@ -14711,20 +14749,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 682935426}
---- !u!114 &985648497
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400006, guid: 4e352aa64cbc07a40b14dd522f0506fb,
-    type: 2}
-  m_PrefabInternal: {fileID: 594701158}
-  m_GameObject: {fileID: 985648495}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da82a1908a6e148419b327bb06cdb783, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ItemDB: {fileID: 0}
-  ItemAtlas: {fileID: 11400000, guid: f95e07e3d350bf748b0c42b453a69d2e, type: 2}
 --- !u!114 &985648498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14739,7 +14763,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerPrefab: {fileID: 11400000, guid: bbc62e18456a7dc41a85be0653d92e94, type: 2}
   EnemyPrefab: {fileID: 11400004, guid: b974757ce80de5e4dbf0e505f383b32f, type: 2}
-  GatlingTurretPrefab: {fileID: 0}
+  GatlingTurretPrefab: {fileID: 11400008, guid: b7ca0c90a098039419896ad8950ea670,
+    type: 2}
   TilePrefab: {fileID: 11400000, guid: 9bfb3d436ce996c47a3e71a8160380a7, type: 2}
   LootCratePrefab: {fileID: 100002, guid: 4da49c52a07bcb442849f3c68c3d1116, type: 2}
   BasicWall: {fileID: 100000, guid: 61a5c8fb07519b54a83facebee526035, type: 2}
@@ -14801,6 +14826,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SS: {fileID: 682935430}
   GOTO_DEBRIEF: 0
+  GameStarted: 0
   HQScene: MissionSelectScene
   GameScene: GameScene
 --- !u!1 &986124759
@@ -16509,9 +16535,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   white_lights:
   - {fileID: 1101530918}
-  orange_lights:
-  - {fileID: 703161211}
-  light_flicker: 1
   delay: 1
 --- !u!1 &1096243820
 GameObject:
@@ -16572,9 +16595,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   white_lights:
   - {fileID: 1581675924}
-  orange_lights:
-  - {fileID: 769060058}
-  light_flicker: 1
   delay: 1
 --- !u!1 &1101530916
 GameObject:
@@ -16824,7 +16844,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1138130765}
+  - {fileID: 934691203}
   - {fileID: 687665447}
   - {fileID: 999498486}
   - {fileID: 829327115}
@@ -17156,7 +17176,7 @@ GameObject:
   - 4: {fileID: 1138130765}
   - 114: {fileID: 1138130766}
   m_Layer: 13
-  m_Name: BG
+  m_Name: FadePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17169,10 +17189,10 @@ Transform:
   m_PrefabInternal: {fileID: 904906279}
   m_GameObject: {fileID: 1138130764}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -63.178463, y: 42.4969444, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1123097776}
+  m_Father: {fileID: 2068029782}
 --- !u!114 &1138130766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17201,15 +17221,15 @@ MonoBehaviour:
     target: {fileID: 0}
     relative: 1
     absolute: 0
-  mColor: {r: 0, g: 0, b: 0, a: 1}
+  mColor: {r: 0, g: 0, b: 0, a: 0}
   mPivot: 4
-  mWidth: 817
-  mHeight: 488
-  mDepth: 0
+  mWidth: 3492
+  mHeight: 1976
+  mDepth: 14
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
   mAtlas: {fileID: 11400000, guid: f95e07e3d350bf748b0c42b453a69d2e, type: 2}
-  mSpriteName: Smooth
+  mSpriteName: Blank
   mFillCenter: 1
   mType: 1
   mFillDirection: 4
@@ -17954,9 +17974,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   white_lights: []
-  orange_lights:
-  - {fileID: 1351938048}
-  light_flicker: 0
   delay: 0
 --- !u!1 &1187931140
 GameObject:
@@ -18264,6 +18281,7 @@ MonoBehaviour:
   MissionBriefing: {fileID: 655531937}
   EndMissionPanel: {fileID: 113633003}
   MechStats: {fileID: 1909347182}
+  FadePanel: {fileID: 1138130766}
   FPS: {fileID: 107886712}
   ShowFPSonAndroid: 1
   updateInterval: .5
@@ -18326,10 +18344,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   white_lights:
   - {fileID: 686832876}
-  orange_lights:
-  - {fileID: 165719044}
-  - {fileID: 1206071162}
-  light_flicker: 1
   delay: 1
 --- !u!1 &1209889025
 GameObject:
@@ -20949,7 +20963,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1378456114}
-  - 95: {fileID: 1378456115}
   m_Layer: 0
   m_Name: Wall_UV
   m_TagString: Untagged
@@ -20970,21 +20983,6 @@ Transform:
   - {fileID: 1788910960}
   - {fileID: 1189516400}
   m_Father: {fileID: 937696700}
---- !u!95 &1378456115
-Animator:
-  serializedVersion: 2
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 9500000, guid: 4bf5d683ca4441247be27d973b6ac2bf,
-    type: 2}
-  m_PrefabInternal: {fileID: 775780674}
-  m_GameObject: {fileID: 1378456113}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 17aba5774186c0f42a6e462f60792a27, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_ApplyRootMotion: 1
-  m_AnimatePhysics: 0
-  m_HasTransformHierarchy: 1
 --- !u!1 &1378587535
 GameObject:
   m_ObjectHideFlags: 0
@@ -21684,8 +21682,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   white_lights:
   - {fileID: 1140995848}
-  orange_lights: []
-  light_flicker: 1
   delay: 1
 --- !u!1 &1408072075
 GameObject:
@@ -21845,10 +21841,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   white_lights:
   - {fileID: 1954388499}
-  orange_lights:
-  - {fileID: 51001053}
-  - {fileID: 12901522}
-  light_flicker: 1
   delay: 1
 --- !u!1 &1416649453
 GameObject:
@@ -22651,8 +22643,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   white_lights:
   - {fileID: 1705070725}
-  orange_lights: []
-  light_flicker: 1
   delay: 1
 --- !u!1 &1469968547
 GameObject:
@@ -22893,7 +22883,7 @@ Transform:
   m_PrefabInternal: {fileID: 904906279}
   m_GameObject: {fileID: 1486936417}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 8024.89697, z: 0}
+  m_LocalPosition: {x: -1.17846274, y: 330.497101, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1123097776}
@@ -29561,10 +29551,10 @@ MonoBehaviour:
   CriticalColor: {r: 1, g: 0, b: 0, a: 1}
   BrokenColor: {r: 0, g: 0, b: 0, a: 1}
   weaponSlots:
-  - {fileID: 1805841739}
   - {fileID: 1909061354}
-  - {fileID: 1139727430}
+  - {fileID: 1805841739}
   - {fileID: 1158648292}
+  - {fileID: 1139727430}
   upperTorso: {fileID: 30491472}
   lowerTorso: {fileID: 1059567857}
 --- !u!54 &1909347183
@@ -31505,7 +31495,7 @@ MonoBehaviour:
     e00: 480.076813
     e01: 0
     e02: 0
-    e03: -795.788452
+    e03: -794.681641
     e10: 0
     e11: 480.076813
     e12: 0
@@ -31582,12 +31572,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   white_lights:
   - {fileID: 2141644618}
-  orange_lights:
-  - {fileID: 1543085120}
-  - {fileID: 227732673}
-  - {fileID: 1603934623}
-  - {fileID: 2012825462}
-  light_flicker: 1
   delay: 1
 --- !u!1 &2030714352
 GameObject:
@@ -32441,6 +32425,7 @@ Transform:
   m_Children:
   - {fileID: 113633004}
   - {fileID: 2107570263}
+  - {fileID: 1138130765}
   m_Father: {fileID: 1208657777}
 --- !u!114 &2068029783
 MonoBehaviour:
@@ -33200,7 +33185,7 @@ MonoBehaviour:
     e00: 480.076813
     e01: 0
     e02: 0
-    e03: -795.788391
+    e03: -794.681519
     e10: 0
     e11: 480.076813
     e12: 0

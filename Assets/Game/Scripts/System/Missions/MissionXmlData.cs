@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class MissionXmlData{
     public string Description;
-    public int Reward;
+    public string RewardClass;
     public List<string> ShipsTypes=new List<string>();
     public List<string> PrimaryObjectives=new List<string>();
     public List<string> SecondaryObjectives=new List<string>();

@@ -69,7 +69,7 @@ public class PlayerObjData{
 
         //sides
         if (dir==0){
-            if (Subs.RandomPercent()<30){
+			if (Subs.RandomPercent()<XmlDatabase.AttackLeftRightPlayerTorsoHitChance){
                 //torso
             }
             else
@@ -80,7 +80,7 @@ public class PlayerObjData{
         }
         else
         if (dir==2){
-            if (Subs.RandomPercent()<30){
+			if (Subs.RandomPercent()<XmlDatabase.AttackLeftRightPlayerTorsoHitChance){
                 //torso
             }
             else {
@@ -90,7 +90,7 @@ public class PlayerObjData{
         }
         else//front and back
         if (dir==1||dir==3){
-            if (Subs.RandomPercent()<50){
+			if (Subs.RandomPercent()<XmlDatabase.AttackFrontBackPlayerTorsoHitChance){
                 target=UpperTorso;
             }
             else if (Subs.RandomPercent()<50){
@@ -102,12 +102,11 @@ public class PlayerObjData{
 				if (w!=null) target=w;
             }
         }
-
         target.TakeDMG(dmg);
 
         if (target.Slot==UIEquipmentSlot.Slot.UpperTorso){
             //Randomly damage utility slots
-            if (Subs.RandomPercent()<25){
+			if (Subs.RandomPercent()<XmlDatabase.AttackTorsoUtilityDamageChance){
                 var util=GetPart(
                     Subs.GetRandom(new UIEquipmentSlot.Slot[]
                     {UIEquipmentSlot.Slot.Utility1,UIEquipmentSlot.Slot.Utility2,UIEquipmentSlot.Slot.Utility3,UIEquipmentSlot.Slot.Utility4}

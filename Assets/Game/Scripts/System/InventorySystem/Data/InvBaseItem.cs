@@ -29,7 +29,7 @@ public class InvBaseItem
 	/// Actual object's stats are calculated based on item's level and quality.
 	/// </summary>
 
-	public List<InvStat> stats = new List<InvStat>();
+	public List<InvStat> Stats = new List<InvStat>();
 
 	/// <summary>
 	/// Game Object that will be created and attached to the specified slot on the body.
@@ -37,7 +37,13 @@ public class InvBaseItem
 	/// a bracer, shield, etc.
 	/// </summary>
 
-	public GameObject attachment;
+	public InvStat GetStat (InvStat.Type type)
+	{
+		foreach(var s in Stats){
+			if (s.type==type) return s;
+		}
+		return null;
+	}
 
 	public Color color = Color.white;
 	public UIAtlas iconAtlas;

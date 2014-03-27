@@ -13,8 +13,8 @@ public class MissionButtonMain : MonoBehaviour {
     public void SetMission(MissionObjData mission){
         Mission=mission;
 
-        Header.text=""+mission.MissionType;
-        Info.text=mission.Briefing;
+		Header.text=""+MissionGenerator.MissionName(mission);
+        Info.text=MissionGenerator.MissionShortDescription(mission);
     }
 
     public int getWidth(){
