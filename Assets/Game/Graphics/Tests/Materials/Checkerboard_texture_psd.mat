@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Test 2
-  m_Shader: {fileID: 4800000, guid: b4ab8bee70a85ff46b283984a48e83a9, type: 3}
+  m_Name: Checkerboard_texture_psd
+  m_Shader: {fileID: 2, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -17,26 +17,19 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: 5b1de7dc2332800429f75b62d9912f67, type: 3}
-          m_Scale: {x: 1, y: 1}
+          m_Texture: {fileID: 2800000, guid: ea852676168784d4f8320a037397419e, type: 3}
+          m_Scale: {x: .100000001, y: .100000001}
           m_Offset: {x: 0, y: 0}
       data:
         first:
           name: _BumpMap
         second:
-          m_Texture: {fileID: 2800000, guid: 6ca2813a71e92a24595becaaa1c442fe, type: 3}
+          m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _SpecMap
-        second:
-          m_Texture: {fileID: 2800000, guid: 8c2aa4c4f67f8f14b83675fca8fed908, type: 3}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _Mask
+          name: _ParallaxMap
         second:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
@@ -45,21 +38,17 @@ Material:
       data:
         first:
           name: _Shininess
-        second: 1
+        second: .078125
       data:
         first:
-          name: _Focus
-        second: -46.4285698
+          name: _Parallax
+        second: .0199999996
     m_Colors:
       data:
         first:
           name: _Color
-        second: {r: .198529422, g: .198529422, b: .198529422, a: 1}
+        second: {r: 1, g: 1, b: 1, a: 1}
       data:
         first:
           name: _SpecColor
-        second: {r: 1, g: 1, b: 1, a: .603921592}
-      data:
-        first:
-          name: _Specular
-        second: {r: 0, g: 0, b: 0, a: 1}
+        second: {r: .5, g: .5, b: .5, a: 1}
