@@ -57,13 +57,17 @@ public class XMLDataLoader : XML_Loader
                 }
 				#endregion
 
-                if (ReadWeapon(node))      continue;
-                if (ReadQuestItem(node))   continue;
-                if (ReadMission(node))     continue;
-                if (ReadObjective(node))   continue;
-                if (ReadAmmo(node))        continue;
+                if (ReadWeapon(node))       continue;
+                if (ReadQuestItem(node))    continue;
+                if (ReadMission(node))      continue;
+                if (ReadObjective(node))    continue;
+                if (ReadAmmo(node))         continue;
+				if (ReadPools(node))		continue;
+				if (ReadRewardClass(node))	continue;
             }
 		}
+
+		ParseData();
     }
 
     static bool ReadWeapon (XmlNode node)
@@ -80,7 +84,7 @@ public class XMLDataLoader : XML_Loader
 			foreach(var t in Subs.EnumValues<InvStat.Type>()){
 				AddStat(node,item,t);
 			}
-			XmlDatabase.items.Add(item);
+			XmlDatabase.items.Add(item.name,item);
             return true;
 		}
         return false;
@@ -127,7 +131,7 @@ public class XMLDataLoader : XML_Loader
             var mission=new MissionXmlData();
             var type=(MissionObjData.Type)System.Enum.Parse(typeof(MissionObjData.Type),getAttStr(node,"type"),true);
             mission.Description=getStr(node,"Description").Replace("\\n","\n");
-            mission.Reward=getAttInt(node,"reward",0);
+            mission.RewardClass=getAttStr(node,"rewardClass");
 
             string[] spl;
 
@@ -242,4 +246,62 @@ public class XMLDataLoader : XML_Loader
             ShipGenerator.ObjectIndices.Add(stats.index,stats);
         }
     }
+
+	static bool ReadPools (XmlNode node)
+	{
+		if (node.Name == "LootPool")
+		{
+			string pool=getAttStr(node,"name");
+			if (!XmlDatabase.LootPool.ContainsKey(pool)){
+				XmlDatabase.LootPool.Add(pool,new List<string>());
+			}
+
+			foreach(XmlNode n in node){
+				if (n.Name=="Item"){
+					XmlDatabase.LootPool[pool].Add(getAttStr(n,"name"));
+				}
+			}
+
+			return true;
+		}
+
+		if (node.Name == "MissionPool")
+		{
+			string pool=getAttStr(node,"name");
+			if (!XmlDatabase.MissionPool.ContainsKey(pool)){
+				XmlDatabase.MissionPool.Add(pool,new List<string>());
+			}
+			
+			foreach(XmlNode n in node){
+				if (n.Name=="Item"){
+					XmlDatabase.MissionPool[pool].Add(getAttStr(n,"name"));
+				}
+			}
+			
+			return true;
+		}
+
+		return false;
+	}
+	
+	static bool ReadRewardClass (XmlNode node)
+	{
+		if (node.Name == "RewardClass")
+		{
+			string name=getAttStr(node,"name");
+			var rc=new RewardClassXmlData();
+			rc.min=getAttInt(node,"min");
+			rc.max=getAttInt(node,"max");
+			XmlDatabase.RewardClasses.Add(name,rc);
+			return true;
+		}
+		
+		return false;
+	}
+
+	//DEV.temp
+	static void ParseData ()
+	{
+
+	}
 }

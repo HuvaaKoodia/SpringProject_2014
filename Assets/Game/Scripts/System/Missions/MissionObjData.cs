@@ -29,6 +29,12 @@ public class MissionObjData {
 	public string Briefing{get;set;}
 	public string Objectives{get;set;}
 
+	public int TravelTime{get;set;}
+	public int ExpirationTime{get;set;}
+
+	public int Reward{get;set;}
+	public string MissionPoolIndex{get;set;}
+
     //stats
 	public Type				MissionType	{get;set;}
 	public AlienAmount      MissionAlienAmount {get;set;}
@@ -63,5 +69,4 @@ public class MissionObjData {
     public bool ContainsObjective(MissionObjData.Objective o){
 		return PrimaryObjectives.Exists(obj=>obj.Objective==o)||SecondaryObjectives.Exists(obj=>obj.Objective==o);
     }
-
 }
