@@ -6,13 +6,16 @@ public class XmlDatabase
 {
     public static List<PlayerXmlData> players { get; private set; }
    // public List<WeaponXmlData> weapons { get; private set; }
-	public static List<InvBaseItem> items{get;private set;}
+	public static Dictionary<string,InvBaseItem> items{get;private set;}
 	public static List<EnemyXmlData> enemies { get; private set; }
 	public static List<ObstacleXmlData> obstacles { get; private set; }
 	public static Dictionary<MissionObjData.Type,MissionXmlData> Missions{ get; private set; }
 	public static Dictionary<string,InvBaseItem> QuestItems=new Dictionary<string,InvBaseItem>();
 	public static Dictionary<string,AmmoXmlData> AmmoTypes=new Dictionary<string,AmmoXmlData>();
 	public static Dictionary<MissionObjData.Objective,ObjectiveXmlData> Objectives=new Dictionary<MissionObjData.Objective,ObjectiveXmlData>();
+	public static Dictionary<string,List<string>> LootPool=new Dictionary<string, List<string>>();
+	public static Dictionary<string,List<string>> MissionPool=new Dictionary<string, List<string>>();
+	public static Dictionary<string,RewardClassXmlData> RewardClasses=new Dictionary<string,RewardClassXmlData>();
 
 	public static string MoneyUnit="BTC";
 
@@ -27,7 +30,8 @@ public class XmlDatabase
 		MissionCatastrophicIntelFailureChance,
 		AttackFrontBackPlayerTorsoHitChance,
 		AttackLeftRightPlayerTorsoHitChance,
-		AttackTorsoUtilityDamageChance
+		AttackTorsoUtilityDamageChance,
+		MissionRewardRounding
         ;
     public static float
         HullHeatAddMultiplier,
@@ -46,7 +50,7 @@ public class XmlDatabase
         enemies = new List<EnemyXmlData>();
         obstacles = new List<ObstacleXmlData>();
 
-		items=new List<InvBaseItem>();
+		items=new Dictionary<string,InvBaseItem>();
 
         XMLDataLoader.Read();
 
@@ -54,7 +58,7 @@ public class XmlDatabase
             i.Value.iconAtlas=ItemAtlas;
         }
 
-		foreach (var i in items){
+		foreach (var i in items.Values){
 			i.iconAtlas=ItemAtlas;
             if(i.ammotype!=""){
                 i.AmmoData=AmmoTypes[i.ammotype];
@@ -65,8 +69,8 @@ public class XmlDatabase
     }
 
 	public static InvBaseItem GetBaseItem(string name){
-		foreach (var i in items){
-			if (i.name==name) return i;
+		if (items.ContainsKey(name)){
+			return items[name];
 		}
 		return null;
 	}

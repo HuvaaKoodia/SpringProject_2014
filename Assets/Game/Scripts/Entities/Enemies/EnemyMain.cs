@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EnemyMain : EntityMain {
 
@@ -9,7 +10,7 @@ public class EnemyMain : EntityMain {
     public bool waitingForAttackPhase;
 
 	public GameObject graphics;
-	public BoxCollider hitbox;
+	public List<BoxCollider> hitboxes;
 
 	public MeshRenderer meshRenderer;
 
