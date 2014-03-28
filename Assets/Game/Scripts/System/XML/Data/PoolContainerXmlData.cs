@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 
-public class PoolContainerXmlData
+public class PoolXmlData
 {
 	string PoolName;
 	public Dictionary<string,List<PoolItemXmlData>> Pool=new Dictionary<string, List<PoolItemXmlData>>();
 
-	public PoolContainerXmlData(string name){
+	public PoolXmlData(string name){
 		PoolName=name;
 	}
 	
