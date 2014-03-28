@@ -2,12 +2,12 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-//enumerator for the environment lights in TilePrefabs under TestObjects in GameScene
+//enumerator for the state of the white lights in TilePrefabs under TestObjects in GameScene
 public enum Lighting_State
 {
-	Broken = 0,
-	Flickering,
-	Normal
+	Broken = 0,																									//broken lights will be off
+	Flickering,																									//broken lights will be toggling between on and off
+	Normal																										//normal lights will be on
 }
 
 public class AllLights : MonoBehaviour
@@ -19,9 +19,9 @@ public class AllLights : MonoBehaviour
 	public float delay;																							//instantiate time to delay by in inspector
 	private float ticks;																						//instantiate time since last toggle
 
-	private bool power_on;																						//instantiate boolean to allow electricity to flow
+	public bool power_on;																						//instantiate boolean to allow electricity to flow
 
-	private Lighting_State lighting_state = Lighting_State.Normal;												//instantiate instance of Lighting_State to Normal
+	public Lighting_State lighting_state = Lighting_State.Normal;												//instantiate instance of Lighting_State to Normal
 
 	float init_light_power = 4.0f;
 
@@ -32,12 +32,11 @@ public class AllLights : MonoBehaviour
 		//power_on = true;																						//initialize electricity to flow
 		ticks = 0.0f;																							//initialize value for ticks and set it to be 0.0f
 	}
-	//changes
 	
 	// Update is called once per frame
 	void Update ()
 	{
-		//as long as state of light is currently set to flicker, call Flicker function
+		//as long as state of white light is currently set to flicker, call Flicker function
 		if(lighting_state == Lighting_State.Flickering)
 		{
 			Flicker (delay);
@@ -152,29 +151,29 @@ public class AllLights : MonoBehaviour
 		}
 	}
 
-	//function to set the state of the white lights
-	public void SetState(Lighting_State LS)
-	{
-		lighting_state = LS;
-	}
-
-	//function to get the current state of the white light
-	public Lighting_State GetState()
-	{
-		return lighting_state;
-	}
-
-	//function to set whether electricity flow
-	public void SetPowerOn(bool on)
-	{
-		power_on = on;
-	}
-
-	//function to get current status of electricity flow
-	public bool GetPowerOn()
-	{
-		return power_on;
-	}
+//	//function to set the state of the white lights
+//	public void SetState(Lighting_State LS)
+//	{
+//		lighting_state = LS;
+//	}
+//
+//	//function to get the current state of the white light
+//	public Lighting_State GetState()
+//	{
+//		return lighting_state;
+//	}
+//
+//	//function to set whether electricity flow
+//	public void SetPowerOn(bool on)
+//	{
+//		power_on = on;
+//	}
+//
+//	//function to get current status of electricity flow
+//	public bool GetPowerOn()
+//	{
+//		return power_on;
+//	}
 
 //	public Lighting_State RandomizeStartState(int broken_percent, int flickering_percent, int normal_percent)
 //	{
