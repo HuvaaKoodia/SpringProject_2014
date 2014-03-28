@@ -114,7 +114,7 @@ public class GameController : MonoBehaviour {
 
         //DEV.DEBUG generate mission
         if (SS.GDB.GameData.CurrentMission==null){
-			SS.GDB.GameData.CurrentMission=MissionGenerator.GenerateMission(Subs.GetRandom(XmlDatabase.MissionPool.Keys));
+			SS.GDB.GameData.CurrentMission=MissionGenerator.GenerateMission(Subs.GetRandom(XmlDatabase.MissionPool.Pool.Keys));
         }
 		menuHandler.MissionBriefing.SetMission(SS.GDB.GameData.CurrentMission);
 

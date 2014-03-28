@@ -5,7 +5,7 @@ public class MissionGenerator{
 
     public static MissionObjData GenerateMission(string pool){
 
-		var type=Subs.GetRandom(XmlDatabase.MissionPool[pool]);
+		var type=XmlDatabase.MissionPool.GetRandomItem(pool).item;
         var mission=new MissionObjData();
 		mission.MissionPoolIndex=pool;
 

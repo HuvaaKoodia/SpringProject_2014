@@ -176,8 +176,8 @@ public class InvGameItem
 
 	public static InvGameItem GetRandomItem (string lootpool)
 	{
-		var i=Subs.GetRandom(XmlDatabase.LootPool[lootpool]);
-		InvBaseItem item = XmlDatabase.items[i];
+		var i=XmlDatabase.LootPool.GetRandomItem(lootpool);
+		InvBaseItem item = XmlDatabase.items[i.item];
 		
 		InvGameItem gi = new InvGameItem(item);
 		gi.itemLevel = NGUITools.RandomRange(item.minItemLevel, item.maxItemLevel);
