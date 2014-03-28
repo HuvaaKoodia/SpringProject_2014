@@ -82,9 +82,12 @@ public class MouseLook : MonoBehaviour {
 		// Make the rigid body not change rotation
 		if (rigidbody)
 			rigidbody.freezeRotation = true;
+	}
 
-		OriginalRot = transform.rotation;
-
+	public void SetOriginalRot(Quaternion rot)
+	{
+		OriginalRot = rot;
+		
 		startX = OriginalRot.eulerAngles.x;
 		startY = OriginalRot.eulerAngles.y;
 		startZ = OriginalRot.eulerAngles.z;

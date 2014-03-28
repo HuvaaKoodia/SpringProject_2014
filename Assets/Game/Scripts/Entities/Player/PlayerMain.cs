@@ -28,6 +28,8 @@ public class PlayerMain : EntityMain
 	public const int disperseHeatCost = 1;
 
 	public Camera GameCamera;
+	public Camera HudCamera;
+	public Camera TargetingCamera;
 
     public void SetObjData(PlayerObjData data){
         ObjData=data;
@@ -57,6 +59,9 @@ public class PlayerMain : EntityMain
         for (int i=0;i<4;++i){
             weaponList[i].weaponID=(WeaponID)i;
         }
+
+		GameCamera.GetComponent<MouseLook>().SetOriginalRot(GameCamera.transform.localRotation);
+		HudCamera.GetComponent<MouseLook>().SetOriginalRot(GameCamera.transform.localRotation);
 
 		CullWorld();
 	}

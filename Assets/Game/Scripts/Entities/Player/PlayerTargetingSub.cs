@@ -25,7 +25,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 	public Rect TargetingArea 
 	{
-		get { return new Rect(150, 80, Screen.width-300, Screen.height-160); }
+		get { return new Rect(50, 80, Screen.width-100, Screen.height-160); }
 	}
 
 	void Awake(){
@@ -52,7 +52,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 		//int screenHeight = (int)Camera.main.pixelHeight;
 		
 		Plane[] planes;
-		planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
+		planes = GeometryUtility.CalculateFrustumPlanes(player.TargetingCamera);
 
 		List<int> wallIndices = new List<int>();
 
@@ -66,13 +66,14 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 				Vector3 adjustedEnemyPos = hitbox.bounds.center;
 
-				Vector3 enemyPosInScreen = Camera.main.WorldToScreenPoint(adjustedEnemyPos);
+				Vector3 enemyPosInScreen = player.TargetingCamera.WorldToScreenPoint(adjustedEnemyPos);
 			
 				//if enemy is near edges of screen, ignore it (because its under hud)
 				if (!TargetingArea.Contains(enemyPosInScreen))
 					continue;
 			
-				Ray ray = Camera.main.ScreenPointToRay(enemyPosInScreen);
+				enemyPosInScreen = player.GameCamera.WorldToScreenPoint(adjustedEnemyPos);
+				Ray ray = player.GameCamera.ScreenPointToRay(enemyPosInScreen);
 				RaycastHit hitInfo;
 
 				Debug.DrawRay(ray.origin, ray.direction * 20, Color.red, 2.0f);
@@ -170,7 +171,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 		
 		enemyPosInScreen.z = 0.7f + (enemyPosInScreen.z / cameraFarZ);
 
-		TargetMarkHandler tmHandler = new TargetMarkHandler(player.GC, enemyPosInScreen, player.movement.targetRotationAngle);
+		TargetMarkHandler tmHandler = new TargetMarkHandler(player.GC, enemyPosInScreen, (int)Quaternion.LookRotation(enemyPosInScreen - player.transform.position).eulerAngles.y);
 		targetableEnemies.Add(enemy, tmHandler);
 	}
 
