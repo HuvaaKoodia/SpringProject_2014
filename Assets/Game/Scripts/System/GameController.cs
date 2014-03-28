@@ -67,7 +67,7 @@ public class GameController : MonoBehaviour {
 	public SharedSystemsMain SS {get;private set;}
 
 	public int CurrentFloorIndex{get{
-			return player.CurrentFloorIndex;
+			return Player.CurrentFloorIndex;
 		}
 	}
 	public FloorObjData CurrentFloorData{get{
@@ -83,19 +83,11 @@ public class GameController : MonoBehaviour {
 	public MenuHandler menuHandler;
 	public InventoryMain Inventory;
 
-    PlayerMain player;
+    public PlayerMain Player;
 	public bool do_culling=false;
 
 	public HaxKnifeCulling culling_system;
 	public MeshCombiner MeshCombi;
-
-    public PlayerMain Player{
-        get{return player;}
-        set{
-            player=value;
-            player.SetObjData(SS.GDB.GameData.PlayerData);
-        }
-    }
 
 	public List<GameObject> FloorContainers{get;private set;}
 
@@ -155,21 +147,24 @@ public class GameController : MonoBehaviour {
 			}
 		}
 		var start_floor=Subs.GetRandom(legit_floors);
-		Player=SS.MGen.CreatePlayer(start_floor);
-		player.CurrentFloorIndex=start_floor.FloorIndex;
-		player.GC=this;
+		SS.MGen.InitPlayer(Player, start_floor);
+		Player.SetObjData(SS.GDB.GameData.PlayerData);
+		Player.CurrentFloorIndex=start_floor.FloorIndex;
+		Player.GC=this;
 
 		//init hud
-		menuHandler.player = player;
+		menuHandler.player = Player;
 		menuHandler.CheckTargetingModePanel();
         menuHandler.SetGC(this);
 
-		Inventory.SetPlayer(player);
+		Inventory.SetPlayer(Player);
 
         var ec=GetComponent<EngineController>();
         ec.AfterRestart+=SS.GDB.StartNewGame;
 
-        player.ActivateEquippedItems();
+        Player.ActivateEquippedItems();
+
+		Player.InitPlayer();
 
 		SetFloor(CurrentFloorIndex);
 
@@ -227,7 +222,7 @@ public class GameController : MonoBehaviour {
 
 	void StartPlayerTurn()
 	{
-		player.StartPlayerPhase();
+		Player.StartPlayerPhase();
 	}
 
 	public void CullWorld (Vector3 position, Vector3 targetPosition,float max_distance)
@@ -250,10 +245,10 @@ public class GameController : MonoBehaviour {
 	public void SetFloor(int index){                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
 		index=Mathf.Max(0,Mathf.Min(Floors.Count-1,index));
 
-		player.CurrentFloorIndex=index;
+		Player.CurrentFloorIndex=index;
 		culling_system.DisableOtherFloors(index,this);
 		aiController.SetFloor(CurrentFloorData);
-		player.interactSub.CheckForInteractables();
+		Player.interactSub.CheckForInteractables();
 	}
 
 	private IEnumerator GotoFloorTimer(int index){

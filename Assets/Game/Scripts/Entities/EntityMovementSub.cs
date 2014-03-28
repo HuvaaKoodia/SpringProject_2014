@@ -39,7 +39,7 @@ public class EntityMovementSub : MonoBehaviour
 		waitBeforeMoving = false;
 	}
 
-    void Start(){
+    public void Init(){
 		UpdateFloor();
 		
 		UpdateTileEntityToThis();

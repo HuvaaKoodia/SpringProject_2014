@@ -44,7 +44,7 @@ public class PlayerMain : EntityMain
 		targetingMode = false;
 	}
 
-	void Start()
+	public void InitPlayer()
     {
 		ap = apMax;
 		ShotLastTurn = false;

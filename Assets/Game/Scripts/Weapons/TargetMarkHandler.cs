@@ -15,7 +15,7 @@ public class TargetMarkHandler
 		get { return crosshair.enabled; }
 	}
 	
-	public TargetMarkHandler(GameController gameController, Vector3 crosshairPosition)
+	public TargetMarkHandler(GameController gameController, Vector3 crosshairPosition, int rotation)
 	{
 		GC = gameController;
 
@@ -30,6 +30,7 @@ public class TargetMarkHandler
 		crosshair.transform.position = GC.menuHandler.NGUICamera.ScreenToWorldPoint(crosshairPosition);
 		crosshair.enabled = true;
 
+		crosshair.transform.Rotate(0, rotation, 0);
 		//crosshair.gameObject.AddComponent("UIButton");
 		
 		numShotsLabels = new List<UILabel>();

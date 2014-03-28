@@ -18,6 +18,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 	//UISprite insightPrefab;
 
 	public LayerMask targetingRayMask;
+	public LayerMask canSeeMask;
 	public int wallMask;
 
 	float cameraFarZ;
@@ -75,9 +76,9 @@ public class PlayerTargetingSub : MonoBehaviour {
 				RaycastHit hitInfo;
 
 				Debug.DrawRay(ray.origin, ray.direction * 20, Color.red, 2.0f);
-				if (Physics.Raycast(ray, out hitInfo, 20, targetingRayMask))
+				if (Physics.Raycast(ray, out hitInfo, 20, canSeeMask))
 				{
-					if (hitInfo.transform != hitbox.transform)
+					if (hitInfo.transform.parent != hitbox.transform.parent)
 						continue;
 				}
 
@@ -169,7 +170,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 		
 		enemyPosInScreen.z = 0.7f + (enemyPosInScreen.z / cameraFarZ);
 
-		TargetMarkHandler tmHandler = new TargetMarkHandler(player.GC, enemyPosInScreen);
+		TargetMarkHandler tmHandler = new TargetMarkHandler(player.GC, enemyPosInScreen, player.movement.targetRotationAngle);
 		targetableEnemies.Add(enemy, tmHandler);
 	}
 

@@ -129,6 +129,8 @@ public class MapGenerator : MonoBehaviour
 						newEnemy.CurrentFloorIndex=floor.FloorIndex;
                         
                         newEnemy.transform.parent = enemy_container.transform;
+
+						newEnemy.movement.Init();
                         break;
 
                     case TileObjData.Obj.Loot:
@@ -154,6 +156,7 @@ public class MapGenerator : MonoBehaviour
 
 						gatlingTurret.transform.parent = enemy_container.transform;
 
+						gatlingTurret.movement.Init();
 						gatlingTurret.movement.GetCurrenTile().LeaveTile();
 						break;
                 }
@@ -161,15 +164,15 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-	public PlayerMain CreatePlayer(FloorObjData floor){
+	public void InitPlayer(PlayerMain player, FloorObjData floor){
 
 		var StartPos = Subs.GetRandom (floor.AirlockPositions);
 		var tile_pos = new Vector3 (StartPos.x * TileSize.x, 0, StartPos.y * TileSize.z);
-		var player = GameObject.Instantiate (MapPrefabs.PlayerPrefab, tile_pos, Quaternion.identity) as PlayerMain;
-		player.name = "Player";
+
 		player.CurrentFloorIndex=floor.FloorIndex;
 		
 		player.movement.SetPositionInGrid (StartPos);
+		player.movement.Init();
 		player.transform.parent = clone_container.transform;
 		
 		//rotate player towards non airlock door
@@ -190,7 +193,6 @@ public class MapGenerator : MonoBehaviour
 				break;
 			}
 		}
-		return player;
 	}
 
     /// <summary>
