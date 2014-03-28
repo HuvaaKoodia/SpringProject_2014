@@ -32,6 +32,7 @@ public class AllLights : MonoBehaviour
 		//power_on = true;																						//initialize electricity to flow
 		ticks = 0.0f;																							//initialize value for ticks and set it to be 0.0f
 	}
+	//changes
 	
 	// Update is called once per frame
 	void Update ()
