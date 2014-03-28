@@ -32,6 +32,9 @@ public class MouseLook : MonoBehaviour {
 
 	public bool MouseLookOn = true;
 
+	Quaternion OriginalRot;
+	float startX, startY, startZ;
+
 	void Update ()
 	{
 		if (MouseLookOn)
@@ -53,7 +56,7 @@ public class MouseLook : MonoBehaviour {
 				transform.localRotation = 
 					Quaternion.RotateTowards(
 						transform.localRotation, 
-						Quaternion.Euler(-rotationY, rotationX, 0), 
+						Quaternion.Euler(-rotationY+startX, rotationX+startY, startZ), 
 						sensitivityX*Time.deltaTime);
 			}
 			else if (axes == RotationAxes.MouseX)
@@ -70,7 +73,7 @@ public class MouseLook : MonoBehaviour {
 		}
 		else
 		{
-			transform.localRotation = Quaternion.RotateTowards(transform.localRotation, Quaternion.Euler(0,0,0), sensitivityX*Time.deltaTime);
+			transform.localRotation = Quaternion.RotateTowards(transform.localRotation, OriginalRot, sensitivityX*Time.deltaTime);
 		}
 	}
 	
@@ -79,5 +82,11 @@ public class MouseLook : MonoBehaviour {
 		// Make the rigid body not change rotation
 		if (rigidbody)
 			rigidbody.freezeRotation = true;
+
+		OriginalRot = transform.rotation;
+
+		startX = OriginalRot.eulerAngles.x;
+		startY = OriginalRot.eulerAngles.y;
+		startZ = OriginalRot.eulerAngles.z;
 	}
 }
