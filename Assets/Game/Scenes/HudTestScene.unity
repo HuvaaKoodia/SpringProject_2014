@@ -109,6 +109,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 20891212}
   - 114: {fileID: 20891213}
+  - 114: {fileID: 20891214}
   m_Layer: 0
   m_Name: Corridor_TCrossing
   m_TagString: Untagged
@@ -144,6 +145,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GraphicsObject: {fileID: 395463618}
   Colliders: {fileID: 1802824380}
+  TileLights: {fileID: 20891214}
+--- !u!114 &20891214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400002, guid: 85a6973b8fa36a04b9d81a05b47648c3,
+    type: 2}
+  m_PrefabInternal: {fileID: 934321401}
+  m_GameObject: {fileID: 20891211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46a4daa2282b9b34f948d527603a44f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  white_lights:
+  - {fileID: 1309522401}
+  orange_lights:
+  - {fileID: 844813764}
+  - {fileID: 443013643}
+  delay: 1
+  power_on: 0
 --- !u!1 &73857635
 GameObject:
   m_ObjectHideFlags: 0
@@ -1317,6 +1338,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GraphicsObject: {fileID: 1085523975}
   Colliders: {fileID: 408884734}
+  TileLights: {fileID: 0}
 --- !u!1001 &934321401
 Prefab:
   m_ObjectHideFlags: 0

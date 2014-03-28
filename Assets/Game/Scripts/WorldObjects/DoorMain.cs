@@ -26,10 +26,12 @@ public class DoorMain : InteractableMain {
 		if (open){
 			graphics.animation.Play(open_animation);
             StartCoroutine(ToggleTimer(true,graphics.animation[open_animation].length));
+			Invoke("hitboxOff", graphics.animation[open_animation].length / 1.25f);
 		}
 		else{
 			graphics.animation.Play(close_animation);
             StartCoroutine(ToggleTimer(false,graphics.animation[open_animation].length));
+			hitboxOn();
 		}
 
 		return true;
@@ -38,15 +40,14 @@ public class DoorMain : InteractableMain {
     IEnumerator ToggleTimer(bool open,float delay){
         if (!open){
             IsOpen=open;
-            doorCollider.enabled=!open;
         }
+
 		anim_on=true;
 		yield return new WaitForSeconds(delay);
 		anim_on=false;
 		interactor.InteractFinished();
         if (open){
     		IsOpen=open;
-			doorCollider.enabled=!open;
         }
 	}
 
@@ -63,5 +64,15 @@ public class DoorMain : InteractableMain {
 		{
 			return Open(!IsOpen);
 		}
+	}
+
+	void hitboxOff()
+	{
+		doorCollider.enabled = false;
+	}
+
+	void hitboxOn()
+	{
+		doorCollider.enabled = true;
 	}
 }

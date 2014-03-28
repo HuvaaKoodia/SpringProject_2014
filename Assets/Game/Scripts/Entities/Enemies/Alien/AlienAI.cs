@@ -16,13 +16,13 @@ public class AlienAI : AIBase {
 	public LayerMask PlayerSeeMask;
 	public LayerMask CommunicationMask;
 
-	public const int PlayerHearRadiusUnaware = 10;
-	public const int PlayerHearRadiusAware = 18;
+	public int PlayerHearRadiusUnaware = 10;
+	public int PlayerHearRadiusAware = 18;
 
-	public const int PlayerSeeRadiusUnaware = 20;
-	public const int PlayerSeeRadiusAware = 30;
+	public int PlayerSeeRadiusUnaware = 20;
+	public int PlayerSeeRadiusAware = 30;
 
-	public const int FleeHealth = 30;
+	public int FleeHealth = 20;
 
 	public int numPhasesWaited = 0;
 	public bool NeedsPathfinding = true;
@@ -261,7 +261,7 @@ public class AlienAI : AIBase {
 		{
 			checkRadius = (blackboard.AwareOfPlayer || player.ShotLastTurn) ? PlayerSeeRadiusAware : PlayerSeeRadiusUnaware;
 
-			if (PathFinder.CanSeeFromTileToTile(player, parent, MyPosition, checkRadius, PlayerSeeMask))
+			if (PathFinder.CanSeeFromTileToTile(player, parent, MyPosition, checkRadius, PlayerSeeMask, true))
 			{
 				blackboard.AwareOfPlayer = true;
 				blackboard.TurnsWithoutPlayerAwareness = 0;
@@ -314,7 +314,7 @@ public class AlienAI : AIBase {
 
 		//if player can't see us, we're OK already. Hearmask because we don't want to hide behind other enemies
 		if (!PathFinder.CanSeeFromTileToTile(player, parent, currentPos, PlayerSeeRadiusAware, 
-             	PlayerHearMask))
+             	PlayerHearMask, true))
 			return RunStatus.Success;
 
 		Point3D playerPos = new Point3D(player.movement.currentGridX, player.movement.currentGridY);
@@ -359,7 +359,7 @@ public class AlienAI : AIBase {
 			return false;
 	
 		if (PathFinder.CanSeeFromTileToTile(player, parent, position, PlayerSeeRadiusAware, 
-                      PlayerSeeMask))
+                      PlayerSeeMask, true))
 		{
 			return true;
 		}
@@ -469,7 +469,7 @@ public class AlienAI : AIBase {
 			//again hearmask because we don't want to hide behind others
 			if (PathFinder.CanSeeFromTileToTile(player, parent, PathFinder.LatestDestination,
 			                                    PlayerHearRadiusAware*3,
-			                                    PlayerHearMask))
+			                                    PlayerHearMask, true))
 			{
 				return RunStatus.Failure;    
 			}
@@ -504,7 +504,7 @@ public class AlienAI : AIBase {
 			//check both next tile and ranged if ranged == 0 (which means no ranged <'',) )
 			if ((distance < 1.5f || distance <= parent.rangedRange) &&
 			    PathFinder.CanSeeFromTileToTile(player, parent, MyPosition, 
-                	Mathf.Max(1.5f, parent.rangedRange), PlayerSeeMask))
+                	Mathf.Max(1.5f, parent.rangedRange), PlayerSeeMask, true))
 				return true;
 
 		}

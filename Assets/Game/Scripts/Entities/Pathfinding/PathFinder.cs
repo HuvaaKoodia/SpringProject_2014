@@ -157,7 +157,7 @@ public static class PathFinder
 			}
 			
 			if (!CanSeeFromTileToTile(toAvoid, avoider, current.position, distance, 
-			                          layerMask))
+			                          layerMask, true))
 			{
 				return FindPath(world, startPoint, current.position, -1);
 			}
@@ -192,7 +192,7 @@ public static class PathFinder
 		return null; //no path found
 	}
 
-	public static bool CanSeeFromTileToTile(EntityMain toSee, EntityMain watcher, Point3D tileToCheck, float checkRadius, LayerMask mask)
+	public static bool CanSeeFromTileToTile(EntityMain toSee, EntityMain watcher, Point3D tileToCheck, float checkRadius, LayerMask mask, bool CheckWiderArea)
 	{
 		Vector3 adjustedtoToSeePos = toSee.transform.position + Vector3.up*0.6f;
 		Vector3 adjustedWatcherPos = 
@@ -212,7 +212,11 @@ public static class PathFinder
 		Color[] rayColors = { Color.magenta, Color.blue, Color.cyan };
 		RaycastHit hitInfo;
 
-		for (int i = 0; i < 3; i++)
+		int checkCount = 1;
+		if (CheckWiderArea)
+			checkCount = 3;
+
+		for (int i = 0; i < checkCount; i++)
 		{
 			Debug.DrawLine(rays[i].origin, rays[i].origin + rays[i].direction*checkRadius, rayColors[i], 5.0f);
 			if (Physics.Raycast(rays[i], out hitInfo, checkRadius, mask))
