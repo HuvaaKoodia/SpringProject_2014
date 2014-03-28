@@ -13,8 +13,8 @@ public class XmlDatabase
 	public static Dictionary<string,InvBaseItem> QuestItems=new Dictionary<string,InvBaseItem>();
 	public static Dictionary<string,AmmoXmlData> AmmoTypes=new Dictionary<string,AmmoXmlData>();
 	public static Dictionary<MissionObjData.Objective,ObjectiveXmlData> Objectives=new Dictionary<MissionObjData.Objective,ObjectiveXmlData>();
-	public static Dictionary<string,List<string>> LootPool=new Dictionary<string, List<string>>();
-	public static Dictionary<string,List<string>> MissionPool=new Dictionary<string, List<string>>();
+	public static PoolXmlData LootPool=new PoolXmlData();
+	public static PoolXmlData MissionPool=new PoolXmlData();
 	public static Dictionary<string,RewardClassXmlData> RewardClasses=new Dictionary<string,RewardClassXmlData>();
 
 	public static string MoneyUnit="BTC";
@@ -74,4 +74,6 @@ public class XmlDatabase
 		}
 		return null;
 	}
+
+
 }

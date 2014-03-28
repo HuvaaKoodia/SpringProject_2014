@@ -19,7 +19,10 @@ public class TileMain : MonoBehaviour
 			{
 				//TileGraphics.TileLights.SetState(TileGraphics.TileLights.RandomizeStartState(30, 50, 20));	//randomize start state of the white lights
 				//TileGraphics.TileLights.SetState(Lighting_State.Normal);
-				TileGraphics.TileLights.SetPowerOn(Subs.RandomBool());										//randomize whether electricity should flow
+				//TileGraphics.TileLights.SetPowerOn(Subs.RandomBool());										//randomize whether electricity should flow
+				TileGraphics.TileLights.power_on = Subs.RandomBool();										//randomize whether electricity should flow
+				//TileGraphics.TileLights.power_on = true;
+				//TileGraphics.TileLights.lighting_state = Lighting_State.Flickering;
 				TileGraphics.TileLights.EnableLights(4.0f);													//set the intensity of the white lights
 			}
 		}

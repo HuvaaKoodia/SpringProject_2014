@@ -252,13 +252,13 @@ public class XMLDataLoader : XML_Loader
 		if (node.Name == "LootPool")
 		{
 			string pool=getAttStr(node,"name");
-			if (!XmlDatabase.LootPool.ContainsKey(pool)){
-				XmlDatabase.LootPool.Add(pool,new List<string>());
+			if (!XmlDatabase.LootPool.Pool.ContainsKey(pool)){
+				XmlDatabase.LootPool.Pool.Add(pool,new List<PoolItemXmlData>());
 			}
 
 			foreach(XmlNode n in node){
 				if (n.Name=="Item"){
-					XmlDatabase.LootPool[pool].Add(getAttStr(n,"name"));
+					XmlDatabase.LootPool.Pool[pool].Add(new PoolItemXmlData(getAttStr(n,"name"),getAttInt(n,"weight",1)));
 				}
 			}
 
@@ -268,13 +268,13 @@ public class XMLDataLoader : XML_Loader
 		if (node.Name == "MissionPool")
 		{
 			string pool=getAttStr(node,"name");
-			if (!XmlDatabase.MissionPool.ContainsKey(pool)){
-				XmlDatabase.MissionPool.Add(pool,new List<string>());
+			if (!XmlDatabase.MissionPool.Pool.ContainsKey(pool)){
+				XmlDatabase.MissionPool.Pool.Add(pool,new List<PoolItemXmlData>());
 			}
 			
 			foreach(XmlNode n in node){
 				if (n.Name=="Item"){
-					XmlDatabase.MissionPool[pool].Add(getAttStr(n,"name"));
+					XmlDatabase.MissionPool.Pool[pool].Add(new PoolItemXmlData(getAttStr(n,"name"),getAttInt(n,"weight",1)));
 				}
 			}
 			

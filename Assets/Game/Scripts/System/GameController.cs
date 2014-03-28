@@ -114,7 +114,7 @@ public class GameController : MonoBehaviour {
 
         //DEV.DEBUG generate mission
         if (SS.GDB.GameData.CurrentMission==null){
-			SS.GDB.GameData.CurrentMission=MissionGenerator.GenerateMission(Subs.GetRandom(XmlDatabase.MissionPool.Keys));
+			SS.GDB.GameData.CurrentMission=MissionGenerator.GenerateMission(Subs.GetRandom(XmlDatabase.MissionPool.Pool.Keys));
         }
 		menuHandler.MissionBriefing.SetMission(SS.GDB.GameData.CurrentMission);
 
@@ -172,6 +172,9 @@ public class GameController : MonoBehaviour {
         player.ActivateEquippedItems();
 
 		SetFloor(CurrentFloorIndex);
+
+		SetState_FloorNum(0, RandomizeStartState(10, 80, 10));
+		EnableLights_AllFloors(4.0f, true);
 	}
 
 	// Update is called once per frame
@@ -288,7 +291,8 @@ public class GameController : MonoBehaviour {
 			if(tilegraphics.TileLights != null)
 			{
 				//set electricity to flow for the white light in particular TileMainMap in particular floor
-				tilegraphics.TileLights.SetPowerOn(on);
+				//tilegraphics.TileLights.SetPowerOn(on);
+				tilegraphics.TileLights.power_on = on;
 				//set intensity for the white light in particular TileMainMap in particular floor
 				tilegraphics.TileLights.EnableLights(power);
 			}
@@ -346,7 +350,8 @@ public class GameController : MonoBehaviour {
 			if(tilegraphics.TileLights != null)
 			{
 				//set state to the white lights
-				tilegraphics.TileLights.SetState(LS);
+				//tilegraphics.TileLights.SetState(LS);
+				tilegraphics.TileLights.lighting_state = LS;
 			}
 		}
 	}
@@ -387,10 +392,12 @@ public class GameController : MonoBehaviour {
 
 
 
+
 	//FUNCTION TO RANDOMIZE THE STATE FOR THE WHITE LIGHT
 
 	//function to randomize the state of the white lights in the environment
-	//percentages of chances are passed in here
+	//percentages passed in represents the chances of getting each state
+	//like a dice roll
 	public Lighting_State RandomizeStartState(int broken_percent, int flickering_percent, int normal_percent)
 	{
 		//as long as the percentages do not add up to 100, display error log and set state to normal
@@ -399,7 +406,8 @@ public class GameController : MonoBehaviour {
 		if(totalpercent != 100)
 		{
 			Debug.Log("Percentages passed in do not add up to 100%");
-			return Lighting_State.Normal;
+			//return Lighting_State.Normal;
+			Debug.Break();
 		}
 		
 		int value = Subs.RandomPercent();
@@ -408,13 +416,9 @@ public class GameController : MonoBehaviour {
 		{
 			return Lighting_State.Broken;
 		}
-		else if(value >= broken_percent && value < flickering_percent)
+		else if(value < flickering_percent)
 		{
 			return Lighting_State.Flickering;
-		}
-		else if(value >= flickering_percent && value < normal_percent)
-		{
-			return Lighting_State.Normal;
 		}
 		else
 		{
