@@ -123,7 +123,6 @@ public class InvGameItem
 
 		if (baseItem != null)
 		{
-
 			List<InvStat> baseStats = baseItem.Stats;
 
 			for (int i = 0, imax = baseStats.Count; i < imax; ++i)
@@ -174,15 +173,17 @@ public class InvGameItem
 		return gi;
 	}
 
-	public static InvGameItem GetRandomItem (string lootpool)
+	public static InvGameItem GetRandomItem (string lootpool,string qualitypool)
 	{
 		var i=XmlDatabase.LootPool.GetRandomItem(lootpool);
-		InvBaseItem item = XmlDatabase.items[i.item];
-		
+		InvBaseItem item = XmlDatabase.GetBaseItem(i);
+
+		Debug.Log("asd: ,"+qualitypool);
+		var level=XmlDatabase.LootQualityPool.GetRandomItem(qualitypool);
+
 		InvGameItem gi = new InvGameItem(item);
-		gi.itemLevel = NGUITools.RandomRange(item.minItemLevel, item.maxItemLevel);
+		gi.itemLevel = int.Parse(level);
 		gi.RecalculateStats();
 		return gi;
 	}
-
 }

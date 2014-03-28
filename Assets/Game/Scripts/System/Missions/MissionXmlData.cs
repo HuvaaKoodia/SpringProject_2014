@@ -4,7 +4,9 @@ using System.Collections.Generic;
 
 public class MissionXmlData{
     public string Description;
-    public string RewardClass;
+    public string RewardClass,LootPool,LootQuality;
+	public int TravelTimeMin,TravelTimeMax,ExpirationTimeMin,ExpirationTimeMax;
+	public PoolContainerXmlData StatusContainer=new PoolContainerXmlData("Status");
     public List<string> ShipsTypes=new List<string>();
     public List<string> PrimaryObjectives=new List<string>();
     public List<string> SecondaryObjectives=new List<string>();

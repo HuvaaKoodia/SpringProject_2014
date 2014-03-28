@@ -114,7 +114,7 @@ public class GameController : MonoBehaviour {
 
         //DEV.DEBUG generate mission
         if (SS.GDB.GameData.CurrentMission==null){
-			SS.GDB.GameData.CurrentMission=MissionGenerator.GenerateMission(Subs.GetRandom(XmlDatabase.MissionPool.Pool.Keys));
+			SS.GDB.GameData.CurrentMission=MissionGenerator.GenerateMission(Subs.GetRandom(XmlDatabase.MissionPool.Pools.Keys));
         }
 		menuHandler.MissionBriefing.SetMission(SS.GDB.GameData.CurrentMission);
 
@@ -140,7 +140,8 @@ public class GameController : MonoBehaviour {
 			SS.MGen.GenerateObjectDataMap(floor,ship_objdata.Floors[i]);
 			SS.SDGen.GenerateShipItems(this,floor,ship_objdata);
 			SS.MGen.GenerateSceneMap(this,floor);
-			SS.SDGen.GenerateLoot(floor,SS.GDB.GameData.CurrentMission.MissionPoolIndex);
+			var xml=SS.GDB.GameData.CurrentMission.XmlData;
+			SS.SDGen.GenerateLoot(floor,xml.LootPool,xml.LootQuality);
 			Debug.Log("Floor: "+i+" loaded");
 		}
 

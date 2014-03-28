@@ -18,8 +18,8 @@ public class MissionObjData {
     public enum Type{TradeVesselInfo,RetrieveCargo,EmergencyBeacon,ExploreVessel}
     public enum AlienAmount{None,Small,Medium,Large}
     public enum SecuritySystems{None,Small,Medium,Large}
-    public enum ShipCondition{Intact,Damaged,BadlyDamaged}
-    public enum ShipPower{On,Off}
+	public enum ShipCondition{BadlyDamaged,Damaged,Intact}
+	public enum ShipPower{Broken,Off,On}
 
     public enum Objective{FindLogs,FindItem,Explore,Loot}
    

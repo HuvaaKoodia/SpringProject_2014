@@ -98,9 +98,9 @@ public class GameDB : MonoBehaviour {
     {
 		List<string> availablemissionpools=new List<string>();
 
-		foreach (var p in XmlDatabase.MissionPool.Pool.Keys){
+		foreach (var p in XmlDatabase.MissionPool.Pools.Keys){
 			availablemissionpools.Add(p);
-		} 
+		}
 
 		for (int i=0;i<GameData.AvailableMissions.Count;++i){
 			var m=GameData.AvailableMissions[i];

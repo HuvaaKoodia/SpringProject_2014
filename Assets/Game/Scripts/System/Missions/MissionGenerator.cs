@@ -3,29 +3,36 @@ using System.Collections;
 
 public class MissionGenerator{
 
-    public static MissionObjData GenerateMission(string pool){
+    public static MissionObjData GenerateMission(string missionpool){
 
-		var type=XmlDatabase.MissionPool.GetRandomItem(pool).item;
+		var type=XmlDatabase.MissionPool.GetRandomItem(missionpool);
         var mission=new MissionObjData();
-		mission.MissionPoolIndex=pool;
+		mission.MissionPoolIndex=missionpool;
 
 		mission.MissionType=(MissionObjData.Type)System.Enum.Parse(typeof(MissionObjData.Type),type);
 
         //DEV.TEMP force type
         //mission.MissionType= MissionObjData.Type.RetrieveCargo;
 
-		mission.XmlData=XmlDatabase.Missions[mission.MissionType];
+		var xml=XmlDatabase.Missions[mission.MissionType];
+		mission.XmlData=xml;
 
-		//missions stats
-        mission.MissionAlienAmount=     Subs.GetRandomEnum<MissionObjData.AlienAmount>();
-        mission.MissionSecuritySystem=  Subs.GetRandomEnum<MissionObjData.SecuritySystems>();
-        mission.MissionShipPower=       Subs.GetRandomEnum<MissionObjData.ShipPower>();
-        mission.MissionShipConditions=  Subs.GetRandomEnum<MissionObjData.ShipCondition>();
+		//mission status
+		var aliens=xml.StatusContainer.GetRandomItem("Aliens");
+		var security=xml.StatusContainer.GetRandomItem("Security");
+		var power=xml.StatusContainer.GetRandomItem("Power");
+		var condition=xml.StatusContainer.GetRandomItem("Condition");
 
+        mission.MissionAlienAmount=     (MissionObjData.AlienAmount)int.Parse(aliens);
+		mission.MissionSecuritySystem=  (MissionObjData.SecuritySystems)int.Parse(security);
+		mission.MissionShipPower=       (MissionObjData.ShipPower)int.Parse(power);
+		mission.MissionShipConditions=  (MissionObjData.ShipCondition)int.Parse(condition);
+
+		//known status info
 		bool has_info=true;
 		if (Subs.RandomPercent()<XmlDatabase.MissionCatastrophicIntelFailureChance) has_info=false;
 		mission.NoInfo=!has_info;
-		//info stats
+
         if (has_info){
 			mission.InfoAlienAmount=GetRandomInfo();
         	mission.InfoSecuritySystem=GetRandomInfo();
@@ -42,11 +49,11 @@ public class MissionGenerator{
             mission.AddSecondaryObjective((MissionObjData.Objective)System.Enum.Parse(typeof(MissionObjData.Objective),o,true));
         }
 
-		//time DEV.in xmls
-		mission.TravelTime=Subs.GetRandom(3,8);
-		mission.ExpirationTime=Subs.GetRandom(1,10);
+		//time 
+		mission.TravelTime=Subs.GetRandom(xml.TravelTimeMin,xml.TravelTimeMax+1);
+		mission.ExpirationTime=Subs.GetRandom(xml.ExpirationTimeMin,xml.ExpirationTimeMax+1);
 
-		var rc=XmlDatabase.RewardClasses[mission.XmlData.RewardClass];
+		var rc=XmlDatabase.RewardClasses[xml.RewardClass];
 
 		mission.Reward=(int)Mathf.Round(Subs.GetRandom(rc.min,rc.max)/(float)XmlDatabase.MissionRewardRounding)*XmlDatabase.MissionRewardRounding;
 

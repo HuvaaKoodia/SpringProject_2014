@@ -1,35 +1,33 @@
 using System;
 using System.Collections.Generic;
 
-public class PoolXmlData
+public class PoolContainerXmlData
 {
-	string PoolName;
-	public Dictionary<string,List<PoolItemXmlData>> Pool=new Dictionary<string, List<PoolItemXmlData>>();
+	public string Name{get;private set;}
+	public Dictionary<string,PoolXmlData> Pools{get;private set;}
 
-	public PoolXmlData(string name){
-		PoolName=name;
+	public PoolContainerXmlData(string name){
+		Name=name;
+		Pools=new Dictionary<string, PoolXmlData>();
 	}
 	
-	public PoolItemXmlData GetRandomItem (string pool)
+	public string GetRandomItem (string pool)
 	{
-		if (!Pool.ContainsKey(pool)){
-			UnityEngine.Debug.Log("Pool not found: "+pool + " in "+PoolName);
+		if (!Pools.ContainsKey(pool)){
+			UnityEngine.Debug.Log("PoolContainer doesn't have a pool: "+pool + " in "+Name);
 			return null;
 		}
-		int pool_size=0;
-		foreach (var i in Pool[pool]){
-			pool_size+=i.weight;
-		}
+		var p=Pools[pool];
+		return p.GetRandomItem();
+	}
 
-		int r=Subs.GetRandom(pool_size);
-		int t=0;
-		foreach (var i in Pool[pool]){
-			if (r<t+i.weight){
-				return i;
-			}
-			t+=i.weight;
+	public void AddPool (string pool)
+	{
+		if (Pools.ContainsKey(pool)){
+			UnityEngine.Debug.Log("PoolContainer already has a pool: "+pool+" in "+Name);
+			return;
 		}
-		return null;
+		Pools.Add(pool,new PoolXmlData());
 	}
 }
 

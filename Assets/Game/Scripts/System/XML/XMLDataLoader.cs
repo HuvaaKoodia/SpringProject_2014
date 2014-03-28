@@ -132,36 +132,51 @@ public class XMLDataLoader : XML_Loader
             var type=(MissionObjData.Type)System.Enum.Parse(typeof(MissionObjData.Type),getAttStr(node,"type"),true);
             mission.Description=getStr(node,"Description").Replace("\\n","\n");
             mission.RewardClass=getAttStr(node,"rewardClass");
+			mission.LootPool=getAttStr(node,"lootPool");
+			mission.LootQuality=getAttStr(node,"lootQuality");
 
             string[] spl;
 
-            var strs=node["PrimaryObjectives"];
-            if (strs!=null){
-                spl=Subs.SplitAndTrim(strs.InnerText,"\n");
+            var temp=node["PrimaryObjectives"];
+            if (temp!=null){
+                spl=Subs.SplitAndTrim(temp.InnerText,"\n");
                 
                 foreach(var n in spl){
                     mission.PrimaryObjectives.Add(n);
                 }
             }
 
-            strs=node["SecondaryObjectives"];
-            if (strs!=null){
-                spl=Subs.SplitAndTrim(strs.InnerText,"\n");
+            temp=node["SecondaryObjectives"];
+            if (temp!=null){
+                spl=Subs.SplitAndTrim(temp.InnerText,"\n");
                 
                 foreach(var n in spl){
                     mission.SecondaryObjectives.Add(n);
                 }
             }
 
-            strs=node["Ships"];
-            spl=Subs.SplitAndTrim(strs.InnerText,"\n");
+            temp=node["Ships"];
+            spl=Subs.SplitAndTrim(temp.InnerText,"\n");
             
             foreach(var n in spl){
                 mission.ShipsTypes.Add(n);
             }
 
+			temp=node["TravelTime"];
+			mission.TravelTimeMin=getAttInt(temp,"min");
+			mission.TravelTimeMax=getAttInt(temp,"max");
+
+			temp=node["ExpirationTime"];
+			mission.ExpirationTimeMin=getAttInt(temp,"min");
+			mission.ExpirationTimeMax=getAttInt(temp,"max");
+
+			//status containers
+			foreach(XmlNode n in node){
+				loadPoolContainer(n,mission.StatusContainer);
+			}
+			
 			XmlDatabase.Missions.Add(type,mission);
-            return true;
+			return true;
         }
         return false;
     }
@@ -249,41 +264,34 @@ public class XMLDataLoader : XML_Loader
 
 	static bool ReadPools (XmlNode node)
 	{
-		if (node.Name == "LootPool")
-		{
-			string pool=getAttStr(node,"name");
-			if (!XmlDatabase.LootPool.Pool.ContainsKey(pool)){
-				XmlDatabase.LootPool.Pool.Add(pool,new List<PoolItemXmlData>());
-			}
-
-			foreach(XmlNode n in node){
-				if (n.Name=="Item"){
-					XmlDatabase.LootPool.Pool[pool].Add(new PoolItemXmlData(getAttStr(n,"name"),getAttInt(n,"weight",1)));
-				}
-			}
-
-			return true;
-		}
-
-		if (node.Name == "MissionPool")
-		{
-			string pool=getAttStr(node,"name");
-			if (!XmlDatabase.MissionPool.Pool.ContainsKey(pool)){
-				XmlDatabase.MissionPool.Pool.Add(pool,new List<PoolItemXmlData>());
-			}
-			
-			foreach(XmlNode n in node){
-				if (n.Name=="Item"){
-					XmlDatabase.MissionPool.Pool[pool].Add(new PoolItemXmlData(getAttStr(n,"name"),getAttInt(n,"weight",1)));
-				}
-			}
-			
-			return true;
-		}
-
+		if (loadPoolContainer(node,XmlDatabase.LootPool)) return true;
+		if (loadPoolContainer(node,XmlDatabase.MissionPool)) return true;
+		if (loadPoolContainer(node,XmlDatabase.LootQualityPool)) return true;
 		return false;
 	}
-	
+
+	private static bool loadPoolContainer(XmlNode node,PoolContainerXmlData container){
+		if (node.Name == container.Name)
+		{
+			string pool=getAttStr(node,"name");
+			if (!container.Pools.ContainsKey(pool)){
+				container.AddPool(pool);
+			}
+			
+			loadPool(node,container.Pools[pool]);
+			return true;
+		}
+		return false;
+	}
+
+	private static void loadPool(XmlNode node,PoolXmlData pool){
+		foreach(XmlNode n in node){
+			if (n.Name=="Item"){
+				pool.AddItem(new PoolItemXmlData(getAttStr(n,"name"),getAttInt(n,"weight",1)));
+			}
+		}
+	}
+
 	static bool ReadRewardClass (XmlNode node)
 	{
 		if (node.Name == "RewardClass")
