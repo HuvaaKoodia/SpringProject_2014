@@ -11,14 +11,14 @@ public class ShipDetailGenerator : MonoBehaviour
     /// Call after MapGen.GenerateSceneMap.
     /// DEV.Develop further
     /// </summary>
-	public void GenerateLoot(FloorObjData floor,string lootpool)
+	public void GenerateLoot(FloorObjData floor,string lootpool,string lootquality)
     {
 		foreach (var c in floor.LootCrates)
         {
             int a = Subs.GetRandom(1, 5);
             for (int i=0; i<a; i++)
             {
-				c.Items.Add(InvGameItem.GetRandomItem(lootpool));
+				c.Items.Add(InvGameItem.GetRandomItem(lootpool,lootquality));
             }
         }
     }

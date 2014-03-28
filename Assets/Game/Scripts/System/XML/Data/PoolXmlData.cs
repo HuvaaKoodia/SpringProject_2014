@@ -3,23 +3,32 @@ using System.Collections.Generic;
 
 public class PoolXmlData
 {
-	public Dictionary<string,List<PoolItemXmlData>> Pool=new Dictionary<string, List<PoolItemXmlData>>();
+	public List<PoolItemXmlData> Pool{get;private set;}
 
-	public PoolItemXmlData GetRandomItem (string pool)
+	public PoolXmlData(){
+		Pool=new List<PoolItemXmlData>();
+	}
+	
+	public string GetRandomItem ()
 	{
 		int pool_size=0;
-		foreach (var i in Pool[pool]){
+		foreach (var i in Pool){
 			pool_size+=i.weight;
 		}
 
 		int r=Subs.GetRandom(pool_size);
-		
-		foreach (var i in Pool[pool]){
-			if (r<i.weight){
-				return i;
+		int t=0;
+		foreach (var i in Pool){
+			if (r<t+i.weight){
+				return i.item;
 			}
+			t+=i.weight;
 		}
-		return null;
+		return "";
+	}
+
+	public void AddItem(PoolItemXmlData item){
+		Pool.Add(item);
 	}
 }
 
