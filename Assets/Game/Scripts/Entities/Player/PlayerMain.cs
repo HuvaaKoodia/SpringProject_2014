@@ -7,6 +7,8 @@ public class PlayerMain : EntityMain
 {
     public PlayerObjData ObjData{get;private set;}
 
+	public PlayerHud HUD;
+
 	public PlayerInputSub inputSub;
 	public PlayerTargetingSub targetingSub;
 	public PlayerInteractSub interactSub;
@@ -41,6 +43,7 @@ public class PlayerMain : EntityMain
 		base.Awake();
 		
 		GC = GameObject.Find("GameSystems").GetComponent<GameController>();
+
 		inputSub = GetComponent<PlayerInputSub>();
 
 		targetingMode = false;
@@ -54,7 +57,7 @@ public class PlayerMain : EntityMain
 		movement.UpdateFloor();
 		interactSub.CheckForInteractables();
 
-        ActivateEquippedItems();
+        
 
         for (int i=0;i<4;++i){
             weaponList[i].weaponID=(WeaponID)i;
@@ -64,6 +67,8 @@ public class PlayerMain : EntityMain
 		HudCamera.GetComponent<MouseLook>().SetOriginalRot(GameCamera.transform.localRotation);
 
 		CullWorld();
+
+		HUD.Init(this,GC);
 	}
 	
 	// Update is called once per frame
@@ -84,7 +89,7 @@ public class PlayerMain : EntityMain
 		Finished = false;
 		DisperseWeaponHeat(1);
 
-		GC.menuHandler.gunInfoDisplay.UpdateAllDisplays();
+		HUD.gunInfoDisplay.UpdateAllDisplays();
         StartTurn();
     }
 
@@ -140,7 +145,7 @@ public class PlayerMain : EntityMain
 		}
 
 		ShotLastTurn = true;
-		GC.menuHandler.gunInfoDisplay.UpdateAllDisplays();
+		HUD.gunInfoDisplay.UpdateAllDisplays();
 
 		if (ap == 0)
 			EndPlayerPhase();
@@ -206,8 +211,8 @@ public class PlayerMain : EntityMain
 		targetingMode = true;
 		targetingSub.CheckTargetableEnemies();
 		targetingSub.CheckGunSightToEnemies(GetCurrentWeapon().transform.position);
-		GC.menuHandler.CheckTargetingModePanel();
-		GC.menuHandler.gunInfoDisplay.ChangeCurrentHighlight(currentWeaponID);
+		HUD.CheckTargetingModePanel();
+		HUD.gunInfoDisplay.ChangeCurrentHighlight(currentWeaponID);
 		return true;
 	}
 
@@ -215,7 +220,7 @@ public class PlayerMain : EntityMain
 	{
 		targetingMode = false;
 		targetingSub.UnsightAllEnemies();
-		GC.menuHandler.CheckTargetingModePanel();
+		HUD.CheckTargetingModePanel();
 	}
 
 	public void DisperseWeaponHeat(float multiplier)
@@ -228,7 +233,7 @@ public class PlayerMain : EntityMain
 		
 		ObjData.UpperTorso.AddHEAT(-(XmlDatabase.HullHeatDisperseConstant+XmlDatabase.HullHeatDisperseHeatMultiplier*ObjData.UpperTorso.HEAT)*multiplier);
 
-		GC.menuHandler.gunInfoDisplay.UpdateAllDisplays();
+		HUD.gunInfoDisplay.UpdateAllDisplays();
 	}
 
 	public void ChangeWeapon(WeaponID id)
@@ -241,8 +246,8 @@ public class PlayerMain : EntityMain
 		currentWeaponID = id;
 		targetingSub.CheckGunTargets();
 		targetingSub.CheckGunSightToEnemies(GetCurrentWeapon().transform.position);
-		GC.menuHandler.CheckTargetingModePanel();
-		GC.menuHandler.gunInfoDisplay.ChangeCurrentHighlight(currentWeaponID);
+		HUD.CheckTargetingModePanel();
+		HUD.gunInfoDisplay.ChangeCurrentHighlight(currentWeaponID);
 		targetingSub.ShowTargetMarks(GetCurrentWeapon().Weapon != null);
 	}
 
@@ -264,7 +269,7 @@ public class PlayerMain : EntityMain
         var Slot=ObjData.Equipment.GetSlot(slot);
         weapon.SetWeapon(Slot);
 
-		GC.menuHandler.gunInfoDisplay.SetWeaponToDisplay(id, weapon);
+		HUD.gunInfoDisplay.SetWeaponToDisplay(id, weapon);
     }
 
 	public bool HasRadar{get;private set;}
@@ -281,7 +286,7 @@ public class PlayerMain : EntityMain
         ActivateEquipment(WeaponID.RightShoulder,UIEquipmentSlot.Slot.WeaponRightShoulder);
         
 		if (GetCurrentWeapon().Usable())
-			GC.menuHandler.gunInfoDisplay.ChangeCurrentHighlight(currentWeaponID);
+			HUD.gunInfoDisplay.ChangeCurrentHighlight(currentWeaponID);
 
 		foreach(WeaponMain weapon in weaponList)
 		{
@@ -337,8 +342,9 @@ public class PlayerMain : EntityMain
 				w.cooling_multi=cooling_multi*0.01f;
 				w.accuracy_multi=accu_multi*0.01f;
 
-				if (w.Equipment.Item.baseItem.type==InvBaseItem.Type.MeleeWeapon)
-					w.attack_multi=melee_multi*0.01f;
+				if (w.Equipment.Item!=null){
+					if (w.Equipment.Item.baseItem.type==InvBaseItem.Type.MeleeWeapon) w.attack_multi=melee_multi*0.01f;
+				}
 			}
 		}
     }

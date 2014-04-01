@@ -134,8 +134,8 @@ public class PlayerInputSub : MonoBehaviour {
 			if (player.targetingMode)
 			{
 				player.targetingSub.TargetAtMousePosition(true);
-				player.GC.menuHandler.CheckTargetingModePanel();
-                player.GC.menuHandler.gunInfoDisplay.UpdateAllDisplays();
+				player.HUD.CheckTargetingModePanel();
+                player.HUD.gunInfoDisplay.UpdateAllDisplays();
 			}
 			else
 			{
@@ -147,8 +147,8 @@ public class PlayerInputSub : MonoBehaviour {
 			if (player.targetingMode)
 			{
 				player.targetingSub.TargetAtMousePosition(false);
-				player.GC.menuHandler.CheckTargetingModePanel();
-                player.GC.menuHandler.gunInfoDisplay.UpdateAllDisplays();
+				player.HUD.CheckTargetingModePanel();
+                player.HUD.gunInfoDisplay.UpdateAllDisplays();
 			}
 		}
 	}
@@ -213,10 +213,10 @@ public class PlayerInputSub : MonoBehaviour {
 
 		if (player.targetingMode){
 			player.EndTargetingMode();
-            player.GC.menuHandler.ToggleTargetingHUD();
+			player.HUD.ToggleTargetingHUD();
         }
         else{
-            if (player.StartTargetingMode()) player.GC.menuHandler.ToggleTargetingHUD();
+            if (player.StartTargetingMode()) player.HUD.ToggleTargetingHUD();
         }
 	}
 
@@ -227,7 +227,7 @@ public class PlayerInputSub : MonoBehaviour {
 
 		player.Attack();
 
-        player.GC.menuHandler.ToggleTargetingHUD();
+		player.HUD.ToggleTargetingHUD();
     }
 
 	public void DisperseHeatInput()

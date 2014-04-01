@@ -153,10 +153,14 @@ public class GameController : MonoBehaviour {
 		Player.CurrentFloorIndex=start_floor.FloorIndex;
 		Player.GC=this;
 
+
+
 		//init hud
 		menuHandler.player = Player;
-		menuHandler.CheckTargetingModePanel();
         menuHandler.SetGC(this);
+
+		Player.InitPlayer();
+		Player.HUD.CheckTargetingModePanel();
 
 		Inventory.SetPlayer(Player);
 
@@ -165,7 +169,7 @@ public class GameController : MonoBehaviour {
 
         Player.ActivateEquippedItems();
 
-		Player.InitPlayer();
+
 
 		SetFloor(CurrentFloorIndex);
 
@@ -218,7 +222,7 @@ public class GameController : MonoBehaviour {
     public void ChangeTurn(TurnState turn)
     {
 		currentTurn = turn;
-		menuHandler.turnText.gameObject.SetActive(currentTurn == TurnState.PlayerTurn);
+		Player.HUD.turnText.gameObject.SetActive(currentTurn == TurnState.PlayerTurn);
     }
 
 	void StartPlayerTurn()

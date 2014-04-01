@@ -45,12 +45,12 @@ public class InventoryMain : MonoBehaviour {
         if (InventoryOpen)
         {
             DeactivateInventory();
-            HUD.DeactivateInventoryHUD();
+			Player.HUD.DeactivateInventoryHUD();
         }
         else
         {
             ActivateInventory();
-            HUD.ActivateInventoryHUD();
+			Player.HUD.ActivateInventoryHUD();
         }
     }
 
@@ -65,7 +65,7 @@ public class InventoryMain : MonoBehaviour {
         InventoryPanel.SetActive(false);
         Player.ActivateEquippedItems();
 
-		HUD.SetHudToPlayerStats();
+		Player.HUD.SetHudToPlayerStats();
 
 		if (LootParent.activeSelf) LootParent.SetActive(false);
 	}
@@ -87,7 +87,7 @@ public class InventoryMain : MonoBehaviour {
 		LootStorage.ChangeItemStorage(loot.Items);
 
 		ActivateInventory();
-		HUD.ActivateInventoryHUD();
+		Player.HUD.ActivateInventoryHUD();
 	}
 
     public void LootAll(){

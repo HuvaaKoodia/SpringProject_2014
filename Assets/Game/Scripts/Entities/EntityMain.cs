@@ -3,7 +3,7 @@ using System.Collections;
 
 public class EntityMain : MonoBehaviour
 {
-    public GameController GC;
+	public GameController GC{get;set;}
     public EntityMovementSub movement;
 
 	public bool BlocksMovement = true;

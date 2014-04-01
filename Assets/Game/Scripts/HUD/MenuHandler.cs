@@ -11,28 +11,12 @@ public class MenuHandler : MonoBehaviour {
 
 	public GameController GC;
 	public PlayerMain player;
-
-	public Camera NGUICamera;
-
-	public UISprite turnText;
-	public UISprite engageButton;
-
-	public UIPanel targetMarkPanel;
-
-	public GunDisplayMain gunInfoDisplay;
-	public RadarMain radar;
-	public HudMapMain map;
-
+	
 	public MenuState currentMenuState;
-
-	public GameObject EndHud;
-	public GameObject MovementHud;
-	public GameObject TargetingHud;
-	public GameObject InteractHud;
+	
 	public InventoryMain InventoryHud;
     public MissionBriefingMenu MissionBriefing;
     public GameObject EndMissionPanel;
-    public MechStatisticsMain MechStats;
 	public UISprite FadePanel;
 
 	public UILabel FPS;
@@ -42,24 +26,10 @@ public class MenuHandler : MonoBehaviour {
 	void Start()
 	{
 		currentMenuState = MenuState.NothingSelected;
-		MovementHud.SetActive(false);
-		TargetingHud.SetActive(false);
-
-        //SetGC(GC);
-		MechStats.SetPlayer(player.ObjData);
-		
-		radar.Init();
-		map.Init();
-		
-		SetHudToPlayerStats();
 	}
 
     public void SetGC(GameController gc){
         GC=gc;
-        gunInfoDisplay.GC=GC;
-        radar.GC=GC;
-        map.GC = GC;
-        
     }
 
 	public  float updateInterval = 0.5F;
@@ -73,80 +43,10 @@ public class MenuHandler : MonoBehaviour {
 		if (ShowFPSonAndroid) {
 			DrawFPS();
 		}
-	#endif
+		#endif
 	}
 
-	void MoveBackwardButtonPressed()
-	{
-		player.inputSub.MoveBackwardInput();
-	}
-
-	void MoveForwardButtonPressed()
-	{
-		player.inputSub.MoveForwardInput();
-	}
-
-	void MoveLeftButtonPressed()
-	{
-		player.inputSub.MoveLeftInput();
-	}
-
-	void MoveRightButtonPressed()
-	{
-		player.inputSub.MoveRightInput();
-	}
-
-	void TurnLeftButtonPressed()
-	{
-		player.inputSub.TurnLeftInput();
-	}
-
-	void TurnRightButtonPressed()
-	{
-		player.inputSub.TurnRightInput();
-	}
-
-	void EndTurnButtonPressed()
-	{
-		player.inputSub.EndTurnInput();
-	}
-
-	void InteractButtonPressed()
-	{
-		player.inputSub.InteractInput(false);
-	}
-
-	void EngageCombatPressed()
-	{
-		player.inputSub.EngageCombatInput();
-	}
-
-	void DisperseHeatPressed()
-	{
-		player.inputSub.DisperseHeatInput();
-	}
-
-	void LeftHandWeaponPressed()
-	{
-        WeaponPressed(WeaponID.LeftHand);
-	}
-
-	void LeftShoulderWeaponPressed()
-	{
-        WeaponPressed(WeaponID.LeftShoulder);
-	}
-
-	void RightHandWeaponPressed()
-	{
-        WeaponPressed(WeaponID.RightHand);
-	}
-
-	void RightShoulderWeaponPressed()
-	{
-        WeaponPressed(WeaponID.RightShoulder);
-	}
-
-    void WeaponPressed(WeaponID id){
+    public void WeaponPressed(WeaponID id){
 
         if (currentMenuState == MenuState.InventoryHUD) return;
 
@@ -163,30 +63,7 @@ public class MenuHandler : MonoBehaviour {
         }
     }
 
-    void TargetingModeButtonPressed()
-    {
-        player.inputSub.TargetingModeInput();
-    }
 
-	public void ToggleMovementHUD()
-	{
-		ChangeMenuState(MenuState.MovementHUD);
-	}
-
-	public void ToggleTargetingHUD()
-	{
-		ChangeMenuState(MenuState.TargetingHUD);
-	}
-
-	public void DeactivateInventoryHUD()
-	{
-		ChangeMenuState(MenuState.NothingSelected);
-	}
-
-	public void ActivateInventoryHUD()
-	{
-		ChangeMenuState(MenuState.InventoryHUD);
-	}
 
     public void SetNothingSelected()
     {
@@ -200,16 +77,21 @@ public class MenuHandler : MonoBehaviour {
 		InventoryHud.DeactivateInventory();
 	}
 
+	public void DeactivateInventoryHUD()
+	{
+		ChangeMenuState(MenuState.NothingSelected);
+	}
+
 	public void SetInteractVisibility(bool visible)
 	{
 		if (currentMenuState == MenuState.InventoryHUD ||
 		    currentMenuState == MenuState.TargetingHUD)
 			visible = false;
 
-		InteractHud.SetActive(visible && player.interactSub.HasInteractable);
+		player.HUD.InteractHud.SetActive(visible && player.interactSub.HasInteractable);
 	}
 
-	void ChangeMenuState(MenuState newState)
+	public void ChangeMenuState(MenuState newState)
 	{
 		if (newState == currentMenuState)
 			currentMenuState = MenuState.NothingSelected;
@@ -219,30 +101,29 @@ public class MenuHandler : MonoBehaviour {
 		switch (currentMenuState)
 		{
 		case MenuState.NothingSelected:
-			EndHud.SetActive(true);
-			MovementHud.SetActive(false);
-			TargetingHud.SetActive(false);
+			player.HUD.EndHud.SetActive(true);
+			player.HUD.MovementHud.SetActive(false);
+			player.HUD.TargetingHud.SetActive(false);
+			player.EndTargetingMode();
 
 			DeactivateInventory();
 
-			GC.Player.EndTargetingMode();
 			SetInteractVisibility(true);
 			break;
 
 		case MenuState.MovementHUD:
-			EndHud.SetActive(false);
-			MovementHud.SetActive(true);
-			TargetingHud.SetActive(false);
+			player.HUD.EndHud.SetActive(false);
+			player.HUD.MovementHud.SetActive(true);
+			player.HUD.TargetingHud.SetActive(false);
+			player.EndTargetingMode();
 
 			DeactivateInventory();
-
-			GC.Player.EndTargetingMode();
 			break;
 
 		case MenuState.TargetingHUD:
-			EndHud.SetActive(false);
-			MovementHud.SetActive(false);
-			TargetingHud.SetActive(true);
+			player.HUD.EndHud.SetActive(false);
+			player.HUD.MovementHud.SetActive(false);
+			player.HUD.TargetingHud.SetActive(true);
 
 			DeactivateInventory();
 
@@ -250,26 +131,16 @@ public class MenuHandler : MonoBehaviour {
 			break;
 
 		case MenuState.InventoryHUD:
-			EndHud.SetActive(false);
-			MovementHud.SetActive(false);
-			TargetingHud.SetActive(false);
-			GC.Player.EndTargetingMode();
+			player.HUD.EndHud.SetActive(false);
+			player.HUD.MovementHud.SetActive(false);
+			player.HUD.TargetingHud.SetActive(false);
+			player.EndTargetingMode();
+
 			SetInteractVisibility(false);
 			break;
 		}
 	}
-
-	public void SetHudToPlayerStats(){
-		radar.SetDisabled(!player.HasRadar);
-		map.SetDisabled(!player.HasMap);
-		radar.radarZoom=2f+1f*(1f-(player.RadarRange/player.RadarRangeMax));
-	}
-
-	public void CheckTargetingModePanel()
-	{
-		engageButton.gameObject.SetActive(player.targetingSub.HasAnyTargets());
-	}
-
+	
     void MissionLogPressed(){
         MissionBriefing.gameObject.SetActive(!MissionBriefing.gameObject.activeSelf);
     }

@@ -235,6 +235,6 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 	public void ShowTargetMarks(bool show)
 	{
-		player.GC.menuHandler.targetMarkPanel.gameObject.SetActive(show);
+		player.HUD.targetMarkPanel.gameObject.SetActive(show);
 	}
 }

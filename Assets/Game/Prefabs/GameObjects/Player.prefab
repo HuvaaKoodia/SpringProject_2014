@@ -399,6 +399,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400046}
+  - 114: {fileID: 11400410}
   m_Layer: 0
   m_Name: PlayerHud
   m_TagString: Untagged
@@ -711,7 +712,7 @@ GameObject:
   - 114: {fileID: 11400046}
   - 114: {fileID: 11400044}
   m_Layer: 9
-  m_Name: Interact
+  m_Name: InteractButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1277,7 +1278,7 @@ GameObject:
   - 114: {fileID: 11400148}
   - 114: {fileID: 11400146}
   m_Layer: 9
-  m_Name: EndTurn
+  m_Name: EndTurnButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2026,21 +2027,6 @@ GameObject:
   - 114: {fileID: 11400264}
   m_Layer: 9
   m_Name: Anchor_TopLeft
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &100242
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 400242}
-  m_Layer: 9
-  m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3140,10 +3126,14 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100070}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.24199605, y: 17.0826225, z: .0315420628}
+  m_LocalPosition: {x: -.24199605, y: 17.0819473, z: .0314836502}
   m_LocalScale: {x: .00277777785, y: .00277777785, z: .00277777785}
   m_Children:
-  - {fileID: 400242}
+  - {fileID: 400138}
+  - {fileID: 400276}
+  - {fileID: 400308}
+  - {fileID: 400180}
+  - {fileID: 400210}
   m_Father: {fileID: 400122}
 --- !u!4 &400072
 Transform:
@@ -3345,7 +3335,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100104}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .889541388, y: 17.9362373, z: .0109484196}
+  m_LocalPosition: {x: 1.26671827, y: 17.9349709, z: .0108366013}
   m_LocalScale: {x: .00277799997, y: .00277799997, z: .00277799997}
   m_Children:
   - {fileID: 400162}
@@ -3434,7 +3424,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100120}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.24199605, y: 17.9362373, z: .0109491348}
+  m_LocalPosition: {x: -.24199605, y: 17.9349709, z: .0108373165}
   m_LocalScale: {x: .00277799997, y: .00277799997, z: .00277799997}
   m_Children:
   - {fileID: 400090}
@@ -3542,11 +3532,11 @@ Transform:
   m_GameObject: {fileID: 100138}
   m_LocalRotation: {x: .258313119, y: .462233514, z: .145672351, w: .835699797}
   m_LocalPosition: {x: 100.592773, y: -46.3842773, z: -406.136169}
-  m_LocalScale: {x: .159384727, y: .299521863, z: .367728591}
+  m_LocalScale: {x: .159384713, y: .299521834, z: .367728561}
   m_Children:
   - {fileID: 400182}
   - {fileID: 400266}
-  m_Father: {fileID: 400242}
+  m_Father: {fileID: 400070}
 --- !u!4 &400140
 Transform:
   m_ObjectHideFlags: 1
@@ -3577,7 +3567,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100144}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.24199605, y: 17.0826225, z: .0315420628}
+  m_LocalPosition: {x: -.24199605, y: 17.0819473, z: .0314836502}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400288}
@@ -3639,7 +3629,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100154}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.24199605, y: 17.0826225, z: .0315420628}
+  m_LocalPosition: {x: -.24199605, y: 17.0819473, z: .0314836502}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400166}
@@ -3784,7 +3774,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100178}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .889541388, y: 17.9362373, z: .0109484196}
+  m_LocalPosition: {x: 1.26671827, y: 17.9349709, z: .0108366013}
   m_LocalScale: {x: .00277799997, y: .00277799997, z: .00277799997}
   m_Children:
   - {fileID: 400066}
@@ -3802,7 +3792,7 @@ Transform:
   m_Children:
   - {fileID: 400152}
   - {fileID: 400264}
-  m_Father: {fileID: 400242}
+  m_Father: {fileID: 400070}
 --- !u!4 &400182
 Transform:
   m_ObjectHideFlags: 1
@@ -3973,7 +3963,7 @@ Transform:
   m_Children:
   - {fileID: 400206}
   - {fileID: 400110}
-  m_Father: {fileID: 400242}
+  m_Father: {fileID: 400070}
 --- !u!4 &400212
 Transform:
   m_ObjectHideFlags: 1
@@ -4110,7 +4100,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100234}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -728.908447, y: 7737.90771, z: 20.516737}
+  m_LocalPosition: {x: -933.158508, y: 7737.90771, z: 20.516737}
   m_LocalScale: {x: .999839962, y: .999839962, z: .999839962}
   m_Children:
   - {fileID: 400084}
@@ -4122,7 +4112,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100236}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.03456712, y: 16.1206417, z: .042743206}
+  m_LocalPosition: {x: 1.46008813, y: 16.1206417, z: .042743206}
   m_LocalScale: {x: .00208300003, y: .00208300003, z: .00208300003}
   m_Children:
   - {fileID: 400318}
@@ -4146,29 +4136,13 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100240}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.37353349, y: 17.9362373, z: .0109484196}
+  m_LocalPosition: {x: -1.75071037, y: 17.9349709, z: .0108366013}
   m_LocalScale: {x: .00277799997, y: .00277799997, z: .00277799997}
   m_Children:
   - {fileID: 400160}
   - {fileID: 400176}
   - {fileID: 400198}
   m_Father: {fileID: 400068}
---- !u!4 &400242
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100242}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 400308}
-  - {fileID: 400180}
-  - {fileID: 400276}
-  - {fileID: 400210}
-  - {fileID: 400138}
-  m_Father: {fileID: 400070}
 --- !u!4 &400244
 Transform:
   m_ObjectHideFlags: 1
@@ -4349,7 +4323,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100274}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.51855934, y: 16.1206417, z: .042743206}
+  m_LocalPosition: {x: -1.94408035, y: 16.1206417, z: .042743206}
   m_LocalScale: {x: .00208300003, y: .00208300003, z: .00208300003}
   m_Children:
   - {fileID: 400298}
@@ -4362,12 +4336,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100276}
   m_LocalRotation: {x: .269444227, y: .460313529, z: .142509386, w: .833787978}
-  m_LocalPosition: {x: 85.1705246, y: -60.6301117, z: -386.183136}
-  m_LocalScale: {x: .171728864, y: .29073444, z: .285322428}
+  m_LocalPosition: {x: 85.1705246, y: -60.6301117, z: -386.183167}
+  m_LocalScale: {x: .171728864, y: .29073441, z: .285322458}
   m_Children:
   - {fileID: 400292}
   - {fileID: 400200}
-  m_Father: {fileID: 400242}
+  m_Father: {fileID: 400070}
 --- !u!4 &400278
 Transform:
   m_ObjectHideFlags: 1
@@ -4453,7 +4427,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100290}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.24199605, y: 17.0826225, z: .0315420628}
+  m_LocalPosition: {x: -.24199605, y: 17.0819473, z: .0314836502}
   m_LocalScale: {x: .00277777785, y: .00277777785, z: .00277777785}
   m_Children:
   - {fileID: 400302}
@@ -4563,12 +4537,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100308}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 411.804474, y: -291.182312, z: -20.4659996}
+  m_LocalPosition: {x: 411.804474, y: -291.181641, z: -20.4659843}
   m_LocalScale: {x: 1.00007999, y: 1.00007999, z: 1.00007999}
   m_Children:
   - {fileID: 400208}
   - {fileID: 400086}
-  m_Father: {fileID: 400242}
+  m_Father: {fileID: 400070}
 --- !u!4 &400310
 Transform:
   m_ObjectHideFlags: 1
@@ -4721,7 +4695,7 @@ Camera:
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294934527
+    m_Bits: 4294926335
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
@@ -5725,7 +5699,7 @@ AudioListener:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100004}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!81 &8100002
 AudioListener:
   m_ObjectHideFlags: 1
@@ -5891,10 +5865,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ebf79ce244998a41bd637067f60d6bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GC: {fileID: 0}
   movement: {fileID: 11400002}
   BlocksMovement: 1
   maxHealth: 100
+  HUD: {fileID: 11400410}
   inputSub: {fileID: 11400004}
   targetingSub: {fileID: 11400008}
   interactSub: {fileID: 11400020}
@@ -6167,7 +6141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 100046}
   functionName: RightHandWeaponPressed
   trigger: 0
   includeChildren: 0
@@ -6383,7 +6357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 100046}
   functionName: InteractButtonPressed
   trigger: 0
   includeChildren: 0
@@ -7586,7 +7560,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 100046}
   functionName: DisperseHeatPressed
   trigger: 0
   includeChildren: 0
@@ -7767,7 +7741,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 100046}
   functionName: MoveBackwardButtonPressed
   trigger: 6
   includeChildren: 0
@@ -7871,7 +7845,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 100046}
   functionName: MoveRightButtonPressed
   trigger: 6
   includeChildren: 0
@@ -7975,7 +7949,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 100046}
   functionName: EndTurnButtonPressed
   trigger: 0
   includeChildren: 0
@@ -8229,7 +8203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 100046}
   functionName: LeftHandWeaponPressed
   trigger: 0
   includeChildren: 0
@@ -8386,15 +8360,15 @@ MonoBehaviour:
     e00: 1940.65198
     e01: -47.2432327
     e02: 165.150879
-    e03: -386.484131
+    e03: 439.304199
     e10: 3.41392016
     e11: 1883.34485
     e12: 498.635406
-    e13: -2760.91187
+    e13: -2759.45898
     e20: -171.741333
     e21: -496.404083
     e22: 1876.09302
-    e23: 202.770264
+    e23: 129.690674
     e30: 0
     e31: 0
     e32: 0
@@ -8531,7 +8505,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 100046}
   functionName: LeftShoulderWeaponPressed
   trigger: 0
   includeChildren: 0
@@ -8564,7 +8538,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 100046}
   functionName: ToggleMovementHUD
   trigger: 0
   includeChildren: 0
@@ -9245,7 +9219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 100046}
   functionName: TargetingModeButtonPressed
   trigger: 0
   includeChildren: 0
@@ -9561,7 +9535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 100046}
   functionName: TurnRightButtonPressed
   trigger: 6
   includeChildren: 0
@@ -9772,7 +9746,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 100046}
   functionName: MoveLeftButtonPressed
   trigger: 6
   includeChildren: 0
@@ -10052,7 +10026,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 100046}
   functionName: EngageCombatPressed
   trigger: 0
   includeChildren: 0
@@ -10313,7 +10287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 100046}
   functionName: TurnLeftButtonPressed
   trigger: 6
   includeChildren: 0
@@ -10474,7 +10448,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 100046}
   functionName: MoveForwardButtonPressed
   trigger: 6
   includeChildren: 0
@@ -10636,7 +10610,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 100046}
   functionName: RightShoulderWeaponPressed
   trigger: 0
   includeChildren: 0
@@ -10979,7 +10953,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 100046}
   functionName: ToggleInventory
   trigger: 0
   includeChildren: 0
@@ -11461,15 +11435,15 @@ MonoBehaviour:
     e00: 1940.65198
     e01: -47.2432327
     e02: 165.150879
-    e03: -386.484131
+    e03: 439.304199
     e10: 3.41392016
     e11: 1883.34485
     e12: 498.635406
-    e13: -2760.91187
+    e13: -2759.45898
     e20: -171.741333
     e21: -496.404083
     e22: 1876.09302
-    e23: 202.770264
+    e23: 129.690674
     e30: 0
     e31: 0
     e32: 0
@@ -11572,7 +11546,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 100046}
   functionName: MissionLogPressed
   trigger: 0
   includeChildren: 0
@@ -11704,15 +11678,15 @@ MonoBehaviour:
     e00: 1945.7738
     e01: 58.2427979
     e02: -189.7883
-    e03: 376.938232
+    e03: -451.029541
     e10: -6.66770935
     e11: 1887.927
     e12: 511.013092
-    e13: -2775.58154
+    e13: -2772.74414
     e20: 198.412109
     e21: -507.726959
     e22: 1878.37512
-    e23: 223.836182
+    e23: 139.407471
     e30: 0
     e31: 0
     e32: 0
@@ -11901,15 +11875,15 @@ MonoBehaviour:
     e00: 1945.7738
     e01: 58.2427979
     e02: -189.7883
-    e03: 376.942139
+    e03: -451.025635
     e10: -6.66770935
     e11: 1887.927
     e12: 511.013092
-    e13: -2775.58154
+    e13: -2772.74414
     e20: 198.412109
     e21: -507.726959
     e22: 1878.37512
-    e23: 223.836426
+    e23: 139.407715
     e30: 0
     e31: 0
     e32: 0
@@ -11938,6 +11912,29 @@ MonoBehaviour:
   minimumY: -6
   maximumY: 5
   MouseLookOn: 1
+--- !u!114 &11400410
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb8e1b369a8e12544a5a533e4dabcef2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menu: {fileID: 0}
+  radar: {fileID: 11400082}
+  map: {fileID: 11400036}
+  turnText: {fileID: 11400058}
+  gunInfoDisplay: {fileID: 11400024}
+  EndHud: {fileID: 100216}
+  MovementHud: {fileID: 100132}
+  TargetingHud: {fileID: 100284}
+  InteractHud: {fileID: 100300}
+  engageButton: {fileID: 100244}
+  MechStats: {fileID: 11400376}
+  targetMarkPanel: {fileID: 11400312}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

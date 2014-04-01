@@ -21,13 +21,13 @@ public class TargetMarkHandler
 
 		parentObject = new GameObject();
 		parentObject.name = "TargetMarkHandler";
-		parentObject.transform.parent = GC.menuHandler.targetMarkPanel.transform;
+		parentObject.transform.parent = GC.Player.HUD.targetMarkPanel.transform;
 		
 		crosshair = GameObject.Instantiate(GC.SS.PS.InsightSprite) as UISprite;
 		crosshair.transform.parent = parentObject.transform;
 		crosshair.spriteName = "crosshair_gray";
 		crosshair.transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
-		crosshair.transform.position = GC.menuHandler.NGUICamera.ScreenToWorldPoint(crosshairPosition);
+		crosshair.transform.position = GC.menuHandler.player.HudCamera.ScreenToWorldPoint(crosshairPosition);
 
 		crosshair.enabled = true;
 
@@ -50,7 +50,7 @@ public class TargetMarkHandler
 			label.transform.parent = crosshair.transform;
 			label.transform.localScale = new Vector3(0.0025f, 0.0025f, 0.0025f);
 			label.transform.position += crosshair.transform.position + labelPosOffsetDirs[i]*0.08f;
-			label.color = GC.menuHandler.gunInfoDisplay.GetWeaponColor((WeaponID)i);
+			label.color = GC.Player.HUD.gunInfoDisplay.GetWeaponColor((WeaponID)i);
 			label.enabled = true;
 
 			numShotsLabels.Add(label);
