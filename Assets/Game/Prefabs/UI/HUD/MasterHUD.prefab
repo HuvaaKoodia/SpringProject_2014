@@ -646,6 +646,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 400170}
   - 114: {fileID: 11400244}
+  - 114: {fileID: 11400008}
   m_Layer: 0
   m_Name: MasterHUD
   m_TagString: Untagged
@@ -2846,7 +2847,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -570.108887, y: 5327.41211, z: 414.994171}
+  m_LocalPosition: {x: -955.733276, y: 537.599915, z: 415.035583}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400002}
@@ -5318,7 +5319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8077b76001d36d489868d20d28bddb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiCamera: {fileID: 0}
+  uiCamera: {fileID: 2000002}
   container: {fileID: 0}
   side: 2
   runOnlyOnce: 1
@@ -5401,6 +5402,21 @@ MonoBehaviour:
   mMaxLineHeight: 0
   mLineWidth: 0
   mMultiline: 1
+--- !u!114 &11400008
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95391265cf3731c4f8691fc8a9b5f74e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Menu: {fileID: 0}
+  DataTerminal_power: {fileID: 0}
+  DataTerminal_command: {fileID: 0}
+  DataTerminal_armory: {fileID: 0}
 --- !u!114 &11400014
 MonoBehaviour:
   m_ObjectHideFlags: 1
