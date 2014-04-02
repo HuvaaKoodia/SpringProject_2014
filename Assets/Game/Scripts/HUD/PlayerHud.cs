@@ -52,12 +52,12 @@ public class PlayerHud : MonoBehaviour {
 
 	public void ToggleMovementHUD()
 	{
-		menu.ChangeMenuState(MenuState.MovementHUD);
+		menu.ToggleMovementHUD();
 	}
 	
 	public void ToggleTargetingHUD()
 	{
-		menu.ChangeMenuState(MenuState.TargetingHUD);
+		menu.ToggleTargetingHUD();
 	}
 	
 	public void DeactivateInventoryHUD()
@@ -67,7 +67,7 @@ public class PlayerHud : MonoBehaviour {
 	
 	public void ActivateInventoryHUD()
 	{
-		menu.ChangeMenuState(MenuState.InventoryHUD);
+		menu.ActivateInventoryHUD();
 	}
 
 	public void ToggleInventory()

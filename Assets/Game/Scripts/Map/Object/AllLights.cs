@@ -21,7 +21,25 @@ public class AllLights : MonoBehaviour
 
 	public bool power_on;																						//instantiate boolean to allow electricity to flow
 
-	public Lighting_State lighting_state = Lighting_State.Normal;												//instantiate instance of Lighting_State to Normal
+	Lighting_State lighting_state = Lighting_State.Normal;
+	public bool PowerOn {
+		get {return power_on;}
+		set{
+			power_on=value;
+			EnableLights();
+		}
+	}
+
+	
+	public Lighting_State LightingState{
+		get{
+			return lighting_state;
+		}
+		set{
+			lighting_state=value;
+			EnableLights();
+		}
+	}
 
 	float init_light_power = 4.0f;
 
@@ -29,15 +47,17 @@ public class AllLights : MonoBehaviour
 	void Start ()
 	{
 		light_flicker = false;																					//initialize light to not flicker
-		//power_on = true;																						//initialize electricity to flow
-		ticks = 0.0f;																							//initialize value for ticks and set it to be 0.0f
+		power_on = true;																						//initialize electricity to flow
+		ticks = 0.0f;
+
+		EnableLights();
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
 		//as long as state of white light is currently set to flicker, call Flicker function
-		if(lighting_state == Lighting_State.Flickering)
+		if(power_on&&lighting_state == Lighting_State.Flickering)
 		{
 			Flicker (delay);
 		}
@@ -45,89 +65,37 @@ public class AllLights : MonoBehaviour
 
 	//function to enable the white lights in TilePrefabs under TestObjects in GameScene 
 	//manipulation of white light intensity is passed in here
-	//switch case handles the differernt light states in TilePrefabs under TestObjects in GameScene
-	public void EnableLights(float light_power)
+	//switch case handles the different light states in TilePrefabs under TestObjects in GameScene
+	public void EnableLights()
 	{
-		switch(lighting_state)
+		for(int i = 0; i < white_lights.Count; i++)
 		{
-		case Lighting_State.Broken:
-			//as long as there is a white_lights
-			if(white_lights.Count > 0)
-			{				
-				//traverse through the list of white_lights
-				for(int i = 0; i < white_lights.Count; i++)
-				{
-					//as long as there is a white_lights, set value of enabled to value of on
-					if(white_lights[i] != null)
-					{
-						white_lights[i].light.enabled = false;
-						//Debug.Log("WHITE_LIGHTS[" + i + "] ON: " + white_lights[i].light.enabled);			//debug to display value of white_lights enabled
-					}
-				}
-			}
-			break;
-		case Lighting_State.Flickering:
-			if(power_on)
+			var white_light=white_lights[i];
+			bool light_on=true;
+			//as long as there is a white_lights, set value of enabled to value of on
+			if(white_light != null)
 			{
-				//as long as there is a white_lights
-				if(white_lights.Count > 0)
-				{				
-					//traverse through the list of white_lights
-					for(int i = 0; i < white_lights.Count; i++)
+			if (power_on){
+					switch(lighting_state)
 					{
-						//as long as there is a white_lights, set value of enabled to value of on
-						if(white_lights[i] != null)
-						{
-							white_lights[i].light.enabled = light_flicker;
-							white_lights[i].light.intensity = light_power;
-							//Debug.Log("WHITE_LIGHTS[" + i + "] ON: " + white_lights[i].light.enabled);			//debug to display value of white_lights enabled
-						}
+					case Lighting_State.Broken:
+						light_on = false;
+						break;
+					case Lighting_State.Flickering:
+						light_on = light_flicker;
+						break;
+					case Lighting_State.Normal:
+						light_on = true;
+						break;
 					}
 				}
-			}
-			break;
-		case Lighting_State.Normal:
-			//Debug.Log("Power_on; " + power_on);
-			if(power_on)
-			{
-				//as long as there is a white_lights
-				if(white_lights.Count > 0)
-				{				
-					//traverse through the list of white_lights
-					for(int i = 0; i < white_lights.Count; i++)
-					{
-						//as long as there is a white_lights, set value of enabled to value of on
-						if(white_lights[i] != null)
-						{
-							white_lights[i].light.enabled = true;
-							white_lights[i].light.intensity = light_power;
-						}
-						//Debug.Log("WHITE_LIGHTS[" + i + "] ON: " + white_lights[i].light.enabled);				//debug to display value of white_lights enabled
-					}
+				else{
+					light_on = false;
 				}
+
+				white_light.enabled=light_on;
 			}
-			break;
-		default:
-			Debug.Log("PASS IN Broken, Flickering OR Normal");
-			Debug.Break();
-			break;
 		}
-		
-//		//as long as there is a white_lights
-//		if(white_lights.Count > 0)
-//		{				
-//			//traverse through the list of white_lights
-//			for(int i = 0; i < white_lights.Count; i++)
-//			{
-//				//as long as there is a white_lights, set value of enabled to value of on
-//				if(white_lights[i] != null)
-//				{
-//					white_lights[i].light.enabled = power_on;
-//					white_lights[i].light.intensity = light_power;
-//					//Debug.Log("WHITE_LIGHTS[" + i + "] ON: " + white_lights[i].light.enabled);					//debug to display value of white_lights enabled
-//				}
-//			}
-//		}
 	}
 
 	//function to set white light to flicker
@@ -142,7 +110,7 @@ public class AllLights : MonoBehaviour
 			//Debug.Log("ON: " + light_flicker);
 			
 			ticks = 0.0f;
-			EnableLights(init_light_power);
+			EnableLights();
 		}
 		//increment ticks every second
 		else

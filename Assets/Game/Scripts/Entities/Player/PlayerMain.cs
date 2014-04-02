@@ -57,8 +57,6 @@ public class PlayerMain : EntityMain
 		movement.UpdateFloor();
 		interactSub.CheckForInteractables();
 
-        
-
         for (int i=0;i<4;++i){
             weaponList[i].weaponID=(WeaponID)i;
         }

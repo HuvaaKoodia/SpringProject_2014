@@ -23,7 +23,7 @@ public class TileMain : MonoBehaviour
 				TileGraphics.TileLights.power_on = Subs.RandomBool();										//randomize whether electricity should flow
 				//TileGraphics.TileLights.power_on = true;
 				//TileGraphics.TileLights.lighting_state = Lighting_State.Flickering;
-				TileGraphics.TileLights.EnableLights(4.0f);													//set the intensity of the white lights
+				TileGraphics.TileLights.EnableLights();													//set the intensity of the white lights
 			}
 		}
 	}

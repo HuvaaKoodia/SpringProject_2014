@@ -7,4 +7,8 @@ public class TileGraphicsSub : MonoBehaviour {
 
 	//instance of Lights class to store Lights of TilePrefabs
 	public AllLights TileLights;
+
+	void Start(){
+
+	}
 }

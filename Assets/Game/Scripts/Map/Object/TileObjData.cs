@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class TileObjData
 {
 	public enum Type {Floor,Wall,Empty,Door,Corridor,Elevator};
-    public enum Obj {None,Player,Enemy,Loot,Obstacle,LootArea, GatlingGun};
+    public enum Obj {None,Player,Enemy,Loot,Obstacle,LootArea,GatlingGun,DataTerminal};
 	
     Obj _obj;
     public int X,Y;

@@ -22,6 +22,8 @@ public class MenuHandler : MonoBehaviour {
 	public UILabel FPS;
 	public bool ShowFPSonAndroid=true;
 
+	public DataTerminalHudController TerminalHud;
+
 	// Use this for initialization
 	void Start()
 	{
@@ -77,9 +79,29 @@ public class MenuHandler : MonoBehaviour {
 		InventoryHud.DeactivateInventory();
 	}
 
+	public void ToggleMovementHUD()
+	{
+		ChangeMenuState(MenuState.MovementHUD);
+	}
+	
+	public void ToggleTargetingHUD()
+	{
+		ChangeMenuState(MenuState.TargetingHUD);
+	}
+
+	public void ActivateInventoryHUD()
+	{
+		ChangeMenuState(MenuState.InventoryHUD);
+	}
+	
 	public void DeactivateInventoryHUD()
 	{
 		ChangeMenuState(MenuState.NothingSelected);
+	}
+
+	public void ActivateDataTerminalHUD (DataTerminalMain.Type terminalType)
+	{
+		TerminalHud.OpenDataTerminal(terminalType);
 	}
 
 	public void SetInteractVisibility(bool visible)

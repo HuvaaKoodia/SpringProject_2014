@@ -19,6 +19,8 @@ public class FloorObjData{
 	public int TileMapW{get{return TileObjectMap.GetLength(0);}}
 	public int TileMapH{get{return TileObjectMap.GetLength(1);}}
 
+	public bool PowerOn=true;
+
 	public FloorObjData(){
 		Enemies=new List<EnemyMain>();
 		LootCrates= new List<LootCrateMain>();
@@ -147,34 +149,34 @@ public class GameController : MonoBehaviour {
 				legit_floors.Add(f);
 			}
 		}
+
+		//init player
+
 		var start_floor=Subs.GetRandom(legit_floors);
 		SS.MGen.InitPlayer(Player, start_floor);
 		Player.SetObjData(SS.GDB.GameData.PlayerData);
 		Player.CurrentFloorIndex=start_floor.FloorIndex;
 		Player.GC=this;
 
-
-
-		//init hud
-		menuHandler.player = Player;
-        menuHandler.SetGC(this);
-
 		Player.InitPlayer();
 		Player.HUD.CheckTargetingModePanel();
 
 		Inventory.SetPlayer(Player);
 
-        var ec=GetComponent<EngineController>();
-        ec.AfterRestart+=SS.GDB.StartNewGame;
-
         Player.ActivateEquippedItems();
 
+		//init hud
+		menuHandler.player = Player;
+		menuHandler.SetGC(this);
 
-
+		//floor stats
 		SetFloor(CurrentFloorIndex);
 
-		SetState_FloorNum(0, RandomizeStartState(10, 80, 10));
-		EnableLights_AllFloors(4.0f, true);
+		RandomizeLightsInAllFloors(10,20);
+
+		//misc
+		var ec=GetComponent<EngineController>();
+		ec.AfterRestart+=SS.GDB.StartNewGame;
 	}
 
 	// Update is called once per frame
@@ -281,7 +283,7 @@ public class GameController : MonoBehaviour {
 
 	//function to enable the white lights in a specific TileMain in the environment for a specific floor
 	//intensity of the white lights is passed in here
-	public void EnableLights_FloorNum(int floor_num, int tilemain_X, int tilemain_Y, float power, bool on)
+	public void EnableLights_FloorNum(int floor_num, int tilemain_X, int tilemain_Y,bool on)
 	{
 		var tilegraphics = GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics;
 		
@@ -292,9 +294,7 @@ public class GameController : MonoBehaviour {
 			{
 				//set electricity to flow for the white light in particular TileMainMap in particular floor
 				//tilegraphics.TileLights.SetPowerOn(on);
-				tilegraphics.TileLights.power_on = on;
-				//set intensity for the white light in particular TileMainMap in particular floor
-				tilegraphics.TileLights.EnableLights(power);
+				tilegraphics.TileLights.PowerOn = on;
 			}
 		}
 	}
@@ -312,7 +312,7 @@ public class GameController : MonoBehaviour {
 				for(int y = 0; y < GetFloor(floor_num).TileMainMap.GetLength(1); y++)
 				{
 					//enable lights in the particular TieMainMap in particular floor
-					EnableLights_FloorNum(floor_num, x, y, power, on);
+					EnableLights_FloorNum(floor_num, x, y, on);
 				}
 			}
 		}
@@ -342,8 +342,11 @@ public class GameController : MonoBehaviour {
 	//function to set the state of the white lights in a specific TileMain in aspecific floor
 	public void SetState_FloorNum(int floor_num, int tilemain_X, int tilemain_Y, Lighting_State LS)
 	{
-		var tilegraphics = GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics;
-		
+		SetTileLightState(GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y),LS,true);
+	}
+
+	private void SetTileLightState(TileMain tile, Lighting_State LS,bool power){
+		var tilegraphics = tile.TileGraphics;
 		//as long as there are TileGraphics and TileLights                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
 		if(tilegraphics != null)
 		{
@@ -351,7 +354,7 @@ public class GameController : MonoBehaviour {
 			{
 				//set state to the white lights
 				//tilegraphics.TileLights.SetState(LS);
-				tilegraphics.TileLights.lighting_state = LS;
+				tilegraphics.TileLights.LightingState = LS;
 			}
 		}
 	}
@@ -388,26 +391,20 @@ public class GameController : MonoBehaviour {
 			}
 		}
 	}
-
-
-
-
-
 	//FUNCTION TO RANDOMIZE THE STATE FOR THE WHITE LIGHT
 
 	//function to randomize the state of the white lights in the environment
 	//percentages passed in represents the chances of getting each state
 	//like a dice roll
-	public Lighting_State RandomizeStartState(int broken_percent, int flickering_percent, int normal_percent)
+	public Lighting_State RandomizeStartState(int broken_percent, int flickering_percent)
 	{
 		//as long as the percentages do not add up to 100, display error log and set state to normal
-		int totalpercent = broken_percent + flickering_percent + normal_percent;
+		int totalpercent = broken_percent + flickering_percent;
 		
-		if(totalpercent != 100)
+		if(totalpercent >= 100)
 		{
-			Debug.Log("Percentages passed in do not add up to 100%");
-			//return Lighting_State.Normal;
-			Debug.Break();
+			Debug.Log("Percentages passed are over 100%");
+			return Lighting_State.Normal;
 		}
 		
 		int value = Subs.RandomPercent();
@@ -416,13 +413,23 @@ public class GameController : MonoBehaviour {
 		{
 			return Lighting_State.Broken;
 		}
-		else if(value < flickering_percent)
+		else if(value < broken_percent+flickering_percent)
 		{
 			return Lighting_State.Flickering;
 		}
 		else
 		{
 			return Lighting_State.Normal;
+		}
+	}
+
+	void RandomizeLightsInAllFloors(int broken_percent, int flickering_percent)
+	{
+		for (int i=0;i<Floors.Count;++i){
+			var floor=GetFloor(i);
+			foreach(var tile in floor.TileMainMap){
+				SetTileLightState(tile,RandomizeStartState(broken_percent,flickering_percent),floor.PowerOn);
+			}
 		}
 	}
 }

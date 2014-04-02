@@ -9,7 +9,7 @@ using System.Collections.Generic;
 public class MapGenerator : MonoBehaviour
 {
     public static Vector3 TileSize = new Vector3(3, 3, 3);
-	public const string WallIcon = "w", DoorIcon = "d", CorridorIcon = "c", FloorIcon = ".", SpaceIcon=",",ElevatorIcon="el";
+	public const string WallIcon = "w", DoorIcon = "d", CorridorIcon = "c", FloorIcon = ".", SpaceIcon=",",ElevatorIcon="h";
     public bool DEBUG_create_temp_tiles = false;
     public PrefabStore MapPrefabs;
 
@@ -99,7 +99,7 @@ public class MapGenerator : MonoBehaviour
         for (int x = 0; x < w; x++)
         {
             for (int y = 0; y < h; y++)
-            {   
+            {
                 //tile
                 //int y_pos = h - 1 - y;
 				Vector2 entity_pos =new Vector2( x,y); 
