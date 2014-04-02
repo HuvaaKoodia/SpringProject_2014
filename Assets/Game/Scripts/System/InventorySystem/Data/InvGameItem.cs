@@ -178,7 +178,6 @@ public class InvGameItem
 		var i=XmlDatabase.LootPool.GetRandomItem(lootpool);
 		InvBaseItem item = XmlDatabase.GetBaseItem(i);
 
-		Debug.Log("asd: ,"+qualitypool);
 		var level=XmlDatabase.LootQualityPool.GetRandomItem(qualitypool);
 
 		InvGameItem gi = new InvGameItem(item);
