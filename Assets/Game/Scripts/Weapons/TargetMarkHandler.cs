@@ -21,13 +21,17 @@ public class TargetMarkHandler
 
 		parentObject = new GameObject();
 		parentObject.name = "TargetMarkHandler";
+
+		Vector3 screenToWorldPoint = GC.menuHandler.player.HudCamera.ScreenToWorldPoint(crosshairPosition);
+
+		parentObject.transform.position = screenToWorldPoint;
 		parentObject.transform.parent = GC.Player.HUD.targetMarkPanel.transform;
 		
 		crosshair = GameObject.Instantiate(GC.SS.PS.InsightSprite) as UISprite;
 		crosshair.transform.parent = parentObject.transform;
 		crosshair.spriteName = "crosshair_gray";
 		crosshair.transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
-		crosshair.transform.position = GC.menuHandler.player.HudCamera.ScreenToWorldPoint(crosshairPosition);
+		crosshair.transform.position = screenToWorldPoint;
 
 		crosshair.enabled = true;
 
@@ -46,17 +50,24 @@ public class TargetMarkHandler
 		{
 			UILabel label = GameObject.Instantiate(GC.SS.PS.NumShotsLabel) as UILabel;
 			label.text = "";
-			
+		
+			float distanceMultiplier = 1 + (screenToWorldPoint - GC.Player.HudCamera.transform.position).magnitude / 2.0f;
+
 			label.transform.parent = crosshair.transform;
-			label.transform.localScale = new Vector3(0.0025f, 0.0025f, 0.0025f);
-			label.transform.position += crosshair.transform.position + labelPosOffsetDirs[i]*0.08f;
+			label.transform.position += crosshair.transform.position + labelPosOffsetDirs[i]*0.08f*(distanceMultiplier/1.35f);
+
 			label.color = GC.Player.HUD.gunInfoDisplay.GetWeaponColor((WeaponID)i);
 			label.enabled = true;
+
+			label.MakePixelPerfect();		
+
+			label.transform.localScale = new Vector3(2.0f*distanceMultiplier, 2.0f*distanceMultiplier, 2.0f*distanceMultiplier);
 
 			numShotsLabels.Add(label);
 		}
 
-		parentObject.AddComponent("LookAtMouse");
+		parentObject.transform.Rotate(0, rotation, 0);
+
 	}
 
 	public void DeInit()

@@ -101,7 +101,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 							{
 								enemyAdded = true;
 						
-								AddEnemyToTargetables(enemy, enemyPosInScreen);
+								AddEnemyToTargetables(enemy, hitbox.transform.position, enemyPosInScreen);
 								break;
 							}
 						}
@@ -163,7 +163,7 @@ public class PlayerTargetingSub : MonoBehaviour {
         }
     }
 	
-	public void AddEnemyToTargetables(EnemyMain enemy, Vector3 enemyPosInScreen)
+	public void AddEnemyToTargetables(EnemyMain enemy, Vector3 hitboxPosition, Vector3 enemyPosInScreen)
 	{
 		if (targetableEnemies.ContainsKey(enemy))
 			return;
@@ -171,7 +171,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 		
 		enemyPosInScreen.z = 0.7f + (enemyPosInScreen.z / cameraFarZ);
 
-		TargetMarkHandler tmHandler = new TargetMarkHandler(player.GC, enemyPosInScreen, (int)Quaternion.LookRotation(enemyPosInScreen - player.transform.position).eulerAngles.y);
+		TargetMarkHandler tmHandler = new TargetMarkHandler(player.GC, enemyPosInScreen, (int)Quaternion.LookRotation(hitboxPosition - player.HudCamera.transform.position).eulerAngles.y);
 		targetableEnemies.Add(enemy, tmHandler);
 	}
 
@@ -180,7 +180,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 		Component target;
 		GameObject hover = UICamera.hoveredObject;
 
-		if (player.targetingMode && Subs.GetObjectMousePos(out target, 20, "TargetingClick"))
+		if (player.targetingMode && Subs.GetObjectMousePos(out target, 20, "TargetingClick", player.HudCamera))
 		{
 			Transform trans = target.transform;
 			EnemyMain enemyTargeted = trans.gameObject.GetComponent<EnemyMain>();
