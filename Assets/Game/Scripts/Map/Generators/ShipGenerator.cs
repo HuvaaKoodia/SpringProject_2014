@@ -6,6 +6,7 @@ public class RoomXmlIndex{
     public string index,type,name;
     public bool randomize_pos=false,randomize_doors=false;
 }
+
 public class ObjectXmlIndex{
     public string index;
     public int rotation;

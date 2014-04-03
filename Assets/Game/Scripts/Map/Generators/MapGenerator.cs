@@ -116,50 +116,63 @@ public class MapGenerator : MonoBehaviour
                 //game objects
                 switch (tile.Data.ObjType)
                 {
-                    case TileObjData.Obj.Player:
-						floor.AirlockPositions.Add(entity_pos);
-                        break;
+	            case TileObjData.Obj.Player:
+					floor.AirlockPositions.Add(entity_pos);
+	                break;
+	            case TileObjData.Obj.Enemy:
+	                var newEnemy = GameObject.Instantiate(MapPrefabs.EnemyPrefab, tile_pos, Quaternion.identity) as EnemyMain;
+	                newEnemy.name = "Enemy";
+	                newEnemy.movement.SetPositionInGrid(entity_pos);
+					floor.Enemies.Add(newEnemy);
 
-                    case TileObjData.Obj.Enemy:
-                        var newEnemy = GameObject.Instantiate(MapPrefabs.EnemyPrefab, tile_pos, Quaternion.identity) as EnemyMain;
-                        newEnemy.name = "Enemy";
-                        newEnemy.movement.SetPositionInGrid(entity_pos);
-						floor.Enemies.Add(newEnemy);
+					newEnemy.CurrentFloorIndex=floor.FloorIndex;
+                
+                	newEnemy.transform.parent = enemy_container.transform;
 
-						newEnemy.CurrentFloorIndex=floor.FloorIndex;
-                        
-                        newEnemy.transform.parent = enemy_container.transform;
+					newEnemy.movement.Init();
+	                break;
 
-						newEnemy.movement.Init();
-                        break;
+	            case TileObjData.Obj.Loot:
+	                var LootCrate = GameObject.Instantiate(MapPrefabs.LootCratePrefab, tile_pos, Quaternion.identity) as GameObject;
 
-                    case TileObjData.Obj.Loot:
-                        var LootCrate = GameObject.Instantiate(MapPrefabs.LootCratePrefab, tile_pos, Quaternion.identity) as GameObject;
+					LootCrateMain crate = LootCrate.GetComponent<LootCrateMain>();
+					crate.GC = GC;
 
-						LootCrateMain crate = LootCrate.GetComponent<LootCrateMain>();
-						crate.GC = GC;
+					floor.LootCrates.Add(crate);
+       				tile.TileObject=LootCrate;
+                	tile.TileObject.transform.parent = tile.transform;
+	                break;
+				case TileObjData.Obj.DataTerminal:
+					var terminal = GameObject.Instantiate(MapPrefabs.DataTerminalPrefab, tile_pos, Quaternion.identity) as DataTerminalMain;
+					terminal.GC = GC;
 
-						floor.LootCrates.Add(crate);
-                        tile.TileObject=LootCrate;
-                        tile.TileObject.transform.parent = tile.transform;
-                        break;
+					tile.TileObject=terminal.gameObject;
+					tile.TileObject.transform.parent = tile.transform;
+					break;
+				case TileObjData.Obj.GatlingGun:
+					var gatlingTurret = GameObject.Instantiate(MapPrefabs.GatlingTurretPrefab) as GatlingEnemySub;
 
-					case TileObjData.Obj.GatlingGun:
-						var gatlingTurret = GameObject.Instantiate(MapPrefabs.GatlingTurretPrefab) as GatlingEnemySub;
+					gatlingTurret.name = "GatlingTurret";
+					gatlingTurret.CurrentFloorIndex=floor.FloorIndex;
 
-						gatlingTurret.name = "GatlingTurret";
-						gatlingTurret.CurrentFloorIndex=floor.FloorIndex;
+					gatlingTurret.transform.position = tile_pos + Vector3.up * (MapGenerator.TileSize.y - 0.1f);
+					gatlingTurret.movement.SetPositionInGrid(entity_pos);
+					floor.Enemies.Add(gatlingTurret);
 
-						gatlingTurret.transform.position = tile_pos + Vector3.up * (MapGenerator.TileSize.y - 0.1f);
-						gatlingTurret.movement.SetPositionInGrid(entity_pos);
-						floor.Enemies.Add(gatlingTurret);
+					gatlingTurret.transform.parent = enemy_container.transform;
 
-						gatlingTurret.transform.parent = enemy_container.transform;
-
-						gatlingTurret.movement.Init();
-						gatlingTurret.movement.GetCurrenTile().LeaveTile();
-						break;
+					gatlingTurret.movement.Init();
+					gatlingTurret.movement.GetCurrenTile().LeaveTile();
+					break;
                 }
+
+				//rotation
+				if (tile.Data.ObjType!=TileObjData.Obj.None&&tile.TileObject!=null){
+					var rotation=tile.Data.ObjXml.rotation;
+					if (rotation<0)
+						rotation=Subs.GetRandom(4)*90;
+					tile.TileObject.transform.rotation=Quaternion.AngleAxis(rotation,Vector3.up);
+				}
             }
         }
     }

@@ -41,8 +41,6 @@ public class AllLights : MonoBehaviour
 		}
 	}
 
-	float init_light_power = 4.0f;
-
 	// Use this for initialization
 	void Start ()
 	{

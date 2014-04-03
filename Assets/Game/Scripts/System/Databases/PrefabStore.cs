@@ -8,7 +8,7 @@ public class PrefabStore : MonoBehaviour {
 
 	public TileMain TilePrefab;
 	public GameObject LootCratePrefab;
-	public GameObject DataTerminalPrefab;
+	public DataTerminalMain DataTerminalPrefab;
 
 	public GameObject 
 			BasicWall,
