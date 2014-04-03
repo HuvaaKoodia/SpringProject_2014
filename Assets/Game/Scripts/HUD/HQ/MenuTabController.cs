@@ -26,6 +26,10 @@ public class MenuTabController : MonoBehaviour {
         ActivateMenu(4);
     }
 
+	public void OpenTab6(){
+		ActivateMenu(5);
+	}
+
     public void ActivateMenu(int index){
         foreach (var m in TabMenus){
             m.SetActive(m==TabMenus[index]?true:false);

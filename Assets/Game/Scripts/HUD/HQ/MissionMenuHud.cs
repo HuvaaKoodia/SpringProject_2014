@@ -8,6 +8,7 @@ public class MissionMenuHud : MonoBehaviour {
     public MissionBriefingMenu MissionBrief;
     public VendorMenu _VendorMenu;
     public MechanicalMenu _MechanicMenu;
+	public FinanceMenu _FinanceMenu;
 
     public Transform MissionButtonsParent;
     public MissionButtonMain MButtonPrefab;
@@ -94,6 +95,11 @@ public class MissionMenuHud : MonoBehaviour {
     public void OpenMechanic(){
         Tabs.ActivateMenu(_MechanicMenu.gameObject);
     }
+
+	public void OpenFinance()
+	{
+		Tabs.ActivateMenu(_FinanceMenu.gameObject);
+	}
 
     public void PlayMission(){
         SS.GDB.SetCurrentMission(Mission);
