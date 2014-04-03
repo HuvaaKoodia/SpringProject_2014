@@ -67,6 +67,8 @@ public class PlayerMain : EntityMain
 		CullWorld();
 
 		HUD.Init(this,GC);
+		
+		TargetingCamera.aspect = 16.0f / 9.0f;
 	}
 	
 	// Update is called once per frame
@@ -79,6 +81,7 @@ public class PlayerMain : EntityMain
 			else
 				weapon.RotateGraphics();
 		}
+
 	}
 
     public void StartPlayerPhase()

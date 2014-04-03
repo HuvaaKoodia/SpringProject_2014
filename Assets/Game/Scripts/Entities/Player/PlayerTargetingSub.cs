@@ -120,6 +120,8 @@ public class PlayerTargetingSub : MonoBehaviour {
 	{
 		foreach(KeyValuePair<EnemyMain, TargetMarkHandler> enemyPair in targetableEnemies)
 		{
+			bool wasSeen = false;
+
 			for (int i = 0; i < enemyPair.Key.hitboxes.Count; i++)
 			{
 				Vector3 adjustedEnemyPos = enemyPair.Key.hitboxes[i].bounds.center;
@@ -132,12 +134,14 @@ public class PlayerTargetingSub : MonoBehaviour {
 					if (hitInfo.transform == enemyPair.Key.hitboxes[i].transform)
 					{
 						enemyPair.Value.SetCrosshairVisible(true);
+						wasSeen = true;
 						break;
 					}
 				}
-
-				enemyPair.Value.SetCrosshairVisible(false);
 			}
+			
+			if (!wasSeen)
+				enemyPair.Value.SetCrosshairVisible(false);
 		}
 	}
 
