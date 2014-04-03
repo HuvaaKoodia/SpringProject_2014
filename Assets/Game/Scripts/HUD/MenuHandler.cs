@@ -64,9 +64,7 @@ public class MenuHandler : MonoBehaviour {
             player.inputSub.ChangeWeaponInput(id);
         }
     }
-
-
-
+	
     public void SetNothingSelected()
     {
         ChangeMenuState(MenuState.NothingSelected);
@@ -102,7 +100,22 @@ public class MenuHandler : MonoBehaviour {
 	public void ActivateDataTerminalHUD (DataTerminalMain.Type terminalType)
 	{
 		TerminalHud.OpenDataTerminal(terminalType);
+		ChangeMenuState(MenuState.InventoryHUD);
 	}
+	
+	public void ToggleInventory()
+	{
+		if (InventoryHud.InventoryOpen)
+		{
+			DeactivateInventoryHUD();
+		}
+		else
+		{
+			InventoryHud.SetTabToInventory();
+			ActivateInventoryHUD();
+		}
+	}
+
 
 	public void SetInteractVisibility(bool visible)
 	{
@@ -167,7 +180,7 @@ public class MenuHandler : MonoBehaviour {
 			player.HUD.disperseHeatButton.SetActive(false);
 			player.EndTargetingMode();
 
-			player.SetMouseLook(false);
+			InventoryHud.ActivateInventory();
 
 			SetInteractVisibility(false);
 			break;

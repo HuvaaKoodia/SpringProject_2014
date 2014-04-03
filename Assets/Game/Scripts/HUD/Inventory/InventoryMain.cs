@@ -13,7 +13,7 @@ public class InventoryMain : MonoBehaviour {
 	public EquipRandomItem temp_random_item_button;
 
     public MenuTabController Tabs;
-    public MechanicalMenu Mechaninc;
+    public MechanicalMenu Mechanic;
 
 	PlayerMain Player;
 
@@ -25,39 +25,13 @@ public class InventoryMain : MonoBehaviour {
 	#endif
 	}
     
-    public void OpenInventory(){
-        //ActivateInventory();
+    public void SetTabToInventory(){
         Tabs.OpenTab1();
-    }
-
-    public void OpenStatus(){
-        //ActivateInventory();
-        Tabs.OpenTab2();
-    }
-
-    public void OpenLog(){
-        //ActivateInventory();
-        Tabs.OpenTab3();
-    }
-
-    public void ToggleInventory()
-    {
-        if (InventoryOpen)
-        {
-            DeactivateInventory();
-			Player.HUD.DeactivateInventoryHUD();
-        }
-        else
-        {
-            ActivateInventory();
-			Player.HUD.ActivateInventoryHUD();
-        }
     }
 
 	public void ActivateInventory()
 	{ 
         InventoryPanel.SetActive(true);
-        OpenInventory();
     }
 
 	public void DeactivateInventory()
@@ -78,16 +52,15 @@ public class InventoryMain : MonoBehaviour {
 		}
 
 		temp_random_item_button.equipment=player.ObjData.Equipment;
-
-        Mechaninc.SetPlayer(player.ObjData);
+        Mechanic.SetPlayer(player.ObjData);
 	}
 
 	public void SetLoot(LootCrateMain loot){
 		LootParent.SetActive(true);
 		LootStorage.ChangeItemStorage(loot.Items);
 
-		ActivateInventory();
-		Player.HUD.ActivateInventoryHUD();
+		SetTabToInventory();
+		HUD.ActivateInventoryHUD();
 	}
 
     public void LootAll(){

@@ -28,10 +28,6 @@ public class PlayerHud : MonoBehaviour {
 	{
 		MovementHud.SetActive(false);
 		TargetingHud.SetActive(false);
-
-
-		
-
 	}
 
     public void Init(PlayerMain p, GameController gc){
@@ -73,7 +69,7 @@ public class PlayerHud : MonoBehaviour {
 
 	public void ToggleInventory()
 	{
-		menu.InventoryHud.ToggleInventory();
+		menu.ToggleInventory();
 	}
 
 	//input

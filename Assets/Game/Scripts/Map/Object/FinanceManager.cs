@@ -52,6 +52,8 @@ public class FinanceManager
 	public float player_money;										//variable to keep track of the amount of money the player has at the given moment
 	public float payment_total;										//variable to store the sum of all the debts
 	public float existing_cash;										//variable to keep track the resultant amount after minusing payment total from player money
+
+	public int shorten_debt;
 	
 	public bool day_pass;											//variable set to true only if a day has passed
 	public bool add_debt;											//variable set to true upon taking on a new debt
@@ -66,6 +68,8 @@ public class FinanceManager
 		
 		player_money = Player.PlayerData.Money;
 		payment_total = 0.0f;
+
+		shorten_debt = 1000;
 		
 		day_pass = false;
 		add_debt = false;
