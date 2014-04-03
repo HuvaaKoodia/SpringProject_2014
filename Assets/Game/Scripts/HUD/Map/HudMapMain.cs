@@ -36,11 +36,13 @@ public class HudMapMain : MonoBehaviour {
 
 		CreateMap();
 
+		float playerRot = player.transform.rotation.eulerAngles.y;
+		Quaternion rot = Quaternion.Euler(0.0f, 0.0f, playerRot);
+
+		playerIndicator.transform.localRotation =  Quaternion.Euler(0, 0, 360 - playerRot);
 
 		if (rotateWithPlayer)
 		{	
-			float playerRot = player.transform.rotation.eulerAngles.y;
-			Quaternion rot = Quaternion.Euler(0.0f, 0.0f, playerRot);
 			spriteParent.transform.localRotation = rot;
 		}
 

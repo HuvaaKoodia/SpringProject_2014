@@ -35,6 +35,11 @@ public class MouseLook : MonoBehaviour {
 	Quaternion OriginalRot;
 	float startX, startY, startZ;
 
+	public int deadzoneLeft = 100;
+	public int deadzoneRight = 100;
+	public int deadzoneTop = 100;
+	public int deadzoneBottom = 100;
+
 	void Update ()
 	{
 		if (MouseLookOn)
@@ -48,10 +53,29 @@ public class MouseLook : MonoBehaviour {
 					rotationX -= 360;
 
 				rotationX = Mathf.Clamp (rotationX, minimumX, maximumX);
-				
+				/*
+				if (rotationX < 0)
+				{
+					rotationX = Mathf.Min(0, deadzoneLeft+rotationX);
+				}
+				else if (rotationX > 0)
+				{
+					rotationX = Mathf.Max(0, deadzoneRight-rotationX);
+				}
+				*/
 				rotationY = ((Input.mousePosition.y - (Screen.height / 2)) / (Screen.height / 2)) * sensitivityY;
 				rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);
-				
+
+				/*
+				if (rotationY < 0)
+				{
+					rotationY = Mathf.Min(startY, deadzoneBottom+rotationY);
+				}
+				else if (rotationY > 0)
+				{
+					rotationY = Mathf.Max(startY, rotationY-deadzoneTop);
+				}
+				*/
 				//transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
 				transform.localRotation = 
 					Quaternion.RotateTowards(

@@ -20,7 +20,11 @@ public class LootCrateMain : InteractableMain {
 
 		if (!GC.Inventory.LootParent.gameObject.activeSelf)
 		{
-			Invoke ("SetLootToInventory", 0.9f);
+			if (openAnimation.isPlaying)
+				Invoke ("SetLootToInventory", 0.9f);
+			else
+				SetLootToInventory();
+
 			return true;
 		}
 		else

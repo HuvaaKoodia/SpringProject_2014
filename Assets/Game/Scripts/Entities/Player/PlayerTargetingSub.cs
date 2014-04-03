@@ -76,7 +76,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 				Ray ray = player.GameCamera.ScreenPointToRay(enemyPosInScreen);
 				RaycastHit hitInfo;
 
-				Debug.DrawRay(ray.origin, ray.direction * 20, Color.red, 2.0f);
+				//Debug.DrawRay(ray.origin, ray.direction * 20, Color.red, 2.0f);
 				if (Physics.Raycast(ray, out hitInfo, 20, canSeeMask))
 				{
 					if (hitInfo.transform.parent != hitbox.transform.parent)
@@ -93,7 +93,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 						ray = new Ray(gunPosition, adjustedEnemyPos - gunPosition);
 
-						Debug.DrawRay(ray.origin, ray.direction * 20, Color.red, 2.0f);
+						//Debug.DrawRay(ray.origin, ray.direction * 20, Color.red, 2.0f);
 
 						if (Physics.Raycast(ray, out hitInfo, 20, targetingRayMask))
 						{

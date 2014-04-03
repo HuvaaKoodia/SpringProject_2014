@@ -128,7 +128,7 @@ public class RadarMain : MonoBehaviour
 		if (rotateWithCenter)
 		{
 			Quaternion rot = Quaternion.Euler(0.0f, 0.0f, playerRot);
-			blipParent.transform.rotation = rot;
+			blipParent.transform.localRotation = rot;
 		}
 		else
 		{
@@ -313,7 +313,7 @@ public class RadarMain : MonoBehaviour
 
 		blip.transform.parent = blipParent.transform;
 		blip.transform.position = blipParent.transform.position;
-		blip.transform.rotation = blipParent.transform.rotation;
+		blip.transform.localRotation = Quaternion.Euler(0,0,0);
 
 		blip.transform.localScale = Vector3.one * radarZoom;
 
