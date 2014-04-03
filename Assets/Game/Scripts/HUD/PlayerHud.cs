@@ -158,8 +158,8 @@ public class PlayerHud : MonoBehaviour {
 	}
 
 	public void SetHudToPlayerStats(){
-		radar.SetDisabled(!player.HasRadar);
-		map.SetDisabled(!player.HasMap);
-		radar.radarZoom=2f+1f*(1f-(player.RadarRange/player.RadarRangeMax));
+		//radar.SetDisabled(!player.HasRadar);
+		//map.SetDisabled(!player.HasMap);
+		//radar.radarZoom=2f+1f*(1f-(player.RadarRange/player.RadarRangeMax));
 	}
 }

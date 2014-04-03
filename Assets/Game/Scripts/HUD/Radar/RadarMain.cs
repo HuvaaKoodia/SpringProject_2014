@@ -143,6 +143,8 @@ public class RadarMain : MonoBehaviour
 		if (!initialized||_disabled)
 			return;
 
+		returnRotationSpeed = GC.Player.movement.turnSpeed;
+
 		if (circleScanActive)
 		{
 			circleScanSprite.enabled = true;
@@ -194,44 +196,45 @@ public class RadarMain : MonoBehaviour
 
 
 		float playerRot = GC.Player.transform.rotation.eulerAngles.y;
-		float radarRot = blipParent.transform.rotation.eulerAngles.z;
+		float radarRot = blipParent.transform.localRotation.eulerAngles.z;
 
 		if (rotateWithCenter)
 		{	
 			if (Mathf.Abs(playerRot - radarRot) < 3.0f)
 			{
 				Quaternion rot = Quaternion.Euler(0.0f, 0.0f, playerRot);
-				blipParent.transform.rotation = rot;
+				blipParent.transform.localRotation = rot;
 			}
 			else
 			{
-				Quaternion rot = blipParent.transform.rotation;
+				Quaternion rot = blipParent.transform.localRotation;
 				rot = Quaternion.RotateTowards(rot, Quaternion.Euler(0, 0, playerRot), returnRotationSpeed * Time.deltaTime);
-				blipParent.transform.rotation = rot;
+				blipParent.transform.localRotation = rot;
 			}
 
-			if (Mathf.Abs(playerRot - radarViewSprite.transform.rotation.z) < 3.0f)
+			if (Mathf.Abs(playerRot - radarViewSprite.transform.localRotation.z) < 3.0f)
 			{
-				radarViewSprite.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+				radarViewSprite.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
 			}
 			else
 			{
-				Quaternion rot = Quaternion.RotateTowards(radarViewSprite.transform.rotation, Quaternion.Euler(0, 0, 0), returnRotationSpeed * Time.deltaTime);
-				radarViewSprite.transform.rotation = rot;
+				Quaternion rot = Quaternion.RotateTowards(radarViewSprite.transform.localRotation, Quaternion.Euler(0, 0, 0), returnRotationSpeed * Time.deltaTime);
+				radarViewSprite.transform.localRotation = rot;
 			}
 		}
 		else 
 		{
-			if (blipParent.transform.rotation.eulerAngles != Vector3.zero)
+			if (blipParent.transform.localRotation.eulerAngles != Vector3.zero)
 			{
-				Quaternion rot = blipParent.transform.rotation;
+				Quaternion rot = blipParent.transform.localRotation;
 				rot = Quaternion.RotateTowards(rot, Quaternion.Euler(0, 0, 0), returnRotationSpeed * Time.deltaTime);
-				blipParent.transform.rotation = rot;
+				blipParent.transform.localRotation = rot;
 			}
 
-			Quaternion viewSpriteRot = Quaternion.RotateTowards(radarViewSprite.transform.rotation, Quaternion.Euler(0, 0, 360 - playerRot), returnRotationSpeed * Time.deltaTime);
-			radarViewSprite.transform.rotation = viewSpriteRot;
+			Quaternion viewSpriteRot = Quaternion.RotateTowards(radarViewSprite.transform.localRotation, Quaternion.Euler(0, 0, 360 - playerRot), returnRotationSpeed * Time.deltaTime);
+			radarViewSprite.transform.localRotation = viewSpriteRot;
 		}
+
 	}
 	
 	// Draw a blip for an object

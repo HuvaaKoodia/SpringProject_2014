@@ -41,7 +41,7 @@ public class HudMapMain : MonoBehaviour {
 		{	
 			float playerRot = player.transform.rotation.eulerAngles.y;
 			Quaternion rot = Quaternion.Euler(0.0f, 0.0f, playerRot);
-			spriteParent.transform.rotation = rot;
+			spriteParent.transform.localRotation = rot;
 		}
 
 		initialized = true;
@@ -56,6 +56,8 @@ public class HudMapMain : MonoBehaviour {
 		int mapWidth = mapSprites.GetLength(0);
 		int mapHeight = mapSprites.GetLength(1);
 
+		returnRotationSpeed = player.movement.turnSpeed;
+
 		for (int x = 0 ; x < mapWidth; x++)
 		{
 			for (int y = 0; y < mapHeight; y++)
@@ -67,33 +69,33 @@ public class HudMapMain : MonoBehaviour {
 		float playerRot = player.transform.rotation.eulerAngles.y;
 		if (rotateWithPlayer)
 		{	
-			float mapRot = spriteParent.transform.rotation.eulerAngles.z;
+			float mapRot = spriteParent.transform.localRotation.eulerAngles.z;
 
 			if (Mathf.Abs(playerRot - mapRot) < 3.0f)
 			{
 				Quaternion rot = Quaternion.Euler(0.0f, 0.0f, playerRot);
-				spriteParent.transform.rotation = rot;
+				spriteParent.transform.localRotation = rot;
 			}
 			else
 			{
-				Quaternion rot = spriteParent.transform.rotation;
+				Quaternion rot = spriteParent.transform.localRotation;
 				rot = Quaternion.RotateTowards(rot, Quaternion.Euler(0, 0, playerRot), returnRotationSpeed * Time.deltaTime);
-				spriteParent.transform.rotation = rot;
+				spriteParent.transform.localRotation = rot;
 			}
 
 			Quaternion playerIndicatorRot = 
-				Quaternion.RotateTowards(playerIndicator.transform.rotation, Quaternion.Euler(0, 0, 0), returnRotationSpeed * Time.deltaTime);
-			playerIndicator.transform.rotation = playerIndicatorRot;
+				Quaternion.RotateTowards(playerIndicator.transform.localRotation, Quaternion.Euler(0, 0, 360 - playerRot), returnRotationSpeed * Time.deltaTime);
+			playerIndicator.transform.localRotation = playerIndicatorRot;
 
 			northIndicator.enabled = true;
 		}
 		else
 		{
-			if (spriteParent.transform.rotation.eulerAngles != Vector3.zero)
+			if (spriteParent.transform.localRotation.eulerAngles != Vector3.zero)
 			{
-				Quaternion rot = spriteParent.transform.rotation;
+				Quaternion rot = spriteParent.transform.localRotation;
 				rot = Quaternion.RotateTowards(rot, Quaternion.Euler(0, 0, 0), returnRotationSpeed * Time.deltaTime);
-				spriteParent.transform.rotation = rot;
+				spriteParent.transform.localRotation = rot;
 			}
 			else
 			{
@@ -101,8 +103,8 @@ public class HudMapMain : MonoBehaviour {
 			}
 
 			Quaternion playerIndicatorRot = 
-				Quaternion.RotateTowards(playerIndicator.transform.rotation, Quaternion.Euler(0, 0, (360 -playerRot)), returnRotationSpeed * Time.deltaTime);
-			playerIndicator.transform.rotation = playerIndicatorRot;
+				Quaternion.RotateTowards(playerIndicator.transform.localRotation, Quaternion.Euler(0, 0, (360 -playerRot)), returnRotationSpeed * Time.deltaTime);
+			playerIndicator.transform.localRotation = playerIndicatorRot;
 		}
 	}
 
@@ -213,7 +215,7 @@ public class HudMapMain : MonoBehaviour {
 		
 		sprite.transform.parent = spriteParent.transform;
 		sprite.transform.position = spriteParent.transform.position;
-		sprite.transform.rotation = spriteParent.transform.rotation;
+		sprite.transform.localRotation = spriteParent.transform.localRotation;
 		
 		sprite.transform.localScale = Vector3.one * zoom;
 
@@ -223,10 +225,10 @@ public class HudMapMain : MonoBehaviour {
 
 		sprite.transform.localPosition = new Vector3(posX * (spriteWidth * zoom), posY * (spriteWidth * zoom), 0);
 
-		float graphicsRotation = tile.TileGraphics.transform.rotation.eulerAngles.y;
+		float graphicsRotation = tile.TileGraphics.transform.localRotation.eulerAngles.y;
 		graphicsRotation = Mathf.Abs(360 - graphicsRotation);
 		Quaternion rot = Quaternion.Euler(0.0f, 0.0f, graphicsRotation);
-		sprite.transform.rotation = rot;
+		sprite.transform.localRotation = rot;
 
 		mapSprites[x, y] = sprite;
 	}
