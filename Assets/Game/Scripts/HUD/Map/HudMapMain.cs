@@ -129,7 +129,8 @@ public class HudMapMain : MonoBehaviour {
 	{
 		//var str=tile.Data.TileType.ToString();
 		if (tile.Data.TileType == TileObjData.Type.Empty
-		    || tile.Data.TileType == TileObjData.Type.Wall)
+		    || tile.Data.TileType == TileObjData.Type.Wall
+		    || tile.TileGraphics == null)
 			return;
 
 		UISprite sprite = GameObject.Instantiate(GC.SS.PS.FloorSprite) as UISprite;
