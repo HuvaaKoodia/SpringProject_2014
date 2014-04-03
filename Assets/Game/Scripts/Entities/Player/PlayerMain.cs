@@ -90,6 +90,8 @@ public class PlayerMain : EntityMain
 		Finished = false;
 		DisperseWeaponHeat(1);
 
+		MovedLastPhase = false;
+
 		HUD.gunInfoDisplay.UpdateAllDisplays();
         StartTurn();
     }
@@ -361,5 +363,11 @@ public class PlayerMain : EntityMain
 	protected override void UpdateFloor(){
 		base.UpdateFloor();
 		//targetingSub.Update
+	}
+
+	public void SetMouseLook(bool look)
+	{
+		GameCamera.GetComponent<MouseLook>().MouseLookOn = look;
+		HudCamera.GetComponent<MouseLook>().MouseLookOn = look;
 	}
 }

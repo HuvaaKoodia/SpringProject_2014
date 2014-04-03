@@ -103,6 +103,7 @@ public class RadarMain : MonoBehaviour
 
 	bool _disabled=false;
 
+	public bool DrawOnlyLastPhaseMovers = true;
 	// Initialize the radar
 	public void Init()
 	{	
@@ -171,8 +172,11 @@ public class RadarMain : MonoBehaviour
 			// Iterate through them and call drawBlip function
 			foreach (EnemyMain enemy in enemies)
 			{
-				drawBlip(enemy.gameObject, enemyBlipTexture);
-				currentBlip++;
+				if (!DrawOnlyLastPhaseMovers || enemy.MovedLastPhase)
+				{
+					drawBlip(enemy.gameObject, enemyBlipTexture);
+					currentBlip++;
+				}
 			}
 		}
 		if (lootBlipActive)

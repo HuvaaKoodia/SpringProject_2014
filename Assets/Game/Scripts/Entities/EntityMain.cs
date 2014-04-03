@@ -5,6 +5,7 @@ public class EntityMain : MonoBehaviour
 {
 	public GameController GC{get;set;}
     public EntityMovementSub movement;
+	public bool MovedLastPhase = false;
 
 	public bool BlocksMovement = true;
 

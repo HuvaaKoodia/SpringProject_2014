@@ -18,6 +18,7 @@ public class PlayerHud : MonoBehaviour {
 	public GameObject TargetingHud;
 	public GameObject InteractHud;
 	public GameObject engageButton;
+	public GameObject disperseHeatButton;
 	public MechStatisticsMain MechStats;
 
 	public UIPanel targetMarkPanel;

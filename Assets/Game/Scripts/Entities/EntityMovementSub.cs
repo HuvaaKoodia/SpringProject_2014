@@ -106,7 +106,7 @@ public class EntityMovementSub : MonoBehaviour
         {
             if (CanMoveToTile(nextX, nextY))
             {
-
+				parentEntity.MovedLastPhase = true;
                 tilemap[currentGridX, currentGridY].LeaveTile();
 
                 currentGridX = nextX;
@@ -143,6 +143,8 @@ public class EntityMovementSub : MonoBehaviour
     {
         if (currentMovement == MovementState.NotMoving)
         {
+			parentEntity.MovedLastPhase = true;
+
             currentMovement = MovementState.Turning;
 
             targetRotationAngle = nextTarget;

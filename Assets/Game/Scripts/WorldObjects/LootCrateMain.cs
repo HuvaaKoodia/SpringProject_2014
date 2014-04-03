@@ -20,7 +20,7 @@ public class LootCrateMain : InteractableMain {
 
 		if (!GC.Inventory.LootParent.gameObject.activeSelf)
 		{
-			GC.Inventory.SetLoot(this);
+			Invoke ("SetLootToInventory", 0.9f);
 			return true;
 		}
 		else
@@ -48,5 +48,10 @@ public class LootCrateMain : InteractableMain {
 	{
 		interactSub.InteractFinished();
 		return Looted();
+	}
+
+	void SetLootToInventory()
+	{
+		GC.Inventory.SetLoot(this);
 	}
 }
