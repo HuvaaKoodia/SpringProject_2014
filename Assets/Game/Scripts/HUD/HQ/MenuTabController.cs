@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MenuTabController : MonoBehaviour {
 
-    public GameObject[] TabMenus;
+    public List<GameObject> TabMenus;
 
     public void OpenTab1(){
         ActivateMenu(0);

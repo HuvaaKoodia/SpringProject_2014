@@ -3,7 +3,7 @@ using System.Collections;
 
 public class InteractableMain : MonoBehaviour {
 
-	public PlayerInteractSub interactor;
+	protected PlayerInteractSub interactor;
 	public int InteractCost;
 
 	public virtual bool Interact(PlayerInteractSub interactSub)
