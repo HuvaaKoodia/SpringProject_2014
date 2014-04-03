@@ -1,9 +1,11 @@
 <!--
+Note: When assigning Room&Object indices take the hardcoded indices specified in _ShipDesignLegend.txt into consideration.
+
 -RoomIndices-
 Attributes:
-index = Index used in map files
-name = Name of a specific room layout
-type = The type used in game to distinguish between rooms
+index = Index used in the xml ship and room layouts.
+name = Name of a specific xml room layout.
+type = The type used in game to distinguish between rooms.
 
 random_pos= Randomizes position within the room space. Default false.
 random_doors= Creates random doors to the room. Default false.
@@ -70,7 +72,7 @@ Obstacle
 		<Tag index="o3"	type="Obstacle" rotation="180"/>
 		<Tag index="o4"	type="Obstacle" rotation="270"/>
 		
-		<Tag index="G"  type="GatlingGun"/>
+		<Tag index="g"  type="GatlingGun"/>
 		
 		<Tag index="t"  type="DataTerminal"/>
 		<Tag index="t2"	type="DataTerminal" rotation="90"/>

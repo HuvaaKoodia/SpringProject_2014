@@ -9,7 +9,12 @@ using System.Collections.Generic;
 public class MapGenerator : MonoBehaviour
 {
     public static Vector3 TileSize = new Vector3(3, 3, 3);
-	public const string WallIcon = "w", DoorIcon = "d", CorridorIcon = "c", FloorIcon = ".", SpaceIcon=",",ElevatorIcon="h";
+	//hardcoded icons
+	public const string 
+		WallIcon = "w", DoorIcon = "d", CorridorIcon = "c", FloorIcon = ".",
+		SpaceIcon=",",ElevatorIcon="h",RoomIcon="r",RoomEndIcon="T",LootAreaIcon=":"
+	;
+
     public bool DEBUG_create_temp_tiles = false;
     public PrefabStore MapPrefabs;
 
@@ -20,7 +25,7 @@ public class MapGenerator : MonoBehaviour
 	}
 
     /// <summary>
-    /// Generates the TileObjectDataMap from a XMLMapData file.
+    /// Generates the TileObjectDataMap from an XMLMapData file.
     /// </summary>
     public void GenerateObjectDataMap(FloorObjData floor, MapXmlData md)
     {

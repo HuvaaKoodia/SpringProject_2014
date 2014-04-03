@@ -11,7 +11,6 @@ public class MainMenuHud : MonoBehaviour {
 #if UNITY_WEBPLAYER
         QuitButton.SetActive(false);
 #endif
-
     }
 
     void PlayClick(){

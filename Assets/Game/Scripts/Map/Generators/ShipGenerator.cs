@@ -109,11 +109,11 @@ public class ShipGenerator : MonoBehaviour
 							if (IsRoomStartIndex(nindex)){
 								break;
 							}
-							if (nindex.ToLower()=="t"){
+							if (nindex==MapGenerator.RoomEndIcon){
 								cell.W+=1;
 								break;
 							}
-							if (nindex=="r"){
+							if (nindex==MapGenerator.RoomIcon){
 								cell.W+=1;
 								++ww;
 							}
@@ -125,11 +125,11 @@ public class ShipGenerator : MonoBehaviour
 							if (IsRoomStartIndex(nindex)){
 								break;
 							}
-	                        if (nindex.ToLower()=="t"){
+							if (nindex==MapGenerator.RoomEndIcon){
 	                            cell.H+=1;
 	                            break;
 	                        }
-							if (nindex=="r"){
+							if (nindex==MapGenerator.RoomIcon){
 								cell.H+=1;
 								++ww;
 							}
@@ -198,8 +198,8 @@ public class ShipGenerator : MonoBehaviour
 				for(int y=0;y<h;y++)
 				{
 					var index=NewFloorMap.map_data[x,y].ToLower();
-					if (index=="r"||index=="t")
-						NewFloorMap.map_data[x,y]=",";
+					if (index==MapGenerator.RoomIcon||index==MapGenerator.RoomEndIcon)
+						NewFloorMap.map_data[x,y]=MapGenerator.SpaceIcon;
 				}
 			}
 			
@@ -309,11 +309,11 @@ public class ShipGenerator : MonoBehaviour
 
     private bool IsPosGoodForADoor(MapXmlData map,int x,int y,int x1,int y1,int x2,int y2){
         var oi=map.GetIndex(x+x1,y+y1);
-        if (oi=="c"){
+		if (oi==MapGenerator.CorridorIcon){
             oi=map.GetIndex(x,y);
             if (oi==MapGenerator.WallIcon){
                 oi=map.GetIndex(x+x2,y+y2);
-                if (oi=="."||oi==":"){
+				if (oi==MapGenerator.FloorIcon||oi==MapGenerator.LootAreaIcon){
                     return true;
                 }
             }
@@ -329,19 +329,19 @@ public class ShipGenerator : MonoBehaviour
 		cell.corridor_dirs.Clear();
 		bool upok=true,downok=true,leftok=true,rightok=true;
 		for (int i=0;i<cell.W;i++){
-			if (upok&&floor.GetIndex(cell.X+i,cell.Y-1)!="c"){
+			if (upok&&floor.GetIndex(cell.X+i,cell.Y-1)!=MapGenerator.CorridorIcon){
 				upok=false;
 			}
-			if (downok&&floor.GetIndex(cell.X+i,cell.Y+cell.H)!="c"){
+			if (downok&&floor.GetIndex(cell.X+i,cell.Y+cell.H)!=MapGenerator.CorridorIcon){
 				downok=false;
 			}
 		}
 		
 		for (int i=0;i<cell.H;i++){
-			if (leftok&&floor.GetIndex(cell.X-1,cell.Y+i)!="c"){
+			if (leftok&&floor.GetIndex(cell.X-1,cell.Y+i)!=MapGenerator.CorridorIcon){
 				leftok=false;
 			}
-			if (rightok&&floor.GetIndex(cell.X+cell.W,cell.Y+i)!="c"){
+			if (rightok&&floor.GetIndex(cell.X+cell.W,cell.Y+i)!=MapGenerator.CorridorIcon){
 				rightok=false;
 			}
 		}
@@ -351,7 +351,6 @@ public class ShipGenerator : MonoBehaviour
 		if (rightok) 	cell.corridor_dirs.Add(0);
 		if (leftok) 	cell.corridor_dirs.Add(2);
 	}
-
 }
 
 
