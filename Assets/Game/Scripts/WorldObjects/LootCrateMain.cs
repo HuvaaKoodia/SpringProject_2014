@@ -6,10 +6,17 @@ public class LootCrateMain : InteractableMain {
 	public GameController GC;
     public InvItemStorage Items{get;private set;}
 	public GameObject graphics;
+
+	public Animation openAnimation;
+	bool isOpen = false;
+
 	public bool Looted ()
 	{
-		graphics.transform.localScale=new Vector3(graphics.transform.localScale.x,1*0.8f,graphics.transform.localScale.z);
-		graphics.renderer.material.color=Color.black;
+		if (!isOpen)
+		{
+			isOpen = true;
+			openAnimation.Play("Open_LootBox");
+		}
 
 		if (!GC.Inventory.LootParent.gameObject.activeSelf)
 		{
@@ -27,6 +34,9 @@ public class LootCrateMain : InteractableMain {
 	void Awake () {
         Items=new InvItemStorage(8,4,2);
 		InteractCost = 0;
+
+		openAnimation["Open_LootBox"].normalizedTime = 0;
+		openAnimation["Open_LootBox"].normalizedSpeed = 1;
 	}
 	
 	// Update is called once per frame
