@@ -6,16 +6,16 @@ public class FinanceMenu : MonoBehaviour {
 	
 	public FinanceManager _FinanceManager;
 	
-	public UILabel Days;
-	public UILabel PlayerMoney;
-	public UILabel ExistingCash;
+	public UILabel Days;										//variable that keeps track of the label for Days Until Next Update
+	public UILabel PlayerMoney;									//variable that keeps track of the label for Player Money 
+	public UILabel ExistingCash;								//variable that keeps track of the label for Existing Cash
 
-	public List<UILabel> LeftToBePayed;
-	public List<UILabel> MonthlyCut;
-	public List<UILabel> Interest;
-	public List<UILabel> Payments;
-	public List<UILabel> ShortenDebt;
-	public List<GameObject> DebtsActivate;
+	public List<UILabel> LeftToBePayed;							//List that keeps track of the amount Left To Be Paid for each Debt
+	public List<UILabel> MonthlyCut;							//List that keeps track of the Monthly Cut for each Debt
+	public List<UILabel> Interest;								//List that keeps track of the Interest for each Debt
+	public List<UILabel> Payments;								//List that keeps track of the Debt Payments for each debt and Payment Total
+	public List<UILabel> ShortenDebt;							//List that keeps track of the Shorten Debt By component for each debt
+	public List<GameObject> DebtsActivate;						//List that keeps track of the Debt types ie, DebtAdded and DebtEmpty for each Debt
 	
 	// Use this for initialization
 	void Start () {
@@ -28,7 +28,8 @@ public class FinanceMenu : MonoBehaviour {
 	void Update () {
 		UpdateValues();
 	}
-	
+
+	//function that inializes variables
 	void InitializeValues()
 	{
 		Days.text = _FinanceManager.days_till_update.ToString();
@@ -77,7 +78,8 @@ public class FinanceMenu : MonoBehaviour {
 			}
 		}
 	}
-	
+
+	//function that updates variables
 	void UpdateValues()
 	{
 		Days.text = _FinanceManager.days_till_update.ToString();
@@ -131,7 +133,8 @@ public class FinanceMenu : MonoBehaviour {
 		
 		ExistingCash.text = _FinanceManager.existing_cash.ToString();
 	}
-	
+
+	//function that increases the value of Shorten Debt By component of Debt1
 	public void IncreaseShortDebt1()
 	{
 		int value = int.Parse(ShortenDebt[1].text);
@@ -145,6 +148,7 @@ public class FinanceMenu : MonoBehaviour {
 		ShortenDebt[0].text = value.ToString();
 	}
 
+	//function that increases the value of Shorten Debt By component of Debt2
 	public void IncreaseShortDebt2()
 	{
 		int value = int.Parse(ShortenDebt[3].text);
@@ -161,6 +165,7 @@ public class FinanceMenu : MonoBehaviour {
 		ShortenDebt[2].text = value.ToString();
 	}
 
+	//function that increases the value of Shorten Debt By component of Debt3
 	public void IncreaseShortDebt3()
 	{
 		int value = int.Parse(ShortenDebt[5].text);
@@ -177,6 +182,7 @@ public class FinanceMenu : MonoBehaviour {
 		ShortenDebt[4].text = value.ToString();
 	}
 
+	//function that decreases the value of Shorten Debt By component of Debt1
 	public void DecreaseShortDebt1()
 	{
 		int value = int.Parse(ShortenDebt[1].text);
@@ -194,7 +200,8 @@ public class FinanceMenu : MonoBehaviour {
 		ShortenDebt[1].text = value.ToString();
 		ShortenDebt[0].text = value.ToString();
 	}
-	
+
+	//function that decreases the value of Shorten Debt By component of Debt2
 	public void DecreaseShortDebt2()
 	{
 		int value = int.Parse(ShortenDebt[3].text);
@@ -215,7 +222,8 @@ public class FinanceMenu : MonoBehaviour {
 		ShortenDebt[3].text = value.ToString();
 		ShortenDebt[2].text = value.ToString();
 	}
-	
+
+	//function that decreases the value of Shorten Debt By component of Debt3
 	public void DecreaseShortDebt3()
 	{
 		int value = int.Parse(ShortenDebt[5].text);
@@ -237,6 +245,7 @@ public class FinanceMenu : MonoBehaviour {
 		ShortenDebt[4].text = value.ToString();
 	}
 
+	//function that activates DebtAdded and deactivates DebtEmpty of Debt1
 	public void ActivateDebt1()
 	{
 		if(DebtsActivate.Count > 0)
@@ -252,6 +261,7 @@ public class FinanceMenu : MonoBehaviour {
 		}
 	}
 
+	//function that activates DebtAdded and deactivates DebtEmpty of Debt2
 	public void ActivateDebt2()
 	{
 		if(DebtsActivate.Count > 0)
@@ -269,6 +279,7 @@ public class FinanceMenu : MonoBehaviour {
 		}
 	}
 
+	//function that activates DebtAdded and deactivates DebtEmpty of Debt3
 	public void ActivateDebt3()
 	{
 		if(DebtsActivate.Count > 0)
@@ -286,6 +297,7 @@ public class FinanceMenu : MonoBehaviour {
 		}
 	}
 
+	//functions that calls all the necessary calculation functions to update the labels in Panel1
 	void ProcessPanel1(int index)
 	{
 		if(index >= 0 && index < 3)
