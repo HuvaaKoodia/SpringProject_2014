@@ -14,7 +14,8 @@ public class RadarBlipSub : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		fades = true;
+		alpha = 0.0f;
 	}
 	
 	// Update is called once per frame

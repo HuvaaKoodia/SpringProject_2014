@@ -136,6 +136,11 @@ public class RadarMain : MonoBehaviour
 			radarViewSprite.transform.rotation = viewSpriteRot;
 		}
 		initialized = true;
+
+		for (int i = enemies.Count + lootCrates.Count; i >= 0; i--)
+		{
+			createBlip();
+		}
 	}
 	
 	// Update is called once per frame
@@ -175,8 +180,8 @@ public class RadarMain : MonoBehaviour
 				if (!DrawOnlyLastPhaseMovers || enemy.MovedLastPhase)
 				{
 					drawBlip(enemy.gameObject, enemyBlipTexture);
-					currentBlip++;
 				}
+				currentBlip++;
 			}
 		}
 		if (lootBlipActive)

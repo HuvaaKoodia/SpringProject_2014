@@ -222,7 +222,8 @@ public static class PathFinder
 			if (Physics.Raycast(rays[i], out hitInfo, checkRadius, mask))
 			{ 
 				//ray hit the entity to avoid -> can see!
-				if (hitInfo.transform == toSee.transform)
+				if (hitInfo.transform == toSee.transform ||
+				    (hitInfo.transform.parent != null && hitInfo.transform.parent == toSee.transform))
 				{
 					return true;
 				}
@@ -250,7 +251,8 @@ public static class PathFinder
 		bool wasToHearHit = false;
 		for (int i = 0; i < hits.Count(); i++)
 		{
-			if (hits[i].transform == toHear.transform)
+			if (hits[i].transform == toHear.transform||
+		    	(hits[i].transform.parent != null && hits[i].transform.parent == toHear.transform))
 			{
 				wasToHearHit = true;
 				distanceToObject = hits[i].distance; 
