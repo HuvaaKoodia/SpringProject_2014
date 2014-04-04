@@ -18,10 +18,13 @@ public class Debt
 	public float interest;											//variable to keep track of interest value per debt
 	public float debt_payment;										//variable to keep track of debt payment per debt
 	
+	public int shorten_debt;
+
 	public Debt()													//constructor that initializes variables
 	{
 		left_tb_payed = 0.0f;
 		monthly_cut = 1000.0f;
+		shorten_debt = 1000;
 	}
 	
 	//function that calculates interest per debt
@@ -52,9 +55,7 @@ public class FinanceManager
 	public float player_money;										//variable to keep track of the amount of money the player has at the given moment
 	public float payment_total;										//variable to store the sum of all the debts
 	public float existing_cash;										//variable to keep track the resultant amount after minusing payment total from player money
-
-	public int shorten_debt;
-	
+		
 	public bool day_pass;											//variable set to true only if a day has passed
 	public bool add_debt;											//variable set to true upon taking on a new debt
 	
@@ -68,9 +69,7 @@ public class FinanceManager
 		
 		player_money = Player.PlayerData.Money;
 		payment_total = 0.0f;
-
-		shorten_debt = 1000;
-		
+				
 		day_pass = false;
 		add_debt = false;
 	}
@@ -124,12 +123,8 @@ public class FinanceManager
 		//as long as ther is debt
 		if(listofdebts.Count > 0)
 		{
-			//traverse through the list of debts
 			//add debt payment per debt to payment total
-			for(int i = 0; i < listofdebts.Count; i++)
-			{
-				payment_total += listofdebts[i].debt_payment;
-			}
+			payment_total += listofdebts[listofdebts.Count - 1].debt_payment;
 		}
 	}
 	

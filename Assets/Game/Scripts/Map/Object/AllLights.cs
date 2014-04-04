@@ -19,7 +19,7 @@ public class AllLights : MonoBehaviour
 	public float delay;																							//instantiate time to delay by in inspector
 	private float ticks;																						//instantiate time since last toggle
 
-	public bool power_on;																						//instantiate boolean to allow electricity to flow
+	bool power_on=true;																						//instantiate boolean to allow electricity to flow
 
 	Lighting_State lighting_state = Lighting_State.Normal;
 	public bool PowerOn {

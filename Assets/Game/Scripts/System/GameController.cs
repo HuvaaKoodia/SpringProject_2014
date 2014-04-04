@@ -181,6 +181,15 @@ public class GameController : MonoBehaviour {
 
 		RandomizeLightsInAllFloors(10,20);
 
+		//set ship status to mission status
+		var c_mis=SS.GDB.GameData.CurrentMission;
+		var power=c_mis.MissionShipPower==MissionObjData.ShipPower.On;
+
+		if (c_mis.MissionShipPower==MissionObjData.ShipPower.Broken); //DEV.todo break generator
+
+
+
+
 		//misc
 		var ec=GetComponent<EngineController>();
 		ec.AfterRestart+=SS.GDB.StartNewGame;
@@ -341,10 +350,6 @@ public class GameController : MonoBehaviour {
 			}
 		}
 	}
-
-
-
-
 	//FUNCTIONS TOP SET STATE OF THE WHITE LIGHTS
 
 	//function to set the state of the white lights in a specific TileMain in aspecific floor
@@ -355,15 +360,33 @@ public class GameController : MonoBehaviour {
 
 	private void SetTileLightState(TileMain tile, Lighting_State LS,bool power){
 		var tilegraphics = tile.TileGraphics;
-		//as long as there are TileGraphics and TileLights                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
-		if(tilegraphics != null)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+		if(tilegraphics != null&&tilegraphics.TileLights != null)
 		{
-			if(tilegraphics.TileLights != null)
-			{
-				//set state to the white lights
-				//tilegraphics.TileLights.SetState(LS);
-				tilegraphics.TileLights.LightingState = LS;
-			}
+			tilegraphics.TileLights.PowerOn=power;
+			tilegraphics.TileLights.LightingState = LS;
+		}
+	}
+
+	private void SetTileLightState(TileMain tile, bool power){
+		var tilegraphics = tile.TileGraphics;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+		if(tilegraphics != null&&tilegraphics.TileLights != null)
+		{
+			tilegraphics.TileLights.PowerOn=power;
+		}
+	}
+
+	public void SetFloorPowerState(int i,bool on){
+		var f=GetFloor(i);
+		foreach(var t in f.TileMainMap){
+			SetTileLightState(t,on);
+		}
+	}
+
+	public void SetFloorsPowerState(bool on){
+		for(var f=0;f<Floors.Count;++f){
+
 		}
 	}
 
@@ -399,8 +422,6 @@ public class GameController : MonoBehaviour {
 			}
 		}
 	}
-	//FUNCTION TO RANDOMIZE THE STATE FOR THE WHITE LIGHT
-
 	//function to randomize the state of the white lights in the environment
 	//percentages passed in represents the chances of getting each state
 	//like a dice roll
@@ -411,7 +432,7 @@ public class GameController : MonoBehaviour {
 		
 		if(totalpercent >= 100)
 		{
-			Debug.Log("Percentages passed are over 100%");
+			Debug.LogError("Percentages passed are over 100%");
 			return Lighting_State.Normal;
 		}
 		
