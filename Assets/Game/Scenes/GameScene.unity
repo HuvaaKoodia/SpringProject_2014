@@ -3421,6 +3421,10 @@ MonoBehaviour:
   minimumY: -6
   maximumY: 5
   MouseLookOn: 1
+  deadzoneLeft: 100
+  deadzoneRight: 100
+  deadzoneTop: 100
+  deadzoneBottom: 100
 --- !u!114 &254486930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3587,7 +3591,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294934527
+    m_Bits: 4294967295
   m_Lightmapping: 1
   m_ShadowSamples: 1
   m_ShadowRadius: 0
@@ -4226,7 +4230,7 @@ Transform:
   m_PrefabInternal: {fileID: 768680370}
   m_GameObject: {fileID: 298391880}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.978389263, y: 0, z: 37.7843666}
+  m_LocalPosition: {x: 0, y: -.717871964, z: 37.7843666}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 586357144}
@@ -6679,7 +6683,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8491d5bbfde51a34a89da7bd6480fb55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TestLoadShipName: mercurius1b
+  TestLoadShipName: blackone
   UseTestMap: 0
   OverrideMissionShip: 1
   EngCont: {fileID: 453917343}
@@ -9768,6 +9772,10 @@ MonoBehaviour:
   minimumY: -6
   maximumY: 5
   MouseLookOn: 1
+  deadzoneLeft: 100
+  deadzoneRight: 100
+  deadzoneTop: 100
+  deadzoneBottom: 100
 --- !u!81 &664783728
 AudioListener:
   m_ObjectHideFlags: 0
@@ -12522,6 +12530,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movement: {fileID: 795672209}
+  MovedLastPhase: 0
   BlocksMovement: 1
   maxHealth: 100
   HUD: {fileID: 1032500414}
@@ -16632,6 +16641,7 @@ MonoBehaviour:
   TargetingHud: {fileID: 1420906119}
   InteractHud: {fileID: 2081915261}
   engageButton: {fileID: 760592005}
+  disperseHeatButton: {fileID: 1555968770}
   MechStats: {fileID: 1836610481}
   targetMarkPanel: {fileID: 1225022718}
 --- !u!1 &1040777566
@@ -19440,7 +19450,7 @@ MonoBehaviour:
   MissionBriefing: {fileID: 655531937}
   EndMissionPanel: {fileID: 113633003}
   FadePanel: {fileID: 1138130766}
-  FPS: {fileID: 0}
+  FPS: {fileID: 68350836}
   ShowFPSonAndroid: 1
   TerminalHud: {fileID: 1020750123}
   updateInterval: .5
@@ -24257,6 +24267,7 @@ MonoBehaviour:
   circleScanSprite: {fileID: 705413995}
   circleScanActive: 1
   scanSpeed: 1
+  DrawOnlyLastPhaseMovers: 1
 --- !u!1 &1521822145
 GameObject:
   m_ObjectHideFlags: 0
@@ -24766,7 +24777,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 6344377a7c1aac8468eb70319349a8a3, type: 2}
       propertyPath: TestLoadShipName
-      value: mercurius1b
+      value: blackone
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 6344377a7c1aac8468eb70319349a8a3, type: 2}
       propertyPath: do_culling
@@ -32259,7 +32270,7 @@ Light:
   serializedVersion: 3
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1.29999995
+  m_Intensity: .200000003
   m_Range: 2
   m_SpotAngle: 30
   m_CookieSize: 10
