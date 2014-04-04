@@ -1,0 +1,93 @@
+<Root>
+<!--
+-Room XML attributes-
+loot_a=amount of loot crates in this room (min,max)
+enemy_a=amount of enemies in this room (min,max)
+
+-Room Legend-
+, = space
+. = floor
+w = wall
+e = elevator
+
+*Extra
+d = door
+p = player 
+
+-Ship XML attributes-
+loot_a=amount of loot items in this ship floor (min,max)
+enemy_a=amount of enemies in this ship floor (min,max)
+
+-Ship Legend-
+, = space
+c = corridor
+r = room
+R = room start (top left corner)
+T = room end (use if rooms right next to each other)
+A = airlock start
+E = elevator start
+-->
+
+<Room name="room" loot_a="2,3" enemy_a="2,6">
+w w w
+w . w
+w w w
+</Room>
+ 
+ <Room name="room" loot_a="2,3" enemy_a="2,6">
+w w w w w w w
+w : . . : : w
+w . . . . . w
+w . : : : : w
+w w w w w w w
+</Room>
+ 
+<Room name="room" loot_a="2,3" enemy_a="2,6">
+w w w w w
+w . . : w
+w . . : w
+w . . : w
+w w w w w
+</Room>
+ 
+<Room name="room" loot_a="2,3" enemy_a="2,6">
+w w w w w w w w w w w
+w : . . : : : : . : w
+w : . . . . . . . . w
+w . : . . : . : : . w
+w . . . . . . : : . w
+w : : . . : . . . . w
+w w w w w w w w w w w
+</Room>
+ 
+ <Room name="room" loot_a="2,9" enemy_a="2,6">
+w w w w w w w w w
+w : : : w o o o w
+w . . . w . . . w
+w . . . . . . . w
+w . . . w . . . w
+w : : : w : : : w
+w w w w w w w w w
+</Room>
+ 
+ <Room name="room" loot_a="2,3" enemy_a="2,6">
+w w w w w w w w w w w
+w : . : : : . . . . w
+w : . . . . . . : : w
+w . . : : . : w w w w
+w : . : : . : w o o w
+w : : : : . . . . . w
+w w w w w w w w w w w
+</Room>
+ 
+  <Room name="room" loot_a="2,3" enemy_a="2,6">
+w w w w w w w w w w w
+w : : : : : : : : : w
+w . . . . . . . . . w
+w . . . . . . . . . w
+w w w . . . : : . . w
+, , w : : w w w w : w
+, , w w w w , , w w w
+</Room>
+ 
+</Root>
