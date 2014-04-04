@@ -1,5 +1,21 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &100000
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400000}
+  - 114: {fileID: 11400068}
+  m_Layer: 13
+  m_Name: Label
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &100002
 GameObject:
   m_ObjectHideFlags: 1
@@ -27,6 +43,22 @@ GameObject:
   - 114: {fileID: 11400004}
   m_Layer: 13
   m_Name: LH_Sprite
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &100006
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400006}
+  - 114: {fileID: 11400070}
+  m_Layer: 13
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,6 +95,24 @@ GameObject:
   - 114: {fileID: 11400010}
   m_Layer: 13
   m_Name: PlayMission
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &100012
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400012}
+  - 65: {fileID: 6500002}
+  - 114: {fileID: 11400066}
+  - 114: {fileID: 11400064}
+  m_Layer: 13
+  m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1646,7 +1696,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 400308}
   - 114: {fileID: 11400416}
-  - 114: {fileID: 11400626}
+  - 114: {fileID: 11400060}
   m_Layer: 13
   m_Name: FinanceMenu
   m_TagString: Untagged
@@ -2963,6 +3013,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400478}
+  - 114: {fileID: 11400062}
   m_Layer: 13
   m_Name: Panel2
   m_TagString: Untagged
@@ -3995,7 +4046,7 @@ GameObject:
   - 114: {fileID: 11400800}
   - 114: {fileID: 11400030}
   m_Layer: 13
-  m_Name: Increase
+  m_Name: Decrease
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4078,7 +4129,7 @@ GameObject:
   - 114: {fileID: 11400802}
   - 114: {fileID: 11400036}
   m_Layer: 13
-  m_Name: Decrease
+  m_Name: Increase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4193,7 +4244,7 @@ GameObject:
   - 114: {fileID: 11400828}
   - 114: {fileID: 11400050}
   m_Layer: 13
-  m_Name: Decrease
+  m_Name: Increase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4276,7 +4327,7 @@ GameObject:
   - 114: {fileID: 11400830}
   - 114: {fileID: 11400048}
   m_Layer: 13
-  m_Name: Increase
+  m_Name: Decrease
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4732,7 +4783,7 @@ GameObject:
   - 114: {fileID: 11400904}
   - 114: {fileID: 11400000}
   m_Layer: 13
-  m_Name: Increase
+  m_Name: Decrease
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4815,7 +4866,7 @@ GameObject:
   - 114: {fileID: 11400906}
   - 114: {fileID: 11400006}
   m_Layer: 13
-  m_Name: Decrease
+  m_Name: Increase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5603,6 +5654,17 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &400000
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 400012}
 --- !u!4 &400002
 Transform:
   m_ObjectHideFlags: 1
@@ -5625,6 +5687,17 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400326}
+--- !u!4 &400006
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100006}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 451.45166, y: -108.009933, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 400012}
 --- !u!4 &400008
 Transform:
   m_ObjectHideFlags: 1
@@ -5651,6 +5724,19 @@ Transform:
   - {fileID: 400148}
   - {fileID: 400312}
   m_Father: {fileID: 400214}
+--- !u!4 &400012
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100012}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -465.039124, y: 102.803307, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 400006}
+  - {fileID: 400000}
+  m_Father: {fileID: 400278}
 --- !u!4 &400018
 Transform:
   m_ObjectHideFlags: 1
@@ -6085,7 +6171,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100136}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.69193548, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: .552953839, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400468}
@@ -6652,9 +6738,10 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100278}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.69193548, y: -16.0300808, z: 0}
+  m_LocalPosition: {x: 0, y: -15.4771271, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 400012}
   - {fileID: 400480}
   - {fileID: 400478}
   - {fileID: 400158}
@@ -7574,7 +7661,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100448}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.69193548, y: -16.0300007, z: 0}
+  m_LocalPosition: {x: 0, y: -15.477047, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400458}
@@ -9774,6 +9861,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 150, y: 40, z: 0}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &6500002
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100012}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 200.016052, y: 50.0040169, z: 0}
+  m_Center: {x: -.0530090332, y: .0345211029, z: 0}
 --- !u!65 &6500004
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -10601,8 +10700,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  functionName: 
+  target: {fileID: 100308}
+  functionName: DecreaseShortDebt3
   trigger: 0
   includeChildren: 0
 --- !u!114 &11400002
@@ -10715,8 +10814,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  functionName: 
+  target: {fileID: 100308}
+  functionName: IncreaseShortDebt3
   trigger: 0
   includeChildren: 0
 --- !u!114 &11400008
@@ -10875,8 +10974,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 100706}
-  functionName: IncreaseShortDebt(3)
+  target: {fileID: 100308}
+  functionName: IncreaseShortDebt3
   trigger: 0
   includeChildren: 0
 --- !u!114 &11400022
@@ -10890,8 +10989,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 100706}
-  functionName: DecreaseShortDebt(3)
+  target: {fileID: 100308}
+  functionName: DecreaseShortDebt3
   trigger: 0
   includeChildren: 0
 --- !u!114 &11400024
@@ -10905,8 +11004,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  functionName: 
+  target: {fileID: 100308}
+  functionName: IncreaseShortDebt2
   trigger: 0
   includeChildren: 0
 --- !u!114 &11400026
@@ -10978,8 +11077,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  functionName: 
+  target: {fileID: 100308}
+  functionName: DecreaseShortDebt2
   trigger: 0
   includeChildren: 0
 --- !u!114 &11400030
@@ -10993,8 +11092,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  functionName: 
+  target: {fileID: 100308}
+  functionName: DecreaseShortDebt2
   trigger: 0
   includeChildren: 0
 --- !u!114 &11400032
@@ -11124,8 +11223,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  functionName: 
+  target: {fileID: 100308}
+  functionName: IncreaseShortDebt2
   trigger: 0
   includeChildren: 0
 --- !u!114 &11400038
@@ -11260,8 +11359,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  functionName: 
+  target: {fileID: 100308}
+  functionName: DecreaseShortDebt1
   trigger: 0
   includeChildren: 0
 --- !u!114 &11400050
@@ -11275,8 +11374,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  functionName: 
+  target: {fileID: 100308}
+  functionName: IncreaseShortDebt1
   trigger: 0
   includeChildren: 0
 --- !u!114 &11400052
@@ -11346,8 +11445,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  functionName: 
+  target: {fileID: 100308}
+  functionName: IncreaseShortDebt1
   trigger: 0
   includeChildren: 0
 --- !u!114 &11400058
@@ -11361,10 +11460,198 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  functionName: 
+  target: {fileID: 100308}
+  functionName: DecreaseShortDebt1
   trigger: 0
   includeChildren: 0
+--- !u!114 &11400060
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dda15e0fb186b7b4ba942e24e530af5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Days: {fileID: 11400720}
+  PlayerMoney: {fileID: 11400718}
+  ExistingCash: {fileID: 11400708}
+  LeftToBePayed:
+  - {fileID: 11400818}
+  - {fileID: 11400812}
+  - {fileID: 11400974}
+  MonthlyCut:
+  - {fileID: 11400816}
+  - {fileID: 11400814}
+  - {fileID: 11400964}
+  Interest:
+  - {fileID: 11400820}
+  - {fileID: 11400810}
+  - {fileID: 11400958}
+  Payments:
+  - {fileID: 11400716}
+  - {fileID: 11400714}
+  - {fileID: 11400712}
+  - {fileID: 11400694}
+  ShortenDebt:
+  - {fileID: 11400842}
+  - {fileID: 11400864}
+  - {fileID: 11400788}
+  - {fileID: 11400766}
+  - {fileID: 11400892}
+  - {fileID: 11400916}
+  DebtsActivate:
+  - {fileID: 100782}
+  - {fileID: 100674}
+  - {fileID: 100494}
+  - {fileID: 100564}
+  - {fileID: 100746}
+  - {fileID: 100720}
+--- !u!114 &11400062
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10d1b0eb2f7164c4fa7b97ef302f42c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11400064
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d44bc69c2ca5f943b845318866dc1bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClip: {fileID: 0}
+  trigger: 0
+  volume: 1
+  pitch: 1
+--- !u!114 &11400066
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fdca5042b1d12a4890ec1bd4f04290d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tweenTarget: {fileID: 100006}
+  hover: {r: 1, g: 1, b: 1, a: 1}
+  pressed: {r: 1, g: 1, b: 1, a: 1}
+  duration: .200000003
+  disabledColor: {r: .5, g: .5, b: .5, a: 1}
+  dragHighlight: 0
+  onClick: []
+--- !u!114 &11400068
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9d0b5f3bbe925a408bd595c79d0bf63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftAnchor:
+    target: {fileID: 0}
+    relative: 0
+    absolute: 0
+  rightAnchor:
+    target: {fileID: 0}
+    relative: 1
+    absolute: 0
+  bottomAnchor:
+    target: {fileID: 0}
+    relative: 0
+    absolute: 0
+  topAnchor:
+    target: {fileID: 0}
+    relative: 1
+    absolute: 0
+  mColor: {r: 1, g: 1, b: 1, a: 1}
+  mPivot: 4
+  mWidth: 58
+  mHeight: 20
+  mDepth: 4
+  autoResizeBoxCollider: 0
+  hideIfOffScreen: 0
+  keepCrispWhenShrunk: 1
+  mTrueTypeFont: {fileID: 0}
+  mFont: {fileID: 11400000, guid: 29056518aafb01b49a5b08faf8e30cff, type: 2}
+  mText: 
+  mFontSize: 20
+  mFontStyle: 0
+  mEncoding: 1
+  mMaxLineCount: 0
+  mEffectStyle: 0
+  mEffectColor: {r: 0, g: 0, b: 0, a: 1}
+  mSymbols: 1
+  mEffectDistance: {x: 1, y: 1}
+  mOverflow: 0
+  mMaterial: {fileID: 0}
+  mApplyGradient: 0
+  mGradientTop: {r: 1, g: 1, b: 1, a: 1}
+  mGradientBottom: {r: .699999988, g: .699999988, b: .699999988, a: 1}
+  mSpacingX: 0
+  mSpacingY: 0
+  mShrinkToFit: 0
+  mMaxLineWidth: 0
+  mMaxLineHeight: 0
+  mLineWidth: 0
+  mMultiline: 1
+--- !u!114 &11400070
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b3dc54f924693f41b5cbecb267e647a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftAnchor:
+    target: {fileID: 0}
+    relative: 0
+    absolute: 0
+  rightAnchor:
+    target: {fileID: 0}
+    relative: 1
+    absolute: 0
+  bottomAnchor:
+    target: {fileID: 0}
+    relative: 0
+    absolute: 0
+  topAnchor:
+    target: {fileID: 0}
+    relative: 1
+    absolute: 0
+  mColor: {r: 0, g: 0, b: 0, a: .784313738}
+  mPivot: 4
+  mWidth: 1300
+  mHeight: 730
+  mDepth: -1
+  autoResizeBoxCollider: 0
+  hideIfOffScreen: 0
+  mAtlas: {fileID: 11400000, guid: 2f2473f73b9ca724f9080d6d76009ea2, type: 2}
+  mSpriteName: Dark
+  mFillCenter: 1
+  mType: 1
+  mFillDirection: 4
+  mFillAmount: 1
+  mInvert: 0
 --- !u!114 &11400080
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -14130,7 +14417,7 @@ MonoBehaviour:
   MissionBrief: {fileID: 11400186}
   _VendorMenu: {fileID: 11400616}
   _MechanicMenu: {fileID: 11400390}
-  _FinanceMenu: {fileID: 11400626}
+  _FinanceMenu: {fileID: 11400060}
   MissionButtonsParent: {fileID: 400472}
   MButtonPrefab: {fileID: 11400000, guid: 5e31095fdddafa34781f4d2829bdc8d1, type: 2}
   Tabs: {fileID: 11400446}
@@ -15254,7 +15541,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerStorage: {fileID: 0}
-  VendorStorage: {fileID: 11400138}
+  VendorStorage: {fileID: 0}
   SellSlot: {fileID: 0}
   MoneyLabel: {fileID: 0}
   EquipmentSlots:
@@ -18542,27 +18829,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
---- !u!114 &11400626
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a594f25be433e14fb57968615c48728, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Days: {fileID: 11400720}
-  PlayerMoney: {fileID: 11400718}
-  Payment1: {fileID: 11400716}
-  Payment2: {fileID: 11400714}
-  Payment3: {fileID: 11400712}
-  PaymentT: {fileID: 11400694}
-  ExistingCash: {fileID: 11400708}
-  ShortD1: {fileID: 11400864}
-  ShortD2: {fileID: 11400766}
-  ShortD3: {fileID: 11400916}
 --- !u!114 &11400628
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -18602,11 +18868,11 @@ MonoBehaviour:
     e00: 360
     e01: 0
     e02: 0
-    e03: 719.353699
+    e03: 718.661743
     e10: 0
     e11: 360
     e12: 0
-    e13: -446.429443
+    e13: -446.982391
     e20: 0
     e21: 0
     e22: 360
@@ -21336,8 +21602,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  functionName: 
+  target: {fileID: 100308}
+  functionName: ActivateDebt2
   trigger: 0
   includeChildren: 0
 --- !u!114 &11400786
@@ -21550,7 +21816,7 @@ MonoBehaviour:
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 0}
   mFont: {fileID: 11400000, guid: ac44b8a25154a9d40a172ab5851e0986, type: 2}
-  mText: +
+  mText: '-'
   mFontSize: 20
   mFontStyle: 0
   mEncoding: 1
@@ -21674,7 +21940,7 @@ MonoBehaviour:
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 0}
   mFont: {fileID: 11400000, guid: ac44b8a25154a9d40a172ab5851e0986, type: 2}
-  mText: '-'
+  mText: +
   mFontSize: 20
   mFontStyle: 0
   mEncoding: 1
@@ -22162,7 +22428,7 @@ MonoBehaviour:
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 0}
   mFont: {fileID: 11400000, guid: ac44b8a25154a9d40a172ab5851e0986, type: 2}
-  mText: '-'
+  mText: +
   mFontSize: 20
   mFontStyle: 0
   mEncoding: 1
@@ -22286,7 +22552,7 @@ MonoBehaviour:
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 0}
   mFont: {fileID: 11400000, guid: ac44b8a25154a9d40a172ab5851e0986, type: 2}
-  mText: +
+  mText: '-'
   mFontSize: 20
   mFontStyle: 0
   mEncoding: 1
@@ -22491,8 +22757,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  functionName: 
+  target: {fileID: 100308}
+  functionName: ActivateDebt1
   trigger: 0
   includeChildren: 0
 --- !u!114 &11400850
@@ -23388,7 +23654,7 @@ MonoBehaviour:
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 0}
   mFont: {fileID: 11400000, guid: ac44b8a25154a9d40a172ab5851e0986, type: 2}
-  mText: +
+  mText: '-'
   mFontSize: 20
   mFontStyle: 0
   mEncoding: 1
@@ -23512,7 +23778,7 @@ MonoBehaviour:
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 0}
   mFont: {fileID: 11400000, guid: ac44b8a25154a9d40a172ab5851e0986, type: 2}
-  mText: '-'
+  mText: +
   mFontSize: 20
   mFontStyle: 0
   mEncoding: 1
@@ -24961,8 +25227,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  functionName: 
+  target: {fileID: 100308}
+  functionName: ActivateDebt3
   trigger: 0
   includeChildren: 0
 --- !u!114 &11401002
