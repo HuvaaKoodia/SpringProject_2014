@@ -57,8 +57,6 @@ public class PlayerMain : EntityMain
 		movement.UpdateFloor();
 		interactSub.CheckForInteractables();
 
-        
-
         for (int i=0;i<4;++i){
             weaponList[i].weaponID=(WeaponID)i;
         }
@@ -69,6 +67,8 @@ public class PlayerMain : EntityMain
 		CullWorld();
 
 		HUD.Init(this,GC);
+		
+		TargetingCamera.aspect = 16.0f / 9.0f;
 	}
 	
 	// Update is called once per frame
@@ -81,6 +81,7 @@ public class PlayerMain : EntityMain
 			else
 				weapon.RotateGraphics();
 		}
+
 	}
 
     public void StartPlayerPhase()
@@ -88,6 +89,8 @@ public class PlayerMain : EntityMain
 		ap = apMax;
 		Finished = false;
 		DisperseWeaponHeat(1);
+
+		MovedLastPhase = false;
 
 		HUD.gunInfoDisplay.UpdateAllDisplays();
         StartTurn();
@@ -360,5 +363,11 @@ public class PlayerMain : EntityMain
 	protected override void UpdateFloor(){
 		base.UpdateFloor();
 		//targetingSub.Update
+	}
+
+	public void SetMouseLook(bool look)
+	{
+		GameCamera.GetComponent<MouseLook>().MouseLookOn = look;
+		HudCamera.GetComponent<MouseLook>().MouseLookOn = look;
 	}
 }

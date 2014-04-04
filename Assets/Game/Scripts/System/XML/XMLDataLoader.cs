@@ -255,8 +255,7 @@ public class XMLDataLoader : XML_Loader
             var stats=new ObjectXmlIndex();
             stats.index=tag.Attributes["index"].Value;
             stats.type=(TileObjData.Obj)System.Enum.Parse(typeof(TileObjData.Obj),tag.Attributes["type"].Value);
-            
-            stats.rotation=getAttInt(root,"rotation",0);
+			stats.rotation=getAttInt(tag,"rotation",0);
             
             ShipGenerator.ObjectIndices.Add(stats.index,stats);
         }

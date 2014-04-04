@@ -50,6 +50,9 @@ public class GatlingAI : AIBase {
 
 	Point3D lastTargetedPosition;
 
+	public float horizontalTurnSpeed = 120;
+	public float verticalTurnSpeed = 90;
+
 	// Use this for initialization
 	void Start()
 	{
@@ -61,7 +64,9 @@ public class GatlingAI : AIBase {
 		
 		blackboard.owner = this;
 		player = parent.GC.Player;
-		
+
+		parent.movement.turnSpeed = horizontalTurnSpeed;
+
 		HasUsedTurn = false;
 		foundMove = false;
 		Animating = false;
@@ -304,7 +309,7 @@ public class GatlingAI : AIBase {
 		while (turretTransform.rotation != verticalRot)
 		{
 			turretTransform.rotation = Quaternion.RotateTowards(turretTransform.rotation,
-			                                                    verticalRot, 90.0f * Time.deltaTime);
+			                                                    verticalRot, horizontalTurnSpeed * Time.deltaTime);
 			
 			yield return null;
 		}
@@ -355,7 +360,7 @@ public class GatlingAI : AIBase {
 	
 		movement.Turn((int)lookToPlayerRot.eulerAngles.y - 90);
 
-		Invoke("StopRotating", 90 * Time.deltaTime);
+		Invoke("StopRotating", horizontalTurnSpeed * Time.deltaTime);
 	}
 
 	void CloseFrame()

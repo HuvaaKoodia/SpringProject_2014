@@ -96,7 +96,7 @@ GameObject:
   - 108: {fileID: 10800000}
   - 122: {fileID: 12200000}
   m_Layer: 0
-  m_Name: Point light
+  m_Name: OrangeLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -113,7 +113,7 @@ GameObject:
   - 108: {fileID: 10800002}
   - 122: {fileID: 12200002}
   m_Layer: 0
-  m_Name: Point light
+  m_Name: OrangeLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -130,7 +130,7 @@ GameObject:
   - 108: {fileID: 10800004}
   - 122: {fileID: 12200004}
   m_Layer: 0
-  m_Name: Point light
+  m_Name: OrangeLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -146,7 +146,7 @@ GameObject:
   - 4: {fileID: 400016}
   - 108: {fileID: 10800006}
   m_Layer: 0
-  m_Name: Point light
+  m_Name: WhiteLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -266,7 +266,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100016}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5999999, z: 0}
+  m_LocalPosition: {x: 0, y: 2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400018}
@@ -522,11 +522,11 @@ Light:
   m_Type: 2
   m_Color: {r: .866666675, g: .949019611, b: 1, a: 1}
   m_Intensity: 4
-  m_Range: 1.79999995
+  m_Range: 2.5
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_Strength: 1
     m_Bias: .00999999978
@@ -573,12 +573,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   white_lights:
   - {fileID: 10800006}
-  orange_lights:
-  - {fileID: 10800004}
-  - {fileID: 10800000}
-  - {fileID: 10800002}
-  light_flicker: 1
   delay: 1
+  power_on: 0
 --- !u!122 &12200000
 Halo:
   m_ObjectHideFlags: 1

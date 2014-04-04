@@ -218,7 +218,7 @@ public static class PathFinder
 
 		for (int i = 0; i < checkCount; i++)
 		{
-			Debug.DrawLine(rays[i].origin, rays[i].origin + rays[i].direction*checkRadius, rayColors[i], 5.0f);
+			//Debug.DrawLine(rays[i].origin, rays[i].origin + rays[i].direction*checkRadius, rayColors[i], 5.0f);
 			if (Physics.Raycast(rays[i], out hitInfo, checkRadius, mask))
 			{ 
 				//ray hit the entity to avoid -> can see!
@@ -243,7 +243,7 @@ public static class PathFinder
 		RaycastHit[] hits = Physics.RaycastAll(ray, checkRadius, mask);
 
 		
-		Debug.DrawLine(ray.origin, ray.origin + ray.direction*checkRadius, Color.yellow, 5.0f);
+		//Debug.DrawLine(ray.origin, ray.origin + ray.direction*checkRadius, Color.yellow, 5.0f);
 
 		//check if toHear was hit at all and cache the distance
 		float distanceToObject = 0;
@@ -286,7 +286,7 @@ public static class PathFinder
 
 		if (walls <= wallTolerance)
 		{
-			Debug.DrawLine(ray.origin, ray.origin + ray.direction*checkRadius, Color.green, 5.0f);
+			//Debug.DrawLine(ray.origin, ray.origin + ray.direction*checkRadius, Color.green, 5.0f);
 			return true;
 		}
 	

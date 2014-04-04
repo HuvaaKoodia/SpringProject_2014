@@ -44,6 +44,7 @@ public class EnemyMain : EntityMain {
 	{
 		ai.Reset();
         waitingForAttackPhase = false;
+		MovedLastPhase = false;
         //Debug.Log("new ai turn");
 	}
 

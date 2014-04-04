@@ -8,13 +8,150 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 using System;
-namespace AssemblyCSharp
+using System.Collections.Generic;
+
+public class Debt
 {
-		public class FinanceManager
-		{
-				public FinanceManager ()
-				{
-				}
-		}
+	public float left_tb_payed;										//variable to keep track of amount left to be payed per debt
+	public float monthly_cut;										//variable to keep track of monthly cut per debt (default value = 1000)
+	public float interest_percent;									//variable to keep track of interest percentage upon taking up a new debt
+	public float interest;											//variable to keep track of interest value per debt
+	public float debt_payment;										//variable to keep track of debt payment per debt
+	
+	public Debt()													//constructor that initializes variables
+	{
+		left_tb_payed = 0.0f;
+		monthly_cut = 1000.0f;
+	}
+	
+	//function that calculates interest per debt
+	//called each time a new debt is taken
+	public void CalcInterest()
+	{
+		interest = (interest_percent * 0.01f) * left_tb_payed;
+	}
+	
+	//function to calculate debt payment per debt
+	//called each time a new debt is taken but after all the necessary calculations have been performed
+	//ie calculate interest percent and interest
+	public void CalcDebtPayment()
+	{
+		debt_payment = monthly_cut + interest;
+	}
 }
 
+public class FinanceManager
+{
+	GameObjData Player;												//access the Player's data
+	public List<Debt> listofdebts = new List<Debt>();				//store all the debts taken
+	
+	public int days_till_update;									//variable to keep track of the number of days until the next update (default value = 30)
+	private int n;													//variable that contributes to the calculation of interest percentage (default value = 5)
+	private int debt_max;											//variable for the maximum number of debts the Player can take
+	
+	public float player_money;										//variable to keep track of the amount of money the player has at the given moment
+	public float payment_total;										//variable to store the sum of all the debts
+	public float existing_cash;										//variable to keep track the resultant amount after minusing payment total from player money
+
+	public int shorten_debt;
+	
+	public bool day_pass;											//variable set to true only if a day has passed
+	public bool add_debt;											//variable set to true upon taking on a new debt
+	
+	public FinanceManager ()										//constructor that initializes variables
+	{
+		Player = new GameObjData();
+		
+		days_till_update = 30;
+		n = 5;
+		debt_max = 3;
+		
+		player_money = Player.PlayerData.Money;
+		payment_total = 0.0f;
+
+		shorten_debt = 1000;
+		
+		day_pass = false;
+		add_debt = false;
+	}
+	
+	//function taht updates the Player's amount of money after paying off the debts
+	public void UpdatePlayerMoney()
+	{
+		Player.PlayerData.Money = (int)existing_cash;
+		player_money = Player.PlayerData.Money;
+	}
+	
+	//function that calculates the Player's existing cash
+	public void CalcExistingCash()
+	{
+		existing_cash = player_money - payment_total;
+	}
+	
+	//function to calculate the new interest percentage each time Player takes on a new debt
+	public void CalcInterestPercent()
+	{
+		int debtnumber = listofdebts.Count;
+		
+		if(add_debt)
+		{
+			//as long as there is a debt, calculate interest percentage for the particular debt
+			if(listofdebts[debtnumber - 1] != null)
+			{
+				listofdebts[debtnumber - 1].interest_percent = (n * debtnumber) + 10;
+			}
+			add_debt = false;
+		}
+	}
+	
+	//	//NOT NEEDED AT THE MOMENT
+	//	public void ProcessDebt()
+	//	{
+	//		int debtnumber = listofdebts.Count;
+	//
+	//		if(add_debt)
+	//		{
+	//			CalcInterestPercent();
+	//			listofdebts[debtnumber - 1].CalcInterest();
+	//			listofdebts[debtnumber - 1].CalcDebtPayment();
+	//			add_debt = false;
+	//		}
+	//	}
+	
+	//function to calculate the sum of all debt payments
+	public void CalcPaymentTotal()
+	{
+		//as long as ther is debt
+		if(listofdebts.Count > 0)
+		{
+			//traverse through the list of debts
+			//add debt payment per debt to payment total
+			for(int i = 0; i < listofdebts.Count; i++)
+			{
+				payment_total += listofdebts[i].debt_payment;
+			}
+		}
+	}
+	
+	//function to update the number of days until the next update
+	public void UpdateDays()
+	{
+		//as long as a day has passed, decrease the number of days until next update
+		if(day_pass)
+		{
+			days_till_update--;
+			day_pass = false;
+		}
+	}
+	
+	//function for Player to take on a new debt
+	public void AddDebt()
+	{
+		//as long as number of debts taken has not reached the maximum number, add new debt
+		if(listofdebts.Count < debt_max)
+		{
+			listofdebts.Add(new Debt());
+			add_debt = true;
+		}
+	}
+}

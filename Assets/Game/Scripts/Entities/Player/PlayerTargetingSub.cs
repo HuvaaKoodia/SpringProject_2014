@@ -76,7 +76,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 				Ray ray = player.GameCamera.ScreenPointToRay(enemyPosInScreen);
 				RaycastHit hitInfo;
 
-				Debug.DrawRay(ray.origin, ray.direction * 20, Color.red, 2.0f);
+				//Debug.DrawRay(ray.origin, ray.direction * 20, Color.red, 2.0f);
 				if (Physics.Raycast(ray, out hitInfo, 20, canSeeMask))
 				{
 					if (hitInfo.transform.parent != hitbox.transform.parent)
@@ -93,7 +93,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 						ray = new Ray(gunPosition, adjustedEnemyPos - gunPosition);
 
-						Debug.DrawRay(ray.origin, ray.direction * 20, Color.red, 2.0f);
+						//Debug.DrawRay(ray.origin, ray.direction * 20, Color.red, 2.0f);
 
 						if (Physics.Raycast(ray, out hitInfo, 20, targetingRayMask))
 						{
@@ -101,7 +101,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 							{
 								enemyAdded = true;
 						
-								AddEnemyToTargetables(enemy, enemyPosInScreen);
+								AddEnemyToTargetables(enemy, hitbox.transform.position, enemyPosInScreen);
 								break;
 							}
 						}
@@ -120,6 +120,8 @@ public class PlayerTargetingSub : MonoBehaviour {
 	{
 		foreach(KeyValuePair<EnemyMain, TargetMarkHandler> enemyPair in targetableEnemies)
 		{
+			bool wasSeen = false;
+
 			for (int i = 0; i < enemyPair.Key.hitboxes.Count; i++)
 			{
 				Vector3 adjustedEnemyPos = enemyPair.Key.hitboxes[i].bounds.center;
@@ -132,12 +134,14 @@ public class PlayerTargetingSub : MonoBehaviour {
 					if (hitInfo.transform == enemyPair.Key.hitboxes[i].transform)
 					{
 						enemyPair.Value.SetCrosshairVisible(true);
+						wasSeen = true;
 						break;
 					}
 				}
-
-				enemyPair.Value.SetCrosshairVisible(false);
 			}
+			
+			if (!wasSeen)
+				enemyPair.Value.SetCrosshairVisible(false);
 		}
 	}
 
@@ -163,7 +167,7 @@ public class PlayerTargetingSub : MonoBehaviour {
         }
     }
 	
-	public void AddEnemyToTargetables(EnemyMain enemy, Vector3 enemyPosInScreen)
+	public void AddEnemyToTargetables(EnemyMain enemy, Vector3 hitboxPosition, Vector3 enemyPosInScreen)
 	{
 		if (targetableEnemies.ContainsKey(enemy))
 			return;
@@ -171,7 +175,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 		
 		enemyPosInScreen.z = 0.7f + (enemyPosInScreen.z / cameraFarZ);
 
-		TargetMarkHandler tmHandler = new TargetMarkHandler(player.GC, enemyPosInScreen, (int)Quaternion.LookRotation(enemyPosInScreen - player.transform.position).eulerAngles.y);
+		TargetMarkHandler tmHandler = new TargetMarkHandler(player.GC, enemyPosInScreen, (int)Quaternion.LookRotation(hitboxPosition - player.HudCamera.transform.position).eulerAngles.y);
 		targetableEnemies.Add(enemy, tmHandler);
 	}
 
@@ -180,7 +184,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 		Component target;
 		GameObject hover = UICamera.hoveredObject;
 
-		if (player.targetingMode && Subs.GetObjectMousePos(out target, 20, "TargetingClick"))
+		if (player.targetingMode && Subs.GetObjectMousePos(out target, 20, "TargetingClick", player.HudCamera))
 		{
 			Transform trans = target.transform;
 			EnemyMain enemyTargeted = trans.gameObject.GetComponent<EnemyMain>();

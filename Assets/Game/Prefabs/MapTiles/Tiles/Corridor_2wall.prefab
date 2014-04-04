@@ -108,7 +108,7 @@ GameObject:
   - 4: {fileID: 400012}
   - 108: {fileID: 10800002}
   m_Layer: 14
-  m_Name: Point light
+  m_Name: WhiteLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -132,7 +132,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.23873043, y: 1.3592937, z: 47.6965141}
+  m_LocalPosition: {x: -11.3657789, y: -13.6470385, z: 47.6965141}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400010}
@@ -193,7 +193,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100012}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.60000014, z: 0}
+  m_LocalPosition: {x: 0, y: 2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400010}
@@ -288,7 +288,7 @@ Light:
   m_Type: 2
   m_Color: {r: .867647052, g: .948529422, b: 1, a: 1}
   m_Intensity: 4
-  m_Range: 1.79999995
+  m_Range: 2.5
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -305,7 +305,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294934527
   m_Lightmapping: 1
   m_ShadowSamples: 1
   m_ShadowRadius: 0
@@ -339,9 +339,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   white_lights:
   - {fileID: 10800002}
-  orange_lights: []
-  light_flicker: 1
   delay: 1
+  power_on: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

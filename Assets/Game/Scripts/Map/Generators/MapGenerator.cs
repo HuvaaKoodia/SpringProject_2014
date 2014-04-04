@@ -9,7 +9,12 @@ using System.Collections.Generic;
 public class MapGenerator : MonoBehaviour
 {
     public static Vector3 TileSize = new Vector3(3, 3, 3);
-	public const string WallIcon = "w", DoorIcon = "d", CorridorIcon = "c", FloorIcon = ".", SpaceIcon=",",ElevatorIcon="el";
+	//hardcoded icons
+	public const string 
+		WallIcon = "w", DoorIcon = "d", CorridorIcon = "c", FloorIcon = ".",
+		SpaceIcon=",",ElevatorIcon="h",RoomIcon="r",RoomEndIcon="T",LootAreaIcon=":"
+	;
+
     public bool DEBUG_create_temp_tiles = false;
     public PrefabStore MapPrefabs;
 
@@ -20,7 +25,7 @@ public class MapGenerator : MonoBehaviour
 	}
 
     /// <summary>
-    /// Generates the TileObjectDataMap from a XMLMapData file.
+    /// Generates the TileObjectDataMap from an XMLMapData file.
     /// </summary>
     public void GenerateObjectDataMap(FloorObjData floor, MapXmlData md)
     {
@@ -99,7 +104,7 @@ public class MapGenerator : MonoBehaviour
         for (int x = 0; x < w; x++)
         {
             for (int y = 0; y < h; y++)
-            {   
+            {
                 //tile
                 //int y_pos = h - 1 - y;
 				Vector2 entity_pos =new Vector2( x,y); 
@@ -116,50 +121,63 @@ public class MapGenerator : MonoBehaviour
                 //game objects
                 switch (tile.Data.ObjType)
                 {
-                    case TileObjData.Obj.Player:
-						floor.AirlockPositions.Add(entity_pos);
-                        break;
+	            case TileObjData.Obj.Player:
+					floor.AirlockPositions.Add(entity_pos);
+	                break;
+	            case TileObjData.Obj.Enemy:
+	                var newEnemy = GameObject.Instantiate(MapPrefabs.EnemyPrefab, tile_pos, Quaternion.identity) as EnemyMain;
+	                newEnemy.name = "Enemy";
+	                newEnemy.movement.SetPositionInGrid(entity_pos);
+					floor.Enemies.Add(newEnemy);
 
-                    case TileObjData.Obj.Enemy:
-                        var newEnemy = GameObject.Instantiate(MapPrefabs.EnemyPrefab, tile_pos, Quaternion.identity) as EnemyMain;
-                        newEnemy.name = "Enemy";
-                        newEnemy.movement.SetPositionInGrid(entity_pos);
-						floor.Enemies.Add(newEnemy);
+					newEnemy.CurrentFloorIndex=floor.FloorIndex;
+                
+                	newEnemy.transform.parent = enemy_container.transform;
 
-						newEnemy.CurrentFloorIndex=floor.FloorIndex;
-                        
-                        newEnemy.transform.parent = enemy_container.transform;
+					newEnemy.movement.Init();
+	                break;
 
-						newEnemy.movement.Init();
-                        break;
+	            case TileObjData.Obj.Loot:
+	                var LootCrate = GameObject.Instantiate(MapPrefabs.LootCratePrefab, tile_pos, Quaternion.identity) as GameObject;
 
-                    case TileObjData.Obj.Loot:
-                        var LootCrate = GameObject.Instantiate(MapPrefabs.LootCratePrefab, tile_pos, Quaternion.identity) as GameObject;
+					LootCrateMain crate = LootCrate.GetComponent<LootCrateMain>();
+					crate.GC = GC;
 
-						LootCrateMain crate = LootCrate.GetComponent<LootCrateMain>();
-						crate.GC = GC;
+					floor.LootCrates.Add(crate);
+       				tile.TileObject=LootCrate;
+                	tile.TileObject.transform.parent = tile.transform;
+	                break;
+				case TileObjData.Obj.DataTerminal:
+					var terminal = GameObject.Instantiate(MapPrefabs.DataTerminalPrefab, tile_pos, Quaternion.identity) as DataTerminalMain;
+					terminal.GC = GC;
 
-						floor.LootCrates.Add(crate);
-                        tile.TileObject=LootCrate;
-                        tile.TileObject.transform.parent = tile.transform;
-                        break;
+					tile.TileObject=terminal.gameObject;
+					tile.TileObject.transform.parent = tile.transform;
+					break;
+				case TileObjData.Obj.GatlingGun:
+					var gatlingTurret = GameObject.Instantiate(MapPrefabs.GatlingTurretPrefab) as GatlingEnemySub;
 
-					case TileObjData.Obj.GatlingGun:
-						var gatlingTurret = GameObject.Instantiate(MapPrefabs.GatlingTurretPrefab) as GatlingEnemySub;
+					gatlingTurret.name = "GatlingTurret";
+					gatlingTurret.CurrentFloorIndex=floor.FloorIndex;
 
-						gatlingTurret.name = "GatlingTurret";
-						gatlingTurret.CurrentFloorIndex=floor.FloorIndex;
+					gatlingTurret.transform.position = tile_pos + Vector3.up * (MapGenerator.TileSize.y - 0.1f);
+					gatlingTurret.movement.SetPositionInGrid(entity_pos);
+					floor.Enemies.Add(gatlingTurret);
 
-						gatlingTurret.transform.position = tile_pos + Vector3.up * (MapGenerator.TileSize.y - 0.1f);
-						gatlingTurret.movement.SetPositionInGrid(entity_pos);
-						floor.Enemies.Add(gatlingTurret);
+					gatlingTurret.transform.parent = enemy_container.transform;
 
-						gatlingTurret.transform.parent = enemy_container.transform;
-
-						gatlingTurret.movement.Init();
-						gatlingTurret.movement.GetCurrenTile().LeaveTile();
-						break;
+					gatlingTurret.movement.Init();
+					gatlingTurret.movement.GetCurrenTile().LeaveTile();
+					break;
                 }
+
+				//rotation
+				if (tile.Data.ObjType!=TileObjData.Obj.None&&tile.TileObject!=null){
+					var rotation=tile.Data.ObjXml.rotation;
+					if (rotation<0)
+						rotation=Subs.GetRandom(4)*90;
+					tile.TileObject.transform.rotation=Quaternion.AngleAxis(rotation,Vector3.up);
+				}
             }
         }
     }

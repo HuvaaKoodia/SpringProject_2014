@@ -18,6 +18,7 @@ public class PlayerHud : MonoBehaviour {
 	public GameObject TargetingHud;
 	public GameObject InteractHud;
 	public GameObject engageButton;
+	public GameObject disperseHeatButton;
 	public MechStatisticsMain MechStats;
 
 	public UIPanel targetMarkPanel;
@@ -27,10 +28,6 @@ public class PlayerHud : MonoBehaviour {
 	{
 		MovementHud.SetActive(false);
 		TargetingHud.SetActive(false);
-
-
-		
-
 	}
 
     public void Init(PlayerMain p, GameController gc){
@@ -52,12 +49,12 @@ public class PlayerHud : MonoBehaviour {
 
 	public void ToggleMovementHUD()
 	{
-		menu.ChangeMenuState(MenuState.MovementHUD);
+		menu.ToggleMovementHUD();
 	}
 	
 	public void ToggleTargetingHUD()
 	{
-		menu.ChangeMenuState(MenuState.TargetingHUD);
+		menu.ToggleTargetingHUD();
 	}
 	
 	public void DeactivateInventoryHUD()
@@ -67,12 +64,12 @@ public class PlayerHud : MonoBehaviour {
 	
 	public void ActivateInventoryHUD()
 	{
-		menu.ChangeMenuState(MenuState.InventoryHUD);
+		menu.ActivateInventoryHUD();
 	}
 
 	public void ToggleInventory()
 	{
-		menu.InventoryHud.ToggleInventory();
+		menu.ToggleInventory();
 	}
 
 	//input
@@ -158,8 +155,8 @@ public class PlayerHud : MonoBehaviour {
 	}
 
 	public void SetHudToPlayerStats(){
-		radar.SetDisabled(!player.HasRadar);
-		map.SetDisabled(!player.HasMap);
-		radar.radarZoom=2f+1f*(1f-(player.RadarRange/player.RadarRangeMax));
+		//radar.SetDisabled(!player.HasRadar);
+		//map.SetDisabled(!player.HasMap);
+		//radar.radarZoom=2f+1f*(1f-(player.RadarRange/player.RadarRangeMax));
 	}
 }

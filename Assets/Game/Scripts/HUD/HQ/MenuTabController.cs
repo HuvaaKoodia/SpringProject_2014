@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MenuTabController : MonoBehaviour {
 
-    public GameObject[] TabMenus;
+    public List<GameObject> TabMenus;
 
     public void OpenTab1(){
         ActivateMenu(0);
@@ -24,6 +25,10 @@ public class MenuTabController : MonoBehaviour {
     public void OpenTab5(){
         ActivateMenu(4);
     }
+
+	public void OpenTab6(){
+		ActivateMenu(5);
+	}
 
     public void ActivateMenu(int index){
         foreach (var m in TabMenus){

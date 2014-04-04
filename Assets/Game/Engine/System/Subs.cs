@@ -233,4 +233,19 @@ public class Subs{
 		obj=null;
 		return false;
 	}
+
+	public static bool GetObjectMousePos(out Component obj,float distance,string layer, Camera camera){
+		var ray= camera.ScreenPointToRay(Input.mousePosition);
+		int mask=1<<LayerMask.NameToLayer(layer);
+		RaycastHit info;
+		
+		//Debug.DrawLine(ray.origin, ray.origin + ray.direction*distance, Color.red, 2.0f);
+		if (Physics.Raycast(ray,out info,distance,mask)){
+			
+			obj= info.collider.gameObject.GetComponent<Component>();
+			return true;
+		}
+		obj=null;
+		return false;
+	}
 }
