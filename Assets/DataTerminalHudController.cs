@@ -2,7 +2,8 @@
 using System.Collections;
 
 public class DataTerminalHudController : MonoBehaviour {
-	
+
+	public MenuHandler menu;
 	public GameObject DataTerminal_button;
 	public MenuTabController Tabs;
 
