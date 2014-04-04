@@ -19,6 +19,8 @@ public class DataTerminalHudController : MonoBehaviour {
 		CloseDataTerminal();
 	}
 
+	//menu activation
+
 	public void OpenDataTerminal (DataTerminalMain.Type terminalType)
 	{
 		DataTerminal_button.SetActive(true);
@@ -34,5 +36,24 @@ public class DataTerminalHudController : MonoBehaviour {
 
 	public void OpenCurrentTerminal(){
 		Tabs.ActivateMenu(Terminals[(int)CurrentType]);
+	}
+
+	//game control functions
+
+	void ToggleGeneratorStatus(){
+		var power=menu.GC.GetFloor(0).PowerOn;
+		menu.GC.SetFloorsPowerState(!power);
+	}
+
+	void ToggleLightStatus(){
+		
+	}
+
+	void ToggleWeaponStatus(){
+		
+	}
+
+	void ToggleElevatorStatus(){
+
 	}
 }

@@ -10,28 +10,6 @@ public class TileMain : MonoBehaviour
 
     public EntityMain entityOnTile {get; private set;}
 
-	void Start()
-	{
-		//as long as there are TileGraphics and TileLights
-		if(TileGraphics != null)
-		{
-			if(TileGraphics.TileLights != null)
-			{
-				//TileGraphics.TileLights.SetState(TileGraphics.TileLights.RandomizeStartState(30, 50, 20));	//randomize start state of the white lights
-				//TileGraphics.TileLights.SetState(Lighting_State.Normal);
-				//TileGraphics.TileLights.SetPowerOn(Subs.RandomBool());										//randomize whether electricity should flow
-				TileGraphics.TileLights.power_on = Subs.RandomBool();										//randomize whether electricity should flow
-				//TileGraphics.TileLights.power_on = true;
-				//TileGraphics.TileLights.lighting_state = Lighting_State.Flickering;
-				TileGraphics.TileLights.EnableLights();													//set the intensity of the white lights
-			}
-		}
-	}
-	
-	void Update()
-	{
-	}
-
 	public bool BlockedForMovement{
 		get{
             if (entityOnTile != null)
