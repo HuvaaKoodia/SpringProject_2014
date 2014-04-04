@@ -45,6 +45,8 @@ public class MenuHandler : MonoBehaviour {
 		if (ShowFPSonAndroid) {
 			DrawFPS();
 		}
+#else
+		FPS.gameObject.SetActive(false);
 		#endif
 	}
 
