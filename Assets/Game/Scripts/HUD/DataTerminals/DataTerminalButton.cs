@@ -3,15 +3,27 @@ using System.Collections;
 
 public class DataTerminalButton : MonoBehaviour {
 
-	public string ButtonText;
+	public DataTerminalHudController Hud;
+	public DataTerminalHudController.StatType type;
 
-	// Use this for initialization
+	public string ButtonText;
+	public string StatusTextTrue="On", StatusTextFalse="Off";
+	UILabel label;
+	UIButton button;
+	
 	void Start () {
-	
+		button=transform.FindChild("Button").GetComponent<UIButton>();
+		label=transform.FindChild("Label").GetComponent<UILabel>();
+
+		button.transform.FindChild("Label").GetComponent<UILabel>().text=ButtonText;
+		label.text=StatusTextTrue;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	public void SetStatus(bool on){
+		label.text=on?StatusTextTrue:StatusTextFalse;
+	}
+
+	void OnButtonPress(){
+		Hud.ToggleStatus(this);
 	}
 }

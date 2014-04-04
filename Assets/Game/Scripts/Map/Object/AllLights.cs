@@ -61,9 +61,9 @@ public class AllLights : MonoBehaviour
 		}
 	}
 
-	//function to enable the white lights in TilePrefabs under TestObjects in GameScene 
-	//manipulation of white light intensity is passed in here
-	//switch case handles the different light states in TilePrefabs under TestObjects in GameScene
+	/// <summary>
+	/// Turns the light on/off based on its state and power setting.
+	/// </summary>
 	public void EnableLights()
 	{
 		for(int i = 0; i < white_lights.Count; i++)

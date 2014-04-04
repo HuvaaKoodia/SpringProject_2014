@@ -187,8 +187,9 @@ public class GameController : MonoBehaviour {
 
 		if (c_mis.MissionShipPower==MissionObjData.ShipPower.Broken); //DEV.todo break generator
 
+		Debug.Log("Power: "+power);
 
-
+		SetFloorsPowerState(power);
 
 		//misc
 		var ec=GetComponent<EngineController>();
@@ -264,9 +265,14 @@ public class GameController : MonoBehaviour {
 		menuHandler.FadeIn();
 		StartCoroutine(GotoFloorTimer(index));
 	}
-
+	/// <summary>
+	/// Sets the floor.
+	/// </summary>
+	/// <param name="index">Index.</param>
 	public void SetFloor(int index){                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
 		index=Mathf.Max(0,Mathf.Min(Floors.Count-1,index));
+
+		SetFloorPowerState(index,CurrentFloorData.PowerOn);//DEV. lazy
 
 		Player.CurrentFloorIndex=index;
 		culling_system.DisableOtherFloors(index,this);
@@ -282,6 +288,15 @@ public class GameController : MonoBehaviour {
 		menuHandler.FadeOut();
 		SetFloor(index);
 		//DEV. elevator sound here + some delay
+		yield return null;
+
+		UpdateFloorStats();//DEV. haxy hax Thanks to having to be called one step after setActive 
+	}
+
+	void UpdateFloorStats ()
+	{
+		//update tiles based on floor stats
+		SetFloorPowerState(index,CurrentFloorData.PowerOn);//DEV. lazy
 	}
 
 	public void UseElevator ()
@@ -292,9 +307,6 @@ public class GameController : MonoBehaviour {
 		else
 			GotoFloor(CurrentFloorIndex-1);
 	}
-
-
-
 
 	//FUNCTIONS TO ENABLE LIGHTS
 
@@ -379,6 +391,7 @@ public class GameController : MonoBehaviour {
 
 	public void SetFloorPowerState(int i,bool on){
 		var f=GetFloor(i);
+		f.PowerOn=on;
 		foreach(var t in f.TileMainMap){
 			SetTileLightState(t,on);
 		}
@@ -386,40 +399,7 @@ public class GameController : MonoBehaviour {
 
 	public void SetFloorsPowerState(bool on){
 		for(var f=0;f<Floors.Count;++f){
-
-		}
-	}
-
-	//function to set the state of the white lights in a specific floor
-	public void SetState_FloorNum(int floor_num, Lighting_State LS)
-	{
-		//as long as there are TileMainMaps
-		if(GetFloor(floor_num).TileMainMap != null)
-		{
-			//traverse through all the TileMainMaps
-			for(int x = 0; x < GetFloor(floor_num).TileMainMap.GetLength(0); x++)
-			{
-				for(int y = 0; y < GetFloor(floor_num).TileMainMap.GetLength(1); y++)
-				{
-					//set state passed in into particular TileMainMap in particular floor
-					SetState_FloorNum(floor_num, x, y, LS);
-				}
-			}
-		}
-	}
-
-	//function to set the state of the white lights in all floors
-	public void SetState_AllFloors(Lighting_State LS)
-	{
-		//as long as there are Floors.
-		if(Floors != null)
-		{
-			//traverse through all the floors
-			for(int floornum = 0; floornum < Floors.Count; floornum  ++)
-			{
-				//set state passed in into particular floor
-				SetState_FloorNum(floornum, LS);
-			}
+			SetFloorPowerState(f,on);
 		}
 	}
 	//function to randomize the state of the white lights in the environment

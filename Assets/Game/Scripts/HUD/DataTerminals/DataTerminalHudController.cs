@@ -40,9 +40,20 @@ public class DataTerminalHudController : MonoBehaviour {
 
 	//game control functions
 
-	void ToggleGeneratorStatus(){
+	public enum StatType{Generator,Lights,Elevator};
+
+	public void ToggleStatus(DataTerminalButton button){
+		switch(button.type){
+			case StatType.Generator:
+				ToggleGeneratorStatus(button);
+			break;
+		}
+	}
+
+	void ToggleGeneratorStatus(DataTerminalButton button){
 		var power=menu.GC.GetFloor(0).PowerOn;
 		menu.GC.SetFloorsPowerState(!power);
+		button.SetStatus(menu.GC.GetFloor(0).PowerOn);
 	}
 
 	void ToggleLightStatus(){
@@ -51,9 +62,5 @@ public class DataTerminalHudController : MonoBehaviour {
 
 	void ToggleWeaponStatus(){
 		
-	}
-
-	void ToggleElevatorStatus(){
-
 	}
 }
