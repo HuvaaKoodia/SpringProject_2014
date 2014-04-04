@@ -22,7 +22,7 @@ public class Debt
 
 	public Debt()													//constructor that initializes variables
 	{
-		left_tb_payed = 1000.0f;
+		left_tb_payed = 0.0f;
 		monthly_cut = 1000.0f;
 		shorten_debt = 1000;
 	}
