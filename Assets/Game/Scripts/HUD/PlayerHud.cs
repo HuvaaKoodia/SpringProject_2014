@@ -159,4 +159,10 @@ public class PlayerHud : MonoBehaviour {
 		//map.SetDisabled(!player.HasMap);
 		//radar.radarZoom=2f+1f*(1f-(player.RadarRange/player.RadarRangeMax));
 	}
+
+	public void ChangeFloor(int floorIndex)
+	{
+		map.ChangeFloor(floorIndex);
+		radar.ChangeFloor(floorIndex);
+	}
 }

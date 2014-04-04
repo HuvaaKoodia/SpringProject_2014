@@ -17,6 +17,12 @@ public class PlayerInteractSub : MonoBehaviour {
 		interactableInfront = null;
 		TileMain tileInfront = player.movement.GetTileInFront();
 
+		if (tileInfront == null)
+		{
+			player.GC.menuHandler.SetInteractVisibility(false);
+			return;
+		}
+
 		GameObject objInfront = tileInfront.TileObject;
 		InteractableMain infront = null;
 

@@ -164,10 +164,11 @@ public class EntityMovementSub : MonoBehaviour
             float distance = movementDir.magnitude;
             movementDir.Normalize();
 
+			Vector3 movement = movementDir * Time.deltaTime * movementSpeed;
             
-            if (distance > Vector3.Magnitude(movementDir * Time.deltaTime * movementSpeed))
+            if (distance > movement.magnitude && movement != Vector3.zero)
             {
-				parentTransform.position += movementDir * Time.deltaTime * movementSpeed;
+				parentTransform.position += movement;
             }
             else
             {
@@ -351,7 +352,7 @@ public class EntityMovementSub : MonoBehaviour
 			nextX -= 1;
 		}
 
-		if (nextX < 0 || nextX > tilemap.GetLength(0) || nextY < 0 || nextY > tilemap.GetLength(1))
+		if (nextX < 0 || nextX >= tilemap.GetLength(0) || nextY < 0 || nextY >= tilemap.GetLength(1))
 			return null;
 
 		return tilemap[nextX, nextY];

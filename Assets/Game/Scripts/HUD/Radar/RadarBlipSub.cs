@@ -42,4 +42,9 @@ public class RadarBlipSub : MonoBehaviour {
 	{
 		spriteSetThisCycle = false;
 	}
+
+	public void MakeInvisible()
+	{
+		blipSprite.alpha = 0.0f;
+	}
 }

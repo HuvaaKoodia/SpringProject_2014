@@ -8,7 +8,9 @@ public class HudMapMain : MonoBehaviour {
 	public PlayerMain player;
 
 	public GameObject spriteParent;
-	private UISprite[,] mapSprites;
+
+	private List<UISprite[,]> mapSprites;
+	private int currentFloor = 0;
 
 	private int spriteWidth;
 
@@ -22,19 +24,25 @@ public class HudMapMain : MonoBehaviour {
 	public UILabel northIndicator;
 	public UISprite playerIndicator;
 
+	public UIPanel spritePanel;
+
 	bool _disabled=false;
 
 	// Use this for initialization
 	void Start()
-	{ }
+	{ 
+		mapSprites = new List<UISprite[,]>();
+	}
 
 	public void Init()
 	{
 		player = GC.Player;
 
 		spriteWidth = GC.SS.PS.FloorSprite.width;
-
+	
 		CreateMap();
+
+		ChangeFloor(GC.CurrentFloorIndex);
 
 		float playerRot = player.transform.rotation.eulerAngles.y;
 		Quaternion rot = Quaternion.Euler(0.0f, 0.0f, playerRot);
@@ -55,8 +63,8 @@ public class HudMapMain : MonoBehaviour {
 		if (!initialized||_disabled)
 			return;
 
-		int mapWidth = mapSprites.GetLength(0);
-		int mapHeight = mapSprites.GetLength(1);
+		int mapWidth = mapSprites[currentFloor].GetLength(0);
+		int mapHeight = mapSprites[currentFloor].GetLength(1);
 
 		returnRotationSpeed = player.movement.turnSpeed;
 
@@ -64,7 +72,7 @@ public class HudMapMain : MonoBehaviour {
 		{
 			for (int y = 0; y < mapHeight; y++)
 			{
-				UpdateSpritePosition(x, y, mapSprites[x,y]);
+				UpdateSpritePosition(x, y, mapSprites[currentFloor][x,y]);
 			}
 		}
 
@@ -112,37 +120,30 @@ public class HudMapMain : MonoBehaviour {
 
 	void CreateMap()
 	{
-		TileMain[,] mapTiles = GC.CurrentFloorData.TileMainMap;
-		int mapWidth = mapTiles.GetLength(0);
-		int mapHeight = mapTiles.GetLength(1);
-
-		mapSprites = new UISprite[mapWidth, mapHeight];
-
-		for (int x = 0 ; x < mapWidth; x++)
+		for (int i = 0; i < GC.Floors.Count; i++)
 		{
-			for (int y = 0; y < mapHeight; y++)
+			MiniMapTileData[,] mapTiles = GC.MiniMapData.GetFloor(i);
+			int mapWidth = mapTiles.GetLength(0);
+			int mapHeight = mapTiles.GetLength(1);
+
+			mapSprites.Add(new UISprite[mapWidth,mapHeight]);
+
+			for (int x = 0 ; x < mapWidth; x++)
 			{
-				AddTileSprite(x, y, mapTiles[x,y]);
+				for (int y = 0; y < mapHeight; y++)
+				{
+					if (mapTiles[x,y] != null)
+						mapSprites[i][x,y] = CreateTileSprite(x, y, mapTiles[x,y]);
+				}
 			}
 		}
 	}
 
-	void AddTileSprite(int x, int y, TileMain tile)
+	UISprite CreateTileSprite(int x, int y, MiniMapTileData tile)
 	{
-		//var str=tile.Data.TileType.ToString();
-		if (tile.Data.TileType == TileObjData.Type.Empty
-		    || tile.Data.TileType == TileObjData.Type.Wall
-		    || tile.TileGraphics == null)
-			return;
-
 		UISprite sprite = GameObject.Instantiate(GC.SS.PS.FloorSprite) as UISprite;
-		string graphicsName = tile.TileGraphics.name;
-
-		if (graphicsName.EndsWith("(Clone)"))
-		{
-			graphicsName = graphicsName.Remove(graphicsName.Length-7);
-		}
-
+		string graphicsName = tile.TileType;
+	
 		switch (graphicsName)
 		{
 		case "Corridor_1wall":
@@ -228,12 +229,14 @@ public class HudMapMain : MonoBehaviour {
 
 		sprite.transform.localPosition = new Vector3(posX * (spriteWidth * zoom), posY * (spriteWidth * zoom), 0);
 
-		float graphicsRotation = tile.TileGraphics.transform.localRotation.eulerAngles.y;
+		float graphicsRotation = tile.Rotation;
 		graphicsRotation = Mathf.Abs(360 - graphicsRotation);
 		Quaternion rot = Quaternion.Euler(0.0f, 0.0f, graphicsRotation);
 		sprite.transform.localRotation = rot;
 
-		mapSprites[x, y] = sprite;
+		sprite.enabled = false;
+
+		return sprite;
 	}
 
 	void UpdateSpritePosition(float x, float y, UISprite sprite)
@@ -247,8 +250,35 @@ public class HudMapMain : MonoBehaviour {
 
 		sprite.transform.localScale = Vector3.one * zoom;
 		sprite.transform.localPosition = new Vector3(posX * (spriteWidth * zoom), posY * (spriteWidth * zoom), 0);
+
+		if (sprite.transform.localPosition.magnitude < spritePanel.finalClipRegion.magnitude/2)
+		{
+			GC.MiniMapData.GetFloor(currentFloor)[(int)x,(int)y].SeenByPlayer = true;
+		}
 	}
 
+	public void ChangeFloor(int floorIndex)
+	{
+		currentFloor = floorIndex;
+
+		for (int i = 0; i < mapSprites.Count; i++)
+		{
+			MiniMapTileData[,] mapTiles = GC.MiniMapData.GetFloor(i);
+			int mapWidth = mapTiles.GetLength(0);
+			int mapHeight = mapTiles.GetLength(1);
+
+			bool enable = (floorIndex == i);
+
+			for (int x = 0 ; x < mapWidth; x++)
+			{
+				for (int y = 0; y < mapHeight; y++)
+				{
+					if (mapSprites[i][x,y] != null)
+						mapSprites[i][x,y].enabled = enable;
+				}
+			}
+		}
+	}
 	public void ToggleRotateWithPlayer()
 	{
 		rotateWithPlayer = !rotateWithPlayer;

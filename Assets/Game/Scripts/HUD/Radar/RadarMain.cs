@@ -90,6 +90,7 @@ public class RadarMain : MonoBehaviour
 	public UISprite circleScanSprite;
 	public bool circleScanActive = true;
 	public float scanSpeed = 1.0f;
+	public float scanRadiusMax = 220;
 	float scanRadius;
 
 	// Internal vars
@@ -156,7 +157,7 @@ public class RadarMain : MonoBehaviour
 			circleScanSprite.enabled = true;
 			circleScanSprite.transform.localScale += Vector3.one * scanSpeed * Time.deltaTime;
 			scanRadius = circleScanSprite.transform.localScale.x * (BGWidth / 2.0f);
-			if (scanRadius > (BGWidth / 2.0f))
+			if (scanRadius > scanRadiusMax)
 			{
 				circleScanSprite.transform.localScale = Vector3.zero;
 				scanRadius = 0;
@@ -341,5 +342,16 @@ public class RadarMain : MonoBehaviour
 		_disabled=disabled;
 		
 		RadarThingsPanel.SetActive(!disabled);
+	}
+
+	public void ChangeFloor(int index)
+	{
+		enemies = GC.GetFloor(index).Enemies;
+		lootCrates = GC.GetFloor(index).LootCrates;
+
+		for (int i = 0; i < blips.Count; i++)
+		{
+			blips[i].MakeInvisible();
+		}
 	}
 }

@@ -79,6 +79,8 @@ public class GameController : MonoBehaviour {
 
 	public List<FloorObjData> Floors{get;set;}
 
+	public MiniMapData MiniMapData { get; private set; }
+
 	public AIcontroller aiController;
 	public TurnState currentTurn = TurnState.StartPlayerTurn;
 
@@ -150,6 +152,10 @@ public class GameController : MonoBehaviour {
 			}
 		}
 
+		//minimap data
+		MiniMapData = new MiniMapData();
+		MiniMapData.Init(this);
+
 		//init player
 
 		var start_floor=Subs.GetRandom(legit_floors);
@@ -164,6 +170,7 @@ public class GameController : MonoBehaviour {
 		Inventory.SetPlayer(Player);
 
         Player.ActivateEquippedItems();
+
 
 		//init hud
 		menuHandler.player = Player;
@@ -256,6 +263,7 @@ public class GameController : MonoBehaviour {
 		culling_system.DisableOtherFloors(index,this);
 		aiController.SetFloor(CurrentFloorData);
 		Player.interactSub.CheckForInteractables();
+		Player.HUD.ChangeFloor(index);
 	}
 
 	private IEnumerator GotoFloorTimer(int index){
