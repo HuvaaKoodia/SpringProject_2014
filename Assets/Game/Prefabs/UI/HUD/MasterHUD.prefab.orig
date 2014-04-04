@@ -498,14 +498,13 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400070}
-  - 114: {fileID: 11400048}
   m_Layer: 13
   m_Name: LightStatus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &100072
 GameObject:
   m_ObjectHideFlags: 1
@@ -514,7 +513,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400072}
-  - 114: {fileID: 11400046}
   m_Layer: 13
   m_Name: GeneratorStatus
   m_TagString: Untagged
@@ -604,7 +602,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &100084
 GameObject:
   m_ObjectHideFlags: 1
@@ -3298,7 +3296,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1170.6947, y: 537.599915, z: 415.035583}
+  m_LocalPosition: {x: -955.733398, y: 537.599915, z: 415.035583}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400002}
@@ -4082,7 +4080,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100170}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -8.89999962, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400286}
@@ -4706,7 +4704,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100434}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+<<<<<<< HEAD
   m_LocalPosition: {x: 0, y: 0, z: 37.7843666}
+=======
+  m_LocalPosition: {x: 1.48199427, y: 1.48110247, z: 37.7843666}
+>>>>>>> powerTerminal imp 1/3
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400072}
@@ -6782,9 +6784,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7460d813e496a15428fb41a1799d4f44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hud: {fileID: 11400008}
+  Hud: {fileID: 0}
   type: 0
-  ButtonText: Elevator
+  ButtonText: 
   StatusTextTrue: On
   StatusTextFalse: Off
 --- !u!114 &11400042
@@ -6886,38 +6888,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
---- !u!114 &11400046
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100072}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7460d813e496a15428fb41a1799d4f44, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Hud: {fileID: 11400008}
-  type: 0
-  ButtonText: 
-  StatusTextTrue: On
-  StatusTextFalse: Off
---- !u!114 &11400048
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7460d813e496a15428fb41a1799d4f44, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Hud: {fileID: 0}
-  type: 0
-  ButtonText: 
-  StatusTextTrue: On
-  StatusTextFalse: Off
 --- !u!114 &11400058
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7367,7 +7337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 100070}
+  target: {fileID: 100588}
   functionName: OnButtonPress
   trigger: 0
   includeChildren: 0
@@ -7464,7 +7434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 100072}
+  target: {fileID: 100588}
   functionName: OnButtonPress
   trigger: 0
   includeChildren: 0
@@ -7740,7 +7710,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 100082}
+  target: {fileID: 100588}
   functionName: OnButtonPress
   trigger: 0
   includeChildren: 0
@@ -10509,7 +10479,7 @@ MonoBehaviour:
     e10: 0
     e11: 479.999969
     e12: 0
-    e13: 4271.99951
+    e13: 0
     e20: 0
     e21: 0
     e22: 479.999969

@@ -290,10 +290,10 @@ public class GameController : MonoBehaviour {
 		//DEV. elevator sound here + some delay
 		yield return null;
 
-		UpdateFloorStats();//DEV. haxy hax Thanks to having to be called one step after setActive 
+		UpdateFloorStats(index);//DEV. haxy hax Thanks to having to be called one step after setActive 
 	}
 
-	void UpdateFloorStats ()
+	void UpdateFloorStats (int index)
 	{
 		//update tiles based on floor stats
 		SetFloorPowerState(index,CurrentFloorData.PowerOn);//DEV. lazy

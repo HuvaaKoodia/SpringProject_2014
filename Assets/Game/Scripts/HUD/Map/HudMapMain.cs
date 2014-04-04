@@ -29,7 +29,7 @@ public class HudMapMain : MonoBehaviour {
 	bool _disabled=false;
 
 	// Use this for initialization
-	void Start()
+	void Awake()
 	{ 
 		mapSprites = new List<UISprite[,]>();
 	}

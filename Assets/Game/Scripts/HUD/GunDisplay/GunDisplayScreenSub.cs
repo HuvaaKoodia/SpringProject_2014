@@ -14,7 +14,7 @@ public class GunDisplayScreenSub : MonoBehaviour {
 	public UISprite overheat;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		overheat.enabled = false;
 	}
 	
