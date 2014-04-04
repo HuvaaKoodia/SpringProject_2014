@@ -1,0 +1,170 @@
+<!--
+Legend:
+
+Status info:
+-Aliens: 	0=none,1=small,2=med,3=lots
+-Security: 	0=none,1=small,2=med,3=lots
+-Condition: 0=badly damaged,1=damaged,2=intact
+-Power: 	0=generator broken,1=power off,2=poweron
+-->
+
+<Root>
+<Mission type="TradeVesselInfo" rewardClass="1" lootPool="1" lootQuality="1">
+	<Description>We've been contracted to investigate the fate of a trade vessel.\nFind out what happened.\n\nThe client doesn't care about the cargo. Grab whatever you can.</Description>
+	<PrimaryObjectives>
+		FindLogs
+	</PrimaryObjectives>
+	<SecondaryObjectives>
+		Loot
+	</SecondaryObjectives>
+	<Ships>
+		blackone
+		mercurius1
+	</Ships>
+	<TravelTime min="2" max="4"/>
+	<ExpirationTime min="2" max="4"/>
+	<Status name="Aliens">
+		<Item name="0"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+		<Item name="3"/>
+	</Status>
+	<Status name="Security">
+		<Item name="0"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+		<Item name="3"/>
+	</Status>
+	<Status name="Condition">
+		<Item name="0"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+	</Status>
+	<Status name="Power">
+		<Item name="0"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+	</Status>
+</Mission>
+
+<Mission type="RetrieveCargo"  rewardClass="1" lootPool="1" lootQuality="1">
+<Description>We've been contracted to retrieve a certain valuable item from an abandoned vessel.\nAnything else you find is for us to keep.</Description>
+	<PrimaryObjectives>
+		FindItem
+	</PrimaryObjectives>
+	<SecondaryObjectives>
+		Loot
+	</SecondaryObjectives>
+	<Ships>
+		mercurius1b
+	</Ships>
+	<TravelTime min="2" max="4"/>
+	<ExpirationTime min="2" max="4"/>
+	<Status name="Aliens">
+		<Item name="0"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+		<Item name="3"/>
+	</Status>
+	<Status name="Security">
+		<Item name="0"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+		<Item name="3"/>
+	</Status>
+	<Status name="Condition">
+		<Item name="0"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+	</Status>
+	<Status name="Power">
+		<Item name="0"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+	</Status>
+</Mission>
+
+<Mission type="ExploreVessel" rewardClass="1" lootPool="1" lootQuality="1">
+	<Description>We've received an emergency message from deep space.\n\nInvestigate and explore!</Description>
+	<PrimaryObjectives>
+		Explore
+	</PrimaryObjectives>
+	<Ships>
+		blackone
+		mercurius1
+	</Ships>
+	<TravelTime min="2" max="4"/>
+	<ExpirationTime min="2" max="4"/>
+	<Status name="Aliens">
+		<Item name="0"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+		<Item name="3"/>
+	</Status>
+	<Status name="Security">
+		<Item name="0"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+		<Item name="3"/>
+	</Status>
+	<Status name="Condition">
+		<Item name="0"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+	</Status>
+	<Status name="Power">
+		<Item name="0"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+	</Status>
+</Mission>
+
+<Mission type="EmergencyBeacon" rewardClass="1" lootPool="1" lootQuality="1">
+	<Description>We've spotted a derelict vessel.\nWe'll pay you a small fee if you find out what happened.\n\nOtherwise: loot, loot, loot!</Description>
+	<PrimaryObjectives>
+		FindLogs
+	</PrimaryObjectives>
+	<SecondaryObjectives>
+		Explore
+	</SecondaryObjectives>
+	<Ships>
+		blackone
+		mercurius1
+	</Ships>
+	<TravelTime min="2" max="4"/>
+	<ExpirationTime min="2" max="4"/>
+	<Status name="Aliens">
+		<Item name="0"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+		<Item name="3"/>
+	</Status>
+	<Status name="Security">
+		<Item name="0"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+		<Item name="3"/>
+	</Status>
+	<Status name="Condition">
+		<Item name="0"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+	</Status>
+	<Status name="Power">
+		<Item name="0"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+	</Status>
+</Mission>
+
+<RewardClass name="1" min="400" max="800"/>	
+
+<LootQuality name="1">
+	<Item name="1" 	weight="25"	/>
+	<Item name="2" 	weight="35"	/>
+	<Item name="3"	weight="30"	/>
+	<Item name="4"	weight="20"	/>
+	<Item name="6"	weight="5"	/>
+</LootQuality>
+
+</Root>
