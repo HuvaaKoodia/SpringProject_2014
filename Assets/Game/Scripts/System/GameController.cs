@@ -362,7 +362,7 @@ public class GameController : MonoBehaviour {
 			}
 		}
 	}
-	//FUNCTIONS TOP SET STATE OF THE WHITE LIGHTS
+	//FUNCTIONS TO SET STATE OF THE WHITE LIGHTS
 
 	//function to set the state of the white lights in a specific TileMain in aspecific floor
 	public void SetState_FloorNum(int floor_num, int tilemain_X, int tilemain_Y, Lighting_State LS)
