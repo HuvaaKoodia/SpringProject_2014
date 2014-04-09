@@ -310,7 +310,7 @@ public class FinanceMenu : MonoBehaviour {
 		}
 		else
 		{
-			Debug.Log("Key in 0 to 2 only");
+			Debug.Log("Key in 0 to 2 only.");
 		}
 	}
 }
