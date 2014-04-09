@@ -103,6 +103,12 @@ public class GameController : MonoBehaviour {
 	// Use this for initialization
 	void Start()
     {
+
+		#if !UNITY_EDITOR
+		OverrideMissionShip=false;
+		UseTestMap=false;
+		#endif
+
 		SS=GameObject.FindGameObjectWithTag("SharedSystems").GetComponent<SharedSystemsMain>();
 	
 		aiController = new AIcontroller(this);

@@ -20,7 +20,7 @@ public class GameDB : MonoBehaviour {
         GenerateNewMissions(0);
     }
 
-#if UNITY_EDITOR 
+#if UNITY_EDITOR && !UNITY_WEBPLAYER
 	public void Update(){
 		if (Input.GetKeyDown(KeyCode.F5)){
 			SaveLoadSys.SaveGame("Save",GameData);
@@ -30,7 +30,7 @@ public class GameDB : MonoBehaviour {
 			LoadGame();
 		}
 	}
-#endif
+
 	public void LoadGame(){
 		GameStarted=true;
 
@@ -51,7 +51,7 @@ public class GameDB : MonoBehaviour {
 
 		Application.LoadLevel(HQScene);
 	}
-
+	#endif
     public void SetCurrentMission(MissionObjData mission)
     {
         GameData.CurrentMission=mission;

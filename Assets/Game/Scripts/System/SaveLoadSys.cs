@@ -7,6 +7,9 @@ using System.IO;
 /// </summary>
 public class SaveLoadSys:TXT_Loader {
 
+#if UNITY_WEBPLAYER
+
+#else
 	public static void SaveGame(string filename,GameObjData data){
 		var serializer=new SharpSerializer(true);
 		var mstream=new MemoryStream();
@@ -27,6 +30,7 @@ public class SaveLoadSys:TXT_Loader {
 		return obj;
 	}
 
+#endif
 	//subs
 	static string StreamToString (MemoryStream mstream)
 	{

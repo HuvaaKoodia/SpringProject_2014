@@ -20,7 +20,7 @@ public class MenuHandler : MonoBehaviour {
 	public UISprite FadePanel;
 
 	public UILabel FPS;
-	public bool ShowFPSonAndroid=true;
+	public bool ShowFPS=true;
 
 	public DataTerminalHudController TerminalHud;
 
@@ -41,13 +41,10 @@ public class MenuHandler : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		#if UNITY_ANDROID
-		if (ShowFPSonAndroid) {
+
+		if (ShowFPS) {
 			DrawFPS();
 		}
-#else
-		FPS.gameObject.SetActive(false);
-		#endif
 	}
 
     public void WeaponPressed(WeaponID id){

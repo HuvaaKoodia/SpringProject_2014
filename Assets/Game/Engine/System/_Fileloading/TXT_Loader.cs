@@ -3,7 +3,8 @@ using System.Collections;
 using System.IO;
 
 public class TXT_Loader{
-	
+
+#if !UNITY_WEBPLAYER
 	/// <summary>
 	/// Reads a txt Documents from a path.
 	/// From disc if PC. From resources if Android or Webplayer
@@ -23,4 +24,5 @@ public class TXT_Loader{
 		path=path+"/"+file;
 		File.WriteAllText(path+file_extension,contents);
 	}
+#endif
 }
