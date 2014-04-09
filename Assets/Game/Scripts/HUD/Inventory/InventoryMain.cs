@@ -15,11 +15,16 @@ public class InventoryMain : MonoBehaviour {
     public MenuTabController Tabs;
     public MechanicalMenu Mechanic;
 
+	public InfoMenuMap MenuMap;
 	PlayerMain Player;
 
 	// Use this for initialization
 	void Start (){
 		InventoryPanel.SetActive(false);
+
+		MenuMap.Init();
+		MenuMap.gameObject.SetActive(false);
+
 	#if !UNITY_EDITOR
 		temp_random_item_button.gameObject.SetActive(false);	
 	#endif
@@ -37,7 +42,9 @@ public class InventoryMain : MonoBehaviour {
 	public void DeactivateInventory()
 	{ 
         InventoryPanel.SetActive(false);
-        Player.ActivateEquippedItems();
+		MenuMap.gameObject.SetActive(false);
+
+		Player.ActivateEquippedItems();
 
 		Player.HUD.SetHudToPlayerStats();
 

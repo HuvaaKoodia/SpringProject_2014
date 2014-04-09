@@ -105,6 +105,7 @@ public class RadarMain : MonoBehaviour
 	bool _disabled=false;
 
 	public bool DrawOnlyLastPhaseMovers = true;
+	public bool DrawOnlyUnopenedLoot = true;
 	// Initialize the radar
 	public void Init()
 	{	
@@ -189,8 +190,11 @@ public class RadarMain : MonoBehaviour
 		{
 			foreach (LootCrateMain loot in lootCrates)
 			{
-				drawBlip(loot.gameObject, lootBlipTexture);
-				currentBlip++;
+				if (!DrawOnlyUnopenedLoot || !loot.isOpen)
+				{
+					drawBlip(loot.gameObject, lootBlipTexture);
+					currentBlip++;
+				}
 			}
 		}
 		

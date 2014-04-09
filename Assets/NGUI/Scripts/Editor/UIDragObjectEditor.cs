@@ -17,7 +17,12 @@ public class UIDragObjectEditor : Editor
 
 		NGUIEditorTools.SetLabelWidth(100f);
 
+        DrawDefaultInspector();
+
+		GUILayout.Space(50);
+
 		SerializedProperty sp = NGUIEditorTools.DrawProperty("Target", serializedObject, "target");
+
 
 		EditorGUI.BeginDisabledGroup(sp.objectReferenceValue == null);
 		{

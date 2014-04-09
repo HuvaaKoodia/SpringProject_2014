@@ -20,6 +20,8 @@ public class UIDragObject : MonoBehaviour
 		Momentum,
 		MomentumAndSpring,
 	}
+	public bool ScaleTargetOnWheel = true;
+	public float ScrollScaleSpeed = 0.25f;
 
 	/// <summary>
 	/// Target object that will be dragged.
@@ -79,6 +81,7 @@ public class UIDragObject : MonoBehaviour
 	Bounds mBounds;
 	int mTouchID = 0;
 	bool mStarted = false;
+
 
 	/// <summary>
 	/// Auto-upgrade the legacy data.
@@ -315,5 +318,10 @@ public class UIDragObject : MonoBehaviour
 	{
 		if (enabled && NGUITools.GetActive(gameObject))
 			mScroll -= scrollMomentum * (delta * 0.05f);
+
+		if (ScaleTargetOnWheel)
+		{
+			target.transform.localScale += new Vector3(delta*ScrollScaleSpeed, delta*ScrollScaleSpeed);
+		}
 	}
 }

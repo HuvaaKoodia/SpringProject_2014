@@ -8,7 +8,7 @@ public class LootCrateMain : InteractableMain {
 	public GameObject graphics;
 
 	public Animation openAnimation;
-	bool isOpen = false;
+	public bool isOpen { get; private set; }
 
 	public bool Looted ()
 	{
@@ -38,6 +38,8 @@ public class LootCrateMain : InteractableMain {
 	void Awake () {
         Items=new InvItemStorage(8,4,2);
 		InteractCost = 0;
+
+		isOpen = false;
 
 		openAnimation["Open_LootBox"].normalizedTime = 0;
 		openAnimation["Open_LootBox"].normalizedSpeed = 1;
