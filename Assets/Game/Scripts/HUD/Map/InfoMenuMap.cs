@@ -18,14 +18,15 @@ public class InfoMenuMap : MonoBehaviour {
 	public UISprite playerIndicator;
 	
 	public UIPanel spritePanel;
-	
+
+	public UILabel CurrentFloorLabel;
+	public GameObject FloorUpButton;
+	public GameObject FloorDownButton;
+
 	bool _disabled=false;
 
-	// Use this for initialization
-	void Awake()
-	{ 
-		mapSprites = new List<UISprite[,]>();
-	}
+	float adjustedPosX;
+	float adjustedPosY;
 	
 	public void Init(GameController gc)
 	{
@@ -41,8 +42,8 @@ public class InfoMenuMap : MonoBehaviour {
 		ChangeFloor(GC.CurrentFloorIndex);
 
 
-		float halfWidth = (mapSprites[0].GetLength(0)-1)* ((float)spriteWidth * 3.0f);
-		float halfHeight = (mapSprites[0].GetLength(1)-1)* ((float)spriteWidth * 3.0f);
+		adjustedPosX = (mapSprites[0].GetLength(0)-1)* ((float)spriteWidth * 3.0f);
+		adjustedPosY = (mapSprites[0].GetLength(1)-1)* ((float)spriteWidth * 3.0f);
 
 		for (int i = 0; i < mapSprites.Count; i++)
 		{
@@ -51,21 +52,28 @@ public class InfoMenuMap : MonoBehaviour {
 				for (int y = 0; y < mapSprites[i].GetLength(1); y++)
 				{
 					if (mapSprites[i][x,y] != null)
-						mapSprites[i][x,y].transform.localPosition -= new Vector3(halfWidth, halfHeight);
+						mapSprites[i][x,y].transform.localPosition -= new Vector3(adjustedPosX, adjustedPosY);
 				}
 			}
 		}
-
-
-		float playerRot = player.transform.rotation.eulerAngles.y;
-		Quaternion rot = Quaternion.Euler(0.0f, 0.0f, playerRot);
-		
-		//playerIndicator.transform.localRotation =  Quaternion.Euler(0, 0, 360 - playerRot);
 	}
 	
 	// Update is called once per frame
 	void Update()
 	{
+		if (playerIndicator.gameObject.activeSelf == false)
+			return;
+
+		float playerRot = player.transform.rotation.eulerAngles.y;
+
+		Quaternion playerIndicatorRot = 
+			Quaternion.Euler(0, 0, (360 -playerRot));
+		playerIndicator.transform.localRotation = playerIndicatorRot;
+
+		int posX = GC.Player.movement.currentGridX;
+		int posY = GC.Player.movement.currentGridY;
+
+		playerIndicator.transform.localPosition = mapSprites[currentFloor][posX,posY].transform.localPosition;
 	}
 
 	public void ChangeFloor(int floorIndex)
@@ -89,16 +97,41 @@ public class InfoMenuMap : MonoBehaviour {
 				}
 			}
 		}
+
+		CurrentFloorLabel.text = currentFloor + "";
+
+		playerIndicator.gameObject.SetActive(currentFloor == GC.CurrentFloorIndex);
+	}
+
+	public void FloorUp()
+	{
+		if (currentFloor < mapSprites.Count-1)
+			ChangeFloor(currentFloor+1);
+
+		if (currentFloor <= mapSprites.Count)
+		{
+			FloorUpButton.SetActive(false);
+		}
+
+		FloorDownButton.SetActive(true);
+	}
+
+	public void FloorDown()
+	{
+		if (currentFloor > 0)
+			ChangeFloor(currentFloor-1);
+		
+		if (currentFloor <= 0)
+		{
+			FloorDownButton.SetActive(false);
+		}
+
+		FloorUpButton.SetActive(true);
 	}
 
 	public void SetDisabled(bool disabled){
 		_disabled=disabled;
 		
 		spriteParent.SetActive(!disabled);
-	}
-
-	public void Zoom(float delta)
-	{
-
 	}
 }

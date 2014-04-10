@@ -7,7 +7,7 @@ public class MiniMapData {
 
 	public GameController GC;
 
-	List<MiniMapTileData[,]> mapFloors;
+	public List<MiniMapTileData[,]> mapFloors {get; private set;}
 
 	public MiniMapTileData[,] GetFloor(int index)
 	{
@@ -88,6 +88,31 @@ public class MiniMapData {
 				}
 			}
 		}
+	}
+
+	public List<UISprite[,]> CreateMapSprites(GameObject spriteParent, float zoom, int spriteWidth)
+	{
+		List<UISprite[,]> spriteList = new List<UISprite[,]>();
+
+		for (int i = 0; i < GC.Floors.Count; i++)
+		{
+			MiniMapTileData[,] mapTiles = GC.MiniMapData.GetFloor(i);
+			int mapWidth = mapTiles.GetLength(0);
+			int mapHeight = mapTiles.GetLength(1);
+			
+			spriteList.Add(new UISprite[mapWidth,mapHeight]);
+			
+			for (int x = 0 ; x < mapWidth; x++)
+			{
+				for (int y = 0; y < mapHeight; y++)
+				{
+					if (mapTiles[x,y] != null)
+						spriteList[i][x,y] = CreateTileSprite(x, y, mapTiles[x,y], spriteParent, zoom, spriteWidth);
+				}
+			}
+		}
+
+		return spriteList;
 	}
 	
 	UISprite CreateTileSprite(int x, int y, MiniMapTileData tile, GameObject spriteParent, float zoom, int spriteWidth)

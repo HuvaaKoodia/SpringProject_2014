@@ -96,6 +96,9 @@ public class GameController : MonoBehaviour {
 	public List<GameObject> FloorContainers{get;private set;}
 
 	void Awake(){
+		
+		SS=GameObject.FindGameObjectWithTag("SharedSystems").GetComponent<SharedSystemsMain>();
+
 		Floors=new List<FloorObjData>();
 		FloorContainers=new List<GameObject>();
 	}
@@ -109,7 +112,6 @@ public class GameController : MonoBehaviour {
 		UseTestMap=false;
 		#endif
 
-		SS=GameObject.FindGameObjectWithTag("SharedSystems").GetComponent<SharedSystemsMain>();
 	
 		aiController = new AIcontroller(this);
 		ShipObjData ship_objdata=null;

@@ -21,7 +21,11 @@ public class UIDragObject : MonoBehaviour
 		MomentumAndSpring,
 	}
 	public bool ScaleTargetOnWheel = true;
+
 	public float ScrollScaleSpeed = 0.25f;
+
+	public float ScrollScaleMin = 0.5f;
+	public float ScrollScaleMax = 2.0f;
 
 	/// <summary>
 	/// Target object that will be dragged.
@@ -321,7 +325,9 @@ public class UIDragObject : MonoBehaviour
 
 		if (ScaleTargetOnWheel)
 		{
-			target.transform.localScale += new Vector3(delta*ScrollScaleSpeed, delta*ScrollScaleSpeed);
+			float scale = Mathf.Clamp(target.transform.localScale.x + delta * ScrollScaleSpeed, ScrollScaleMin, ScrollScaleMax);
+
+			target.transform.localScale = new Vector3(scale, scale);
 		}
 	}
 }

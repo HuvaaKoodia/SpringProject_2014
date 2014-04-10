@@ -40,9 +40,9 @@ public class HudMapMain : MonoBehaviour {
 
 		spriteWidth = GC.SS.PS.FloorSprite.width;
 
-		mapSprites = new List<UISprite[,]>();
+		//mapSprites = new List<UISprite[,]>();
 
-		GC.MiniMapData.CreateMapSprites(spriteParent, mapSprites, zoom, spriteWidth);
+		mapSprites = GC.MiniMapData.CreateMapSprites(spriteParent, zoom, spriteWidth);
 
 		ChangeFloor(GC.CurrentFloorIndex);
 
@@ -117,6 +117,20 @@ public class HudMapMain : MonoBehaviour {
 			Quaternion playerIndicatorRot = 
 				Quaternion.RotateTowards(playerIndicator.transform.localRotation, Quaternion.Euler(0, 0, (360 -playerRot)), returnRotationSpeed * Time.deltaTime);
 			playerIndicator.transform.localRotation = playerIndicatorRot;
+		}
+
+		int playerX = player.movement.currentGridX;
+		int playerY = player.movement.currentGridY;
+
+		for (int x = -2; x < 3; x++)
+		{
+			for (int y = -2; y < 3; y++)
+			{
+				MiniMapTileData tileData = GC.MiniMapData.mapFloors[currentFloor][playerX+x, playerY+y];
+
+				if (tileData != null)
+					tileData.SeenByPlayer = true;
+			}
 		}
 	}
 

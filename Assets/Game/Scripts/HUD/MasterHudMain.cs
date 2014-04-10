@@ -204,6 +204,18 @@ public class MasterHudMain : MonoBehaviour {
         GC.SS.GDB.EndMission();
     }
 
+	public void ToggleRadarRotateWithCenter()
+	{
+		if (currentMenuState == MenuState.NothingSelected)
+			player.HUD.radar.ToggleRotateWithCenter();
+	}
+
+	public void ToggleMapRotateWithPlayer()
+	{
+		if (currentMenuState == MenuState.NothingSelected)
+			player.HUD.map.ToggleRotateWithPlayer();
+	}
+
 	void DrawFPS(){
 		timeleft -= Time.deltaTime;
 		accum += Time.timeScale/Time.deltaTime;
