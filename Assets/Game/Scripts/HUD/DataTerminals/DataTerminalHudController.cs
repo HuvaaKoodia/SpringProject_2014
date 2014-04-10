@@ -39,7 +39,6 @@ public class DataTerminalHudController : MonoBehaviour {
 	}
 
 	//game control functions
-
 	public enum StatType{Generator,Lights,Elevator};
 
 	public void ToggleStatus(DataTerminalButton button){

@@ -119,7 +119,9 @@ public class HaxKnifeCulling : MonoBehaviour {
 				cull_this=false;
 				if (DEBUG_ShowRays) Debug.DrawLine(ray.origin,tile_pos,Color.green,5);
 				break;
-			}else{
+			}else if (WallHits.Length==0){
+				//push to map
+
 				if (DEBUG_ShowRays) Debug.DrawLine(ray.origin,tile_pos,Color.red,5);
 			}
 		}

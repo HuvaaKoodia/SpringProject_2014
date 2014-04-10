@@ -82,7 +82,7 @@ public class XMLDataLoader : XML_Loader
 			foreach(var t in Subs.EnumValues<InvStat.Type>()){
 				AddStat(node,item,t);
 			}
-			XmlDatabase.items.Add(item.name,item);
+			XmlDatabase.AddItem(item);
             return true;
 		}
         return false;
@@ -100,7 +100,7 @@ public class XMLDataLoader : XML_Loader
             data.StartAmount=getAttInt(node,"startamount",data.MaxAmount);
             data.ShowInGame=getAttBool(node,"showingame",true);
 
-			XmlDatabase.AmmoTypes.Add(data.Type,data);
+			XmlDatabase.AddAmmoType(data.Type,data);
             return true;
         }
         return false;
@@ -116,7 +116,7 @@ public class XMLDataLoader : XML_Loader
             item.description=getStr(node,"Description");
             item.iconName=getAttStr(node,"sprite");
             
-			XmlDatabase.QuestItems.Add(item.name,item);
+			XmlDatabase.AddQuestItem(item);
             return true;
         }
         return false;
@@ -127,7 +127,7 @@ public class XMLDataLoader : XML_Loader
         if (node.Name == "Mission")
         {
             var mission=new MissionXmlData();
-            var type=(MissionObjData.Type)System.Enum.Parse(typeof(MissionObjData.Type),getAttStr(node,"type"),true);
+			var type=getAttStr(node,"type");
             mission.Description=getStr(node,"Description").Replace("\\n","\n");
             mission.RewardClass=getAttStr(node,"rewardClass");
 			mission.LootPool=getAttStr(node,"lootPool");
@@ -173,7 +173,7 @@ public class XMLDataLoader : XML_Loader
 				loadPool("LootQualityPool",n,mission.LootQualityPool);
 			}
 
-			XmlDatabase.Missions.Add(type,mission);
+			XmlDatabase.AddMission(type,mission);
 			return true;
         }
         return false;
@@ -184,19 +184,19 @@ public class XMLDataLoader : XML_Loader
         if (node.Name == "Objective")
         {
             var data=new ObjectiveXmlData();
-            var type=(MissionObjData.Objective)System.Enum.Parse(typeof(MissionObjData.Objective),getAttStr(node,"type"),true);
+            var type=getAttStr(node,"type");
             data.Name=getAttStr(node,"name");
 
             data.Room=getStr(node,"Room","room");
             data.Item=getStr(node,"Item","");
 
-			XmlDatabase.Objectives.Add(type,data);
+			XmlDatabase.AddObjective(type,data);
             return true;
         }
         return false;
     }
 
-	static void AddStat(XmlNode node,InvBaseItem item,InvStat.Type type){
+	private static void AddStat(XmlNode node,InvBaseItem item,InvStat.Type type){
 		var n1=node[type.ToString()];
 		if (n1!=null){
 			var stat=new InvStat();
@@ -302,7 +302,7 @@ public class XMLDataLoader : XML_Loader
 			var rc=new RewardClassXmlData();
 			rc.min=getAttInt(node,"min");
 			rc.max=getAttInt(node,"max");
-			XmlDatabase.RewardClasses.Add(name,rc);
+			XmlDatabase.AddRewardClass(name,rc);
 			return true;
 		}
 		

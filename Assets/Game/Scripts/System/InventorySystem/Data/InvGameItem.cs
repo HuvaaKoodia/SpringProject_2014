@@ -165,7 +165,7 @@ public class InvGameItem
 
     public static InvGameItem GetRandomItem ()
 	{
-		InvBaseItem item = Subs.GetRandom(XmlDatabase.items.Values);
+		InvBaseItem item = Subs.GetRandom(XmlDatabase.Items.Values);
 		
 		InvGameItem gi = new InvGameItem(item);
 		gi.itemLevel = NGUITools.RandomRange(item.minItemLevel, item.maxItemLevel);

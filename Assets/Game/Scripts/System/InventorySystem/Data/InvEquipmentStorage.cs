@@ -215,7 +215,7 @@ public class InvEquipmentStorage
     /// </summary>
     public static void EquipRandomItem(InvEquipmentStorage equipment){
         if (equipment == null) return;
-		if (XmlDatabase.items.Count == 0) return;
+		if (XmlDatabase.Items.Count == 0) return;
         if (!equipment.HasEmptySlots()) return;
 
         while(true){

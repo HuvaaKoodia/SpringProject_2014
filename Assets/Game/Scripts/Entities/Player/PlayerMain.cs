@@ -64,7 +64,7 @@ public class PlayerMain : EntityMain
 		GameCamera.GetComponent<MouseLook>().SetOriginalRot(GameCamera.transform.localRotation);
 		HudCamera.GetComponent<MouseLook>().SetOriginalRot(GameCamera.transform.localRotation);
 
-		CullWorld();
+
 
 		HUD.Init(this,GC);
 		
@@ -72,8 +72,15 @@ public class PlayerMain : EntityMain
 	}
 	
 	// Update is called once per frame
+	bool temphax=true;
 	void Update()
     {
+		if (temphax){
+			temphax=false;
+			CullWorld();
+
+		}
+
         foreach (WeaponMain weapon in weaponList)
 		{
 			if (targetingMode && !weapon.HasTargets && weapon == GetCurrentWeapon())
