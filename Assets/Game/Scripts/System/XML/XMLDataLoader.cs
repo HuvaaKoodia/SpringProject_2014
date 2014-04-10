@@ -66,8 +66,6 @@ public class XMLDataLoader : XML_Loader
 				if (ReadRewardClass(node))	continue;
             }
 		}
-
-		ParseData();
     }
 
     static bool ReadWeapon (XmlNode node)
@@ -133,7 +131,6 @@ public class XMLDataLoader : XML_Loader
             mission.Description=getStr(node,"Description").Replace("\\n","\n");
             mission.RewardClass=getAttStr(node,"rewardClass");
 			mission.LootPool=getAttStr(node,"lootPool");
-			mission.LootQuality=getAttStr(node,"lootQuality");
 
             string[] spl;
 
@@ -173,8 +170,9 @@ public class XMLDataLoader : XML_Loader
 			//status containers
 			foreach(XmlNode n in node){
 				loadPoolContainer(n,mission.StatusContainer);
+				loadPool("LootQualityPool",n,mission.LootQualityPool);
 			}
-			
+
 			XmlDatabase.Missions.Add(type,mission);
 			return true;
         }
@@ -230,7 +228,6 @@ public class XMLDataLoader : XML_Loader
         
         var tags=getChildrenByTag(root,"Tag");
         foreach(var tag in tags){
-            
             var stats=new RoomXmlIndex();
             stats.index=tag.Attributes["index"].Value;
             stats.name=tag.Attributes["name"].Value;
@@ -268,7 +265,7 @@ public class XMLDataLoader : XML_Loader
 		if (loadPoolContainer(node,XmlDatabase.LootQualityPool)) return true;
 		return false;
 	}
-
+	
 	private static bool loadPoolContainer(XmlNode node,PoolContainerXmlData container){
 		if (node.Name == container.Name)
 		{
@@ -291,6 +288,12 @@ public class XMLDataLoader : XML_Loader
 		}
 	}
 
+	private static void loadPool(string Name,XmlNode node,PoolXmlData pool){
+		if (node.Name==Name){
+			loadPool(node,pool);
+		}
+	}
+
 	static bool ReadRewardClass (XmlNode node)
 	{
 		if (node.Name == "RewardClass")
@@ -304,11 +307,5 @@ public class XMLDataLoader : XML_Loader
 		}
 		
 		return false;
-	}
-
-	//DEV.temp
-	static void ParseData ()
-	{
-
 	}
 }

@@ -28,6 +28,8 @@ public class MissionGenerator{
 		mission.MissionShipPower=       (MissionObjData.ShipPower)int.Parse(power);
 		mission.MissionShipConditions=  (MissionObjData.ShipCondition)int.Parse(condition);
 
+		mission.LootQuality=xml.LootQualityPool.GetRandomItem();
+
 		//known status info
 		bool has_info=true;
 		if (Subs.RandomPercent()<XmlDatabase.MissionCatastrophicIntelFailureChance) has_info=false;

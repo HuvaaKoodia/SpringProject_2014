@@ -7,10 +7,10 @@ using System.Collections.Generic;
 
 public enum WeaponID
 {
-    LeftHand,
-	LeftShoulder,
-    RightHand,
-	RightShoulder
+    LeftHand=0,
+	LeftShoulder=1,
+    RightHand=2,
+	RightShoulder=3
 }
 
 public class WeaponMain : MonoBehaviour {

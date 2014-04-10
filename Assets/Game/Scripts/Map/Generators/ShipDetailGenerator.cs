@@ -137,7 +137,7 @@ public class ShipDetailGenerator : MonoBehaviour
     /// Returns all tiles of a certain type inside a room which don't have an object yet.
     /// If room is null the whole map is scanned.
     /// </summary>
-    void GetFreeTilesOfType(FloorObjData floor,CellData room, TileObjData.Type type, List<TileObjData> free_tiles)
+	void GetFreeTilesOfType(FloorObjData floor,ShipRoomObjData room, TileObjData.Type type, List<TileObjData> free_tiles)
     {
 		GetTilesOfTypeWithObject(floor,room,type,TileObjData.Obj.None,free_tiles);
     }
@@ -146,7 +146,7 @@ public class ShipDetailGenerator : MonoBehaviour
     /// Returns all tiles of a certain type inside a room which have an object.
     /// If room is null the whole map is scanned.
     /// </summary>
-    void GetTilesOfTypeWithObject(FloorObjData floor,CellData room, TileObjData.Type type,TileObjData.Obj obj, List<TileObjData> free_tiles)
+	void GetTilesOfTypeWithObject(FloorObjData floor,ShipRoomObjData room, TileObjData.Type type,TileObjData.Obj obj, List<TileObjData> free_tiles)
     {
         free_tiles.Clear();
         
@@ -176,10 +176,10 @@ public class ShipDetailGenerator : MonoBehaviour
 			var objective=XmlDatabase.Objectives[MissionObjData.Objective.FindItem];
             //generate item somewhere in ship
             string obj_room=objective.Room;
-			Dictionary<int,List<CellData>> LegitRooms=new Dictionary<int,List<CellData>>();
+			var LegitRooms=new Dictionary<int,List<ShipRoomObjData>>();
 			bool nonefound=true;
 			for (int i=0;i<ship.FloorRooms.Count;++i){
-				LegitRooms.Add(i,new List<CellData>());
+				LegitRooms.Add(i,new List<ShipRoomObjData>());
 				foreach(var r in ship.FloorRooms[i]){
 					if (r.roomStats.type==obj_room) 
 					{

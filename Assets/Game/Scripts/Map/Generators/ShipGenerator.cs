@@ -35,7 +35,7 @@ public class ShipGenerator : MonoBehaviour
 		return false;
 	}
 
-	void FitRoom(string room_index,CellData cell){
+	void FitRoom(string room_index,ShipRoomObjData cell){
 
 		var room_stats=RoomIndices[room_index];
 
@@ -83,7 +83,7 @@ public class ShipGenerator : MonoBehaviour
 
 			int w=CurrentFloor.W;
 			int h=CurrentFloor.H;
-			List<CellData> Rooms=new List<CellData>();
+			var Rooms=new List<ShipRoomObjData>();
 			MapXmlData NewFloorMap=new MapXmlData(w,h);
 			
 			//Assign map indices and generate room cells
@@ -96,7 +96,7 @@ public class ShipGenerator : MonoBehaviour
 
 					if (IsRoomStartIndex(index)){
 						//random room
-						var cell=new CellData();
+						var cell=new ShipRoomObjData();
 						cell.X=x;cell.Y=y;
 						cell.W=1;cell.H=1;
 
@@ -263,7 +263,7 @@ public class ShipGenerator : MonoBehaviour
 	/// Gets the random door position.
 	/// Returns zero if non found.
 	/// </summary>
-	private Vector2 GetRandomDoorPos(CellData room,MapXmlData map,int dir){
+	private Vector2 GetRandomDoorPos(ShipRoomObjData room,MapXmlData map,int dir){
 		var temp_door_list=new List<Vector2>();//DEV. unnec list
 		
         int x=0,y=0;//,x1=0,y1=0,x2=0,y2=0;
@@ -325,7 +325,7 @@ public class ShipGenerator : MonoBehaviour
 	/// Checks the legit walls, which can be used to create doors randomly.
 	/// DEV. imp a more adv. algorithm
 	/// </summary>
-	private void CheckLegitWalls(CellData cell,MapXmlData floor){
+	private void CheckLegitWalls(ShipRoomObjData cell,MapXmlData floor){
 		cell.corridor_dirs.Clear();
 		bool upok=true,downok=true,leftok=true,rightok=true;
 		for (int i=0;i<cell.W;i++){
@@ -354,14 +354,3 @@ public class ShipGenerator : MonoBehaviour
 }
 
 
-public class CellData{
-    public int X,Y,W=0,H=0,XOFF,YOFF;
-	public List<int> corridor_dirs=new List<int>();
-	
-    public RoomXmlIndex roomStats {get;set;}
-    public MapXmlData RoomXmlData {get;set;}
-
-	public CellData(){
-        W=H=1;
-	}
-}

@@ -9,7 +9,7 @@ Status info:
 -->
 
 <Root>
-<Mission type="TradeVesselInfo" rewardClass="1" lootPool="1" lootQuality="1">
+<Mission type="TradeVesselInfo" rewardClass="1" lootPool="1">
 	<Description>We've been contracted to investigate the fate of a trade vessel.\nFind out what happened.\n\nThe client doesn't care about the cargo. Grab whatever you can.</Description>
 	<PrimaryObjectives>
 		FindLogs
@@ -23,6 +23,10 @@ Status info:
 	</Ships>
 	<TravelTime min="2" max="4"/>
 	<ExpirationTime min="2" max="4"/>
+	<LootQualityPool>
+		<Item name="1"/>
+		<Item name="2"/>
+	</LootQualityPool>
 	<Status name="Aliens">
 		<Item name="0"/>
 		<Item name="1" weight="3"/>
@@ -47,7 +51,7 @@ Status info:
 	</Status>
 </Mission>
 
-<Mission type="RetrieveCargo"  rewardClass="1" lootPool="1" lootQuality="1">
+<Mission type="RetrieveCargo"  rewardClass="1" lootPool="1">
 <Description>We've been contracted to retrieve a certain valuable item from an abandoned vessel.\nAnything else you find is for us to keep.</Description>
 	<PrimaryObjectives>
 		FindItem
@@ -60,6 +64,10 @@ Status info:
 	</Ships>
 	<TravelTime min="2" max="4"/>
 	<ExpirationTime min="2" max="4"/>
+	<LootQualityPool>
+		<Item name="1"/>
+		<Item name="2"/>
+	</LootQualityPool>
 	<Status name="Aliens">
 		<Item name="0"/>
 		<Item name="1" weight="3"/>
@@ -84,7 +92,7 @@ Status info:
 	</Status>
 </Mission>
 
-<Mission type="ExploreVessel" rewardClass="1" lootPool="1" lootQuality="1">
+<Mission type="ExploreVessel" rewardClass="1" lootPool="1">
 	<Description>We've received an emergency message from deep space.\n\nInvestigate and explore!</Description>
 	<PrimaryObjectives>
 		Explore
@@ -95,6 +103,10 @@ Status info:
 	</Ships>
 	<TravelTime min="2" max="4"/>
 	<ExpirationTime min="2" max="4"/>
+	<LootQualityPool>
+		<Item name="1"/>
+		<Item name="2"/>
+	</LootQualityPool>
 	<Status name="Aliens">
 		<Item name="0"/>
 		<Item name="1" weight="3"/>
@@ -119,7 +131,7 @@ Status info:
 	</Status>
 </Mission>
 
-<Mission type="EmergencyBeacon" rewardClass="1" lootPool="1" lootQuality="1">
+<Mission type="EmergencyBeacon" rewardClass="1" lootPool="1">
 	<Description>We've spotted a derelict vessel.\nWe'll pay you a small fee if you find out what happened.\n\nOtherwise: loot, loot, loot!</Description>
 	<PrimaryObjectives>
 		FindLogs
@@ -133,6 +145,10 @@ Status info:
 	</Ships>
 	<TravelTime min="2" max="4"/>
 	<ExpirationTime min="2" max="4"/>
+	<LootQualityPool>
+		<Item name="1"/>
+		<Item name="2"/>
+	</LootQualityPool>
 	<Status name="Aliens">
 		<Item name="0"/>
 		<Item name="1" weight="3"/>
@@ -165,6 +181,15 @@ Status info:
 	<Item name="3"	weight="30"	/>
 	<Item name="4"	weight="20"	/>
 	<Item name="6"	weight="5"	/>
+</LootQuality>
+
+<LootQuality name="2">
+	<Item name="3"	weight="10"	/>
+	<Item name="4"	weight="20"	/>
+	<Item name="5"	weight="30"	/>
+	<Item name="6"	weight="25"	/>
+	<Item name="7"	weight="8"	/>
+	<Item name="8"	weight="3"	/>
 </LootQuality>
 
 </Root>

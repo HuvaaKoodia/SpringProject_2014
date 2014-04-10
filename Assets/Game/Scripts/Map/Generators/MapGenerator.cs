@@ -185,7 +185,7 @@ public class MapGenerator : MonoBehaviour
 	public void InitPlayer(PlayerMain player, FloorObjData floor){
 
 		var StartPos = Subs.GetRandom (floor.AirlockPositions);
-		var tile_pos = new Vector3 (StartPos.x * TileSize.x, 0, StartPos.y * TileSize.z);
+		//var tile_pos = new Vector3 (StartPos.x * TileSize.x, 0, StartPos.y * TileSize.z);
 
 		player.CurrentFloorIndex=floor.FloorIndex;
 		

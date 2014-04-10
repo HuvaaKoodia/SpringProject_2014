@@ -54,7 +54,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 		Plane[] planes;
 		planes = GeometryUtility.CalculateFrustumPlanes(player.TargetingCamera);
 
-		List<int> wallIndices = new List<int>();
+		//List<int> wallIndices = new List<int>();
 
 		for(int e = 0; e < allEnemies.Count; e++)
 		{
@@ -182,7 +182,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 	public void TargetAtMousePosition(bool increase_amount)
 	{
 		Component target;
-		GameObject hover = UICamera.hoveredObject;
+		//GameObject hover = UICamera.hoveredObject;
 
 		if (player.targetingMode && Subs.GetObjectMousePos(out target, 20, "TargetingClick", player.HudCamera))
 		{

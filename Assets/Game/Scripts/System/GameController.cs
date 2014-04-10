@@ -142,8 +142,9 @@ public class GameController : MonoBehaviour {
 			SS.MGen.GenerateObjectDataMap(floor,ship_objdata.Floors[i]);
 			SS.SDGen.GenerateShipItems(this,floor,ship_objdata);
 			SS.MGen.GenerateSceneMap(this,floor);
-			var xml=SS.GDB.GameData.CurrentMission.XmlData;
-			SS.SDGen.GenerateLoot(floor,xml.LootPool,xml.LootQuality);
+			var cmis=SS.GDB.GameData.CurrentMission;
+			var xml=cmis.XmlData;
+			SS.SDGen.GenerateLoot(floor,xml.LootPool,cmis.LootQuality);
 			Debug.Log("Floor: "+i+" loaded");
 		}
 

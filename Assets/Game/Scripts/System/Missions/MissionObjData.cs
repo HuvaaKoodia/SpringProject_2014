@@ -29,6 +29,8 @@ public class MissionObjData {
 	public string Briefing{get;set;}
 	public string Objectives{get;set;}
 
+	public string LootQuality;
+
 	public int TravelTime{get;set;}
 	public int ExpirationTime{get;set;}
 

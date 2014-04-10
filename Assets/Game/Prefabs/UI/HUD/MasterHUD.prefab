@@ -1944,7 +1944,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &100424
 GameObject:
   m_ObjectHideFlags: 1
@@ -4751,12 +4751,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100422}
   m_LocalRotation: {x: 0, y: 0, z: -2.22923319e-07, w: 1}
-  m_LocalPosition: {x: 1360.68652, y: -34.2511597, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 653.992859, y: 480.016449, z: 37.7843742}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 400430}
   - {fileID: 400432}
-  m_Father: {fileID: 400436}
+  m_Father: {fileID: 400588}
 --- !u!4 &400424
 Transform:
   m_ObjectHideFlags: 1
@@ -4838,7 +4838,6 @@ Transform:
   m_LocalPosition: {x: -718.661743, y: 446.429443, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 400422}
   - {fileID: 400112}
   - {fileID: 400428}
   - {fileID: 400370}
@@ -5756,6 +5755,7 @@ Transform:
   - {fileID: 400056}
   - {fileID: 400004}
   - {fileID: 400426}
+  - {fileID: 400422}
   m_Father: {fileID: 400286}
 --- !u!4 &400590
 Transform:
@@ -6146,7 +6146,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 150, y: 40, z: 0}
+  m_Size: {x: 46, y: 46, z: 0}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &6500070
 BoxCollider:
@@ -7040,7 +7040,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Hud: {fileID: 11400008}
   type: 0
-  ButtonText: 
+  ButtonText: Power
   StatusTextTrue: On
   StatusTextFalse: Off
 --- !u!114 &11400048
@@ -11937,7 +11937,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 100170}
-  functionName: MissionLogPressed
+  functionName: ToggleInventory
   trigger: 0
   includeChildren: 0
 --- !u!114 &11400644
@@ -12017,8 +12017,8 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: .690196097, g: .588235319, b: .407843143, a: 1}
   mPivot: 4
-  mWidth: 150
-  mHeight: 40
+  mWidth: 46
+  mHeight: 46
   mDepth: 0
   autoResizeBoxCollider: 1
   hideIfOffScreen: 0
@@ -12245,15 +12245,15 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .23880595, g: .197638646, b: .121185109, a: 1}
   mPivot: 4
-  mWidth: 142
-  mHeight: 32
+  mWidth: 38
+  mHeight: 38
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 0}
   mFont: {fileID: 11400000, guid: 29056518aafb01b49a5b08faf8e30cff, type: 2}
-  mText: Close
+  mText: X
   mFontSize: 20
   mFontStyle: 0
   mEncoding: 1
@@ -12303,8 +12303,8 @@ MonoBehaviour:
     absolute: -3
   mColor: {r: 0, g: 0, b: 0, a: .152941182}
   mPivot: 4
-  mWidth: 144
-  mHeight: 34
+  mWidth: 40
+  mHeight: 40
   mDepth: 1
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -13501,10 +13501,10 @@ MonoBehaviour:
   CriticalColor: {r: 1, g: 0, b: 0, a: 1}
   BrokenColor: {r: 0, g: 0, b: 0, a: 1}
   weaponSlots:
-  - {fileID: 11400728}
   - {fileID: 11400696}
-  - {fileID: 11400824}
+  - {fileID: 11400728}
   - {fileID: 11400810}
+  - {fileID: 11400824}
   upperTorso: {fileID: 11400726}
   lowerTorso: {fileID: 11400090}
 --- !u!114 &11400726
