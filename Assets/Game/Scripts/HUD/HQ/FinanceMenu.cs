@@ -16,16 +16,19 @@ public class FinanceMenu : MonoBehaviour {
 	public List<UILabel> Payments;								//List that keeps track of the Debt Payments for each debt and Payment Total
 	public List<UILabel> ShortenDebt;							//List that keeps track of the Shorten Debt By component for each debt
 	public List<GameObject> DebtsActivate;						//List that keeps track of the Debt types ie, DebtAdded and DebtEmpty for each Debt
+
+	private float ticks = 0;
 	
 	// Use this for initialization
 	void Start () {
 		_FinanceManager = new FinanceManager();
-		
+
 		InitializeValues();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		DaysTimer();
 		UpdateValues();
 	}
 
@@ -33,6 +36,7 @@ public class FinanceMenu : MonoBehaviour {
 	void InitializeValues()
 	{
 		Days.text = _FinanceManager.days_till_update.ToString();
+
 		PlayerMoney.text = _FinanceManager.player_money.ToString();
 
 		if(LeftToBePayed.Count > 0)
@@ -83,6 +87,7 @@ public class FinanceMenu : MonoBehaviour {
 	void UpdateValues()
 	{
 		Days.text = _FinanceManager.days_till_update.ToString();
+
 		PlayerMoney.text = _FinanceManager.player_money.ToString();
 
 		var FM_l = _FinanceManager.listofdebts;
@@ -109,6 +114,7 @@ public class FinanceMenu : MonoBehaviour {
 			{
 				for(int i = 0; i < FM_l.Count; i++)
 				{
+					//FM_l[i].CalcInterest();
 					Interest[i].text = FM_l[i].interest.ToString() + "(" + FM_l[i].interest_percent.ToString() + "%)";
 				}
 			}
@@ -117,6 +123,7 @@ public class FinanceMenu : MonoBehaviour {
 			{
 				for(int i = 0; i < FM_l.Count; i++)
 				{
+					//_FinanceManager.listofdebts[i].CalcDebtPayment();
 					Payments[i].text = _FinanceManager.listofdebts[i].debt_payment.ToString();
 				}
 				Payments[Payments.Count - 1].text = _FinanceManager.payment_total.ToString();
@@ -130,7 +137,7 @@ public class FinanceMenu : MonoBehaviour {
 //				}
 //			}
 		}
-		
+
 		ExistingCash.text = _FinanceManager.existing_cash.ToString();
 	}
 
@@ -139,7 +146,7 @@ public class FinanceMenu : MonoBehaviour {
 	{
 		int value = int.Parse(ShortenDebt[1].text);
 		value += 100;
-
+		
 		if(_FinanceManager.listofdebts.Count > 0)
 		{
 			_FinanceManager.listofdebts[0].shorten_debt = value;
@@ -180,6 +187,42 @@ public class FinanceMenu : MonoBehaviour {
 //		}
 		ShortenDebt[5].text = value.ToString();
 		ShortenDebt[4].text = value.ToString();
+	}
+
+	public void ShortenDebt1()
+	{
+		if(_FinanceManager.listofdebts[0].left_tb_payed > 0)
+		{
+			_FinanceManager.listofdebts[0].left_tb_payed -= int.Parse(ShortenDebt[1].text);
+			if(_FinanceManager.listofdebts[0].left_tb_payed <= 0)
+			{
+				_FinanceManager.listofdebts[0].left_tb_payed = 0;
+			}
+		}
+	}
+
+	public void ShortenDebt2()
+	{
+		if(_FinanceManager.listofdebts[1].left_tb_payed > 0)
+		{
+			_FinanceManager.listofdebts[1].left_tb_payed -= int.Parse(ShortenDebt[3].text);
+			if(_FinanceManager.listofdebts[1].left_tb_payed <= 0)
+			{
+				_FinanceManager.listofdebts[1].left_tb_payed = 0;
+			}
+		}
+	}
+
+	public void ShortenDebt3()
+	{
+		if(_FinanceManager.listofdebts[2].left_tb_payed > 0)
+		{
+			_FinanceManager.listofdebts[2].left_tb_payed -= int.Parse(ShortenDebt[5].text);
+			if(_FinanceManager.listofdebts[2].left_tb_payed <= 0)
+			{
+				_FinanceManager.listofdebts[2].left_tb_payed = 0;
+			}
+		}
 	}
 
 	//function that decreases the value of Shorten Debt By component of Debt1
@@ -251,6 +294,7 @@ public class FinanceMenu : MonoBehaviour {
 		if(DebtsActivate.Count > 0)
 		{
 			_FinanceManager.AddDebt();
+			//_FinanceManager.listofdebts[0].left_tb_payed = int.Parse(ShortenDebt[1].text);
 			ProcessPanel1(0);
 
 			DebtsActivate[0].SetActive(true);
@@ -269,6 +313,7 @@ public class FinanceMenu : MonoBehaviour {
 			if(DebtsActivate[0].activeInHierarchy)
 			{
 				_FinanceManager.AddDebt();
+				//_FinanceManager.listofdebts[1].left_tb_payed = int.Parse(ShortenDebt[3].text);
 				ProcessPanel1(1);
 
 				DebtsActivate[2].SetActive(true);
@@ -287,6 +332,7 @@ public class FinanceMenu : MonoBehaviour {
 			if(DebtsActivate[2].activeInHierarchy)
 			{
 				_FinanceManager.AddDebt();
+				//_FinanceManager.listofdebts[2].left_tb_payed = int.Parse(ShortenDebt[5].text);
 				ProcessPanel1(2);
 
 				DebtsActivate[4].SetActive(true);
@@ -311,6 +357,20 @@ public class FinanceMenu : MonoBehaviour {
 		else
 		{
 			Debug.Log("Key in 0 to 2 only.");
+		}
+	}
+
+	private void DaysTimer()
+	{
+		if(ticks >= 10)
+		{
+			_FinanceManager.day_pass = true;
+			_FinanceManager.UpdateDays();
+			ticks = 0.0f;
+		}
+		else
+		{
+			ticks += Time.deltaTime;
 		}
 	}
 }
