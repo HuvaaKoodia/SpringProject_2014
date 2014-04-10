@@ -3690,6 +3690,7 @@ GameObject:
   - 65: {fileID: 6500088}
   - 114: {fileID: 11400732}
   - 114: {fileID: 11400730}
+  - 114: {fileID: 11400074}
   m_Layer: 13
   m_Name: ShortenDebt
   m_TagString: Untagged
@@ -4649,6 +4650,7 @@ GameObject:
   - 65: {fileID: 6500122}
   - 114: {fileID: 11401016}
   - 114: {fileID: 11401018}
+  - 114: {fileID: 11400072}
   m_Layer: 13
   m_Name: ShortenDebt
   m_TagString: Untagged
@@ -5085,6 +5087,7 @@ GameObject:
   - 65: {fileID: 6500142}
   - 114: {fileID: 11400950}
   - 114: {fileID: 11400952}
+  - 114: {fileID: 11400076}
   m_Layer: 13
   m_Name: ShortenDebt
   m_TagString: Untagged
@@ -5890,7 +5893,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100056}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 438.699341, z: 0}
+  m_LocalPosition: {x: -265.027649, y: 438.699341, z: 0}
   m_LocalScale: {x: 4, y: 4, z: .999839962}
   m_Children: []
   m_Father: {fileID: 400176}
@@ -6049,7 +6052,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100096}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .860869586, y: -9.94347477, z: 0}
+  m_LocalPosition: {x: 0, y: -10.6419821, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400176}
@@ -6367,7 +6370,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100176}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 244.054214, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400208}
@@ -11519,8 +11522,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweenTarget: {fileID: 100006}
-  hover: {r: 1, g: 1, b: 1, a: 1}
-  pressed: {r: 1, g: 1, b: 1, a: 1}
+  hover: {r: 0, g: 0, b: 0, a: .784313738}
+  pressed: {r: 0, g: 0, b: 0, a: .784313738}
   duration: .200000003
   disabledColor: {r: .5, g: .5, b: .5, a: 1}
   dragHighlight: 0
@@ -11624,6 +11627,51 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
+--- !u!114 &11400072
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 100308}
+  functionName: ShortenDebt1
+  trigger: 0
+  includeChildren: 0
+--- !u!114 &11400074
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 100308}
+  functionName: ShortenDebt2
+  trigger: 0
+  includeChildren: 0
+--- !u!114 &11400076
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 100308}
+  functionName: ShortenDebt3
+  trigger: 0
+  includeChildren: 0
 --- !u!114 &11400080
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -13659,11 +13707,11 @@ MonoBehaviour:
     e00: 360
     e01: 0
     e02: 0
-    e03: -.860869586
+    e03: -244.054214
     e10: 0
     e11: 360
     e12: 0
-    e13: 0
+    e13: .698507309
     e20: 0
     e21: 0
     e22: 360
@@ -14482,7 +14530,7 @@ MonoBehaviour:
   mDepth: 0
   autoResizeBoxCollider: 1
   hideIfOffScreen: 0
-  mAtlas: {fileID: 11400000, guid: 62adb30369acbf943a67cee0f69267a3, type: 2}
+  mAtlas: {fileID: 11400000, guid: 2f2473f73b9ca724f9080d6d76009ea2, type: 2}
   mSpriteName: Button
   mFillCenter: 1
   mType: 1
@@ -15279,7 +15327,7 @@ MonoBehaviour:
   mDepth: 0
   autoResizeBoxCollider: 1
   hideIfOffScreen: 0
-  mAtlas: {fileID: 11400000, guid: 62adb30369acbf943a67cee0f69267a3, type: 2}
+  mAtlas: {fileID: 11400000, guid: 2f2473f73b9ca724f9080d6d76009ea2, type: 2}
   mSpriteName: Button
   mFillCenter: 1
   mType: 1
@@ -15587,7 +15635,7 @@ MonoBehaviour:
   mDepth: 0
   autoResizeBoxCollider: 1
   hideIfOffScreen: 0
-  mAtlas: {fileID: 11400000, guid: 62adb30369acbf943a67cee0f69267a3, type: 2}
+  mAtlas: {fileID: 11400000, guid: 2f2473f73b9ca724f9080d6d76009ea2, type: 2}
   mSpriteName: Button
   mFillCenter: 1
   mType: 1
@@ -16228,7 +16276,7 @@ MonoBehaviour:
   mDepth: 0
   autoResizeBoxCollider: 1
   hideIfOffScreen: 0
-  mAtlas: {fileID: 11400000, guid: 62adb30369acbf943a67cee0f69267a3, type: 2}
+  mAtlas: {fileID: 11400000, guid: 2f2473f73b9ca724f9080d6d76009ea2, type: 2}
   mSpriteName: Button
   mFillCenter: 1
   mType: 1
@@ -16903,7 +16951,7 @@ MonoBehaviour:
   mDepth: 1
   autoResizeBoxCollider: 1
   hideIfOffScreen: 0
-  mAtlas: {fileID: 11400000, guid: 62adb30369acbf943a67cee0f69267a3, type: 2}
+  mAtlas: {fileID: 11400000, guid: 2f2473f73b9ca724f9080d6d76009ea2, type: 2}
   mSpriteName: Button
   mFillCenter: 1
   mType: 1
@@ -20726,8 +20774,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweenTarget: {fileID: 100560}
-  hover: {r: 1, g: 1, b: 1, a: 1}
-  pressed: {r: 1, g: 1, b: 1, a: 1}
+  hover: {r: .470588237, g: .470588237, b: .470588237, a: 1}
+  pressed: {r: .235294119, g: .235294119, b: .235294119, a: 1}
   duration: .200000003
   disabledColor: {r: .5, g: .5, b: .5, a: 1}
   dragHighlight: 0
@@ -20817,7 +20865,7 @@ MonoBehaviour:
     target: {fileID: 0}
     relative: 1
     absolute: 0
-  mColor: {r: 1, g: 1, b: 1, a: 1}
+  mColor: {r: .235294119, g: .235294119, b: .235294119, a: 1}
   mPivot: 4
   mWidth: 200
   mHeight: 50
@@ -20825,7 +20873,7 @@ MonoBehaviour:
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
   mAtlas: {fileID: 11400000, guid: 2f2473f73b9ca724f9080d6d76009ea2, type: 2}
-  mSpriteName: Dark
+  mSpriteName: Button
   mFillCenter: 1
   mType: 1
   mFillDirection: 4
@@ -24351,7 +24399,7 @@ MonoBehaviour:
     target: {fileID: 0}
     relative: 1
     absolute: 0
-  mColor: {r: 1, g: 1, b: 1, a: 1}
+  mColor: {r: .235294119, g: .235294119, b: .235294119, a: 1}
   mPivot: 4
   mWidth: 200
   mHeight: 50
@@ -24359,7 +24407,7 @@ MonoBehaviour:
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
   mAtlas: {fileID: 11400000, guid: 2f2473f73b9ca724f9080d6d76009ea2, type: 2}
-  mSpriteName: Dark
+  mSpriteName: Button
   mFillCenter: 1
   mType: 1
   mFillDirection: 4
@@ -24435,8 +24483,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweenTarget: {fileID: 100730}
-  hover: {r: 1, g: 1, b: 1, a: 1}
-  pressed: {r: 1, g: 1, b: 1, a: 1}
+  hover: {r: .470588237, g: .470588237, b: .470588237, a: 1}
+  pressed: {r: .235294119, g: .235294119, b: .235294119, a: 1}
   duration: .200000003
   disabledColor: {r: .5, g: .5, b: .5, a: 1}
   dragHighlight: 0
@@ -25421,7 +25469,7 @@ MonoBehaviour:
     target: {fileID: 0}
     relative: 1
     absolute: 0
-  mColor: {r: 1, g: 1, b: 1, a: 1}
+  mColor: {r: .235294119, g: .235294119, b: .235294119, a: 1}
   mPivot: 4
   mWidth: 200
   mHeight: 50
@@ -25429,7 +25477,7 @@ MonoBehaviour:
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
   mAtlas: {fileID: 11400000, guid: 2f2473f73b9ca724f9080d6d76009ea2, type: 2}
-  mSpriteName: Dark
+  mSpriteName: Button
   mFillCenter: 1
   mType: 1
   mFillDirection: 4
@@ -25505,8 +25553,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweenTarget: {fileID: 100678}
-  hover: {r: 1, g: 1, b: 1, a: 1}
-  pressed: {r: 1, g: 1, b: 1, a: 1}
+  hover: {r: .470588237, g: .470588237, b: .470588237, a: 1}
+  pressed: {r: .235294119, g: .235294119, b: .235294119, a: 1}
   duration: .200000003
   disabledColor: {r: .5, g: .5, b: .5, a: 1}
   dragHighlight: 0

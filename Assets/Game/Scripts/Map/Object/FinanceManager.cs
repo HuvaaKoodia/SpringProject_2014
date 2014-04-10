@@ -12,6 +12,7 @@ using System.Collections.Generic;
 
 public class Debt
 {
+	public float original_debt_sum;
 	public float left_tb_payed;										//variable to keep track of amount left to be payed per debt
 	public float monthly_cut;										//variable to keep track of monthly cut per debt (default value = 1000)
 	public float interest_percent;									//variable to keep track of interest percentage upon taking up a new debt
@@ -22,16 +23,17 @@ public class Debt
 
 	public Debt()													//constructor that initializes variables
 	{
+		original_debt_sum = 0.0f;
 		left_tb_payed = 0.0f;
-		monthly_cut = 1000.0f;
-		shorten_debt = 1000;
+		monthly_cut = 0.0f;
+		//shorten_debt = 1000;
 	}
 	
 	//function that calculates interest per debt
 	//called each time a new debt is taken
 	public void CalcInterest()
 	{
-		interest = (interest_percent * 0.01f) * left_tb_payed;
+		interest = (interest_percent) * left_tb_payed;
 	}
 	
 	//function to calculate debt payment per debt
@@ -41,12 +43,17 @@ public class Debt
 	{
 		debt_payment = monthly_cut + interest;
 	}
+
+	public void CalcMonthlyCut()
+	{
+		monthly_cut = original_debt_sum * 0.05f;
+	}
 }
 
 public class FinanceManager
 {
 	GameObjData Player;												//access the Player's data
-	public List<Debt> listofdebts = new List<Debt>();				//store all the debts taken
+	public List<Debt> listofdebts;									//store all the debts taken
 	
 	public int days_till_update;									//variable to keep track of the number of days until the next update (default value = 30)
 	private int n;													//variable that contributes to the calculation of interest percentage (default value = 5)
@@ -58,10 +65,15 @@ public class FinanceManager
 		
 	public bool day_pass;											//variable set to true only if a day has passed
 	public bool add_debt;											//variable set to true upon taking on a new debt
+
+	public float default_percent = 0.05f;
+	public float increase_percent = 0.05f;
+	public int month = 1;
 	
 	public FinanceManager ()										//constructor that initializes variables
 	{
 		Player = new GameObjData();
+		listofdebts = new List<Debt>();
 		
 		days_till_update = 30;
 		n = 5;
@@ -91,15 +103,21 @@ public class FinanceManager
 	public void CalcInterestPercent()
 	{
 		int debtnumber = listofdebts.Count;
-		
-		if(add_debt)
+//		
+//		if(add_debt)
+//		{
+//			//as long as there is a debt, calculate interest percentage for the particular debt
+//			if(listofdebts[debtnumber - 1] != null)
+//			{
+//				listofdebts[debtnumber - 1].interest_percent = (n * debtnumber) + 10;
+//			}
+//			add_debt = false;
+//		}
+				
+		//as long as there is a debt, calculate interest percentage for the particular debt
+		if(listofdebts[debtnumber - 1] != null)
 		{
-			//as long as there is a debt, calculate interest percentage for the particular debt
-			if(listofdebts[debtnumber - 1] != null)
-			{
-				listofdebts[debtnumber - 1].interest_percent = (n * debtnumber) + 10;
-			}
-			add_debt = false;
+			listofdebts[debtnumber - 1].interest_percent = (increase_percent * month) + default_percent;
 		}
 	}
 	
@@ -135,6 +153,12 @@ public class FinanceManager
 		if(day_pass)
 		{
 			days_till_update--;
+			if(days_till_update <= 0)
+			{
+				month++;
+				CalcInterestPercent();
+				days_till_update = 30;
+			}
 			day_pass = false;
 		}
 	}
