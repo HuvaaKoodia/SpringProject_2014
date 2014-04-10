@@ -41,8 +41,8 @@ MonoBehaviour:
   material: {fileID: 2100000, guid: b4f0e87c2586e86439b4ed15887975db, type: 2}
   mSprites:
   - name: 1Wall
-    x: 410
-    y: 799
+    x: 419
+    y: 948
     width: 18
     height: 18
     borderLeft: 0
@@ -54,8 +54,21 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: 2Walls
-    x: 386
-    y: 770
+    x: 438
+    y: 948
+    width: 18
+    height: 18
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: 3Edges
+    x: 457
+    y: 948
     width: 18
     height: 18
     borderLeft: 0
@@ -68,7 +81,7 @@ MonoBehaviour:
     paddingBottom: 0
   - name: BG
     x: 0
-    y: 254
+    y: 509
     width: 251
     height: 250
     borderLeft: 0
@@ -80,21 +93,21 @@ MonoBehaviour:
     paddingTop: 4
     paddingBottom: 2
   - name: body
-    x: 260
-    y: 661
-    width: 92
-    height: 103
+    x: 265
+    y: 840
+    width: 97
+    height: 105
     borderLeft: 0
     borderRight: 0
     borderTop: 0
     borderBottom: 0
-    paddingLeft: 81
-    paddingRight: 83
-    paddingTop: 59
-    paddingBottom: 94
+    paddingLeft: 1
+    paddingRight: 2
+    paddingTop: 0
+    paddingBottom: 1
   - name: CorridorCorner
-    x: 328
-    y: 770
+    x: 265
+    y: 764
     width: 18
     height: 18
     borderLeft: 0
@@ -105,24 +118,89 @@ MonoBehaviour:
     paddingRight: 0
     paddingTop: 0
     paddingBottom: 0
-  - name: crosshair_gray
-    x: 260
-    y: 843
-    width: 100
+  - name: crosshair_grey
+    x: 363
+    y: 845
+    width: 99
     height: 100
     borderLeft: 0
     borderRight: 0
     borderTop: 0
     borderBottom: 0
-    paddingLeft: 0
+    paddingLeft: 1
     paddingRight: 0
     paddingTop: 0
     paddingBottom: 0
+  - name: crosshair_grey_med
+    x: 351
+    y: 545
+    width: 81
+    height: 80
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 9
+    paddingRight: 10
+    paddingTop: 10
+    paddingBottom: 10
+  - name: crosshair_grey_small
+    x: 265
+    y: 783
+    width: 56
+    height: 56
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 21
+    paddingRight: 23
+    paddingTop: 22
+    paddingBottom: 22
   - name: crosshair_red
-    x: 364
-    y: 843
-    width: 100
+    x: 252
+    y: 525
+    width: 98
     height: 100
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 2
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: crosshair_red_med
+    x: 363
+    y: 763
+    width: 81
+    height: 81
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 10
+    paddingRight: 9
+    paddingTop: 9
+    paddingBottom: 10
+  - name: crosshair_red_small
+    x: 419
+    y: 967
+    width: 57
+    height: 57
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 21
+    paddingRight: 22
+    paddingTop: 21
+    paddingBottom: 22
+  - name: Crossroad
+    x: 284
+    y: 764
+    width: 18
+    height: 18
     borderLeft: 0
     borderRight: 0
     borderTop: 0
@@ -131,9 +209,9 @@ MonoBehaviour:
     paddingRight: 0
     paddingTop: 0
     paddingBottom: 0
-  - name: Crossroad
-    x: 468
-    y: 859
+  - name: CrossRoad
+    x: 303
+    y: 764
     width: 18
     height: 18
     borderLeft: 0
@@ -145,8 +223,21 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: Deadend
-    x: 306
-    y: 770
+    x: 491
+    y: 927
+    width: 18
+    height: 18
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: DeadEnd
+    x: 341
+    y: 763
     width: 18
     height: 18
     borderLeft: 0
@@ -158,10 +249,23 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: enemyBlip
-    x: 492
-    y: 947
-    width: 6
-    height: 6
+    x: 350
+    y: 798
+    width: 10
+    height: 10
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: enemyBlipHalo
+    x: 483
+    y: 828
+    width: 16
+    height: 16
     borderLeft: 0
     borderRight: 0
     borderTop: 0
@@ -171,8 +275,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: Floor
-    x: 492
-    y: 957
+    x: 445
+    y: 792
     width: 16
     height: 16
     borderLeft: 0
@@ -184,8 +288,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: Floor1Edge
-    x: 364
-    y: 770
+    x: 482
+    y: 854
     width: 18
     height: 18
     borderLeft: 0
@@ -197,8 +301,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: Floor2Edges
-    x: 490
-    y: 859
+    x: 445
+    y: 826
     width: 18
     height: 18
     borderLeft: 0
@@ -210,8 +314,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: Floor3Edges
-    x: 424
-    y: 947
+    x: 464
+    y: 826
     width: 18
     height: 18
     borderLeft: 0
@@ -223,7 +327,7 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: hot
-    x: 470
+    x: 477
     y: 977
     width: 32
     height: 47
@@ -236,23 +340,36 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: legs
-    x: 260
-    y: 947
-    width: 160
-    height: 77
+    x: 265
+    y: 946
+    width: 153
+    height: 78
     borderLeft: 0
     borderRight: 0
     borderTop: 0
     borderBottom: 0
-    paddingLeft: 47
-    paddingRight: 49
-    paddingTop: 140
-    paddingBottom: 39
+    paddingLeft: 0
+    paddingRight: 1
+    paddingTop: 1
+    paddingBottom: 1
   - name: lootBlip
-    x: 502
-    y: 947
-    width: 6
-    height: 6
+    x: 350
+    y: 787
+    width: 10
+    height: 10
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: lootBlipHalo
+    x: 445
+    y: 809
+    width: 16
+    height: 16
     borderLeft: 0
     borderRight: 0
     borderTop: 0
@@ -262,8 +379,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: OppositeEdges
-    x: 468
-    y: 881
+    x: 322
+    y: 763
     width: 18
     height: 18
     borderLeft: 0
@@ -275,10 +392,10 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: playerBlip
-    x: 260
-    y: 774
-    width: 6
-    height: 6
+    x: 501
+    y: 881
+    width: 10
+    height: 10
     borderLeft: 0
     borderRight: 0
     borderTop: 0
@@ -288,47 +405,47 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: PlayerMapIndicator
-    x: 468
-    y: 903
+    x: 322
+    y: 809
     width: 40
-    height: 40
+    height: 30
     borderLeft: 0
     borderRight: 0
     borderTop: 0
     borderBottom: 0
-    paddingLeft: 0
-    paddingRight: 0
-    paddingTop: 0
-    paddingBottom: 0
+    paddingLeft: 4
+    paddingRight: 4
+    paddingTop: 4
+    paddingBottom: 4
   - name: radarScanCircle
     x: 0
-    y: 768
-    width: 256
-    height: 256
+    y: 760
+    width: 264
+    height: 264
     borderLeft: 0
     borderRight: 0
     borderTop: 0
     borderBottom: 0
     paddingLeft: 0
-    paddingRight: 0
+    paddingRight: 1
     paddingTop: 0
-    paddingBottom: 0
+    paddingBottom: 1
   - name: radarView
-    x: 0
-    y: 508
-    width: 256
-    height: 256
+    x: 252
+    y: 626
+    width: 252
+    height: 133
     borderLeft: 0
     borderRight: 0
     borderTop: 0
     borderBottom: 0
-    paddingLeft: 0
-    paddingRight: 0
-    paddingTop: 0
-    paddingBottom: 0
+    paddingLeft: 4
+    paddingRight: 4
+    paddingTop: 2
+    paddingBottom: 125
   - name: RoomCorner
-    x: 446
-    y: 947
+    x: 491
+    y: 900
     width: 18
     height: 18
     borderLeft: 0
@@ -340,8 +457,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: TCrossing
-    x: 470
-    y: 955
+    x: 463
+    y: 873
     width: 18
     height: 18
     borderLeft: 0
@@ -353,8 +470,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: WallCorner
-    x: 410
-    y: 821
+    x: 463
+    y: 854
     width: 18
     height: 18
     borderLeft: 0
@@ -366,8 +483,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: WallCornerOpposite
-    x: 490
-    y: 881
+    x: 482
+    y: 873
     width: 18
     height: 18
     borderLeft: 0
@@ -379,57 +496,57 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: wpn_left
-    x: 424
-    y: 969
-    width: 42
-    height: 55
+    x: 463
+    y: 892
+    width: 27
+    height: 26
     borderLeft: 0
     borderRight: 0
     borderTop: 0
     borderBottom: 0
-    paddingLeft: 45
-    paddingRight: 169
-    paddingTop: 86
-    paddingBottom: 115
+    paddingLeft: 0
+    paddingRight: 1
+    paddingTop: 0
+    paddingBottom: 1
   - name: wpn_left_top
-    x: 306
-    y: 792
-    width: 42
-    height: 47
+    x: 477
+    y: 950
+    width: 27
+    height: 26
     borderLeft: 0
     borderRight: 0
     borderTop: 0
     borderBottom: 0
-    paddingLeft: 71
-    paddingRight: 143
-    paddingTop: 37
-    paddingBottom: 172
+    paddingLeft: 0
+    paddingRight: 1
+    paddingTop: 0
+    paddingBottom: 1
   - name: wpn_right
-    x: 260
-    y: 784
-    width: 42
-    height: 55
+    x: 322
+    y: 782
+    width: 27
+    height: 26
     borderLeft: 0
     borderRight: 0
     borderTop: 0
     borderBottom: 0
-    paddingLeft: 167
-    paddingRight: 47
-    paddingTop: 86
-    paddingBottom: 115
+    paddingLeft: 0
+    paddingRight: 1
+    paddingTop: 0
+    paddingBottom: 1
   - name: wpn_right_top
-    x: 364
-    y: 792
-    width: 42
-    height: 47
+    x: 463
+    y: 919
+    width: 27
+    height: 26
     borderLeft: 0
     borderRight: 0
     borderTop: 0
     borderBottom: 0
-    paddingLeft: 141
-    paddingRight: 73
-    paddingTop: 37
-    paddingBottom: 172
+    paddingLeft: 0
+    paddingRight: 1
+    paddingTop: 0
+    paddingBottom: 1
   mPixelSize: 1
   mReplacement: {fileID: 0}
   mCoordinates: 0
