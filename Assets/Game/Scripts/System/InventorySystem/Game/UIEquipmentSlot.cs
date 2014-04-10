@@ -22,7 +22,7 @@ public class UIEquipmentSlot : UIItemSlot
 	public InvEquipmentStorage equipment;
 	public Slot slot;
 
-    public GameObject DisabledSprite;
+    public GameObject DisabledSprite,HeatSprite;
 
     //DEv. puukkoa! Color all slots
     public static List<UIEquipmentSlot> EquipmentSlots;
@@ -32,7 +32,8 @@ public class UIEquipmentSlot : UIItemSlot
             background.color=Color.white;
             return;
         }
-        if (equipment.GetSlot(slot).HasType(item.baseItem.type)){
+		var s=equipment.GetSlot(slot);
+		if (s.HasType(item.baseItem.type)&&s.ObjData.USABLE&&s.ObjData.CHANGEABLE){
             background.color=Color.green;
         }
         else{
@@ -66,9 +67,6 @@ public class UIEquipmentSlot : UIItemSlot
 
 	override protected InvGameItem Replace (InvGameItem item)
 	{
-        if (equipment!=null){
-            if (!equipment.GetSlot(slot).ObjData.USABLE) return item;
-        }
         if (equipment!=null&&!equipment.CanReplace(slot, item)) return item;
         if (CheckVendorSlotItemInteractions(item)) return item;
 
@@ -93,7 +91,11 @@ public class UIEquipmentSlot : UIItemSlot
     void UpdateSlotCondition(){
         if (equipment==null) return;
         var s=equipment.GetSlot(slot);
-        if (s!=null)
+        if (s!=null){
+			if (HeatSprite!=null&&s.ObjData.USABLE){
+				HeatSprite.SetActive(!s.ObjData.CHANGEABLE);
+			}
             DisabledSprite.SetActive(!s.ObjData.USABLE);
+		}
     }
 }

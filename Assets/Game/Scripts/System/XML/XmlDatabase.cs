@@ -6,7 +6,7 @@ public class XmlDatabase
 {
 	//data
 
-    public static List<PlayerXmlData> players { get; private set; }
+	public static PlayerXmlData Player;
 	public static Dictionary<string,InvBaseItem> Items{get;private set;}
 	public static List<EnemyXmlData> enemies { get; private set; }
 	public static List<ObstacleXmlData> obstacles { get; private set; }
@@ -47,7 +47,6 @@ public class XmlDatabase
 	public static void LoadData(UIAtlas ItemAtlas)
     {
         Missions =new Dictionary<MissionObjData.Type, MissionXmlData>();
-        players = new List<PlayerXmlData>();
         enemies = new List<EnemyXmlData>();
         obstacles = new List<ObstacleXmlData>();
 

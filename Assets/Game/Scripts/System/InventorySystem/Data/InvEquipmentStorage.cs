@@ -75,7 +75,8 @@ public class InvEquipmentStorage
     public InvGameItem Replace (UIEquipmentSlot.Slot slot, InvGameItem item)
     {
         var Slot=EquipmentSlots[(int)slot];
-        
+		if (!CanReplace(slot, item)) return item;
+
         if (item==null){
             var prev=Slot.Item;
             Slot.Item=null;
@@ -93,20 +94,16 @@ public class InvEquipmentStorage
         }
     }
 
-	/// <summary>
-	/// Equip the specified item automatically replacing an existing one.
-	/// </summary>
-
 	public bool CanReplace (UIEquipmentSlot.Slot slot, InvGameItem item)
 	{
 		var Slot=EquipmentSlots[(int)slot];
 
 		if (item==null){
-			return true;
+			return Slot.ObjData.USABLE&&Slot.ObjData.CHANGEABLE;
 		}
 		else{
-			// If the item is not of appropriate type, we shouldn't do anything
-			if (!Slot.HasType(item.baseItem.type)) return false;
+			// If the item is not of appropriate type or it's unusable or unchangeable, we shouldn't do anything
+			return Slot.HasType(item.baseItem.type)&&Slot.ObjData.USABLE&&Slot.ObjData.CHANGEABLE;
 		}
         return true;
 	}
@@ -223,4 +220,18 @@ public class InvEquipmentStorage
             if (equipment.Equip(gi)==null) break;
         }
     }
+
+	/// <summary>
+	/// DEV. WARNING WARNING infinite loop running the world!
+	/// </summary>
+	public static void EquipRandomItem(InvEquipmentStorage equipment,string lootpool,string lootquality){
+		if (equipment == null) return;
+		if (XmlDatabase.Items.Count == 0) return;
+		if (!equipment.HasEmptySlots()) return;
+		
+		while(true){
+			var gi=InvGameItem.GetRandomItem();
+			if (equipment.Equip(gi)==null) break;
+		}
+	}
 }

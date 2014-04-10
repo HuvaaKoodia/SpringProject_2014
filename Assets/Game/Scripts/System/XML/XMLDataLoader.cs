@@ -20,14 +20,21 @@ public class XMLDataLoader : XML_Loader
 				#region Player
 				if (node.Name == "Player")
                 {
-                    int playerHealth = getAttInt(node, "Health");
+					if (XmlDatabase.Player!=null){
+						Debug.LogWarning("XmlDatabase PlayerData redefinition.");
+					}
+					else{
+						var newPlayer = new PlayerXmlData();
+						newPlayer.Health= getAttInt(node, "Health");
 
-                    float movementSpeed = getAttFlt(node, "MovementSpeed");
-                    float turnSpeed = getAttFlt(node, "TurnSpeed");
+						newPlayer.MovementSpeed = getAttFlt(node, "MovementSpeed");
+						newPlayer.TurnSpeed = getAttFlt(node, "TurnSpeed");
 
-                    PlayerXmlData newPlayer = new PlayerXmlData(playerHealth, movementSpeed, turnSpeed);
-					XmlDatabase.players.Add(newPlayer);
-                    continue;
+						newPlayer.StartingWeaponAmount=getAttFlt(node, "StartingWeaponAmount");
+						newPlayer.StartingUtilityAmount=getAttFlt(node, "StartingUtilityAmount");
+						XmlDatabase.Player=newPlayer;
+	                    continue;
+					}
                 }
 				#endregion
 
