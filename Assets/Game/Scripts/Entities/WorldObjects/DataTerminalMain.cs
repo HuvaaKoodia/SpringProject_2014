@@ -15,7 +15,7 @@ public class DataTerminalMain : InteractableMain {
 
 	public override bool Interact(PlayerInteractSub interactSub)
 	{
-		GC.menuHandler.ActivateDataTerminalHUD(TerminalType);
+		GC.HUD.ActivateDataTerminalHUD(TerminalType);
 		return false;
 	}
 }

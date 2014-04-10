@@ -29,7 +29,7 @@ public class LootCrateMain : InteractableMain {
 		}
 		else
 		{
-			GC.menuHandler.DeactivateInventoryHUD();
+			GC.HUD.DeactivateInventoryHUD();
 			return false;
 		}
 	}

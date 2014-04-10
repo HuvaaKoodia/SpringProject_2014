@@ -57,7 +57,7 @@ public class DoorMain : InteractableMain {
 
 		if (isAirlockDoor)
 		{
-			GC.menuHandler.OpenEndMissionPanel();
+			GC.HUD.OpenEndMissionPanel();
 			return false;
 		}
 		else

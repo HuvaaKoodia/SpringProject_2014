@@ -5,8 +5,8 @@ using System.Collections.Generic;
 
 public class InfoMenuMap : MonoBehaviour {
 
-	public GameController GC;
-	public PlayerMain player;
+	GameController GC;
+	PlayerMain player;
 	
 	public GameObject spriteParent;
 	
@@ -27,8 +27,9 @@ public class InfoMenuMap : MonoBehaviour {
 		mapSprites = new List<UISprite[,]>();
 	}
 	
-	public void Init()
+	public void Init(GameController gc)
 	{
+		GC=gc;
 		player = GC.Player;
 		
 		spriteWidth = GC.SS.PS.FloorSprite.width;

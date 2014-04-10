@@ -25,7 +25,6 @@ public class GunDisplayScreenSub : MonoBehaviour {
 
 	public void UpdateGunInfo()
 	{
-
 		if (weapon.Weapon != null)
 		{
 			string info = weapon.GunName;

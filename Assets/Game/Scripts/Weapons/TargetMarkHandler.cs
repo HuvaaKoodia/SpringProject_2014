@@ -22,7 +22,7 @@ public class TargetMarkHandler
 		parentObject = new GameObject();
 		parentObject.name = "TargetMarkHandler";
 
-		Vector3 screenToWorldPoint = GC.menuHandler.player.HudCamera.ScreenToWorldPoint(crosshairPosition);
+		Vector3 screenToWorldPoint = GC.HUD.player.HudCamera.ScreenToWorldPoint(crosshairPosition);
 
 		parentObject.transform.position = screenToWorldPoint;
 		parentObject.transform.parent = GC.Player.HUD.targetMarkPanel.transform;

@@ -19,7 +19,7 @@ public class PlayerInteractSub : MonoBehaviour {
 
 		if (tileInfront == null)
 		{
-			player.GC.menuHandler.SetInteractVisibility(false);
+			player.GC.HUD.SetInteractVisibility(false);
 			return;
 		}
 
@@ -36,7 +36,7 @@ public class PlayerInteractSub : MonoBehaviour {
 			interactableInfront = infront;
 		}
 
-		player.GC.menuHandler.SetInteractVisibility(interactableInfront != null);
+		player.GC.HUD.SetInteractVisibility(interactableInfront != null);
 	}
 
 	public void Interact(bool screenClick)

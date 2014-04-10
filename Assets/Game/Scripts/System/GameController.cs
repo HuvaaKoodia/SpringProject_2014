@@ -84,8 +84,8 @@ public class GameController : MonoBehaviour {
 	public AIcontroller aiController;
 	public TurnState currentTurn = TurnState.StartPlayerTurn;
 
-	public MenuHandler menuHandler;
-	public InventoryMain Inventory;
+	public MasterHudMain HUD;
+	public InGameInfoPanelMain Inventory;
 
     public PlayerMain Player;
 	public bool do_culling=false;
@@ -118,7 +118,7 @@ public class GameController : MonoBehaviour {
         if (SS.GDB.GameData.CurrentMission==null){
 			SS.GDB.GameData.CurrentMission=MissionGenerator.GenerateMission(Subs.GetRandom(XmlDatabase.MissionPool.Pools.Keys));
         }
-		menuHandler.MissionBriefing.SetMission(SS.GDB.GameData.CurrentMission);
+		HUD.MissionBriefing.SetMission(SS.GDB.GameData.CurrentMission);
 
 		if (UseTestMap)
 		{
@@ -180,8 +180,8 @@ public class GameController : MonoBehaviour {
 
 
 		//init hud
-		menuHandler.player = Player;
-		menuHandler.SetGC(this);
+		HUD.player = Player;
+		HUD.SetGC(this);
 
 		//floor stats
 		SetFloor(CurrentFloorIndex);
@@ -269,7 +269,7 @@ public class GameController : MonoBehaviour {
 	public void GotoFloor(int index){
 		if (index<0||index>Floors.Count-1) return;
 		
-		menuHandler.FadeIn();
+		HUD.FadeIn();
 		StartCoroutine(GotoFloorTimer(index));
 	}
 	/// <summary>
@@ -289,10 +289,10 @@ public class GameController : MonoBehaviour {
 	}
 
 	private IEnumerator GotoFloorTimer(int index){
-		while(menuHandler.FadeInProgress){
+		while(HUD.FadeInProgress){
 			yield return null;
 		}
-		menuHandler.FadeOut();
+		HUD.FadeOut();
 		SetFloor(index);
 		//DEV. elevator sound here + some delay
 		yield return null;

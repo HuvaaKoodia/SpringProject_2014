@@ -2,11 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class InventoryMain : MonoBehaviour {
+public class InGameInfoPanelMain : MonoBehaviour {
 
 	public bool InventoryOpen{get{return InventoryPanel.activeSelf;}}
 
-	public MenuHandler HUD;
+	public MasterHudMain HUD;
 	public GameObject InventoryPanel,LootParent;
 	public UIItemStorage InventoryStorage,LootStorage;
 	public List<UIEquipmentSlot> EquipmentSlots;
@@ -22,7 +22,7 @@ public class InventoryMain : MonoBehaviour {
 	void Start (){
 		InventoryPanel.SetActive(false);
 
-		MenuMap.Init();
+		MenuMap.Init(HUD.GC);
 		MenuMap.gameObject.SetActive(false);
 
 	#if !UNITY_EDITOR

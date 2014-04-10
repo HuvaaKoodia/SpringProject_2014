@@ -7,14 +7,14 @@ public enum MenuState
 	NothingSelected, MovementHUD, TargetingHUD, InventoryHUD
 }
 
-public class MenuHandler : MonoBehaviour {
+public class MasterHudMain : MonoBehaviour {
 
 	public GameController GC;
 	public PlayerMain player;
 	
 	public MenuState currentMenuState;
 	
-	public InventoryMain InventoryHud;
+	public InGameInfoPanelMain InfoHud;
     public MissionBriefingMenu MissionBriefing;
     public GameObject EndMissionPanel;
 	public UISprite FadePanel;
@@ -71,9 +71,9 @@ public class MenuHandler : MonoBehaviour {
 
 	void DeactivateInventory ()
 	{
-		if (!InventoryHud.InventoryOpen) return;
+		if (!InfoHud.InventoryOpen) return;
 		
-		InventoryHud.DeactivateInventory();
+		InfoHud.DeactivateInventory();
 	}
 
 	public void ToggleMovementHUD()
@@ -104,13 +104,13 @@ public class MenuHandler : MonoBehaviour {
 	
 	public void ToggleInventory()
 	{
-		if (InventoryHud.InventoryOpen)
+		if (InfoHud.InventoryOpen)
 		{
 			DeactivateInventoryHUD();
 		}
 		else
 		{
-			InventoryHud.SetTabToInventory();
+			InfoHud.SetTabToInventory();
 			ActivateInventoryHUD();
 		}
 	}
@@ -181,7 +181,7 @@ public class MenuHandler : MonoBehaviour {
 
 			player.SetMouseLook(false);
 
-			InventoryHud.ActivateInventory();
+			InfoHud.ActivateInventory();
 
 			SetInteractVisibility(false);
 			break;

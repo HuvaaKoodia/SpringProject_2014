@@ -6,7 +6,7 @@ public class InvBaseItem
 {
 	public enum Type
 	{
-		None,
+		None=0,
 		LightWeapon,
 		HeavyWeapon,
         MeleeWeapon,
@@ -14,6 +14,7 @@ public class InvBaseItem
 		Radar,
 		Navigator,
         QuestItem,
+		Loot,
 		_Amount
 	}
 

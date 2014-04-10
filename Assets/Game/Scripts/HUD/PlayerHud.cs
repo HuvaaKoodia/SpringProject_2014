@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class PlayerHud : MonoBehaviour {
 	
 	PlayerMain player;
-	public MenuHandler menu;
+	public MasterHudMain menu;
 
 	public RadarMain radar;
 	public HudMapMain map;

@@ -23,7 +23,7 @@ public class PlayerInputSub : MonoBehaviour {
 			if (!UICamera.MenuButtonPressed)
             	MouseInput();
 
-			//player.GC.menuHandler.gunInfoDisplay.UpdateGunInfo();
+			//player.GC.HUD.gunInfoDisplay.UpdateGunInfo();
         }
 
 		UICamera.MenuButtonPressed = false;
@@ -31,7 +31,7 @@ public class PlayerInputSub : MonoBehaviour {
 
     void HotkeyInput()
     {
-		if (!player.targetingMode && player.GC.menuHandler.currentMenuState != MenuState.InventoryHUD)
+		if (!player.targetingMode && player.GC.HUD.currentMenuState != MenuState.InventoryHUD)
 		{
 	        float verticalAxis = Input.GetAxis("Vertical");
 	        float horizontalAxis = Input.GetAxis("Horizontal");
@@ -241,7 +241,7 @@ public class PlayerInputSub : MonoBehaviour {
     
     public void ChangeWeaponInput(WeaponID id)
 	{
-		if (NotUsable()|| player.GC.menuHandler.currentMenuState == MenuState.InventoryHUD)
+		if (NotUsable()|| player.GC.HUD.currentMenuState == MenuState.InventoryHUD)
 			return;
 
 		player.ChangeWeapon(id);
@@ -258,8 +258,8 @@ public class PlayerInputSub : MonoBehaviour {
 	{
         if (NotUsable()) return;
 
-		if (player.GC.menuHandler.currentMenuState == MenuState.NothingSelected || 
-		    player.GC.menuHandler.currentMenuState == MenuState.MovementHUD)
+		if (player.GC.HUD.currentMenuState == MenuState.NothingSelected || 
+		    player.GC.HUD.currentMenuState == MenuState.MovementHUD)
 			player.interactSub.Interact(screenClick);
 	}
 

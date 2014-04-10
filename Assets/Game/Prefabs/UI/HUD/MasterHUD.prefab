@@ -1598,9 +1598,9 @@ GameObject:
   - 114: {fileID: 11400448}
   - 114: {fileID: 11400446}
   - 54: {fileID: 5400024}
-  - 114: {fileID: 11400444}
+  - 114: {fileID: 11400144}
   m_Layer: 13
-  m_Name: 2DHUD
+  m_Name: 2DHUDRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3299,7 +3299,7 @@ GameObject:
   - 114: {fileID: 11400010}
   - 114: {fileID: 11400008}
   m_Layer: 13
-  m_Name: MechaInfoPanel
+  m_Name: InGameInfoPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3364,7 +3364,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -955.733398, y: 537.599976, z: 415.035583}
+  m_LocalPosition: {x: -1379.47913, y: 537.599915, z: 415.035583}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400002}
@@ -4196,7 +4196,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100170}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -8.89999962, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400286}
@@ -4820,7 +4820,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100434}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .708588839, y: .70841372, z: 37.7843666}
+  m_LocalPosition: {x: 1.20287693, y: 1.20273757, z: 37.7843666}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400072}
@@ -7132,8 +7132,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfb34defa29c09f4aabecc5e3b5a471d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GC: {fileID: 0}
-  player: {fileID: 0}
   spriteParent: {fileID: 100034}
   playerIndicator: {fileID: 11400050}
   spritePanel: {fileID: 11400056}
@@ -8647,6 +8645,35 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
+--- !u!114 &11400144
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 608f185a6d9d71e479636a2e689af931, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HUD: {fileID: 11400244}
+  InventoryPanel: {fileID: 100588}
+  LootParent: {fileID: 100144}
+  InventoryStorage: {fileID: 11400318}
+  LootStorage: {fileID: 11400204}
+  EquipmentSlots:
+  - {fileID: 11400202}
+  - {fileID: 11400120}
+  - {fileID: 11400074}
+  - {fileID: 11400358}
+  - {fileID: 11400374}
+  - {fileID: 11400404}
+  - {fileID: 11400418}
+  - {fileID: 11400438}
+  temp_random_item_button: {fileID: 11400172}
+  Tabs: {fileID: 11400010}
+  Mechanic: {fileID: 11400794}
+  MenuMap: {fileID: 11400054}
 --- !u!114 &11400148
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9524,7 +9551,7 @@ MonoBehaviour:
   GC: {fileID: 0}
   player: {fileID: 0}
   currentMenuState: 0
-  InventoryHud: {fileID: 11400444}
+  InfoHud: {fileID: 11400144}
   MissionBriefing: {fileID: 11400654}
   EndMissionPanel: {fileID: 100374}
   FadePanel: {fileID: 11400576}
@@ -10699,35 +10726,6 @@ MonoBehaviour:
   mMaxLineHeight: 0
   mLineWidth: 0
   mMultiline: 1
---- !u!114 &11400444
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100286}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 608f185a6d9d71e479636a2e689af931, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HUD: {fileID: 11400244}
-  InventoryPanel: {fileID: 100588}
-  LootParent: {fileID: 100144}
-  InventoryStorage: {fileID: 11400318}
-  LootStorage: {fileID: 11400204}
-  EquipmentSlots:
-  - {fileID: 11400202}
-  - {fileID: 11400120}
-  - {fileID: 11400074}
-  - {fileID: 11400358}
-  - {fileID: 11400374}
-  - {fileID: 11400404}
-  - {fileID: 11400418}
-  - {fileID: 11400438}
-  temp_random_item_button: {fileID: 11400172}
-  Tabs: {fileID: 11400010}
-  Mechanic: {fileID: 11400794}
-  MenuMap: {fileID: 11400054}
 --- !u!114 &11400446
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10786,7 +10784,7 @@ MonoBehaviour:
     e10: 0
     e11: 479.999969
     e12: 0
-    e13: 0
+    e13: 4271.99951
     e20: 0
     e21: 0
     e22: 479.999969
