@@ -77,7 +77,7 @@ public class PlayerMain : EntityMain
     {
 		if (temphax){
 			temphax=false;
-			CullWorld();
+			CullWorld(true);
 
 		}
 
@@ -131,15 +131,15 @@ public class PlayerMain : EntityMain
 	public void StartedMoving()
 	{
 		if (transform.position!=movement.targetPosition){
-			CullWorld();
+			CullWorld(true);
 		}
 
 		inputSub.enabled = false;
 		ap -= movementCost;
 	}
 
-	public void CullWorld(){
-		GC.CullWorld(transform.position,movement.targetPosition,GameCamera.farClipPlane);
+	public void CullWorld(bool miniMapIgnoreDoors){
+		GC.CullWorld(transform.position,movement.targetPosition,GameCamera.farClipPlane, miniMapIgnoreDoors);
 	}
 
     public void Attack()

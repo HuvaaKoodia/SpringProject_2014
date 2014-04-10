@@ -4,10 +4,19 @@ using System.Collections.Generic;
 
 public class HaxKnifeCulling : MonoBehaviour {
 
+	GameController GC;
+	List<MiniMapTileData[,]> miniMapData;
+
 	LayerMask mask;
 	// Use this for initialization
 	void Start () {
 		mask=1<<LayerMask.NameToLayer("Wall");
+	}
+
+	public void Init(GameController GC)
+	{
+		this.GC = GC;
+		miniMapData = GC.MiniMapData.mapFloors;
 	}
 	
 	int legit_walls;
@@ -76,14 +85,14 @@ public class HaxKnifeCulling : MonoBehaviour {
 		}
 	}
 
-	public void CullBasedOnPositions(Vector3 pos1,Vector3 pos2,float detect_radius,GameController GC){
+	public void CullBasedOnPositions(Vector3 pos1,Vector3 pos2,float detect_radius,GameController GC, bool miniMapIgnoreDoors){
 		//Debug.Log("Start Culling.");
 
 		for(int y=0;y<GC.CurrentFloorData.TileMapH;++y){
 			for(int x=0;x<GC.CurrentFloorData.TileMapW;++x){
 				tile = GC.CurrentFloorData.TileMainMap[x,y];
 				if (tile.TileGraphics==null) continue;
-				if (IsCullable(tile,pos1,detect_radius)&&IsCullable(tile,pos2,detect_radius)){
+				if (IsCullable(tile,pos1,detect_radius, miniMapIgnoreDoors)&&IsCullable(tile,pos2,detect_radius, miniMapIgnoreDoors)){
 					tile.ShowGraphicsUnsafe(false);
 				}
 				else{
@@ -101,7 +110,7 @@ public class HaxKnifeCulling : MonoBehaviour {
 	private static Vector3[] Positions={new Vector3(0,0,0),new Vector3(1,0,1),new Vector3(1,0,-1),new Vector3(-1,0,-1),new Vector3(-1,0,1)};
 
 	//DEV. todo optimize
-	private bool IsCullable(TileMain tile,Vector3 position,float detect_radius){
+	private bool IsCullable(TileMain tile,Vector3 position,float detect_radius, bool miniMapIgnoreDoors){
 		bool cull_this=true;
 
 		position+=Vector3.up;
@@ -117,10 +126,35 @@ public class HaxKnifeCulling : MonoBehaviour {
 
 			if (WallHits.Length<=1){
 				cull_this=false;
+
+				if (miniMapIgnoreDoors)
+				{
+					if (tile.Data.TileType == TileObjData.Type.Door && i == 0 || WallHits.Length == 0 )
+					{
+						miniMapData[GC.CurrentFloorIndex][tile.Data.X, tile.Data.Y].SeenByPlayer = true;
+					}
+				}
+				else
+				{
+					if ((tile.Data.TileType == TileObjData.Type.Door || tile.Data.TileType == TileObjData.Type.Elevator))
+					{
+						if (i == 0 && tile.GetDoor() != null && tile.GetDoor().anim_on)
+						{
+							miniMapData[GC.CurrentFloorIndex][tile.Data.X, tile.Data.Y].SeenByPlayer = true;
+						}
+					}
+					else
+						miniMapData[GC.CurrentFloorIndex][tile.Data.X, tile.Data.Y].SeenByPlayer = true;
+				}
+
+				if (tile.Data.TileType == TileObjData.Type.Door)
+				{
+				
+				}
+
 				if (DEBUG_ShowRays) Debug.DrawLine(ray.origin,tile_pos,Color.green,5);
 				break;
-			}else if (WallHits.Length==0){
-				//push to map
+			}else {
 
 				if (DEBUG_ShowRays) Debug.DrawLine(ray.origin,tile_pos,Color.red,5);
 			}

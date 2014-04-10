@@ -153,6 +153,13 @@ public class GameController : MonoBehaviour {
         if (!OverrideMissionShip)
 			SS.SDGen.GenerateMissionObjectives(this,SS.GDB.GameData.CurrentMission,ship_objdata);
 
+		//minimap data
+		MiniMapData = new MiniMapData();
+		MiniMapData.Init(this);
+
+		//init culling
+		culling_system.Init(this);
+
 		//create player
 		var legit_floors=new List<FloorObjData>();
 		foreach(var f in Floors){
@@ -160,10 +167,6 @@ public class GameController : MonoBehaviour {
 				legit_floors.Add(f);
 			}
 		}
-
-		//minimap data
-		MiniMapData = new MiniMapData();
-		MiniMapData.Init(this);
 
 		//init player
 
@@ -224,13 +227,13 @@ public class GameController : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.C)){
 			do_culling=!do_culling;
 			if (do_culling)
-				Player.CullWorld();
+				Player.CullWorld(true);
 			else
 				culling_system.ResetCulling(this);
 		}
 
 		if (Input.GetKeyDown(KeyCode.V)){
-			Player.CullWorld();
+			Player.CullWorld(true);
 		}
 
 		//Dev. temp.
@@ -258,9 +261,9 @@ public class GameController : MonoBehaviour {
 		Player.StartPlayerPhase();
 	}
 
-	public void CullWorld (Vector3 position, Vector3 targetPosition,float max_distance)
+	public void CullWorld (Vector3 position, Vector3 targetPosition,float max_distance, bool miniMapIgnoreDoors)
 	{
-		if (do_culling) culling_system.CullBasedOnPositions(position,targetPosition,max_distance,this);
+		if (do_culling) culling_system.CullBasedOnPositions(position,targetPosition,max_distance,this, miniMapIgnoreDoors);
 	}
 
 	public FloorObjData GetFloor (int index)
@@ -306,6 +309,7 @@ public class GameController : MonoBehaviour {
 	{
 		//update tiles based on floor stats
 		SetFloorPowerState(index,CurrentFloorData.PowerOn);//DEV. lazy
+		Player.CullWorld(true);
 	}
 
 	public void UseElevator ()

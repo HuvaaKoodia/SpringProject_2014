@@ -56,6 +56,19 @@ public class InfoMenuMap : MonoBehaviour {
 				}
 			}
 		}
+
+		FloorDownButton.SetActive(true);
+		FloorUpButton.SetActive(true);
+		CurrentFloorLabel.gameObject.SetActive(true);
+
+		if (currentFloor >= mapSprites.Count-1)
+		{
+			FloorDownButton.SetActive(false);
+		}
+		if (currentFloor <= 0)
+		{
+			FloorDownButton.SetActive(false);
+		}
 	}
 	
 	// Update is called once per frame
@@ -93,7 +106,12 @@ public class InfoMenuMap : MonoBehaviour {
 				for (int y = 0; y < mapHeight; y++)
 				{
 					if (mapSprites[i][x,y] != null)
-						mapSprites[i][x,y].enabled = enable;
+					{
+						if (mapTiles[x,y].SeenByPlayer == true)
+								mapSprites[i][x,y].enabled = enable;
+						else
+							mapSprites[i][x,y].enabled = false;
+					}
 				}
 			}
 		}
@@ -133,5 +151,10 @@ public class InfoMenuMap : MonoBehaviour {
 		_disabled=disabled;
 		
 		spriteParent.SetActive(!disabled);
+	}
+
+	public void BecomeVisible()
+	{
+		ChangeFloor(currentFloor);
 	}
 }

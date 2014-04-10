@@ -74,7 +74,7 @@ public class HudMapMain : MonoBehaviour {
 		{
 			for (int y = 0; y < mapHeight; y++)
 			{
-				UpdateSpritePosition(x, y, mapSprites[currentFloor][x,y]);
+				UpdateSprite(x, y, mapSprites[currentFloor][x,y]);
 			}
 		}
 
@@ -118,23 +118,9 @@ public class HudMapMain : MonoBehaviour {
 				Quaternion.RotateTowards(playerIndicator.transform.localRotation, Quaternion.Euler(0, 0, (360 -playerRot)), returnRotationSpeed * Time.deltaTime);
 			playerIndicator.transform.localRotation = playerIndicatorRot;
 		}
-
-		int playerX = player.movement.currentGridX;
-		int playerY = player.movement.currentGridY;
-
-		for (int x = -2; x < 3; x++)
-		{
-			for (int y = -2; y < 3; y++)
-			{
-				MiniMapTileData tileData = GC.MiniMapData.mapFloors[currentFloor][playerX+x, playerY+y];
-
-				if (tileData != null)
-					tileData.SeenByPlayer = true;
-			}
-		}
 	}
 
-	void UpdateSpritePosition(float x, float y, UISprite sprite)
+	void UpdateSprite(float x, float y, UISprite sprite)
 	{
 		if (sprite == null)
 			return;
@@ -146,10 +132,8 @@ public class HudMapMain : MonoBehaviour {
 		sprite.transform.localScale = Vector3.one * zoom;
 		sprite.transform.localPosition = new Vector3(posX * (spriteWidth * zoom), posY * (spriteWidth * zoom), 0);
 
-		if (sprite.transform.localPosition.magnitude < spritePanel.finalClipRegion.magnitude/2)
-		{
-			GC.MiniMapData.GetFloor(currentFloor)[(int)x,(int)y].SeenByPlayer = true;
-		}
+		if (GC.MiniMapData.mapFloors[currentFloor][(int)x,(int)y].SeenByPlayer)
+			sprite.enabled = true;
 	}
 
 	public void ChangeFloor(int floorIndex)
@@ -169,11 +153,17 @@ public class HudMapMain : MonoBehaviour {
 				for (int y = 0; y < mapHeight; y++)
 				{
 					if (mapSprites[i][x,y] != null)
-						mapSprites[i][x,y].enabled = enable;
+					{
+						if (mapTiles[x,y].SeenByPlayer)
+							mapSprites[i][x,y].enabled = enable;
+						else
+							mapSprites[i][x,y].enabled = false;
+					}
 				}
 			}
 		}
 	}
+
 	public void ToggleRotateWithPlayer()
 	{
 		rotateWithPlayer = !rotateWithPlayer;
@@ -183,5 +173,29 @@ public class HudMapMain : MonoBehaviour {
 		_disabled=disabled;
 
 		spriteParent.SetActive(!disabled);
+
+		if (!disabled)
+		{
+			CheckSeenTiles();
+		}
+	}
+
+	void CheckSeenTiles()
+	{
+		int mapWidth = mapSprites[currentFloor].GetLength(0);
+		int mapHeight = mapSprites[currentFloor].GetLength(1);
+
+		for (int x = 0; x < mapWidth; x++)
+		{
+			for (int y = 0; y < mapHeight; y++)
+			{
+				MiniMapTileData data = GC.MiniMapData.mapFloors[currentFloor][x,y];
+				if (data != null && 
+				    data.SeenByPlayer == true)
+				{
+					mapSprites[currentFloor][x,y].enabled = true;
+				}
+			}
+		}
 	}
 }

@@ -44,26 +44,24 @@ public class PlayerInteractSub : MonoBehaviour {
 		if (interactableInfront == null || (screenClick && !MouseHitInteractable()))
 			return;
 
-		if (interactableInfront != null)
+		if (player.ap < interactableInfront.InteractCost)
+			return;
+
+		WaitingInteractToFinish = true;
+
+		if (interactableInfront.Interact(this))
 		{
-			
-			if (player.ap < interactableInfront.InteractCost)
-				return;
-
-			WaitingInteractToFinish = true;
-
-			if (interactableInfront.Interact(this))
-			{
-				player.ap -= interactableInfront.InteractCost;
-			}
-			else
-			{
-				WaitingInteractToFinish = false;
-			}
-
-			if (player.ap == 0)
-				player.EndPlayerPhase();
+			player.ap -= interactableInfront.InteractCost;
 		}
+		else
+		{
+			WaitingInteractToFinish = false;
+		}
+		
+		player.CullWorld(false);
+
+		if (player.ap == 0)
+			player.EndPlayerPhase();
 	}
 
 	public bool MouseHitInteractable()

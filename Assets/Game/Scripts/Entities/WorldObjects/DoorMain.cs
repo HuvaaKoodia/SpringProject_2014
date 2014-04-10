@@ -12,7 +12,7 @@ public class DoorMain : InteractableMain {
 
     public bool isAirlockDoor=false;
 
-	bool anim_on;
+	public bool anim_on { get; private set; }
 
 	void Start(){
 		InteractCost = 1;
