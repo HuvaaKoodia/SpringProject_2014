@@ -10,7 +10,7 @@ public class MissionGenerator{
 		mission.MissionPoolIndex=missionpool;
 
 		mission.MissionType=(MissionObjData.Type)System.Enum.Parse(typeof(MissionObjData.Type),type);
-
+		
         //DEV.TEMP force type
         //mission.MissionType= MissionObjData.Type.RetrieveCargo;
 
