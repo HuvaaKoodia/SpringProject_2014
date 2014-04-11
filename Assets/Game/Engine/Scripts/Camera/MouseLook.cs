@@ -40,15 +40,35 @@ public class MouseLook : MonoBehaviour {
 	public int deadzoneTop = 100;
 	public int deadzoneBottom = 100;
 
+	public BoxCollider DeadZone;
+
 	public float currentX, currentY;
 	public bool clampX, clampY;
 
+	int layer;
+
 	void Update ()
 	{
-		if (MouseLookOn)
+		//VERSIO 4, KAIKKI MUUT VERSIOT KOMMENTTEIHIN JA TÄÄLLÄ YLHÄÄLLÄ NÄIN
+		//VERSION 4 SAA POIS PÄÄLTÄ JOS PAKOTTAA isInDeadzonen TRUEKSI
+		Ray mouseRay = camera.ScreenPointToRay(Input.mousePosition);
+		bool isInDeadzone = Physics.Raycast(mouseRay, 1, layer);
+
+		if (isInDeadzone)
+		{
+			Debug.DrawRay(mouseRay.origin, mouseRay.direction, Color.green);
+		}
+		else
+		{
+			Debug.DrawRay(mouseRay.origin, mouseRay.direction, Color.red);
+		}
+
+		if (MouseLookOn && !isInDeadzone)
 		{
 			if (axes == RotationAxes.MouseXAndY)
 			{
+
+
 				float rotationX =
 					((Input.mousePosition.x - (Screen.width / 2)) / (Screen.width / 2)) * sensitivityX;
 
@@ -147,6 +167,8 @@ public class MouseLook : MonoBehaviour {
 		// Make the rigid body not change rotation
 		if (rigidbody)
 			rigidbody.freezeRotation = true;
+
+		layer = 1 << LayerMask.NameToLayer("MouseLookDeadzone");
 	}
 
 	public void SetOriginalRot(Quaternion rot)
