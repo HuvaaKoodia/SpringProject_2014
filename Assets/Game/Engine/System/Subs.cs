@@ -141,6 +141,11 @@ public class Subs{
     {
         return (x >= ax && x < ax + aw && y >= ay && y < ay + ah);
     }
+
+	public static bool insideArea(float x,float y,float ax,float ay,float aw,float ah)
+	{
+		return (x >= ax && x < ax + aw && y >= ay && y < ay + ah);
+	}
 	
 	public static void ChangeColor(Transform t, Color color){
 		if (t.renderer!=null){

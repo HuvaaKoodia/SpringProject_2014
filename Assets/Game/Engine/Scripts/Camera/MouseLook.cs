@@ -55,23 +55,48 @@ public class MouseLook : MonoBehaviour {
 				rotationX = Mathf.Clamp (rotationX, minimumX, maximumX);
 
 				rotationY = ((Input.mousePosition.y - (Screen.height / 2)) / (Screen.height / 2)) * sensitivityY;
-
-				bool insideDeadZone = false;
-
-
-
 				rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);
 
+
+				bool insideDeadZone = Subs.insideArea(rotationX, rotationY, 
+				                                      -deadzoneLeft, -deadzoneBottom, 
+				                                      deadzoneLeft+deadzoneRight, deadzoneBottom+deadzoneTop);
+
+				//VERSIO 1, KAIKKI MUU PAITSI TÄMÄ IF KOMMENTTEIHIN
+				if (insideDeadZone)
+				{
+					rotationX = 0;
+					rotationY = 0;
+				}
+				/*else //VERSIO 2, OTA TÄMÄ ELSE VERSION 1 MUKAAN
+				{
+					if (rotationX < -deadzoneLeft)
+						rotationX += deadzoneLeft;
+					else if (rotationX > deadzoneRight)
+						rotationX -= deadzoneRight;
+
+					if (rotationY < -deadzoneBottom)
+						rotationY += deadzoneBottom;
+					else if (rotationY > deadzoneTop)
+						rotationY -= deadzoneTop;
+				}*/
+
+				//VERSIO 3, TÄSTÄ ALASPÄIN KOMMENTIT POIS JA YLÖS KAIKKI KOMMENTTEIHIN
 				/*
-				if (rotationY < 0)
-				{
-					rotationY = Mathf.Min(startY, deadzoneBottom+rotationY);
-				}
-				else if (rotationY > 0)
-				{
-					rotationY = Mathf.Max(startY, rotationY-deadzoneTop);
-				}
-				*/
+				if (rotationX < -deadzoneLeft)
+					rotationX += deadzoneLeft;
+				else if (rotationX > deadzoneRight)
+					rotationX -= deadzoneRight;
+				else
+					rotationX = 0;
+
+				if (rotationY < -deadzoneBottom)
+					rotationY += deadzoneBottom;
+				else if (rotationY > deadzoneTop)
+					rotationY -= deadzoneTop;
+				else
+					rotationY = 0;
+*/
 				//transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
 				transform.localRotation = 
 					Quaternion.RotateTowards(

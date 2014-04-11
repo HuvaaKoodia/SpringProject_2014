@@ -167,7 +167,7 @@ public class MapGenerator : MonoBehaviour
 					gatlingTurret.transform.parent = enemy_container.transform;
 
 					gatlingTurret.movement.Init();
-					gatlingTurret.movement.GetCurrenTile().LeaveTile();
+					//gatlingTurret.movement.GetCurrenTile().LeaveTile();
 					break;
                 }
 
