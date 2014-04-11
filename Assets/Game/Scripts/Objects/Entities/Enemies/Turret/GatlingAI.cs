@@ -53,6 +53,8 @@ public class GatlingAI : AIBase {
 	public float horizontalTurnSpeed = 120;
 	public float verticalTurnSpeed = 90;
 
+	public AudioClip ShootSoundFX;
+
 	// Use this for initialization
 	void Start()
 	{
@@ -205,6 +207,8 @@ public class GatlingAI : AIBase {
 		turretAnimation[GunShootAnimation].normalizedTime = 0;
 		turretAnimation[GunShootAnimation].speed = 1;
 		turretAnimation.Play(GunShootAnimation);
+
+		audio.PlayOneShot(ShootSoundFX);
 
 		Invoke("DamagePlayer", turretAnimation[GunShootAnimation].clip.length / 2.0f);
 		AP -= AttackCost;

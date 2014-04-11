@@ -14,6 +14,9 @@ public class DoorMain : InteractableMain {
 
 	public bool anim_on { get; private set; }
 
+	public AudioClip CloseSoundFX;
+	public AudioClip OpenSoundFX;
+
 	void Start(){
 		InteractCost = 1;
 		IsOpen=false;
@@ -25,11 +28,13 @@ public class DoorMain : InteractableMain {
 		anim_on=false;
 		if (open){
 			graphics.animation.Play(open_animation);
+			audio.PlayOneShot(OpenSoundFX);
             StartCoroutine(ToggleTimer(true,graphics.animation[open_animation].length));
 			Invoke("hitboxOff", graphics.animation[open_animation].length / 1.25f);
 		}
 		else{
 			graphics.animation.Play(close_animation);
+			audio.PlayOneShot(CloseSoundFX);
             StartCoroutine(ToggleTimer(false,graphics.animation[open_animation].length));
 			hitboxOn();
 		}

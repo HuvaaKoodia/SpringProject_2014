@@ -11,6 +11,7 @@ GameObject:
   - 65: {fileID: 6500000}
   - 114: {fileID: 11400000}
   - 114: {fileID: 11400002}
+  - 82: {fileID: 8200000}
   m_Layer: 11
   m_Name: Door
   m_TagString: Untagged
@@ -244,7 +245,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 33.6814499, y: -6.97293615, z: 61.4479218}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400024}
@@ -732,6 +733,64 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .300000012, y: 3, z: 3}
   m_Center: {x: 0, y: 1.5, z: 0}
+--- !u!82 &8200000
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!111 &11100000
 Animation:
   m_ObjectHideFlags: 1
@@ -766,6 +825,8 @@ MonoBehaviour:
   graphics: {fileID: 100022}
   doorCollider: {fileID: 6500006}
   isAirlockDoor: 0
+  CloseSoundFX: {fileID: 8300000, guid: c007e2e1015a6bc4b912c5c0a58abf83, type: 3}
+  OpenSoundFX: {fileID: 8300000, guid: f8b56d38e3abf754e8a4bd4e36de4c0e, type: 3}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -778,7 +839,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GraphicsObject: {fileID: 100024}
-  Colliders: {fileID: 100034}
   TileLights: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:

@@ -179,14 +179,13 @@ public class EntityMovementSub : MonoBehaviour
 
         else if (currentMovement == MovementState.Turning)
         {
-			float direction = targetRotationAngle - parentTransform.eulerAngles.y;
-            direction /= Mathf.Abs(direction);
-
 			float distance = targetRotationAngle - parentTransform.eulerAngles.y;
+            float direction = distance / Mathf.Abs(distance);
 
             //to prevent 270 degree turns
-            if (distance > 180)
+            if (Mathf.Abs(distance) > 180)
                 direction *= -1;
+
 
             //Debug.Log("direction: "+ direction + " distance: " + distance);
             if (Mathf.Abs(direction * Time.deltaTime * turnSpeed) < Mathf.Abs(distance))
