@@ -41,7 +41,10 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-	
+		foreach(KeyValuePair<EnemyMain, TargetMarkHandler> enemyPair in targetableEnemies)
+		{
+			enemyPair.Value.Update(Time.deltaTime);
+		}
 	}
 
 	public void CheckTargetableEnemies()

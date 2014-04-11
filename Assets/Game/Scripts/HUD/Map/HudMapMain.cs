@@ -69,6 +69,17 @@ public class HudMapMain : MonoBehaviour {
 		initialPositionX = player.movement.currentGridX;
 		initialPositionY = player.movement.currentGridY;
 
+		for (int i = 0; i < mapSprites.Count; i++)
+		{
+			for (int x = 0 ; x < mapWidth; x++)
+			{
+				for (int y = 0; y < mapHeight; y++)
+				{
+					UpdateSpritePosition(x, y, mapSprites[i][x,y]);
+				}
+			}
+		}
+
 		initialized = true;
 	}
 	
@@ -182,8 +193,6 @@ public class HudMapMain : MonoBehaviour {
 				{
 					if (mapSprites[i][x,y] != null)
 					{
-						UpdateSpritePosition(x, y, mapSprites[i][x,y]);
-
 						if (mapTiles[x,y].SeenByPlayer)
 							mapSprites[i][x,y].enabled = enable;
 						else

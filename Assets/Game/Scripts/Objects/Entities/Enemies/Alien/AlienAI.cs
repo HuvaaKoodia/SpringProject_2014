@@ -30,6 +30,11 @@ public class AlienAI : AIBase {
 
 	public float communicationRange = 3;
 
+	public Animation spiderAnimation;
+	
+	public string WalkAnimation;
+	public string AttackAnimation;
+
 	bool readyToAttack = false;
 
 	Point3D MyPosition;
@@ -67,7 +72,7 @@ public class AlienAI : AIBase {
 
 	public override void PlayAiTurn()
 	{
-		if (AP == 0)
+		if (AP == 0 || Animating)
 			return;
 
 		MyPosition = new Point3D(movement.currentGridX, movement.currentGridY);
@@ -124,12 +129,16 @@ public class AlienAI : AIBase {
 			foundMove = true;
 			AP -= MovementCost;
 			blackboard.Path = blackboard.Path.next;
+
+			PlayAnimation(WalkAnimation, 1);
 		}
 		else if (movedSuccessfully == MovementState.Turning)
 		{
 			HasUsedTurn = true;
 			foundMove = true;
 			AP -= MovementCost;
+
+			PlayAnimation(WalkAnimation, 1);
 		}
 		else
 		{
@@ -355,7 +364,7 @@ public class AlienAI : AIBase {
 
 		//check that player is facing this general direction
 		float angleBetween = Quaternion.Angle(playerRot, playerToEnemyRot);
-		if (angleBetween >  50)
+		if (angleBetween >  90)
 			return false;
 	
 		if (PathFinder.CanSeeFromTileToTile(player, parent, position, PlayerSeeRadiusAware, 
@@ -514,21 +523,25 @@ public class AlienAI : AIBase {
 
 	void Attack()
 	{
+		PlayAnimation(AttackAnimation, 1);
+
 		if (movement.GetTileInFront().entityOnTile == player)
-			AttackMelee();
+			StartCoroutine("AttackMelee",(spiderAnimation[AttackAnimation].length * 0.85f));
 		else
-			AttackRanged();
+			StartCoroutine("AttackRanged", (spiderAnimation[AttackAnimation].length * 0.85f));
 
 		AP -= AttackCost;
 	}
 
-	void AttackRanged()
+	IEnumerator AttackRanged(float inflictDelay)
 	{
+		yield return new WaitForSeconds(inflictDelay);
 		player.TakeDamage(Damage / 2, MyPosition.X, MyPosition.Y);
 	}
 
-	void AttackMelee()
+	IEnumerator AttackMelee(float inflictDelay)
 	{
+		yield return new WaitForSeconds(inflictDelay);
 		player.TakeDamage(Damage, MyPosition.X, MyPosition.Y);
 	}
 
@@ -644,5 +657,15 @@ public class AlienAI : AIBase {
 		PrioritySelector root = new PrioritySelector(playerPresentSequence, playerNotFoundSelector);
 		
 		behaviourTree = root;
+	}
+
+	void PlayAnimation(string animation, float speed)
+	{
+		spiderAnimation[animation].normalizedTime = 0;
+		spiderAnimation[animation].speed = speed;
+		spiderAnimation.Play(animation);
+		
+		Animating = true;
+		Invoke ("AnimationFinished", spiderAnimation[animation].length / speed);
 	}
 }
