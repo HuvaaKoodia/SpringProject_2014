@@ -29,7 +29,7 @@ public class TargetMarkHandler
 		
 		crosshair = GameObject.Instantiate(GC.SS.PS.InsightSprite) as UISprite;
 		crosshair.transform.parent = parentObject.transform;
-		crosshair.spriteName = "crosshair_gray";
+		crosshair.spriteName = "crosshair_grey";
 		crosshair.transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
 		crosshair.transform.position = screenToWorldPoint;
 
@@ -85,7 +85,7 @@ public class TargetMarkHandler
 		else
 		{
 			numShotsLabels[(int)gun].text = "";
-			crosshair.spriteName = "crosshair_gray";
+			crosshair.spriteName = "crosshair_grey";
 		}
 	}
 
