@@ -7524,7 +7524,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 460232822}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: MapSpritePositionParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10354,6 +10354,7 @@ GameObject:
   - 20: {fileID: 664783726}
   - 81: {fileID: 664783728}
   - 114: {fileID: 406602042}
+  - 114: {fileID: 664783729}
   m_Layer: 0
   m_Name: PlayerCamera
   m_TagString: MainCamera
@@ -10381,7 +10382,7 @@ Camera:
   m_GameObject: {fileID: 664783724}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -10439,6 +10440,25 @@ AudioListener:
   m_PrefabInternal: {fileID: 649020165}
   m_GameObject: {fileID: 664783724}
   m_Enabled: 1
+--- !u!114 &664783729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400388, guid: bbc62e18456a7dc41a85be0653d92e94,
+    type: 2}
+  m_PrefabInternal: {fileID: 649020165}
+  m_GameObject: {fileID: 664783724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97b4768c3683045e4bfdb2e78272970c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  threshhold: .00499999989
+  intensity: .340000004
+  blurSize: 2.94000006
+  resolution: 0
+  blurIterations: 1
+  blurType: 0
+  fastBloomShader: {fileID: 4800000, guid: 68a00c837b82e4c6d92e7da765dc5f1d, type: 3}
 --- !u!1 &678256765
 GameObject:
   m_ObjectHideFlags: 0
@@ -13431,7 +13451,7 @@ MonoBehaviour:
   - {fileID: 2043786598}
   - {fileID: 1916532528}
   currentWeaponID: 0
-  ShotLastTurn: 0
+  ShotLastTurn: 1
   Finished: 0
   INVINCIBLE: 0
   ap: 0
@@ -13483,6 +13503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c912e0c77919e9943bd76a8959c1df44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DISABLE_INPUT: 0
 --- !u!114 &795672209
 MonoBehaviour:
   m_ObjectHideFlags: 0

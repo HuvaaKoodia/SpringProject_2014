@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb8e1b369a8e12544a5a533e4dabcef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MasterHud: {fileID: 0}
+  MasterHud: {fileID: 1208657778}
   radar: {fileID: 442736604}
   map: {fileID: 159749417}
   turnText: {fileID: 327985712}
@@ -780,7 +780,7 @@ MonoBehaviour:
   - {fileID: 130986168}
   - {fileID: 393149748}
   currentWeaponID: 0
-  ShotLastTurn: 0
+  ShotLastTurn: 1
   Finished: 0
   INVINCIBLE: 0
   ap: 0
@@ -832,6 +832,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c912e0c77919e9943bd76a8959c1df44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DISABLE_INPUT: 0
 --- !u!114 &65573016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17637,6 +17638,10 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400410, guid: bbc62e18456a7dc41a85be0653d92e94, type: 2}
+      propertyPath: MasterHud
+      value: 
+      objectReference: {fileID: 1208657778}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bbc62e18456a7dc41a85be0653d92e94, type: 2}
   m_RootGameObject: {fileID: 65573010}
@@ -18077,7 +18082,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1173703921}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: MapSpritePositionParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30131,6 +30136,7 @@ GameObject:
   - 20: {fileID: 2108720084}
   - 81: {fileID: 2108720083}
   - 114: {fileID: 2108720081}
+  - 114: {fileID: 2108720082}
   m_Layer: 0
   m_Name: PlayerCamera
   m_TagString: MainCamera
@@ -30178,6 +30184,25 @@ MonoBehaviour:
   currentY: 0
   clampX: 0
   clampY: 0
+--- !u!114 &2108720082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400388, guid: bbc62e18456a7dc41a85be0653d92e94,
+    type: 2}
+  m_PrefabInternal: {fileID: 1142757709}
+  m_GameObject: {fileID: 2108720079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97b4768c3683045e4bfdb2e78272970c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  threshhold: .00499999989
+  intensity: .340000004
+  blurSize: 2.94000006
+  resolution: 0
+  blurIterations: 1
+  blurType: 0
+  fastBloomShader: {fileID: 4800000, guid: 68a00c837b82e4c6d92e7da765dc5f1d, type: 3}
 --- !u!81 &2108720083
 AudioListener:
   m_ObjectHideFlags: 0
@@ -30195,7 +30220,7 @@ Camera:
   m_GameObject: {fileID: 2108720079}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
