@@ -1654,7 +1654,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 400196}
   m_Layer: 9
-  m_Name: MapSpriteParent
+  m_Name: Sprites
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2710,6 +2710,36 @@ GameObject:
   m_Layer: 0
   m_Name: PlayerCamera
   m_TagString: MainCamera
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &100322
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400322}
+  m_Layer: 0
+  m_Name: MapSpriteRotationParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &100324
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400324}
+  m_Layer: 0
+  m_Name: MapSpritePositionParent
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3907,6 +3937,7 @@ Transform:
   m_Children:
   - {fileID: 400064}
   - {fileID: 400304}
+  - {fileID: 400322}
   m_Father: {fileID: 400298}
 --- !u!4 &400198
 Transform:
@@ -4645,6 +4676,29 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400000}
+--- !u!4 &400322
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100322}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 400324}
+  m_Father: {fileID: 400196}
+--- !u!4 &400324
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100324}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 400322}
 --- !u!20 &2000000
 Camera:
   m_ObjectHideFlags: 1
@@ -6190,6 +6244,10 @@ MonoBehaviour:
   deadzoneRight: 4
   deadzoneTop: 3
   deadzoneBottom: 3
+  currentX: 0
+  currentY: 0
+  clampX: 0
+  clampY: 0
 --- !u!114 &11400012
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6430,7 +6488,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GC: {fileID: 0}
   player: {fileID: 0}
-  spriteParent: {fileID: 100196}
+  spriteParent: {fileID: 100322}
+  spritePositionParent: {fileID: 100324}
   zoom: 5
   rotateWithPlayer: 1
   returnRotationSpeed: 100
@@ -6698,6 +6757,10 @@ MonoBehaviour:
   deadzoneRight: 4
   deadzoneTop: 3
   deadzoneBottom: 3
+  currentX: 0
+  currentY: 0
+  clampX: 0
+  clampY: 0
 --- !u!114 &11400056
 MonoBehaviour:
   m_ObjectHideFlags: 1

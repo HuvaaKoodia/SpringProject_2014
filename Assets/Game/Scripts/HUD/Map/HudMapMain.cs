@@ -8,6 +8,7 @@ public class HudMapMain : MonoBehaviour {
 	public PlayerMain player;
 
 	public GameObject spriteParent;
+	public GameObject spritePositionParent;
 
 	private List<UISprite[,]> mapSprites;
 	private int currentFloor = 0;
@@ -26,6 +27,12 @@ public class HudMapMain : MonoBehaviour {
 
 	public UIPanel spritePanel;
 
+	int mapWidth;
+	int mapHeight;
+
+	int initialPositionX;
+	int initialPositionY;
+
 	bool _disabled=false;
 
 	// Use this for initialization
@@ -42,19 +49,25 @@ public class HudMapMain : MonoBehaviour {
 
 		//mapSprites = new List<UISprite[,]>();
 
-		mapSprites = GC.MiniMapData.CreateMapSprites(spriteParent, zoom, spriteWidth);
+		mapSprites = GC.MiniMapData.CreateMapSprites(spritePositionParent, zoom, spriteWidth);
 
 		ChangeFloor(GC.CurrentFloorIndex);
 
 		float playerRot = player.transform.rotation.eulerAngles.y;
 		Quaternion rot = Quaternion.Euler(0.0f, 0.0f, playerRot);
 
-		playerIndicator.transform.localRotation =  Quaternion.Euler(0, 0, 360 - playerRot);
+		playerIndicator.transform.localRotation =  Quaternion.Euler(0, 0, 0);
 
 		if (rotateWithPlayer)
 		{	
 			spriteParent.transform.localRotation = rot;
 		}
+
+		mapWidth = mapSprites[currentFloor].GetLength(0);
+		mapHeight = mapSprites[currentFloor].GetLength(1);
+
+		initialPositionX = player.movement.currentGridX;
+		initialPositionY = player.movement.currentGridY;
 
 		initialized = true;
 	}
@@ -65,9 +78,6 @@ public class HudMapMain : MonoBehaviour {
 		if (!initialized||_disabled)
 			return;
 
-		int mapWidth = mapSprites[currentFloor].GetLength(0);
-		int mapHeight = mapSprites[currentFloor].GetLength(1);
-
 		returnRotationSpeed = player.movement.turnSpeed;
 
 		for (int x = 0 ; x < mapWidth; x++)
@@ -77,6 +87,8 @@ public class HudMapMain : MonoBehaviour {
 				UpdateSprite(x, y, mapSprites[currentFloor][x,y]);
 			}
 		}
+
+		UpdateSpriteParentPosition();
 
 		float playerRot = player.transform.rotation.eulerAngles.y;
 		if (rotateWithPlayer)
@@ -94,9 +106,9 @@ public class HudMapMain : MonoBehaviour {
 				rot = Quaternion.RotateTowards(rot, Quaternion.Euler(0, 0, playerRot), returnRotationSpeed * Time.deltaTime);
 				spriteParent.transform.localRotation = rot;
 			}
-
+		
 			Quaternion playerIndicatorRot = 
-				Quaternion.RotateTowards(playerIndicator.transform.localRotation, Quaternion.Euler(0, 0, 360 - playerRot), returnRotationSpeed * Time.deltaTime);
+				Quaternion.RotateTowards(playerIndicator.transform.localRotation, Quaternion.Euler(0, 0, 0), returnRotationSpeed * Time.deltaTime);
 			playerIndicator.transform.localRotation = playerIndicatorRot;
 
 			northIndicator.enabled = true;
@@ -118,12 +130,31 @@ public class HudMapMain : MonoBehaviour {
 				Quaternion.RotateTowards(playerIndicator.transform.localRotation, Quaternion.Euler(0, 0, (360 -playerRot)), returnRotationSpeed * Time.deltaTime);
 			playerIndicator.transform.localRotation = playerIndicatorRot;
 		}
+
+	}
+
+	void UpdateSpriteParentPosition()
+	{
+		Vector3 playerPosition = player.transform.position;
+		float posX = initialPositionX - (playerPosition.x / MapGenerator.TileSize.x);
+		float posY = initialPositionY - (playerPosition.z / MapGenerator.TileSize.z);
+
+		spritePositionParent.transform.localPosition = new Vector3(posX * (spriteWidth * zoom), posY * (spriteWidth * zoom), 0);
 	}
 
 	void UpdateSprite(float x, float y, UISprite sprite)
 	{
 		if (sprite == null)
 			return;
+	
+		if (GC.MiniMapData.mapFloors[currentFloor][(int)x,(int)y].SeenByPlayer)
+			sprite.enabled = true;
+	}
+
+	void UpdateSpritePosition(float x, float y, UISprite sprite)
+	{
+		if (sprite == null)
+		return;
 
 		Vector3 playerPosition = player.transform.position;
 		float posX = x - (playerPosition.x / MapGenerator.TileSize.x);
@@ -131,9 +162,6 @@ public class HudMapMain : MonoBehaviour {
 
 		sprite.transform.localScale = Vector3.one * zoom;
 		sprite.transform.localPosition = new Vector3(posX * (spriteWidth * zoom), posY * (spriteWidth * zoom), 0);
-
-		if (GC.MiniMapData.mapFloors[currentFloor][(int)x,(int)y].SeenByPlayer)
-			sprite.enabled = true;
 	}
 
 	public void ChangeFloor(int floorIndex)
@@ -154,6 +182,8 @@ public class HudMapMain : MonoBehaviour {
 				{
 					if (mapSprites[i][x,y] != null)
 					{
+						UpdateSpritePosition(x, y, mapSprites[i][x,y]);
+
 						if (mapTiles[x,y].SeenByPlayer)
 							mapSprites[i][x,y].enabled = enable;
 						else

@@ -40,6 +40,9 @@ public class MouseLook : MonoBehaviour {
 	public int deadzoneTop = 100;
 	public int deadzoneBottom = 100;
 
+	public float currentX, currentY;
+	public bool clampX, clampY;
+
 	void Update ()
 	{
 		if (MouseLookOn)
@@ -57,7 +60,7 @@ public class MouseLook : MonoBehaviour {
 				rotationY = ((Input.mousePosition.y - (Screen.height / 2)) / (Screen.height / 2)) * sensitivityY;
 				rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);
 
-
+				/*
 				bool insideDeadZone = Subs.insideArea(rotationX, rotationY, 
 				                                      -deadzoneLeft, -deadzoneBottom, 
 				                                      deadzoneLeft+deadzoneRight, deadzoneBottom+deadzoneTop);
@@ -68,18 +71,31 @@ public class MouseLook : MonoBehaviour {
 					rotationX = 0;
 					rotationY = 0;
 				}
-				/*else //VERSIO 2, OTA TÄMÄ ELSE VERSION 1 MUKAAN
+				else //VERSIO 2, OTA TÄMÄ ELSE VERSION 1 MUKAAN
 				{
+					clampX = false;
+					clampY = false;
+
+					if (rotationX < -deadzoneLeft || rotationX > deadzoneRight)
+						clampX = true;
+
+					if (rotationY < -deadzoneBottom || rotationY > deadzoneTop)
+						clampY = true;
+
+
 					if (rotationX < -deadzoneLeft)
 						rotationX += deadzoneLeft;
 					else if (rotationX > deadzoneRight)
 						rotationX -= deadzoneRight;
-
+					
+					if (!clampX && clampY)
+					{
 					if (rotationY < -deadzoneBottom)
 						rotationY += deadzoneBottom;
 					else if (rotationY > deadzoneTop)
 						rotationY -= deadzoneTop;
-				}*/
+					}
+				}
 
 				//VERSIO 3, TÄSTÄ ALASPÄIN KOMMENTIT POIS JA YLÖS KAIKKI KOMMENTTEIHIN
 				/*
@@ -96,7 +112,11 @@ public class MouseLook : MonoBehaviour {
 					rotationY -= deadzoneTop;
 				else
 					rotationY = 0;
-*/
+				*/
+
+				currentX = rotationX;
+				currentY = rotationY;
+
 				//transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
 				transform.localRotation = 
 					Quaternion.RotateTowards(
