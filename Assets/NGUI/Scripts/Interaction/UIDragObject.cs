@@ -141,7 +141,7 @@ public class UIDragObject : MonoBehaviour
 	/// Create a plane on which we will be performing the dragging.
 	/// </summary>
 
-	void OnPress (bool pressed)
+	void OnPress (UICamera.InputEvent pressed)
 	{
 		if (enabled && NGUITools.GetActive(gameObject) && target != null)
 		{
@@ -177,6 +177,12 @@ public class UIDragObject : MonoBehaviour
 				}
 			}
 		}
+	}
+
+	public void ConstraintToBounds(){
+		FindPanel();
+		UpdateBounds ();
+		mPanel.ConstrainTargetToBounds(target, ref mBounds, true);
 	}
 
 	/// <summary>

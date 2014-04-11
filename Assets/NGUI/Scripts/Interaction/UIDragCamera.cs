@@ -35,7 +35,7 @@ public class UIDragCamera : MonoBehaviour
 	/// Forward the press event to the draggable camera.
 	/// </summary>
 
-	void OnPress (bool isPressed)
+	void OnPress (UICamera.InputEvent isPressed)
 	{
 		if (enabled && NGUITools.GetActive(gameObject) && draggableCamera != null)
 		{

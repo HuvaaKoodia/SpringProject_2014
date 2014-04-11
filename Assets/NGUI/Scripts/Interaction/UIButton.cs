@@ -84,7 +84,7 @@ public class UIButton : UIButtonColor
 			base.OnHover(isOver);
 	}
 	
-	protected override void OnPress (bool isPressed)
+	protected override void OnPress (UICamera.InputEvent isPressed)
 	{
 		if (isEnabled)
 			base.OnPress(isPressed);

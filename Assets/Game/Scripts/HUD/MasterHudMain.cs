@@ -13,7 +13,8 @@ public class MasterHudMain : MonoBehaviour {
 	public PlayerMain player;
 	
 	public MenuState currentMenuState;
-	
+	public MenuState CurrentMenuState{get{return currentMenuState;}}
+
 	public InGameInfoPanelMain InfoHud;
     public MissionBriefingMenu MissionBriefing;
     public GameObject EndMissionPanel;
@@ -71,7 +72,7 @@ public class MasterHudMain : MonoBehaviour {
 
 	void DeactivateInventory ()
 	{
-		if (!InfoHud.InventoryOpen) return;
+		if (!InfoHud.InfoPanelOpen) return;
 		
 		InfoHud.DeactivateInventory();
 	}
@@ -104,8 +105,9 @@ public class MasterHudMain : MonoBehaviour {
 	
 	public void ToggleInventory()
 	{
-		if (InfoHud.InventoryOpen)
+		if (InfoHud.InfoPanelOpen)
 		{
+			InfoHud.DataTerminalPanel.CloseDataTerminal();
 			DeactivateInventoryHUD();
 		}
 		else
@@ -115,6 +117,11 @@ public class MasterHudMain : MonoBehaviour {
 		}
 	}
 
+	public void OpenMapInfopanel()
+	{
+		InfoHud.SetTabToMap();
+		ActivateInventoryHUD();
+	}
 
 	public void SetInteractVisibility(bool visible)
 	{
@@ -203,18 +210,6 @@ public class MasterHudMain : MonoBehaviour {
     public void EndMission(){
         GC.SS.GDB.EndMission();
     }
-
-	public void ToggleRadarRotateWithCenter()
-	{
-		if (currentMenuState == MenuState.NothingSelected)
-			player.HUD.radar.ToggleRotateWithCenter();
-	}
-
-	public void ToggleMapRotateWithPlayer()
-	{
-		if (currentMenuState == MenuState.NothingSelected)
-			player.HUD.map.ToggleRotateWithPlayer();
-	}
 
 	void DrawFPS(){
 		timeleft -= Time.deltaTime;

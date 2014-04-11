@@ -220,7 +220,6 @@ public class InvEquipmentStorage
             if (equipment.Equip(gi)==null) break;
         }
     }
-
 	/// <summary>
 	/// DEV. WARNING WARNING infinite loop running the world!
 	/// </summary>
