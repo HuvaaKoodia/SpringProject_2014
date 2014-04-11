@@ -334,6 +334,8 @@ public class UIDragObject : MonoBehaviour
 			float scale = Mathf.Clamp(target.transform.localScale.x + delta * ScrollScaleSpeed, ScrollScaleMin, ScrollScaleMax);
 
 			target.transform.localScale = new Vector3(scale, scale);
+
+			ConstraintToBounds();
 		}
 	}
 }

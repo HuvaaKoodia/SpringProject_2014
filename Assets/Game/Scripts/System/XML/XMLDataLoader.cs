@@ -64,7 +64,7 @@ public class XMLDataLoader : XML_Loader
                 }
 				#endregion
 
-                if (ReadWeapon(node))       continue;
+                if (ReadItem(node))       	continue;
                 if (ReadQuestItem(node))    continue;
                 if (ReadMission(node))      continue;
                 if (ReadObjective(node))    continue;
@@ -75,9 +75,9 @@ public class XMLDataLoader : XML_Loader
 		}
     }
 
-    static bool ReadWeapon (XmlNode node)
+    static bool ReadItem (XmlNode node)
 	{
-		if (node.Name == "Weapon")
+		if (node.Name == "Item"||node.Name=="Weapon") //DEV. BWComp option
 		{
 			InvBaseItem item=new InvBaseItem();
 			item.name=getAttStr(node,"name");

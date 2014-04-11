@@ -18,6 +18,23 @@ public class GameDB : MonoBehaviour {
         GameStarted=true;
 		GameData=new GameObjData();
         GenerateNewMissions(0);
+
+		
+		GameData.PlayerData.Money=1000;
+
+		//starting player equipment 
+		for (int i=0;i<XmlDatabase.Player.StartingWeaponAmount;i++){
+			InvEquipmentStorage.EquipRandomItem(GameData.PlayerData.Equipment,"starting_weapons","starting_quality");
+		}
+		
+		for (int i=0;i<XmlDatabase.Player.StartingUtilityAmount;i++){
+			InvEquipmentStorage.EquipRandomItem(GameData.PlayerData.Equipment,"starting_utilities","starting_quality");
+		}
+		
+		//DEV.DEBUG random vendor items
+		for (int i=0;i<6;i++){
+			GameData.VendorStore.Add(InvGameItem.GetRandomItem());
+		}
     }
 
 #if UNITY_EDITOR && !UNITY_WEBPLAYER
@@ -96,6 +113,7 @@ public class GameDB : MonoBehaviour {
 
     void GenerateNewMissions(int time_increase)
     {
+		//Remove old missions and find all available mission pools.
 		List<string> availablemissionpools=new List<string>();
 
 		foreach (var p in XmlDatabase.MissionPool.Pools.Keys){
@@ -113,6 +131,7 @@ public class GameDB : MonoBehaviour {
 			availablemissionpools.Remove(m.MissionPoolIndex);
 		}
 
+		//generate new missions if any are needed
         while (GameData.AvailableMissions.Count<4){
 			var index=Subs.GetRandom(availablemissionpools);
 			GameData.AvailableMissions.Add(MissionGenerator.GenerateMission(index));
@@ -135,19 +154,5 @@ public class GameObjData{
 		AvailableMissions=new List<MissionObjData>();
 		PlayerData=new PlayerObjData();
 		VendorStore=new InvItemStorage(8,4,2);
-
-		PlayerData.Money=1000;
-		
-		//DEV.DEBUG random equipment
-		for (int i=0;i<4;i++){
-			InvEquipmentStorage.EquipRandomItem(PlayerData.Equipment);
-		}
-		
-		//DEV.DEBUG random vendor items
-		for (int i=0;i<6;i++){
-			InvEquipmentStorage.EquipRandomItem(PlayerData.Equipment);
-			VendorStore.Add(InvGameItem.GetRandomItem());
-		}
-
 	}
 }

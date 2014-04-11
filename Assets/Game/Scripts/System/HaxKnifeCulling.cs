@@ -127,6 +127,7 @@ public class HaxKnifeCulling : MonoBehaviour {
 			if (WallHits.Length<=1){
 				cull_this=false;
 
+				//map data culling
 				if (miniMapIgnoreDoors)
 				{
 					if (tile.Data.TileType == TileObjData.Type.Door && i == 0 || WallHits.Length == 0 )
@@ -138,7 +139,7 @@ public class HaxKnifeCulling : MonoBehaviour {
 				{
 					if ((tile.Data.TileType == TileObjData.Type.Door || tile.Data.TileType == TileObjData.Type.Elevator))
 					{
-						if (i == 0 && tile.GetDoor() != null && tile.GetDoor().anim_on)
+						if (i == 0)
 						{
 							miniMapData[GC.CurrentFloorIndex][tile.Data.X, tile.Data.Y].SeenByPlayer = true;
 						}

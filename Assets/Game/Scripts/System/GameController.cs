@@ -273,8 +273,6 @@ public class GameController : MonoBehaviour {
 
 	public void GotoFloor(int index){
 		if (index<0||index>Floors.Count-1) return;
-		
-		HUD.FadeIn();
 		StartCoroutine(GotoFloorTimer(index));
 	}
 	/// <summary>
@@ -294,6 +292,8 @@ public class GameController : MonoBehaviour {
 	}
 
 	private IEnumerator GotoFloorTimer(int index){
+		Player.inputSub.DISABLE_INPUT=true;
+		HUD.FadeIn();
 		while(HUD.FadeInProgress){
 			yield return null;
 		}
@@ -303,6 +303,12 @@ public class GameController : MonoBehaviour {
 		yield return null;
 
 		UpdateFloorStats(index);//DEV. haxy hax Thanks to having to be called one step after setActive 
+
+		while(HUD.FadeInProgress){
+			yield return null;
+		}
+
+		Player.inputSub.DISABLE_INPUT=false;
 	}
 
 	void UpdateFloorStats (int index)

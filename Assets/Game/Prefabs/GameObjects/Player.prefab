@@ -1327,6 +1327,7 @@ GameObject:
   - 114: {fileID: 11400164}
   - 114: {fileID: 11400162}
   - 65: {fileID: 6500024}
+  - 114: {fileID: 11400222}
   m_Layer: 9
   m_Name: Map_BG_Sprite
   m_TagString: Untagged
@@ -2707,6 +2708,7 @@ GameObject:
   - 20: {fileID: 2000004}
   - 81: {fileID: 8100002}
   - 114: {fileID: 11400054}
+  - 114: {fileID: 11400388}
   m_Layer: 0
   m_Name: PlayerCamera
   m_TagString: MainCamera
@@ -2737,7 +2739,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400324}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: MapSpritePositionParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4795,7 +4797,7 @@ Camera:
   m_GameObject: {fileID: 100320}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -6222,7 +6224,7 @@ MonoBehaviour:
   - {fileID: 11400014}
   - {fileID: 11400012}
   currentWeaponID: 0
-  ShotLastTurn: 0
+  ShotLastTurn: 1
   Finished: 0
   INVINCIBLE: 0
   ap: 0
@@ -6260,6 +6262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c912e0c77919e9943bd76a8959c1df44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DISABLE_INPUT: 0
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6809,7 +6812,7 @@ MonoBehaviour:
   mInvert: 0
 --- !u!114 &11400054
 MonoBehaviour:
-  m_ObjectHideFlags: 13
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100320}
@@ -9506,6 +9509,22 @@ MonoBehaviour:
   mMaxLineHeight: 0
   mLineWidth: 0
   mMultiline: 1
+--- !u!114 &11400222
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 100046}
+  functionName: OpenMap
+  trigger: 3
+  includeChildren: 0
+  OnPressInputIndex: 0
 --- !u!114 &11400224
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -11841,6 +11860,24 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
+--- !u!114 &11400388
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97b4768c3683045e4bfdb2e78272970c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  threshhold: .00499999989
+  intensity: .340000004
+  blurSize: 2.94000006
+  resolution: 0
+  blurIterations: 1
+  blurType: 0
+  fastBloomShader: {fileID: 4800000, guid: 68a00c837b82e4c6d92e7da765dc5f1d, type: 3}
 --- !u!114 &11400398
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -213,9 +213,8 @@ public class InvEquipmentStorage
     public static void EquipRandomItem(InvEquipmentStorage equipment){
         if (equipment == null) return;
 		if (XmlDatabase.Items.Count == 0) return;
-        if (!equipment.HasEmptySlots()) return;
 
-        while(true){
+		while(equipment.HasEmptySlots()){
             var gi=InvGameItem.GetRandomItem();
             if (equipment.Equip(gi)==null) break;
         }
@@ -226,10 +225,9 @@ public class InvEquipmentStorage
 	public static void EquipRandomItem(InvEquipmentStorage equipment,string lootpool,string lootquality){
 		if (equipment == null) return;
 		if (XmlDatabase.Items.Count == 0) return;
-		if (!equipment.HasEmptySlots()) return;
 		
-		while(true){
-			var gi=InvGameItem.GetRandomItem();
+		while(equipment.HasEmptySlots()){
+			var gi=InvGameItem.GetRandomItem(lootpool,lootquality);
 			if (equipment.Equip(gi)==null) break;
 		}
 	}

@@ -75,10 +75,9 @@ public class PlayerMain : EntityMain
 	bool temphax=true;
 	void Update()
     {
-		if (temphax){
+		if (temphax){//start game cull
 			temphax=false;
 			CullWorld(true);
-
 		}
 
         foreach (WeaponMain weapon in weaponList)

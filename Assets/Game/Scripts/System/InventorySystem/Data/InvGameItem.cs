@@ -175,13 +175,15 @@ public class InvGameItem
 
 	public static InvGameItem GetRandomItem (string lootpool,string qualitypool)
 	{
-		var i=XmlDatabase.LootPool.GetRandomItem(lootpool);
-		InvBaseItem item = XmlDatabase.GetBaseItem(i);
+		string i_s=XmlDatabase.LootPool.GetRandomItem(lootpool);
+		InvBaseItem bi = XmlDatabase.GetBaseItem(i_s);
 
-		string level=XmlDatabase.LootQualityPool.GetRandomItem(qualitypool);
+		string level_s=XmlDatabase.LootQualityPool.GetRandomItem(qualitypool);
+		float level=float.Parse(level_s)*0.1f;
 
-		InvGameItem gi = new InvGameItem(item);
-		gi.itemLevel = int.Parse(level);
+		InvGameItem gi = new InvGameItem(bi);
+		gi.itemLevel = (int)(bi.minItemLevel+(bi.maxItemLevel-bi.minItemLevel)*level);
+		gi.itemLevel=Mathf.Clamp(gi.itemLevel,bi.minItemLevel,bi.maxItemLevel);
 		gi.RecalculateStats();
 		return gi;
 	}

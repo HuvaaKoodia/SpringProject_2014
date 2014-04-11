@@ -3,6 +3,8 @@ using System.Collections;
 
 public class PlayerInputSub : MonoBehaviour {
 
+	public bool DISABLE_INPUT=false;
+
     PlayerMain player;
     EntityMovementSub playerMovement;
 
@@ -16,6 +18,7 @@ public class PlayerInputSub : MonoBehaviour {
 	// Update is called once per frame
 	void Update()
     {
+		if (DISABLE_INPUT) return;
         if (playerMovement.currentMovement == MovementState.NotMoving)
         {
             HotkeyInput();
