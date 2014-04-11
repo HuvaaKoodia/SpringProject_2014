@@ -43,7 +43,7 @@ public class TestFinance : MonoBehaviour {
 			Debug.Log("Debt payment[" + i + "]: " + PlayerFinance.listofdebts[i].debt_payment);
 		}
 		
-		PlayerFinance.CalcPaymentTotal();
+		PlayerFinance.CalcPaymentTotal(false);
 		Debug.Log("Payment total: " + PlayerFinance.payment_total);
 		
 		PlayerFinance.CalcExistingCash();
