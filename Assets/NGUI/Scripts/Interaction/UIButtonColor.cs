@@ -139,7 +139,7 @@ public class UIButtonColor : UIWidgetContainer
 		OnEnable();
 	}
 
-	protected virtual void OnPress (bool isPressed)
+	protected virtual void OnPress (UICamera.InputEvent isPressed)
 	{
 		if (enabled)
 		{

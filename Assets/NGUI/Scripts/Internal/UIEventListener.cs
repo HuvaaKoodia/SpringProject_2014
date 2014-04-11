@@ -39,7 +39,7 @@ public class UIEventListener : MonoBehaviour
 	void OnClick ()					{ if (onClick != null) onClick(gameObject); }
 	void OnDoubleClick ()			{ if (onDoubleClick != null) onDoubleClick(gameObject); }
 	void OnHover (bool isOver)		{ if (onHover != null) onHover(gameObject, isOver); }
-	void OnPress (bool isPressed)	{ if (onPress != null) onPress(gameObject, isPressed); }
+	void OnPress (UICamera.InputEvent isPressed)	{ if (onPress != null) onPress(gameObject, isPressed); }
 	void OnSelect (bool selected)	{ if (onSelect != null) onSelect(gameObject, selected); }
 	void OnScroll (float delta)		{ if (onScroll != null) onScroll(gameObject, delta); }
 	void OnDrag (Vector2 delta)		{ if (onDrag != null) onDrag(gameObject, delta); }

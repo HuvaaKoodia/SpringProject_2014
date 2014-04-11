@@ -17,6 +17,8 @@ public class DataTerminalButton : MonoBehaviour {
 
 		button.transform.FindChild("Label").GetComponent<UILabel>().text=ButtonText;
 		label.text=StatusTextTrue;
+
+		SetStatus(Hud.GetStatus(this));
 	}
 
 	public void SetStatus(bool on){

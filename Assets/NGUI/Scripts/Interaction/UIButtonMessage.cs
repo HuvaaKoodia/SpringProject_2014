@@ -30,6 +30,8 @@ public class UIButtonMessage : MonoBehaviour
 
 	bool mStarted = false;
 
+	public int OnPressInputIndex=0;
+
 	void Start () { mStarted = true; }
 
 	void OnEnable () { if (mStarted) OnHover(UICamera.IsHighlighted(gameObject)); }
@@ -43,12 +45,12 @@ public class UIButtonMessage : MonoBehaviour
 		}
 	}
 
-	void OnPress (bool isPressed)
+	void OnPress (UICamera.InputEvent isPressed)
 	{
-		if (enabled)
+		if (enabled&&OnPressInputIndex==isPressed.PressIndex)
 		{
 			if (((isPressed && trigger == Trigger.OnPress) ||
-				(!isPressed && trigger == Trigger.OnRelease))) Send();
+			     (!isPressed && trigger == Trigger.OnRelease))) Send();
 
 			if (trigger == Trigger.OnDown) Send();
 		}

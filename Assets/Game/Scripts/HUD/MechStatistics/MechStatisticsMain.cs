@@ -57,7 +57,7 @@ public class MechStatisticsMain : MonoBehaviour {
         
         if (hp == 0)
         {
-            part.ChangePartColor(CriticalColor);
+            part.ChangePartColor(BrokenColor);
         }
         else if (hp <= 30)
         {

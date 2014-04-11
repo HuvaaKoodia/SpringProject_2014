@@ -74,7 +74,7 @@ public class UIDragScrollView : MonoBehaviour
 	/// Create a plane on which we will be performing the dragging.
 	/// </summary>
 
-	void OnPress (bool pressed)
+	void OnPress (UICamera.InputEvent pressed)
 	{
 		// If the scroll view has been set manually, don't try to find it again
 		if (mAutoFind && mScroll != scrollView)

@@ -4,10 +4,11 @@ using System.Collections.Generic;
 
 public class InGameInfoPanelMain : MonoBehaviour {
 
-	public bool InventoryOpen{get{return InventoryPanel.activeSelf;}}
+	public bool InfoPanelOpen{get{return InfoPanel.activeSelf;}}
 
+	public DataTerminalHudController DataTerminalPanel;
 	public MasterHudMain HUD;
-	public GameObject InventoryPanel,LootParent;
+	public GameObject InfoPanel,LootParent;
 	public UIItemStorage InventoryStorage,LootStorage;
 	public List<UIEquipmentSlot> EquipmentSlots;
 	public EquipRandomItem temp_random_item_button;
@@ -20,7 +21,7 @@ public class InGameInfoPanelMain : MonoBehaviour {
 
 	// Use this for initialization
 	void Start (){
-		InventoryPanel.SetActive(false);
+		InfoPanel.SetActive(false);
 
 		MenuMap.Init(HUD.GC);
 		MenuMap.gameObject.SetActive(false);
@@ -34,18 +35,21 @@ public class InGameInfoPanelMain : MonoBehaviour {
         Tabs.OpenTab1();
     }
 
+	public void SetTabToMap(){
+		Tabs.OpenTab4();
+	}
+
 	public void ActivateInventory()
 	{ 
-        InventoryPanel.SetActive(true);
+		InfoPanel.SetActive(true);
     }
 
 	public void DeactivateInventory()
-	{ 
-        InventoryPanel.SetActive(false);
+	{
+		InfoPanel.SetActive(false);
 		MenuMap.gameObject.SetActive(false);
 
 		Player.ActivateEquippedItems();
-
 		Player.HUD.SetHudToPlayerStats();
 
 		if (LootParent.activeSelf) LootParent.SetActive(false);

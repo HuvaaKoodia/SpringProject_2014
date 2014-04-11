@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class PlayerHud : MonoBehaviour {
 	
 	PlayerMain player;
-	public MasterHudMain menu;
+	public MasterHudMain MasterHud;
 
 	public RadarMain radar;
 	public HudMapMain map;
@@ -49,27 +49,27 @@ public class PlayerHud : MonoBehaviour {
 
 	public void ToggleMovementHUD()
 	{
-		menu.ToggleMovementHUD();
+		MasterHud.ToggleMovementHUD();
 	}
 	
 	public void ToggleTargetingHUD()
 	{
-		menu.ToggleTargetingHUD();
+		MasterHud.ToggleTargetingHUD();
 	}
 	
 	public void DeactivateInventoryHUD()
 	{
-		menu.DeactivateInventoryHUD();
+		MasterHud.DeactivateInventoryHUD();
 	}
 	
 	public void ActivateInventoryHUD()
 	{
-		menu.ActivateInventoryHUD();
+		MasterHud.ActivateInventoryHUD();
 	}
 
 	public void ToggleInventory()
 	{
-		menu.ToggleInventory();
+		MasterHud.ToggleInventory();
 	}
 
 	//input
@@ -126,22 +126,22 @@ public class PlayerHud : MonoBehaviour {
 
 	void LeftHandWeaponPressed()
 	{
-		menu.WeaponPressed(WeaponID.LeftHand);
+		MasterHud.WeaponPressed(WeaponID.LeftHand);
 	}
 
 	void LeftShoulderWeaponPressed()
 	{
-		menu.WeaponPressed(WeaponID.LeftShoulder);
+		MasterHud.WeaponPressed(WeaponID.LeftShoulder);
 	}
 
 	void RightHandWeaponPressed()
 	{
-		menu.WeaponPressed(WeaponID.RightHand);
+		MasterHud.WeaponPressed(WeaponID.RightHand);
 	}
 
 	void RightShoulderWeaponPressed()
 	{
-		menu.WeaponPressed(WeaponID.RightShoulder);
+		MasterHud.WeaponPressed(WeaponID.RightShoulder);
 	}
 
     void TargetingModeButtonPressed()
@@ -155,14 +155,33 @@ public class PlayerHud : MonoBehaviour {
 	}
 
 	public void SetHudToPlayerStats(){
-		//radar.SetDisabled(!player.HasRadar);
-		//map.SetDisabled(!player.HasMap);
-		//radar.radarZoom=2f+1f*(1f-(player.RadarRange/player.RadarRangeMax));
+
+#if !UNITY_EDITOR
+		radar.SetDisabled(!player.HasRadar);
+		map.SetDisabled(!player.HasMap);
+		radar.radarZoom=2f+1f*(1f-(player.RadarRange/player.RadarRangeMax));
+#endif
 	}
 
 	public void ChangeFloor(int floorIndex)
 	{
 		map.ChangeFloor(floorIndex);
 		radar.ChangeFloor(floorIndex);
+	}
+
+	public void ToggleRadarRotateWithCenter()
+	{
+		if (MasterHud.CurrentMenuState == MenuState.NothingSelected)
+			radar.ToggleRotateWithCenter();
+	}
+	
+	public void ToggleMapRotateWithPlayer()
+	{
+		if (MasterHud.CurrentMenuState == MenuState.NothingSelected)
+			map.ToggleRotateWithPlayer();
+	}
+
+	public void OpenMap(){
+		MasterHud.OpenMapInfopanel();
 	}
 }

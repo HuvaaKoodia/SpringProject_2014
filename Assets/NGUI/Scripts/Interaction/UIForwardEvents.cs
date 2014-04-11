@@ -34,7 +34,7 @@ public class UIForwardEvents : MonoBehaviour
 		}
 	}
 
-	void OnPress (bool pressed)
+	void OnPress (UICamera.InputEvent pressed)
 	{
 		if (onPress && target != null)
 		{

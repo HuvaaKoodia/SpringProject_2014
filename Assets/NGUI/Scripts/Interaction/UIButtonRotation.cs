@@ -46,7 +46,7 @@ public class UIButtonRotation : MonoBehaviour
 		}
 	}
 
-	void OnPress (bool isPressed)
+	void OnPress (UICamera.InputEvent isPressed)
 	{
 		if (enabled)
 		{

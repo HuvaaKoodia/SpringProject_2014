@@ -53,7 +53,7 @@ public class UIDragDropItem : MonoBehaviour
 	/// Record the time the item was pressed on.
 	/// </summary>
 
-	void OnPress (bool isPressed) { if (isPressed) mPressTime = RealTime.time; }
+	void OnPress (UICamera.InputEvent isPressed) { if (isPressed) mPressTime = RealTime.time; }
 
 	/// <summary>
 	/// Start the dragging operation.

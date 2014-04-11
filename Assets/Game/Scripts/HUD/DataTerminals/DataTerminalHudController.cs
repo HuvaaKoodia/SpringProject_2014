@@ -47,12 +47,20 @@ public class DataTerminalHudController : MonoBehaviour {
 				ToggleGeneratorStatus(button);
 			break;
 		}
+
+		button.SetStatus(GetStatus(button));
 	}
 
 	void ToggleGeneratorStatus(DataTerminalButton button){
 		var power=menu.GC.GetFloor(0).PowerOn;
 		menu.GC.SetFloorsPowerState(!power);
-		button.SetStatus(menu.GC.GetFloor(0).PowerOn);
+	}
+
+	public bool GetStatus(DataTerminalButton button){
+		switch(button.type){
+		case StatType.Generator: return menu.GC.GetFloor(0).PowerOn;
+		}
+		return false;
 	}
 
 	void ToggleLightStatus(){

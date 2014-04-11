@@ -9,7 +9,8 @@ public class InfoMenuMap : MonoBehaviour {
 	PlayerMain player;
 	
 	public GameObject spriteParent;
-	
+	public UIDragObject UIDrag;
+
 	private List<UISprite[,]> mapSprites;
 	private int currentFloor = 0;
 	
@@ -119,6 +120,8 @@ public class InfoMenuMap : MonoBehaviour {
 		CurrentFloorLabel.text = currentFloor + "";
 
 		playerIndicator.gameObject.SetActive(currentFloor == GC.CurrentFloorIndex);
+
+		UIDrag.ConstraintToBounds();
 	}
 
 	public void FloorUp()

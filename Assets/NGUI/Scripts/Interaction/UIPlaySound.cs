@@ -40,7 +40,7 @@ public class UIPlaySound : MonoBehaviour
 		}
 	}
 
-	void OnPress (bool isPressed)
+	void OnPress (UICamera.InputEvent isPressed)
 	{
 		if (enabled && ((isPressed && trigger == Trigger.OnPress) || (!isPressed && trigger == Trigger.OnRelease)))
 		{

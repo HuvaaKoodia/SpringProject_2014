@@ -69,7 +69,7 @@ public class UIImageButton : MonoBehaviour
 		}
 	}
 
-	void OnPress (bool pressed)
+	void OnPress (UICamera.InputEvent pressed)
 	{
 		if (pressed)
 		{

@@ -56,6 +56,42 @@ public class UICamera : MonoBehaviour
 		BasedOnDelta,
 	}
 
+	public class InputEvent{
+		public bool isPressed;
+		public int PressIndex;
+
+		public InputEvent(bool pressed,int index){
+			isPressed=pressed;
+			PressIndex=index;
+		}
+
+		public static implicit operator bool(InputEvent x) 
+		{
+			return x.isPressed;
+		}
+
+		public static bool operator ==(InputEvent x, bool y) 
+		{
+			return x.isPressed==y;
+		}
+
+		public static bool operator !=(InputEvent x, bool y) 
+		{
+			return x.isPressed!=y;
+		}
+
+		public static bool operator true(InputEvent x) 
+		{
+			return x==true;
+		}
+
+		public static bool operator false(InputEvent x) 
+		{
+			return x==false;
+		}
+
+	}
+
 	/// <summary>
 	/// Ambiguous mouse, touch, or controller event.
 	/// </summary>
@@ -85,6 +121,8 @@ public class UICamera : MonoBehaviour
 	/// <summary>
 	/// Camera type controls how raycasts are handled by the UICamera.
 	/// </summary>
+
+	int CurrentClickIndex=0;
 
 	public enum EventType
 	{
@@ -1009,7 +1047,7 @@ public class UICamera : MonoBehaviour
 				break;
 			}
 		}
-        //DEV.HAX.DONT COUNT LEFT BUTTON
+        //DEV.HAX.DONT COUNT LEFT BUTTON. Fixes some tooltip problems
         if (!left_pressed){
     		if (isPressed)
     		{
@@ -1050,6 +1088,7 @@ public class UICamera : MonoBehaviour
 
 			if (pressed || unpressed) currentScheme = ControlScheme.Mouse;
 
+			CurrentClickIndex=i;
 			currentTouch = mMouse[i];
 			currentTouchID = -1 - i;
 			currentKey = KeyCode.Mouse0 + i;
@@ -1313,13 +1352,13 @@ public class UICamera : MonoBehaviour
 		{
 			//if (mTooltip != null) ShowTooltip(false);
 			currentTouch.pressStarted = true;
-			Notify(currentTouch.pressed, "OnPress", false);
+			Notify(currentTouch.pressed, "OnPress", new InputEvent(false,CurrentClickIndex));
 			currentTouch.pressed = currentTouch.current;
 			currentTouch.dragged = currentTouch.current;
 			currentTouch.clickNotification = ClickNotification.BasedOnDelta;
 			currentTouch.totalDelta = Vector2.zero;
 			currentTouch.dragStarted = false;
-			Notify(currentTouch.pressed, "OnPress", true);
+			Notify(currentTouch.pressed, "OnPress",  new InputEvent(true,CurrentClickIndex));
 
 			int layer = LayerMask.NameToLayer("NGUI");
 			if (currentTouch.pressed != null &&
@@ -1415,7 +1454,7 @@ public class UICamera : MonoBehaviour
 				}
 
 				// Send the notification of a touch ending
-				Notify(currentTouch.pressed, "OnPress", false);
+				Notify(currentTouch.pressed, "OnPress",  new InputEvent(false,CurrentClickIndex));
 
 				// Send a hover message to the object
 				if (isMouse) Notify(currentTouch.current, "OnHover", true);
