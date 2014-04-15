@@ -126,22 +126,22 @@ public class PlayerHud : MonoBehaviour {
 
 	void LeftHandWeaponPressed()
 	{
-		MasterHud.WeaponPressed(WeaponID.LeftHand);
+		WeaponPressed(WeaponID.LeftHand);
 	}
 
 	void LeftShoulderWeaponPressed()
 	{
-		MasterHud.WeaponPressed(WeaponID.LeftShoulder);
+		WeaponPressed(WeaponID.LeftShoulder);
 	}
 
 	void RightHandWeaponPressed()
 	{
-		MasterHud.WeaponPressed(WeaponID.RightHand);
+		WeaponPressed(WeaponID.RightHand);
 	}
 
 	void RightShoulderWeaponPressed()
 	{
-		MasterHud.WeaponPressed(WeaponID.RightShoulder);
+		WeaponPressed(WeaponID.RightShoulder);
 	}
 
     void TargetingModeButtonPressed()
@@ -183,5 +183,23 @@ public class PlayerHud : MonoBehaviour {
 
 	public void OpenMap(){
 		MasterHud.OpenMapInfopanel();
+	}
+
+	
+	public void WeaponPressed(WeaponID id){
+		
+		if (MasterHud.CurrentMenuState == MenuState.InventoryHUD) return;
+		
+		if (MasterHud.CurrentMenuState == MenuState.TargetingHUD){
+			if (player.currentWeaponID==id){
+				player.targetingSub.UnsightWeapon(player.GetWeapon(id));
+				return;
+			}
+			player.inputSub.ChangeWeaponInput(id);
+		}
+		else{
+			player.inputSub.TargetingModeInput();
+			player.inputSub.ChangeWeaponInput(id);
+		}
 	}
 }

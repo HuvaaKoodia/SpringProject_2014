@@ -18,7 +18,6 @@ public class GameDB : MonoBehaviour {
         GameStarted=true;
 		GameData=new GameObjData();
         GenerateNewMissions(0);
-
 		
 		GameData.PlayerData.Money=1000;
 

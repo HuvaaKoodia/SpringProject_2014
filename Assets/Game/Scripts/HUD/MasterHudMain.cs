@@ -47,23 +47,6 @@ public class MasterHudMain : MonoBehaviour {
 			DrawFPS();
 		}
 	}
-
-    public void WeaponPressed(WeaponID id){
-
-        if (currentMenuState == MenuState.InventoryHUD) return;
-
-        if (currentMenuState == MenuState.TargetingHUD){
-            if (player.currentWeaponID==id){
-                player.targetingSub.UnsightWeapon(player.GetWeapon(id));
-                return;
-            }
-            player.inputSub.ChangeWeaponInput(id);
-        }
-        else{
-            player.inputSub.TargetingModeInput();
-            player.inputSub.ChangeWeaponInput(id);
-        }
-    }
 	
     public void SetNothingSelected()
     {

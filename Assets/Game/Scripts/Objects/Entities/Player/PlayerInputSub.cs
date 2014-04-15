@@ -72,19 +72,19 @@ public class PlayerInputSub : MonoBehaviour {
 
 	 	if (Input.GetKeyDown(KeyCode.Alpha1))
 		{
-			ChangeWeaponInput(WeaponID.LeftShoulder);
+			player.HUD.WeaponPressed(WeaponID.LeftShoulder);
 		}
 		else if (Input.GetKeyDown(KeyCode.Alpha2))
 		{
-			ChangeWeaponInput(WeaponID.LeftHand);
+			player.HUD.WeaponPressed(WeaponID.LeftHand);
 		}
 		else if (Input.GetKeyDown(KeyCode.Alpha3))
 		{
-			ChangeWeaponInput(WeaponID.RightShoulder);
+			player.HUD.WeaponPressed(WeaponID.RightShoulder);
 		}
 		else if (Input.GetKeyDown(KeyCode.Alpha4))
 		{
-			ChangeWeaponInput(WeaponID.RightHand);
+			player.HUD.WeaponPressed(WeaponID.RightHand);
 		}
 		else if (Input.GetButtonDown("Engage Combat"))
 		{
