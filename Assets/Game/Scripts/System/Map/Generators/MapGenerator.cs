@@ -11,7 +11,7 @@ public class MapGenerator : MonoBehaviour
     public static Vector3 TileSize = new Vector3(3, 3, 3);
 	//hardcoded icons
 	public const string 
-		WallIcon = "w", DoorIcon = "d", CorridorIcon = "c", FloorIcon = ".",
+		WallIcon = "w", DoorIcon = "d", CorridorIcon = "c", FloorIcon = ".",AirlockIcon = "a",
 		SpaceIcon=",",ElevatorIcon="h",RoomIcon="r",RoomEndIcon="T",LootAreaIcon=":"
 	;
 
@@ -60,8 +60,11 @@ public class MapGenerator : MonoBehaviour
                         data.SetType(TileObjData.Type.Wall);
                         break;
                     case DoorIcon:
-                        data.SetType(TileObjData.Type.Door);
+						data.SetType(TileObjData.Type.Door);
                         break;
+				case AirlockIcon:
+						data.SetType(TileObjData.Type.Airlock);
+						break;
 					case ElevatorIcon:
 						data.SetType(TileObjData.Type.Elevator);
 						break;
@@ -73,6 +76,39 @@ public class MapGenerator : MonoBehaviour
                 }
             }
         }
+
+		//remove doors next to nothing
+		for (int x = 0; x < w; x++)
+		{
+			for (int y = 0; y < h; y++)
+			{
+				var data = floor.TileObjectMap [x, y];
+				if (data.TileType==TileObjData.Type.Door)
+				{
+					bool Delete=true;
+					//is airlock door
+					for(int i=0;i<2;i++){
+						int x1=0,y1=0,x2=0,y2=0;
+						
+						if (i==0)       {x1=1;  y1=0;x2=-1;  y2=0;}
+						else if (i==1)  {x1=0;  y1=1;x2=0;  y2=-1;}
+						
+						var t1=floor.GetTileObj(x+x1,y+y1);
+						var t2=floor.GetTileObj(x+x2,y+y2);
+						bool t1ok=(t1!=null&&(t1.TileType==TileObjData.Type.Corridor||t1.TileType==TileObjData.Type.Floor));
+						bool t2ok=(t2!=null&&(t2.TileType==TileObjData.Type.Corridor||t2.TileType==TileObjData.Type.Floor));
+						
+						if (t1ok&&t2ok){
+							Delete=false;
+							break;
+						}
+					}
+					if (Delete){
+						data.SetType(TileObjData.Type.Wall);
+					}
+				}
+			}
+		}
     }
 
     /// <summary>
@@ -247,9 +283,14 @@ public class MapGenerator : MonoBehaviour
         }
     
         //test functions
-        System.Func<TileObjData.Type,bool> FloorOrCorridor =
+        System.Func<TileObjData.Type,bool> NotWall =
             obj => {
-			return obj == TileObjData.Type.Corridor || obj == TileObjData.Type.Floor || obj == TileObjData.Type.Door|| obj == TileObjData.Type.Elevator;;};
+			return obj != TileObjData.Type.Empty && obj != TileObjData.Type.Wall;
+		};
+		System.Func<TileObjData.Type,bool> FloorOrCorridor =
+		obj => {
+			return obj == TileObjData.Type.Floor && obj == TileObjData.Type.Corridor;
+		};
         /*
         System.Func<TileObjData.Type,bool> Floor =
         obj => {
@@ -273,218 +314,218 @@ public class MapGenerator : MonoBehaviour
             case TileObjData.Type.Floor:
             case TileObjData.Type.Corridor:
                     //check tile type
-                if (CheckTypeEqual(FloorOrCorridor, tile_types, 0, 1, 2, 3, 4, 5, 6, 7))
+			if (CheckTypeEqual(NotWall, tile_types, 0, 1, 2, 3, 4, 5, 6, 7))
                 {
                     //Floor
                     tileobj = MapPrefabs.Corridor_Floor;
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 0, 1, 2, 3, 4, 5, 6))
+			} else if (CheckTypeEqual(NotWall, tile_types, 0, 1, 2, 3, 4, 5, 6))
                 {
                     //Floor 1 edge 1
                     tileobj = MapPrefabs.Corridor_Floor1Edge;
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 0, 2, 3, 4, 5, 6, 7))
+			} else if (CheckTypeEqual(NotWall, tile_types, 0, 2, 3, 4, 5, 6, 7))
                 {
                     //Floor 1 edge 2
                     tileobj = MapPrefabs.Corridor_Floor1Edge;
                     rotation = Quaternion.AngleAxis(-90, Vector3.up);
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 0, 1, 2, 4, 5, 6, 7))
+			} else if (CheckTypeEqual(NotWall, tile_types, 0, 1, 2, 4, 5, 6, 7))
                 {
                     //Floor 1 edge 3
                     tileobj = MapPrefabs.Corridor_Floor1Edge;
                     rotation = Quaternion.AngleAxis(180, Vector3.up);
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 0, 1, 2, 3, 4, 6, 7))
+			} else if (CheckTypeEqual(NotWall, tile_types, 0, 1, 2, 3, 4, 6, 7))
                 {
                     //Floor 1 edge 4
                     tileobj = MapPrefabs.Corridor_Floor1Edge;
                     rotation = Quaternion.AngleAxis(90, Vector3.up);
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 0, 1, 2, 3, 4, 6))
+			} else if (CheckTypeEqual(NotWall, tile_types, 0, 1, 2, 3, 4, 6))
                 {
                     //Floor 2 edges 1
                     tileobj = MapPrefabs.Corridor_Floor2Edges;
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 2, 3, 4, 5, 6, 0))
+			} else if (CheckTypeEqual(NotWall, tile_types, 2, 3, 4, 5, 6, 0))
                 {
                     //Floor 2 edges 2
                     tileobj = MapPrefabs.Corridor_Floor2Edges;
                     rotation = Quaternion.AngleAxis(-90, Vector3.up);
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 4, 5, 6, 7, 0, 2))
+			} else if (CheckTypeEqual(NotWall, tile_types, 4, 5, 6, 7, 0, 2))
                 {
                     //Floor 2 edges 3
                     tileobj = MapPrefabs.Corridor_Floor2Edges;
                     rotation = Quaternion.AngleAxis(180, Vector3.up);
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 6, 7, 0, 1, 2, 4))
+			} else if (CheckTypeEqual(NotWall, tile_types, 6, 7, 0, 1, 2, 4))
                 {
                     //Floor 2 edges 4
                     tileobj = MapPrefabs.Corridor_Floor2Edges;
                     rotation = Quaternion.AngleAxis(90, Vector3.up);
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 0, 1, 2, 4, 5, 6))
+			} else if (CheckTypeEqual(NotWall, tile_types, 0, 1, 2, 4, 5, 6))
                 {
                     //Floor opposite edges 1
                     tileobj = MapPrefabs.Corridor_FloorOppositeEdges;
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 2, 3, 4, 6, 7, 0))
+			} else if (CheckTypeEqual(NotWall, tile_types, 2, 3, 4, 6, 7, 0))
                 {
                     //Floor opposite edges 2
                     tileobj = MapPrefabs.Corridor_FloorOppositeEdges;
                     rotation = Quaternion.AngleAxis(-90, Vector3.up);
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 0, 1, 2, 4, 6))
+			} else if (CheckTypeEqual(NotWall, tile_types, 0, 1, 2, 4, 6))
                 {
                     //Floor 3 edges 1
                     tileobj = MapPrefabs.Corridor_Floor3Edges;
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 2, 3, 4, 6, 0))
+			} else if (CheckTypeEqual(NotWall, tile_types, 2, 3, 4, 6, 0))
                 {
                     //Floor 3 edges 2
                     tileobj = MapPrefabs.Corridor_Floor3Edges;
                     rotation = Quaternion.AngleAxis(-90, Vector3.up);
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 4, 5, 6, 0, 2))
+			} else if (CheckTypeEqual(NotWall, tile_types, 4, 5, 6, 0, 2))
                 {
                     //Floor 3 edges 3
                     tileobj = MapPrefabs.Corridor_Floor3Edges;
                     rotation = Quaternion.AngleAxis(180, Vector3.up);
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 6, 7, 0, 2, 4))
+			} else if (CheckTypeEqual(NotWall, tile_types, 6, 7, 0, 2, 4))
                 {
                     //Floor 3 edges 4
                     tileobj = MapPrefabs.Corridor_Floor3Edges;
                     rotation = Quaternion.AngleAxis(90, Vector3.up);
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 6, 7, 0, 1, 2))
+			} else if (CheckTypeEqual(NotWall, tile_types, 6, 7, 0, 1, 2))
                 {
                     //Wall 1
                     tileobj = MapPrefabs.Corridor_OneWall;
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 0, 1, 2, 3, 4))
+			} else if (CheckTypeEqual(NotWall, tile_types, 0, 1, 2, 3, 4))
                 {
                     //Wall 2
                     tileobj = MapPrefabs.Corridor_OneWall;
                     rotation = Quaternion.AngleAxis(-90, Vector3.up);
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 2, 3, 4, 5, 6))
+			} else if (CheckTypeEqual(NotWall, tile_types, 2, 3, 4, 5, 6))
                 {
                     //Wall 3
                     tileobj = MapPrefabs.Corridor_OneWall;
                     rotation = Quaternion.AngleAxis(180, Vector3.up);
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 4, 5, 6, 7, 0))
+			} else if (CheckTypeEqual(NotWall, tile_types, 4, 5, 6, 7, 0))
                 {
                     //Wall 4
                     tileobj = MapPrefabs.Corridor_OneWall;
                     rotation = Quaternion.AngleAxis(90, Vector3.up);
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 0, 2, 4, 6))
+			} else if (CheckTypeEqual(NotWall, tile_types, 0, 2, 4, 6))
                 {
                     //Crossroad
                     tileobj = MapPrefabs.Corridor_Crossroad;
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 0, 2, 3, 4))
+			} else if (CheckTypeEqual(NotWall, tile_types, 0, 2, 3, 4))
                 {
                     //wall corner 1
                     tileobj = MapPrefabs.Corridor_WallCorner;
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 2, 4, 5, 6))
+			} else if (CheckTypeEqual(NotWall, tile_types, 2, 4, 5, 6))
                 {
                     //wall corner 2
                     tileobj = MapPrefabs.Corridor_WallCorner;
                     rotation = Quaternion.AngleAxis(-90, Vector3.up);
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 4, 6, 7, 0))
+			} else if (CheckTypeEqual(NotWall, tile_types, 4, 6, 7, 0))
                 {
                     //wall corner 3
                     tileobj = MapPrefabs.Corridor_WallCorner;
                     rotation = Quaternion.AngleAxis(180, Vector3.up);
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 6, 0, 1, 2))
+			} else if (CheckTypeEqual(NotWall, tile_types, 6, 0, 1, 2))
                 {
                     //wall corner 4
                     tileobj = MapPrefabs.Corridor_WallCorner;
                     rotation = Quaternion.AngleAxis(90, Vector3.up);
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 0, 1, 2, 4))
+			} else if (CheckTypeEqual(NotWall, tile_types, 0, 1, 2, 4))
                 {
                     //wall corner Mirrored 1
                     tileobj = MapPrefabs.Corridor_WallCornerMirrored;
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 2, 3, 4, 6))
+			} else if (CheckTypeEqual(NotWall, tile_types, 2, 3, 4, 6))
                 {
                     //wall corner Mirrored 2
                     tileobj = MapPrefabs.Corridor_WallCornerMirrored;
                     rotation = Quaternion.AngleAxis(-90, Vector3.up);
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 4, 5, 6, 0))
+                } else if (CheckTypeEqual(NotWall, tile_types, 4, 5, 6, 0))
                 {
                     //wall corner Mirrored 3
                     tileobj = MapPrefabs.Corridor_WallCornerMirrored;
                     rotation = Quaternion.AngleAxis(180, Vector3.up);
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 6, 7, 0, 2))
+                } else if (CheckTypeEqual(NotWall, tile_types, 6, 7, 0, 2))
                 {
                     //wall corner Mirrored 4
                     tileobj = MapPrefabs.Corridor_WallCornerMirrored;
                     rotation = Quaternion.AngleAxis(90, Vector3.up);
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 0, 1, 2))
+                } else if (CheckTypeEqual(NotWall, tile_types, 0, 1, 2))
                 {
                     //room corner 1
                     tileobj = MapPrefabs.Corridor_RoomCorner;
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 2, 3, 4))
+                } else if (CheckTypeEqual(NotWall, tile_types, 2, 3, 4))
                 {
                     //room corner 2
                     tileobj = MapPrefabs.Corridor_RoomCorner;
                     rotation = Quaternion.AngleAxis(-90, Vector3.up);
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 4, 5, 6))
+                } else if (CheckTypeEqual(NotWall, tile_types, 4, 5, 6))
                 {
                     //room corner 3
                     tileobj = MapPrefabs.Corridor_RoomCorner;
                     rotation = Quaternion.AngleAxis(180, Vector3.up);
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 6, 7, 0))
+                } else if (CheckTypeEqual(NotWall, tile_types, 6, 7, 0))
                 {
                     //room corner 4
                     tileobj = MapPrefabs.Corridor_RoomCorner;
                     rotation = Quaternion.AngleAxis(90, Vector3.up);
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 0, 2, 4))
+                } else if (CheckTypeEqual(NotWall, tile_types, 0, 2, 4))
                 {
                     //Tcrossing 1
                     tileobj = MapPrefabs.Corridor_TCrossing;
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 2, 4, 6))
+                } else if (CheckTypeEqual(NotWall, tile_types, 2, 4, 6))
                 {
                     //Tcrossing 2
                     tileobj = MapPrefabs.Corridor_TCrossing;
                     rotation = Quaternion.AngleAxis(-90, Vector3.up);
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 4, 6, 0))
+                } else if (CheckTypeEqual(NotWall, tile_types, 4, 6, 0))
                 {
                     //Tcrossing 3
                     tileobj = MapPrefabs.Corridor_TCrossing;
                     rotation = Quaternion.AngleAxis(180, Vector3.up);
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 6, 0, 2))
+                } else if (CheckTypeEqual(NotWall, tile_types, 6, 0, 2))
                 {
                     //Tcrossing 4
                     tileobj = MapPrefabs.Corridor_TCrossing;
                     rotation = Quaternion.AngleAxis(90, Vector3.up);
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 0, 4))
+                } else if (CheckTypeEqual(NotWall, tile_types, 0, 4))
                 {
                     //horizontal corridor
                     tileobj = MapPrefabs.Corridor_TwoWall;
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 2, 6))
+                } else if (CheckTypeEqual(NotWall, tile_types, 2, 6))
                 {
                     //vertical corridor
                     tileobj = MapPrefabs.Corridor_TwoWall;
                     rotation = Quaternion.AngleAxis(90, Vector3.up);
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 0, 2))
+                } else if (CheckTypeEqual(NotWall, tile_types, 0, 2))
                 {
                     //corner 1
                     tileobj = MapPrefabs.Corridor_Corner;
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 2, 4))
+                } else if (CheckTypeEqual(NotWall, tile_types, 2, 4))
                 {
                     //corner 2
                     tileobj = MapPrefabs.Corridor_Corner;
                     rotation = Quaternion.AngleAxis(-90, Vector3.up);
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 4, 6))
+                } else if (CheckTypeEqual(NotWall, tile_types, 4, 6))
                 {
                     //corner 3
                     tileobj = MapPrefabs.Corridor_Corner;
                     rotation = Quaternion.AngleAxis(180, Vector3.up);
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 6, 0))
+                } else if (CheckTypeEqual(NotWall, tile_types, 6, 0))
                 {
                     //corner 4
                     tileobj = MapPrefabs.Corridor_Corner;
                     rotation = Quaternion.AngleAxis(90, Vector3.up);
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 0))
+                } else if (CheckTypeEqual(NotWall, tile_types, 0))
                 {
                     //DeadEnd 1
                     tileobj = MapPrefabs.Corridor_Deadend;
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 2))
+                } else if (CheckTypeEqual(NotWall, tile_types, 2))
                 {
                     //DeadEnd 2
                     tileobj = MapPrefabs.Corridor_Deadend;
                     rotation = Quaternion.AngleAxis(-90, Vector3.up);
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 4))
+			} else if (CheckTypeEqual(NotWall, tile_types, 4))
                 {
                     //DeadEnd 3
                     tileobj = MapPrefabs.Corridor_Deadend;
                     rotation = Quaternion.AngleAxis(180, Vector3.up);
-                } else if (CheckTypeEqual(FloorOrCorridor, tile_types, 6))
+			} else if (CheckTypeEqual(NotWall, tile_types, 6))
                 {
                     //DeadEnd 4
                     tileobj = MapPrefabs.Corridor_Deadend;
@@ -495,7 +536,7 @@ public class MapGenerator : MonoBehaviour
 
 			case TileObjData.Type.Elevator:
 				tileobj = MapPrefabs.Corridor_ElevatorDoor;
-				
+
 				if (CheckTypeEqual(FloorOrCorridor, tile_types, 2, 6))
 				{
 					rotation = Quaternion.AngleAxis(90, Vector3.up);
@@ -504,12 +545,12 @@ public class MapGenerator : MonoBehaviour
 				{
 					rotation = Quaternion.AngleAxis(90, Vector3.up);
 				}
-				
 				add_as_tileobject_as_well=true;
 				break;
+			case TileObjData.Type.Airlock:
             case TileObjData.Type.Door:
                 tileobj = MapPrefabs.Corridor_Door;
-                
+
                 if (CheckTypeEqual(FloorOrCorridor, tile_types, 2, 6))
                 {
                     rotation = Quaternion.AngleAxis(90, Vector3.up);
@@ -534,27 +575,18 @@ public class MapGenerator : MonoBehaviour
                 var door=tile.TileObject.GetComponent<DoorMain>();
 
                 door.GC=GC;
-
-                //is airlock door
-                for(int i=0;i<2;i++){
-                    int x1=0,y1=0,x2=0,y2=0;
-
-                    if (i==0)       {x1=1;  y1=0;x2=-1;  y2=0;}
-                    else if (i==1)  {x1=0;  y1=1;x2=0;  y2=-1;}
-                    
-					var t1=floor.GetTileObj(x+x1,y+y1);
-					var t2=floor.GetTileObj(x+x2,y+y2);
-                    bool t1ok=(t1!=null&&(t1.TileType==TileObjData.Type.Corridor||t1.TileType==TileObjData.Type.Floor));
-                    bool t2ok=(t2!=null&&(t2.TileType==TileObjData.Type.Corridor||t2.TileType==TileObjData.Type.Floor));
-
-                    door.isAirlockDoor=!(t1ok&&t2ok);
-                    if (!door.isAirlockDoor) break;
-                }
             }
+            
 			if (tile.Data.TileType==TileObjData.Type.Elevator){
 				var door=tile.TileObject.GetComponent<ElevatorMain>();
 				
 				door.GC=GC;
+			}
+
+			if (tile.Data.TileType==TileObjData.Type.Airlock){
+				var door=tile.TileObject.GetComponent<DoorMain>();
+				door.GC=GC;
+				door.isAirlockDoor=true;
 			}
         }
     }

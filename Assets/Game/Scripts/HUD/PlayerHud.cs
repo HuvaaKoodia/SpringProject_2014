@@ -42,6 +42,7 @@ public class PlayerHud : MonoBehaviour {
 		radar.Init();
 		map.Init();
 
+		player.ActivateEquippedItems();
 		SetHudToPlayerStats();
     }
 
@@ -155,7 +156,6 @@ public class PlayerHud : MonoBehaviour {
 	}
 
 	public void SetHudToPlayerStats(){
-
 #if !UNITY_EDITOR
 		radar.SetDisabled(!player.HasRadar);
 		map.SetDisabled(!player.HasMap);
