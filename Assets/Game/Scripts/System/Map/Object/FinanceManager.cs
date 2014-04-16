@@ -19,11 +19,15 @@ public class Debt
 	public float interest;											//variable to keep track of interest value per debt
 	public float debt_payment;										//variable to keep track of debt payment per debt
 
+	public bool active;												//variable to keep track of debt's active state
+
 	public Debt()													//constructor that initializes variables
 	{
 		original_debt_sum = 0.0f;
-		left_tb_payed = 1000.0f;
+		left_tb_payed = 0.0f;
 		monthly_cut = 0.0f;
+
+		active = false;
 	}
 	
 	//function that calculates interest per debt
@@ -54,7 +58,6 @@ public class FinanceManager
 	public List<Debt> listofdebts;									//store all the debts taken
 	
 	public int days_till_update;									//variable to keep track of the number of days until the next update (default value = 30)
-	//<private int n;													//variable that contributes to the calculation of interest percentage (default value = 5)
 	private int debt_max;											//variable for the maximum number of debts the Player can take
 	
 	public float player_money;										//variable to keep track of the amount of money the player has at the given moment
@@ -62,10 +65,9 @@ public class FinanceManager
 	public float existing_cash;										//variable to keep track the resultant amount after minusing payment total from player money
 		
 	public bool day_pass;											//variable set to true only if a day has passed
-	public bool add_debt;											//variable set to true upon taking on a new debt
 
-	public float default_percent = 0.05f;
-	public float increase_percent = 0.05f;
+	public float default_percent;									//variable contributing to calculating interest percentage
+	public float increase_percent;									//variable contributing to calculating interest percentage
 	public int month = 1;
 	
 	public FinanceManager ()										//constructor that initializes variables
@@ -74,20 +76,25 @@ public class FinanceManager
 		listofdebts = new List<Debt>();
 		
 		days_till_update = 30;
-		//n = 5;
 		debt_max = 3;
 		
 		player_money = Player.PlayerData.Money;
 		payment_total = 0.0f;
 				
 		day_pass = false;
-		add_debt = false;
+		default_percent = 0.05f;
+		increase_percent = 0.05f;
+
+		//adding debt_max amount of Debts to the list
+		for(int i = 0; i < debt_max; i++)
+		{
+			listofdebts.Add(new Debt());
+		}
 	}
 	
 	//function taht updates the Player's amount of money after paying off the debts
 	public void UpdatePlayerMoney()
 	{
-		 //Player.PlayerData.Money = (int)existing_cash;
 		player_money = Player.PlayerData.Money;
 	}
 	
@@ -99,9 +106,7 @@ public class FinanceManager
 	
 	//function to calculate the new interest percentage each time Player takes on a new debt
 	public void CalcInterestPercent()
-	{
-		int debtnumber = listofdebts.Count;
-				
+	{				
 		//as long as there is a debt, calculate interest percentage for the particular debt
 		for(int i = 0; i < listofdebts.Count; i++)
 		{
@@ -115,19 +120,14 @@ public class FinanceManager
 	//function to calculate the sum of all debt payments upon taking up new debt
 	public void CalcPaymentTotal(bool traverse)
 	{
-		if(!traverse)
+		//as long as ther is debt
+		if(listofdebts.Count > 0)
 		{
-			//as long as ther is debt
-			if(listofdebts.Count > 0)
+			if(!traverse)
 			{
-				//add debt payment per debt to payment total
 				payment_total += listofdebts[listofdebts.Count - 1].debt_payment;
 			}
-		}
-		else
-		{
-			//as long as there is debt
-			if(listofdebts.Count > 0)
+			else
 			{
 				//traverse through the debt payments of each debt and add it to payment total
 				for(int i = 0; i < listofdebts.Count; i++)
@@ -175,13 +175,11 @@ public class FinanceManager
 	}
 	
 	//function for Player to take on a new debt
-	public void AddDebt()
+	//assign new debt into specific index
+	//set debt to active
+	public void AddDebt(int index)
 	{
-		//as long as number of debts taken has not reached the maximum number, add new debt
-		if(listofdebts.Count < debt_max)
-		{
-			listofdebts.Add(new Debt());
-			add_debt = true;
-		}
+		listofdebts[index] = new Debt();
+		listofdebts[index].active = true;
 	}
 }

@@ -14,7 +14,7 @@ public class TestFinance : MonoBehaviour {
 		PlayerFinance = new FinanceManager();
 		
 		//add the 1st debt
-		PlayerFinance.AddDebt();
+		PlayerFinance.AddDebt(0);
 		Debug.Log("List of debts: " + PlayerFinance.listofdebts.Count);
 		PlayerFinance.listofdebts[0].left_tb_payed = 14000.0f;
 		
@@ -23,7 +23,7 @@ public class TestFinance : MonoBehaviour {
 		Debug.Log("Debt interest percent: " + PlayerFinance.listofdebts[PlayerFinance.listofdebts.Count - 1].interest_percent);
 		
 		//add the 2nd debt
-		PlayerFinance.AddDebt();
+		PlayerFinance.AddDebt(1);
 		Debug.Log("List of debts: " + PlayerFinance.listofdebts.Count);
 		PlayerFinance.listofdebts[1].left_tb_payed = 6000.0f;
 		
