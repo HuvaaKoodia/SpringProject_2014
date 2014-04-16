@@ -146,7 +146,7 @@ public class AlienAI : AIBase {
 			HasUsedTurn = true;
 			foundMove = true;
 			AP -= MovementCost;
-			/*
+
 			if (movement.targetRotationAngle < parent.transform.rotation.eulerAngles.y)
 			{
 				PlayAnimation(RotateLeftAnimation, 1);
@@ -154,7 +154,7 @@ public class AlienAI : AIBase {
 			else
 			{
 				PlayAnimation(RotateRightAnimation, 1);
-			}*/
+			}
 		}
 		else
 		{
