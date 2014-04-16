@@ -209,7 +209,7 @@ public static class PathFinder
 					  new Ray(adjustedWatcherPos+leftOffsetCheck, (adjustedtoToSeePos+leftOffsetCheck)-(adjustedWatcherPos+leftOffsetCheck))
 		};
 
-		//Color[] rayColors = { Color.magenta, Color.blue, Color.cyan };
+		Color[] rayColors = { Color.magenta, Color.blue, Color.cyan };
 		RaycastHit hitInfo;
 
 		int checkCount = 1;
@@ -218,6 +218,7 @@ public static class PathFinder
 
 		for (int i = 0; i < checkCount; i++)
 		{
+
 			//Debug.DrawLine(rays[i].origin, rays[i].origin + rays[i].direction*checkRadius, rayColors[i], 5.0f);
 			if (Physics.Raycast(rays[i], out hitInfo, checkRadius, mask))
 			{ 

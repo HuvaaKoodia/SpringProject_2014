@@ -33,7 +33,16 @@ public class AlienAI : AIBase {
 	public Animation spiderAnimation;
 	
 	public string WalkAnimation;
-	public string AttackAnimation;
+
+	public string RotateLeftAnimation;
+	public string RotateRightAnimation;
+
+	public string MeleeAttackAnimation;
+	public string RangedAttackAnimation;
+
+	public string Damage01Animation;
+	public string Damage02Animation;
+	public int HeavyDamageAnimationTreshold = 30;
 
 	bool readyToAttack = false;
 
@@ -137,8 +146,15 @@ public class AlienAI : AIBase {
 			HasUsedTurn = true;
 			foundMove = true;
 			AP -= MovementCost;
-
-			PlayAnimation(WalkAnimation, 1);
+			/*
+			if (movement.targetRotationAngle < parent.transform.rotation.eulerAngles.y)
+			{
+				PlayAnimation(RotateLeftAnimation, 1);
+			}
+			else
+			{
+				PlayAnimation(RotateRightAnimation, 1);
+			}*/
 		}
 		else
 		{
@@ -510,10 +526,10 @@ public class AlienAI : AIBase {
 		{
 			float distance = playerInRelationToMe.magnitude / MapGenerator.TileSize.x;
 
-			//check both next tile and ranged if ranged == 0 (which means no ranged <'',) )
+			//check both next tile and ranged range (which means no ranged <'',) )
 			if ((distance < 1.5f || distance <= parent.rangedRange) &&
 			    PathFinder.CanSeeFromTileToTile(player, parent, MyPosition, 
-                	Mathf.Max(1.5f, parent.rangedRange), PlayerSeeMask, true))
+                	Mathf.Max(1.5f, parent.rangedRange*3), PlayerSeeMask, true))
 				return true;
 
 		}
@@ -523,24 +539,27 @@ public class AlienAI : AIBase {
 
 	void Attack()
 	{
-		PlayAnimation(AttackAnimation, 1);
-
 		if (movement.GetTileInFront().entityOnTile == player)
-			StartCoroutine("AttackMelee",(spiderAnimation[AttackAnimation].length * 0.85f));
+		{
+			StartCoroutine("AttackMelee",(spiderAnimation[MeleeAttackAnimation].length * 0.85f));
+		}
 		else
-			StartCoroutine("AttackRanged", (spiderAnimation[AttackAnimation].length * 0.85f));
-
+		{
+			StartCoroutine("AttackRanged", (spiderAnimation[RangedAttackAnimation].length * 0.85f));
+		}
 		AP -= AttackCost;
 	}
 
 	IEnumerator AttackRanged(float inflictDelay)
 	{
+		PlayAnimation(MeleeAttackAnimation, 1);
 		yield return new WaitForSeconds(inflictDelay);
 		player.TakeDamage(Damage / 2, MyPosition.X, MyPosition.Y);
 	}
 
 	IEnumerator AttackMelee(float inflictDelay)
 	{
+		PlayAnimation(RangedAttackAnimation, 1);
 		yield return new WaitForSeconds(inflictDelay);
 		player.TakeDamage(Damage, MyPosition.X, MyPosition.Y);
 	}
@@ -565,6 +584,18 @@ public class AlienAI : AIBase {
 					otherAgent.blackboard.InformedOfPlayer = true;
 				}
 			}
+		}
+	}
+
+	public void PlayDamageAnimation(int damageAmount)
+	{
+		if (damageAmount < HeavyDamageAnimationTreshold)
+		{
+			PlayAnimation(Damage01Animation, 1);
+		}
+		else
+		{
+			PlayAnimation(Damage02Animation, 1);
 		}
 	}
 

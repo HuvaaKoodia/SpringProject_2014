@@ -40,7 +40,7 @@ public class EnemyMain : EntityMain {
 	
 	}
 
-	public void StartEnemyTurn()
+	public virtual void StartEnemyTurn()
 	{
 		ai.Reset();
         waitingForAttackPhase = false;

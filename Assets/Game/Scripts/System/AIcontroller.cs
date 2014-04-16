@@ -74,11 +74,13 @@ public class AIcontroller
 		{
 			bool enemyAnimating = false;
 
-			foreach(EnemyMain enemy in enemies)
+			for (int i = enemies.Count-1; i >= 0; i--)
 			{
+				EnemyMain enemy = enemies[i];
+
 				enemy.PlayTurn();
 
-				if (enemy.ai.Animating || enemy.ai.Rotating)
+				if (enemy != null && (enemy.ai.Animating || enemy.ai.Rotating))
 					enemyAnimating = true;
 			}
 
@@ -108,9 +110,9 @@ public class AIcontroller
 			enemiesFinishedTurn = 0;
 			finishedEnemies.Clear();
 			Debug.Log("AI start");
-			foreach (EnemyMain enemy in enemies)
+			for (int i = enemies.Count-1; i >= 0; i--)
 			{
-				enemy.StartEnemyTurn();
+				enemies[i].StartEnemyTurn();
 			}
 			GC.ChangeTurn(TurnState.AITurn);
 		}
