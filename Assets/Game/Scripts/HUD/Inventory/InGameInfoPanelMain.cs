@@ -31,12 +31,18 @@ public class InGameInfoPanelMain : MonoBehaviour {
 	#endif
 	}
     
-    public void SetTabToInventory(){
+    public void OpenTab_Inventory(){
         Tabs.OpenTab1();
     }
 
-	public void SetTabToMap(){
+	public void OpenTab_Map(){
+		MenuMap.BecomeVisible();
 		Tabs.OpenTab4();
+	}
+
+	public void OpenTab_Status(){
+		Mechanic.OpenPanel();
+		Tabs.OpenTab2();
 	}
 
 	public void ActivateInventory()
@@ -70,7 +76,7 @@ public class InGameInfoPanelMain : MonoBehaviour {
 		LootParent.SetActive(true);
 		LootStorage.ChangeItemStorage(loot.Items);
 
-		SetTabToInventory();
+		OpenTab_Inventory();
 		HUD.ActivateInventoryHUD();
 	}
 

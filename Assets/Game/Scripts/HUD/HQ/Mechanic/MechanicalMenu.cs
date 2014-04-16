@@ -30,11 +30,23 @@ public class MechanicalMenu : MonoBehaviour {
         UpdateStats();
     }
 
-    void Update(){
-        UpdateStats();
-    }
+	void Update(){
+		UpdateMoney();
+	}
+
+	void UpdateMoney(){
+		if (MoneyLabel!=null) MoneyLabel.text="Money: "+player.Money+" "+XmlDatabase.MoneyUnit;
+	}
 
     void UpdateStats(){
-		if (MoneyLabel!=null) MoneyLabel.text="Money: "+player.Money+" "+XmlDatabase.MoneyUnit;
+		LH.UpdateStats();
+		RH.UpdateStats();
+		LS.UpdateStats();
+		RS.UpdateStats();
+		UT.UpdateStats();
     }
+
+	public void OpenPanel(){
+		UpdateStats();
+	}
 }

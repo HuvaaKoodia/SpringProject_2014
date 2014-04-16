@@ -6,8 +6,6 @@ public class MenuTabController : MonoBehaviour {
 
     public List<GameObject> TabMenus;
 
-	public InfoMenuMap MenuMap;
-
     public void OpenTab1(){
         ActivateMenu(0);
     }
@@ -17,11 +15,11 @@ public class MenuTabController : MonoBehaviour {
     }
 
     public void OpenTab3(){
+
         ActivateMenu(2);
     }
 
     public void OpenTab4(){
-		MenuMap.BecomeVisible();
         ActivateMenu(3);
     }
 

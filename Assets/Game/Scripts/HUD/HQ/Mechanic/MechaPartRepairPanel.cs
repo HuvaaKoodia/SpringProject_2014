@@ -26,7 +26,7 @@ public class MechaPartRepairPanel : MonoBehaviour {
         UpdateStats();
     }
 
-    void UpdateStats(){
+    public void UpdateStats(){
         int con=(int)((float)Part.HP/MechaPartObjData.MaxHP*100f);
         cost=(int)((MechaPartObjData.MaxHP-Part.HP)*cost_multi);
 

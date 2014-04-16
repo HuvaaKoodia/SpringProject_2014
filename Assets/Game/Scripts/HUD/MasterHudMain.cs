@@ -98,14 +98,14 @@ public class MasterHudMain : MonoBehaviour {
 		}
 		else
 		{
-			InfoHud.SetTabToInventory();
+			InfoHud.OpenTab_Inventory();
 			ActivateInventoryHUD();
 		}
 	}
 
 	public void OpenMapInfopanel()
 	{
-		InfoHud.SetTabToMap();
+		InfoHud.OpenTab_Map();
 		ActivateInventoryHUD();
 	}
 

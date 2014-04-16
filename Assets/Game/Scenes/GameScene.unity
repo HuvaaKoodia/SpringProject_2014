@@ -319,7 +319,7 @@ Transform:
   m_PrefabInternal: {fileID: 1403205788}
   m_GameObject: {fileID: 9571369}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -70, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1342438386}
@@ -1050,8 +1050,8 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 256
-  mHeight: 256
+  mWidth: 28
+  mHeight: 28
   mDepth: 0
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -8931,7 +8931,7 @@ Transform:
   m_PrefabInternal: {fileID: 1403205788}
   m_GameObject: {fileID: 477229498}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -918.563965, y: 537.599915, z: 415.035583}
+  m_LocalPosition: {x: -979.309204, y: 537.599915, z: 415.035583}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 68350835}
@@ -14046,8 +14046,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 2107570262}
-  functionName: OpenTab4
+  target: {fileID: 2068029781}
+  functionName: OpenTab_Map
   trigger: 0
   includeChildren: 0
   OnPressInputIndex: 0
@@ -15587,7 +15587,7 @@ Transform:
   m_PrefabInternal: {fileID: 1403205788}
   m_GameObject: {fileID: 797032102}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -51, y: -5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1826044511}
@@ -20133,8 +20133,8 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 256
-  mHeight: 256
+  mWidth: 28
+  mHeight: 28
   mDepth: 0
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -23614,7 +23614,7 @@ Transform:
   m_PrefabInternal: {fileID: 1403205788}
   m_GameObject: {fileID: 1187931140}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -21, y: 55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 68169006}
@@ -26850,8 +26850,8 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 256
-  mHeight: 256
+  mWidth: 154
+  mHeight: 80
   mDepth: 0
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -27856,8 +27856,8 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 256
-  mHeight: 256
+  mWidth: 28
+  mHeight: 28
   mDepth: 0
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -27913,7 +27913,7 @@ Prefab:
       objectReference: {fileID: 795672205}
     - target: {fileID: 400000, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -918.563965
+      value: -979.309204
       objectReference: {fileID: 0}
     - target: {fileID: 100176, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
       propertyPath: m_IsActive
@@ -27923,6 +27923,38 @@ Prefab:
       propertyPath: ShowFPS
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 400538, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400538, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400754, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
+      propertyPath: functionName
+      value: OpenTab_Inventory
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400798, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
+      propertyPath: functionName
+      value: OpenTab_Status
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400190, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
+      propertyPath: functionName
+      value: OpenTab_Map
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400754, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 2068029781}
+    - target: {fileID: 11400798, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 2068029781}
+    - target: {fileID: 11400190, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 2068029781}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
   m_RootGameObject: {fileID: 1208657776}
@@ -28493,7 +28525,7 @@ Transform:
   m_PrefabInternal: {fileID: 1403205788}
   m_GameObject: {fileID: 1416649453}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.07305384, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1417613585}
@@ -32378,8 +32410,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 2107570262}
-  functionName: OpenTab1
+  target: {fileID: 2068029781}
+  functionName: OpenTab_Inventory
   trigger: 0
   includeChildren: 0
   OnPressInputIndex: 0
@@ -34653,8 +34685,8 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 256
-  mHeight: 256
+  mWidth: 100
+  mHeight: 106
   mDepth: 0
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -35518,7 +35550,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1813056643
 Transform:
   m_ObjectHideFlags: 0
@@ -35896,8 +35928,8 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 256
-  mHeight: 256
+  mWidth: 28
+  mHeight: 28
   mDepth: 0
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -35981,8 +36013,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 2107570262}
-  functionName: OpenTab2
+  target: {fileID: 2068029781}
+  functionName: OpenTab_Status
   trigger: 0
   includeChildren: 0
   OnPressInputIndex: 0
@@ -37159,7 +37191,7 @@ Transform:
   m_PrefabInternal: {fileID: 1403205788}
   m_GameObject: {fileID: 1862608085}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 51, y: -5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1021293087}
@@ -41321,7 +41353,7 @@ Transform:
   m_PrefabInternal: {fileID: 1403205788}
   m_GameObject: {fileID: 2026389580}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 21, y: 55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1400822398}
@@ -43515,7 +43547,6 @@ MonoBehaviour:
   - {fileID: 1813056642}
   - {fileID: 655531935}
   - {fileID: 737841993}
-  MenuMap: {fileID: 737841996}
 --- !u!1 &2109894232
 GameObject:
   m_ObjectHideFlags: 0
