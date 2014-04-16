@@ -289,7 +289,7 @@ public class MapGenerator : MonoBehaviour
 		};
 		System.Func<TileObjData.Type,bool> FloorOrCorridor =
 		obj => {
-			return obj == TileObjData.Type.Floor && obj == TileObjData.Type.Corridor;
+			return obj == TileObjData.Type.Floor || obj == TileObjData.Type.Corridor;
 		};
         /*
         System.Func<TileObjData.Type,bool> Floor =
