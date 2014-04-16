@@ -7,7 +7,7 @@ public class GameDB : MonoBehaviour {
 
     public SharedSystemsMain SS;
 
-	public GameObjData GameData;
+	public GameObjData  GameData;
 
 	public bool GOTO_DEBRIEF=false;
 	public bool GameStarted=false;
@@ -21,7 +21,7 @@ public class GameDB : MonoBehaviour {
 		
 		GameData.PlayerData.Money=1000;
 
-		//starting player equipment 
+		//starting player equipment
 		for (int i=0;i<XmlDatabase.Player.StartingWeaponAmount;i++){
 			InvEquipmentStorage.EquipRandomItem(GameData.PlayerData.Equipment,"starting_weapons","starting_quality");
 		}
@@ -30,11 +30,17 @@ public class GameDB : MonoBehaviour {
 			InvEquipmentStorage.EquipRandomItem(GameData.PlayerData.Equipment,"starting_utilities","starting_quality");
 		}
 		
-		//DEV.DEBUG random vendor items
-		for (int i=0;i<6;i++){
-			GameData.VendorStore.Add(InvGameItem.GetRandomItem());
-		}
+		RestockVendor();
     }
+
+	public void RestockVendor(){
+		GameData.VendorStore.Clear();
+
+		for (int i=0;i<Subs.GetRandom(6,8);i++){
+			//GameData.VendorStore.Eq
+			InvItemStorage.EquipRandomItem(GameData.VendorStore,"vendor_items","vendor_quality");
+		}
+	}
 
 #if UNITY_EDITOR && !UNITY_WEBPLAYER
 	public void Update(){
@@ -85,6 +91,8 @@ public class GameDB : MonoBehaviour {
 		GameData.CurrentTime+=GameData.CurrentMission.TravelTime;
 
 		GenerateNewMissions(GameData.CurrentMission.TravelTime);
+		RestockVendor();
+
         Application.LoadLevel(HQScene);
     }
 

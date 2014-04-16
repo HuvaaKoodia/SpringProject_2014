@@ -56,7 +56,6 @@ public class InvItemStorage
         return false;
 	}
    
-
     public bool HasItem(System.Func<InvGameItem,bool> test){
         foreach(var i in mItems){
             if (test(i)) return true;
@@ -71,4 +70,20 @@ public class InvItemStorage
         }
         return _items;
     }
+
+	public void Clear ()
+	{
+		items.Clear();
+	}
+
+	/// <summary>
+	/// DEV. WARNING WARNING infinite loop running the world!
+	/// </summary>
+	public static void EquipRandomItem(InvItemStorage storage,string lootpool,string lootquality){
+		if (storage == null) return;
+		if (XmlDatabase.Items.Count == 0) return;
+
+		var gi=InvGameItem.GetRandomItem(lootpool,lootquality);
+		storage.Add(gi);
+	}
 }

@@ -46,6 +46,9 @@ public class MasterHudMain : MonoBehaviour {
 		if (ShowFPS) {
 			DrawFPS();
 		}
+		else{
+			FPS.gameObject.SetActive(false);
+		}
 	}
 	
     public void SetNothingSelected()
@@ -247,5 +250,4 @@ public class MasterHudMain : MonoBehaviour {
 		}
 		FadeInProgress=false;
 	}
-
 }
