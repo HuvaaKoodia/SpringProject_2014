@@ -134,12 +134,13 @@ public class AlienAI : AIBase {
 		
 		if (movedSuccessfully == MovementState.Moving)
 		{
+			parent.GC.culling_system.CullMovingEnemy(parent, player.transform.position, MyPosition, blackboard.Path.next.position, Camera.main.farClipPlane+5, parent.GC);
+			PlayAnimation(WalkAnimation, 1);
+
 			HasUsedTurn = true;
 			foundMove = true;
 			AP -= MovementCost;
 			blackboard.Path = blackboard.Path.next;
-
-			PlayAnimation(WalkAnimation, 1);
 		}
 		else if (movedSuccessfully == MovementState.Turning)
 		{
@@ -692,6 +693,9 @@ public class AlienAI : AIBase {
 
 	void PlayAnimation(string animation, float speed)
 	{
+		if (parent.graphics.activeSelf == false)
+			return;
+
 		spiderAnimation[animation].normalizedTime = 0;
 		spiderAnimation[animation].speed = speed;
 		spiderAnimation.Play(animation);

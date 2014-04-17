@@ -12,10 +12,14 @@ public class EnemyMain : EntityMain {
 	public GameObject graphics;
 	public List<BoxCollider> hitboxes;
 
-	public MeshRenderer meshRenderer;
+	MeshRenderer meshRenderer;
 
 	public int rangedRange = 3;
 	public int rangedAngleMax = 50;
+
+	float normalMovementSpeed;
+	float normalTurnSpeed;
+	float culledSpeedMultiplier = 5;
 
 	// Use this for initialization
 	public override void Awake()
@@ -27,6 +31,9 @@ public class EnemyMain : EntityMain {
 
 		aiController = GC.aiController;
 		ai = transform.root.GetComponent<AIBase>();
+
+		normalMovementSpeed = movement.movementSpeed;
+		normalTurnSpeed = movement.turnSpeed;
 	}
 
 	void Start ()
@@ -148,5 +155,21 @@ public class EnemyMain : EntityMain {
 	{
 		ai.blackboard.InformedOfPlayer = false;
 		aiController.EnemyFinishedTurn(this);
+	}
+
+	public void CullShow()
+	{
+		graphics.SetActive(true);
+
+		movement.movementSpeed = normalMovementSpeed;
+		movement.turnSpeed = normalTurnSpeed;
+	}
+
+	public void CullHide()
+	{
+		graphics.SetActive(false);
+
+		movement.movementSpeed = normalMovementSpeed * culledSpeedMultiplier;
+		movement.turnSpeed = normalTurnSpeed * culledSpeedMultiplier;
 	}
 }
