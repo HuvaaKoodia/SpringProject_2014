@@ -61,4 +61,11 @@ public class PrefabStore : MonoBehaviour {
 		;
 
 	public RadarBlipSub RadarBlip;
+
+	//Weapon graphics
+	public GameObject
+		Cannon,
+		Gatling,
+		Shotgun
+			;
 }

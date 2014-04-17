@@ -134,7 +134,7 @@ public class AlienAI : AIBase {
 		
 		if (movedSuccessfully == MovementState.Moving)
 		{
-			parent.GC.culling_system.CullMovingEnemy(parent, player.transform.position, MyPosition, blackboard.Path.next.position, Camera.main.farClipPlane+5, parent.GC);
+			parent.GC.culling_system.CullMovingEnemy(parent, player.transform.position, MyPosition, blackboard.Path.next.position, player.GameCamera.farClipPlane, parent.GC);
 			PlayAnimation(WalkAnimation, 1);
 
 			HasUsedTurn = true;

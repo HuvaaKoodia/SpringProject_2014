@@ -33,7 +33,11 @@ public class WeaponMain : MonoBehaviour {
 
 	public int HeatGeneration { get; protected set;}
 	public int CoolingRate { get; protected set;}
-	
+
+	public LayerMask lookAtLayer;
+
+	public GameObject graphics;
+
     public int CurrentAmmo { 
         get{
             if (NoAmmoConsumption) return 1;
@@ -68,8 +72,14 @@ public class WeaponMain : MonoBehaviour {
 
         if (Weapon==null) return;
 
-		GunName=Weapon.baseItem.name;
-	    
+		bool changedGraphics = false;
+
+		if (GunName != Weapon.baseItem.name)
+		{
+			GunName=Weapon.baseItem.name;
+			changedGraphics = true;
+		}
+
 		var dam=WeaponSlot.ObjData.GetDamage();
 		MinDamage = dam;
 		MaxDamage = dam;
@@ -88,6 +98,11 @@ public class WeaponMain : MonoBehaviour {
         else{
             NoAmmoConsumption=false;
         }
+
+		if (changedGraphics)
+		{
+			//Destroy(graphics);
+		}
 	}
 
 	public bool HasTargets
@@ -240,13 +255,13 @@ public class WeaponMain : MonoBehaviour {
 			Ray ray=Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit info;
 
-			float mouseDistance = 10;
-			if (Physics.Raycast(ray, out info))
+			float mouseDistance = 12;
+			if (Physics.Raycast(ray, out info, mouseDistance, lookAtLayer))
 			{
 				mouseDistance = info.distance;
 			}
 
-			Vector3 mouseToWorld = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x , Input.mousePosition.y, mouseDistance));
+			Vector3 mouseToWorld = player.GameCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x , Input.mousePosition.y, mouseDistance));
 
 			targetRotation = Quaternion.LookRotation((mouseToWorld - transform.position));
 		}

@@ -33,7 +33,7 @@ ModelImporter:
     4300002: Cannon_Barrel
     4300004: Cannon_Cover
     4300006: Cannon_Body
-    7400000: Take 001
+    7400000: Shoot
     9500000: //RootNode
     13700000: Cannon_Barrel
     13700002: Cannon_Body
@@ -52,7 +52,57 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Shoot
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 60
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Cannon_Body
+        weight: 1
+      - path: Cannon_Holder
+        weight: 1
+      - path: Gun
+        weight: 1
+      - path: Gun/Cannon_Barrel
+        weight: 1
+      - path: Gun/Cannon_Cover
+        weight: 1
+      - path: Joints
+        weight: 1
+      - path: Joints/Base
+        weight: 1
+      - path: Joints/Base/cap_1
+        weight: 1
+      - path: Joints/Base/cap_1/Cap_End
+        weight: 1
+      - path: Joints/Base/Mid
+        weight: 1
+      - path: Joints/Base/Mid/Head
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []
