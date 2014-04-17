@@ -24,8 +24,6 @@ public class InfoMenuMap : MonoBehaviour {
 	public GameObject FloorUpButton;
 	public GameObject FloorDownButton;
 
-	bool _disabled=false;
-
 	float adjustedPosX;
 	float adjustedPosY;
 	
@@ -41,7 +39,6 @@ public class InfoMenuMap : MonoBehaviour {
 		GC.MiniMapData.CreateMapSprites(spriteParent, mapSprites, 6, spriteWidth);
 		
 		ChangeFloor(GC.CurrentFloorIndex);
-
 
 		adjustedPosX = (mapSprites[0].GetLength(0)-1)* ((float)spriteWidth * 3.0f);
 		adjustedPosY = (mapSprites[0].GetLength(1)-1)* ((float)spriteWidth * 3.0f);
@@ -151,7 +148,6 @@ public class InfoMenuMap : MonoBehaviour {
 	}
 
 	public void SetDisabled(bool disabled){
-		_disabled=disabled;
 		
 		spriteParent.SetActive(!disabled);
 	}

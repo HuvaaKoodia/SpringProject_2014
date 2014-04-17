@@ -59,10 +59,12 @@ public class UICamera : MonoBehaviour
 	public class InputEvent{
 		public bool isPressed;
 		public int PressIndex;
+		public RaycastHit Hit;
 
-		public InputEvent(bool pressed,int index){
+		public InputEvent(bool pressed,int index,RaycastHit hit){
 			isPressed=pressed;
 			PressIndex=index;
+			Hit=hit;
 		}
 
 		public static implicit operator bool(InputEvent x) 
@@ -89,6 +91,7 @@ public class UICamera : MonoBehaviour
 		{
 			return x==false;
 		}
+
 
 	}
 
@@ -1352,13 +1355,13 @@ public class UICamera : MonoBehaviour
 		{
 			//if (mTooltip != null) ShowTooltip(false);
 			currentTouch.pressStarted = true;
-			Notify(currentTouch.pressed, "OnPress", new InputEvent(false,CurrentClickIndex));
+			Notify(currentTouch.pressed, "OnPress", new InputEvent(false,CurrentClickIndex,lastHit));
 			currentTouch.pressed = currentTouch.current;
 			currentTouch.dragged = currentTouch.current;
 			currentTouch.clickNotification = ClickNotification.BasedOnDelta;
 			currentTouch.totalDelta = Vector2.zero;
 			currentTouch.dragStarted = false;
-			Notify(currentTouch.pressed, "OnPress",  new InputEvent(true,CurrentClickIndex));
+			Notify(currentTouch.pressed, "OnPress",  new InputEvent(true,CurrentClickIndex,lastHit));
 
 			int layer = LayerMask.NameToLayer("NGUI");
 			if (currentTouch.pressed != null &&
@@ -1454,7 +1457,7 @@ public class UICamera : MonoBehaviour
 				}
 
 				// Send the notification of a touch ending
-				Notify(currentTouch.pressed, "OnPress",  new InputEvent(false,CurrentClickIndex));
+				Notify(currentTouch.pressed, "OnPress",  new InputEvent(false,CurrentClickIndex,lastHit));
 
 				// Send a hover message to the object
 				if (isMouse) Notify(currentTouch.current, "OnHover", true);
