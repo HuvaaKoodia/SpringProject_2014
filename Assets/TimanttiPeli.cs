@@ -14,7 +14,7 @@ namespace ComputerSystems{
 		public float UpdateDelay=0.5f;
 
 		ScreenContext context;
-		CellObjData Selected,SelectedOld;
+		GameObjData Selected,SelectedOld;
 
 		GameGrid Grid;
 
@@ -45,16 +45,18 @@ namespace ComputerSystems{
 			}
 			//creating randomized game objects
 
-			Grid=new GameGrid(width,height-1);
+			Grid=new GameGrid(width,height);
 			for (int x=0;x<Grid.Width;++x){
 				for (int y=0;y<Grid.Height;++y){
-					var data=new GameObjData(x,y,0,1);
+					var data=Grid.GetObj(x,y);
 					
 					while (hasMatch(data)){
 						data.Type=Subs.GetRandom(GameObjData.TypeAmount);
 					}
 				}
 			}
+
+			UpdateGame();
 		}
 		
 		void UpdateGame(){
@@ -68,7 +70,8 @@ namespace ComputerSystems{
 					var obj=Grid.GetObj(x,y);
 					obj.moving=false;
 					if (obj.Empty){
-						if (y+1==height){//in top row
+
+						if (y+1==Grid.Height){//in top row
 							obj.Type=Subs.GetRandom(GameObjData.TypeAmount);
 							update_game=true;
 							obj.moving=true;
@@ -96,8 +99,8 @@ namespace ComputerSystems{
 			}
 			
 			//check for matches
-			for (int x=0;x<width;++x){
-				for (int y=0;y<height;++y){
+			for (int x=0;x<Grid.Width;++x){
+				for (int y=0;y<Grid.Height;++y){
 					var obj=Grid.GetObj(x,y);
 					if (hasMatch(obj)){
 						var matches=getMatches(obj);
@@ -114,6 +117,15 @@ namespace ComputerSystems{
 			//check for no moves left
 
 			//TODO
+
+
+			//draw game objects
+			for (int x=0;x<Grid.Width;++x){
+				for (int y=0;y<Grid.Height;++y){
+					var obj=Grid.GetObj(x,y);
+					obj.Draw(context);
+				}
+			}
 
 			update_tick=update_delay;
 		}
@@ -136,18 +148,18 @@ namespace ComputerSystems{
 		bool hasMatch(GameObjData obj){
 			int hm=0,vm=0;
 			for (int i=-2;i<3;++i){
-				var next=gameGrid.GetObj(obj.GX+i,obj.GY);
-				if (next==null||next.IsEmpty||next.Type!=cell.Type||next.moving) 
+				var next=Grid.GetObj(obj.GX+i,obj.GY);
+				if (next==null||next.Empty||next.Type!=obj.Type||next.moving) 
 					hm=0;
 				else{
-					if (next.Type==cell.Type) ++hm;
+					if (next.Type==obj.Type) ++hm;
 				}
 				
-				next=GetCell(cell.X,cell.Y+i);
-				if (next==null||next.IsEmpty||next.Type!=cell.Type||next.moving)
+				next=Grid.GetObj(obj.GX,obj.GY+i);
+				if (next==null||next.Empty||next.Type!=obj.Type||next.moving)
 					vm=0;
 				else{
-					if (next.Type==cell.Type) ++vm;
+					if (next.Type==obj.Type) ++vm;
 				}
 				if (hm>2||vm>2)
 					return true;
@@ -158,7 +170,7 @@ namespace ComputerSystems{
 		/// <summary>
 		/// Returns all matching objects.
 		///</summary>
-		List<CellObjData> getMatches(GameObjData obj){
+		List<GameObjData> getMatches(GameObjData obj){
 			var allMatches=new List<GameObjData>();
 			AddToList(obj,true,allMatches);
 			AddToList(obj,false,allMatches);
@@ -171,20 +183,20 @@ namespace ComputerSystems{
 		/// </summary>
 		void AddToList(GameObjData start_cell,bool horizontal,List<GameObjData> total_list){
 
-			var temp_list=new List<CellObjData>();
-			CellObjData next=null;
+			var temp_list=new List<GameObjData>();
+			GameObjData next=null;
 			for (int i=-2;i<3;++i){
-				if (horizontal) next=Grid.GetObj(start_cell.X+i,start_cell.Y);
-				else next=GetCell(start_cell.X,start_cell.Y+i);
+				if (horizontal) next=Grid.GetObj(start_cell.GX+i,start_cell.GY);
+				else next=Grid.GetObj(start_cell.GX,start_cell.GY+i);
 
-				if (next==null||next.IsEmpty||next.Type!=start_cell.Type||next.moving){
+				if (next==null||next.Empty||next.Type!=start_cell.Type||next.moving){
 					//save matches up until now
 					if (temp_list.Count>2) foreach(var c in temp_list) total_list.Add(c);
 					temp_list.Clear();
 				}
 				else{
 					if (next.Type==start_cell.Type) temp_list.Add(next);
-				}l
+				}
 			}
 			//save the rest
 			if (temp_list.Count>2) foreach(var c in temp_list) total_list.Add(c);
@@ -207,7 +219,7 @@ namespace ComputerSystems{
 
 		void SetSelected(int x,int y){
 			SelectedOld=Selected;
-			Selected=GetCell(x,y);
+			Selected=Grid.GetObj(x,y);
 			 
 			//change color
 			if (Selected!=null){
@@ -226,14 +238,14 @@ namespace ComputerSystems{
 				}
 			}
 			else{
-				SelectedOld.DeSelect();
+				if (SelectedOld!=null)SelectedOld.DeSelect();
 				return;
 			}
 
 			//swap places
 			if (Selected!=null&&SelectedOld!=null){
-				int xd=Selected.X-SelectedOld.X;
-				int yd=Selected.Y-SelectedOld.Y;
+				int xd=Selected.GX-SelectedOld.GX;
+				int yd=Selected.GY-SelectedOld.GY;
 
 				if ((Mathf.Abs(xd)<2&&yd==0)||(Mathf.Abs(yd)<2&&xd==0)){
 					//next to each other.
@@ -248,7 +260,7 @@ namespace ComputerSystems{
 			}
 		}
 
-		void SwapCells (CellObjData c1, CellObjData c2)
+		void SwapCells (GameObjData c1, GameObjData c2)
 		{
 			int type=c1.Type;
 			c1.Type=c2.Type;
@@ -271,11 +283,12 @@ namespace ComputerSystems{
 		public int SY_off{get;private set;}
 
 		//screen position
-		public int SX{get{return GX+X_off;}}
-		public int SY{get{return GY+Y_off;}}
+		public int SX{get{return GX+SX_off;}}
+		public int SY{get{return GY+SY_off;}}
 
 		//logic
 		public GameObjData(int gx,int gy,int sx_off,int sy_off){
+			Type=0;
 			GX=gx;GY=gy;
 			SX_off=sx_off;SY_off=sy_off;
 		}
@@ -296,7 +309,7 @@ namespace ComputerSystems{
 		public bool moving=false;
 		bool highlight=false,selected=false;
 		public bool HighLighted{get{return highlight;}}
-		public bool Empty{get{return {Type<0;}}}
+		public bool Empty{get{return Type<0;}}
 
 		public void DeSelect(){
 			highlight=false;
@@ -323,7 +336,7 @@ namespace ComputerSystems{
 		}
 
 		
-		string getTypeColor(){
+		Color getTypeColor(){
 			if (highlight) return Color.blue;
 			if (selected) return Color.red;
 
@@ -332,13 +345,20 @@ namespace ComputerSystems{
 	}
 
 	class GameGrid{
-		GameObjData[,] Grid;
+		public GameObjData[,] Grid;
 
 		public int Width {get{return Grid.GetLength(0);}}
 		public int Height{get{return Grid.GetLength(1);}}
 
 		public GameGrid(int w,int h){
 			Grid=new GameObjData[w,h];
+
+			for (int x=0;x<Width;++x){
+				for (int y=0;y<Height;++y){
+					Grid[x,y]=new GameObjData(x,y,0,0);
+				}
+			}
+
 		}
 
 		public GameObjData GetObj(int x,int y){
@@ -348,11 +368,10 @@ namespace ComputerSystems{
 	}
 
 	class ScreenContext{
-
 		public CellObjData[,] ScreenCells;
 
 		public ScreenContext(int w,int h){
-			ScreenCells=new CellObjData[x_size,y_size];
+			ScreenCells=new CellObjData[w,h];
 		}
 
 		public CellObjData GetCell (int x, int y)
@@ -370,6 +389,16 @@ namespace ComputerSystems{
 		public CellObjData(int x,int y,UILabel l){
 			label=l;
 			X=x;Y=y;
+		}
+
+		public void SetText (string str)
+		{
+			label.text=str;
+		}
+
+		public void SetColor (Color col)
+		{
+			label.color=col;
 		}
 	}
 }
