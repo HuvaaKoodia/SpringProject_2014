@@ -12,7 +12,7 @@ public class MapGenerator : MonoBehaviour
 	//hardcoded icons
 	public const string 
 		WallIcon = "w", DoorIcon = "d", CorridorIcon = "c", FloorIcon = ".",AirlockIcon = "a",
-		SpaceIcon=",",ElevatorIcon="h",RoomIcon="r",RoomEndIcon="T",LootAreaIcon=":"
+		SpaceIcon=",",ElevatorIcon="h",RoomIcon="r",RoomEndIcon="t",LootAreaIcon=":"
 	;
 
     public bool DEBUG_create_temp_tiles = false;

@@ -105,7 +105,6 @@ public class InvEquipmentStorage
 			// If the item is not of appropriate type or it's unusable or unchangeable, we shouldn't do anything
 			return Slot.HasType(item.baseItem.type)&&Slot.ObjData.USABLE&&Slot.ObjData.CHANGEABLE;
 		}
-        return true;
 	}
 
 	/// <summary>

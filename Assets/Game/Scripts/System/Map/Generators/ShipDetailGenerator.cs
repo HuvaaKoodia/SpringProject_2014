@@ -174,7 +174,14 @@ public class ShipDetailGenerator : MonoBehaviour
 
         if (mission.ContainsObjective(MissionObjData.Objective.FindItem)){
 			var objective=XmlDatabase.Objectives[MissionObjData.Objective.FindItem];
-            //generate item somewhere in ship
+			var quest_item=XmlDatabase.GetQuestItem(objective.Item);
+
+			if (quest_item==null){
+				Debug.LogError("Mission: "+mission.MissionType+" failed to create objective item "+objective.Item+" as it's not found in the xmldatabase");
+				return;
+			}
+
+			//generate item somewhere in ship
             string obj_room=objective.Room;
 			var LegitRooms=new Dictionary<int,List<ShipRoomObjData>>();
 			bool nonefound=true;
@@ -216,7 +223,7 @@ public class ShipDetailGenerator : MonoBehaviour
                         loot.Add(tile.TileObject.GetComponent<LootCrateMain>());
                     }
                 }
-            }
+            
 
             if (loot.Count==0){
                 Debug.LogWarning("Cannot generate quest item. No loot crates in room "+obj_room+ " ship type "+ship.Name);
@@ -225,9 +232,10 @@ public class ShipDetailGenerator : MonoBehaviour
 
             //DEV. temp mission item type to xml objective data
             var l=Subs.GetRandom(loot);
-			var item=new InvGameItem(XmlDatabase.QuestItems[objective.Item]);
+			var item=new InvGameItem(quest_item);
             l.Items.Add(item);
         }
     }
+	}
 }
 

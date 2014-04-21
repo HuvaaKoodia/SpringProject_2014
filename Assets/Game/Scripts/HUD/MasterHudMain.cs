@@ -29,6 +29,10 @@ public class MasterHudMain : MonoBehaviour {
 	void Start()
 	{
 		currentMenuState = MenuState.NothingSelected;
+
+		if (!ShowFPS){
+			FPS.gameObject.SetActive(false);
+		}
 	}
 
     public void SetGC(GameController gc){
@@ -45,9 +49,6 @@ public class MasterHudMain : MonoBehaviour {
 
 		if (ShowFPS) {
 			DrawFPS();
-		}
-		else{
-			FPS.gameObject.SetActive(false);
 		}
 	}
 	

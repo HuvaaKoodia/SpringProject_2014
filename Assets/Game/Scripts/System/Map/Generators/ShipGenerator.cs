@@ -49,7 +49,7 @@ public class ShipGenerator : MonoBehaviour
 
 		while (true){
 			if (PossibleRooms.Count==0){
-                Debug.LogError("No fitting room in ["+cell.X+", "+cell.Y+"] "+room_index);
+                Debug.LogError("No fitting room in ["+cell.X+", "+cell.Y+"] "+room_index+" max size: "+cell.W+" "+cell.H);
 				break;
 			}
 			
@@ -137,7 +137,6 @@ public class ShipGenerator : MonoBehaviour
 						}
 						CheckLegitWalls(cell,CurrentFloor);
 
-						
 						//randomize a room of right size
 	                    FitRoom(index,cell);
 					}

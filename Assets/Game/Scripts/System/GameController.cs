@@ -137,6 +137,8 @@ public class GameController : MonoBehaviour {
             }
 		}
 
+		Debug.Log("Loading ship "+ship_objdata.XmlData.Name);
+
 		for (int i=0;i<ship_objdata.Floors.Count;++i){
 			var floor=new FloorObjData();
 			floor.FloorIndex=i;
@@ -166,6 +168,10 @@ public class GameController : MonoBehaviour {
 			if (f.AirlockPositions.Count>0){
 				legit_floors.Add(f);
 			}
+		}
+
+		if (legit_floors.Count==0){
+			Debug.LogError("The ship "+ship_objdata.XmlData.Name+" has no floors with airlocks.");
 		}
 
 		//init player

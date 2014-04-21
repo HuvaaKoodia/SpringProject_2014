@@ -7851,7 +7851,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TestLoadShipName: mercurius1b
   UseTestMap: 0
-  OverrideMissionShip: 1
+  OverrideMissionShip: 0
   EngCont: {fileID: 453917343}
   currentTurn: 0
   HUD: {fileID: 1208657778}
@@ -8241,7 +8241,7 @@ Transform:
   m_PrefabInternal: {fileID: 1403205788}
   m_GameObject: {fileID: 477229498}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -655.727295, y: 537.599915, z: 415.035583}
+  m_LocalPosition: {x: -591.842102, y: 537.599915, z: 415.035583}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 68350835}
@@ -12307,6 +12307,22 @@ Prefab:
       propertyPath: Player
       value: 
       objectReference: {fileID: 795672205}
+    - target: {fileID: 11400002, guid: 6344377a7c1aac8468eb70319349a8a3, type: 2}
+      propertyPath: OverrideMissionShip
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 6344377a7c1aac8468eb70319349a8a3, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 6344377a7c1aac8468eb70319349a8a3, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 6344377a7c1aac8468eb70319349a8a3, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6344377a7c1aac8468eb70319349a8a3, type: 2}
   m_RootGameObject: {fileID: 453917342}
@@ -22682,7 +22698,7 @@ MonoBehaviour:
   EndMissionPanel: {fileID: 113633003}
   FadePanel: {fileID: 1138130766}
   FPS: {fileID: 68350836}
-  ShowFPS: 1
+  ShowFPS: 0
   TerminalHud: {fileID: 2107570264}
   updateInterval: .5
 --- !u!1 &1208918879
@@ -26357,7 +26373,7 @@ Prefab:
       objectReference: {fileID: 795672205}
     - target: {fileID: 400000, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -655.727295
+      value: -591.842102
       objectReference: {fileID: 0}
     - target: {fileID: 100176, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
       propertyPath: m_IsActive
@@ -26365,7 +26381,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400244, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
       propertyPath: ShowFPS
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400538, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
       propertyPath: m_LocalPosition.x

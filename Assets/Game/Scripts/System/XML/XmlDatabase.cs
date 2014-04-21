@@ -75,9 +75,16 @@ public class XmlDatabase
 		Debug.Log("Item not found: "+name);
 		return null;
 	}
-
 	
-	//Defensive add data functions.
+	public static InvBaseItem GetQuestItem(string name){
+		if (QuestItems.ContainsKey(name)){
+			return QuestItems[name];
+		}
+		Debug.Log("Quest Item not found: "+name);
+		return null;
+	}
+	
+	//Defensive add data functions
 	public static void AddRewardClass(string name,RewardClassXmlData data){
 		if (RewardClasses.ContainsKey(name)){
 			Debug.LogWarning(data.GetType().ToString()+" redefinition: "+name);

@@ -65,7 +65,6 @@ public class XMLDataLoader : XML_Loader
 				#endregion
 
                 if (ReadItem(node))       	continue;
-                if (ReadQuestItem(node))    continue;
                 if (ReadMission(node))      continue;
                 if (ReadObjective(node))    continue;
                 if (ReadAmmo(node))         continue;
@@ -89,7 +88,12 @@ public class XMLDataLoader : XML_Loader
 			foreach(var t in Subs.EnumValues<InvStat.Type>()){
 				AddStat(node,item,t);
 			}
-			XmlDatabase.AddItem(item);
+			if (item.type==InvBaseItem.Type.QuestItem){
+				XmlDatabase.AddQuestItem(item);
+			}
+			else{
+				XmlDatabase.AddItem(item);
+			}
             return true;
 		}
         return false;
@@ -108,22 +112,6 @@ public class XMLDataLoader : XML_Loader
             data.ShowInGame=getAttBool(node,"showingame",true);
 
 			XmlDatabase.AddAmmoType(data.Type,data);
-            return true;
-        }
-        return false;
-    }
-
-    static bool ReadQuestItem(XmlNode node)
-    {
-        if (node.Name == "Item")
-        {
-            InvBaseItem item=new InvBaseItem();
-            item.name=getAttStr(node,"name");
-            item.type=(InvBaseItem.Type)System.Enum.Parse(typeof(InvBaseItem.Type),getAttStr(node,"type"),true);
-            item.description=getStr(node,"Description");
-            item.iconName=getAttStr(node,"sprite");
-            
-			XmlDatabase.AddQuestItem(item);
             return true;
         }
         return false;
