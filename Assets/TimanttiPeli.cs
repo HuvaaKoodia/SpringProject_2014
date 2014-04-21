@@ -5,11 +5,12 @@ using System.Collections.Generic;
 namespace ComputerSystems{
 
 	public class TimanttiPeli : MonoBehaviour {
-		
 		public GameObject ScreenCell_prefab;
 		public Transform CellParent;
 		public UIPanel ScreenPanel;
 		public int width=10,height=10,x_size=32,y_size=32;
+
+		public int BaseScore=100;
 
 		public float UpdateDelay=0.5f;
 
@@ -18,12 +19,16 @@ namespace ComputerSystems{
 
 		GameGrid Grid;
 
-		bool update_game=false;
+		bool update_game=false,gameover=false;
 		float update_tick=0,update_delay;
+
+		int points=0,scorebar_y;
 
 		//logic
 		void Start () 
 		{
+			scorebar_y=height-1;
+
 			context=new ScreenContext(width,height);
 			//instantiating screen context
 			for (int x=0;x<width;++x){
@@ -43,90 +48,131 @@ namespace ComputerSystems{
 					context.ScreenCells[x,y]=data;
 				}
 			}
-			//creating randomized game objects
 
-			Grid=new GameGrid(width,height);
-			for (int x=0;x<Grid.Width;++x){
-				for (int y=0;y<Grid.Height;++y){
-					var data=Grid.GetObj(x,y);
-					
-					while (hasMatch(data)){
-						data.Type=Subs.GetRandom(GameObjData.TypeAmount);
-					}
-				}
-			}
+			Grid=new GameGrid(0,0,width,height-1);
 
+			ResetGame();
 			UpdateGame();
 		}
-		
+
+		int gameover_step=0;
+
 		void UpdateGame(){
 			update_game=false;
 			update_delay=UpdateDelay;
-			Debug.Log("Update!");
-			
-			//drop tiles if over empty
-			for (int x=0;x<Grid.Width;++x){
-				for (int y=0;y<Grid.Height;++y){
-					var obj=Grid.GetObj(x,y);
-					obj.moving=false;
-					if (obj.Empty){
 
-						if (y+1==Grid.Height){//in top row
-							obj.Type=Subs.GetRandom(GameObjData.TypeAmount);
-							update_game=true;
-							obj.moving=true;
-						}
-						else{
-							var above=Grid.GetObj(x,y+1);
-							obj.Type=above.Type;
-							above.Type=-1;
+			int added_points=0;
 
-							update_game=true;
-							obj.moving=true;
+
+			//game logic
+			if (gameover){
+				int x=gameover_step%width;
+				int y=gameover_step/width;
+
+				var cell=context.GetCell(x,y);
+				var txt="GAMEOVER!".ToCharArray();
+				cell.SetText(""+txt[gameover_step%txt.Length]);
+				cell.SetColor(Color.magenta);
+
+				update_delay=0.1f;
+				++gameover_step;
+
+				if (gameover_step==width*height){
+					update_delay=3;
+					gameover_step=0;
+					ResetGame();
+				}
+				update_game=true;
+			}
+			else{
+				//drop tiles if over empty
+				for (int x=0;x<Grid.Width;++x){
+					for (int y=0;y<Grid.Height;++y){
+						var obj=Grid.GetObj(x,y);
+						obj.moving=false;
+						if (obj.Empty){
+
+							if (y+1==Grid.Height){//in top row
+								obj.Type=Subs.GetRandom(GameObjData.TypeAmount);
+								update_game=true;
+								obj.moving=true;
+							}
+							else{
+								var above=Grid.GetObj(x,y+1);
+								obj.Type=above.Type;
+								above.Type=-1;
+
+								update_game=true;
+								obj.moving=true;
+							}
 						}
 					}
 				}
-			}
-			//clear highlighted tiles
-			for (int x=0;x<Grid.Width;++x){
-				for (int y=0;y<Grid.Height;++y){
-					var obj=Grid.GetObj(x,y);
-					if (obj.HighLighted){
+				//clear highlighted tiles
+				for (int x=0;x<Grid.Width;++x){
+					for (int y=0;y<Grid.Height;++y){
+						var obj=Grid.GetObj(x,y);
+						if (obj.HighLighted){
+							update_game=true;
+							obj.Clear();
+						} 
+					}
+				}
+				
+				//check for matches
+				for (int x=0;x<Grid.Width;++x){
+					for (int y=0;y<Grid.Height;++y){
+						var obj=Grid.GetObj(x,y);
+						if (hasMatch(obj)){
+							var matches=getMatches(obj);
+							
+							foreach(var m in matches){
+								m.HighLight();
+								update_game=true;
+								update_delay=UpdateDelay*1.5f;
+							}
+
+							added_points+=BaseScore*(1+(matches.Count-3));
+						}
+					}
+				}
+
+				//check for no moves left
+				if (!update_game){
+					if (NoMovesRemaining()){
+						gameover=true;
+						update_delay=2.700f;
+						for (int x=0;x<Grid.Width;++x){
+							for (int y=0;y<Grid.Height;++y){
+								var obj=Grid.GetObj(x,y);
+								obj.Select();
+							}
+						}
 						update_game=true;
-						obj.Clear();
-					} 
+					}
 				}
-			}
-			
-			//check for matches
-			for (int x=0;x<Grid.Width;++x){
-				for (int y=0;y<Grid.Height;++y){
-					var obj=Grid.GetObj(x,y);
-					if (hasMatch(obj)){
-						var matches=getMatches(obj);
-						
-						foreach(var m in matches){
-							m.HighLight();
-							update_game=true;
-							update_delay=UpdateDelay*1.5f;
-						}
+
+				
+				//basic drawing
+				context.Clear();
+				
+				//set score bar
+				if (added_points>0){
+					SetScorebar("+",added_points,Color.red);
+				}
+				else{
+					SetScorebar("",points,Color.white);
+				}
+				points+=added_points;
+
+				//draw game objects
+				for (int x=0;x<Grid.Width;++x){
+					for (int y=0;y<Grid.Height;++y){
+						var obj=Grid.GetObj(x,y);
+						obj.Draw(context);
 					}
 				}
 			}
-
-			//check for no moves left
-
-			//TODO
-
-
-			//draw game objects
-			for (int x=0;x<Grid.Width;++x){
-				for (int y=0;y<Grid.Height;++y){
-					var obj=Grid.GetObj(x,y);
-					obj.Draw(context);
-				}
-			}
-
 			update_tick=update_delay;
 		}
 		
@@ -138,8 +184,32 @@ namespace ComputerSystems{
 				}
 			}
 		}
-
 		//functions
+
+		bool NoMovesRemaining(){
+			for (int x=0;x<Grid.Width;++x){
+				for (int y=0;y<Grid.Height;++y){
+					var obj=Grid.GetObj(x,y);
+					GameObjData next=null;
+					int dx,dy;
+					for (int d=0;d<4;++d){
+						dx=MapGenerator.GetCardinalX(d);
+						dy=MapGenerator.GetCardinalY(d);
+
+						next=Grid.GetObj(obj.GX+dx,obj.GY+dy);
+						if (next==null) continue;
+						SwapCells(obj,next);
+						bool match=hasMatch(obj);
+						SwapCells(next,obj);
+
+						if (match) {
+							return false;
+						}
+					}
+				}
+			}
+			return true;
+		}
 
 		/// <summary>
 		/// Checks if there is a match for this cell
@@ -204,7 +274,7 @@ namespace ComputerSystems{
 
 		public void Click (RaycastHit hit)
 		{
-			if (update_game) return;
+			if (update_game||gameover) return;
 			if (hit.transform!=null){
 				var relative=hit.collider.transform.InverseTransformPoint(hit.point);
 
@@ -217,7 +287,10 @@ namespace ComputerSystems{
 			}
 		}
 
-		void SetSelected(int x,int y){
+		void SetSelected(int sx,int sy){
+			int x=sx-Grid.X;
+			int y=sy-Grid.Y;
+
 			SelectedOld=Selected;
 			Selected=Grid.GetObj(x,y);
 			 
@@ -265,6 +338,38 @@ namespace ComputerSystems{
 			int type=c1.Type;
 			c1.Type=c2.Type;
 			c2.Type=type;
+		}
+
+		void SetScorebar (string str, int points,Color color)
+		{
+			var pnts=str+points;
+			var carray=pnts.ToCharArray();
+			int len=Mathf.Min(pnts.Length,width);     
+            for (int i=0;i<len;++i){
+				var cell=context.GetCell(i,scorebar_y);
+				cell.SetText(""+carray[i]);
+				cell.SetColor(color);
+			}
+		}
+
+		void ResetGame ()
+		{
+			gameover=false;
+			points=0;
+			//randomized game object types
+			do {
+				for (int x=0;x<Grid.Width;++x){
+					for (int y=0;y<Grid.Height;++y){
+						var data=Grid.GetObj(x,y);
+						data.DeSelect();
+						do{
+							data.Type=Subs.GetRandom(GameObjData.TypeAmount);
+						}
+						while (hasMatch(data));
+					}
+				}
+			}
+			while(NoMovesRemaining());
 		}
 	}
 
@@ -319,11 +424,12 @@ namespace ComputerSystems{
 		public void Draw(ScreenContext context){
 			var cell=context.GetCell(SX,SY);
 
-			cell.SetText(getTypeChar());
-			cell.SetColor(getTypeColor());
+			if (cell!=null){
+				cell.SetText(getTypeChar());
+				cell.SetColor(getTypeColor());
+			}
 		}
 
-		
 		string getTypeChar(){
 			switch(Type){
 			case 0: return "A";
@@ -335,7 +441,6 @@ namespace ComputerSystems{
 			}
 		}
 
-		
 		Color getTypeColor(){
 			if (highlight) return Color.blue;
 			if (selected) return Color.red;
@@ -347,18 +452,22 @@ namespace ComputerSystems{
 	class GameGrid{
 		public GameObjData[,] Grid;
 
+		//game grid position
+		public int X{get;private set;}
+		public int Y{get;private set;}
+
 		public int Width {get{return Grid.GetLength(0);}}
 		public int Height{get{return Grid.GetLength(1);}}
 
-		public GameGrid(int w,int h){
+		public GameGrid(int xpos,int ypos,int w,int h){
+			X=xpos;Y=ypos;
 			Grid=new GameObjData[w,h];
 
 			for (int x=0;x<Width;++x){
 				for (int y=0;y<Height;++y){
-					Grid[x,y]=new GameObjData(x,y,0,0);
+					Grid[x,y]=new GameObjData(x,y,X,Y);
 				}
 			}
-
 		}
 
 		public GameObjData GetObj(int x,int y){
@@ -370,13 +479,27 @@ namespace ComputerSystems{
 	class ScreenContext{
 		public CellObjData[,] ScreenCells;
 
+		public int Width {get{return ScreenCells.GetLength(0);}}
+		public int Height{get{return ScreenCells.GetLength(1);}}
+
 		public ScreenContext(int w,int h){
 			ScreenCells=new CellObjData[w,h];
 		}
 
 		public CellObjData GetCell (int x, int y)
 		{
+			if (!Subs.insideArea(x,y,0,0,Width,Height)) return null;
 			return ScreenCells[x,y];
+		}
+
+		public void Clear ()
+		{
+			for (int x=0;x<Width;++x){
+				for (int y=0;y<Height;++y){
+					var cell=GetCell(x,y);
+					cell.SetText("");
+				}
+			}
 		}
 	}
 
