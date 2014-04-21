@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ScreenInputSub : MonoBehaviour {
 
-	public TimanttiPeli screen;
+	public ComputerSystems.TimanttiPeli screen;
 
 	void OnPress (UICamera.InputEvent isPressed)
 	{
