@@ -6,9 +6,12 @@ using TreeSharp;
 public class AlienAI : AIBase {
 	EntityMovementSub movement;
 
-	public const int APmax = 3;
-	public const int MovementCost = 1;
-	public const int AttackCost = 2;
+	public const int APmax = 6;
+
+	public const int MovementCost = 2;
+	public const int TurnCost = 1;
+
+	public const int AttackCost = 3;
 
 	public int Damage = 20;
 
@@ -86,7 +89,7 @@ public class AlienAI : AIBase {
 
 		MyPosition = new Point3D(movement.currentGridX, movement.currentGridY);
 
-		if ((AP <= AttackCost || readyToAttack) && CanAttack())
+		if ((AP <= AttackCost+1 || readyToAttack) && CanAttack())
 		{
 			Attack();
 		}
@@ -146,7 +149,7 @@ public class AlienAI : AIBase {
 		{
 			HasUsedTurn = true;
 			foundMove = true;
-			AP -= MovementCost;
+			AP -= TurnCost;
 
 			if (movement.targetRotationAngle < parent.transform.rotation.eulerAngles.y)
 			{
@@ -441,7 +444,10 @@ public class AlienAI : AIBase {
 		
 		if (tilesPlayerCanSee >= 2)
 		{
-			if (pathLength < 3 && tilesPlayerCanSee == 2)
+			bool currentlySeen = CanPlayerSee(MyPosition);
+			float seenTilesProsent = (float)tilesPlayerCanSee / (float)pathLength;
+
+			if (currentlySeen && seenTilesProsent > 0.4f)
 				return RunStatus.Failure;
 	
 				return RunStatus.Success;
@@ -548,7 +554,7 @@ public class AlienAI : AIBase {
 		{
 			StartCoroutine("AttackRanged", (spiderAnimation[RangedAttackAnimation].length * 0.85f));
 		}
-		AP -= AttackCost;
+		AP = 0;
 	}
 
 	IEnumerator AttackRanged(float inflictDelay)
