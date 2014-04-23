@@ -54,12 +54,25 @@ namespace ComputerSystems{
 			InstantiateContext(ScreenPanelSmall,contextSmall);
 			InstantiateContext(ScreenPanelBig,contextBig);
 
-			context=contextSmall;
+			SetContext(true);
 
 			Grid=new GameGrid(0,0,width,height-1);
 
 			ResetGame();
 			UpdateGame();
+		}
+
+		void SetContext(bool small){
+			if (small){
+				context=contextSmall;
+				ScreenPanelSmall.gameObject.SetActive(true);
+				ScreenPanelBig.gameObject.SetActive(false);
+			}
+			else{
+				context=contextBig;
+				ScreenPanelSmall.gameObject.SetActive(false);
+				ScreenPanelBig.gameObject.SetActive(true);
+			}
 		}
 
 		int gameover_step=0;
