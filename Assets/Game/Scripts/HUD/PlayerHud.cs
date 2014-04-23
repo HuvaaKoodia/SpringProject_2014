@@ -23,9 +23,14 @@ public class PlayerHud : MonoBehaviour {
 
 	public UIPanel targetMarkPanel;
 
+	public bool UpdateComputerSystems=true;
+
 	// Use this for initialization
 	void Start()
 	{
+#if !UNITY_EDITOR
+		UpdateComputerSystems=true;
+#endif
 		MovementHud.SetActive(false);
 		TargetingHud.SetActive(false);
 	}
@@ -156,11 +161,14 @@ public class PlayerHud : MonoBehaviour {
 	}
 
 	public void SetHudToPlayerStats(){
-#if !UNITY_EDITOR
-		radar.SetDisabled(!player.HasRadar);
-		map.SetDisabled(!player.HasMap);
-		radar.radarZoom=2f+1f*(1f-(player.RadarRange/player.RadarRangeMax));
-#endif
+	
+		if (UpdateComputerSystems){
+			radar.SetDisabled(!player.HasRadar);
+			map.SetDisabled(!player.HasMap);
+			radar.radarZoom=2f+1f*(1f-(player.RadarRange/player.RadarRangeMax));
+
+			if (player.HasMap) player.CullWorld(true);
+		}
 	}
 
 	public void ChangeFloor(int floorIndex)

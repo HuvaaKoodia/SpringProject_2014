@@ -61,7 +61,7 @@ public class WeaponMain : MonoBehaviour {
     public bool NoAmmoConsumption{get;private set;}
 
     public bool Usable(){
-        return Weapon!=null&&!Overheat&&CurrentAmmo>0;
+		return Weapon!=null&&WeaponSlot.ObjData.USABLE&&!Overheat&&CurrentAmmo>0;
     }
 
 	public void SetWeapon(InvEquipmentSlot slot){
@@ -115,10 +115,6 @@ public class WeaponMain : MonoBehaviour {
 		rotationSpeed = 50;
 		targetRotation = Quaternion.identity;
 		targets = new Dictionary<EnemyMain, int>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
 	}
 
     public virtual void TargetEnemy(EnemyMain enemy,bool increase_amount)

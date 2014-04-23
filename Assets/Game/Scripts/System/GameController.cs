@@ -267,9 +267,9 @@ public class GameController : MonoBehaviour {
 		Player.StartPlayerPhase();
 	}
 
-	public void CullWorld (Vector3 position, Vector3 targetPosition,float max_distance, bool miniMapIgnoreDoors)
+	public void CullWorld (Vector3 position, Vector3 targetPosition,float max_distance, bool miniMapIgnoreDoors,bool updateMap)
 	{
-		if (do_culling) culling_system.CullBasedOnPositions(position,targetPosition,max_distance,this, miniMapIgnoreDoors);
+		if (do_culling) culling_system.CullBasedOnPositions(position,targetPosition,max_distance,this, miniMapIgnoreDoors,updateMap);
 	}
 
 	public FloorObjData GetFloor (int index)

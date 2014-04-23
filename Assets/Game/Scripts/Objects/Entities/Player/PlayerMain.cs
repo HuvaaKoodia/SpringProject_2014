@@ -65,9 +65,7 @@ public class PlayerMain : EntityMain
 
 		GameCamera.GetComponent<MouseLook>().SetOriginalRot(GameCamera.transform.localRotation);
 		HudCamera.GetComponent<MouseLook>().SetOriginalRot(GameCamera.transform.localRotation);
-
-
-
+		
 		HUD.Init(this,GC);
 		
 		TargetingCamera.aspect = 16.0f / 9.0f;
@@ -140,7 +138,7 @@ public class PlayerMain : EntityMain
 	}
 
 	public void CullWorld(bool miniMapIgnoreDoors){
-		GC.CullWorld(transform.position,movement.targetPosition,GameCamera.farClipPlane, miniMapIgnoreDoors);
+		GC.CullWorld(transform.position,movement.targetPosition,GameCamera.farClipPlane, miniMapIgnoreDoors,HasMap);
 	}
 
     public void Attack()
@@ -161,17 +159,6 @@ public class PlayerMain : EntityMain
 		if (ap == 0)
 			EndPlayerPhase();
 	}
-	/*
-    public void PickupLoot(LootCrateMain loot)
-    {
-        if (ap < lootPickupCost)
-            return;
-
-		GC.Inventory.SetLoot(loot);
-		GC.Inventory.ToggleInventory();
-		loot.Looted();
-    }
-    */
 
     /// <summary>
     /// Inflicts damage from grid position x,y

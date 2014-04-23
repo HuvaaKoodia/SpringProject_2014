@@ -7,7 +7,7 @@ public class HudMapMain : MonoBehaviour {
 	public GameController GC;
 	public PlayerMain player;
 
-	public GameObject spriteParent;
+	public GameObject spriteDisableParent,spriteParent;
 	public GameObject spritePositionParent;
 
 	private List<UISprite[,]> mapSprites;
@@ -211,7 +211,7 @@ public class HudMapMain : MonoBehaviour {
 	public void SetDisabled(bool disabled){
 		_disabled=disabled;
 
-		spriteParent.SetActive(!disabled);
+		spriteDisableParent.SetActive(!disabled);
 
 		if (!disabled)
 		{
