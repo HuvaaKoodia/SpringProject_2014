@@ -6,15 +6,14 @@ namespace ComputerSystems{
 
 	public class TimanttiPeli : MonoBehaviour {
 		public GameObject ScreenCell_prefab;
-		public Transform CellParent;
-		public UIPanel ScreenPanel;
+		public UIPanel ScreenPanelSmall,ScreenPanelBig;
 		public int width=10,height=10,x_size=32,y_size=32;
 
 		public int BaseScore=100;
 
 		public float UpdateDelay=0.5f;
 
-		ScreenContext context;
+		ScreenContext context,contextBig,contextSmall;
 		GameObjData Selected,SelectedOld;
 
 		GameGrid Grid;
@@ -24,30 +23,38 @@ namespace ComputerSystems{
 
 		int points=0,scorebar_y;
 
+		void InstantiateContext(UIPanel panel,ScreenContext con){
+			for (int x=0;x<width;++x){
+				for (int y=0;y<height;++y){
+					var cell=Instantiate(ScreenCell_prefab) as GameObject;
+					
+					var lab=cell.GetComponent<UILabel>();
+					lab.width=x_size;lab.height=y_size;
+					lab.pivot=UIWidget.Pivot.BottomLeft;
+					
+					cell.transform.parent=panel.transform;
+					cell.transform.localPosition=new Vector3(x*x_size,y*y_size);
+					cell.transform.localScale=Vector3.one*(x_size/16);
+					cell.transform.localRotation=Quaternion.identity;
+					
+					var data=new CellObjData(x,y,lab);
+					con.ScreenCells[x,y]=data;
+				}
+			}
+		}
+
 		//logic
 		void Start () 
 		{
 			scorebar_y=height-1;
 
-			context=new ScreenContext(width,height);
+			contextSmall=new ScreenContext(width,height);
+			contextBig=new ScreenContext(width,height);
 			//instantiating screen context
-			for (int x=0;x<width;++x){
-				for (int y=0;y<height;++y){
-					var cell=Instantiate(ScreenCell_prefab) as GameObject;
+			InstantiateContext(ScreenPanelSmall,contextSmall);
+			InstantiateContext(ScreenPanelBig,contextBig);
 
-					var lab=cell.GetComponent<UILabel>();
-					lab.width=x_size;lab.height=y_size;
-					lab.pivot=UIWidget.Pivot.BottomLeft;
-
-					cell.transform.parent=CellParent;
-					cell.transform.localPosition=new Vector3(x*x_size,y*y_size);
-					cell.transform.localScale=Vector3.one*(x_size/16);
-					cell.transform.localRotation=CellParent.localRotation;
-
-					var data=new CellObjData(x,y,lab);
-					context.ScreenCells[x,y]=data;
-				}
-			}
+			context=contextSmall;
 
 			Grid=new GameGrid(0,0,width,height-1);
 

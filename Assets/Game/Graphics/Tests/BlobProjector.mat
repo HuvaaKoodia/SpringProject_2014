@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Grate Material
-  m_Shader: {fileID: 7, guid: 0000000000000000f000000000000000, type: 0}
+  m_Name: BlobProjector
+  m_Shader: {fileID: 4800000, guid: ac96f5c0b697340a887ac2bd77a0bddc, type: 3}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -17,31 +17,26 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: 826ddfa7b44efeb4b80a436f8c1889d8, type: 3}
+          m_Texture: {fileID: 2800000, guid: 278ba5456581d8b4c9e7e98dc5343aa7, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _BumpMap
+          name: _ShadowTex
         second:
-          m_Texture: {fileID: 2800000, guid: 7f8a384c9b9353e4390185ee8c04ee1f, type: 3}
+          m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
-    m_Floats:
       data:
         first:
-          name: _Cutoff
-        second: .5
-      data:
-        first:
-          name: _Shininess
-        second: .0792755485
+          name: _FalloffTex
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
     m_Colors:
       data:
         first:
           name: _Color
-        second: {r: .83088237, g: .83088237, b: .83088237, a: 1}
-      data:
-        first:
-          name: _SpecColor
-        second: {r: .338235319, g: .310878038, b: .310878038, a: 0}
+        second: {r: 1, g: 1, b: 1, a: 1}

@@ -191,7 +191,7 @@ public class WeaponMain : MonoBehaviour {
 
                 IncreaseHeat(1);
 
-				if (Accuracy > Subs.RandomPercent())
+				if (HitChancePercent(enemyPair.Key) > Subs.RandomPercent())
 				{
                     //hit
 					int dmg = (int)Random.Range(MinDamage, MaxDamage);
