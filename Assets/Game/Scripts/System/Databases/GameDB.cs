@@ -170,6 +170,6 @@ public class GameObjData{
 		AvailableMissions=new List<MissionObjData>();
 		PlayerData=new PlayerObjData();
 		VendorStore=new InvItemStorage(8,4,2);
-		FinanceManager = new FinanceManager();
+		//FinanceManager = new FinanceManager();
 	}
 }
