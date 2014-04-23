@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class FinanceMenu : MonoBehaviour {
 	
-	public FinanceManager _FinanceManager;
+	public FinanceManager _FinanceManager = new FinanceManager();
 	
 	public UILabel Days;										//variable that keeps track of the label for Days Until Next Update
 	public UILabel PlayerMoney;									//variable that keeps track of the label for Player Money 
@@ -18,10 +18,10 @@ public class FinanceMenu : MonoBehaviour {
 	public List<GameObject> DebtsActivate;						//List that keeps track of the Debt types ie, DebtAdded and DebtEmpty for each Debt
 	
 	private float ticks = 0;									//variable to keep track of time
+	string money_unit = " " + XmlDatabase.MoneyUnit;
 	
 	// Use this for initialization
 	void Start () {
-		_FinanceManager = new FinanceManager();
 		InitializeValues();
 	}
 	
@@ -30,12 +30,13 @@ public class FinanceMenu : MonoBehaviour {
 		DaysTimer();
 		UpdateValues();
 	}
-	
+
+	//INITIALIZE
 	//function that inializes variables
 	private void InitializeValues()
 	{
 		Days.text = _FinanceManager.days_till_update.ToString();
-		
+
 		PlayerMoney.text = _FinanceManager.player_money.ToString();
 		
 		if(LeftToBePayed.Count > 0)
@@ -89,7 +90,8 @@ public class FinanceMenu : MonoBehaviour {
 			}
 		}
 	}
-	
+
+	//UPDATE
 	//function that updates variables
 	private void UpdateValues()
 	{
@@ -152,6 +154,39 @@ public class FinanceMenu : MonoBehaviour {
 		
 		ExistingCash.text = _FinanceManager.existing_cash.ToString();
 	}
+
+	//INCREASE
+	//function that increases ShortenDebt value
+	private void IncrementProcess(int sd_index, int ltbp_index)
+	{
+		//value for DebtEmpty
+		int value1 = int.Parse(ShortenDebt[sd_index].text);
+		value1 += 1000;
+		
+		//cap for the value
+		ShortenDebt[sd_index].text = value1.ToString();
+		if(int.Parse(ShortenDebt[sd_index].text) >= 50000)
+		{
+			ShortenDebt[sd_index].text = "50000";
+		}
+		
+		//value for DebtActive
+		int value = int.Parse(ShortenDebt[sd_index - 1].text);
+		int ltbp = int.Parse(LeftToBePayed[ltbp_index].text);
+		
+		//value can only increment if left_tb_payed value is > 0
+		if(ltbp != 0)
+		{
+			value += 1000;
+		}
+		
+		//cap for the value
+		ShortenDebt[sd_index - 1].text = value.ToString();
+		if(int.Parse(ShortenDebt[sd_index - 1].text) >= ltbp && ltbp != 0)
+		{
+			ShortenDebt[sd_index - 1].text = LeftToBePayed[ltbp_index].text;
+		}
+	}
 	
 	//function that increases the value of Shorten Debt By component of Debt1
 	public void IncreaseShortDebt1()
@@ -170,6 +205,33 @@ public class FinanceMenu : MonoBehaviour {
 	{
 		IncrementProcess(5, 2);
 	}
+
+	//DECREASE
+	//function that decreases ShortenDebt value
+	private void DecrementProcess(int sd_index)
+	{
+		//value for DebtEmpty
+		int value1 = int.Parse(ShortenDebt[sd_index].text);
+		value1 -= 1000;
+		
+		//cap for the value
+		ShortenDebt[sd_index].text = value1.ToString();
+		if(int.Parse(ShortenDebt[sd_index].text) <= 10000)
+		{
+			ShortenDebt[sd_index].text = "10000";
+		}
+		
+		//value for DebtActive
+		int value = int.Parse(ShortenDebt[sd_index - 1].text);
+		value -= 1000;
+		
+		//cap for the value
+		ShortenDebt[sd_index - 1].text = value.ToString();
+		if(int.Parse(ShortenDebt[sd_index - 1].text) <= 1000)
+		{
+			ShortenDebt[sd_index - 1].text = "1000";
+		}
+	}
 	
 	//function that decreases the value of Shorten Debt By component of Debt1
 	public void DecreaseShortDebt1()
@@ -187,6 +249,42 @@ public class FinanceMenu : MonoBehaviour {
 	public void DecreaseShortDebt3()
 	{
 		DecrementProcess(5);
+	}
+
+	//ACTIVATE
+	//functions that calls all the necessary calculation functions to update the labels in Panel(index+2)
+	private void ProcessPanel(int index)
+	{
+		if(index >= 0 && index < 3)
+		{
+			_FinanceManager.listofdebts[index].CalcMonthlyCut();
+			_FinanceManager.CalcInterestPercent();
+			_FinanceManager.listofdebts[index].CalcInterest();
+			_FinanceManager.listofdebts[index].CalcDebtPayment();
+			_FinanceManager.CalcPaymentTotal(false);
+			_FinanceManager.CalcExistingCash();
+		}
+		else
+		{
+			Debug.Log("Key in 0 to 2 only.");
+			Debug.Break();
+		}
+	}
+
+	//function to process the activation and deactivation of specific debts
+	private void ActivateDebtProcess(int index_1, int index_2)
+	{
+		//add a debt
+		_FinanceManager.AddDebt(index_1);
+		
+		_FinanceManager.listofdebts[index_1].left_tb_payed = int.Parse(ShortenDebt[index_2].text);
+		
+		//process the necessary values for the current panel
+		ProcessPanel(index_1);
+		
+		//enable DebtActive and disable DebtEmpty for current panel
+		DebtsActivate[index_2 - 1].SetActive(true);
+		DebtsActivate[index_2].SetActive(false);
 	}
 	
 	//function that activates DebtAdded and deactivates DebtEmpty of Debt1
@@ -227,110 +325,55 @@ public class FinanceMenu : MonoBehaviour {
 		}
 	}
 
-	//function to process the activation and deactivation of specific debts
-	private void ActivateDebtProcess(int index_1, int index_2)
+	//SHORTEN DEBT
+	//function to ensure such that ShortenDebt values in the different Debt screens are correct
+	private void ShortenDebtCheck()
 	{
-		//add a debt
-		_FinanceManager.AddDebt(index_1);
-		
-		_FinanceManager.listofdebts[index_1].left_tb_payed = int.Parse(ShortenDebt[index_2].text);
-		
-		//process the necessary values for the current panel
-		ProcessPanel(index_1);
-		
-		//enable DebtActive and disable DebtEmpty for current panel
-		DebtsActivate[index_2 - 1].SetActive(true);
-		DebtsActivate[index_2].SetActive(false);
-	}
-
-	//function that increases ShortenDebt value
-	private void IncrementProcess(int sd_index, int ltbp_index)
-	{
-		//value for DebtEmpty
-		int value1 = int.Parse(ShortenDebt[sd_index].text);
-		value1 += 1000;
-		
-		//cap for the value
-		ShortenDebt[sd_index].text = value1.ToString();
-		if(int.Parse(ShortenDebt[sd_index].text) >= 50000)
+		if(ShortenDebt.Count > 0)
 		{
-			ShortenDebt[sd_index].text = "50000";
-		}
-		
-		//value for DebtActive
-		int value = int.Parse(ShortenDebt[sd_index - 1].text);
-		int ltbp = int.Parse(LeftToBePayed[ltbp_index].text);
-		
-		//value can only increment if left_tb_payed value is > 0
-		if(ltbp != 0)
-		{
-			value += 1000;
-		}
-		
-		//cap for the value
-		ShortenDebt[sd_index - 1].text = value.ToString();
-		if(int.Parse(ShortenDebt[sd_index - 1].text) >= ltbp && ltbp != 0)
-		{
-			ShortenDebt[sd_index - 1].text = LeftToBePayed[ltbp_index].text;
-		}
-	}
-
-	//function that decreases ShortenDebt value
-	private void DecrementProcess(int sd_index)
-	{
-		//value for DebtEmpty
-		int value1 = int.Parse(ShortenDebt[sd_index].text);
-		value1 -= 1000;
-		
-		//cap for the value
-		ShortenDebt[sd_index].text = value1.ToString();
-		if(int.Parse(ShortenDebt[sd_index].text) <= 10000)
-		{
-			ShortenDebt[sd_index].text = "10000";
-		}
-		
-		//value for DebtActive
-		int value = int.Parse(ShortenDebt[sd_index - 1].text);
-		value -= 1000;
-		
-		//cap for the value
-		ShortenDebt[sd_index - 1].text = value.ToString();
-		if(int.Parse(ShortenDebt[sd_index - 1].text) <= 1000)
-		{
-			ShortenDebt[sd_index - 1].text = "1000";
+			for(int i = 0; i < ShortenDebt.Count; i++)
+			{
+				if(i%2 != 0)
+				{
+					ShortenDebt[i].text = "10000";
+				}
+				else
+				{
+					ShortenDebt[i].text = "1000";
+				}
+			}
 		}
 	}
 	
-	//functions that calls all the necessary calculation functions to update the labels in Panel(index+2)
-	private void ProcessPanel(int index)
+	//function to perform the necessary steps on the specific Debts if left to be payed amount < 0
+	private void ShortenDebtCheck(int debt_index, int debt_active_index)
 	{
-		if(index >= 0 && index < 3)
-		{
-			_FinanceManager.listofdebts[index].CalcMonthlyCut();
-			_FinanceManager.CalcInterestPercent();
-			_FinanceManager.listofdebts[index].CalcInterest();
-			_FinanceManager.listofdebts[index].CalcDebtPayment();
-			_FinanceManager.CalcPaymentTotal(false);
-			_FinanceManager.CalcExistingCash();
-		}
-		else
-		{
-			Debug.Log("Key in 0 to 2 only.");
-			Debug.Break();
-		}
+		_FinanceManager.listofdebts[debt_index].left_tb_payed = 0;
+		
+		//enable DebtActive and disable DebtEmpty for current panel
+		DebtsActivate[debt_active_index].SetActive(false);
+		DebtsActivate[debt_active_index + 1].SetActive(true);
+		
+		_FinanceManager.listofdebts[debt_index].active = false;
 	}
 
 	//function to Shorten the amount left to be payed in Panel2
 	public void ShortenDebt1()
 	{
-		if(int.Parse(LeftToBePayed[0].text) > 0)
+		if(_FinanceManager.player_money >= int.Parse(ShortenDebt[0].text))
 		{
-			_FinanceManager.listofdebts[0].left_tb_payed -= int.Parse(ShortenDebt[0].text);
-		}
-		else
-		{
-			ShortenDebtCheck(0, 0);
-			ShortenDebtCheck();
+			if(int.Parse(LeftToBePayed[0].text) > 0)
+			{
+				_FinanceManager.listofdebts[0].left_tb_payed -= int.Parse(ShortenDebt[0].text);
+			}
+			else
+			{
+				ShortenDebtCheck(0, 0);
+				ShortenDebtCheck();
+			}
+
+			_FinanceManager.player_money -= int.Parse(ShortenDebt[0].text);
+			_FinanceManager.Player.PlayerData.Money = (int)_FinanceManager.player_money;
 		}
 	}
 
@@ -346,6 +389,9 @@ public class FinanceMenu : MonoBehaviour {
 			ShortenDebtCheck(1, 2);
 			ShortenDebtCheck();
 		}
+
+		_FinanceManager.player_money -= int.Parse(ShortenDebt[2].text);
+		_FinanceManager.Player.PlayerData.Money = (int)_FinanceManager.player_money;
 	}
 
 	//function to Shorten the amount left to be payed in Panel4
@@ -360,8 +406,12 @@ public class FinanceMenu : MonoBehaviour {
 			ShortenDebtCheck(2, 4);
 			ShortenDebtCheck();
 		}
+
+		_FinanceManager.player_money -= int.Parse(ShortenDebt[4].text);
+		_FinanceManager.Player.PlayerData.Money = (int)_FinanceManager.player_money;
 	}
 
+	//DAY TIMER
 	//function to update time for number of days until next update
 	private void DaysTimer()
 	{
@@ -381,36 +431,5 @@ public class FinanceMenu : MonoBehaviour {
 		{
 			ticks += Time.deltaTime;
 		}
-	}
-
-	//function to ensure such that ShortenDebt values in the different Debt screens are correct
-	private void ShortenDebtCheck()
-	{
-		if(ShortenDebt.Count > 0)
-		{
-			for(int i = 0; i < ShortenDebt.Count; i++)
-			{
-				if(i%2 != 0)
-				{
-					ShortenDebt[i].text = "10000";
-				}
-				else
-				{
-					ShortenDebt[i].text = "1000";
-				}
-			}
-		}
-	}
-
-	//function to perform the necessary steps on the specific Debts if left to be payed amount < 0
-	private void ShortenDebtCheck(int debt_index, int debt_active_index)
-	{
-		_FinanceManager.listofdebts[debt_index].left_tb_payed = 0;
-		
-		//enable DebtActive and disable DebtEmpty for current panel
-		DebtsActivate[debt_active_index].SetActive(false);
-		DebtsActivate[debt_active_index + 1].SetActive(true);
-		
-		_FinanceManager.listofdebts[debt_index].active = false;
 	}
 }

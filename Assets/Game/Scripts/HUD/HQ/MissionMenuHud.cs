@@ -47,6 +47,8 @@ public class MissionMenuHud : MonoBehaviour {
         _VendorMenu.Init();
 
 		_MechanicMenu.SetPlayer(SS.GDB.GameData.PlayerData);
+	
+		_FinanceMenu._FinanceManager.SetPlayer(SS.GDB.GameData.PlayerData);
 
         //open correct menu
 
