@@ -54,22 +54,23 @@ public class Debt
 
 public class FinanceManager
 {
-	GameObjData Player;												//access the Player's data
-	public List<Debt> listofdebts;									//store all the debts taken
+	public GameObjData Player{get;set;}												//access the Player's data
+	public List<Debt> listofdebts{get;set;}									//store all the debts taken
 	
-	public int days_till_update;									//variable to keep track of the number of days until the next update (default value = 30)
+	public int days_till_update{get;set;}									//variable to keep track of the number of days until the next update (default value = 30)
 	private int debt_max;											//variable for the maximum number of debts the Player can take
 	
-	public float player_money;										//variable to keep track of the amount of money the player has at the given moment
-	public float payment_total;										//variable to store the sum of all the debts
-	public float existing_cash;										//variable to keep track the resultant amount after minusing payment total from player money
+	public float player_money{get;set;}										//variable to keep track of the amount of money the player has at the given moment
+	public float payment_total{get;set;}										//variable to store the sum of all the debts
+	public float existing_cash{get;set;}										//variable to keep track the resultant amount after minusing payment total from player money
 		
-	public bool day_pass;											//variable set to true only if a day has passed
+	public bool day_pass{get;set;}											//variable set to true only if a day has passed
 
-	public float default_percent;									//variable contributing to calculating interest percentage
-	public float increase_percent;									//variable contributing to calculating interest percentage
-	public int month = 1;
-	
+	public float default_percent{get;set;}									//variable contributing to calculating interest percentage
+	public float increase_percent{get;set;}									//variable contributing to calculating interest percentage
+
+	public int month{get;set;}
+
 	public FinanceManager ()										//constructor that initializes variables
 	{
 		Player = new GameObjData();
@@ -90,6 +91,13 @@ public class FinanceManager
 		{
 			listofdebts.Add(new Debt());
 		}
+
+		month = 1;
+	}
+
+	public void SetPlayer(PlayerObjData player)
+	{
+		Player.PlayerData = player;
 	}
 	
 	//function taht updates the Player's amount of money after paying off the debts
@@ -168,7 +176,8 @@ public class FinanceManager
 			listofdebts[i].CalcInterest();
 			listofdebts[i].CalcDebtPayment();
 		}
-		
+
+		//reset payment total and recalculate value of payment total
 		payment_total = 0.0f;
 		CalcPaymentTotal(true);
 		CalcExistingCash();

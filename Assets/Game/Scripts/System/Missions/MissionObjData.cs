@@ -32,7 +32,7 @@ public class MissionObjData {
 	public string LootQuality;
 
 	public int TravelTime{get;set;}
-	public int ExpirationTime{get;set;}
+	public int ExpirationTime{get;set;}	
 
 	public int Reward{get;set;}
 	public string MissionPoolIndex{get;set;}
