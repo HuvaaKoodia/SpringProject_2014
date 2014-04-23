@@ -33,6 +33,8 @@ public class PlayerMain : EntityMain
 	public Camera HudCamera;
 	public Camera TargetingCamera;
 
+	public Animation playerAnimation;
+
     public void SetObjData(PlayerObjData data){
         ObjData=data;
     }
@@ -192,6 +194,31 @@ public class PlayerMain : EntityMain
         ObjData.TakeDMG(damage,dir);
 
         Health = ObjData.UpperTorso.HP;
+
+		switch(dir)
+		{
+		case 0:
+			//playerAnimation["PlayerHitFromRight"].normalizedTime = 0;
+			//playerAnimation["PlayerHitFromRight"].speed = 1;
+			playerAnimation.Play("PlayerHitFromRight");
+			break;
+		case 1:
+			//playerAnimation["PlayerHitFromFront"].normalizedTime = 0;
+			//playerAnimation["PlayerHitFromFront"].speed = 1;
+			playerAnimation.Play("PlayerHitFromFront");
+			break;
+		case 2:
+			//playerAnimation["PlayerHitFromLeft"].normalizedTime = 0;
+			//playerAnimation["PlayerHitFromLeft"].speed = 1;
+			playerAnimation.Play("PlayerHitFromLeft");
+			break;
+		case 3:
+			//playerAnimation["PlayerHitFromBack"].normalizedTime = 0;
+			//playerAnimation["PlayerHitFromBack"].speed = 1;
+			playerAnimation.Play("PlayerHitFromBack");
+			break;
+		}
+
         if (Health <= 0)
 		{
 			Debug.Log("Kuoli saatana");
@@ -375,5 +402,11 @@ public class PlayerMain : EntityMain
 	{
 		GameCamera.GetComponent<MouseLook>().MouseLookOn = look;
 		HudCamera.GetComponent<MouseLook>().MouseLookOn = look;
+	}
+
+	public void ToggleMouseLook()
+	{
+		GameCamera.GetComponent<MouseLook>().ToggleMouseLookOn();
+		HudCamera.GetComponent<MouseLook>().ToggleMouseLookOn();
 	}
 }

@@ -47,12 +47,14 @@ public class MouseLook : MonoBehaviour {
 
 	int layer;
 
+	public bool UseDeadzone = false;
+
 	void Update ()
 	{
 		//VERSIO 4, KAIKKI MUUT VERSIOT KOMMENTTEIHIN JA TÄÄLLÄ YLHÄÄLLÄ NÄIN
 		//VERSION 4 SAA POIS PÄÄLTÄ JOS PAKOTTAA isInDeadzonen TRUEKSI
 		Ray mouseRay = camera.ScreenPointToRay(Input.mousePosition);
-		bool isInDeadzone = Physics.Raycast(mouseRay, 1, layer);
+		bool isInDeadzone = UseDeadzone ? Physics.Raycast(mouseRay, 1, layer) : false;
 
 		if (isInDeadzone)
 		{
@@ -178,5 +180,10 @@ public class MouseLook : MonoBehaviour {
 		startX = OriginalRot.eulerAngles.x;
 		startY = OriginalRot.eulerAngles.y;
 		startZ = OriginalRot.eulerAngles.z;
+	}
+
+	public void ToggleMouseLookOn()
+	{
+		MouseLookOn = !MouseLookOn;
 	}
 }

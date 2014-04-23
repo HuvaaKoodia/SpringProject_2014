@@ -101,6 +101,10 @@ public class PlayerInputSub : MonoBehaviour {
 			InteractInput(false);
 		}
 
+		if (Input.GetButtonDown("Free look toggle"))
+		{
+			FreeLookToggleInput();
+		}
 #if UNITY_EDITOR
         //DEV.DEBUG damage
         var x=playerMovement.currentGridX;
@@ -264,6 +268,11 @@ public class PlayerInputSub : MonoBehaviour {
 		if (player.GC.HUD.currentMenuState == MenuState.NothingSelected || 
 		    player.GC.HUD.currentMenuState == MenuState.MovementHUD)
 			player.interactSub.Interact(screenClick);
+	}
+
+	public void FreeLookToggleInput()
+	{
+		player.ToggleMouseLook();
 	}
 
     bool NotUsable(){

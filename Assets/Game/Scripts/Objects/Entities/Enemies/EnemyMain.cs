@@ -19,7 +19,7 @@ public class EnemyMain : EntityMain {
 
 	float normalMovementSpeed;
 	float normalTurnSpeed;
-	float culledSpeedMultiplier = 5;
+	float culledSpeedMultiplier = 7;
 
 	// Use this for initialization
 	public override void Awake()

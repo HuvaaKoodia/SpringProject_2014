@@ -135,7 +135,7 @@ public class MasterHudMain : MonoBehaviour {
 			player.HUD.disperseHeatButton.SetActive(true);
 			player.EndTargetingMode();
 
-			player.SetMouseLook(true);
+			//player.SetMouseLook(true);
 
 			DeactivateInventory();
 
@@ -149,7 +149,7 @@ public class MasterHudMain : MonoBehaviour {
 			player.HUD.disperseHeatButton.SetActive(false);
 			player.EndTargetingMode();
 
-			player.SetMouseLook(true);
+			//player.SetMouseLook(true);
 
 			DeactivateInventory();
 			break;
@@ -159,7 +159,7 @@ public class MasterHudMain : MonoBehaviour {
 			player.HUD.MovementHud.SetActive(false);
 			player.HUD.TargetingHud.SetActive(true);
 			player.HUD.disperseHeatButton.SetActive(false);
-			player.SetMouseLook(true);
+			//player.SetMouseLook(true);
 
 			DeactivateInventory();
 
