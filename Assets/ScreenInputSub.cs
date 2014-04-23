@@ -7,6 +7,13 @@ public class ScreenInputSub : MonoBehaviour {
 
 	void OnPress (UICamera.InputEvent isPressed)
 	{
-		if (isPressed.isPressed) screen.Click(isPressed.Hit);
+		if (isPressed.isPressed){
+			if (isPressed.PressIndex==0){
+				screen.Click(isPressed.Hit);
+			}
+			else{
+				screen.ToggleContext();
+			}
+		}
 	}
 }

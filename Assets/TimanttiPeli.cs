@@ -64,15 +64,22 @@ namespace ComputerSystems{
 
 		void SetContext(bool small){
 			if (small){
+				contextSmall.SetData(contextBig);
 				context=contextSmall;
 				ScreenPanelSmall.gameObject.SetActive(true);
 				ScreenPanelBig.gameObject.SetActive(false);
 			}
 			else{
+				contextBig.SetData(contextSmall);
 				context=contextBig;
 				ScreenPanelSmall.gameObject.SetActive(false);
 				ScreenPanelBig.gameObject.SetActive(true);
 			}
+		}
+
+		public void ToggleContext ()
+		{
+			SetContext(context==contextBig);
 		}
 
 		int gameover_step=0;
@@ -521,10 +528,27 @@ namespace ComputerSystems{
 				}
 			}
 		}
+
+		public void SetData (ScreenContext other)
+		{
+			if (other.Width==Width&&other.Height==Height)
+			{
+				for (int x=0;x<Width;++x){
+					for (int y=0;y<Height;++y){
+						GetCell(x,y).SetText(other.GetCell(x,y).Text);
+					}
+				}
+			}
+			else{
+				Debug.LogWarning("Screen contexts have a different size and cannot be copied");
+			}
+		}
 	}
 
 	class CellObjData{
 		public UILabel label;
+
+		public string Text{get{return label.text;}}
 
 		public int X{get;private set;}
 		public int Y{get;private set;}
