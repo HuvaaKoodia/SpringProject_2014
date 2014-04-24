@@ -187,6 +187,12 @@ public class XMLDataLoader : XML_Loader
             data.Room=getStr(node,"Room","room");
             data.Item=getStr(node,"Item","");
 
+			foreach(XmlNode n in node){
+				if (n.Name=="Data"){
+					data.Data.Add(n.InnerText);
+				}
+			}
+
 			XmlDatabase.AddObjective(type,data);
             return true;
         }

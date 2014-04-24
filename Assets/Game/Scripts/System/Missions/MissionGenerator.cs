@@ -247,15 +247,32 @@ public class MissionGenerator{
 
 		foreach (var o in mission.PrimaryObjectives){
 			o.status=0;
-			if (o.Objective==MissionObjData.Objective.FindItem){
-				var objective=XmlDatabase.Objectives[o.Objective];
+			bool complete=true;
+
+			var xml=XmlDatabase.Objectives[o.Objective];
+
+			if (xml.Item!=""){
+				complete=false;
+				//has specified item
 				foreach(var qi in quest_items){
-					if (qi.baseItem.name==objective.Item){
-						o.status=1;
+					if (qi.baseItem.name==xml.Item){
+						complete=true;
 						break;
 					}
 				}
 			}
+
+			if (xml.Data.Count>0){
+
+				//has all required data
+				foreach(var d in xml.Data){
+					if (!player.HasDownloadData(d)){
+						complete=false;
+					}
+				}
+			}
+
+			if (complete) o.status=1;
 		}
 	}
 	
