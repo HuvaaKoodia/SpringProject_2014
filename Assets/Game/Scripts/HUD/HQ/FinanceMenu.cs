@@ -143,6 +143,7 @@ public class FinanceMenu : MonoBehaviour {
 			{
 				UpdateLeftToBePayed(i);
 				UpdateMonthlyCut(i);
+				UpdateInterest(i);
 				UpdatePayments (i);
 			}
 		}
