@@ -181,7 +181,8 @@ public class UIDragObject : MonoBehaviour
 
 	public void ConstraintToBounds(){
 		FindPanel();
-		UpdateBounds ();
+		UpdateBounds();
+
 		mPanel.ConstrainTargetToBounds(target, ref mBounds, true);
 	}
 

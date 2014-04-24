@@ -36,8 +36,13 @@ public class InGameInfoPanelMain : MonoBehaviour {
     }
 
 	public void OpenTab_Map(){
-		MenuMap.BecomeVisible();
+		StartCoroutine(CallBecomeVisibleAfterOneUpdateStepBecauseUnitySetActiveShenanigans());
 		Tabs.OpenTab4();
+	}
+
+	IEnumerator CallBecomeVisibleAfterOneUpdateStepBecauseUnitySetActiveShenanigans(){
+		yield return null;
+		MenuMap.BecomeVisible();
 	}
 
 	public void OpenTab_Status(){

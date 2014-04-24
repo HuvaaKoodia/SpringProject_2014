@@ -3,13 +3,15 @@ using System.Collections;
 
 public class DataTerminalHudController : MonoBehaviour {
 
+	public enum StatType{Generator,Lights,Elevator,EngineData,NavigationData,CargoData,ArmoryData};
+
 	public MasterHudMain menu;
 	public GameObject DataTerminal_button;
 	public MenuTabController Tabs;
 
 	public GameObject[] Terminals;
 
-	private DataTerminalMain.Type CurrentType;
+	private TileObjData.Obj CurrentType;
 
 	public void Awake(){
 		foreach(var t in Terminals){
@@ -21,12 +23,12 @@ public class DataTerminalHudController : MonoBehaviour {
 
 	//menu activation
 
-	public void OpenDataTerminal (DataTerminalMain.Type terminalType)
+	public void OpenDataTerminal (TileObjData.Obj terminalType)
 	{
 		DataTerminal_button.SetActive(true);
 		CurrentType=terminalType;
 
-		Tabs.ActivateMenu(Terminals[(int)terminalType]);
+		Tabs.ActivateMenu(Terminals[DataTerminalMain.TypeToIndex(terminalType)]);
 	}
 
 	public void CloseDataTerminal ()
@@ -39,7 +41,6 @@ public class DataTerminalHudController : MonoBehaviour {
 	}
 
 	//game control functions
-	public enum StatType{Generator,Lights,Elevator};
 
 	public void ToggleStatus(DataTerminalButton button){
 		switch(button.type){

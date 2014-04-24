@@ -18,7 +18,7 @@ public class InvBaseItem
 		_Amount
 	}
 
-    public string name,description,ammotype;
+    public string name,description,ammotype,mesh;
     public AmmoXmlData AmmoData;
 	public Type type = Type.None;
 

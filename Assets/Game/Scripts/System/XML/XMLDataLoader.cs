@@ -79,12 +79,14 @@ public class XMLDataLoader : XML_Loader
 		if (node.Name == "Item"||node.Name=="Weapon") //DEV. BWComp option
 		{
 			InvBaseItem item=new InvBaseItem();
+
 			item.name=getAttStr(node,"name");
 			item.type=(InvBaseItem.Type)System.Enum.Parse(typeof(InvBaseItem.Type),getAttStr(node,"type"),true);
+			item.mesh=getAttStr(node,"mesh","none");
 			item.description=getStr(node,"Description");
 			item.iconName=getAttStr(node,"sprite");
-            item.ammotype=getStr(node,"Ammo");
 
+            item.ammotype=getStr(node,"Ammo");
 			foreach(var t in Subs.EnumValues<InvStat.Type>()){
 				AddStat(node,item,t);
 			}

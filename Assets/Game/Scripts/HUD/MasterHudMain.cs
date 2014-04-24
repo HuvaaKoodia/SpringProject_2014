@@ -84,7 +84,7 @@ public class MasterHudMain : MonoBehaviour {
 		ChangeMenuState(MenuState.NothingSelected);
 	}
 
-	public void ActivateDataTerminalHUD (DataTerminalMain.Type terminalType)
+	public void ActivateDataTerminalHUD (TileObjData.Obj terminalType)
 	{
 		TerminalHud.OpenDataTerminal(terminalType);
 		ChangeMenuState(MenuState.InventoryHUD);
