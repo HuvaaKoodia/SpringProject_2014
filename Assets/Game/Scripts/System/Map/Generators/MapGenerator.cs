@@ -86,7 +86,6 @@ public class MapGenerator : MonoBehaviour
 				if (data.TileType==TileObjData.Type.Door)
 				{
 					bool Delete=true;
-					//is airlock door
 					for(int i=0;i<2;i++){
 						int x1=0,y1=0,x2=0,y2=0;
 						
@@ -183,9 +182,13 @@ public class MapGenerator : MonoBehaviour
        				tile.TileObject=LootCrate;
                 	tile.TileObject.transform.parent = tile.transform;
 	                break;
-				case TileObjData.Obj.DataTerminal:
+				case TileObjData.Obj.NavigationTerminal:
+				case TileObjData.Obj.ArmoryTerminal:
+				case TileObjData.Obj.CargoTerminal:
+				case TileObjData.Obj.EngineTerminal:
 					var terminal = GameObject.Instantiate(MapPrefabs.DataTerminalPrefab, tile_pos, Quaternion.identity) as DataTerminalMain;
 					terminal.GC = GC;
+					terminal.SetType(tile.Data.ObjType);
 
 					tile.TileObject=terminal.gameObject;
 					tile.TileObject.transform.parent = tile.transform;
@@ -531,7 +534,6 @@ public class MapGenerator : MonoBehaviour
                     tileobj = MapPrefabs.Corridor_Deadend;
                     rotation = Quaternion.AngleAxis(90, Vector3.up);
                 }
-
                 break;
 
 			case TileObjData.Type.Elevator:

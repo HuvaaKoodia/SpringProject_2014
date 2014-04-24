@@ -111,8 +111,6 @@ public class GameController : MonoBehaviour {
 		OverrideMissionShip=false;
 		UseTestMap=false;
 		#endif
-
-	
 		aiController = new AIcontroller(this);
 		ShipObjData ship_objdata=null;
 
