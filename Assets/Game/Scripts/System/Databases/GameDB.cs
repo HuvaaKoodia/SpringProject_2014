@@ -93,7 +93,7 @@ public class GameDB : MonoBehaviour {
 		GenerateNewMissions(GameData.CurrentMission.TravelTime);
 		RestockVendor();
 
-		UpdateFinanceManager(GameData.CurrentMission.TravelTime);
+		//UpdateFinanceManager(GameData.CurrentMission.TravelTime);
 
         Application.LoadLevel(HQScene);
     }
@@ -148,10 +148,10 @@ public class GameDB : MonoBehaviour {
         }
     }
 
-	void UpdateFinanceManager(int amt_of_days)
-	{
-
-	}
+//	void UpdateFinanceManager(int amt_of_days)
+//	{
+//
+//	}
 }
 
 public class GameObjData{
@@ -161,7 +161,7 @@ public class GameObjData{
 	public MissionObjData CurrentMission{get;set;}
 	public InvItemStorage VendorStore{get;set;}
 
-	public FinanceManager FinanceManager{get;set;}
+	//public FinanceManager FinanceManager{get;set;}
 
 	public int CurrentTime{get;set;}
 
