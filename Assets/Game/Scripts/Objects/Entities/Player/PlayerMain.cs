@@ -34,6 +34,8 @@ public class PlayerMain : EntityMain
 	public Camera TargetingCamera;
 
 	public Animation playerAnimation;
+	public Animation legAnimation;
+	public bool AnimationsOn;
 
     public void SetObjData(PlayerObjData data){
         ObjData=data;
@@ -136,7 +138,10 @@ public class PlayerMain : EntityMain
 		inputSub.enabled = false;
 		ap -= movementCost;
 
-		playerAnimation.Play("Walk");
+		if (AnimationsOn)
+		{	playerAnimation.Play("Walk");
+			legAnimation.Play("Walk");
+		}
 	}
 
 	public void CullWorld(bool miniMapIgnoreDoors){

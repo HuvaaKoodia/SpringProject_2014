@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PrefabStore : MonoBehaviour {
 
@@ -63,9 +64,14 @@ public class PrefabStore : MonoBehaviour {
 	public RadarBlipSub RadarBlip;
 
 	//Weapon graphics
-	public GameObject
-		Cannon,
-		Gatling,
-		Shotgun
-			;
+	public Dictionary<string, GameObject> weaponGraphics;
+
+	public void Awake()
+	{
+		weaponGraphics = new Dictionary<string, GameObject>();
+		weaponGraphics.Add("Shotgun", Resources.Load("Weapons/Shotgun") as GameObject);
+		weaponGraphics.Add("Gatling", Resources.Load("Weapons/GatlingArm") as GameObject);
+		weaponGraphics.Add("Cannon", Resources.Load("Weapons/Cannon") as GameObject);
+		weaponGraphics.Add("NotFound", Resources.Load("Weapons/WeaponNotFound") as GameObject);
+	}
 }

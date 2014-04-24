@@ -72,13 +72,7 @@ public class WeaponMain : MonoBehaviour {
 
         if (Weapon==null) return;
 
-		bool changedGraphics = false;
-
-		if (GunName != Weapon.baseItem.name)
-		{
-			GunName=Weapon.baseItem.name;
-			changedGraphics = true;
-		}
+		GunName=Weapon.baseItem.name;
 
 		var dam=WeaponSlot.ObjData.GetDamage();
 		MinDamage = dam;
@@ -99,9 +93,25 @@ public class WeaponMain : MonoBehaviour {
             NoAmmoConsumption=false;
         }
 
-		if (changedGraphics)
+		if (weaponID == WeaponID.LeftShoulder || weaponID == WeaponID.RightShoulder)
+			return;
+
+		bool graphicsFound = player.GC.SS.PS.weaponGraphics.ContainsKey(Weapon.baseItem.mesh);
+		GameObject.Destroy(graphics);
+
+		if (graphicsFound)
 		{
-			//Destroy(graphics);
+			graphics = GameObject.Instantiate(player.GC.SS.PS.weaponGraphics[Weapon.baseItem.mesh]) as GameObject;
+			graphics.transform.parent = transform;
+			graphics.transform.localPosition = Vector3.zero;
+			graphics.transform.rotation = transform.rotation;
+		}
+		else
+		{
+			graphics = GameObject.Instantiate(player.GC.SS.PS.weaponGraphics["NotFound"]) as GameObject;
+			graphics.transform.parent = transform;
+			graphics.transform.localPosition = Vector3.zero;
+			graphics.transform.rotation = transform.rotation;
 		}
 	}
 
