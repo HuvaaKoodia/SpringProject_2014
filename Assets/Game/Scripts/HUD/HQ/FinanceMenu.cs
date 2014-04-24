@@ -3,9 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class FinanceMenu : MonoBehaviour {
-	
-	public FinanceManager _FinanceManager = new FinanceManager();
-	
+
 	public UILabel Days;										//variable that keeps track of the label for Days Until Next Update
 	public UILabel PlayerMoney;									//variable that keeps track of the label for Player Money 
 	public UILabel ExistingCash;								//variable that keeps track of the label for Existing Cash
@@ -19,6 +17,8 @@ public class FinanceMenu : MonoBehaviour {
 	
 	private float ticks = 0;									//variable to keep track of time
 	string money_unit = " " + XmlDatabase.MoneyUnit;
+
+	public FinanceManager _FinanceManager = new FinanceManager();
 	
 	// Use this for initialization
 	void Start () {
@@ -29,6 +29,11 @@ public class FinanceMenu : MonoBehaviour {
 	void Update () {
 		DaysTimer();
 		UpdateValues();
+	}
+
+	public void SetPlayer(PlayerObjData player)
+	{
+		_FinanceManager.Player = player;
 	}
 
 	//INITIALIZE
@@ -373,7 +378,7 @@ public class FinanceMenu : MonoBehaviour {
 			}
 
 			_FinanceManager.player_money -= int.Parse(ShortenDebt[0].text);
-			_FinanceManager.Player.PlayerData.Money = (int)_FinanceManager.player_money;
+			_FinanceManager.Player.Money = (int)_FinanceManager.player_money;
 		}
 	}
 
@@ -391,7 +396,7 @@ public class FinanceMenu : MonoBehaviour {
 		}
 
 		_FinanceManager.player_money -= int.Parse(ShortenDebt[2].text);
-		_FinanceManager.Player.PlayerData.Money = (int)_FinanceManager.player_money;
+		_FinanceManager.Player.Money = (int)_FinanceManager.player_money;
 	}
 
 	//function to Shorten the amount left to be payed in Panel4
@@ -408,7 +413,7 @@ public class FinanceMenu : MonoBehaviour {
 		}
 
 		_FinanceManager.player_money -= int.Parse(ShortenDebt[4].text);
-		_FinanceManager.Player.PlayerData.Money = (int)_FinanceManager.player_money;
+		_FinanceManager.Player.Money = (int)_FinanceManager.player_money;
 	}
 
 	//DAY TIMER
