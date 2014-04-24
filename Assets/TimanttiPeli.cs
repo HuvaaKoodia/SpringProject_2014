@@ -459,11 +459,11 @@ namespace ComputerSystems{
 
 		string getTypeChar(){
 			switch(Type){
-			case 0: return "A";
-			case 1: return "B";
-			case 2: return "C";
-			case 3: return "D";
-			case 4: return "E";
+			case 0: return "$"; // Set 1: ♥♦♣♠■
+			case 1: return "±"; // Set 2: ¥$%€£
+			case 2: return "■"; // Set 3: ÂÑÕÜÐ
+			case 3: return "♂"; // Set 4: Ø■#¶§
+			case 4: return "®";
 			default: return "";
 			}
 		}
@@ -536,6 +536,7 @@ namespace ComputerSystems{
 				for (int x=0;x<Width;++x){
 					for (int y=0;y<Height;++y){
 						GetCell(x,y).SetText(other.GetCell(x,y).Text);
+						GetCell(x,y).SetColor(other.GetCell(x,y).Color);
 					}
 				}
 			}
@@ -549,6 +550,7 @@ namespace ComputerSystems{
 		public UILabel label;
 
 		public string Text{get{return label.text;}}
+		public Color Color{get{return label.color;}}
 
 		public int X{get;private set;}
 		public int Y{get;private set;}

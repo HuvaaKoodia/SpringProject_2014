@@ -3,5 +3,27 @@
 		Health = "100"
 		MovementSpeed = "5"
 		TurnSpeed = "3"
-	/>
+		StartingWeaponAmount="2"
+		StartingUtilityAmount="2"
+		>
+	</Player>
+	
+	<LootPool name="starting_weapons">
+		<Item name="Gladius" weight="20"/>
+		<Item name="Arbalest" weight="20"/>
+		<Item name="Hades" weight="1"/>
+	</LootPool>
+
+	<LootPool name="starting_utilities">
+		<Item name="Radar" weight="3"/>
+		<Item name="Heat Sink" weight="3"/>
+		<Item name="Hydraulic Booster" weight="3"/>
+	</LootPool>
+
+	<LootQuality name="starting_quality">
+		<Item name="1"	weight="10"	/>
+		<Item name="2"	weight="20"	/>
+		<Item name="3"	weight="5"	/>
+	</LootQuality>
+
 </Root>

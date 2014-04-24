@@ -14,9 +14,13 @@ public class PlayerObjData{
 	public MechaPartObjData[] MechParts {get; set;}
 	public MechaPartObjData UpperTorso{get;set;}
 
+	public List<string> DownloadedData;
+
 	public PlayerObjData(){
         Items=new InvItemStorage(8,4,2);
         
+		DownloadedData=new List<string>();
+
         Ammo=new Dictionary<string ,int>();
 		foreach(var a in XmlDatabase.AmmoTypes){
             Ammo.Add(a.Key,a.Value.StartAmount);
@@ -156,4 +160,16 @@ public class PlayerObjData{
     {
 		Ammo[ammotype]=XmlDatabase.AmmoTypes[ammotype].MaxAmount;
     }
+
+	public void AddDownloadData(string data){
+		DownloadedData.Add(data);
+	}
+
+	public bool HasDownloadData(string data){
+		return DownloadedData.Contains(data);
+	}
+
+	public void ClearDownloadData(){
+		DownloadedData.Clear();
+	}
 }

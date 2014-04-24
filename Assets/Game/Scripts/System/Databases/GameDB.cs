@@ -148,9 +148,17 @@ public class GameDB : MonoBehaviour {
         }
     }
 
+	//update number of days until update
 	void UpdateFinanceManager(int amt_of_days)
 	{
+		GameData.FinanceManager.days_till_update -= amt_of_days;
 
+		if(GameData.FinanceManager.days_till_update <= 0)
+		{
+			GameData.FinanceManager.day_pass = true;
+			GameData.FinanceManager.UpdateDays();
+			GameData.FinanceManager.day_pass = false;
+		}
 	}
 }
 
@@ -170,6 +178,6 @@ public class GameObjData{
 		AvailableMissions=new List<MissionObjData>();
 		PlayerData=new PlayerObjData();
 		VendorStore=new InvItemStorage(8,4,2);
-		FinanceManager = new FinanceManager();
+		FinanceManager = new FinanceManager(PlayerData);
 	}
 }

@@ -1,4 +1,12 @@
 <Root>
+<!--
+Data types:
+-NavigationData
+-EngineData
+-CargoData
+-
+-->
+
 
 <Objective type="FindItem" name="Find item">
 	<Item>Blackbox</Item>
@@ -6,8 +14,7 @@
 </Objective>
 
 <Objective type="FindLogs" name="Find captain's logs">
-	<Item>ShipLogs</Item>
-	<Room>commandbridge</Room>
+	<Data>NavigationData</Data>
 </Objective>
 
 <Objective type="Explore" name="Explore the ship">

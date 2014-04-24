@@ -12,16 +12,16 @@ using System.Collections.Generic;
 
 public class Debt
 {
-	public float original_debt_sum;
-	public float left_tb_payed;										//variable to keep track of amount left to be payed per debt
-	public float monthly_cut;										//variable to keep track of monthly cut per debt (default value = 1000)
-	public float interest_percent;									//variable to keep track of interest percentage upon taking up a new debt
-	public float interest;											//variable to keep track of interest value per debt
-	public float debt_payment;										//variable to keep track of debt payment per debt
+	public float original_debt_sum{get;set;}
+	public float left_tb_payed{get;set;}									//variable to keep track of amount left to be payed per debt
+	public float monthly_cut{get;set;}										//variable to keep track of monthly cut per debt (default value = 1000)
+	public float interest_percent{get;set;}									//variable to keep track of interest percentage upon taking up a new debt
+	public float interest{get;set;}											//variable to keep track of interest value per debt
+	public float debt_payment{get;set;}										//variable to keep track of debt payment per debt
 
-	public bool active;												//variable to keep track of debt's active state
+	public bool active{get;set;}											//variable to keep track of debt's active state
 
-	public Debt()													//constructor that initializes variables
+	public Debt()															//constructor that initializes variables
 	{
 		original_debt_sum = 0.0f;
 		left_tb_payed = 0.0f;
@@ -54,32 +54,35 @@ public class Debt
 
 public class FinanceManager
 {
-	public PlayerObjData Player{get;set;}													//access the Player's data
+	public PlayerObjData Player{get;set;}									//access the Player's data
 	public List<Debt> listofdebts{get;set;}									//store all the debts taken
 	
 	public int days_till_update{get;set;}									//variable to keep track of the number of days until the next update (default value = 30)
-	private int debt_max;											//variable for the maximum number of debts the Player can take
+	private int debt_max;													//variable for the maximum number of debts the Player can take
 	
-	public float player_money{get;set;}									//variable to keep track of the amount of money the player has at the given moment
-	public float payment_total{get;set;}										//variable to store the sum of all the debts
-	public float existing_cash{get;set;}										//variable to keep track the resultant amount after minusing payment total from player money
+	public float player_money{get;set;}										//variable to keep track of the amount of money the player has at the given moment
+	public float payment_total{get;set;}									//variable to store the sum of all the debts
+	public float existing_cash{get;set;}									//variable to keep track the resultant amount after minusing payment total from player money
 		
 	public bool day_pass{get;set;}											//variable set to true only if a day has passed
 
 	public float default_percent{get;set;}									//variable contributing to calculating interest percentage
-	public float increase_percent{get;set;}								//variable contributing to calculating interest percentage
+	public float increase_percent{get;set;}									//variable contributing to calculating interest percentage
 
-	public int month{get;set;}
+	public int month{get;set;}												//variable to keep track of months (required in the calculation of interest percent)
 
-	public FinanceManager ()										//constructor that initializes variables
+	public FinanceManager()
 	{
-		Player = new PlayerObjData();
+	}
+
+	public FinanceManager (PlayerObjData player)							//constructor that initializes variables, takes in a PlayerObjData
+	{
+		Player = player;
 		listofdebts = new List<Debt>();
 		
 		days_till_update = 30;
 		debt_max = 3;
 		
-		//player_money = Player.Money;
 		payment_total = 0.0f;
 				
 		day_pass = false;
