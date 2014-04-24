@@ -135,6 +135,8 @@ public class PlayerMain : EntityMain
 
 		inputSub.enabled = false;
 		ap -= movementCost;
+
+		playerAnimation.Play("Walk");
 	}
 
 	public void CullWorld(bool miniMapIgnoreDoors){
@@ -187,22 +189,22 @@ public class PlayerMain : EntityMain
 		case 0:
 			//playerAnimation["PlayerHitFromRight"].normalizedTime = 0;
 			//playerAnimation["PlayerHitFromRight"].speed = 1;
-			playerAnimation.Play("PlayerHitFromRight");
+			//playerAnimation.Play("PlayerHitFromRight");
 			break;
 		case 1:
 			//playerAnimation["PlayerHitFromFront"].normalizedTime = 0;
 			//playerAnimation["PlayerHitFromFront"].speed = 1;
-			playerAnimation.Play("PlayerHitFromFront");
+			//playerAnimation.Play("PlayerHitFromFront");
 			break;
 		case 2:
 			//playerAnimation["PlayerHitFromLeft"].normalizedTime = 0;
 			//playerAnimation["PlayerHitFromLeft"].speed = 1;
-			playerAnimation.Play("PlayerHitFromLeft");
+			//playerAnimation.Play("PlayerHitFromLeft");
 			break;
 		case 3:
 			//playerAnimation["PlayerHitFromBack"].normalizedTime = 0;
 			//playerAnimation["PlayerHitFromBack"].speed = 1;
-			playerAnimation.Play("PlayerHitFromBack");
+			//playerAnimation.Play("PlayerHitFromBack");
 			break;
 		}
 

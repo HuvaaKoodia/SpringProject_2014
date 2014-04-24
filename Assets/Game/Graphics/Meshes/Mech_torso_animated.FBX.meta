@@ -50,8 +50,9 @@ ModelImporter:
     4300012: Cylinder023
     4300014: Cylinder024
     4300016: Body
-    7400000: Take 001
+    7400000: Walk
     9500000: //RootNode
+    11100000: //RootNode
     13700000: Body
   materials:
     importMaterials: 1
@@ -67,7 +68,55 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Walk
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 68
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Body
+        weight: 1
+      - path: CATRigHub001
+        weight: 1
+      - path: Cylinder017
+        weight: 1
+      - path: Cylinder018
+        weight: 1
+      - path: Cylinder019
+        weight: 1
+      - path: Cylinder020
+        weight: 1
+      - path: Cylinder021
+        weight: 1
+      - path: Cylinder022
+        weight: 1
+      - path: Cylinder023
+        weight: 1
+      - path: Cylinder024
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []
@@ -103,6 +152,6 @@ ModelImporter:
     feetSpacing: 0
     rootMotionBoneName: 
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 1
   additionalBone: 0
   userData: 
