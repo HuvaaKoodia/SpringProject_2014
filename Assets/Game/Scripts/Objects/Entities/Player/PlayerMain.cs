@@ -79,7 +79,7 @@ public class PlayerMain : EntityMain
     {
 		if (temphax){//start game cull
 			temphax=false;
-			CullWorld(true);
+			CullWorld(false);
 		}
 
         foreach (WeaponMain weapon in weaponList)

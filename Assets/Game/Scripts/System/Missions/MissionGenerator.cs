@@ -247,7 +247,7 @@ public class MissionGenerator{
 
 		foreach (var o in mission.PrimaryObjectives){
 			o.status=0;
-			bool complete=true;
+			bool complete=false;
 
 			var xml=XmlDatabase.Objectives[o.Objective];
 
@@ -260,14 +260,16 @@ public class MissionGenerator{
 						break;
 					}
 				}
+				if (!complete) continue;
 			}
 
 			if (xml.Data.Count>0){
-
+				complete=true;
 				//has all required data
 				foreach(var d in xml.Data){
 					if (!player.HasDownloadData(d)){
 						complete=false;
+						break;
 					}
 				}
 			}

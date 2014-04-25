@@ -28,7 +28,7 @@ public class DataTerminalHudController : MonoBehaviour {
 		DataTerminal_button.SetActive(true);
 		CurrentType=terminalType;
 		
-		Tabs.ActivateMenu(Terminals[DataTerminalMain.TypeToIndex(terminalType)]);
+		OpenCurrentTerminal();
 	}
 	
 	public void CloseDataTerminal ()
@@ -37,17 +37,15 @@ public class DataTerminalHudController : MonoBehaviour {
 	}
 	
 	public void OpenCurrentTerminal(){
-		Tabs.ActivateMenu(Terminals[(int)CurrentType]);
+		Tabs.ActivateMenu(Terminals[DataTerminalMain.TypeToIndex(CurrentType)]);
 	}
 	
 	//game control functions
-	
 	public void ToggleStatus(DataTerminalButton button){
 		switch(button.type){
 		case StatType.Generator:
 			ToggleGeneratorStatus(button);
 			break;
-		
 		case StatType.EngineData:
 		case StatType.CargoData:
 		case StatType.ArmoryData:

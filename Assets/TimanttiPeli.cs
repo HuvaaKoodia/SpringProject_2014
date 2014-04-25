@@ -7,7 +7,7 @@ namespace ComputerSystems{
 	public class TimanttiPeli : MonoBehaviour {
 		public GameObject ScreenCell_prefab;
 		public UIPanel ScreenPanelSmall,ScreenPanelBig;
-		public int width=10,height=10,x_size=32,y_size=32;
+		public int width=10,height=10,x_size_small=32,y_size_small=32,x_size_big=32,y_size_big=32;
 
 		public int BaseScore=100;
 
@@ -29,12 +29,12 @@ namespace ComputerSystems{
 					var cell=Instantiate(ScreenCell_prefab) as GameObject;
 					
 					var lab=cell.GetComponent<UILabel>();
-					lab.width=x_size;lab.height=y_size;
+					//lab.width=cell_x_size;lab.height=cell_y_size;
 					lab.pivot=UIWidget.Pivot.BottomLeft;
 					
 					cell.transform.parent=panel.transform;
-					cell.transform.localPosition=new Vector3(x*x_size,y*y_size);
-					cell.transform.localScale=Vector3.one*(x_size/16);
+					cell.transform.localPosition=new Vector3(x*con.CellWidth,y*con.CellHeight);
+					cell.transform.localScale=Vector3.one*(con.CellWidth/16);
 					cell.transform.localRotation=Quaternion.identity;
 					
 					var data=new CellObjData(x,y,lab);
@@ -48,8 +48,8 @@ namespace ComputerSystems{
 		{
 			scorebar_y=height-1;
 
-			contextSmall=new ScreenContext(width,height);
-			contextBig=new ScreenContext(width,height);
+			contextSmall=new ScreenContext(width,height,x_size_small,y_size_small);
+			contextBig=new ScreenContext(width,height,x_size_big,y_size_big);
 			//instantiating screen context
 			InstantiateContext(ScreenPanelSmall,contextSmall);
 			InstantiateContext(ScreenPanelBig,contextBig);
@@ -74,6 +74,13 @@ namespace ComputerSystems{
 				context=contextBig;
 				ScreenPanelSmall.gameObject.SetActive(false);
 				ScreenPanelBig.gameObject.SetActive(true);
+			}
+
+			foreach(var c in context.ScreenCells){//HD haxy hax... But it works?!?
+				c.label.fontSize=-1;
+				c.label.ResizeCollider();
+				c.label.fontSize=50;
+				c.label.ResizeCollider();
 			}
 		}
 
@@ -305,8 +312,8 @@ namespace ComputerSystems{
 			if (hit.transform!=null){
 				var relative=hit.collider.transform.InverseTransformPoint(hit.point);
 
-				int x=(int)(relative.x/(x_size));
-				int y=(int)(relative.y/(y_size));
+				int x=(int)(relative.x/(context.CellWidth));
+				int y=(int)(relative.y/(context.CellHeight));
 
 				SetSelected(x,y);
 
@@ -506,14 +513,18 @@ namespace ComputerSystems{
 	class ScreenContext{
 		public CellObjData[,] ScreenCells;
 
+		public int CellWidth {get;private set;}
+		public int CellHeight{get;private set;}
+
 		public int Width {get{return ScreenCells.GetLength(0);}}
 		public int Height{get{return ScreenCells.GetLength(1);}}
 
-		public ScreenContext(int w,int h){
+		public ScreenContext(int w,int h,int cell_x_size,int cell_y_size){
+			CellWidth=cell_x_size;CellHeight=cell_y_size;
 			ScreenCells=new CellObjData[w,h];
 		}
 
-		public CellObjData GetCell (int x, int y)
+		public CellObjData GetCell(int x, int y)
 		{
 			if (!Subs.insideArea(x,y,0,0,Width,Height)) return null;
 			return ScreenCells[x,y];

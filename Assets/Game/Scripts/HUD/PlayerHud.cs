@@ -167,7 +167,7 @@ public class PlayerHud : MonoBehaviour {
 			map.SetDisabled(!player.HasMap);
 			radar.radarZoom=2f+1f*(1f-(player.RadarRange/player.RadarRangeMax));
 
-			if (player.HasMap) player.CullWorld(true);
+			if (player.HasMap) player.CullWorld(false);
 		}
 	}
 
@@ -192,7 +192,6 @@ public class PlayerHud : MonoBehaviour {
 	public void OpenMap(){
 		MasterHud.OpenMapInfopanel();
 	}
-
 	
 	public void WeaponPressed(WeaponID id){
 		

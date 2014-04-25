@@ -51,7 +51,7 @@ public class HaxKnifeCulling : MonoBehaviour {
 			}
 		}
 
-		CullEnemies(pos1, pos2, detect_radius, GC);
+		//CullEnemies(pos1, pos2, detect_radius, GC);
 
 //		for (int i=0;i<TilesToCull.Count;++i){
 //			var tile=TilesToCull[i];
@@ -80,6 +80,9 @@ public class HaxKnifeCulling : MonoBehaviour {
 				cull_this=false;
 
 				if (updateMap){
+					miniMapData[GC.CurrentFloorIndex][tile.Data.X, tile.Data.Y].SeenByPlayer=true;
+				}
+				if (false){
 					//map data culling
 					if (miniMapIgnoreDoors)
 					{
@@ -90,7 +93,7 @@ public class HaxKnifeCulling : MonoBehaviour {
 					}
 					else
 					{
-						if ((tile.Data.TileType == TileObjData.Type.Door || tile.Data.TileType == TileObjData.Type.Elevator))
+						if (tile.Data.TileType == TileObjData.Type.Door || tile.Data.TileType == TileObjData.Type.Elevator)
 						{
 							if (i == 0)
 							{
@@ -137,8 +140,8 @@ public class HaxKnifeCulling : MonoBehaviour {
 
 	public void CullMovingEnemy(EnemyMain enemy, Vector3 playerPosition, Point3D enemyStartPosition, Point3D enemyEndPosition, float detectRadius, GameController GC)
 	{
-		if (IsCullable(GC.CurrentFloorData.TileMainMap[enemyStartPosition.X, enemyStartPosition.Y], playerPosition, detectRadius, true,false) &&
-		    IsCullable(GC.CurrentFloorData.TileMainMap[enemyEndPosition.X, enemyEndPosition.Y], playerPosition, detectRadius, true,false))
+		if (IsCullable(GC.CurrentFloorData.TileMainMap[enemyStartPosition.X, enemyStartPosition.Y], playerPosition, detectRadius, false,false) &&
+		    IsCullable(GC.CurrentFloorData.TileMainMap[enemyEndPosition.X, enemyEndPosition.Y], playerPosition, detectRadius, false,false))
 		{
 			enemy.CullHide();
 		}
