@@ -54,7 +54,6 @@ public class TestFinance : MonoBehaviour {
 		
 		Debug.Log("Days till next update: " + PlayerFinance.days_till_update);
 		
-		PlayerFinance.day_pass = true;
 		PlayerFinance.UpdateDays();
 		Debug.Log("Days till next update: " + PlayerFinance.days_till_update);
 		

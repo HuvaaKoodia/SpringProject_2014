@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 public class Debt
 {
-	public float original_debt_sum{get;set;}
+	public float original_debt_sum{get;set;}								//variable to keep track of the Player's original debt sum
 	public float left_tb_payed{get;set;}									//variable to keep track of amount left to be payed per debt
 	public float monthly_cut{get;set;}										//variable to keep track of monthly cut per debt (default value = 1000)
 	public float interest_percent{get;set;}									//variable to keep track of interest percentage upon taking up a new debt
@@ -64,14 +64,12 @@ public class FinanceManager
 	public float payment_total{get;set;}									//variable to store the sum of all the debts
 	public float existing_cash{get;set;}									//variable to keep track the resultant amount after minusing payment total from player money
 		
-	public bool day_pass{get;set;}											//variable set to true only if a day has passed
-
 	public float default_percent{get;set;}									//variable contributing to calculating interest percentage
 	public float increase_percent{get;set;}									//variable contributing to calculating interest percentage
 
 	public int month{get;set;}												//variable to keep track of months (required in the calculation of interest percent)
 
-	public FinanceManager()
+	public FinanceManager()													//empty constructor (needs to be introduced due to presence of public properties in the class)
 	{
 	}
 
@@ -85,11 +83,10 @@ public class FinanceManager
 		
 		payment_total = 0.0f;
 				
-		day_pass = false;
 		default_percent = 0.05f;
 		increase_percent = 0.05f;
 
-		//adding debt_max amount of Debts to the list
+		//adding debt_max amount of Debts to the list, limit to 3
 		for(int i = 0; i < debt_max; i++)
 		{
 			listofdebts.Add(new Debt());
@@ -131,6 +128,7 @@ public class FinanceManager
 		{
 			if(!traverse)
 			{
+				//add the last debt's payment value to the payment total
 				payment_total += listofdebts[listofdebts.Count - 1].debt_payment;
 			}
 			else
@@ -147,19 +145,16 @@ public class FinanceManager
 	//function to update the number of days until the next update
 	public void UpdateDays()
 	{
-		//as long as a day has passed, decrease the number of days until next update
-		if(day_pass)
+		//once, number of days are used up for the month, increase month value, update the necessary values and reset the value for the number of days
+		if(days_till_update == 0)
 		{
-			days_till_update--;
-
-			//once, number of days are used up for the month, increase month value, update the necessary values and reset the value for the number of days
-			if(days_till_update <= 0)
-			{
-				month++;
-				UpdateValues();
-				days_till_update = 30;
-			}
-			day_pass = false;
+			month++;
+			days_till_update = 30;
+		}
+		else if(days_till_update < 0)
+		{
+			month++;
+			days_till_update = 30 + days_till_update;
 		}
 	}
 

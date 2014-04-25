@@ -15,8 +15,6 @@ public class FinanceMenu : MonoBehaviour {
 	public List<UILabel> ShortenDebt;							//List that keeps track of the Shorten Debt By component for each debt
 	public List<GameObject> DebtsActivate;						//List that keeps track of the Debt types ie, DebtAdded and DebtEmpty for each Debt
 	
-	private float ticks = 0;									//variable to keep track of time
-
 	public FinanceManager _FinanceManager;
 	
 	// Use this for initialization
@@ -26,7 +24,6 @@ public class FinanceMenu : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		DaysTimer();
 		UpdateValues();
 	}
 
@@ -47,11 +44,10 @@ public class FinanceMenu : MonoBehaviour {
 	public void SetFinanceManager(FinanceManager FM)
 	{
 		_FinanceManager = FM;
-		
 		SearchActiveDebt();
 	}
 
-	//INITIALIZE
+	//INITIALIZE LABELS FOR FINANCE SCREEN PROPERTIES
 	//function that inializes variables
 	private void InitializeValues()
 	{
@@ -61,7 +57,7 @@ public class FinanceMenu : MonoBehaviour {
 		ExistingCash.text = _FinanceManager.existing_cash.ToString();
 	}
 
-	//UPDATE
+	//UPDATE LABELS FOR FINANCE SCREEN PROPERTIES
 	//function to update the value of amount left to be payed per debt
 	private void UpdateLeftToBePayed(int i)
 	{
@@ -278,7 +274,7 @@ public class FinanceMenu : MonoBehaviour {
 		//process the necessary values for the current panel
 		ProcessPanel(index_1);
 		
-		//enable DebtActive and disable DebtEmpty for current panel
+		//enable DebtAdded and disable DebtEmpty for current panel
 		DebtsActivate[index_2 - 1].SetActive(true);
 		DebtsActivate[index_2].SetActive(false);
 	}
@@ -353,8 +349,8 @@ public class FinanceMenu : MonoBehaviour {
 		_FinanceManager.listofdebts[debt_index].active = false;
 	}
 
-	//function to update the Player's money after choosing to shorten the debt
-	private void UpdatePlayerMoney(int index)
+	//function to deduct the amount of money to shorten the debt by from the Player's money
+	private void DeductPlayerMoney(int index)
 	{
 		_FinanceManager.player_money -= int.Parse(ShortenDebt[index].text);
 		_FinanceManager.Player.Money = (int)_FinanceManager.player_money;
@@ -365,7 +361,8 @@ public class FinanceMenu : MonoBehaviour {
 	{
 		if(_FinanceManager.player_money >= int.Parse(ShortenDebt[0].text))
 		{
-			if(int.Parse(LeftToBePayed[0].text) > 0)
+			//has to be > 1000 to deactivate DebtAdded for the specific panel
+			if(int.Parse(LeftToBePayed[0].text) > 1000)
 			{
 				_FinanceManager.listofdebts[0].left_tb_payed -= int.Parse(ShortenDebt[0].text);
 			}
@@ -375,7 +372,7 @@ public class FinanceMenu : MonoBehaviour {
 				ShortenDebtCheck();
 			}
 
-			UpdatePlayerMoney(0);
+			DeductPlayerMoney(0);
 		}
 	}
 
@@ -384,7 +381,8 @@ public class FinanceMenu : MonoBehaviour {
 	{
 		if(_FinanceManager.player_money >= int.Parse(ShortenDebt[0].text))
 		{
-			if(int.Parse(LeftToBePayed[1].text) > 0)
+			//has to be > 1000 to deactivate DebtAdded for the specific panel
+			if(int.Parse(LeftToBePayed[1].text) > 1000)
 			{
 				_FinanceManager.listofdebts[1].left_tb_payed -= int.Parse(ShortenDebt[2].text);
 			}
@@ -394,7 +392,7 @@ public class FinanceMenu : MonoBehaviour {
 				ShortenDebtCheck();
 			}
 
-			UpdatePlayerMoney(2);
+			DeductPlayerMoney(2);
 		}
 	}
 
@@ -403,7 +401,8 @@ public class FinanceMenu : MonoBehaviour {
 	{
 		if(_FinanceManager.player_money >= int.Parse(ShortenDebt[0].text))
 		{
-			if(int.Parse(LeftToBePayed[2].text) > 0)
+			//has to be > 1000 to deactivate DebtAdded for the specific panel
+			if(int.Parse(LeftToBePayed[2].text) > 1000)
 			{
 				_FinanceManager.listofdebts[2].left_tb_payed -= int.Parse(ShortenDebt[4].text);
 			}
@@ -413,29 +412,7 @@ public class FinanceMenu : MonoBehaviour {
 				ShortenDebtCheck();
 			}
 
-			UpdatePlayerMoney(4);
-		}
-	}
-
-	//DAY TIMER
-	//function to update time for number of days until next update
-	private void DaysTimer()
-	{
-		//1 Day = 60s * 60mins * 24hrs
-		//		= 86400s
-		//as long as a day has passed, update the value for the number of days until next updtae.
-		//then reset timer
-		if(ticks >= 86400
-		   //|| Input.GetKeyDown("p")			//used for testing purposes
-		   )
-		{
-			_FinanceManager.day_pass = true;
-			_FinanceManager.UpdateDays();
-			ticks = 0.0f;
-		}
-		else
-		{
-			ticks += Time.deltaTime;
+			DeductPlayerMoney(4);
 		}
 	}
 }
