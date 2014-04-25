@@ -209,7 +209,7 @@ public static class PathFinder
 					  new Ray(adjustedWatcherPos+leftOffsetCheck, (adjustedtoToSeePos+leftOffsetCheck)-(adjustedWatcherPos+leftOffsetCheck))
 		};
 
-		Color[] rayColors = { Color.magenta, Color.blue, Color.cyan };
+		//Color[] rayColors = { Color.magenta, Color.blue, Color.cyan };
 		RaycastHit hitInfo;
 
 		int checkCount = 1;

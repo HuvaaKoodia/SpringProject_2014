@@ -12,7 +12,7 @@ public class MapGenerator : MonoBehaviour
 	//hardcoded icons
 	public const string 
 		WallIcon = "w", DoorIcon = "d", CorridorIcon = "c", FloorIcon = ".",AirlockIcon = "a",
-		SpaceIcon=",",ElevatorIcon="h",RoomIcon="r",RoomEndIcon="t",LootAreaIcon=":"
+		SpaceIcon=",",ElevatorDoorIcon="hd",ElevatorIcon="h",RoomIcon="r",RoomEndIcon="t",LootAreaIcon=":"
 	;
 
     public bool DEBUG_create_temp_tiles = false;
@@ -43,7 +43,7 @@ public class MapGenerator : MonoBehaviour
                 data.X = x;
                 data.Y = y;
 
-                //DEV. create type and obj dictionaries
+                //Hard coded tile indices
                 var index=md.map_data[x, y];
                 switch (index)
                 {
@@ -62,12 +62,15 @@ public class MapGenerator : MonoBehaviour
                     case DoorIcon:
 						data.SetType(TileObjData.Type.Door);
                         break;
-				case AirlockIcon:
+					case AirlockIcon:
 						data.SetType(TileObjData.Type.Airlock);
 						break;
 					case ElevatorIcon:
-						data.SetType(TileObjData.Type.Elevator);
+						data.SetType(TileObjData.Type.ElevatorTrigger);
 						break;
+					case ElevatorDoorIcon:
+						data.SetType(TileObjData.Type.ElevatorDoor);
+					break;
                 }
                 var obj_index=ShipGenerator.GetObjectIndices(index);
                 if (obj_index!=null){
@@ -294,6 +297,10 @@ public class MapGenerator : MonoBehaviour
 		obj => {
 			return obj == TileObjData.Type.Floor || obj == TileObjData.Type.Corridor;
 		};
+		System.Func<TileObjData.Type,bool> ElevatorTrigger =
+		obj => {
+			return obj == TileObjData.Type.ElevatorTrigger;
+		};
         /*
         System.Func<TileObjData.Type,bool> Floor =
         obj => {
@@ -316,8 +323,28 @@ public class MapGenerator : MonoBehaviour
                 break;
             case TileObjData.Type.Floor:
             case TileObjData.Type.Corridor:
-                    //check tile type
-			if (CheckTypeEqual(NotWall, tile_types, 0, 1, 2, 3, 4, 5, 6, 7))
+			//check tile type
+			if (CheckTypeEqual(ElevatorTrigger, tile_types, 4))
+			{
+				//Elevator end 1
+				tileobj = MapPrefabs.Corridor_Elevator;
+			} else if (CheckTypeEqual(ElevatorTrigger, tile_types, 6))
+			{
+				//Elevator end 2
+				tileobj = MapPrefabs.Corridor_Elevator;
+				rotation = Quaternion.AngleAxis(-90, Vector3.up);
+			} else if (CheckTypeEqual(ElevatorTrigger, tile_types, 0))
+			{
+				//Elevator end 3
+				tileobj = MapPrefabs.Corridor_Elevator;
+				rotation = Quaternion.AngleAxis(180, Vector3.up);
+			} else if (CheckTypeEqual(ElevatorTrigger, tile_types, 2))
+			{
+				//Elevator end 4
+				tileobj = MapPrefabs.Corridor_Elevator;
+				rotation = Quaternion.AngleAxis(90, Vector3.up);
+			}
+			else if (CheckTypeEqual(NotWall, tile_types, 0, 1, 2, 3, 4, 5, 6, 7))
                 {
                     //Floor
                     tileobj = MapPrefabs.Corridor_Floor;
@@ -514,53 +541,53 @@ public class MapGenerator : MonoBehaviour
                     //corner 4
                     tileobj = MapPrefabs.Corridor_Corner;
                     rotation = Quaternion.AngleAxis(90, Vector3.up);
-                } else if (CheckTypeEqual(NotWall, tile_types, 0))
-                {
-                    //DeadEnd 1
-                    tileobj = MapPrefabs.Corridor_Deadend;
-                } else if (CheckTypeEqual(NotWall, tile_types, 2))
-                {
-                    //DeadEnd 2
-                    tileobj = MapPrefabs.Corridor_Deadend;
-                    rotation = Quaternion.AngleAxis(-90, Vector3.up);
-			} else if (CheckTypeEqual(NotWall, tile_types, 4))
-                {
-                    //DeadEnd 3
-                    tileobj = MapPrefabs.Corridor_Deadend;
-                    rotation = Quaternion.AngleAxis(180, Vector3.up);
-			} else if (CheckTypeEqual(NotWall, tile_types, 6))
-                {
-                    //DeadEnd 4
-                    tileobj = MapPrefabs.Corridor_Deadend;
-                    rotation = Quaternion.AngleAxis(90, Vector3.up);
-                }
-                break;
 
-			case TileObjData.Type.Elevator:
+                }
+			else if (CheckTypeEqual(NotWall, tile_types, 0))
+			{
+				//DeadEnd 1
+				tileobj = MapPrefabs.Corridor_Deadend;
+			} else if (CheckTypeEqual(NotWall, tile_types, 2))
+			{
+				//DeadEnd 2
+				tileobj = MapPrefabs.Corridor_Deadend;
+				rotation = Quaternion.AngleAxis(-90, Vector3.up);
+			} else if (CheckTypeEqual(NotWall, tile_types, 4))
+			{
+				//DeadEnd 3
+				tileobj = MapPrefabs.Corridor_Deadend;
+				rotation = Quaternion.AngleAxis(180, Vector3.up);
+			} else if (CheckTypeEqual(NotWall, tile_types, 6))
+			{
+				//DeadEnd 4
+				tileobj = MapPrefabs.Corridor_Deadend;
+				rotation = Quaternion.AngleAxis(90, Vector3.up);
+			}
+        	break;
+
+		case TileObjData.Type.ElevatorDoor:
 				tileobj = MapPrefabs.Corridor_ElevatorDoor;
 
-				if (CheckTypeEqual(FloorOrCorridor, tile_types, 2, 6))
-				{
+				if 	(CheckTypeEqual(FloorOrCorridor, tile_types, 2, 6)||
+			    	(CheckTypeEqual(FloorOrCorridor, tile_types, 2)||CheckTypeEqual(FloorOrCorridor, tile_types, 6))
+			 	){
 					rotation = Quaternion.AngleAxis(90, Vector3.up);
 				}
-				else if (CheckTypeEqual(FloorOrCorridor, tile_types, 2)||CheckTypeEqual(FloorOrCorridor, tile_types, 6))
-				{
-					rotation = Quaternion.AngleAxis(90, Vector3.up);
-				}
+				add_as_tileobject_as_well=true;
+				break;
+		case TileObjData.Type.ElevatorTrigger:
+				tileobj = MapPrefabs.ElevatorTrigger;
 				add_as_tileobject_as_well=true;
 				break;
 			case TileObjData.Type.Airlock:
             case TileObjData.Type.Door:
                 tileobj = MapPrefabs.Corridor_Door;
 
-                if (CheckTypeEqual(FloorOrCorridor, tile_types, 2, 6))
-                {
-                    rotation = Quaternion.AngleAxis(90, Vector3.up);
-                }
-                else if (CheckTypeEqual(FloorOrCorridor, tile_types, 2)||CheckTypeEqual(FloorOrCorridor, tile_types, 6))
-                {
-                    rotation = Quaternion.AngleAxis(90, Vector3.up);
-                }
+				if 	(CheckTypeEqual(FloorOrCorridor, tile_types, 2, 6)||
+				     (CheckTypeEqual(FloorOrCorridor, tile_types, 2)||CheckTypeEqual(FloorOrCorridor, tile_types, 6))
+				     ){
+					rotation = Quaternion.AngleAxis(90, Vector3.up);
+				}
                 
                 add_as_tileobject_as_well=true;
                 break;
@@ -570,19 +597,18 @@ public class MapGenerator : MonoBehaviour
 			tile.TileGraphics= go.GetComponent<TileGraphicsSub>();
 
             if (add_as_tileobject_as_well){
-                tile.TileObject=tile.TileGraphics.gameObject;
+				tile.TileObject=go;
             }
 
-            if (tile.Data.TileType==TileObjData.Type.Door){
+			if (tile.Data.TileType==TileObjData.Type.Door||tile.Data.TileType==TileObjData.Type.ElevatorDoor){
                 var door=tile.TileObject.GetComponent<DoorMain>();
 
                 door.GC=GC;
             }
             
-			if (tile.Data.TileType==TileObjData.Type.Elevator){
-				var door=tile.TileObject.GetComponent<ElevatorMain>();
-				
-				door.GC=GC;
+			if (tile.Data.TileType==TileObjData.Type.ElevatorTrigger){
+				var elevator=tile.TileObject.GetComponent<ElevatorMain>();
+				elevator.GC=GC;
 			}
 
 			if (tile.Data.TileType==TileObjData.Type.Airlock){

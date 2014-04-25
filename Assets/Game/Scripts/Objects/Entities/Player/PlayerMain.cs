@@ -71,14 +71,14 @@ public class PlayerMain : EntityMain
 		HUD.Init(this,GC);
 		
 		TargetingCamera.aspect = 16.0f / 9.0f;
+		OneUpdateDone=false;
 	}
-	
-	// Update is called once per frame
-	bool temphax=true;
+
+	public bool OneUpdateDone{get;private set;}
 	void Update()
     {
-		if (temphax){//start game cull
-			temphax=false;
+		if (!OneUpdateDone){//start game cull
+			OneUpdateDone=true;
 			CullWorld(false);
 		}
 

@@ -137,7 +137,8 @@ public class MiniMapData {
 		case "Corridor_Crossroad":
 			sprite.spriteName = GC.SS.PS.CrossroadSprite.spriteName;
 			break;
-			
+
+		case "Corridor_Elevator":
 		case "Corridor_DeadEnd":
 			sprite.spriteName = GC.SS.PS.DeadendSprite.spriteName;
 			break;
@@ -177,12 +178,9 @@ public class MiniMapData {
 		case "Corridor_WallCornerMirrored":
 			sprite.spriteName = GC.SS.PS.WallCornerMirroredSprite.spriteName;
 			break;
-			
-		case "Door":
-			sprite.spriteName = GC.SS.PS.TwoWallsSprite.spriteName;
-			break;
-			
+
 		case "ElevatorDoor":
+		case "Door":
 			sprite.spriteName = GC.SS.PS.TwoWallsSprite.spriteName;
 			break;
 			
@@ -199,7 +197,7 @@ public class MiniMapData {
 		
 		sprite.transform.localScale = Vector3.one * zoom;
 		
-		Vector3 playerPosition = GC.Player.transform.position;
+		//Vector3 playerPosition = GC.Player.transform.position;
 		float posX = x; //- (playerPosition.x / MapGenerator.TileSize.x);
 		float posY = y; //- (playerPosition.z / MapGenerator.TileSize.z);
 		

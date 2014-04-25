@@ -40,7 +40,9 @@ public class XmlDatabase
 		WeaponHeatDisperseCoolingMultiplier,
 		WeaponHeatDisperseHeatMultiplier,
 		DisperseHeatMultiplier,
-		HullHeatDisperseHeatMultiplier
+		HullHeatDisperseHeatMultiplier,
+		ConditionFairThreshold,
+		ConditionBadThreshold
     ;
 
 	//Logic

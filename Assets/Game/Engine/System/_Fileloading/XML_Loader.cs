@@ -301,6 +301,7 @@ public class XML_Loader{
 			
 			foreach (var ta in text_assets)
 			{
+				if (ta.name.EndsWith(".txt")) continue;
 				TextAsset asset=(TextAsset)ta;
 				var Xdoc=new XmlDocument();
 				Xdoc.Load(asset.text.ToStream());

@@ -15,8 +15,8 @@ public class TileMain : MonoBehaviour
             if (entityOnTile != null)
                 return true;
 
-            if (Data.TileType==TileObjData.Type.Door){
-                var door=GetDoor();
+			var door=GetDoor();
+			if (door!=null){
                 if (door.IsOpen)
                     return false;
                 return true;

@@ -157,6 +157,7 @@ namespace ComputerSystems{
 				for (int x=0;x<Grid.Width;++x){
 					for (int y=0;y<Grid.Height;++y){
 						var obj=Grid.GetObj(x,y);
+						if (obj.HighLighted) continue;
 						if (hasMatch(obj)){
 							var matches=getMatches(obj);
 							

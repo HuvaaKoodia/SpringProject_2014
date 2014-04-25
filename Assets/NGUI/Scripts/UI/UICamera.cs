@@ -67,6 +67,13 @@ public class UICamera : MonoBehaviour
 			Hit=hit;
 		}
 
+		public override bool Equals(object o){
+			return false;
+		}
+		public override int GetHashCode(){
+			return (""+Hit+PressIndex+isPressed).GetHashCode();
+		}
+
 		public static implicit operator bool(InputEvent x) 
 		{
 			return x.isPressed;

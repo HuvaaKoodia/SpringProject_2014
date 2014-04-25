@@ -51,12 +51,7 @@ public class HaxKnifeCulling : MonoBehaviour {
 			}
 		}
 
-		//CullEnemies(pos1, pos2, detect_radius, GC);
-
-//		for (int i=0;i<TilesToCull.Count;++i){
-//			var tile=TilesToCull[i];
-//			tile.ShowGraphicsUnsafe(false);
-//		}
+		CullEnemies(pos1, pos2, detect_radius, GC);
 	}
 
 	private static Vector3[] Positions={new Vector3(0,0,0),new Vector3(1,0,1),new Vector3(1,0,-1),new Vector3(-1,0,-1),new Vector3(-1,0,1)};
@@ -80,9 +75,6 @@ public class HaxKnifeCulling : MonoBehaviour {
 				cull_this=false;
 
 				if (updateMap){
-					miniMapData[GC.CurrentFloorIndex][tile.Data.X, tile.Data.Y].SeenByPlayer=true;
-				}
-				if (false){
 					//map data culling
 					if (miniMapIgnoreDoors)
 					{
@@ -93,7 +85,7 @@ public class HaxKnifeCulling : MonoBehaviour {
 					}
 					else
 					{
-						if (tile.Data.TileType == TileObjData.Type.Door || tile.Data.TileType == TileObjData.Type.Elevator)
+						if (tile.Data.TileType == TileObjData.Type.Door || tile.Data.TileType == TileObjData.Type.ElevatorDoor)
 						{
 							if (i == 0)
 							{

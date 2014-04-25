@@ -32,7 +32,9 @@ public class PrefabStore : MonoBehaviour {
 		Corridor_Crossroad,
 		Corridor_Deadend,
 		Corridor_Door,
-		Corridor_ElevatorDoor
+		Corridor_ElevatorDoor,
+		Corridor_Elevator,
+		ElevatorTrigger
 		;
 
 	public UISprite

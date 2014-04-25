@@ -60,7 +60,7 @@ public class TileLightsSub : MonoBehaviour
 	{
 		if(power_on&&lighting_state == Lighting_State.Flickering)
 		{
-			Flicker (delay);
+			Flicker ();
 		}
 	}
 
@@ -100,7 +100,7 @@ public class TileLightsSub : MonoBehaviour
 	}
 
 	//function to set white light to flicker
-	private void Flicker(float delay)
+	private void Flicker()
 	{
 		//toggling of enabled value of the white lights in TilePrefabs under TestObjects in GameScene
 		if(ticks >= delay)
@@ -109,6 +109,19 @@ public class TileLightsSub : MonoBehaviour
 			
 			ticks = 0.0f;
 			EnableLights();
+
+			//set new random delay
+			if (light_flicker){
+				delay=Subs.GetRandom(10,100)*0.001f;
+			}
+			else{
+				if (Subs.RandomPercent()<20){
+					delay=Subs.GetRandom(10,100)*0.001f;
+				}
+				else
+					delay=Subs.GetRandom(1000,4000)*0.001f;
+			}
+
 		}
 		//increment ticks every second
 		else

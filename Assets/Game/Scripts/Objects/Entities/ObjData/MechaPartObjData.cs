@@ -31,6 +31,10 @@ public class MechaPartObjData{
 		}
     }
 
+	public float ConditionPercent(){
+		return (float)HP/MaxHP;
+	}
+
 	//gamedata
 	public int Overheat_limit_bonus=0;
 	public float armor_multi=0,cooling_multi=0,attack_multi=0,accuracy_multi=0;
@@ -101,12 +105,12 @@ public class MechaPartObjData{
 	}
 
     //effects
-
     public float GetAccuracyMulti()
     {
-        if (HP<MaxHP*0.5f){
-			return 0.6f+accuracy_multi;
-		}
+		if (HP <= MechaPartObjData.MaxHP*XmlDatabase.ConditionFairThreshold)
+			return XmlDatabase.ConditionFairThreshold+accuracy_multi;
+		if (HP <= MechaPartObjData.MaxHP*XmlDatabase.ConditionBadThreshold)
+			return XmlDatabase.ConditionBadThreshold+accuracy_multi;
 		return 1f+accuracy_multi;
     }
 }
