@@ -671,7 +671,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400078}
-  - 111: {fileID: 11100002}
+  - 95: {fileID: 9500000}
   m_Layer: 0
   m_Name: Graphics
   m_TagString: Untagged
@@ -784,8 +784,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100016}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.35782528, y: -13.4295616, z: -7.5014739}
+  m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106829}
+  m_LocalPosition: {x: 16.2067795, y: -1.71982431, z: 50.0386429}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400078}
@@ -2186,6 +2186,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .5, y: 1.5, z: 1.5}
   m_Center: {x: 0, y: 1.5, z: 0}
+<<<<<<< HEAD:Assets/Game/Prefabs/MapTiles/Tiles/ElevatorDoor.prefab
+--- !u!95 &9500000
+Animator:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100078}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 152fecdb7d85db243b2300bb12efc244, type: 3}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_ApplyRootMotion: 1
+  m_AnimatePhysics: 0
+  m_HasTransformHierarchy: 1
+=======
 --- !u!82 &8200000
 AudioSource:
   m_ObjectHideFlags: 1
@@ -2244,6 +2260,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+>>>>>>> Elevator + flicker + random fixes:Assets/Game/Prefabs/MapTiles/Tiles/Elevator/ElevatorDoor.prefab
 --- !u!111 &11100000
 Animation:
   m_ObjectHideFlags: 1
@@ -2256,22 +2273,6 @@ Animation:
   m_Animations:
   - {fileID: 7400000, guid: cd2820fa155d8fb43945574668554898, type: 3}
   - {fileID: 7400002, guid: cd2820fa155d8fb43945574668554898, type: 3}
-  m_WrapMode: 0
-  m_PlayAutomatically: 0
-  m_AnimatePhysics: 0
-  m_CullingType: 0
---- !u!111 &11100002
-Animation:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100078}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 152fecdb7d85db243b2300bb12efc244, type: 3}
-  m_Animations:
-  - {fileID: 7400000, guid: 152fecdb7d85db243b2300bb12efc244, type: 3}
-  - {fileID: 7400002, guid: 152fecdb7d85db243b2300bb12efc244, type: 3}
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
@@ -2291,7 +2292,7 @@ MonoBehaviour:
   GC: {fileID: 0}
   open_animation: Open
   close_animation: Close
-  graphics: {fileID: 100078}
+  graphics: {fileID: 100006}
   doorCollider: {fileID: 6500004}
   isAirlockDoor: 0
   CloseSoundFX: {fileID: 8300000, guid: c007e2e1015a6bc4b912c5c0a58abf83, type: 3}
@@ -2307,7 +2308,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 289c8933137c12347b6443533b6fe922, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GraphicsObject: {fileID: 100078}
+<<<<<<< HEAD:Assets/Game/Prefabs/MapTiles/Tiles/ElevatorDoor.prefab
+  GraphicsObject: {fileID: 100014, guid: 0d605a78d35ce0a4a8693ce4fccc85be, type: 3}
+=======
+  GraphicsObject: {fileID: 100014}
+>>>>>>> Elevator + flicker + random fixes:Assets/Game/Prefabs/MapTiles/Tiles/Elevator/ElevatorDoor.prefab
   TileLights: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:

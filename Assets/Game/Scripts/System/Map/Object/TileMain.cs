@@ -58,6 +58,10 @@ public class TileMain : MonoBehaviour
 	/// Doesn't null check BEWARE!
 	/// </summary>
 	public void ShowGraphicsUnsafe(bool show){
+		if (TileGraphics.GraphicsObject==null){
+			Debug.Log("SDASDASd");
+		}
+
 		TileGraphics.GraphicsObject.SetActive(show);
 	}
 }
