@@ -34,7 +34,8 @@ Obstacle
 
 <ShipGenerator>
 	<RoomIndices>
-		<Tag index="R"  name="room" 				type="room" 			random_pos="true" random_doors="true"/>
+		<Tag index="RD"  name="room" 				type="room" 			random_pos="true" random_doors="true"/>
+		<Tag index="R"  name="room" 				type="room" 			random_pos="true"/>
 						
 		<Tag index="AL" name="airlockLeft" 			type="airlock"/>
 		<Tag index="AR" name="airlockRight" 		type="airlock"/>
@@ -55,9 +56,11 @@ Obstacle
 		<Tag index="V4" name="cargoLargeLR"			type="cargohold"/>
 						
 		<Tag index="M"  name="armory" 				type="armory" 			random_pos="true" random_doors="true"/>
-		<Tag index="M1" name="armoryHorizontal"		type="armory"/>
-		<Tag index="M2" name="armoryVerticalLeft"	type="armory"/>
-		<Tag index="M3" name="armoryVerticalRight"	type="armory"/>
+		<Tag index="MH" name="armoryHorizontal"		type="armory"/>
+		<Tag index="ML" name="armoryLeft"	type="armory"/>
+		<Tag index="MR" name="armoryRight"	type="armory"/>
+		
+		<Tag index="B1"  name="test1" 				type="room" 			random_pos="true" random_doors="false"/>
 	</RoomIndices>
 
 	<ObjectIndices>
