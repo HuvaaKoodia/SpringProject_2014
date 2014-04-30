@@ -12,7 +12,6 @@ using System.Collections.Generic;
 
 public class Debt
 {
-	public float original_debt_sum{get;set;}								//variable to keep track of the Player's original debt sum
 	public float left_tb_payed{get;set;}									//variable to keep track of amount left to be payed per debt
 	public float monthly_cut{get;set;}										//variable to keep track of monthly cut per debt (default value = 1000)
 	public float interest_percent{get;set;}									//variable to keep track of interest percentage upon taking up a new debt
@@ -23,7 +22,6 @@ public class Debt
 
 	public Debt()															//constructor that initializes variables
 	{
-		original_debt_sum = 0.0f;
 		left_tb_payed = 0.0f;
 		monthly_cut = 0.0f;
 
@@ -44,12 +42,6 @@ public class Debt
 	{
 		debt_payment = monthly_cut + interest;
 	}
-
-	//function to calculate the monthly cut for each debt
-	public void CalcMonthlyCut()
-	{
-		monthly_cut = original_debt_sum * 0.05f;
-	}
 }
 
 public class FinanceManager
@@ -68,7 +60,8 @@ public class FinanceManager
 	public float increase_percent{get;set;}									//variable contributing to calculating interest percentage
 
 	public int month{get;set;}												//variable to keep track of months (required in the calculation of interest percent)
-
+	public float original_debt_sum{get;set;}								//variable to keep track of the Player's original debt sum
+	
 	public FinanceManager()													//empty constructor (needs to be introduced due to presence of public properties in the class)
 	{
 	}
@@ -93,6 +86,7 @@ public class FinanceManager
 		}
 
 		month = 1;
+		original_debt_sum = 0.0f;
 	}
 	
 	//function taht updates the Player's amount of money after paying off the debts
@@ -117,6 +111,15 @@ public class FinanceManager
 			{
 				listofdebts[i].interest_percent = (increase_percent * month) + default_percent;
 			}
+		}
+	}
+
+	//function to calculate the monthly cut for each debt
+	public void CalcMonthlyCut()
+	{
+		for(int i = 0; i < listofdebts.Count; i++)
+		{
+			listofdebts[i].monthly_cut = original_debt_sum * 0.05f;
 		}
 	}
 	

@@ -74,12 +74,14 @@ public class FinanceMenu : MonoBehaviour {
 		var FM_l_i = _FinanceManager.listofdebts[i];
 		if(MonthlyCut.Count > 0)
 		{
+			//as long as the debt is active, monthly_cut will have a value
 			if(!FM_l_i.active)
 			{
 				FM_l_i.monthly_cut = 0;
 			}
 			else
 			{
+				_FinanceManager.CalcMonthlyCut();
 				MonthlyCut[i].text = FM_l_i.monthly_cut.ToString();
 			}
 		}
@@ -91,6 +93,7 @@ public class FinanceMenu : MonoBehaviour {
 		var FM_l_i = _FinanceManager.listofdebts[i];
 		if(Interest.Count > 0)
 		{
+			//as long as the debt is active, interest will have a value
 			if(!FM_l_i.active)
 			{
 				FM_l_i.interest = 0;
@@ -108,6 +111,7 @@ public class FinanceMenu : MonoBehaviour {
 		var FM_l_i = _FinanceManager.listofdebts[i];
 		if(Payments.Count > 0)
 		{
+			//as long as the debt is active, debt_payment will have a value
 			if(!FM_l_i.active)
 			{
 				FM_l_i.debt_payment = 0;
@@ -123,11 +127,14 @@ public class FinanceMenu : MonoBehaviour {
 	//function that updates variables
 	private void UpdateValues()
 	{
+		//Days
 		Days.text = _FinanceManager.days_till_update.ToString();
 
+		//Player's money
 		_FinanceManager.UpdatePlayerMoney();
 		PlayerMoney.text = _FinanceManager.player_money.ToString();
 
+		//amount left to be payed, monthly cut, interest, debt payments, payment total
 		_FinanceManager.UpdateValues();
 
 		var FM_l = _FinanceManager.listofdebts;
@@ -143,7 +150,8 @@ public class FinanceMenu : MonoBehaviour {
 				UpdatePayments (i);
 			}
 		}
-		
+
+		//existing cash
 		ExistingCash.text = _FinanceManager.existing_cash.ToString();
 	}
 
@@ -249,7 +257,7 @@ public class FinanceMenu : MonoBehaviour {
 	{
 		if(index >= 0 && index < 3)
 		{
-			_FinanceManager.listofdebts[index].CalcMonthlyCut();
+			_FinanceManager.CalcMonthlyCut();
 			_FinanceManager.CalcInterestPercent();
 			_FinanceManager.listofdebts[index].CalcInterest();
 			_FinanceManager.listofdebts[index].CalcDebtPayment();
@@ -277,6 +285,11 @@ public class FinanceMenu : MonoBehaviour {
 		//enable DebtAdded and disable DebtEmpty for current panel
 		DebtsActivate[index_2 - 1].SetActive(true);
 		DebtsActivate[index_2].SetActive(false);
+
+		for(int i = 0; i < _FinanceManager.listofdebts.Count; i++)
+		{
+			_FinanceManager.original_debt_sum += _FinanceManager.listofdebts[i].left_tb_payed;
+		}
 	}
 	
 	//function that activates DebtAdded and deactivates DebtEmpty of Debt1
@@ -286,6 +299,12 @@ public class FinanceMenu : MonoBehaviour {
 		if(DebtsActivate.Count > 0)
 		{
 			ActivateDebtProcess(0, 1);
+
+//			for(int i = 0; i < _FinanceManager.listofdebts.Count; i++)
+//			{
+//				_FinanceManager.listofdebts[i].original_debt_sum += _FinanceManager.listofdebts[i].left_tb_payed;
+//				_FinanceManager.listofdebts[i].CalcMonthlyCut();
+//			}
 		}
 	}
 	
@@ -299,6 +318,12 @@ public class FinanceMenu : MonoBehaviour {
 			if(DebtsActivate[0].activeInHierarchy)
 			{
 				ActivateDebtProcess(1, 3);
+
+//				for(int i = 0; i < _FinanceManager.listofdebts.Count; i++)
+//				{
+//					_FinanceManager.listofdebts[i].original_debt_sum += _FinanceManager.listofdebts[i].left_tb_payed;
+//					_FinanceManager.listofdebts[i].CalcMonthlyCut();
+//				}
 			}
 		}
 	}
@@ -313,6 +338,12 @@ public class FinanceMenu : MonoBehaviour {
 			if(DebtsActivate[2].activeInHierarchy)
 			{
 				ActivateDebtProcess(2, 5);
+
+//				for(int i = 0; i < _FinanceManager.listofdebts.Count; i++)
+//				{
+//					_FinanceManager.listofdebts[i].original_debt_sum += _FinanceManager.listofdebts[i].left_tb_payed;
+//					_FinanceManager.listofdebts[i].CalcMonthlyCut();
+//				}
 			}
 		}
 	}
@@ -325,6 +356,7 @@ public class FinanceMenu : MonoBehaviour {
 		{
 			for(int i = 0; i < ShortenDebt.Count; i++)
 			{
+				//let all odd debts be initialized to 10000 and all even debts be  initialized to 1000 in the list
 				if(i%2 != 0)
 				{
 					ShortenDebt[i].text = "10000";
@@ -356,6 +388,15 @@ public class FinanceMenu : MonoBehaviour {
 		_FinanceManager.Player.Money = (int)_FinanceManager.player_money;
 	}
 
+	private void UpdateOriginalDebtSum()
+	{
+		_FinanceManager.original_debt_sum = 0.0f;
+		for(int i = 0; i < _FinanceManager.listofdebts.Count; i++)
+		{
+			_FinanceManager.original_debt_sum += _FinanceManager.listofdebts[i].left_tb_payed;
+		}
+	}
+
 	//function to Shorten the amount left to be payed in Panel2
 	public void ShortenDebt1()
 	{
@@ -365,6 +406,7 @@ public class FinanceMenu : MonoBehaviour {
 			if(int.Parse(LeftToBePayed[0].text) > 1000)
 			{
 				_FinanceManager.listofdebts[0].left_tb_payed -= int.Parse(ShortenDebt[0].text);
+				UpdateOriginalDebtSum();
 			}
 			else
 			{
@@ -385,6 +427,7 @@ public class FinanceMenu : MonoBehaviour {
 			if(int.Parse(LeftToBePayed[1].text) > 1000)
 			{
 				_FinanceManager.listofdebts[1].left_tb_payed -= int.Parse(ShortenDebt[2].text);
+				UpdateOriginalDebtSum();
 			}
 			else
 			{
@@ -405,6 +448,7 @@ public class FinanceMenu : MonoBehaviour {
 			if(int.Parse(LeftToBePayed[2].text) > 1000)
 			{
 				_FinanceManager.listofdebts[2].left_tb_payed -= int.Parse(ShortenDebt[4].text);
+				UpdateOriginalDebtSum();
 			}
 			else
 			{
