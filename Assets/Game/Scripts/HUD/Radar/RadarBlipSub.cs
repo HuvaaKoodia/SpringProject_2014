@@ -21,7 +21,7 @@ public class RadarBlipSub : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (fades)
-			alpha -= (FadeSpeed /256.0f) * Time.deltaTime;
+			alpha -= (FadeSpeed /255.0f) * Time.deltaTime;
 		else
 			alpha = 1.0f;
 

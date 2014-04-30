@@ -192,24 +192,24 @@ public class PlayerMain : EntityMain
 		switch(dir)
 		{
 		case 0:
-			//playerAnimation["PlayerHitFromRight"].normalizedTime = 0;
-			//playerAnimation["PlayerHitFromRight"].speed = 1;
-			//playerAnimation.Play("PlayerHitFromRight");
+			playerAnimation["Damage_Right"].normalizedTime = 0;
+			playerAnimation["Damage_Right"].speed = 1;
+			playerAnimation.Play("Damage_Right");
 			break;
 		case 1:
-			//playerAnimation["PlayerHitFromFront"].normalizedTime = 0;
-			//playerAnimation["PlayerHitFromFront"].speed = 1;
-			//playerAnimation.Play("PlayerHitFromFront");
+			playerAnimation["Damage_Front"].normalizedTime = 0;
+			playerAnimation["Damage_Front"].speed = 1;
+			playerAnimation.Play("Damage_Front");
 			break;
 		case 2:
-			//playerAnimation["PlayerHitFromLeft"].normalizedTime = 0;
-			//playerAnimation["PlayerHitFromLeft"].speed = 1;
-			//playerAnimation.Play("PlayerHitFromLeft");
+			playerAnimation["Damage_Left"].normalizedTime = 0;
+			playerAnimation["Damage_Left"].speed = 1;
+			playerAnimation.Play("Damage_Left");
 			break;
 		case 3:
-			//playerAnimation["PlayerHitFromBack"].normalizedTime = 0;
-			//playerAnimation["PlayerHitFromBack"].speed = 1;
-			//playerAnimation.Play("PlayerHitFromBack");
+			playerAnimation["Damage_Back"].normalizedTime = 0;
+			playerAnimation["Damage_Back"].speed = 1;
+			playerAnimation.Play("Damage_Back");
 			break;
 		}
 
@@ -269,7 +269,7 @@ public class PlayerMain : EntityMain
 	public void ChangeWeapon(WeaponID id)
 	{
         var weapon=weaponList[(int)id];
-        if (!weapon.Usable()) 
+        if (!weapon.Usable() || currentWeaponID == id) 
 			return;
 
 		GetCurrentWeapon().Unselected();
@@ -402,5 +402,11 @@ public class PlayerMain : EntityMain
 	{
 		GameCamera.GetComponent<MouseLook>().ToggleMouseLookOn();
 		HudCamera.GetComponent<MouseLook>().ToggleMouseLookOn();
+	}
+
+	public void ActivateHaxMapNRadar ()
+	{
+		HasMap = true;
+		HasRadar = true;
 	}
 }

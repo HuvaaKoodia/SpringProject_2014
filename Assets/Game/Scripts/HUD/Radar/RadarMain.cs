@@ -281,20 +281,21 @@ public class RadarMain : MonoBehaviour
 			posOffset.x *= radarZoom;
 			posOffset.y *= radarZoom;
 
+			bool onTopOfOther = false;
+			
+			Vector3 position = blipParent.transform.localPosition + posOffset;
+
+			for (int i = 0; i < currentBlip; i++)
+			{
+				if (blips[i].transform.localPosition == position)
+				{
+					onTopOfOther = true;
+					break;
+				}
+			}
+
 			if (posOffset.magnitude <= scanRadius || !circleScanActive)
 			{
-				Vector3 position = blipParent.transform.localPosition + posOffset;
-
-				bool onTopOfOther = false;
-
-				for (int i = 0; i < currentBlip; i++)
-				{
-					if (blips[i].transform.localPosition == position)
-					{
-						onTopOfOther = true;
-						break;
-					}
-				}
 
 				if (!onTopOfOther || blipTexture.spriteName == "playerBlip")
 				{
@@ -311,6 +312,14 @@ public class RadarMain : MonoBehaviour
 				}
 				else
 					blips[currentBlip].fades = true;
+			}
+			else
+			{
+				if (!onTopOfOther || blipTexture.spriteName == "playerBlip")
+				{
+					blips[currentBlip].transform.localPosition = position;
+					blips[currentBlip].transform.localScale = Vector3.one * radarZoom;
+				}
 			}
 		}
 	}

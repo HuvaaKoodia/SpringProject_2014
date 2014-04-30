@@ -72,11 +72,11 @@ public class PlayerInputSub : MonoBehaviour {
 
 	 	if (Input.GetKeyDown(KeyCode.Alpha1))
 		{
-			player.HUD.WeaponPressed(WeaponID.LeftShoulder);
+			player.HUD.WeaponPressed(WeaponID.LeftHand);
 		}
 		else if (Input.GetKeyDown(KeyCode.Alpha2))
 		{
-			player.HUD.WeaponPressed(WeaponID.LeftHand);
+			player.HUD.WeaponPressed(WeaponID.LeftShoulder);
 		}
 		else if (Input.GetKeyDown(KeyCode.Alpha3))
 		{

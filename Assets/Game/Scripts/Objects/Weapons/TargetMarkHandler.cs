@@ -62,14 +62,16 @@ public class TargetMarkHandler
 			crosshairSprites[i].enabled = true;
 		}
 		//crosshair.gameObject.AddComponent("UIButton");
-		
+
 		numShotsLabels = new List<UILabel>();
+
+		float[] labelDegrees = { 190, 130, 350, 50 };
 		Vector3[] labelPosOffsetDirs =
 		{
-			new Vector3(Mathf.Cos(150 * Mathf.Deg2Rad), Mathf.Sin(150 * Mathf.Deg2Rad), 0),
-			new Vector3(Mathf.Cos(110 * Mathf.Deg2Rad), Mathf.Sin(110 * Mathf.Deg2Rad), 0),
-			new Vector3(Mathf.Cos(30 * Mathf.Deg2Rad), Mathf.Sin(30 * Mathf.Deg2Rad), 0),
-			new Vector3(Mathf.Cos(70 * Mathf.Deg2Rad), Mathf.Sin(70 * Mathf.Deg2Rad), 0)
+			new Vector3(Mathf.Cos(labelDegrees[0] * Mathf.Deg2Rad), Mathf.Sin(labelDegrees[0] * Mathf.Deg2Rad), 0),
+			new Vector3(Mathf.Cos(labelDegrees[1] * Mathf.Deg2Rad), Mathf.Sin(labelDegrees[1] * Mathf.Deg2Rad), 0),
+			new Vector3(Mathf.Cos(labelDegrees[2] * Mathf.Deg2Rad), Mathf.Sin(labelDegrees[2] * Mathf.Deg2Rad), 0),
+			new Vector3(Mathf.Cos(labelDegrees[3] * Mathf.Deg2Rad), Mathf.Sin(labelDegrees[3] * Mathf.Deg2Rad), 0)
 		};
 
 		textParent.transform.position = crosshairSprites[0].transform.position;
@@ -81,7 +83,12 @@ public class TargetMarkHandler
 			label.text = "";
 			
 			float distanceMultiplier = 1 + (screenToWorldPoint - GC.Player.HudCamera.transform.position).magnitude / 2.0f;
-			
+
+			if (i == 1 || i == 3)
+			{
+				distanceMultiplier *= 1.2f;
+			}
+
 			label.transform.parent = textParent.transform;
 			label.transform.position = textParent.transform.position + labelPosOffsetDirs[i]*0.08f*(distanceMultiplier/1.35f);
 			
