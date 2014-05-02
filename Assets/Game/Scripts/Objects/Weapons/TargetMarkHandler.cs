@@ -67,13 +67,29 @@ public class TargetMarkHandler
 
 		numShotsLabels = new List<UILabel>();
 
-		float[] labelDegrees = { 190, 130, 350, 50 };
+		float[] labelDegrees = { 180, 130, 360, 50 };
 		Vector3[] labelPosOffsetDirs =
 		{
 			new Vector3(Mathf.Cos(labelDegrees[0] * Mathf.Deg2Rad), Mathf.Sin(labelDegrees[0] * Mathf.Deg2Rad), 0),
 			new Vector3(Mathf.Cos(labelDegrees[1] * Mathf.Deg2Rad), Mathf.Sin(labelDegrees[1] * Mathf.Deg2Rad), 0),
 			new Vector3(Mathf.Cos(labelDegrees[2] * Mathf.Deg2Rad), Mathf.Sin(labelDegrees[2] * Mathf.Deg2Rad), 0),
 			new Vector3(Mathf.Cos(labelDegrees[3] * Mathf.Deg2Rad), Mathf.Sin(labelDegrees[3] * Mathf.Deg2Rad), 0)
+		};
+
+		Vector3[] highlightOffsets =
+		{
+			new Vector3(0.01f, -0.03f, 0.0f),
+			new Vector3(-0.014f, -0.05f, 0.0f),
+			new Vector3(-0.01f, -0.03f, 0.0f),
+			new Vector3(0.014f, -0.05f, 0.0f)
+		};
+
+		Vector3[] labelPosOffsets =
+		{
+			Vector3.zero,
+			new Vector3(-0.02f, -0.005f, 0.0f),
+			Vector3.zero,
+			new Vector3(0.02f, -0.005f, 0.0f)
 		};
 
 		targetingHighligts = new GameObject[4];
@@ -94,7 +110,7 @@ public class TargetMarkHandler
 			}
 
 			label.transform.parent = textParent.transform;
-			label.transform.position = textParent.transform.position + labelPosOffsetDirs[i]*0.08f*(distanceMultiplier/1.35f);
+			label.transform.position = textParent.transform.position + labelPosOffsetDirs[i]*0.08f*(distanceMultiplier/1.2f)+labelPosOffsets[i];
 			
 			label.color = GC.Player.HUD.gunInfoDisplay.GetWeaponColor((WeaponID)i);
 			label.enabled = true;
@@ -108,7 +124,10 @@ public class TargetMarkHandler
 			GameObject highlight = GameObject.Instantiate(GC.SS.PS.targetHighlights[i]) as GameObject;
 			highlight.transform.parent = textParent.transform;
 			highlight.transform.localScale = Vector3.one * 0.2f;
-			highlight.transform.position = label.transform.position - new Vector3(0, 0, 0);
+			highlight.transform.position = textParent.transform.position + labelPosOffsetDirs[i]*0.08f*(distanceMultiplier/1.2f) + highlightOffsets[i];
+
+			highlight.GetComponent<UISprite>().color = label.color = GC.Player.HUD.gunInfoDisplay.GetWeaponColor((WeaponID)i);
+			highlight.SetActive(false);
 			targetingHighligts[i] = highlight;
 		}
 		
@@ -126,6 +145,7 @@ public class TargetMarkHandler
 		if (numShots != 0)
 		{
 			numShotsLabels[(int)gun].text = numShots.ToString()+"\n"+hit_percent+"%";
+			targetingHighligts[(int)gun].SetActive(true);
 			for (int i = 0; i < 3; i++)
 			{
 				crosshairSprites[i].spriteName = targetedSpriteNames[i];
@@ -134,6 +154,7 @@ public class TargetMarkHandler
 		else
 		{
 			numShotsLabels[(int)gun].text = "";
+			targetingHighligts[(int)gun].SetActive(false);
 			for (int i = 0; i < 3; i++)
 			{
 				crosshairSprites[i].spriteName = notTargetedSpriteNames[i];
