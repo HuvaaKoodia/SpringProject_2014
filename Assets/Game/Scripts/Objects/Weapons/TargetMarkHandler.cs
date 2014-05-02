@@ -13,6 +13,8 @@ public class TargetMarkHandler
 	string[] notTargetedSpriteNames;
 	string[] targetedSpriteNames;
 
+	GameObject[] targetingHighligts;
+
 	float[] rotationSpeeds;
 
 	List<UILabel> numShotsLabels;
@@ -74,6 +76,8 @@ public class TargetMarkHandler
 			new Vector3(Mathf.Cos(labelDegrees[3] * Mathf.Deg2Rad), Mathf.Sin(labelDegrees[3] * Mathf.Deg2Rad), 0)
 		};
 
+		targetingHighligts = new GameObject[4];
+
 		textParent.transform.position = crosshairSprites[0].transform.position;
 		textParent.transform.localScale = new Vector3(0.003f, 0.003f, 0.003f);
 
@@ -100,6 +104,12 @@ public class TargetMarkHandler
 			//label.transform.localScale = new Vector3(2.0f*distanceMultiplier, 2.0f*distanceMultiplier, 2.0f*distanceMultiplier);
 			
 			numShotsLabels.Add(label);
+
+			GameObject highlight = GameObject.Instantiate(GC.SS.PS.targetHighlights[i]) as GameObject;
+			highlight.transform.parent = textParent.transform;
+			highlight.transform.localScale = Vector3.one * 0.2f;
+			highlight.transform.position = label.transform.position - new Vector3(0, 0, 0);
+			targetingHighligts[i] = highlight;
 		}
 		
 		parentObject.transform.Rotate(0, rotation, 0);
