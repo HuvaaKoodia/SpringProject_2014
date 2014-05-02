@@ -139,7 +139,8 @@ public class PlayerMain : EntityMain
 		ap -= movementCost;
 
 		if (AnimationsOn)
-		{	playerAnimation.Play("Walk");
+		{	
+			playerAnimation.Play("Walk");
 			legAnimation.Play("Walk");
 		}
 	}
