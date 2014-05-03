@@ -282,6 +282,9 @@ public class WeaponMain : MonoBehaviour {
 
 	public void LookAtMouse(Rect bounds)
 	{
+        if (verticalMovement == null)
+            return;
+
 		if (bounds.Contains(new Vector2(Input.mousePosition.x, Input.mousePosition.y)))
 		{
 			Ray ray=Camera.main.ScreenPointToRay(Input.mousePosition);
