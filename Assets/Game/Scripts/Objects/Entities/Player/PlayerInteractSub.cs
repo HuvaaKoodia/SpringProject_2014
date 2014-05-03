@@ -17,7 +17,7 @@ public class PlayerInteractSub : MonoBehaviour {
 		interactableInfront = null;
 		TileMain tileInfront = player.movement.GetTileInFront();
 
-		if (tileInfront == null)
+		if (tileInfront == null || tileInfront.entityOnTile != null)
 		{
 			player.GC.HUD.SetInteractVisibility(false);
 			return;

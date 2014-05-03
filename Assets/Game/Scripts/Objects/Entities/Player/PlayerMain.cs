@@ -107,6 +107,7 @@ public class PlayerMain : EntityMain
     void StartTurn()
     {
         inputSub.enabled = true;
+        interactSub.CheckForInteractables();
     }
 
     public void EndPlayerPhase()
