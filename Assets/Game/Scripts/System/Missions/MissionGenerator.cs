@@ -14,8 +14,7 @@ public class MissionGenerator{
         //DEV.TEMP force type
         //mission.MissionType= MissionObjData.Type.RetrieveCargo;
 
-		var xml=XmlDatabase.Missions[mission.MissionType];
-		mission.XmlData=xml;
+		var xml=mission.XmlData;
 
 		//mission status
 		var aliens=xml.StatusContainer.GetRandomItem("Aliens");
@@ -89,7 +88,7 @@ public class MissionGenerator{
 			info_text+="- ";
 			switch(mission.InfoAlienAmount){
 	            case MissionObjData.InformationRating.None:
-	                info_text+="We were unable to determine organic presence.";
+				info_text+="We were unable to determine the presence of organics.";
 	                break;
 	            case MissionObjData.InformationRating.Something:
 	                info_text+=MissionAlienInfoSomething(mission);
@@ -306,7 +305,7 @@ public class MissionGenerator{
 
 		text+="Travel time:\n"+mission.TravelTime +" days";
 		text+="\n\n";
-		text+="Expires in\n"+mission.ExpirationTime+" days";
+		text+="Expires in\n"+(mission.TravelTime+mission.ExpirationTime)+" days";
 
 		return text;
 	}

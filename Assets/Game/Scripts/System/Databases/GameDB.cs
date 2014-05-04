@@ -17,9 +17,11 @@ public class GameDB : MonoBehaviour {
     public void StartNewGame(){
         GameStarted=true;
 		GameData=new GameObjData();
-        GenerateNewMissions(0);
+        GenerateNewMissions();
 		
 		GameData.PlayerData.Money=1000;
+
+		GameData.FinanceManager.AddDebt(0,10000);
 
 		//starting player equipment
 		for (int i=0;i<XmlDatabase.Player.StartingWeaponAmount;i++){
@@ -33,29 +35,24 @@ public class GameDB : MonoBehaviour {
 		RestockVendor();
     }
 
-	public void RestockVendor(){
-		GameData.VendorStore.Clear();
-
-		for (int i=0;i<Subs.GetRandom(6,8);i++){
-			//GameData.VendorStore.Eq
-			InvItemStorage.EquipRandomItem(GameData.VendorStore,"vendor_items","vendor_quality");
-		}
-	}
-
 #if UNITY_EDITOR && !UNITY_WEBPLAYER
 	public void Update(){
 		if (Input.GetKeyDown(KeyCode.F5)){
-			SaveLoadSys.SaveGame("Save",GameData);
+			SaveGame();
 		}
 
 		if (Input.GetKeyDown(KeyCode.F9)){
 			LoadGame();
 		}
 	}
+	#endif
 
+	public void SaveGame(){
+		SaveLoadSys.SaveGame("Save",GameData);
+	}
+	
 	public void LoadGame(){
 		GameStarted=true;
-
 		GameData=SaveLoadSys.LoadGame("Save");
 
 		//init GameData
@@ -66,14 +63,13 @@ public class GameDB : MonoBehaviour {
 		foreach(var e in GameData.PlayerData.Items.items){
 			if (e!=null) e.InitBaseItem();
 		}
-
 		foreach(var e in GameData.PlayerData.Equipment.EquipmentSlots){
 			if (e.Item!=null) e.Item.InitBaseItem();
 		}
 
 		Application.LoadLevel(HQScene);
 	}
-	#endif
+
     public void SetCurrentMission(MissionObjData mission)
     {
         GameData.CurrentMission=mission;
@@ -88,9 +84,18 @@ public class GameDB : MonoBehaviour {
     {
         GOTO_DEBRIEF=true;
 
+		//mission status
+
+		MissionGenerator.UpdateMissionObjectiveStatus(GameData.CurrentMission,GameData.PlayerData);
+		int reward=CalculateQuestReward();
+		GameData.PlayerData.Money+=reward;
+		RemoveQuestItems();
+
+		//world simulation
 		GameData.CurrentTime+=GameData.CurrentMission.TravelTime;
 
-		GenerateNewMissions(GameData.CurrentMission.TravelTime);
+		GameData.CurrentMission.ExpirationTime=0;
+		UpdateMissions(GameData.CurrentMission.TravelTime);
 		RestockVendor();
 
 		UpdateFinanceManager(GameData.CurrentMission.TravelTime);
@@ -119,11 +124,28 @@ public class GameDB : MonoBehaviour {
             }
         }
     }
+	
+	void GenerateNewMissions()
+	{
+		//get all possible pools
+		var availablemissionpools=new List<string>();
+		
+		foreach (var p in XmlDatabase.MissionPool.Pools.Keys){
+			availablemissionpools.Add(p);
+		}
+		//generate new missions if any are needed
+		while (GameData.AvailableMissions.Count<4){
+			var index=Subs.GetRandom(availablemissionpools);
+			availablemissionpools.Remove(index);
+				
+			GameData.AvailableMissions.Add(MissionGenerator.GenerateMission(index));
+		}
+	}
 
-    void GenerateNewMissions(int time_increase)
+    void UpdateMissions(int time_increase)
     {
 		//Remove old missions and find all available mission pools.
-		List<string> availablemissionpools=new List<string>();
+		var availablemissionpools=new List<string>();
 
 		foreach (var p in XmlDatabase.MissionPool.Pools.Keys){
 			availablemissionpools.Add(p);
@@ -132,20 +154,24 @@ public class GameDB : MonoBehaviour {
 		for (int i=0;i<GameData.AvailableMissions.Count;++i){
 			var m=GameData.AvailableMissions[i];
 			m.ExpirationTime-=time_increase;
-			if (m.ExpirationTime<=0){
-				GameData.AvailableMissions.Remove(m);
-				--i;
+			if (m.ExpirationTime<0){
 				continue;
 			}
+			//mission stays. Pool not available
 			availablemissionpools.Remove(m.MissionPoolIndex);
 		}
 
 		//generate new missions if any are needed
-        while (GameData.AvailableMissions.Count<4){
-			var index=Subs.GetRandom(availablemissionpools);
-			GameData.AvailableMissions.Add(MissionGenerator.GenerateMission(index));
-			availablemissionpools.Remove(index);
-        }
+		
+		for (int i=0;i<GameData.AvailableMissions.Count;++i){
+			var m=GameData.AvailableMissions[i];
+			if (m.ExpirationTime<0){
+				var index=Subs.GetRandom(availablemissionpools);
+				availablemissionpools.Remove(index);
+
+				GameData.AvailableMissions[i]=MissionGenerator.GenerateMission(index);
+			}
+		}
     }
 
 	//update number of days until update
@@ -154,6 +180,15 @@ public class GameDB : MonoBehaviour {
 		var GDFM = GameData.FinanceManager;
 		GDFM.days_till_update -= amt_of_days;
 		GDFM.UpdateDays();
+	}
+	
+	public void RestockVendor(){
+		GameData.VendorStore.Clear();
+		
+		for (int i=0;i<Subs.GetRandom(6,8);i++){
+			//GameData.VendorStore.Eq
+			InvItemStorage.EquipRandomItem(GameData.VendorStore,"vendor_items","vendor_quality");
+		}
 	}
 }
 
@@ -168,11 +203,15 @@ public class GameObjData{
 
 	public int CurrentTime{get;set;}
 
+	public int[] TPhighScores{get;set;}
+
 	public GameObjData(){
 		CurrentTime=1;
 		AvailableMissions=new List<MissionObjData>();
 		PlayerData=new PlayerObjData();
 		VendorStore=new InvItemStorage(8,4,2);
 		FinanceManager = new FinanceManager(PlayerData);
+
+		TPhighScores=new int[5];
 	}
 }

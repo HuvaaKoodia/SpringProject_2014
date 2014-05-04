@@ -11,10 +11,7 @@ public class MechanicalMenu : MonoBehaviour {
 
     public AmmoPanelMain AmmoPanel;
 
-    PlayerObjData player;
-
     public void SetPlayer(PlayerObjData player){
-        this.player=player;
         Statistics.SetPlayer(player);
 
 		LH.SetPlayer(player,player.GetPart(UIEquipmentSlot.Slot.WeaponLeftHand),allow_buying);
@@ -29,14 +26,6 @@ public class MechanicalMenu : MonoBehaviour {
         AmmoPanel.SetPlayer(player,allow_buying);
         UpdateStats();
     }
-
-	void Update(){
-		UpdateMoney();
-	}
-
-	void UpdateMoney(){
-		if (MoneyLabel!=null) MoneyLabel.text="Money: "+player.Money+" "+XmlDatabase.MoneyUnit;
-	}
 
     void UpdateStats(){
 		LH.UpdateStats();

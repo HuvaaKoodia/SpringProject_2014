@@ -7,9 +7,7 @@ using System.IO;
 /// </summary>
 public class SaveLoadSys:TXT_Loader {
 
-#if UNITY_WEBPLAYER
-
-#else
+#if !UNITY_WEBPLAYER
 	public static void SaveGame(string filename,GameObjData data){
 		var serializer=new SharpSerializer(true);
 		var mstream=new MemoryStream();
@@ -17,6 +15,7 @@ public class SaveLoadSys:TXT_Loader {
 		serializer.Serialize(data,mstream);
 		
 		WriteDocument("Saves",filename,".sav",StreamToString(mstream));
+		Debug.Log("Game saved.");
 	}
 
 	public static GameObjData LoadGame(string filename)
@@ -27,6 +26,7 @@ public class SaveLoadSys:TXT_Loader {
 		var mstream=StreamFromString(data);
 		
 		var obj=serializer.Deserialize(mstream) as GameObjData;
+		Debug.Log("Game loaded.");
 		return obj;
 	}
 

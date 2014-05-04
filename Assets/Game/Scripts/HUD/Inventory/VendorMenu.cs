@@ -6,21 +6,10 @@ public class VendorMenu : MonoBehaviour {
 
     public UIItemStorage PlayerStorage,VendorStorage;
     public UIEquipmentSlot SellSlot;
-    public UILabel MoneyLabel;
 
     public List<UIEquipmentSlot> EquipmentSlots;
 
     PlayerObjData _player;
-
-	// Use this for initialization
-	void Start(){
-
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		MoneyLabel.text="Money: "+_player.Money+" "+XmlDatabase.MoneyUnit;
-	}
 
 	public void SetPlayer(PlayerObjData player){
         _player=player;

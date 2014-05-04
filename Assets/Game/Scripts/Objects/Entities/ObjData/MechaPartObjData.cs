@@ -10,7 +10,7 @@ public class MechaPartObjData{
 	public UIEquipmentSlot.Slot Slot {get;set;}
 
 	//lazy reference
-	public InvEquipmentSlot Equipment;
+	public InvEquipmentSlot Equipment{get; set;}
 
     //serializable data
     public int HP{get; set;}

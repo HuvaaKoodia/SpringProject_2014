@@ -12,7 +12,12 @@ public class SharedSystemsMain : MonoBehaviour {
 
 	public UIAtlas ItemAtlas;
 
+	bool loaded=false;
+
     void Awake(){
+		if (loaded) return;
+		loaded=true;
+
         XMAP.LoadData();
 		XmlDatabase.LoadData(ItemAtlas);
         GDB.StartNewGame();

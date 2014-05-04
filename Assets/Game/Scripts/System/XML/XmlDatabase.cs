@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public class XmlDatabase
 {
 	//data
-
 	public static PlayerXmlData Player;
 	public static Dictionary<string,InvBaseItem> Items{get;private set;}
 	public static List<EnemyXmlData> enemies { get; private set; }
@@ -69,6 +68,12 @@ public class XmlDatabase
 
         XMLDataLoader.ReadDataFiles();
     }
+
+	//getters
+	public static MissionXmlData GetMission (MissionObjData.Type type)
+	{
+		return Missions[type];
+	}
 
 	public static InvBaseItem GetBaseItem(string name){
 		if (Items.ContainsKey(name)){
@@ -137,17 +142,4 @@ public class XmlDatabase
 		}
 		Missions.Add(type,data);
 	}
-
-
-	/*
-	 *     public static List<PlayerXmlData> players { get; private set; }
-	public static Dictionary<string,InvBaseItem> items{get;private set;}
-	public static List<EnemyXmlData> enemies { get; private set; }
-	public static List<ObstacleXmlData> obstacles { get; private set; }
-	public static Dictionary<MissionObjData.Type,MissionXmlData> Missions{ get; private set; }
-	public static Dictionary<string,InvBaseItem> QuestItems=new Dictionary<string,InvBaseItem>();
-	public static Dictionary<string,AmmoXmlData> AmmoTypes=new Dictionary<string,AmmoXmlData>();
-	public static Dictionary<MissionObjData.Objective,ObjectiveXmlData> Objectives=new Dictionary<MissionObjData.Objective,ObjectiveXmlData>();
-	public static Dictionary<string,RewardClassXmlData> RewardClasses=new Dictionary<string,RewardClassXmlData>();
-	 * */
 }

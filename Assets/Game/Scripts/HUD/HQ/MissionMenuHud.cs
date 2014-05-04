@@ -9,20 +9,22 @@ public class MissionMenuHud : MonoBehaviour {
     public VendorMenu _VendorMenu;
     public MechanicalMenu _MechanicMenu;
 	public FinanceMenu _FinanceMenu;
-
     public Transform MissionButtonsParent;
     public MissionButtonMain MButtonPrefab;
-
     public MenuTabController Tabs;
+	public UILabel MoneyLabel;
+
+	public int MissionButtonGap=8;
 
     SharedSystemsMain SS;
     MissionObjData Mission;
+	PlayerObjData _player;
 
 	// Use this for initialization
 	void Start () {
         SS=GameObject.FindGameObjectWithTag("SharedSystems").GetComponent<SharedSystemsMain>();
 
-        //Dev.temp
+        //Dev.debug
         if (!SS.GDB.GameStarted)
             SS.GDB.StartNewGame();
 
@@ -34,41 +36,38 @@ public class MissionMenuHud : MonoBehaviour {
 
             button.transform.localScale=Vector3.one;
             button.transform.localPosition=Vector3.zero;
-            button.transform.localPosition+=Vector3.right*((button.getWidth()+10)*i);
+            button.transform.localPosition+=Vector3.right*((button.getWidth()+MissionButtonGap)*i);
             ++i;
 
             button.Menu=this;
             button.SetMission(m);
         }
 
+		_player=SS.GDB.GameData.PlayerData;
+
         //set references
-        _VendorMenu.SetPlayer(SS.GDB.GameData.PlayerData);
+        _VendorMenu.SetPlayer(_player);
 		_VendorMenu.SetVendor(SS.GDB.GameData.VendorStore);
         _VendorMenu.Init();
 
-		_MechanicMenu.SetPlayer(SS.GDB.GameData.PlayerData);
+		_MechanicMenu.SetPlayer(_player);
 	
 		_FinanceMenu.SetFinanceManager(SS.GDB.GameData.FinanceManager);
 
         //open correct menu
-
         if (SS.GDB.GOTO_DEBRIEF){
             SS.GDB.GOTO_DEBRIEF=false;
-			MissionGenerator.UpdateMissionObjectiveStatus(SS.GDB.GameData.CurrentMission,SS.GDB.GameData.PlayerData);
-            int reward=SS.GDB.CalculateQuestReward();
-			SS.GDB.GameData.PlayerData.Money+=reward;
-			MissionDebrief.SetMission(SS.GDB,reward);
+			MissionDebrief.SetMission(SS.GDB);
             OpenMissionDebrief();
-            SS.GDB.RemoveQuestItems();
+            
         }
         else{
             OpenMissionSelect();
         }
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
-	    
+		MoneyLabel.text="Money: "+_player.Money+" "+XmlDatabase.MoneyUnit;
 	}
 
     public void SelectMission(MissionObjData mission)

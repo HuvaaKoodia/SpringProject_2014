@@ -6,6 +6,8 @@ public class MissionObjective{
 	public MissionObjData.Objective Objective{get;private set;}
 	public int status{get;set;}
 
+	public MissionObjective(){}
+
 	public MissionObjective(MissionObjData.Objective obj){
 		Objective=obj;
 	}
@@ -13,7 +15,7 @@ public class MissionObjective{
 
 public class MissionObjData {
 	
-    public MissionXmlData XmlData{get;set;}
+	public MissionXmlData XmlData{get{return XmlDatabase.GetMission(MissionType);}}
 
     public enum Type{TradeVesselInfo,RetrieveCargo,EmergencyBeacon,ExploreVessel}
     public enum AlienAmount{None,Small,Medium,Large}
@@ -29,7 +31,7 @@ public class MissionObjData {
 	public string Briefing{get;set;}
 	public string Objectives{get;set;}
 
-	public string LootQuality;
+	public string LootQuality{get;set;}
 
 	public int TravelTime{get;set;}
 	public int ExpirationTime{get;set;}	
