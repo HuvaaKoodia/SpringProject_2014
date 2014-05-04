@@ -68,6 +68,8 @@ public class PrefabStore : MonoBehaviour {
 	//Weapon graphics
 	public Dictionary<string, GameObject> weaponGraphics;
 
+	public List<GameObject> targetHighlights;
+
 	public void Awake()
 	{
 		weaponGraphics = new Dictionary<string, GameObject>();
@@ -75,5 +77,11 @@ public class PrefabStore : MonoBehaviour {
 		weaponGraphics.Add("Gatling", Resources.Load("Weapons/GatlingArm") as GameObject);
 		weaponGraphics.Add("Cannon", Resources.Load("Weapons/Cannon") as GameObject);
 		weaponGraphics.Add("NotFound", Resources.Load("Weapons/WeaponNotFound") as GameObject);
+
+		targetHighlights = new List<GameObject>();
+		targetHighlights.Add(Resources.Load("TargetingSprites/LeftDown") as GameObject);
+		targetHighlights.Add(Resources.Load("TargetingSprites/LeftUp") as GameObject);
+		targetHighlights.Add(Resources.Load("TargetingSprites/RightDown") as GameObject);
+		targetHighlights.Add(Resources.Load("TargetingSprites/RightUp") as GameObject);
 	}
 }

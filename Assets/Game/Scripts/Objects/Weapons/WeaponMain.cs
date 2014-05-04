@@ -38,6 +38,11 @@ public class WeaponMain : MonoBehaviour {
 
 	public GameObject graphics;
 
+	public GameObject verticalMovement;
+	public GameObject horizontalMovement;
+
+	public Transform barrelEstimate;
+
     public int CurrentAmmo { 
         get{
             if (NoAmmoConsumption) return 1;
@@ -102,14 +107,14 @@ public class WeaponMain : MonoBehaviour {
 		if (graphicsFound)
 		{
 			graphics = GameObject.Instantiate(player.GC.SS.PS.weaponGraphics[Weapon.baseItem.mesh]) as GameObject;
-			graphics.transform.parent = transform;
+			graphics.transform.parent = horizontalMovement.transform;
 			graphics.transform.localPosition = Vector3.zero;
 			graphics.transform.rotation = transform.rotation;
 		}
 		else
 		{
 			graphics = GameObject.Instantiate(player.GC.SS.PS.weaponGraphics["NotFound"]) as GameObject;
-			graphics.transform.parent = transform;
+			graphics.transform.parent = horizontalMovement.transform;
 			graphics.transform.localPosition = Vector3.zero;
 			graphics.transform.rotation = transform.rotation;
 		}
@@ -244,18 +249,42 @@ public class WeaponMain : MonoBehaviour {
 
 	public void RotateGraphics()
 	{
+		if (verticalMovement == null)
+			return;
+
 		if (HasTargets)
 		{
-			transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime*rotationSpeed);
+			verticalMovement.transform.rotation = 
+				Quaternion.RotateTowards(verticalMovement.transform.rotation, 
+				                         Quaternion.Euler(targetRotation.eulerAngles.x, player.transform.rotation.eulerAngles.y, 0.0f), 
+				                         Time.deltaTime*rotationSpeed);
+
+			horizontalMovement.transform.rotation = 
+				Quaternion.RotateTowards(horizontalMovement.transform.rotation, 
+				                         Quaternion.Euler(0.0f, targetRotation.eulerAngles.y, 0.0f) , 
+				                         Time.deltaTime*rotationSpeed);
 		}
 		else
 		{
-			transform.rotation = Quaternion.RotateTowards(transform.rotation, player.transform.rotation, Time.deltaTime*rotationSpeed);
+
+			verticalMovement.transform.rotation = 
+				Quaternion.RotateTowards(verticalMovement.transform.rotation, 
+				                         player.transform.rotation, 
+				                         Time.deltaTime*rotationSpeed);
+
+			horizontalMovement.transform.rotation = 
+				Quaternion.RotateTowards(horizontalMovement.transform.rotation, 
+				                         player.transform.rotation, 
+				                         Time.deltaTime*rotationSpeed);
+				                         
 		}
 	}
 
 	public void LookAtMouse(Rect bounds)
 	{
+        if (verticalMovement == null)
+            return;
+
 		if (bounds.Contains(new Vector2(Input.mousePosition.x, Input.mousePosition.y)))
 		{
 			Ray ray=Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -269,13 +298,21 @@ public class WeaponMain : MonoBehaviour {
 
 			Vector3 mouseToWorld = player.GameCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x , Input.mousePosition.y, mouseDistance));
 
-			targetRotation = Quaternion.LookRotation((mouseToWorld - transform.position));
+			targetRotation = Quaternion.LookRotation(mouseToWorld - barrelEstimate.position);
 		}
 		else
 			targetRotation = transform.rotation = 
 				Quaternion.RotateTowards(transform.rotation, player.transform.rotation, Time.deltaTime*rotationSpeed);
 
-		transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime*rotationSpeed);
+		verticalMovement.transform.rotation = 
+			Quaternion.RotateTowards(verticalMovement.transform.rotation, 
+			                         Quaternion.Euler(targetRotation.eulerAngles.x, player.transform.rotation.eulerAngles.y, 0.0f),// * player.transform.rotation, 
+			                         Time.deltaTime*rotationSpeed);
+		
+		horizontalMovement.transform.rotation = 
+			Quaternion.RotateTowards(horizontalMovement.transform.rotation, 
+			                         Quaternion.Euler(targetRotation.eulerAngles.x, targetRotation.eulerAngles.y, 0.0f),// * player.transform.rotation, 
+			                         Time.deltaTime*rotationSpeed);
 	}
 	
 	public void Unselected()

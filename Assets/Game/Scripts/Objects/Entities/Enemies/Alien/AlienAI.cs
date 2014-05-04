@@ -51,6 +51,8 @@ public class AlienAI : AIBase {
 
 	Point3D MyPosition;
 
+	public float MeleeDealDamageDelay;
+
 	// Use this for initialization
 	void Start()
 	{
@@ -548,11 +550,11 @@ public class AlienAI : AIBase {
 	{
 		if (movement.GetTileInFront().entityOnTile == player)
 		{
-			StartCoroutine("AttackMelee",(spiderAnimation[MeleeAttackAnimation].length * 0.85f));
+			StartCoroutine("AttackMelee", MeleeDealDamageDelay);
 		}
 		else
 		{
-			StartCoroutine("AttackRanged", (spiderAnimation[RangedAttackAnimation].length * 0.85f));
+			StartCoroutine("AttackRanged", MeleeDealDamageDelay-0.2f); //TEMP
 		}
 		AP = 0;
 	}

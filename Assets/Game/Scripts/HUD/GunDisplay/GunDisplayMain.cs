@@ -7,20 +7,12 @@ public class GunDisplayMain : MonoBehaviour {
 	public GameController GC;
 	public List<GunDisplayScreenSub> gunInfoScreens;
 
-	public Color[] weaponColors { get; private set; }
-	public Color inActiveColor { get; private set; }
+	public List<Color> weaponColors;
+	public Color inActiveColor;
 
 	// Use this for initialization
 	void Awake()
 	{
-		weaponColors = new Color[] 
-		{
-			Color.cyan,
-			Color.magenta,
-			Color.red,
-			Color.yellow
-		};
-
 		inActiveColor = Color.black;
 	}
 
