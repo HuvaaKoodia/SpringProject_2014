@@ -16,7 +16,7 @@ namespace ComputerSystems{
 		public float UpdateDelay=0.5f;
 
 		ScreenContext context,contextBig,contextSmall;
-		GameObjData Selected,SelectedOld;
+		TPObjData Selected,SelectedOld;
 
 		GameGrid Grid;
 
@@ -24,16 +24,14 @@ namespace ComputerSystems{
 		float update_tick=0,update_delay;
 
 		int points=0,scorebar_y;
-
-		int [] TPhighScores;
+		public GameObjData GameData;
 
 		public Color Basic_color=Color.white,Select_color=Color.red,Highlight_color=Color.blue,Intro_color=Color.magenta;
+		int intro_graphics_step=0,intro_step=0,intro_temp=0,intro_temp2=0;
 
 		//logic
 		void Start () 
 		{
-			TPhighScores=new int[5];
-
 			scorebar_y=height-1;
 
 			contextSmall=new ScreenContext(width,height,x_size_small,y_size_small);
@@ -54,7 +52,21 @@ namespace ComputerSystems{
 			//points=100;
 		}
 
-		int intro_graphics_step=0,intro_step=0,intro_temp=0,intro_temp2=0;
+		void Update(){
+			if (update_game){
+				update_tick-=Time.deltaTime;
+				if (update_tick<0){
+					UpdateGame();
+				}
+			}
+#if UNITY_EDITOR
+			if (Input.GetKeyDown(KeyCode.M)){
+				gameover=true;
+				update_game=true;
+				intro_graphics_step=0;intro_step=0;intro_temp=0;intro_temp2=0;
+			}
+#endif
+		}
 
 		void UpdateGame(){
 			update_game=false;
@@ -89,6 +101,10 @@ namespace ComputerSystems{
 						intro_graphics_step=context.Height-1;
 						intro_temp=intro_temp2=0;
 					}
+					else{
+						intro_step=3;
+						intro_graphics_step=context.Height-1;
+					}
 				}
 				if (intro_step==2){
 					//print hiscore!
@@ -113,12 +129,12 @@ namespace ComputerSystems{
 						if (intro_temp2==9){
 							++intro_step;
 							intro_graphics_step=context.Height-1;
-							update_delay=3f;
+							update_delay=1.5f;
 						}
 					}
 				}
 				else if (intro_step==3){
-					update_delay=0.5f;
+					update_delay=0.3f;
 
 					context.ClearRow(intro_graphics_step);
 					if (intro_graphics_step== context.Height-1){
@@ -128,8 +144,8 @@ namespace ComputerSystems{
 						intro_temp=0;
 					}
 					else{
-						if (intro_temp<TPhighScores.Length){
-							context.Write(0,intro_graphics_step,""+TPhighScores[intro_temp],Basic_color);
+						if (intro_temp<GameData.TPhighScores.Length){
+							context.Write(0,intro_graphics_step,""+GameData.TPhighScores[intro_temp],Basic_color);
 							++intro_temp;
 						}
 					}
@@ -155,7 +171,7 @@ namespace ComputerSystems{
 						obj.moving=false;
 						if (obj.Empty){
 							if (y+1==Grid.Height){//in top row
-								obj.Type=Subs.GetRandom(GameObjData.TypeAmount);
+								obj.Type=Subs.GetRandom(TPObjData.TypeAmount);
 								update_game=true;
 								obj.moving=true;
 							}
@@ -245,15 +261,7 @@ namespace ComputerSystems{
 
 			if (!update_game) score_multiplier=0;
 		}
-		
-		void Update(){
-			if (update_game){
-				update_tick-=Time.deltaTime;
-				if (update_tick<0){
-					UpdateGame();
-				}
-			}
-		}
+
 		//functions
 		
 		void SetContext(bool small){
@@ -306,16 +314,16 @@ namespace ComputerSystems{
 		bool AddHighScore(int score){
 			bool added=false;
 			int old_score=0;
-			for (int i=0;i<TPhighScores.Length;++i){
-				int hs=TPhighScores[i];
+			for (int i=0;i<GameData.TPhighScores.Length;++i){
+				int hs=GameData.TPhighScores[i];
 				if (added){
-					TPhighScores[i]=old_score;
+					GameData.TPhighScores[i]=old_score;
 					old_score=hs;
 				}
 				else if (score>hs){
 					added=true;
 					old_score=hs;
-					TPhighScores[i]=score;
+					GameData.TPhighScores[i]=score;
 				}
 			}
 			return added;
@@ -325,7 +333,7 @@ namespace ComputerSystems{
 			for (int x=0;x<Grid.Width;++x){
 				for (int y=0;y<Grid.Height;++y){
 					var obj=Grid.GetObj(x,y);
-					GameObjData next=null;
+					TPObjData next=null;
 					int dx,dy;
 					for (int d=0;d<4;++d){
 						dx=MapGenerator.GetCardinalX(d);
@@ -350,7 +358,7 @@ namespace ComputerSystems{
 		/// Checks if there is a match for this cell
 		/// </summary>
 		/// <param name="y">The y coordinate.</param>
-		bool hasMatch(GameObjData obj){
+		bool hasMatch(TPObjData obj){
 			int hm=0,vm=0;
 			for (int i=-2;i<3;++i){
 				var next=Grid.GetObj(obj.GX+i,obj.GY);
@@ -375,8 +383,8 @@ namespace ComputerSystems{
 		/// <summary>
 		/// Returns all matching objects.
 		///</summary>
-		List<GameObjData> getMatches(GameObjData obj){
-			var allMatches=new List<GameObjData>();
+		List<TPObjData> getMatches(TPObjData obj){
+			var allMatches=new List<TPObjData>();
 			AddToList(obj,true,allMatches);
 			AddToList(obj,false,allMatches);
 
@@ -386,10 +394,10 @@ namespace ComputerSystems{
 		/// <summary>
 		/// Adds all matching adjacent cells to the list.
 		/// </summary>
-		void AddToList(GameObjData start_cell,bool horizontal,List<GameObjData> total_list){
+		void AddToList(TPObjData start_cell,bool horizontal,List<TPObjData> total_list){
 
-			var temp_list=new List<GameObjData>();
-			GameObjData next=null;
+			var temp_list=new List<TPObjData>();
+			TPObjData next=null;
 			for (int i=-4;i<5;++i){
 				if (horizontal) next=Grid.GetObj(start_cell.GX+i,start_cell.GY);
 				else next=Grid.GetObj(start_cell.GX,start_cell.GY+i);
@@ -468,7 +476,7 @@ namespace ComputerSystems{
 			}
 		}
 
-		void SwapCells (GameObjData c1, GameObjData c2)
+		void SwapCells (TPObjData c1, TPObjData c2)
 		{
 			int type=c1.Type;
 			c1.Type=c2.Type;
@@ -498,7 +506,7 @@ namespace ComputerSystems{
 						var data=Grid.GetObj(x,y);
 						data.DeSelect();
 						do{
-							data.Type=Subs.GetRandom(GameObjData.TypeAmount);
+							data.Type=Subs.GetRandom(TPObjData.TypeAmount);
 						}
 						while (hasMatch(data));
 					}
@@ -508,7 +516,7 @@ namespace ComputerSystems{
 		}
 	}
 
-	class GameObjData{
+	class TPObjData{
 		//data
 		public static int TypeAmount=5;
 		
@@ -529,7 +537,7 @@ namespace ComputerSystems{
 		TimanttiPeli TP;
 		List<string> GSet;
 		//logic
-		public GameObjData(List<string> gset,TimanttiPeli tp, int gx,int gy,int sx_off,int sy_off){
+		public TPObjData(List<string> gset,TimanttiPeli tp, int gx,int gy,int sx_off,int sy_off){
 			GSet=gset;
 			TP=tp;
 			Type=0;
@@ -596,7 +604,7 @@ namespace ComputerSystems{
 			
 		}
 
-		public GameObjData[,] Grid;
+		public TPObjData[,] Grid;
 
 		//game grid position
 		public int X{get;private set;}
@@ -607,19 +615,19 @@ namespace ComputerSystems{
 
 		public GameGrid(TimanttiPeli tp,int xpos,int ypos,int w,int h){
 			X=xpos;Y=ypos;
-			Grid=new GameObjData[w,h];
+			Grid=new TPObjData[w,h];
 			
 			initGSets();
 			var set=Subs.GetRandom(GSets);
 
 			for (int x=0;x<Width;++x){
 				for (int y=0;y<Height;++y){
-					Grid[x,y]=new GameObjData(set,tp,x,y,X,Y);
+					Grid[x,y]=new TPObjData(set,tp,x,y,X,Y);
 				}
 			}
 		}
 
-		public GameObjData GetObj(int x,int y){
+		public TPObjData GetObj(int x,int y){
 			if (!Subs.insideArea(x,y,0,0,Width,Height)) return null;
 			return Grid[x,y];
 		}

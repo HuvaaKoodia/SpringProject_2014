@@ -23,6 +23,8 @@ public class MasterHudMain : MonoBehaviour {
 	public UILabel FPS;
 	public bool ShowFPS=true;
 
+
+
 	public DataTerminalHudController TerminalHud;
 
 	// Use this for initialization

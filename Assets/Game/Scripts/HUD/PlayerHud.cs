@@ -23,6 +23,8 @@ public class PlayerHud : MonoBehaviour {
 
 	public UIPanel targetMarkPanel;
 
+	public ComputerSystems.TimanttiPeli TP;
+
 	public bool UpdateComputerSystems=true;
 
 	// Use this for initialization
@@ -49,10 +51,11 @@ public class PlayerHud : MonoBehaviour {
 
 		player.ActivateEquippedItems();
 		SetHudToPlayerStats();
+
+		TP.GameData=gc.SS.GDB.GameData;
     }
 
 	//hud buttons
-
 	public void ToggleMovementHUD()
 	{
 		MasterHud.ToggleMovementHUD();

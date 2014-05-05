@@ -211,10 +211,8 @@ public class ShipGenerator : MonoBehaviour
 					if (t_index==MapGenerator.CorridorIcon||t_index==MapGenerator.DoorIcon||t_index==MapGenerator.FloorIcon){
 						int dir=0,xo=0,yo=0;
 						while (dir<4){
-							if (dir==0){ xo=1;yo=0; }
-							if (dir==1){ xo=-1;yo=0;}
-							if (dir==2){ xo=0;yo=1; }
-							if (dir==3){ xo=0;yo=-1;}
+							xo=MapGenerator.GetCardinalX(dir);
+							yo=MapGenerator.GetCardinalY(dir);
 							
 							var index=NewFloorMap.GetIndex(x+xo,y+yo);
 							
@@ -248,6 +246,22 @@ public class ShipGenerator : MonoBehaviour
 						var r_fix=Subs.GetRandom(PossibleDoors);
 
 						NewFloorMap.map_data[(int)r_fix.x,(int)r_fix.y]=MapGenerator.DoorIcon;
+
+						//change non floors next to added door to floors
+						for (int s=0;s<4;++s){
+							int x=MapGenerator.GetCardinalX(s);
+							int y=MapGenerator.GetCardinalY(s);
+							var index=NewFloorMap.GetIndex((int)r_fix.x+x,(int)r_fix.y+y);
+							if (index=="") continue;
+							if (index!=MapGenerator.SpaceIcon
+							    &&index!=MapGenerator.FloorIcon
+							    &&index!=MapGenerator.WallIcon
+							    &&index!=MapGenerator.CorridorIcon)
+							{
+								Debug.Log(index+" changed!!");
+								NewFloorMap.map_data[(int)r_fix.x+x,(int)r_fix.y+y]=MapGenerator.FloorIcon;
+							}
+						}
 					}
 				}
 			}
@@ -312,7 +326,7 @@ public class ShipGenerator : MonoBehaviour
             oi=map.GetIndex(x,y);
             if (oi==MapGenerator.WallIcon){
                 oi=map.GetIndex(x+x2,y+y2);
-				if (oi==MapGenerator.FloorIcon||oi==MapGenerator.LootAreaIcon){
+				if (oi!=MapGenerator.SpaceIcon&&oi!=MapGenerator.WallIcon){
                     return true;
                 }
             }

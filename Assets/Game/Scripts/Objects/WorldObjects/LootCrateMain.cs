@@ -12,25 +12,22 @@ public class LootCrateMain : InteractableMain {
 
 	public bool Looted ()
 	{
+		if (openAnimation.isPlaying) return false;
+
 		if (!isOpen)
 		{
 			isOpen = true;
 			openAnimation.Play("Open_LootBox");
+			Invoke ("SetLootToInventory", 0.9f);
 		}
-
-		if (!GC.Inventory.LootParent.gameObject.activeSelf)
-		{
-			if (openAnimation.isPlaying)
-				Invoke ("SetLootToInventory", 0.9f);
-			else
-				SetLootToInventory();
-
-			return true;
+		else{
+			SetLootToInventory();
 		}
-		else
+		return true;
+		//else
 		{
-			GC.HUD.DeactivateInventoryHUD();
-			return false;
+		//	GC.HUD.DeactivateInventoryHUD();
+		//	return false;
 		}
 	}
 

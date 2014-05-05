@@ -12,17 +12,13 @@ public class MapGenerator : MonoBehaviour
 	//hardcoded icons
 	public const string 
 		WallIcon = "w", DoorIcon = "d", CorridorIcon = "c", FloorIcon = ".",AirlockIcon = "a",
-		SpaceIcon=",",ElevatorDoorIcon="hd",ElevatorIcon="h",RoomIcon="r",RoomEndIcon="t",LootAreaIcon=":"
+		SpaceIcon=",",ElevatorDoorIcon="hd",ElevatorIcon="h",RoomIcon="r",RoomEndIcon="t"
 	;
 
     public bool DEBUG_create_temp_tiles = false;
     public PrefabStore MapPrefabs;
 
 	GameObject clone_container;
-
-	void Awake(){
-
-	}
 
     /// <summary>
     /// Generates the TileObjectDataMap from an XMLMapData file.

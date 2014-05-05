@@ -45,22 +45,6 @@ public class ShipDetailGenerator : MonoBehaviour
 			GetTilesOfTypeWithObject(floor,room, TileObjData.Type.Floor,TileObjData.Obj.LootArea, free_tiles);
             int l_amount = Subs.GetRandom(room.RoomXmlData.LootAmountMin, room.RoomXmlData.LootAmountMax);
 
-            //remove free positions next to doors
-            for (int t=0;t<free_tiles.Count;++t){
-                var tile=free_tiles[t];
-
-                for (int i=0;i<4;i++){
-                    int x=MapGenerator.GetCardinalX(i),y=MapGenerator.GetCardinalY(i);
-                    var index=floor.GetTileObj(tile.X+x,tile.Y+y);
-
-                    if (index.TileType==TileObjData.Type.Door){
-                        free_tiles.Remove(tile);
-                        --t;
-						break;
-                    }
-                }
-            }
-
             while (free_tiles.Count>0)
             {
                 if (floor_amount_loot == 0 || l_amount == 0)
