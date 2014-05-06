@@ -7,6 +7,7 @@ public class MechaPartRepairPanel : MonoBehaviour {
     MechaPartObjData Part;
     public UILabel Condition,Name,Cost;
     public UIButton Button;
+	private bool ButtonActive;
 
     public string _Name;
     public float cost_multi=2f;
@@ -18,6 +19,7 @@ public class MechaPartRepairPanel : MonoBehaviour {
 
     void Start(){
         Name.text=_Name;
+		ButtonActive = true;
     }
 
     public void SetPlayer(PlayerObjData player,MechaPartObjData part, bool allow_buying){
@@ -35,14 +37,20 @@ public class MechaPartRepairPanel : MonoBehaviour {
         Condition.text=con+"%";
         Cost.text="Cost: "+cost;
 
+		// Lazy. Best Regards, Your Divine Producer
         if (!AllowBuying||cost==0){
-            Button.gameObject.SetActive(false);
-            Cost.gameObject.SetActive(false);
+			var c = Button.gameObject.GetComponent<UIButton>().defaultColor;
+			Button.gameObject.GetComponent<UIButton>().defaultColor = new Color(c.r, c.g, c.b, 0.3f);
+			Cost.gameObject.SetActive(false);
+			ButtonActive = false;
+			Button.gameObject.GetComponent<UIButton>().enabled = false; 
+			Button.gameObject.GetComponent<UIButtonScale>().enabled = false;
+			Button.gameObject.GetComponentInChildren<UILabel>().alpha = 0.3f;
         }
     }
 
     public void Repair(){
-        if (Player.Money>=cost){
+        if (ButtonActive && Player.Money>=cost){
             Player.Money-=cost;
             Part.ResetHP();
             UpdateStats();
