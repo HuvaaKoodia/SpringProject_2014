@@ -4,7 +4,7 @@ using System.Collections;
 public class MainMenuHud : MonoBehaviour {
 	
     public GameObject CreditsPanel,HelpPanel,PlayPanel,QuitButton;
-
+	public string StartScene;
     void Start(){
 
         DisableAll();
@@ -18,7 +18,7 @@ public class MainMenuHud : MonoBehaviour {
     }
 
     void StartClick(){
-        Application.LoadLevel("GameScene");
+        Application.LoadLevel(StartScene);
     }
     
     void HelpClick(){
