@@ -1,23 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MechanicalMenu : MonoBehaviour {
 
     public MechStatisticsMain Statistics;
-    public MechaPartRepairPanel LH,RH,LS,RS,UT,LT;
     public UILabel MoneyLabel;
 
     public bool allow_buying=true;
 
     public AmmoPanelMain AmmoPanel;
 
+	public MechaPartRepairPanel UT,LT;
+	public List<MechaPartRepairPanel> RepairPanels;
+
     public void SetPlayer(PlayerObjData player){
         Statistics.SetPlayer(player);
 
-		LH.SetPlayer(player,player.GetPart(UIEquipmentSlot.Slot.WeaponLeftHand),allow_buying);
-		RH.SetPlayer(player,player.GetPart(UIEquipmentSlot.Slot.WeaponRightHand),allow_buying);
-		LS.SetPlayer(player,player.GetPart(UIEquipmentSlot.Slot.WeaponLeftShoulder),allow_buying);
-		RS.SetPlayer(player,player.GetPart(UIEquipmentSlot.Slot.WeaponRightShoulder),allow_buying);
+		foreach(var panel in RepairPanels){
+			panel.SetPlayer(player,player.GetPart(panel.EquipmentSlot),allow_buying);
+		}
 
         UT.SetPlayer(player,player.Equipment.UpperTorso.ObjData,allow_buying);
         //if (LT!=null)
@@ -28,10 +30,9 @@ public class MechanicalMenu : MonoBehaviour {
     }
 
     void UpdateStats(){
-		LH.UpdateStats();
-		RH.UpdateStats();
-		LS.UpdateStats();
-		RS.UpdateStats();
+		foreach (var panel in RepairPanels){
+			panel.UpdateStats();
+		}
 		UT.UpdateStats();
     }
 

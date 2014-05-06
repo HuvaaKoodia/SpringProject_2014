@@ -331,7 +331,7 @@ public class PlayerMain : EntityMain
 		int overheat_limit=0;
 		float accu_multi=0,def_multi=0,melee_multi=0,cooling_multi=0;
 		foreach (var s in ObjData.Equipment.EquipmentSlots){
-			if (s.Item==null) continue;
+			if (s.Item==null||!s.ObjData.USABLE) continue;
 			if (s.Item.baseItem.type==InvBaseItem.Type.Utility||
 			    s.Item.baseItem.type==InvBaseItem.Type.Navigator||
 			    s.Item.baseItem.type==InvBaseItem.Type.Radar){
@@ -355,7 +355,6 @@ public class PlayerMain : EntityMain
 				else if (GetStatValue(s.Item,InvStat.Type.SystemCooling,out value)){
 					cooling_multi+=value;
 				}
-
 				if (s.Item.baseItem.type==InvBaseItem.Type.Navigator){
 					HasMap=true;
 				}

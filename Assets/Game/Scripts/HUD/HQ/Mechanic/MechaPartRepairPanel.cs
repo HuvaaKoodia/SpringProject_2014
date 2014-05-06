@@ -12,6 +12,8 @@ public class MechaPartRepairPanel : MonoBehaviour {
     public float cost_multi=2f;
     public bool AllowBuying=true;
 
+	public UIEquipmentSlot.Slot EquipmentSlot;
+
     int cost;
 
     void Start(){
