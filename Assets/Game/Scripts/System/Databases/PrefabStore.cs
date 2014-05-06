@@ -76,6 +76,7 @@ public class PrefabStore : MonoBehaviour {
 		weaponGraphics.Add("Shotgun", Resources.Load("Weapons/Shotgun") as GameObject);
 		weaponGraphics.Add("Gatling", Resources.Load("Weapons/GatlingArm") as GameObject);
 		weaponGraphics.Add("Cannon", Resources.Load("Weapons/Cannon") as GameObject);
+		weaponGraphics.Add("Melee", Resources.Load("Weapons/Gladius") as GameObject);
 		weaponGraphics.Add("NotFound", Resources.Load("Weapons/WeaponNotFound") as GameObject);
 
 		targetHighlights = new List<GameObject>();

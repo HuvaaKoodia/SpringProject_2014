@@ -256,12 +256,12 @@ public class WeaponMain : MonoBehaviour {
 		{
 			verticalMovement.transform.rotation = 
 				Quaternion.RotateTowards(verticalMovement.transform.rotation, 
-				                         Quaternion.Euler(targetRotation.eulerAngles.x, player.transform.rotation.eulerAngles.y, 0.0f), 
+				                         Quaternion.Euler(targetRotation.eulerAngles.x, player.transform.rotation.eulerAngles.y, 0.0f),// * player.transform.rotation, 
 				                         Time.deltaTime*rotationSpeed);
-
+			
 			horizontalMovement.transform.rotation = 
 				Quaternion.RotateTowards(horizontalMovement.transform.rotation, 
-				                         Quaternion.Euler(0.0f, targetRotation.eulerAngles.y, 0.0f) , 
+				                         Quaternion.Euler(targetRotation.eulerAngles.x, targetRotation.eulerAngles.y, 0.0f),// * player.transform.rotation, 
 				                         Time.deltaTime*rotationSpeed);
 		}
 		else

@@ -322,7 +322,8 @@ public class PlayerMain : EntityMain
 
 		foreach(WeaponMain weapon in weaponList)
 		{
-			weapon.gameObject.SetActive(weapon.Weapon != null);
+			if (weapon.graphics != null)
+				weapon.graphics.SetActive(weapon.Weapon != null);
 		}
         //activate utilities
 		HasRadar=false;
