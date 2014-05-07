@@ -17,6 +17,11 @@ public class UIEquipmentSlot : UIItemSlot
 		UpperTorso=8,
         LowerTorso=9,
 		RecycleBin=10,
+		Ammo1,
+		Ammo2,
+		Ammo3,
+		Ammo4,
+		Ammo5,
 		_Amount
 	}
 	public InvEquipmentStorage equipment;
@@ -32,7 +37,12 @@ public class UIEquipmentSlot : UIItemSlot
             background.color=Color.white;
             return;
         }
+		if (equipment==null){
+			Debug.LogWarning("EquipmentSlot has no equipmentStorage attached");
+			return;
+		}
 		var s=equipment.GetSlot(slot);
+
 		if (s.HasType(item.baseItem.type)&&s.ObjData.USABLE&&s.ObjData.CHANGEABLE){
             background.color=Color.green;
         }
@@ -95,7 +105,9 @@ public class UIEquipmentSlot : UIItemSlot
 			if (HeatSprite!=null&&s.ObjData.USABLE){
 				HeatSprite.SetActive(!s.ObjData.CHANGEABLE);
 			}
-            DisabledSprite.SetActive(!s.ObjData.USABLE);
+			if (DisabledSprite!=null){
+            	DisabledSprite.SetActive(!s.ObjData.USABLE);
+			}
 		}
     }
 }

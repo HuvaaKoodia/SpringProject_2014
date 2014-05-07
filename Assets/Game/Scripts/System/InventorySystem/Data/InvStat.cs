@@ -20,7 +20,8 @@ public class InvStat
 		RadarRange,
 		AccuracyBoost,
 		MeleeDamage,
-		Hacking
+		Hacking,
+		Amount
 	}
 
 	/// <summary>

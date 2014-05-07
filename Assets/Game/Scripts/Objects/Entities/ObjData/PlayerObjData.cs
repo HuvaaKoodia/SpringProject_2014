@@ -146,9 +146,16 @@ public class PlayerObjData{
     {
         return Ammo[ammotype];
     }
+
+	public void AddAmmoAmount(string ammotype,int amount)
+	{
+		SetAmmoAmount(ammotype,Ammo[ammotype]+amount);
+	}
+
     public int SetAmmoAmount(string ammotype,int amount)
     {
-        return Ammo[ammotype]=amount;
+		int max=GetAmmoData(ammotype).MaxAmount;
+		return Ammo[ammotype]=Mathf.Min(amount,max);
     }
 
     public AmmoXmlData GetAmmoData(string ammotype)

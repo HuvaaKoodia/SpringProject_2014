@@ -148,7 +148,8 @@ static public class NGUITools
 
 	static public int RandomRange (int min, int max)
 	{
-		if (min == max) return min;
+		if (min == max) 
+			return min;
 		return UnityEngine.Random.Range(min, max + 1);
 	}
 

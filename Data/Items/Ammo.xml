@@ -1,14 +1,50 @@
 <Root>
-<!--
-name dafaults to type
-startamount defaults to maxamont
+<!-- Types
+name defaults to type
+startamount defaults to maxamount
 showingame defaults to true
--->
+sprite is required is showningame
 
-	<Ammo type = "Standard" 	name = "Standard"	 	maxamount="30" startamount="15"/>
-	<Ammo type = "Heavy" 		name = "Heavy Slug" 	maxamount="12" startamount="6"/>
-	<Ammo type = "Light" 		name = "Light Slug" 	maxamount="40" startamount="20"/>
-	<Ammo type = "Scatter"	 	name = "Scatter Shot" 	maxamount="20" startamount="10"/>
-	<Ammo type = "Missile" 		name = "Missile" 		maxamount="10" startamount="5"/>
-	<Ammo type = "Melee" 		name = "" 				maxamount="-1" showingame="false"/>
+negative maxamount equals infinite ammo
+-->
+	<Ammo type = "Standard" 	name = "Standard"	 	sprite = "Ammo1" maxamount="30" startamount="15"/>
+	<Ammo type = "Heavy" 		name = "Heavy Slug" 	sprite = "Ammo2" maxamount="12" startamount="6"/>
+	<Ammo type = "Light" 		name = "Light Slug" 	sprite = "Ammo5" maxamount="40" startamount="20"/>
+	<Ammo type = "Scatter"	 	name = "Scatter Shot" 	sprite = "Ammo4" maxamount="20" startamount="10"/>
+	<Ammo type = "Missile" 		name = "Missile" 		sprite = "Ammo3" maxamount="10" startamount="5"/>
+	<Ammo type = "Melee" 		maxamount="-1" showingame="false"/>
+	
+<!-- Ammo boxes-->
+	
+	<Item type = "AmmoBox" name = "Standard Ammunition" sprite="Ammo1">
+		<Description>Bog standard, but effective.</Description>
+		<Ammo>Standard</Ammo>
+		<Amount min ="20" max="50"/>
+	</Item>
+	
+	<Item type = "AmmoBox" name = "Heavy Slugs" sprite="Ammo2">
+		<Description>Heavy duty slugs.</Description>
+		<Ammo>Heavy</Ammo>
+		<Amount min ="5" max="10"/>
+	</Item>
+	
+	<Item type = "AmmoBox" name = "Light Slugs" sprite="Ammo5">
+		<Description>Light machine gun rounds.</Description>
+		<Ammo>Light</Ammo>
+		<Amount min ="10" max="30"/>
+	</Item>
+	
+	<Item type = "AmmoBox" name = "Scatter Ammo" sprite="Ammo4">
+		<Description>Box of Buckshot</Description>
+		<Ammo>Scatter</Ammo>
+		<Amount min ="8" max="15"/>
+	</Item>
+	
+	<Item type = "AmmoBox" name = "Missiles" sprite="Ammo3">
+		<Description>Missiles for the missile God!</Description>
+		<Ammo>Missile</Ammo>
+		<Amount min ="2" max="6"/>
+	</Item>
+	
+	
 </Root>

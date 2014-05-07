@@ -11,6 +11,7 @@ public class InGameInfoPanelMain : MonoBehaviour {
 	public GameObject InfoPanel,LootParent;
 	public UIItemStorage InventoryStorage,LootStorage;
 	public List<UIEquipmentSlot> EquipmentSlots;
+	public List<UIAmmoSlot> AmmoSlots;
 	public EquipRandomItem temp_random_item_button;
 
     public MenuTabController Tabs;
@@ -71,6 +72,15 @@ public class InGameInfoPanelMain : MonoBehaviour {
         InventoryStorage.SetItemStorage(player.ObjData.Items);
 		foreach(var s in EquipmentSlots){
             s.equipment=player.ObjData.Equipment;
+		}
+
+		int i=0;
+		foreach (var a in player.ObjData.Ammo.Keys){
+			if(i>AmmoSlots.Count-1) break;
+			var s = AmmoSlots[i];
+			s.Player=player.ObjData;
+			s.SetAmmoType(a);
+			++i;
 		}
 
 		temp_random_item_button.equipment=player.ObjData.Equipment;
