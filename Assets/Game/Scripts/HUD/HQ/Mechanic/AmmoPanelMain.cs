@@ -3,7 +3,9 @@ using System.Collections;
 
 public class AmmoPanelMain : MonoBehaviour {
     public Transform AmmoButtonsParent;
-    public AmmoTypePanel AmmoPanelPrefab;
+    public UIAmmoSlot AmmoPanelPrefab;
+
+	public int xoff=105;
 
     public void SetPlayer(PlayerObjData player,bool allow_buying){
         //create ammo buttons
@@ -12,12 +14,12 @@ public class AmmoPanelMain : MonoBehaviour {
             var data=player.GetAmmoData(m.Key);
             if (!data.ShowInGame) continue;
             
-            var button=Instantiate(AmmoPanelPrefab) as AmmoTypePanel;
+			var button=Instantiate(AmmoPanelPrefab) as UIAmmoSlot;
             button.transform.parent=AmmoButtonsParent;
             
             button.transform.localScale=Vector3.one;
             button.transform.localPosition=Vector3.zero;
-            button.transform.localPosition+=Vector3.down*((90)*i);//DEV.Magic number!
+			button.transform.localPosition+=Vector3.right*(xoff*i);//DEV.Magic number!
             ++i;
 
             button.AllowBuying=allow_buying;

@@ -17,11 +17,6 @@ public class UIEquipmentSlot : UIItemSlot
 		UpperTorso=8,
         LowerTorso=9,
 		RecycleBin=10,
-		Ammo1,
-		Ammo2,
-		Ammo3,
-		Ammo4,
-		Ammo5,
 		_Amount
 	}
 	public InvEquipmentStorage equipment;

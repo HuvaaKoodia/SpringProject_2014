@@ -13,9 +13,7 @@ public class AmmoTypePanel : MonoBehaviour {
     int cost;
     string index;
 
-    void Start(){
-
-    }
+    void Start(){}
 
     public void SetPlayer(PlayerObjData player,string ammo_index){
         Player=player;
@@ -47,6 +45,5 @@ public class AmmoTypePanel : MonoBehaviour {
 
             UpdateStats();
         }
-
     }
 }
