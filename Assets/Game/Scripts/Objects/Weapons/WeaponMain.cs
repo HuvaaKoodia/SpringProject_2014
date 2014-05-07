@@ -339,4 +339,9 @@ public class WeaponMain : MonoBehaviour {
     {
         return HitChance(enemy)*0.01f;
     }
+
+	bool looksAtTarget()
+	{
+		return horizontalMovement.transform.rotation == Quaternion.Euler(targetRotation.eulerAngles.x, targetRotation.eulerAngles.y, 0.0f);
+	}
 }

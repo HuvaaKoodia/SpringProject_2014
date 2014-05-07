@@ -84,9 +84,12 @@ public class PlayerMain : EntityMain
 
         foreach (WeaponMain weapon in weaponList)
 		{
-			if (targetingMode && !weapon.HasTargets && weapon == GetCurrentWeapon())
+			//Mouse look was taken off when 2 pivot point rotation was implemented
+			//weapon graphics caused clipping and 2 pivot points weird vibration when moving mouse fast
+			//or around floor/ceiling
+			/*if (targetingMode && !weapon.HasTargets && weapon == GetCurrentWeapon())
 				weapon.LookAtMouse(targetingSub.TargetingArea);
-			else
+			else*/
 				weapon.RotateGraphics();
 		}
 
