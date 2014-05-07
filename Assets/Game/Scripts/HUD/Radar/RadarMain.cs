@@ -193,8 +193,8 @@ public class RadarMain : MonoBehaviour
 				if (!DrawOnlyUnopenedLoot || !loot.isOpen)
 				{
 					drawBlip(loot.gameObject, lootBlipTexture);
-					currentBlip++;
 				}
+				currentBlip++;
 			}
 		}
 		
@@ -284,15 +284,6 @@ public class RadarMain : MonoBehaviour
 			bool onTopOfOther = false;
 			
 			Vector3 position = blipParent.transform.localPosition + posOffset;
-
-			for (int i = 0; i < currentBlip; i++)
-			{
-				if (blips[i].transform.localPosition == position)
-				{
-					onTopOfOther = true;
-					break;
-				}
-			}
 
 			if (posOffset.magnitude <= scanRadius || !circleScanActive)
 			{

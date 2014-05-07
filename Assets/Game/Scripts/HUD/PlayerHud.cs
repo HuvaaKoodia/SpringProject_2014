@@ -58,27 +58,32 @@ public class PlayerHud : MonoBehaviour {
 	//hud buttons
 	public void ToggleMovementHUD()
 	{
-		MasterHud.ToggleMovementHUD();
+		if (player.inputSub.NotUsable()) return;
+			MasterHud.ToggleMovementHUD();
 	}
 	
 	public void ToggleTargetingHUD()
 	{
-		MasterHud.ToggleTargetingHUD();
+		if (player.inputSub.NotUsable()) return;
+			MasterHud.ToggleTargetingHUD();
 	}
 	
 	public void DeactivateInventoryHUD()
 	{
-		MasterHud.DeactivateInventoryHUD();
+		if (player.inputSub.NotUsable()) return;
+			MasterHud.DeactivateInventoryHUD();
 	}
 	
 	public void ActivateInventoryHUD()
 	{
-		MasterHud.ActivateInventoryHUD();
+		if (player.inputSub.NotUsable()) return;
+			MasterHud.ActivateInventoryHUD();
 	}
 
 	public void ToggleInventory()
 	{
-		MasterHud.ToggleInventory();
+		if (player.inputSub.NotUsable()) return;
+			MasterHud.ToggleInventory();
 	}
 
 	//input

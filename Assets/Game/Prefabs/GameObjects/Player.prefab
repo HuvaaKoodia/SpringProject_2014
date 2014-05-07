@@ -1559,6 +1559,7 @@ GameObject:
   - 114: {fileID: 11400200}
   - 65: {fileID: 6500030}
   - 114: {fileID: 11400202}
+  - 114: {fileID: 11400022}
   m_Layer: 9
   m_Name: RadarBG
   m_TagString: Untagged
@@ -3379,7 +3380,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100008}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .979132414, y: .993728161, z: -.269728541}
+  m_LocalPosition: {x: .979145169, y: 1.15870965, z: -.269729078}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400020}
@@ -3402,7 +3403,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100012}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.817159057, y: .99372828, z: -.26972729}
+  m_LocalPosition: {x: -.817159176, y: 1.15871394, z: -.269727349}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400390}
@@ -7382,6 +7383,7 @@ MonoBehaviour:
   playerAnimation: {fileID: 11100004}
   legAnimation: {fileID: 11100002}
   AnimationsOn: 0
+  WeaponMouseLookOn: 0
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7570,6 +7572,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Target: {fileID: 400398}
+  functionName: OpenMap
+  trigger: 3
+  includeChildren: 0
+  OnPressInputIndex: 0
 --- !u!114 &11400024
 MonoBehaviour:
   m_ObjectHideFlags: 1

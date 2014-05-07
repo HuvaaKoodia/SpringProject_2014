@@ -37,6 +37,8 @@ public class PlayerMain : EntityMain
 	public Animation legAnimation;
 	public bool AnimationsOn;
 
+	public bool WeaponMouseLookOn = false;
+
     public void SetObjData(PlayerObjData data){
         ObjData=data;
     }
@@ -84,7 +86,11 @@ public class PlayerMain : EntityMain
 
         foreach (WeaponMain weapon in weaponList)
 		{
-			if (targetingMode && !weapon.HasTargets && weapon == GetCurrentWeapon())
+			//Mouse look was taken off by default when 2 pivot point rotation was implemented
+			//weapon graphics caused clipping and 2 pivot points weird vibration when moving mouse fast
+			//or around floor/ceiling
+
+			if (WeaponMouseLookOn && targetingMode && !weapon.HasTargets && weapon == GetCurrentWeapon())
 				weapon.LookAtMouse(targetingSub.TargetingArea);
 			else
 				weapon.RotateGraphics();
@@ -317,15 +323,25 @@ public class PlayerMain : EntityMain
         ActivateEquipment(WeaponID.RightHand,UIEquipmentSlot.Slot.WeaponRightHand);
         ActivateEquipment(WeaponID.RightShoulder,UIEquipmentSlot.Slot.WeaponRightShoulder);
         
-		if (GetCurrentWeapon().Usable())
-			HUD.gunInfoDisplay.ChangeCurrentHighlight(currentWeaponID);
+		if (!GetCurrentWeapon().Usable())
+		{
+			for (int i = 0; i < 4; i++)
+			{
+				if (GetWeapon((WeaponID)i).Usable())
+					ChangeWeapon((WeaponID)i);
+			}
+		}
+
+		HUD.gunInfoDisplay.ChangeCurrentHighlight(currentWeaponID);
 
 		foreach(WeaponMain weapon in weaponList)
 		{
-			weapon.gameObject.SetActive(weapon.Weapon != null);
+			if (weapon.graphics != null)
+				weapon.graphics.SetActive(weapon.Weapon != null);
 		}
         //activate utilities
 		HasRadar=false;
+		HUD.radar.radarViewSprite.enabled = false;
 		HasMap=false;
 		RadarRange=0;
 		int overheat_limit=0;
@@ -363,6 +379,11 @@ public class PlayerMain : EntityMain
 					RadarRangeMax=s.Item.baseItem.GetStat(InvStat.Type.RadarRange).max_amount;
 				}
 			}
+		}
+
+		if (HasRadar && !HasMap)
+		{
+			HUD.radar.radarViewSprite.enabled = true;
 		}
 
 		ObjData.UpperTorso.armor_multi=def_multi*0.01f;
