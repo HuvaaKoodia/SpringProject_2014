@@ -59,6 +59,7 @@ public class WeaponMain : MonoBehaviour {
     public bool Overheat{get{return WeaponSlot.ObjData.OVERHEAT;}}
 
 	public Dictionary<EnemyMain, int> targets { get; private set;}
+	public Dictionary<EnemyMain, Vector3> targetPositions { get; private set;}
 
 	public Quaternion targetRotation;
 	public float rotationSpeed;
@@ -130,6 +131,7 @@ public class WeaponMain : MonoBehaviour {
 		rotationSpeed = 50;
 		targetRotation = Quaternion.identity;
 		targets = new Dictionary<EnemyMain, int>();
+		targetPositions = new Dictionary<EnemyMain, Vector3>();
 	}
 
     public virtual void TargetEnemy(EnemyMain enemy,bool increase_amount)
@@ -183,9 +185,12 @@ public class WeaponMain : MonoBehaviour {
 		targets.Remove(enemy);
 	}
 
-	public void ClearTargets()
+	public void ClearTargets(bool clearPositions)
 	{
 		targets.Clear();
+
+		if (clearPositions)
+			targetPositions.Clear();
 	}
 
 	public void Shoot()
@@ -324,7 +329,12 @@ public class WeaponMain : MonoBehaviour {
 	{
 		if (HasTargets)
 		{
-			targetRotation = Quaternion.LookRotation((targets.Keys.First().transform.position + Vector3.up *0.6f)- transform.position);
+			//targetRotation = Quaternion.LookRotation((targets.Keys.First().transform.position + Vector3.up *0.6f)- transform.position);
+			targetRotation = Quaternion.LookRotation(targetPositions[targets.Keys.First()] - transform.position);
+		}
+		else
+		{
+			targetRotation = player.transform.rotation;
 		}
 	}
 
@@ -343,5 +353,17 @@ public class WeaponMain : MonoBehaviour {
 	bool looksAtTarget()
 	{
 		return horizontalMovement.transform.rotation == Quaternion.Euler(targetRotation.eulerAngles.x, targetRotation.eulerAngles.y, 0.0f);
+	}
+
+	public void SetEnemyTargetPosition(EnemyMain enemy, Vector3 position)
+	{
+		if (targetPositions.ContainsKey(enemy))
+	    {
+			targetPositions[enemy] = position;
+		}
+		else
+		{
+			targetPositions.Add(enemy, position);
+		}
 	}
 }
