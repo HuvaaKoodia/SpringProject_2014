@@ -19,9 +19,11 @@ public class LootCrateMain : InteractableMain {
 			isOpen = true;
 			openAnimation.Play("Open_LootBox");
 			Invoke ("SetLootToInventory", 0.9f);
+			Invoke("FinishAnimation", 0.9f);
 		}
 		else{
 			SetLootToInventory();
+			FinishAnimation();
 		}
 		return true;
 		//else
@@ -49,12 +51,17 @@ public class LootCrateMain : InteractableMain {
 
 	public override bool Interact(PlayerInteractSub interactSub)
 	{
-		interactSub.InteractFinished();
+		interactor = interactSub;
 		return Looted();
 	}
 
 	void SetLootToInventory()
 	{
 		GC.Inventory.SetLoot(this);
+	}
+
+	void FinishAnimation()
+	{
+		interactor.InteractFinished();
 	}
 }

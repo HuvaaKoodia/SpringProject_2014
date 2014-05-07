@@ -330,6 +330,7 @@ public class PlayerMain : EntityMain
 		}
         //activate utilities
 		HasRadar=false;
+		HUD.radar.radarViewSprite.enabled = false;
 		HasMap=false;
 		RadarRange=0;
 		int overheat_limit=0;
@@ -367,6 +368,11 @@ public class PlayerMain : EntityMain
 					RadarRangeMax=s.Item.baseItem.GetStat(InvStat.Type.RadarRange).max_amount;
 				}
 			}
+		}
+
+		if (HasRadar && !HasMap)
+		{
+			HUD.radar.radarViewSprite.enabled = true;
 		}
 
 		ObjData.UpperTorso.armor_multi=def_multi*0.01f;
