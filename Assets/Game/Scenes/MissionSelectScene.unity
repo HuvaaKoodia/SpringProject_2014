@@ -32946,6 +32946,8 @@ MonoBehaviour:
   volume: 1
   pitch: 1
 --- !u!114 &1110912420
+  Corridor_Elevator: {fileID: 100028, guid: 801afeb357eeced4f8c461473ca348d4, type: 2}
+  ElevatorTrigger: {fileID: 100000, guid: 3cebb2af10bf43841b03044cd1f5c425, type: 2}
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 11400874, guid: 2986cfc147efccc46ab7a96fe5ada06b,
@@ -44736,7 +44738,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1579435739
 Transform:
   m_ObjectHideFlags: 0
@@ -57890,10 +57892,10 @@ MonoBehaviour:
       tangentMode: 0
     - time: 1
       value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100242, guid: 2986cfc147efccc46ab7a96fe5ada06b, type: 2}
+      propertyPath: m_IsActive
+      value: 0
     m_PostInfinity: 2
   ignoreTimeScale: 1
   delay: 0
