@@ -31,6 +31,11 @@ public abstract class UIItemSlot : MonoBehaviour
             if (slot.slot!=UIEquipmentSlot.Slot.RecycleBin)
                 slot.SetSlotColor(item);
         }
+
+		foreach (var slot in UIAmmoSlot.EquipmentSlots){
+			if (slot.slot!=UIEquipmentSlot.Slot.RecycleBin)
+				slot.SetSlotColor(item);
+		}
     }
 
     //Dev.end
@@ -285,14 +290,9 @@ public abstract class UIItemSlot : MonoBehaviour
 					icon.spriteName = baseItem.iconName;
 					icon.enabled = true;
 					icon.MakePixelPerfect();
+					icon.transform.localScale=Vector3.one*0.9f;
 				}
 			}
-
-			/*
-			if (background != null)
-			{
-				background.color = (i != null) ? i.color : Color.white;
-			}*/
 		}
 	}
 

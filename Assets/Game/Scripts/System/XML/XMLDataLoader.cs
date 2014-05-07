@@ -90,6 +90,16 @@ public class XMLDataLoader : XML_Loader
 			foreach(var t in Subs.EnumValues<InvStat.Type>()){
 				AddStat(node,item,t);
 			}
+			var lvl_node=node["Level"];
+			if (lvl_node!=null){
+				var lvl=ReadStat(lvl_node,"Level");
+				item.minItemLevel=lvl.min_amount;
+				item.maxItemLevel=lvl.max_amount;
+			}
+
+			//set levels
+			//var lvl_stat=item.GetStat(InvStat.Type.
+
 			if (item.type==InvBaseItem.Type.QuestItem){
 				XmlDatabase.AddQuestItem(item);
 			}
@@ -108,6 +118,7 @@ public class XMLDataLoader : XML_Loader
             var data=new AmmoXmlData();
             data.Type=getAttStr(node,"type");
             data.Name=getAttStr(node,"name");
+			data.sprite=getAttStr(node,"sprite","none");
             data.MaxAmount=getAttInt(node,"maxamount");
 
             data.StartAmount=getAttInt(node,"startamount",data.MaxAmount);
@@ -202,13 +213,19 @@ public class XMLDataLoader : XML_Loader
 	private static void AddStat(XmlNode node,InvBaseItem item,InvStat.Type type){
 		var n1=node[type.ToString()];
 		if (n1!=null){
-			var stat=new InvStat();
+			var stat=ReadStat(n1,type.ToString());
+			if (stat==null) return;
 			stat.type=type;
-            if (HasAtt(n1,"min")) stat.min_amount=getAttInt(n1,"min");
-            if (HasAtt(n1,"max")) stat.max_amount=getAttInt(n1,"max");
-            if (HasAtt(n1,"minmax")) stat.min_amount=stat.max_amount=getAttInt(n1,"minmax");
 			item.Stats.Add(stat);
 		}
+	}
+
+	private static InvStat ReadStat(XmlNode node,string type){
+		var stat=new InvStat();
+		if (HasAtt(node,"min")) stat.min_amount=getAttInt(node,"min");
+		if (HasAtt(node,"max")) stat.max_amount=getAttInt(node,"max");
+		if (HasAtt(node,"minmax")) stat.min_amount=stat.max_amount=getAttInt(node,"minmax");
+		return stat;
 	}
 
     public static void ReadDataFiles()

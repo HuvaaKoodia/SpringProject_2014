@@ -15,6 +15,7 @@ public class InvBaseItem
 		Navigator,
         QuestItem,
 		Loot,
+		AmmoBox,
 		_Amount
 	}
 
