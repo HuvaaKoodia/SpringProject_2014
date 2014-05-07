@@ -39,13 +39,16 @@ public class MechaPartRepairPanel : MonoBehaviour {
 
 		// Lazy. Best Regards, Your Divine Producer
         if (!AllowBuying||cost==0){
+			ButtonActive = false;
+
+			/*
 			var c = Button.gameObject.GetComponent<UIButton>().defaultColor;
 			Button.gameObject.GetComponent<UIButton>().defaultColor = new Color(c.r, c.g, c.b, 0.3f);
 			Cost.gameObject.SetActive(false);
-			ButtonActive = false;
-			Button.gameObject.GetComponent<UIButton>().enabled = false; 
+						Button.gameObject.GetComponent<UIButton>().enabled = false; 
 			Button.gameObject.GetComponent<UIButtonScale>().enabled = false;
 			Button.gameObject.GetComponentInChildren<UILabel>().alpha = 0.3f;
+			*/
         }
     }
 
