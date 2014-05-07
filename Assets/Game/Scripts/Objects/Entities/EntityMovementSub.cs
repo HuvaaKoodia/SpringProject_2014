@@ -28,6 +28,9 @@ public class EntityMovementSub : MonoBehaviour
 
 	bool waitBeforeMoving;
 
+    AudioClip WalkSoundFX;
+    AudioClip TurnSoundFX;
+
 	// Use this for initialization
 	void Awake()
     {
@@ -116,8 +119,13 @@ public class EntityMovementSub : MonoBehaviour
 
                 targetPosition = tilemap[currentGridX, currentGridY].transform.position;
 
-
                 UpdateTileEntityToThis();
+
+                if (WalkSoundFX != null)
+                {
+                    audio.PlayOneShot(WalkSoundFX);
+                }
+
                 return true;
             }
             else
@@ -153,6 +161,11 @@ public class EntityMovementSub : MonoBehaviour
                 targetRotationAngle += 360;
             else if (targetRotationAngle > 360)
                 targetRotationAngle -= 360;
+
+            if (TurnSoundFX != null)
+            {
+                audio.PlayOneShot(TurnSoundFX);
+            }
         }
     }
 
@@ -208,6 +221,8 @@ public class EntityMovementSub : MonoBehaviour
     {
         currentMovement = MovementState.NotMoving;
         parentEntity.FinishedMoving(false);
+
+        audio.Stop();
     }
 
     bool CanMoveToTile(int x, int y)

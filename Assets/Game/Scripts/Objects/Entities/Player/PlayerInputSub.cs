@@ -234,7 +234,7 @@ public class PlayerInputSub : MonoBehaviour {
 
 		player.Attack();
 
-		player.HUD.ToggleTargetingHUD();
+        player.HUD.DeactivateTargetingHUD();
     }
 
 	public void DisperseHeatInput()

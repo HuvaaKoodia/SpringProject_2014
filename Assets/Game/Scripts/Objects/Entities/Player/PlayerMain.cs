@@ -417,7 +417,7 @@ public class PlayerMain : EntityMain
 	public void SetMouseLook(bool look)
 	{
 		GameCamera.GetComponent<MouseLook>().MouseLookOn = look;
-		HudCamera.GetComponent<MouseLook>().MouseLookOn = look;
+		//HudCamera.GetComponent<MouseLook>().MouseLookOn = look;
 	}
 
 	public void ToggleMouseLook()
