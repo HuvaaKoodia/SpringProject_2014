@@ -19,7 +19,7 @@ public class PlayerInputSub : MonoBehaviour {
 	void Update()
     {
 		if (DISABLE_INPUT) return;
-        if (playerMovement.currentMovement == MovementState.NotMoving)
+        if (playerMovement.currentMovement == MovementState.NotMoving && !player.interactSub.WaitingInteractToFinish)
         {
             HotkeyInput();
 
@@ -275,8 +275,9 @@ public class PlayerInputSub : MonoBehaviour {
 		player.ToggleMouseLook();
 	}
 
-    bool NotUsable(){
-        return this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving;
+    public bool NotUsable(){
+		return this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving  || player.interactSub.WaitingInteractToFinish
+			|| player.GC.HUD.currentMenuState == MenuState.InventoryHUD;
     }
 
 	bool NotUsableWorldInteractions(){

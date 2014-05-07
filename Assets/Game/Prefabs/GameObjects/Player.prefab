@@ -1559,6 +1559,7 @@ GameObject:
   - 114: {fileID: 11400200}
   - 65: {fileID: 6500030}
   - 114: {fileID: 11400202}
+  - 114: {fileID: 11400022}
   m_Layer: 9
   m_Name: RadarBG
   m_TagString: Untagged
@@ -3341,7 +3342,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100008}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .979132414, y: .993728161, z: -.269728541}
+  m_LocalPosition: {x: .979145169, y: 1.15870965, z: -.269729078}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400020}
@@ -3364,7 +3365,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100012}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.817159057, y: .99372828, z: -.26972729}
+  m_LocalPosition: {x: -.817159176, y: 1.15871394, z: -.269727349}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400390}
@@ -7441,6 +7442,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 11400000}
   WaitingInteractToFinish: 0
+--- !u!114 &11400022
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 100046}
+  functionName: OpenMap
+  trigger: 3
+  includeChildren: 0
+  OnPressInputIndex: 0
 --- !u!114 &11400024
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -13205,7 +13222,7 @@ MonoBehaviour:
   MechStats: {fileID: 11400376}
   targetMarkPanel: {fileID: 11400312}
   TP: {fileID: 11400176}
-  UpdateComputerSystems: 0
+  UpdateComputerSystems: 1
 --- !u!114 &11400412
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -137,6 +137,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 					if (hitInfo.transform == enemyPair.Key.hitboxes[i].transform)
 					{
 						enemyPair.Value.SetCrosshairVisible(true);
+						player.GetCurrentWeapon().SetEnemyTargetPosition(enemyPair.Key, enemyPair.Key.hitboxes[i].transform.position + Vector3.down*0.1f);
 						wasSeen = true;
 						break;
 					}
@@ -152,7 +153,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 	{
 		foreach(WeaponMain gun in player.weaponList)
 		{
-			gun.ClearTargets();
+			gun.ClearTargets(true);
 		}
 
 		foreach (KeyValuePair<EnemyMain, TargetMarkHandler> enemyPair in targetableEnemies)
@@ -163,7 +164,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 
     public void UnsightWeapon(WeaponMain weapon)
     {
-        weapon.ClearTargets();
+        weapon.ClearTargets(false);
 
         foreach (var enemyPair in targetableEnemies){
             enemyPair.Value.ChangeNumShots(weapon.weaponID,0,0);
