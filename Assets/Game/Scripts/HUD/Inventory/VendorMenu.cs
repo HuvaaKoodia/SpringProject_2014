@@ -9,6 +9,8 @@ public class VendorMenu : MonoBehaviour {
 
     public List<UIEquipmentSlot> EquipmentSlots;
 
+	public AmmoPanelMain AmmoPanel;
+
     PlayerObjData _player;
 
 	public void SetPlayer(PlayerObjData player){
@@ -17,6 +19,8 @@ public class VendorMenu : MonoBehaviour {
 		foreach(var s in EquipmentSlots){
             s.equipment=player.Equipment;
 		}
+
+		AmmoPanel.SetPlayer(player,true);
 	}
 
 	public void SetVendor(InvItemStorage store){

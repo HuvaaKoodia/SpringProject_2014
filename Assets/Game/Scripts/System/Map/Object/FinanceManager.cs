@@ -3,18 +3,18 @@ using System.Collections.Generic;
 
 public class Debt
 {
-	public float left_tb_payed{get;set;}									//variable to keep track of amount left to be payed per debt
-	public float monthly_cut{get;set;}										//variable to keep track of monthly cut per debt (default value = 1000)
+	public int left_tb_payed{get;set;}									//variable to keep track of amount left to be payed per debt
+	public int monthly_cut{get;set;}										//variable to keep track of monthly cut per debt (default value = 1000)
 	public float interest_percent{get;set;}									//variable to keep track of interest percentage upon taking up a new debt
-	public float interest{get;set;}											//variable to keep track of interest value per debt
-	public float debt_payment{get;set;}										//variable to keep track of debt payment per debt
+	public int interest{get;set;}											//variable to keep track of interest value per debt
+	public int debt_payment{get;set;}										//variable to keep track of debt payment per debt
 
 	public bool active{get;set;}											//variable to keep track of debt's active state
 
 	public Debt()															//constructor that initializes variables
 	{
-		left_tb_payed = 0.0f;
-		monthly_cut = 0.0f;
+		left_tb_payed = 0;
+		monthly_cut = 0;
 
 		active = false;
 	}
@@ -27,7 +27,7 @@ public class Debt
 	//called each time a new debt is taken
 	public void CalcInterest()
 	{
-		interest = (interest_percent) * left_tb_payed;
+		interest = (int)(interest_percent * left_tb_payed);
 	}
 	
 	//function to calculate debt payment per debt
@@ -47,9 +47,9 @@ public class FinanceManager
 	public int days_till_update{get;set;}									//variable to keep track of the number of days until the next update (default value = 30)
 	private int debt_max;													//variable for the maximum number of debts the Player can take
 	
-	public float player_money{get;set;}										//variable to keep track of the amount of money the player has at the given moment
-	public float payment_total{get;set;}									//variable to store the sum of all the debts
-	public float existing_cash{get;set;}									//variable to keep track the resultant amount after minusing payment total from player money
+	public int player_money{get{return Player.Money;} set{Player.Money=value;}}										//variable to keep track of the amount of money the player has at the given moment
+	public int payment_total{get;set;}									//variable to store the sum of all the debts
+	public int existing_cash{get;set;}									//variable to keep track the resultant amount after minusing payment total from player money
 		
 	float default_percent;													//variable contributing to calculating interest percentage
 	float increase_percent;													//variable contributing to calculating interest percentage
@@ -67,7 +67,7 @@ public class FinanceManager
 		days_till_update = 30;
 		debt_max = 3;
 		
-		payment_total = 0.0f;
+		payment_total = 0;
 				
 		default_percent = 0.05f;
 		increase_percent = 0.05f;
@@ -80,12 +80,6 @@ public class FinanceManager
 
 		month = 1;
 		original_debt_sum = 0.0f;
-	}
-	
-	//function taht updates the Player's amount of money after paying off the debts
-	public void UpdatePlayerMoney()
-	{
-		player_money = Player.Money;
 	}
 	
 	//function that calculates the Player's existing cash
@@ -112,7 +106,7 @@ public class FinanceManager
 	{
 		for(int i = 0; i < listofdebts.Count; i++)
 		{
-			listofdebts[i].monthly_cut = original_debt_sum * 0.05f;
+			listofdebts[i].monthly_cut = (int)(original_debt_sum * 0.05f);
 		}
 	}
 	
@@ -151,6 +145,8 @@ public class FinanceManager
 		{
 			month++;
 			days_till_update = 30 + days_till_update;
+			CalcExistingCash();
+			Player.Money=existing_cash;
 		}
 	}
 
@@ -167,7 +163,7 @@ public class FinanceManager
 		}
 
 		//reset payment total and recalculate value of payment total
-		payment_total = 0.0f;
+		payment_total = 0;
 		CalcPaymentTotal(true);
 		CalcExistingCash();
 	}
@@ -185,7 +181,6 @@ public class FinanceManager
 	{
 		AddDebt(index);
 		GetDebt(index).SetStartingDepth(amount);
-		//GetDebt(index).CalcMonthlyCut();
 	}
 
 	public Debt GetDebt(int index)

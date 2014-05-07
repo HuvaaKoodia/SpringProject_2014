@@ -68,7 +68,6 @@ public class PlayerMain : EntityMain
         }
 
 		GameCamera.GetComponent<MouseLook>().SetOriginalRot(GameCamera.transform.localRotation);
-		//HudCamera.GetComponent<MouseLook>().SetOriginalRot(GameCamera.transform.localRotation);
 		
 		HUD.Init(this,GC);
 		
@@ -417,13 +416,11 @@ public class PlayerMain : EntityMain
 	public void SetMouseLook(bool look)
 	{
 		GameCamera.GetComponent<MouseLook>().MouseLookOn = look;
-		HudCamera.GetComponent<MouseLook>().MouseLookOn = look;
 	}
 
 	public void ToggleMouseLook()
 	{
 		GameCamera.GetComponent<MouseLook>().ToggleMouseLookOn();
-		//HudCamera.GetComponent<MouseLook>().ToggleMouseLookOn();
 	}
 
 	public void ActivateHaxMapNRadar ()
