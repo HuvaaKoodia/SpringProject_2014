@@ -67,11 +67,15 @@ public class PlayerHud : MonoBehaviour {
 		if (player.inputSub.NotUsable()) return;
 			MasterHud.ToggleTargetingHUD();
 	}
-	
+
+    public void DeactivateTargetingHUD()
+    {
+        MasterHud.DeactivateTargetingHUD();
+    }
+
 	public void DeactivateInventoryHUD()
 	{
-		if (player.inputSub.NotUsable()) return;
-			MasterHud.DeactivateInventoryHUD();
+		MasterHud.DeactivateInventoryHUD();
 	}
 	
 	public void ActivateInventoryHUD()

@@ -76,6 +76,11 @@ public class MasterHudMain : MonoBehaviour {
 		ChangeMenuState(MenuState.TargetingHUD);
 	}
 
+    public void DeactivateTargetingHUD()
+    {
+        ChangeMenuState(MenuState.NothingSelected);
+    }
+
 	public void ActivateInventoryHUD()
 	{
 		ChangeMenuState(MenuState.InventoryHUD);

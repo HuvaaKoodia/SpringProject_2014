@@ -54,6 +54,9 @@ public class GatlingAI : AIBase {
 	public float verticalTurnSpeed = 90;
 
 	public AudioClip ShootSoundFX;
+    public AudioClip OpenSoundFX;
+    public AudioClip CloseSoundFX;
+    public AudioClip VerticalRotationSoundFX;
 
 	// Use this for initialization
 	void Start()
@@ -158,6 +161,9 @@ public class GatlingAI : AIBase {
 			turretAnimation[GunAppearAnimation].normalizedTime = 0;
 			turretAnimation[GunAppearAnimation].speed = 1;
 			turretAnimation.Play(GunAppearAnimation);
+
+            if (OpenSoundFX != null)
+                audio.PlayOneShot(OpenSoundFX);
 	
 			StartCoroutine(MoveDown());
 
@@ -193,6 +199,9 @@ public class GatlingAI : AIBase {
 			*/
 			StartCoroutine(FaceGround());
 			StartCoroutine(MoveUp());
+
+            if (CloseSoundFX != null)
+                audio.PlayOneShot(CloseSoundFX);
 
 			LightsOff();
 		}
@@ -306,6 +315,9 @@ public class GatlingAI : AIBase {
 
 		Rotating = true;
 
+        if (VerticalRotationSoundFX != null)
+            audio.PlayOneShot(VerticalRotationSoundFX);
+
 		Quaternion verticalRot = Quaternion.LookRotation(player.transform.position - turretTransform.position);
 		Quaternion ninetyCCW = Quaternion.Euler(0, -90, 0);
 		verticalRot *= ninetyCCW;
@@ -318,6 +330,7 @@ public class GatlingAI : AIBase {
 			yield return null;
 		}
 
+        audio.Stop();
 		Rotating = false;
 	}
 

@@ -313,6 +313,7 @@ public class GameController : MonoBehaviour {
 		}
 
 		Player.inputSub.DISABLE_INPUT=false;
+		Player.movement.Init();
 	}
 
 	void UpdateFloorStats (int index)

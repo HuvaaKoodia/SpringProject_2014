@@ -33,8 +33,7 @@ public abstract class UIItemSlot : MonoBehaviour
         }
 
 		foreach (var slot in UIAmmoSlot.EquipmentSlots){
-			if (slot.slot!=UIEquipmentSlot.Slot.RecycleBin)
-				slot.SetSlotColor(item);
+			slot.SetSlotColor(item);
 		}
     }
 

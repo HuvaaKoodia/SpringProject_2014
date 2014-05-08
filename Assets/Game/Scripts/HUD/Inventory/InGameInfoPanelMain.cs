@@ -11,7 +11,6 @@ public class InGameInfoPanelMain : MonoBehaviour {
 	public GameObject InfoPanel,LootParent;
 	public UIItemStorage InventoryStorage,LootStorage;
 	public List<UIEquipmentSlot> EquipmentSlots;
-	public List<UIAmmoSlot> AmmoSlots;
 	public EquipRandomItem temp_random_item_button;
 
     public MenuTabController Tabs;
@@ -20,12 +19,16 @@ public class InGameInfoPanelMain : MonoBehaviour {
 	public InfoMenuMap MenuMap;
 	PlayerMain Player;
 
+	public AmmoPanelMain AmmoPanel;
+
 	// Use this for initialization
 	void Start (){
 		InfoPanel.SetActive(false);
 
 		MenuMap.Init(HUD.GC);
 		MenuMap.gameObject.SetActive(false);
+
+		if (LootParent.activeSelf) LootParent.SetActive(false);
 
 	#if !UNITY_EDITOR
 		temp_random_item_button.gameObject.SetActive(false);	
@@ -63,8 +66,8 @@ public class InGameInfoPanelMain : MonoBehaviour {
 
 		Player.ActivateEquippedItems();
 		Player.HUD.SetHudToPlayerStats();
-
 		if (LootParent.activeSelf) LootParent.SetActive(false);
+
 	}
 
 	public void SetPlayer(PlayerMain player){
@@ -74,17 +77,10 @@ public class InGameInfoPanelMain : MonoBehaviour {
             s.equipment=player.ObjData.Equipment;
 		}
 
-		int i=0;
-		foreach (var a in player.ObjData.Ammo.Keys){
-			if(i>AmmoSlots.Count-1) break;
-			var s = AmmoSlots[i];
-			s.Player=player.ObjData;
-			s.SetAmmoType(a);
-			++i;
-		}
-
 		temp_random_item_button.equipment=player.ObjData.Equipment;
         Mechanic.SetPlayer(player.ObjData);
+
+		AmmoPanel.SetPlayer(player.ObjData,false);
 	}
 
 	public void SetLoot(LootCrateMain loot){

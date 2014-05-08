@@ -131,7 +131,6 @@ public class FinanceMenu : MonoBehaviour {
 		Days.text = _FinanceManager.days_till_update.ToString();
 
 		//Player's money
-		_FinanceManager.UpdatePlayerMoney();
 		PlayerMoney.text = _FinanceManager.player_money.ToString();
 
 		//amount left to be payed, monthly cut, interest, debt payments, payment total
@@ -274,10 +273,13 @@ public class FinanceMenu : MonoBehaviour {
 	//function to process the activation and deactivation of specific debts
 	private void ActivateDebtProcess(int index_1, int index_2)
 	{
+		int amount=int.Parse(ShortenDebt[index_2].text);
+
+		if (_FinanceManager.Player.Money<amount) return;
 		//add a debt
 		_FinanceManager.AddDebt(index_1);
 		
-		_FinanceManager.listofdebts[index_1].left_tb_payed = int.Parse(ShortenDebt[index_2].text);
+		_FinanceManager.listofdebts[index_1].left_tb_payed = amount;
 		
 		//process the necessary values for the current panel
 		ProcessPanel(index_1);
@@ -385,7 +387,6 @@ public class FinanceMenu : MonoBehaviour {
 	private void DeductPlayerMoney(int index)
 	{
 		_FinanceManager.player_money -= int.Parse(ShortenDebt[index].text);
-		_FinanceManager.Player.Money = (int)_FinanceManager.player_money;
 	}
 
 	private void UpdateOriginalDebtSum()

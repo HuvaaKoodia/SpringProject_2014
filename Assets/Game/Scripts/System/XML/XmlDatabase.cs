@@ -41,7 +41,8 @@ public class XmlDatabase
 		DisperseHeatMultiplier,
 		HullHeatDisperseHeatMultiplier,
 		ConditionFairThreshold,
-		ConditionBadThreshold
+		ConditionBadThreshold,
+		MechaPartRepairMulti
     ;
 
 	//Logic

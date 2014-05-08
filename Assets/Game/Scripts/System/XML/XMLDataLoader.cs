@@ -118,6 +118,7 @@ public class XMLDataLoader : XML_Loader
             var data=new AmmoXmlData();
             data.Type=getAttStr(node,"type");
             data.Name=getAttStr(node,"name");
+			data.Cost=getAttInt(node,"cost");
 			data.sprite=getAttStr(node,"sprite","none");
             data.MaxAmount=getAttInt(node,"maxamount");
 

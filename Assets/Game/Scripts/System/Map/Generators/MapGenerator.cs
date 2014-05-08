@@ -151,6 +151,9 @@ public class MapGenerator : MonoBehaviour
 				SetTileGraphics(x, y, tile, floor.TileObjectMap,GC,floor);
                 if (tile.TileGraphics != null)
                     tile.TileGraphics.transform.parent = tile.transform;
+				else if (tile.TileObject!=null){
+					tile.TileObject.transform.parent=tile.transform;
+				}
 
                 //game objects
                 switch (tile.Data.ObjType)
@@ -537,7 +540,6 @@ public class MapGenerator : MonoBehaviour
                     //corner 4
                     tileobj = MapPrefabs.Corridor_Corner;
                     rotation = Quaternion.AngleAxis(90, Vector3.up);
-
                 }
 			else if (CheckTypeEqual(NotWall, tile_types, 0))
 			{
