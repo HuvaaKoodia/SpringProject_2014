@@ -41,7 +41,7 @@ public class TargetMarkHandler
 
 		textParent.transform.parent = parentObject.transform;
 
-		Vector3 screenToWorldPoint = GC.HUD.player.HudCamera.ScreenToWorldPoint(crosshairPosition);
+		Vector3 screenToWorldPoint = GC.Player.PlayerCamera.ScreenToWorldPoint(crosshairPosition);
 		
 		parentObject.transform.position = screenToWorldPoint;
 		parentObject.transform.parent = GC.Player.HUD.targetMarkPanel.transform;
@@ -102,7 +102,7 @@ public class TargetMarkHandler
 			UILabel label = GameObject.Instantiate(GC.SS.PS.NumShotsLabel) as UILabel;
 			label.text = "";
 			
-			float distanceMultiplier = 1 + (screenToWorldPoint - GC.Player.HudCamera.transform.position).magnitude / 2.0f;
+			float distanceMultiplier = 1 + (screenToWorldPoint - GC.Player.PlayerCamera.transform.position).magnitude / 2.0f;
 
 			if (i == 1 || i == 3)
 			{

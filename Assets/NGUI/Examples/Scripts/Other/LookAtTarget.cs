@@ -29,7 +29,8 @@ public class LookAtTarget : MonoBehaviour
 			if (mag > 0.001f)
 			{
 				Quaternion lookRot = Quaternion.LookRotation(dir);
-				mTrans.rotation = Quaternion.Slerp(mTrans.rotation, lookRot, Mathf.Clamp01(speed * Time.deltaTime));
+				mTrans.rotation = Quaternion.RotateTowards(mTrans.rotation, lookRot, speed * Time.deltaTime);
+				//mTrans.rotation = Quaternion.Slerp(mTrans.rotation, lookRot, Mathf.Clamp01(speed * Time.deltaTime));
 			}
 		}
 	}
