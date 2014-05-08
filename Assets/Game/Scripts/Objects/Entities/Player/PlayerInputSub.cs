@@ -129,6 +129,7 @@ public class PlayerInputSub : MonoBehaviour {
             player.ap=200;
             player.movement.movementSpeed=10;
             player.movement.turnSpeed=360;
+			player.AnimationsOn = false;
         }
 #endif
 
@@ -232,9 +233,7 @@ public class PlayerInputSub : MonoBehaviour {
 		if (this.enabled == false || !player.targetingMode)
 			return;
 
-		player.Attack();
-
-        player.HUD.DeactivateTargetingHUD();
+		StartCoroutine(player.Attack());
     }
 
 	public void DisperseHeatInput()
@@ -277,7 +276,7 @@ public class PlayerInputSub : MonoBehaviour {
 
     public bool NotUsable(){
 		return this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving  || player.interactSub.WaitingInteractToFinish
-			|| player.GC.HUD.currentMenuState == MenuState.InventoryHUD;
+			|| player.GC.HUD.currentMenuState == MenuState.InventoryHUD || player.playerAnimation.isPlaying;
     }
 
 	bool NotUsableWorldInteractions(){

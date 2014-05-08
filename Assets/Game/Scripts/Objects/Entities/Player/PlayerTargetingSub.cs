@@ -14,6 +14,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 	}
 
 	Dictionary<EnemyMain, TargetMarkHandler> targetableEnemies;
+	public Dictionary<WeaponMain, Dictionary<EnemyMain, Vector3>> targetPositions { get; private set; }
 
 	//UISprite insightPrefab;
 
@@ -31,6 +32,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 	void Awake(){
 		player = gameObject.GetComponent<PlayerMain>();
 		targetableEnemies = new Dictionary<EnemyMain, TargetMarkHandler>();
+		targetPositions = new Dictionary<WeaponMain, Dictionary<EnemyMain, Vector3>>();
 
 		wallMask = LayerMask.NameToLayer("Wall");
 	}
@@ -137,7 +139,24 @@ public class PlayerTargetingSub : MonoBehaviour {
 					if (hitInfo.transform == enemyPair.Key.hitboxes[i].transform)
 					{
 						enemyPair.Value.SetCrosshairVisible(true);
-						player.GetCurrentWeapon().SetEnemyTargetPosition(enemyPair.Key, enemyPair.Key.hitboxes[i].transform.position + Vector3.down*0.1f);
+
+						if (targetPositions.ContainsKey(player.GetCurrentWeapon()))
+						{
+							if (targetPositions[player.GetCurrentWeapon()].ContainsKey(enemyPair.Key))
+							{
+								targetPositions[player.GetCurrentWeapon()][enemyPair.Key] = enemyPair.Key.hitboxes[i].transform.position + Vector3.down*0.1f;
+							}
+							else
+							{
+								targetPositions[player.GetCurrentWeapon()].Add(enemyPair.Key, enemyPair.Key.hitboxes[i].transform.position + Vector3.down*0.1f);
+							}
+						}
+						else
+						{
+							targetPositions.Add(player.GetCurrentWeapon(), new Dictionary<EnemyMain, Vector3>());
+							targetPositions[player.GetCurrentWeapon()].Add(enemyPair.Key, enemyPair.Key.hitboxes[i].transform.position + Vector3.down*0.1f);
+						}
+
 						wasSeen = true;
 						break;
 					}
@@ -153,7 +172,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 	{
 		foreach(WeaponMain gun in player.weaponList)
 		{
-			gun.ClearTargets(true);
+			gun.ClearTargets();
 		}
 
 		foreach (KeyValuePair<EnemyMain, TargetMarkHandler> enemyPair in targetableEnemies)
@@ -164,7 +183,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 
     public void UnsightWeapon(WeaponMain weapon)
     {
-        weapon.ClearTargets(false);
+        weapon.ClearTargets();
 
         foreach (var enemyPair in targetableEnemies){
             enemyPair.Value.ChangeNumShots(weapon.weaponID,0,0);

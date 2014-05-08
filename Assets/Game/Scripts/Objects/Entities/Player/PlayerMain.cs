@@ -34,10 +34,11 @@ public class PlayerMain : EntityMain
 	public Camera TargetingCamera;
 
 	public Animation playerAnimation;
-	public Animation legAnimation;
 	public bool AnimationsOn;
 
 	public bool WeaponMouseLookOn = false;
+	
+	int gunsFinishedShooting;
 
     public void SetObjData(PlayerObjData data){
         ObjData=data;
@@ -144,10 +145,9 @@ public class PlayerMain : EntityMain
 		inputSub.enabled = false;
 		ap -= movementCost;
 
-		if (AnimationsOn)
+		if (AnimationsOn && movement.currentMovement == MovementState.Moving)
 		{	
 			playerAnimation.Play("Walk");
-			legAnimation.Play("Walk");
 		}
 	}
 
@@ -155,23 +155,33 @@ public class PlayerMain : EntityMain
 		GC.CullWorld(transform.position,movement.targetPosition,GameCamera.farClipPlane, miniMapIgnoreDoors,HasMap);
 	}
 
-    public void Attack()
+    public IEnumerator Attack()
     {
 		ap = 0;
+		gunsFinishedShooting = 0;
 
         foreach(WeaponMain weapon in weaponList)
 		{
             if (weapon.HasTargets)
 			{
-                weapon.Shoot();
+				StartCoroutine(weapon.Shoot());
+			}
+			else
+			{
+				GunFinishedShooting();
 			}
 		}
 
 		ShotLastTurn = true;
-		HUD.gunInfoDisplay.UpdateAllDisplays();
 
-		if (ap == 0)
-			EndPlayerPhase();
+		while (gunsFinishedShooting < weaponList.Count)
+		{
+			HUD.gunInfoDisplay.UpdateAllDisplays();
+			yield return null;
+		}
+		
+		HUD.DeactivateTargetingHUD();
+		EndPlayerPhase();
 	}
 
     /// <summary>
@@ -427,5 +437,10 @@ public class PlayerMain : EntityMain
 	{
 		HasMap = true;
 		HasRadar = true;
+	}
+
+	public void GunFinishedShooting()
+	{
+		gunsFinishedShooting++;
 	}
 }
