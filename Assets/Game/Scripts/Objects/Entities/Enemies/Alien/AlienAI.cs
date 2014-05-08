@@ -564,10 +564,10 @@ public class AlienAI : AIBase {
 
 	IEnumerator AttackRanged(float inflictDelay)
 	{
-		PlayAnimation(MeleeAttackAnimation, 1);
+		PlayAnimation(RangedAttackAnimation, 1);
 
-        if (MeleeAttackSoundFX != null)
-            audio.PlayOneShot(MeleeAttackSoundFX);
+        if (RangedAttackSoundFX != null)
+			audio.PlayOneShot(RangedAttackSoundFX);
 
 		yield return new WaitForSeconds(inflictDelay);
 		player.TakeDamage(Damage / 2, MyPosition.X, MyPosition.Y);
@@ -575,10 +575,10 @@ public class AlienAI : AIBase {
 
 	IEnumerator AttackMelee(float inflictDelay)
 	{
-		PlayAnimation(RangedAttackAnimation, 1);
+		PlayAnimation(MeleeAttackAnimation, 1);
 
-        if (RangedAttackSoundFX != null)
-            audio.PlayOneShot(RangedAttackSoundFX);
+        if (MeleeAttackSoundFX != null)
+			audio.PlayOneShot(MeleeAttackSoundFX);
 
 		yield return new WaitForSeconds(inflictDelay);
 		player.TakeDamage(Damage, MyPosition.X, MyPosition.Y);
