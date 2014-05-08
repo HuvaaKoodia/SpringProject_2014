@@ -47,19 +47,6 @@ MonoBehaviour:
   material: {fileID: 2100000, guid: e7ef61ebb5c25394c8706a7ea658349f, type: 2}
   mSprites:
   - name: Ammo1
-    x: 388
-    y: 225
-    width: 123
-    height: 124
-    borderLeft: 0
-    borderRight: 0
-    borderTop: 0
-    borderBottom: 0
-    paddingLeft: 4
-    paddingRight: 5
-    paddingTop: 4
-    paddingBottom: 5
-  - name: Ammo2
     x: 260
     y: 96
     width: 123
@@ -72,7 +59,7 @@ MonoBehaviour:
     paddingRight: 5
     paddingTop: 4
     paddingBottom: 5
-  - name: Ammo3
+  - name: Ammo2
     x: 386
     y: 96
     width: 123
@@ -85,7 +72,7 @@ MonoBehaviour:
     paddingRight: 5
     paddingTop: 4
     paddingBottom: 5
-  - name: Ammo4
+  - name: Ammo3
     x: 517
     y: 318
     width: 123
@@ -98,7 +85,7 @@ MonoBehaviour:
     paddingRight: 5
     paddingTop: 4
     paddingBottom: 5
-  - name: Ammo5
+  - name: Ammo4
     x: 643
     y: 318
     width: 123
@@ -111,9 +98,22 @@ MonoBehaviour:
     paddingRight: 5
     paddingTop: 4
     paddingBottom: 5
-  - name: Armor-plating
+  - name: Ammo5
     x: 769
     y: 318
+    width: 123
+    height: 124
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 4
+    paddingRight: 5
+    paddingTop: 4
+    paddingBottom: 5
+  - name: Armor-plating
+    x: 388
+    y: 225
     width: 123
     height: 124
     borderLeft: 0
@@ -138,8 +138,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 2
   - name: Beveled Outline
-    x: 62
-    y: 4
+    x: 89
+    y: 29
     width: 17
     height: 17
     borderLeft: 5
@@ -177,8 +177,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: Bright
-    x: 109
-    y: 29
+    x: 62
+    y: 4
     width: 17
     height: 17
     borderLeft: 5
@@ -203,8 +203,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: Cannon
-    x: 517
-    y: 64
+    x: 769
+    y: 191
     width: 123
     height: 124
     borderLeft: 0
@@ -217,7 +217,7 @@ MonoBehaviour:
     paddingBottom: 5
   - name: continue-button
     x: 909
-    y: 881
+    y: 589
     width: 450
     height: 70
     borderLeft: 0
@@ -230,7 +230,7 @@ MonoBehaviour:
     paddingBottom: 0
   - name: continue-button-over
     x: 909
-    y: 954
+    y: 516
     width: 450
     height: 70
     borderLeft: 0
@@ -243,7 +243,7 @@ MonoBehaviour:
     paddingBottom: 0
   - name: credits-button
     x: 909
-    y: 589
+    y: 443
     width: 450
     height: 70
     borderLeft: 0
@@ -256,7 +256,7 @@ MonoBehaviour:
     paddingBottom: 0
   - name: credits-button-over
     x: 909
-    y: 735
+    y: 370
     width: 450
     height: 70
     borderLeft: 0
@@ -334,7 +334,7 @@ MonoBehaviour:
     paddingBottom: 5
   - name: Flat Outline
     x: 89
-    y: 29
+    y: 9
     width: 17
     height: 17
     borderLeft: 5
@@ -359,8 +359,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 44
   - name: Gatling
-    x: 769
-    y: 191
+    x: 517
+    y: 64
     width: 123
     height: 124
     borderLeft: 0
@@ -386,6 +386,58 @@ MonoBehaviour:
     paddingBottom: 0
   - name: Hacking-unit
     x: 643
+    y: 191
+    width: 123
+    height: 124
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 4
+    paddingRight: 5
+    paddingTop: 4
+    paddingBottom: 5
+  - name: heatbar
+    x: 1287
+    y: 170
+    width: 48
+    height: 124
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 5
+    paddingRight: 5
+    paddingTop: 5
+    paddingBottom: 5
+  - name: heatbar-bg
+    x: 1287
+    y: 37
+    width: 54
+    height: 130
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 2
+    paddingRight: 2
+    paddingTop: 2
+    paddingBottom: 2
+  - name: Heat-sink
+    x: 1161
+    y: 170
+    width: 123
+    height: 124
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 4
+    paddingRight: 5
+    paddingTop: 4
+    paddingBottom: 5
+  - name: Heat-sink2
+    x: 643
     y: 64
     width: 123
     height: 124
@@ -397,7 +449,7 @@ MonoBehaviour:
     paddingRight: 5
     paddingTop: 4
     paddingBottom: 5
-  - name: Heat-sink
+  - name: Hydraulic-booster
     x: 769
     y: 64
     width: 123
@@ -410,35 +462,9 @@ MonoBehaviour:
     paddingRight: 5
     paddingTop: 4
     paddingBottom: 5
-  - name: Heat-sink2
-    x: 909
-    y: 170
-    width: 123
-    height: 124
-    borderLeft: 0
-    borderRight: 0
-    borderTop: 0
-    borderBottom: 0
-    paddingLeft: 4
-    paddingRight: 5
-    paddingTop: 4
-    paddingBottom: 5
-  - name: Hydraulic-booster
-    x: 909
-    y: 43
-    width: 123
-    height: 124
-    borderLeft: 0
-    borderRight: 0
-    borderTop: 0
-    borderBottom: 0
-    paddingLeft: 4
-    paddingRight: 5
-    paddingTop: 4
-    paddingBottom: 5
   - name: instructions-button
     x: 909
-    y: 370
+    y: 954
     width: 450
     height: 70
     borderLeft: 0
@@ -450,8 +476,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: instructions-button-over
-    x: 1362
-    y: 954
+    x: 909
+    y: 881
     width: 450
     height: 70
     borderLeft: 0
@@ -489,7 +515,7 @@ MonoBehaviour:
     paddingTop: 15
     paddingBottom: 14
   - name: Melee
-    x: 1035
+    x: 909
     y: 170
     width: 123
     height: 124
@@ -515,7 +541,7 @@ MonoBehaviour:
     paddingTop: 26
     paddingBottom: 24
   - name: Missile-battery
-    x: 1035
+    x: 909
     y: 43
     width: 123
     height: 124
@@ -541,7 +567,7 @@ MonoBehaviour:
     paddingTop: 19
     paddingBottom: 17
   - name: Navigator
-    x: 1161
+    x: 1035
     y: 170
     width: 123
     height: 124
@@ -555,7 +581,7 @@ MonoBehaviour:
     paddingBottom: 5
   - name: new-game-button
     x: 1362
-    y: 735
+    y: 954
     width: 450
     height: 70
     borderLeft: 0
@@ -568,7 +594,7 @@ MonoBehaviour:
     paddingBottom: 0
   - name: new-game-button-over
     x: 909
-    y: 662
+    y: 297
     width: 450
     height: 70
     borderLeft: 0
@@ -593,8 +619,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: options-button
-    x: 1362
-    y: 808
+    x: 909
+    y: 662
     width: 450
     height: 70
     borderLeft: 0
@@ -606,8 +632,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: options-button-over
-    x: 909
-    y: 808
+    x: 1362
+    y: 735
     width: 450
     height: 70
     borderLeft: 0
@@ -633,7 +659,7 @@ MonoBehaviour:
     paddingBottom: 0
   - name: play-button
     x: 909
-    y: 297
+    y: 735
     width: 450
     height: 70
     borderLeft: 0
@@ -645,8 +671,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: play-button-over
-    x: 909
-    y: 516
+    x: 1362
+    y: 808
     width: 450
     height: 70
     borderLeft: 0
@@ -658,8 +684,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: Quest-item
-    x: 643
-    y: 191
+    x: 1035
+    y: 43
     width: 123
     height: 124
     borderLeft: 0
@@ -672,7 +698,7 @@ MonoBehaviour:
     paddingBottom: 5
   - name: quit-button
     x: 909
-    y: 443
+    y: 808
     width: 450
     height: 70
     borderLeft: 0
@@ -736,8 +762,8 @@ MonoBehaviour:
     paddingTop: 4
     paddingBottom: 5
   - name: Smooth
-    x: 89
-    y: 9
+    x: 109
+    y: 29
     width: 17
     height: 17
     borderLeft: 4
