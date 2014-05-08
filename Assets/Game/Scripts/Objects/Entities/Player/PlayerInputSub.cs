@@ -19,7 +19,7 @@ public class PlayerInputSub : MonoBehaviour {
 	void Update()
     {
 		if (DISABLE_INPUT) return;
-        if (playerMovement.currentMovement == MovementState.NotMoving && !player.interactSub.WaitingInteractToFinish)
+        if (playerMovement.currentMovement == MovementState.NotMoving && !player.interactSub.WaitingInteractToFinish && !player.Shooting)
         {
             HotkeyInput();
 
@@ -276,7 +276,7 @@ public class PlayerInputSub : MonoBehaviour {
 
     public bool NotUsable(){
 		return this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving  || player.interactSub.WaitingInteractToFinish
-			|| player.GC.HUD.currentMenuState == MenuState.InventoryHUD || player.playerAnimation.isPlaying;
+			|| player.GC.HUD.currentMenuState == MenuState.InventoryHUD || player.playerAnimation.isPlaying || player.Shooting;
     }
 
 	bool NotUsableWorldInteractions(){

@@ -3,14 +3,12 @@ using System.Collections;
 
 public class SpiderEnemySub : EnemyMain {
 
-	int totalDamage;
-
 	AlienAI spiderAI;
+
+	public float deathDelay = 53.0f/60.0f;
 
 	// Use this for initialization
 	void Start () {
-		totalDamage = 0;
-
 		spiderAI = ai as AlienAI;
 	}
 	
@@ -21,19 +19,27 @@ public class SpiderEnemySub : EnemyMain {
 
 	public override void StartEnemyTurn ()
 	{
-		if (totalDamage > 0)
-		{
-			spiderAI.PlayDamageAnimation(totalDamage);
-			base.TakeDamage(totalDamage);
-
-			totalDamage = 0;
-		}
-
-		base.StartEnemyTurn ();
+		if (!Dead)
+			base.StartEnemyTurn ();
 	}
 
 	public override void TakeDamage(int amount)
 	{
-		totalDamage += amount;
+		base.TakeDamage(amount);
+
+		if (Dead)
+		{
+			Invoke("Remove", deathDelay);
+			spiderAI.PlayDeathAnimation();
+		}
+		else
+		{	
+			spiderAI.PlayDamageAnimation(amount);
+		}
+	}
+
+	protected override void Die()
+	{
+		Dead = true;
 	}
 }

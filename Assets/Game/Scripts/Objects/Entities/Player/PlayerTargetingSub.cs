@@ -77,8 +77,8 @@ public class PlayerTargetingSub : MonoBehaviour {
 				if (!TargetingArea.Contains(enemyPosInScreen))
 					continue;
 			
-				enemyPosInScreen = player.GameCamera.WorldToScreenPoint(adjustedEnemyPos);
-				Ray ray = player.GameCamera.ScreenPointToRay(enemyPosInScreen);
+				enemyPosInScreen = player.PlayerCamera.WorldToScreenPoint(adjustedEnemyPos);
+				Ray ray = player.PlayerCamera.ScreenPointToRay(enemyPosInScreen);
 				RaycastHit hitInfo;
 
 				//Debug.DrawRay(ray.origin, ray.direction * 20, Color.red, 2.0f);
@@ -136,7 +136,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 				if (Physics.Raycast(ray, out hitInfo, 20, targetingRayMask))
 				{
-					if (hitInfo.transform == enemyPair.Key.hitboxes[i].transform)
+					if (hitInfo.transform.parent == enemyPair.Key.hitboxes[i].transform.parent)
 					{
 						enemyPair.Value.SetCrosshairVisible(true);
 
@@ -144,17 +144,20 @@ public class PlayerTargetingSub : MonoBehaviour {
 						{
 							if (targetPositions[player.GetCurrentWeapon()].ContainsKey(enemyPair.Key))
 							{
-								targetPositions[player.GetCurrentWeapon()][enemyPair.Key] = enemyPair.Key.hitboxes[i].transform.position + Vector3.down*0.1f;
+								targetPositions[player.GetCurrentWeapon()][enemyPair.Key] = 
+									enemyPair.Key.hitboxes[i].bounds.center+ Vector3.down*0.1f;
 							}
 							else
 							{
-								targetPositions[player.GetCurrentWeapon()].Add(enemyPair.Key, enemyPair.Key.hitboxes[i].transform.position + Vector3.down*0.1f);
+								targetPositions[player.GetCurrentWeapon()].Add(
+									enemyPair.Key, enemyPair.Key.hitboxes[i].bounds.center+ Vector3.down*0.1f);
 							}
 						}
 						else
 						{
 							targetPositions.Add(player.GetCurrentWeapon(), new Dictionary<EnemyMain, Vector3>());
-							targetPositions[player.GetCurrentWeapon()].Add(enemyPair.Key, enemyPair.Key.hitboxes[i].transform.position + Vector3.down*0.1f);
+							targetPositions[player.GetCurrentWeapon()].Add(
+								enemyPair.Key, enemyPair.Key.hitboxes[i].bounds.center+ Vector3.down*0.1f);
 						}
 
 						wasSeen = true;

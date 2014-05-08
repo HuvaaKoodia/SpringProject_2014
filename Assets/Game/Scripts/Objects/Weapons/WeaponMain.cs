@@ -60,7 +60,8 @@ public class WeaponMain : MonoBehaviour {
 
 	public Dictionary<EnemyMain, TargetInfo> targets { get; private set;}
 
-	public Quaternion targetRotation;
+	public Quaternion targetVerticalRotation;
+	public Quaternion targetHorizontalRotation;
 	public float rotationSpeed;
 
     public bool NoAmmoConsumption{get;private set;}
@@ -128,7 +129,8 @@ public class WeaponMain : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		rotationSpeed = 50;
-		targetRotation = Quaternion.identity;
+		targetVerticalRotation = Quaternion.identity;
+		targetHorizontalRotation = Quaternion.identity;
 		targets = new Dictionary<EnemyMain, TargetInfo>();
 	}
 
@@ -172,8 +174,10 @@ public class WeaponMain : MonoBehaviour {
             else
                 RemoveTarget(enemy);
         }
-        else{
-            if (GetNumShotsTargetedTotal() < RateOfFire){
+        else
+		{
+            if (GetNumShotsTargetedTotal() < RateOfFire)
+			{
 				TargetInfo newInfo = new TargetInfo();
 				newInfo.numShots = RateOfFire-GetNumShotsTargetedTotal();
 				newInfo.targetPosition = player.targetingSub.targetPositions[this][enemy];
@@ -184,7 +188,7 @@ public class WeaponMain : MonoBehaviour {
 
 	protected void RemoveTarget(EnemyMain enemy)
 	{
-		targets[enemy].numShots = 0;
+		targets.Remove(enemy);
 	}
 
 	public void ClearTargets()
@@ -204,7 +208,7 @@ public class WeaponMain : MonoBehaviour {
 			for (int i = 0; i < enemyPair.Value.numShots; i++)
 			{
 				if (Overheat || CurrentAmmo == 0) break;
-				if (enemyPair.Value.numShots == 0 || enemyPair.Key == null) continue;
+				if (enemyPair.Value.numShots == 0 || enemyPair.Key == null || enemyPair.Key.Dead) continue;
 
 				while (waitingForShot)
 				{
@@ -232,7 +236,9 @@ public class WeaponMain : MonoBehaviour {
 		waitingForShot = true;
 
 		while (!lookingAtEnemy(enemy))
+		{
 			yield return null;
+		}
 
 		if (!NoAmmoConsumption) CurrentAmmo--;
 		if (CurrentAmmo<0) CurrentAmmo=0;
@@ -292,7 +298,7 @@ public class WeaponMain : MonoBehaviour {
 			{
 				verticalMovement.transform.rotation = 
 					Quaternion.RotateTowards(verticalMovement.transform.rotation, 
-					                         Quaternion.Euler(targetRotation.eulerAngles.x, player.transform.rotation.eulerAngles.y, 0.0f),// * player.transform.rotation, 
+					                         Quaternion.Euler(targetVerticalRotation.eulerAngles.x, player.transform.rotation.eulerAngles.y, 0.0f),// * player.transform.rotation, 
 					                         Time.deltaTime*rotationSpeed);
 			}
 
@@ -300,7 +306,7 @@ public class WeaponMain : MonoBehaviour {
 			{
 				horizontalMovement.transform.rotation = 
 					Quaternion.RotateTowards(horizontalMovement.transform.rotation, 
-				    	                     Quaternion.Euler(targetRotation.eulerAngles.x, targetRotation.eulerAngles.y, 0.0f),// * player.transform.rotation, 
+					                         Quaternion.Euler(targetVerticalRotation.eulerAngles.x, targetHorizontalRotation.eulerAngles.y, 0.0f),// * player.transform.rotation, 
 				        	                 Time.deltaTime*rotationSpeed);
 			}
 		}
@@ -323,6 +329,15 @@ public class WeaponMain : MonoBehaviour {
 				                         
 			}
 		}
+
+		
+		verticalMovement.transform.rotation = Quaternion.Euler(verticalMovement.transform.rotation.eulerAngles.x,
+		                                                       verticalMovement.transform.rotation.eulerAngles.y,
+		                                                       0.0f);
+
+		horizontalMovement.transform.rotation = Quaternion.Euler(verticalMovement.transform.rotation.eulerAngles.x,
+		                                                         horizontalMovement.transform.rotation.eulerAngles.y,
+		                                                         0.0f);
 	}
 
 	public void LookAtMouse(Rect bounds)
@@ -340,25 +355,31 @@ public class WeaponMain : MonoBehaviour {
 
 			Vector3 mouseToWorld = player.GameCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x , Input.mousePosition.y, mouseDistance));
 
-			targetRotation = Quaternion.LookRotation(mouseToWorld - barrelEstimate.position);
+			targetVerticalRotation = Quaternion.LookRotation(mouseToWorld - verticalMovement.transform.position);
+			targetHorizontalRotation = Quaternion.LookRotation(mouseToWorld - horizontalMovement.transform.position);
 		}
 		else
-			targetRotation = transform.rotation = 
-				Quaternion.RotateTowards(transform.rotation, player.transform.rotation, Time.deltaTime*rotationSpeed);
+		{
+			targetVerticalRotation = transform.rotation = 
+				Quaternion.RotateTowards(verticalMovement.transform.rotation, player.transform.rotation, Time.deltaTime*rotationSpeed);
+
+			targetHorizontalRotation = transform.rotation = 
+				Quaternion.RotateTowards(horizontalMovement.transform.rotation, player.transform.rotation, Time.deltaTime*rotationSpeed);
+		}
 
 		if (verticalMovement != null)
 		{
 			verticalMovement.transform.rotation = 
 				Quaternion.RotateTowards(verticalMovement.transform.rotation, 
-			    	                     Quaternion.Euler(targetRotation.eulerAngles.x, player.transform.rotation.eulerAngles.y, 0.0f),// * player.transform.rotation, 
+				                         Quaternion.Euler(targetVerticalRotation.eulerAngles.x, player.transform.rotation.eulerAngles.y, 0.0f),// * player.transform.rotation, 
 			        	                 Time.deltaTime*rotationSpeed);
 		}
 
-		if (verticalMovement != null)
+		if (horizontalMovement != null)
 		{
 			horizontalMovement.transform.rotation = 
 				Quaternion.RotateTowards(horizontalMovement.transform.rotation, 
-		    		                     Quaternion.Euler(targetRotation.eulerAngles.x, targetRotation.eulerAngles.y, 0.0f),// * player.transform.rotation, 
+				                         Quaternion.Euler(targetVerticalRotation.eulerAngles.x, targetHorizontalRotation.eulerAngles.y, 0.0f),// * player.transform.rotation, 
 			            	             Time.deltaTime*rotationSpeed);
 		}
 	}
@@ -373,7 +394,8 @@ public class WeaponMain : MonoBehaviour {
 		if (HasTargets)
 		{
 			//targetRotation = Quaternion.LookRotation((targets.Keys.First().transform.position + Vector3.up *0.6f)- transform.position);
-			targetRotation = Quaternion.LookRotation(targets[targets.Keys.First()].targetPosition - transform.position);
+			targetHorizontalRotation = Quaternion.LookRotation(targets[targets.Keys.First()].targetPosition - horizontalMovement.transform.position);
+			targetVerticalRotation = Quaternion.LookRotation(targets[targets.Keys.First()].targetPosition - verticalMovement.transform.position);
 		}
 		else
 		{
@@ -383,12 +405,14 @@ public class WeaponMain : MonoBehaviour {
 
 	void SetTargetRotation(EnemyMain enemy)
 	{
-		targetRotation = Quaternion.LookRotation(targets[enemy].targetPosition - transform.position);
+		targetHorizontalRotation = Quaternion.LookRotation(targets[enemy].targetPosition - horizontalMovement.transform.position);
+		targetVerticalRotation = Quaternion.LookRotation(targets[enemy].targetPosition - verticalMovement.transform.position);
 	}
 
 	void SetTargetRotationToDefault()
 	{
-		targetRotation = player.transform.rotation;
+		targetVerticalRotation = player.transform.rotation;
+		targetHorizontalRotation = player.transform.rotation;
 	}
 
     public int HitChancePercent(EnemyMain enemy)
@@ -405,13 +429,25 @@ public class WeaponMain : MonoBehaviour {
 
 	bool lookingAtTarget()
 	{
-		return horizontalMovement.transform.rotation == Quaternion.Euler(targetRotation.eulerAngles.x, targetRotation.eulerAngles.y, 0.0f);
+		Quaternion lookAtTarget = Quaternion.Euler(targetHorizontalRotation.eulerAngles.x, targetHorizontalRotation.eulerAngles.y, 0.0f);
+
+		return Subs.ApproximatelySame(horizontalMovement.transform.rotation.eulerAngles.x, lookAtTarget.eulerAngles.x, 0.001f) &&
+				Subs.ApproximatelySame(horizontalMovement.transform.rotation.eulerAngles.y, lookAtTarget.eulerAngles.y, 0.001f) &&
+				Subs.ApproximatelySame(horizontalMovement.transform.rotation.eulerAngles.z, lookAtTarget.eulerAngles.z, 0.001f);
 	}
 
 	bool lookingAtEnemy(EnemyMain enemy)
 	{
-		return horizontalMovement.transform.rotation == Quaternion.LookRotation(targets[enemy].targetPosition - transform.position);
+		Quaternion lookToEnemyX =  Quaternion.LookRotation(targets[enemy].targetPosition - verticalMovement.transform.position);
+		Quaternion lookToEnemyY =  Quaternion.LookRotation(targets[enemy].targetPosition - horizontalMovement.transform.position);
+
+		bool x = Subs.ApproximatelySame(verticalMovement.transform.rotation.eulerAngles.x, lookToEnemyX.eulerAngles.x, 0.001f);
+		bool y = Subs.ApproximatelySame(horizontalMovement.transform.rotation.eulerAngles.y, lookToEnemyY.eulerAngles.y, 0.001f);
+
+		return x && y;
 	}
+
+
 
 	public void SetEnemyTargetPosition(EnemyMain enemy, Vector3 position)
 	{

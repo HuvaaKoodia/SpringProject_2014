@@ -32,11 +32,13 @@ public class PlayerMain : EntityMain
 	public Camera GameCamera;
 	public Camera HudCamera;
 	public Camera TargetingCamera;
+	public Camera PlayerCamera;
 
 	public Animation playerAnimation;
 	public bool AnimationsOn;
 
 	public bool WeaponMouseLookOn = false;
+	public bool Shooting = false;
 	
 	int gunsFinishedShooting;
 
@@ -159,6 +161,7 @@ public class PlayerMain : EntityMain
     {
 		ap = 0;
 		gunsFinishedShooting = 0;
+		Shooting = true;
 
         foreach(WeaponMain weapon in weaponList)
 		{
@@ -179,7 +182,8 @@ public class PlayerMain : EntityMain
 			HUD.gunInfoDisplay.UpdateAllDisplays();
 			yield return null;
 		}
-		
+
+		Shooting = false;
 		HUD.DeactivateTargetingHUD();
 		EndPlayerPhase();
 	}
