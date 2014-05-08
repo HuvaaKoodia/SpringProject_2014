@@ -56,21 +56,10 @@ public class MouseLook : MonoBehaviour {
 		Ray mouseRay = camera.ScreenPointToRay(Input.mousePosition);
 		bool isInDeadzone = UseDeadzone ? Physics.Raycast(mouseRay, 1, layer) : false;
 
-		if (isInDeadzone)
-		{
-			Debug.DrawRay(mouseRay.origin, mouseRay.direction, Color.green);
-		}
-		else
-		{
-			Debug.DrawRay(mouseRay.origin, mouseRay.direction, Color.red);
-		}
-
 		if (MouseLookOn && !isInDeadzone)
 		{
 			if (axes == RotationAxes.MouseXAndY)
 			{
-
-
 				float rotationX =
 					((Input.mousePosition.x - (Screen.width / 2)) / (Screen.width / 2)) * sensitivityX;
 

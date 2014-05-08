@@ -21,6 +21,8 @@ public class EnemyMain : EntityMain {
 	float normalTurnSpeed;
 	float culledSpeedMultiplier = 7;
 
+	public bool Dead { get; protected set; }
+
 	// Use this for initialization
 	public override void Awake()
 	{
@@ -28,6 +30,8 @@ public class EnemyMain : EntityMain {
 
 		if (graphics != null)
 			meshRenderer = graphics.GetComponent<MeshRenderer>();
+
+		Dead = false;
 
 		aiController = GC.aiController;
 		ai = transform.root.GetComponent<AIBase>();
@@ -139,7 +143,13 @@ public class EnemyMain : EntityMain {
 		}
 	}
 
-	void Die()
+	protected virtual void Die()
+	{
+		Dead = true;
+		Remove();
+	}
+
+	void Remove()
 	{
 		movement.GetCurrenTile().LeaveTile();
 		CurrentFloor.Enemies.Remove(this);

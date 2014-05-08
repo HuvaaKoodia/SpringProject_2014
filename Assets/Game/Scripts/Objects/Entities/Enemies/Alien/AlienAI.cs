@@ -47,6 +47,8 @@ public class AlienAI : AIBase {
 	public string Damage02Animation;
 	public int HeavyDamageAnimationTreshold = 30;
 
+	public string DeathAnimation;
+
 	bool readyToAttack = false;
 
 	Point3D MyPosition;
@@ -560,14 +562,15 @@ public class AlienAI : AIBase {
 			StartCoroutine("AttackRanged", MeleeDealDamageDelay-0.2f); //TEMP
 		}
 		AP = 0;
+		parent.MovedLastPhase = true;
 	}
 
 	IEnumerator AttackRanged(float inflictDelay)
 	{
-		PlayAnimation(MeleeAttackAnimation, 1);
+		PlayAnimation(RangedAttackAnimation, 1);
 
-        if (MeleeAttackSoundFX != null)
-            audio.PlayOneShot(MeleeAttackSoundFX);
+        if (RangedAttackSoundFX != null)
+			audio.PlayOneShot(RangedAttackSoundFX);
 
 		yield return new WaitForSeconds(inflictDelay);
 		player.TakeDamage(Damage / 2, MyPosition.X, MyPosition.Y);
@@ -575,10 +578,10 @@ public class AlienAI : AIBase {
 
 	IEnumerator AttackMelee(float inflictDelay)
 	{
-		PlayAnimation(RangedAttackAnimation, 1);
+		PlayAnimation(MeleeAttackAnimation, 1);
 
-        if (RangedAttackSoundFX != null)
-            audio.PlayOneShot(RangedAttackSoundFX);
+        if (MeleeAttackSoundFX != null)
+			audio.PlayOneShot(MeleeAttackSoundFX);
 
 		yield return new WaitForSeconds(inflictDelay);
 		player.TakeDamage(Damage, MyPosition.X, MyPosition.Y);
@@ -611,12 +614,17 @@ public class AlienAI : AIBase {
 	{
 		if (damageAmount < HeavyDamageAnimationTreshold)
 		{
-			PlayAnimation(Damage01Animation, 1);
+			BlendAnimation(Damage01Animation, 1);
 		}
 		else
 		{
-			PlayAnimation(Damage02Animation, 1);
+			BlendAnimation(Damage02Animation, 1);
 		}
+	}
+
+	public void PlayDeathAnimation()
+	{
+		BlendAnimation(DeathAnimation, 1);
 	}
 
 	protected override void CreateBehaviourTree()
@@ -715,6 +723,19 @@ public class AlienAI : AIBase {
 		if (parent.graphics.activeSelf == false)
 			return;
 
+		spiderAnimation[animation].normalizedTime = 0;
+		spiderAnimation[animation].speed = speed;
+		spiderAnimation.Play(animation);
+		
+		Animating = true;
+		Invoke ("AnimationFinished", spiderAnimation[animation].length / speed);
+	}
+
+	void BlendAnimation(string animation, float speed)
+	{
+		if (parent.graphics.activeSelf == false)
+			return;
+		
 		spiderAnimation[animation].normalizedTime = 0;
 		spiderAnimation[animation].speed = speed;
 		spiderAnimation.Play(animation);

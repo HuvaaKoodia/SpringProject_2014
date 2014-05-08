@@ -254,4 +254,9 @@ public class Subs{
 		obj=null;
 		return false;
 	}
+
+	public static bool ApproximatelySame(float a, float b, float tolerance)
+	{
+		return Mathf.Abs(a-b) < tolerance;
+	}
 }
