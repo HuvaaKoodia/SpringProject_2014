@@ -417,7 +417,8 @@ public class WeaponMain : MonoBehaviour {
 
     public int HitChancePercent(EnemyMain enemy)
     {
-        var distance=Vector3.Distance(player.transform.position,enemy.transform.position);
+        var distance=Vector3.Distance(new Vector3(player.transform.position.x, player.transform.position.z),
+		                              new Vector3(enemy.transform.position.x, enemy.transform.position.z));
         var multi=WeaponSlot.ObjData.GetAccuracyMulti();
         return (int)Mathf.Clamp((Accuracy-((distance-MapGenerator.TileSize.x)/(Range*0.01f)))*multi,0,100);
     }
