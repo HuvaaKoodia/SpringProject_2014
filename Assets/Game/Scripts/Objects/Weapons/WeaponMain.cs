@@ -329,7 +329,6 @@ public class WeaponMain : MonoBehaviour {
 				                         
 			}
 		}
-
 		
 		verticalMovement.transform.rotation = Quaternion.Euler(verticalMovement.transform.rotation.eulerAngles.x,
 		                                                       verticalMovement.transform.rotation.eulerAngles.y,
