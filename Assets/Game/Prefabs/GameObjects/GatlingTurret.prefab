@@ -395,6 +395,8 @@ Transform:
   m_Children:
   - {fileID: 400014}
   - {fileID: 400016}
+  - {fileID: 400030}
+  - {fileID: 400036}
   - {fileID: 400018}
   - {fileID: 400022}
   m_Father: {fileID: 400004}
@@ -492,8 +494,6 @@ Transform:
   m_LocalPosition: {x: .230000004, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 400036}
-  - {fileID: 400030}
   - {fileID: 400004}
   m_Father: {fileID: 400026}
 --- !u!4 &400030
@@ -502,11 +502,11 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100030}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106829}
+  m_LocalPosition: {x: -0, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 400028}
+  m_Father: {fileID: 400012}
 --- !u!4 &400032
 Transform:
   m_ObjectHideFlags: 1
@@ -535,11 +535,11 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100036}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.192909703, y: -.343343079, z: 0}
-  m_LocalScale: {x: .330000013, y: .899999976, z: .430000007}
+  m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106829}
+  m_LocalPosition: {x: -.192909703, y: 0, z: -.343343109}
+  m_LocalScale: {x: .330000013, y: .899999738, z: .429999918}
   m_Children: []
-  m_Father: {fileID: 400028}
+  m_Father: {fileID: 400012}
 --- !u!23 &2300000
 Renderer:
   m_ObjectHideFlags: 1
@@ -979,6 +979,9 @@ MonoBehaviour:
   horizontalTurnSpeed: 150
   verticalTurnSpeed: 90
   ShootSoundFX: {fileID: 8300000, guid: 7a1d812e8757cfe4c970aa3e3e9f4484, type: 3}
+  OpenSoundFX: {fileID: 0}
+  CloseSoundFX: {fileID: 0}
+  VerticalRotationSoundFX: {fileID: 0}
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1034,8 +1037,7 @@ MonoBehaviour:
   waitingForAttackPhase: 0
   graphics: {fileID: 100024}
   hitboxes: []
-  meshRenderer: {fileID: 0}
-  rangedRange: 3
+  rangedRange: 4
   rangedAngleMax: 50
   TurretTransform: {fileID: 400004}
   BaseTransform: {fileID: 400002}

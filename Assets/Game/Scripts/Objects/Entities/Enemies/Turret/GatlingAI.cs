@@ -7,14 +7,12 @@ public class GatlingAI : AIBase {
 	EntityMovementSub movement;
 
 	public const int APmax = 2;
-	public const int AppearCost = 1;
 	public const int AttackCost = 2;
 	
 	public int Damage = 20;
 
 	public int TurnsBeforeClose = 2;
 
-	public const int AttackRadius = 16;
 	public LayerMask PlayerSeeMask;
 	
 	Point3D MyPosition;
@@ -112,7 +110,7 @@ public class GatlingAI : AIBase {
 
 	private RunStatus CheckForPlayerPresence()
 	{
-		if (PathFinder.CanSeeFromTileToTile(player, parent, MyPosition, AttackRadius, PlayerSeeMask, false))
+		if (PathFinder.CanSeeFromTileToTile(player, parent, MyPosition, parent.rangedRange*MapGenerator.TileSize.x, PlayerSeeMask, false))
 		{
 			if (blackboard.AwareOfPlayer)
 			{
@@ -166,8 +164,6 @@ public class GatlingAI : AIBase {
                 audio.PlayOneShot(OpenSoundFX);
 	
 			StartCoroutine(MoveDown());
-
-			AP -= AppearCost;
 		}
 	}
 
@@ -236,11 +232,13 @@ public class GatlingAI : AIBase {
 			return RunStatus.Failure;
 	}
 
+	Vector3 playerLookPosition { get { return player.PlayerCamera.transform.position + Vector3.down*0.75f; } }
+
 	void FacePlayer()
 	{
 		lastTargetedPosition = blackboard.LastKnownPlayerPosition;
 
-		lookToPlayerRot = Quaternion.LookRotation((player.transform.position + Vector3.up) - turretTransform.position);
+		lookToPlayerRot = Quaternion.LookRotation(playerLookPosition - turretTransform.position);
 		lookToPlayerRot = Quaternion.Euler(lookToPlayerRot.eulerAngles.x-90,
 		                                   lookToPlayerRot.eulerAngles.y,
 		                                   lookToPlayerRot.eulerAngles.z-90);
@@ -253,7 +251,7 @@ public class GatlingAI : AIBase {
 
 	RunStatus FacingPlayer()
 	{
-		lookToPlayerRot = Quaternion.LookRotation((player.transform.position + Vector3.up) - turretTransform.position);
+		lookToPlayerRot = Quaternion.LookRotation(playerLookPosition - turretTransform.position);
 		lookToPlayerRot = Quaternion.Euler(lookToPlayerRot.eulerAngles.x-90,
 		                                   lookToPlayerRot.eulerAngles.y,
 		                                   lookToPlayerRot.eulerAngles.z-90);
@@ -318,7 +316,7 @@ public class GatlingAI : AIBase {
         if (VerticalRotationSoundFX != null)
             audio.PlayOneShot(VerticalRotationSoundFX);
 
-		Quaternion verticalRot = Quaternion.LookRotation(player.transform.position - turretTransform.position);
+		Quaternion verticalRot = Quaternion.LookRotation(playerLookPosition - turretTransform.position);
 		Quaternion ninetyCCW = Quaternion.Euler(0, -90, 0);
 		verticalRot *= ninetyCCW;
 

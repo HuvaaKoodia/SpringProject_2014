@@ -43,8 +43,11 @@ public class WeaponMain : MonoBehaviour {
 
 	public Transform barrelEstimate;
 
-	public string ShootingAnimation = "Shooting";
-	public Animation shootAnimator;
+	string ShootingAnimation = "Shooting";
+	Animation shootAnimator;
+
+	ParticleSystem bulletEmitter;
+	ParticleSystem muzzleFlashEmitter;
 
     public int CurrentAmmo { 
         get{
@@ -116,6 +119,22 @@ public class WeaponMain : MonoBehaviour {
 			graphics.transform.rotation = transform.rotation;
 
 			shootAnimator = graphics.GetComponentInChildren<Animation>();
+
+			ParticleSystem[] particleEmitters = graphics.GetComponentsInChildren<ParticleSystem>();
+
+			for (int i = 0; i < particleEmitters.Count(); i++)
+			{
+				if (particleEmitters[i].name == "bullets")
+				{
+					bulletEmitter = particleEmitters[i]; 
+					bulletEmitter.renderer.sortingLayerName = "BulletParticle";
+					bulletEmitter.renderer.sortingOrder = 19;
+				}
+				else if (particleEmitters[i].name == "muzzleFlash")
+				{
+					muzzleFlashEmitter = particleEmitters[i];
+				}
+			}
 		}
 		else
 		{
@@ -249,8 +268,10 @@ public class WeaponMain : MonoBehaviour {
 		if (CurrentAmmo<0) CurrentAmmo=0;
 		
 		IncreaseHeat(1);
-		
-		if (HitChancePercent(enemy) > Subs.RandomPercent())
+
+		bool hit = HitChancePercent(enemy) > Subs.RandomPercent();
+
+		if (hit)
 		{
 			//hit
 			int dmg = (int)Random.Range(MinDamage, MaxDamage);
@@ -261,6 +282,27 @@ public class WeaponMain : MonoBehaviour {
 		{
 			shootAnimator[ShootingAnimation].normalizedTime = 0;
 			shootAnimator.Play(ShootingAnimation);
+	
+			if (bulletEmitter != null)
+			{
+				if (hit)
+				{
+					Physics.IgnoreLayerCollision(enemy.gameObject.layer, bulletEmitter.gameObject.layer, false);
+				}
+				else
+				{
+					Physics.IgnoreLayerCollision(enemy.gameObject.layer, bulletEmitter.gameObject.layer, true);
+				}
+
+				bulletEmitter.Play();
+				Invoke("stopBulletEmiting",shootAnimator[ShootingAnimation].length * 0.7f);
+			}
+
+			if (muzzleFlashEmitter != null)
+			{
+				muzzleFlashEmitter.Play();
+				Invoke("stopMuzzleFlashEmiting",shootAnimator[ShootingAnimation].length * 0.8f);
+			}
 
 			while (shootAnimator.isPlaying)
 			{
@@ -269,6 +311,16 @@ public class WeaponMain : MonoBehaviour {
 		}
 
 		waitingForShot = false;
+	}
+
+	void stopBulletEmiting()
+	{
+		bulletEmitter.Stop();
+	}
+
+	void stopMuzzleFlashEmiting()
+	{
+		muzzleFlashEmitter.Stop();
 	}
 
     public void IncreaseHeat(float multi)

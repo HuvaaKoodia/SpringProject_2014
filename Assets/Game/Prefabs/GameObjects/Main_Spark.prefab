@@ -70,21 +70,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emit: {fileID: 100002}
-  delay: .100000001
-  limit: 1
+  delay: .5
+  limit: 5
+  max_delay: 5
+  max_limit: 5
 --- !u!198 &19800000
 ParticleSystem:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  lengthInSec: 5
+  lengthInSec: 1
   startDelay: 0
   speed: 1
   randomSeed: 0
-  looping: 1
+  looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   moveWithTransform: 1
   InitialModule:
     enabled: 1
@@ -334,7 +336,7 @@ ParticleSystem:
     enabled: 1
     m_Type: 0
     rate:
-      scalar: 100
+      scalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -374,7 +376,7 @@ ParticleSystem:
     time1: 0
     time2: 0
     time3: 0
-    m_BurstCount: 0
+    m_BurstCount: 1
   SizeModule:
     enabled: 0
     curve:
@@ -1134,9 +1136,9 @@ ParticleSystem:
   startDelay: 0
   speed: 1
   randomSeed: 0
-  looping: 1
+  looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   moveWithTransform: 1
   InitialModule:
     enabled: 1
@@ -1213,7 +1215,7 @@ ParticleSystem:
           rgba: 4294967295
         key1:
           serializedVersion: 2
-          rgba: 4294967295
+          rgba: 4278190080
         key2:
           serializedVersion: 2
           rgba: 0
@@ -1299,7 +1301,7 @@ ParticleSystem:
       maxColor:
         serializedVersion: 2
         rgba: 4294967295
-      minMaxState: 0
+      minMaxState: 1
     startSize:
       scalar: 5
       maxCurve:
@@ -1506,7 +1508,7 @@ ParticleSystem:
           rgba: 4294967295
         key1:
           serializedVersion: 2
-          rgba: 4294967295
+          rgba: 0
         key2:
           serializedVersion: 2
           rgba: 0

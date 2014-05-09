@@ -10,6 +10,7 @@ public class Debt
 	public int debt_payment{get;set;}										//variable to keep track of debt payment per debt
 
 	public bool active{get;set;}											//variable to keep track of debt's active state
+	public float original_debt_sum{get;set;}								//variable to keep track of the Player's original debt sum
 
 	public Debt()															//constructor that initializes variables
 	{
@@ -17,6 +18,7 @@ public class Debt
 		monthly_cut = 0;
 
 		active = false;
+		original_debt_sum = 0.0f;
 	}
 
 	public void SetStartingDepth(int sum){
@@ -55,7 +57,6 @@ public class FinanceManager
 	float increase_percent;													//variable contributing to calculating interest percentage
 
 	public int month{get;set;}												//variable to keep track of months (required in the calculation of interest percent)
-	public float original_debt_sum{get;set;}								//variable to keep track of the Player's original debt sum
 	
 	public FinanceManager(){}													//empty constructor (needs to be introduced due to presence of public properties in the class)
 
@@ -79,17 +80,16 @@ public class FinanceManager
 		}
 
 		month = 1;
-		original_debt_sum = 0.0f;
 	}
 	
 	//function that calculates the Player's existing cash
-	public void CalcExistingCash()
+	private void CalcExistingCash()
 	{
 		existing_cash = (int)(player_money - payment_total);
 	}
 	
 	//function to calculate the new interest percentage each time Player takes on a new debt
-	public void CalcInterestPercent()
+	private void CalcInterestPercent()
 	{				
 		//as long as there is a debt, calculate interest percentage for the particular debt
 		for(int i = 0; i < listofdebts.Count; i++)
@@ -102,16 +102,16 @@ public class FinanceManager
 	}
 
 	//function to calculate the monthly cut for each debt
-	public void CalcMonthlyCut()
+	private void CalcMonthlyCut()
 	{
 		for(int i = 0; i < listofdebts.Count; i++)
 		{
-			listofdebts[i].monthly_cut = (int)(original_debt_sum * 0.05f);
+			listofdebts[i].monthly_cut = (int)(listofdebts[i].original_debt_sum * 0.05f);
 		}
 	}
 	
 	//function to calculate the sum of all debt payments upon taking up new debt
-	public void CalcPaymentTotal(bool traverse)
+	private void CalcPaymentTotal(bool traverse)
 	{
 		//as long as ther is debt
 		if(listofdebts.Count > 0)
@@ -130,6 +130,20 @@ public class FinanceManager
 				}
 			}
 		}
+	}
+
+	public void CalcAll()
+	{
+		CalcMonthlyCut();
+		CalcInterestPercent();
+		for(int i = 0; i < listofdebts.Count; i++)
+		{
+			listofdebts[i].CalcInterest();
+			listofdebts[i].CalcDebtPayment();
+		}
+		payment_total = 0;
+		CalcPaymentTotal(true);
+		CalcExistingCash();
 	}
 	
 	//function to update the number of days until the next update
@@ -150,23 +164,23 @@ public class FinanceManager
 		}
 	}
 
-	//function to update values upon click of shorten debt button and upon update of month
-	public void UpdateValues()
-	{
-		//update interest percents, interests, debt payments of each debt and peyment total
-		CalcInterestPercent();
-		
-		for(int i = 0; i < listofdebts.Count; i++)
-		{
-			listofdebts[i].CalcInterest();
-			listofdebts[i].CalcDebtPayment();
-		}
-
-		//reset payment total and recalculate value of payment total
-		payment_total = 0;
-		CalcPaymentTotal(true);
-		CalcExistingCash();
-	}
+//	//function to update values upon click of shorten debt button and upon update of month
+//	public void UpdateValues()
+//	{
+//		//update interest percents, interests, debt payments of each debt and peyment total
+//		CalcInterestPercent();
+//		
+//		for(int i = 0; i < listofdebts.Count; i++)
+//		{
+//			listofdebts[i].CalcInterest();
+//			listofdebts[i].CalcDebtPayment();
+//		}
+//
+//		//reset payment total and recalculate value of payment total
+//		payment_total = 0;
+//		CalcPaymentTotal(true);
+//		CalcExistingCash();
+//	}
 	
 	//function for Player to take on a new debt
 	//assign new debt into specific index
@@ -181,7 +195,7 @@ public class FinanceManager
 	{
 		AddDebt(index);
 		GetDebt(index).SetStartingDepth(amount);
-		CalcMonthlyCut ();
+		listofdebts[index].original_debt_sum = amount;
 	}
 
 	public Debt GetDebt(int index)
