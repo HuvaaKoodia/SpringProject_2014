@@ -241,7 +241,8 @@ public class MapGenerator : MonoBehaviour
 			
 			var t=floor.GetTileMain(x+xx,y-yy);
 			if (t!=null&&t.Data.TileType==TileObjData.Type.Door){
-				bool isairlock=t.TileObject.GetComponent<DoorMain>().isAirlockDoor;
+				var door=t.GetDoor();
+				bool isairlock=door.isAirlockDoor;
 				
 				if (isairlock) continue;
 				
@@ -249,6 +250,7 @@ public class MapGenerator : MonoBehaviour
 				var dir=Mathf.Atan2(yy,xx);
 				dir=Mathf.Rad2Deg*dir+90;
 				player.transform.rotation=Quaternion.AngleAxis(dir,Vector3.up);
+				door.canOpenDoorOnStartUp=false;
 				break;
 			}
 		}

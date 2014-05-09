@@ -1,11 +1,19 @@
 
+<!--
+Explanations:
+
+WeaponHeatDisperseCoolingMultiplier = multiplier for counting the cooling value of weapons (bigger -> more cooling)
+WeaponHeatDisperseHeatMultiplier = multiplier for counting an additional cooling value based on current heat value. (bigger -> more cooling)
+-->
+
+
 <Constants
 	DisperseHeatMultiplier="3"
 
 	WeaponOverheatEndThreshold="50"
 	WeaponChangeableHeatThreshold="10" 
 	WeaponHeatDisperseCoolingMultiplier="2"
-	WeaponHeatDisperseheatMultiplier="0.25"
+	WeaponHeatDisperseHeatMultiplier="0.25" 
 	
 	HullOverheatEndThreshold="50"
 	HullHeatAddMultiplier="0.25"
@@ -15,15 +23,16 @@
 	MissionInfoSuccessRating="80"
 	MissionInfoFailRating="20"
 	MissionCatastrophicIntelFailureChance="5"
+	MissionRewardRounding="100"
 	
 	AttackFrontBackPlayerTorsoHitChance="30"
 	AttackLeftRightPlayerTorsoHitChance="30"
 	AttackTorsoUtilityDamageChance="50"
 	
-	MissionRewardRounding="100"
+	MechaPartConditionFairThreshold="0.6"
+	MechaPartConditionBadThreshold="0.3"
+	MechaPartRepairCostMulti="3.0"
 	
-	ConditionFairThreshold="0.6"
-	ConditionBadThreshold="0.3"
-	
-	MechaPartRepairMulti="3.0"
+	MaxEnemyPercentageOnCorridors="0.2"
+	OpenDoorChange="20"
 />

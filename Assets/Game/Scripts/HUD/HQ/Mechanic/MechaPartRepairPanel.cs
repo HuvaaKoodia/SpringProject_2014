@@ -34,7 +34,7 @@ public class MechaPartRepairPanel : MonoBehaviour {
 		if (!gameObject.activeInHierarchy) return;
 
         int con=(int)((float)Part.HP/MechaPartObjData.MaxHP*100f);
-		cost=(int)((MechaPartObjData.MaxHP-Part.HP)*XmlDatabase.MechaPartRepairMulti);
+		cost=(int)((MechaPartObjData.MaxHP-Part.HP)*XmlDatabase.MechaPartRepairCostMulti);
 
         Condition.text=con+"%";
         Cost.text="Cost: "+cost;
