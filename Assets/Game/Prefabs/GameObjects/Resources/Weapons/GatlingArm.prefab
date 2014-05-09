@@ -91,7 +91,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400010}
-  - 95: {fileID: 9500000}
+  - 111: {fileID: 11100000}
   m_Layer: 18
   m_Name: Graphics
   m_TagString: Untagged
@@ -182,7 +182,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 21def464ee8e8764992976cf3786dfad, type: 2}
+  - {fileID: 2100000, guid: f2903f8ceaa1ded4281a61f77e6fed52, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -203,7 +203,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 21def464ee8e8764992976cf3786dfad, type: 2}
+  - {fileID: 2100000, guid: f2903f8ceaa1ded4281a61f77e6fed52, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -224,7 +224,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 21def464ee8e8764992976cf3786dfad, type: 2}
+  - {fileID: 2100000, guid: f2903f8ceaa1ded4281a61f77e6fed52, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -245,7 +245,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 21def464ee8e8764992976cf3786dfad, type: 2}
+  - {fileID: 2100000, guid: f2903f8ceaa1ded4281a61f77e6fed52, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -282,20 +282,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100008}
   m_Mesh: {fileID: 4300008, guid: 080e0a8f53c6d914bacd32fc5b6cd3bd, type: 3}
---- !u!95 &9500000
-Animator:
-  serializedVersion: 2
+--- !u!111 &11100000
+Animation:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100010}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 080e0a8f53c6d914bacd32fc5b6cd3bd, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_ApplyRootMotion: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 080e0a8f53c6d914bacd32fc5b6cd3bd, type: 3}
+  m_Animations:
+  - {fileID: 7400000, guid: 080e0a8f53c6d914bacd32fc5b6cd3bd, type: 3}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
-  m_HasTransformHierarchy: 1
+  m_CullingType: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

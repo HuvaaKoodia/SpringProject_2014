@@ -43,6 +43,9 @@ public class WeaponMain : MonoBehaviour {
 
 	public Transform barrelEstimate;
 
+	public string ShootingAnimation = "Shooting";
+	public Animation shootAnimator;
+
     public int CurrentAmmo { 
         get{
             if (NoAmmoConsumption) return 1;
@@ -111,6 +114,8 @@ public class WeaponMain : MonoBehaviour {
 			graphics.transform.parent = horizontalMovement.transform;
 			graphics.transform.localPosition = Vector3.zero;
 			graphics.transform.rotation = transform.rotation;
+
+			shootAnimator = graphics.GetComponentInChildren<Animation>();
 		}
 		else
 		{
@@ -250,6 +255,17 @@ public class WeaponMain : MonoBehaviour {
 			//hit
 			int dmg = (int)Random.Range(MinDamage, MaxDamage);
 			enemy.TakeDamage(dmg);
+		}
+
+		if (shootAnimator != null)
+		{
+			shootAnimator[ShootingAnimation].normalizedTime = 0;
+			shootAnimator.Play(ShootingAnimation);
+
+			while (shootAnimator.isPlaying)
+			{
+				yield return null;
+			}
 		}
 
 		waitingForShot = false;
@@ -444,9 +460,7 @@ public class WeaponMain : MonoBehaviour {
 
 		return x && y;
 	}
-
-
-
+	
 	public void SetEnemyTargetPosition(EnemyMain enemy, Vector3 position)
 	{
 		if (targets.ContainsKey(enemy))
