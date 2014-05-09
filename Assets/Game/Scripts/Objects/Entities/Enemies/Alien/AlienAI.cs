@@ -606,13 +606,15 @@ public class AlienAI : AIBase {
 
 	public void PlayDamageAnimation(int damageAmount)
 	{
+		if (Animating) return;
+
 		if (damageAmount < HeavyDamageAnimationTreshold)
 		{
-			BlendAnimation(Damage01Animation, 1);
+			PlayAnimation(Damage01Animation, 1);
 		}
 		else
 		{
-			BlendAnimation(Damage02Animation, 1);
+			PlayAnimation(Damage02Animation, 1);
 		}
 	}
 

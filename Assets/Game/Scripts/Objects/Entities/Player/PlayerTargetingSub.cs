@@ -145,24 +145,25 @@ public class PlayerTargetingSub : MonoBehaviour {
 					{
 						enemyPair.Value.SetCrosshairVisible(true);
 
+						Vector3 targetPosition = enemyPair.Key.hitboxes[i].bounds.center+ Vector3.down*0.2f;
+
 						if (targetPositions.ContainsKey(player.GetCurrentWeapon()))
 						{
 							if (targetPositions[player.GetCurrentWeapon()].ContainsKey(enemyPair.Key))
 							{
-								targetPositions[player.GetCurrentWeapon()][enemyPair.Key] = 
-									enemyPair.Key.hitboxes[i].bounds.center+ Vector3.down*0.1f;
+								targetPositions[player.GetCurrentWeapon()][enemyPair.Key] = targetPosition;
 							}
 							else
 							{
 								targetPositions[player.GetCurrentWeapon()].Add(
-									enemyPair.Key, enemyPair.Key.hitboxes[i].bounds.center+ Vector3.down*0.1f);
+									enemyPair.Key, targetPosition);
 							}
 						}
 						else
 						{
 							targetPositions.Add(player.GetCurrentWeapon(), new Dictionary<EnemyMain, Vector3>());
 							targetPositions[player.GetCurrentWeapon()].Add(
-								enemyPair.Key, enemyPair.Key.hitboxes[i].bounds.center+ Vector3.down*0.1f);
+								enemyPair.Key, targetPosition);
 						}
 
 						wasSeen = true;
