@@ -430,11 +430,8 @@ public class WeaponMain : MonoBehaviour {
 
 	bool lookingAtTarget()
 	{
-		Quaternion lookAtTarget = Quaternion.Euler(targetHorizontalRotation.eulerAngles.x, targetHorizontalRotation.eulerAngles.y, 0.0f);
-
-		return Subs.ApproximatelySame(horizontalMovement.transform.rotation.eulerAngles.x, lookAtTarget.eulerAngles.x, 0.03f) &&
-				Subs.ApproximatelySame(horizontalMovement.transform.rotation.eulerAngles.y, lookAtTarget.eulerAngles.y, 0.03f) &&
-				Subs.ApproximatelySame(horizontalMovement.transform.rotation.eulerAngles.z, lookAtTarget.eulerAngles.z, 0.03f);
+		return Subs.ApproximatelySame(verticalMovement.transform.rotation.eulerAngles.x, targetVerticalRotation.eulerAngles.x, 0.04f) &&
+			   Subs.ApproximatelySame(horizontalMovement.transform.rotation.eulerAngles.y, targetHorizontalRotation.eulerAngles.y, 0.04f);
 	}
 
 	bool lookingAtEnemy(EnemyMain enemy)
@@ -442,8 +439,8 @@ public class WeaponMain : MonoBehaviour {
 		Quaternion lookToEnemyX =  Quaternion.LookRotation(targets[enemy].targetPosition - verticalMovement.transform.position);
 		Quaternion lookToEnemyY =  Quaternion.LookRotation(targets[enemy].targetPosition - horizontalMovement.transform.position);
 
-		bool x = Subs.ApproximatelySame(verticalMovement.transform.rotation.eulerAngles.x, lookToEnemyX.eulerAngles.x, 0.03f);
-		bool y = Subs.ApproximatelySame(horizontalMovement.transform.rotation.eulerAngles.y, lookToEnemyY.eulerAngles.y, 0.03f);
+		bool x = Subs.ApproximatelySame(verticalMovement.transform.rotation.eulerAngles.x, lookToEnemyX.eulerAngles.x, 0.04f);
+		bool y = Subs.ApproximatelySame(horizontalMovement.transform.rotation.eulerAngles.y, lookToEnemyY.eulerAngles.y, 0.04f);
 
 		return x && y;
 	}

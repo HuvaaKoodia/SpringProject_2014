@@ -2887,6 +2887,32 @@ Transform:
   - {fileID: 769060056}
   - {fileID: 1581675923}
   m_Father: {fileID: 1096243821}
+--- !u!1 &152038455
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 100000, guid: b5a1cbd439826bf458473cbd32c949f9, type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 152038456}
+  m_Layer: 18
+  m_Name: GatlingArm
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &152038456
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 400000, guid: b5a1cbd439826bf458473cbd32c949f9, type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 152038455}
+  m_LocalRotation: {x: -3.09086232e-08, y: .707106829, z: -.707106829, w: -3.09086232e-08}
+  m_LocalPosition: {x: -3.57253413e-07, y: -4.87149009e-07, z: -4.08650255}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
 --- !u!1 &152649536
 GameObject:
   m_ObjectHideFlags: 0
@@ -15065,6 +15091,10 @@ Prefab:
       propertyPath: MasterHud
       value: 
       objectReference: {fileID: 1208657778}
+    - target: {fileID: 11400000, guid: bbc62e18456a7dc41a85be0653d92e94, type: 2}
+      propertyPath: INVINCIBLE
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bbc62e18456a7dc41a85be0653d92e94, type: 2}
   m_RootGameObject: {fileID: 1448605822}
@@ -31898,7 +31928,7 @@ MonoBehaviour:
   currentWeaponID: 0
   ShotLastTurn: 1
   Finished: 0
-  INVINCIBLE: 0
+  INVINCIBLE: 1
   ap: 0
   GameCamera: {fileID: 1139544427}
   HudCamera: {fileID: 1050427132}
