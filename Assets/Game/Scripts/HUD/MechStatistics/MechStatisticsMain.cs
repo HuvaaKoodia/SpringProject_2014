@@ -59,11 +59,11 @@ public class MechStatisticsMain : MonoBehaviour {
         {
             part.ChangePartColor(BrokenColor);
         }
-		else if (hp <= MechaPartObjData.MaxHP*XmlDatabase.ConditionBadThreshold)
+		else if (hp <= MechaPartObjData.MaxHP*XmlDatabase.MechaPartConditionBadThreshold)
         {
             part.ChangePartColor(CriticalColor);
         }
-		else if (hp <= MechaPartObjData.MaxHP*XmlDatabase.ConditionFairThreshold)
+		else if (hp <= MechaPartObjData.MaxHP*XmlDatabase.MechaPartConditionFairThreshold)
         {
             part.ChangePartColor(DamagedColor);
         }

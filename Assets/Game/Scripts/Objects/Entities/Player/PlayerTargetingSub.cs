@@ -24,9 +24,11 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 	float cameraFarZ;
 
+	public float deadZoneX, deadZoneY;
+
 	public Rect TargetingArea 
 	{
-		get { return new Rect(50, 80, Screen.width-100, Screen.height-160); }
+		get { return new Rect(deadZoneX, deadZoneY, Screen.width-deadZoneX*2, Screen.height-deadZoneY*2); }
 	}
 
 	void Awake(){
@@ -47,6 +49,9 @@ public class PlayerTargetingSub : MonoBehaviour {
 		{
 			enemyPair.Value.Update(Time.deltaTime);
 		}
+
+		deadZoneX = Screen.width * 0.025f;
+		deadZoneY = Screen.height * 0.07f;
 	}
 
 	public void CheckTargetableEnemies()

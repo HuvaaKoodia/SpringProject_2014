@@ -78,12 +78,16 @@ public class PlayerMain : EntityMain
 		OneUpdateDone=false;
 	}
 
+	int updates_todo=1;
 	public bool OneUpdateDone{get;private set;}
 	void Update()
     {
 		if (!OneUpdateDone){//start game cull
-			OneUpdateDone=true;
-			CullWorld(false);
+			if (updates_todo==0){
+				CullWorld(false);
+				OneUpdateDone=true;
+			}
+			--updates_todo;
 		}
 
         foreach (WeaponMain weapon in weaponList)

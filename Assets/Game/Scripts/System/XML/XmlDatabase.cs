@@ -40,9 +40,11 @@ public class XmlDatabase
 		WeaponHeatDisperseHeatMultiplier,
 		DisperseHeatMultiplier,
 		HullHeatDisperseHeatMultiplier,
-		ConditionFairThreshold,
-		ConditionBadThreshold,
-		MechaPartRepairMulti
+		MechaPartConditionFairThreshold,
+		MechaPartConditionBadThreshold,
+		MechaPartRepairCostMulti,
+		MaxEnemyPercentageOnCorridors,
+		OpenDoorChange
     ;
 
 	//Logic

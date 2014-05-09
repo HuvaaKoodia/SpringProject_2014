@@ -61,6 +61,9 @@ public class EnemyMain : EntityMain {
 
     public void PlayTurn()
     {
+		if (Dead)
+			return;
+
         if (!ai.HasUsedTurn)
         {
             if (ai.AP > 0)

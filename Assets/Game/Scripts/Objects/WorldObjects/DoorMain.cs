@@ -10,14 +10,14 @@ public class DoorMain : InteractableMain {
 
 	public BoxCollider doorCollider;
 
-    public bool isAirlockDoor=false;
+    public bool isAirlockDoor=false,canOpenDoorOnStartUp=true;
 
 	public bool anim_on { get; private set; }
 
 	public AudioClip CloseSoundFX;
 	public AudioClip OpenSoundFX;
 
-	void Start(){
+	void Awake(){
 		InteractCost = 1;
 		IsOpen=false;
 	}
@@ -27,19 +27,30 @@ public class DoorMain : InteractableMain {
 
 		anim_on=false;
 		if (open){
+			graphics.animation[open_animation].speed = 1;
 			graphics.animation.Play(open_animation);
 			audio.PlayOneShot(OpenSoundFX);
             StartCoroutine(ToggleTimer(true,graphics.animation[open_animation].length));
 			Invoke("hitboxOff", graphics.animation[open_animation].length / 1.25f);
 		}
 		else{
+			graphics.animation[close_animation].speed = 1;
 			graphics.animation.Play(close_animation);
 			audio.PlayOneShot(CloseSoundFX);
             StartCoroutine(ToggleTimer(false,graphics.animation[open_animation].length));
 			hitboxOn();
 		}
-
 		return true;
+	}
+
+	public void ForceOpen(){
+		hitboxOff();
+		IsOpen=true;
+		var anim=graphics.animation[open_animation];
+
+		anim.time = anim.length;
+		anim.speed = 0;
+		graphics.animation.Play(open_animation);
 	}
 
     IEnumerator ToggleTimer(bool open,float delay){

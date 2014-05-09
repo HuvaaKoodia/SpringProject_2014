@@ -34,22 +34,15 @@ public class MechaPartRepairPanel : MonoBehaviour {
 		if (!gameObject.activeInHierarchy) return;
 
         int con=(int)((float)Part.HP/MechaPartObjData.MaxHP*100f);
-		cost=(int)((MechaPartObjData.MaxHP-Part.HP)*XmlDatabase.MechaPartRepairMulti);
+		cost=(int)((MechaPartObjData.MaxHP-Part.HP)*XmlDatabase.MechaPartRepairCostMulti);
 
         Condition.text=con+"%";
         Cost.text="Cost: "+cost;
 
 		// Lazy. Best Regards, Your Divine Producer
-		if (AllowBuying&&cost==0){
-			ButtonActive = false;
-
-			var c = Button.gameObject.GetComponent<UIButton>().defaultColor;
-			Button.gameObject.GetComponent<UIButton>().defaultColor = new Color(c.r, c.g, c.b, 0.3f);
-			Cost.gameObject.SetActive(false);
-			Button.gameObject.GetComponent<UIButton>().enabled = false; 
-			Button.gameObject.GetComponent<UIButtonScale>().enabled = false;
-			Button.gameObject.GetComponentInChildren<UILabel>().alpha = 0.3f;
-        }
+		if (AllowBuying) {
+			SetButtonActive(cost>0);
+		}
 		//FIX for lazyness.
 		if (!AllowBuying){
 			ButtonActive = false;
@@ -57,6 +50,21 @@ public class MechaPartRepairPanel : MonoBehaviour {
 			Button.gameObject.SetActive(false);
 		}
     }
+
+	private void SetButtonActive(bool active){
+		ButtonActive = active;
+
+		var alpha = active ? 1f : 0.1f;
+
+		Button.gameObject.GetComponent<UIButton> ().enabled = active; 
+		Button.gameObject.GetComponent<UIButtonScale> ().enabled = active;
+		Cost.gameObject.SetActive (active);
+
+		var bg = Button.GetComponentInChildren<UISprite> ();
+		var c = bg.color;
+		bg.color = new Color (c.r, c.g, c.b, alpha);
+		Button.gameObject.GetComponentInChildren<UILabel> ().alpha = alpha;
+	}
 
     public void Repair(){
         if (ButtonActive && Player.Money>=cost){
