@@ -13,7 +13,8 @@ public class AlienAI : AIBase {
 
 	public const int AttackCost = 3;
 
-	public int Damage = 20;
+	public int DamageMelee = 30;
+	public int DamageRanged = 20;
 
 	public LayerMask PlayerHearMask;
 	public LayerMask PlayerSeeMask;
@@ -29,7 +30,6 @@ public class AlienAI : AIBase {
 
 	public int numPhasesWaited = 0;
 	public bool NeedsPathfinding = true;
-	public bool test = false;
 
 	public float communicationRange = 3;
 
@@ -96,7 +96,7 @@ public class AlienAI : AIBase {
 
 		MyPosition = new Point3D(movement.currentGridX, movement.currentGridY);
 
-		if ((AP <= AttackCost+1 || readyToAttack) && CanAttack())
+		if ((AP < AttackCost || readyToAttack) && CanAttack())
 		{
 			Attack();
 		}
@@ -126,12 +126,6 @@ public class AlienAI : AIBase {
 
 	private void MoveToNextTile()
 	{
-		if (test)
-		{
-			int i = 0;
-			i++;
-		}
-
 		if (blackboard.Path == null || blackboard.Path.next == null)
 		{
 			HasUsedTurn = true;
@@ -543,7 +537,7 @@ public class AlienAI : AIBase {
 			//check both next tile and ranged range (which means no ranged <'',) )
 			if ((distance < 1.5f || distance <= parent.rangedRange) &&
 			    PathFinder.CanSeeFromTileToTile(player, parent, MyPosition, 
-                	Mathf.Max(1.5f, parent.rangedRange*3), PlayerSeeMask, true))
+                	Mathf.Max(1.5f, parent.rangedRange*MapGenerator.TileSize.x), PlayerSeeMask, true))
 				return true;
 
 		}
@@ -573,7 +567,7 @@ public class AlienAI : AIBase {
 			audio.PlayOneShot(RangedAttackSoundFX);
 
 		yield return new WaitForSeconds(inflictDelay);
-		player.TakeDamage(Damage / 2, MyPosition.X, MyPosition.Y);
+		player.TakeDamage(DamageRanged, MyPosition.X, MyPosition.Y);
 	}
 
 	IEnumerator AttackMelee(float inflictDelay)
@@ -584,7 +578,7 @@ public class AlienAI : AIBase {
 			audio.PlayOneShot(MeleeAttackSoundFX);
 
 		yield return new WaitForSeconds(inflictDelay);
-		player.TakeDamage(Damage, MyPosition.X, MyPosition.Y);
+		player.TakeDamage(DamageMelee, MyPosition.X, MyPosition.Y);
 	}
 
 	void InformPlayerPosToOthers()

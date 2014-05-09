@@ -1430,7 +1430,7 @@ Animation:
   - {fileID: 7400012, guid: ac7bc502581b2c04fa9b520293d7f527, type: 3}
   - {fileID: 7400014, guid: ac7bc502581b2c04fa9b520293d7f527, type: 3}
   m_WrapMode: 0
-  m_PlayAutomatically: 0
+  m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 1
 --- !u!114 &11400002
@@ -1471,7 +1471,8 @@ MonoBehaviour:
   foundMove: 0
   Animating: 0
   Rotating: 0
-  Damage: 20
+  DamageMelee: 30
+  DamageRanged: 20
   PlayerHearMask:
     serializedVersion: 2
     m_Bits: 5120
@@ -1488,7 +1489,6 @@ MonoBehaviour:
   FleeHealth: 20
   numPhasesWaited: 0
   NeedsPathfinding: 1
-  test: 0
   communicationRange: 3
   spiderAnimation: {fileID: 11100000}
   WalkAnimation: Walking
