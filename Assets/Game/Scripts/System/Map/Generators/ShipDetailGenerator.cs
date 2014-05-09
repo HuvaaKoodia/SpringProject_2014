@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class ShipDetailGenerator : MonoBehaviour
 {
@@ -28,7 +29,7 @@ public class ShipDetailGenerator : MonoBehaviour
     /// Call after GenerateObjectDataMap and before GenerateSceneMap
     /// </summary>
 
-    public void GenerateShipItems(FloorObjData floor,ShipObjData ship)
+    public void GenerateShipItems(FloorObjData floor,ShipObjData ship,MissionObjData mission)
     {
         int current_floor = floor.FloorIndex;
         var xml_md = ship.XmlData.Floors [current_floor];
@@ -38,15 +39,14 @@ public class ShipDetailGenerator : MonoBehaviour
 
 		int force_enemy_amount_to_corridors=(int)(Subs.GetRandom(XmlDatabase.MaxEnemyPercentageOnCorridors)*floor_amount_enemies);
 
-		floor_amount_enemies-=force_enemy_amount_to_corridors;
-
         //rooms
         List<TileObjData> free_tiles = new List<TileObjData>();
         var rooms_list = ship.FloorRooms [current_floor];
+
+		//loot
         foreach (var room in rooms_list)
         {
-            //loot crates
-			GetTilesOfTypeWithObject(floor,room, TileObjData.Type.Floor,TileObjData.Obj.LootArea, free_tiles);
+			GetTilesOfTypeWithObject(free_tiles, floor,room, TileObjData.Type.Floor,TileObjData.Obj.LootArea);
             int l_amount = Subs.GetRandom(room.RoomXmlData.LootAmountMin, room.RoomXmlData.LootAmountMax);
 
             while (free_tiles.Count>0)
@@ -62,8 +62,50 @@ public class ShipDetailGenerator : MonoBehaviour
                     
                 tile.SetObj(TileObjData.Obj.Loot);
             }
+		}
 
-            //enemies
+		//security systems
+
+		float percent=MissionObjData.GetSecurityPercent(mission.MissionSecuritySystem);
+
+		Debug.Log("SecuritySystem percent: "+percent);
+
+		foreach (var room in rooms_list)
+		{
+			GetTilesOfTypeWithObject(free_tiles, floor,room, TileObjData.Type.Floor,TileObjData.Obj.GatlingGunArea);
+
+			int l_amount =(int)((free_tiles.Count()*percent));
+
+			if (free_tiles.Count()>0) Debug.Log("SecuritySystem amount: "+free_tiles.Count()+" -> "+l_amount);
+
+			while (free_tiles.Count>0&&l_amount>0)
+			{	
+
+				var tile = Subs.GetRandom(free_tiles);
+				free_tiles.Remove(tile);
+				
+				--l_amount;
+				--floor_amount_loot;
+				
+				tile.SetObj(TileObjData.Obj.GatlingGun);
+			}
+		}
+
+		//change unused loot and security areas to empty (so that other things can be spawned on them).
+
+		foreach (var room in rooms_list)
+		{
+			GetTilesOfTypeWithObject(free_tiles,floor,room, TileObjData.Type.Floor,TileObjData.Obj.LootArea,TileObjData.Obj.GatlingGunArea);
+			foreach (var t in free_tiles){
+				t.SetObj(TileObjData.Obj.None);
+			}
+		}
+
+		//random enemies
+		floor_amount_enemies-=force_enemy_amount_to_corridors;
+
+		foreach (var room in rooms_list)
+		{
 			GetFreeTilesOfType(floor,room, TileObjData.Type.Floor, free_tiles);
             int e_amount = Subs.GetRandom(room.RoomXmlData.EnemyAmountMin, room.RoomXmlData.EnemyAmountMax);
 
@@ -90,7 +132,6 @@ public class ShipDetailGenerator : MonoBehaviour
 			GetFreeTilesOfType(floor,null, TileObjData.Type.Corridor, free_tiles);
             while (free_tiles.Count>0)
             {
-                
                 if (floor_amount_enemies == 0)
                     break;
                 
@@ -197,14 +238,14 @@ public class ShipDetailGenerator : MonoBehaviour
 	/// </summary>
 	void GetFreeTilesOfType(FloorObjData floor,ShipRoomObjData room, TileObjData.Type type, List<TileObjData> free_tiles)
 	{
-		GetTilesOfTypeWithObject(floor,room,type,TileObjData.Obj.None,free_tiles);
+		GetTilesOfTypeWithObject(free_tiles,floor,room,type,TileObjData.Obj.None);
 	}
 	
 	/// <summary>
-	/// Returns all tiles of a certain type with a certain object inside a room.
+	/// Returns all tiles of a certain type with an object inside a room.
 	/// If room is null the whole map is scanned.
 	/// </summary>
-	void GetTilesOfTypeWithObject(FloorObjData floor,ShipRoomObjData room, TileObjData.Type type,TileObjData.Obj obj, List<TileObjData> free_tiles)
+	void GetTilesOfTypeWithObject(List<TileObjData> free_tiles,FloorObjData floor,ShipRoomObjData room, TileObjData.Type type,params TileObjData.Obj[] objs)
 	{
 		free_tiles.Clear();
 		
@@ -220,7 +261,7 @@ public class ShipDetailGenerator : MonoBehaviour
 			for (int y = 0; y < rh; y++)
 			{
 				var tile = floor.TileObjectMap[rx+x, ry+y];
-				if (tile.TileType == type && tile.ObjType == obj)
+				if (tile.TileType == type&&objs.Contains(tile.ObjType))
 				{
 					free_tiles.Add(tile);
 				}

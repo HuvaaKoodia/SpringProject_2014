@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 public class EngineController : MonoBehaviour {
 	
-	public bool enable_Restart=true,enable_Quit=true;
+	public bool enable_Restart=true,enable_Quit=true,ClearConsoleOnRestart=true;
 	public System.Action AfterRestart,BeforeQuit;
 	
 	
@@ -21,6 +21,9 @@ public class EngineController : MonoBehaviour {
         if (!enable_Restart)
             return;
 
+		if (ClearConsoleOnRestart)
+			ClearConsole();
+
         Application.LoadLevel(Application.loadedLevel);
         if (AfterRestart != null)
             AfterRestart();
@@ -35,4 +38,19 @@ public class EngineController : MonoBehaviour {
             BeforeQuit();
         Application.Quit();
     }
+
+	void ClearConsole()
+	{
+		StartCoroutine(ClearConsole_E());
+	}
+	
+	IEnumerator ClearConsole_E()
+	{
+		while(!Debug.developerConsoleVisible)
+		{
+			yield return null;
+		}
+		yield return null;
+		Debug.ClearDeveloperConsole();
+	}
 }

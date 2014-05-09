@@ -117,78 +117,10 @@ public class MiniMapData {
 	
 	UISprite CreateTileSprite(int x, int y, MiniMapTileData tile, GameObject spriteParent, float zoom, int spriteWidth)
 	{
-		UISprite sprite = GameObject.Instantiate(GC.SS.PS.FloorSprite) as UISprite;
 		string graphicsName = tile.TileType;
-		
-		switch (graphicsName)
-		{
-		case "Corridor_1wall":
-			sprite.spriteName = GC.SS.PS.OneWallSprite.spriteName;
-			break;
-			
-		case "Corridor_2wall":
-			sprite.spriteName = GC.SS.PS.TwoWallsSprite.spriteName;
-			break;
-			
-		case "Corridor_Corner":
-			sprite.spriteName = GC.SS.PS.CorridorCornerSprite.spriteName;
-			break;
-			
-		case "Corridor_Crossroad":
-			sprite.spriteName = GC.SS.PS.CrossroadSprite.spriteName;
-			break;
+		var go=GameObject.Instantiate(GC.SS.PS.GetMapSpritePrefab(graphicsName)) as GameObject;
+		UISprite sprite = go.GetComponent<UISprite>();
 
-		case "Corridor_Elevator":
-		case "Corridor_DeadEnd":
-			sprite.spriteName = GC.SS.PS.DeadendSprite.spriteName;
-			break;
-			
-		case "Corridor_Floor":
-			sprite.spriteName = GC.SS.PS.FloorSprite.spriteName;
-			break;
-			
-		case "Corridor_Floor1Edge":
-			sprite.spriteName = GC.SS.PS.Floor1EdgeSprite.spriteName;
-			break;
-			
-		case "Corridor_Floor2Edges":
-			sprite.spriteName = GC.SS.PS.Floor2EdgesSprite.spriteName;
-			break;
-			
-		case "Corridor_Floor3Edges":
-			sprite.spriteName = GC.SS.PS.Floor3EdgesSprite.spriteName;
-			break;
-			
-		case "Corridor_FloorOppositeEdges":
-			sprite.spriteName = GC.SS.PS.OppositeEdgesSprite.spriteName;
-			break;
-			
-		case "Corridor_RoomCorner":
-			sprite.spriteName = GC.SS.PS.RoomCornerSprite.spriteName;
-			break;
-			
-		case "Corridor_TCrossing":
-			sprite.spriteName = GC.SS.PS.TCrossingSprite.spriteName;
-			break;
-			
-		case "Corridor_WallCorner":
-			sprite.spriteName = GC.SS.PS.WallCornerSprite.spriteName;
-			break;
-			
-		case "Corridor_WallCornerMirrored":
-			sprite.spriteName = GC.SS.PS.WallCornerMirroredSprite.spriteName;
-			break;
-
-		case "ElevatorDoor":
-		case "Door":
-			sprite.spriteName = GC.SS.PS.TwoWallsSprite.spriteName;
-			break;
-			
-		default:
-			Debug.Log("Unidentified graphics in map: " + graphicsName);
-			break;
-		}
-		
 		sprite.name = "mapSprite";
 		
 		sprite.transform.parent = spriteParent.transform;

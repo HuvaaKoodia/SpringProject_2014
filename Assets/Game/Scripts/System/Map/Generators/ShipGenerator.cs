@@ -246,7 +246,7 @@ public class ShipGenerator : MonoBehaviour
 						var r_fix=Subs.GetRandom(PossibleDoors);
 
 						NewFloorMap.map_data[(int)r_fix.x,(int)r_fix.y]=MapGenerator.DoorIcon;
-
+						
 						//change non floors next to added door to floors
 						for (int s=0;s<4;++s){
 							int x=MapGenerator.GetCardinalX(s);
@@ -265,6 +265,7 @@ public class ShipGenerator : MonoBehaviour
 					}
 				}
 			}
+
 			ship_obj_data.Floors.Add(i,NewFloorMap);
 			ship_obj_data.FloorRooms.Add(i,Rooms);
 		}

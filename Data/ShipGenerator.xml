@@ -10,7 +10,7 @@ type = The type used in game to distinguish between rooms when generating object
 random_pos= Randomizes position within the room space. Default false.
 random_doors= Creates random doors to the room. Default false.
 
-Possible types:
+Possible types: (softcoded)
 room
 airlock
 engine
@@ -21,11 +21,11 @@ armory
 -ObjectIndices-
 Attributes:
 index = Index used in map files
-type = The type used in game to select which object to create
+type = The type used in game to create items of correct type.
 
 rotation = start rotation in game (default=0, -1=random rotation)
 
-Possible types:
+Possible types:  (hardcoded)
 Player
 Enemy
 Loot
@@ -34,8 +34,8 @@ Obstacle
 
 <ShipGenerator>
 	<RoomIndices>
-		<Tag index="R" 	 name="room" 					type="room" 			random_pos="true" random_doors="true"/>
-		<Tag index="RD"  name="roomDoors" 				type="room" 			random_pos="true" random_doors="false"/>
+		<Tag index="R" 	 name="room" 				type="room" 			random_pos="true" random_doors="true"/>
+		<Tag index="RD"  name="roomDoors" 			type="room" 			random_pos="true" random_doors="false"/>
 						
 		<Tag index="AL" name="airlockLeft" 			type="airlock"/>
 		<Tag index="AR" name="airlockRight" 		type="airlock"/>
@@ -48,7 +48,7 @@ Obstacle
 		<Tag index="HD" name="elevatorDown" 		type="elevator"/>
 			
 		<Tag index="E"  name="engine" 				type="engine" 			random_pos="true" random_doors="true"/>
-		<Tag index="ED"  name="engineDoors" 			type="engine" 			random_pos="true" random_doors="false"/>
+		<Tag index="ED" name="engineDoors" 			type="engine" 			random_pos="true" random_doors="false"/>
 		<Tag index="E1" name="engine1"				type="engine"/>
 						
 		<Tag index="KD"  name="commandbridgeDoors" 	type="commandbridge" 			random_pos="true"/>
@@ -77,6 +77,7 @@ Obstacle
 		<Tag index="p"	type="Player"/>
 		<Tag index="e"	type="Enemy"/>
 		<Tag index=":"	type="LootArea"/>
+		<Tag index="ga"  type="GatlingGunArea"/>
 		<!--hardcoded end-->
 		
 		<Tag index="l"	type="Loot"/>
