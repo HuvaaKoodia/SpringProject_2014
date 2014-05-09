@@ -24,9 +24,11 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 	float cameraFarZ;
 
+	public float deadZoneX, deadZoneY;
+
 	public Rect TargetingArea 
 	{
-		get { return new Rect(50, 80, Screen.width-100, Screen.height-160); }
+		get { return new Rect(deadZoneX, deadZoneY, Screen.width-deadZoneX*2, Screen.height-deadZoneY*2); }
 	}
 
 	void Awake(){
@@ -47,6 +49,9 @@ public class PlayerTargetingSub : MonoBehaviour {
 		{
 			enemyPair.Value.Update(Time.deltaTime);
 		}
+
+		deadZoneX = Screen.width * 0.025f;
+		deadZoneY = Screen.height * 0.07f;
 	}
 
 	public void CheckTargetableEnemies()
@@ -140,24 +145,25 @@ public class PlayerTargetingSub : MonoBehaviour {
 					{
 						enemyPair.Value.SetCrosshairVisible(true);
 
+						Vector3 targetPosition = enemyPair.Key.hitboxes[i].bounds.center+ Vector3.down*0.2f;
+
 						if (targetPositions.ContainsKey(player.GetCurrentWeapon()))
 						{
 							if (targetPositions[player.GetCurrentWeapon()].ContainsKey(enemyPair.Key))
 							{
-								targetPositions[player.GetCurrentWeapon()][enemyPair.Key] = 
-									enemyPair.Key.hitboxes[i].bounds.center+ Vector3.down*0.1f;
+								targetPositions[player.GetCurrentWeapon()][enemyPair.Key] = targetPosition;
 							}
 							else
 							{
 								targetPositions[player.GetCurrentWeapon()].Add(
-									enemyPair.Key, enemyPair.Key.hitboxes[i].bounds.center+ Vector3.down*0.1f);
+									enemyPair.Key, targetPosition);
 							}
 						}
 						else
 						{
 							targetPositions.Add(player.GetCurrentWeapon(), new Dictionary<EnemyMain, Vector3>());
 							targetPositions[player.GetCurrentWeapon()].Add(
-								enemyPair.Key, enemyPair.Key.hitboxes[i].bounds.center+ Vector3.down*0.1f);
+								enemyPair.Key, targetPosition);
 						}
 
 						wasSeen = true;
