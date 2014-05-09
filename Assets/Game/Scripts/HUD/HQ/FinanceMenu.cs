@@ -81,7 +81,7 @@ public class FinanceMenu : MonoBehaviour {
 			}
 			else
 			{
-				_FinanceManager.CalcMonthlyCut();
+				//_FinanceManager.CalcMonthlyCut();
 				MonthlyCut[i].text = FM_l_i.monthly_cut.ToString();
 			}
 		}
@@ -134,7 +134,8 @@ public class FinanceMenu : MonoBehaviour {
 		PlayerMoney.text = _FinanceManager.player_money.ToString();
 
 		//amount left to be payed, monthly cut, interest, debt payments, payment total
-		_FinanceManager.UpdateValues();
+		//_FinanceManager.UpdateValues();
+		_FinanceManager.CalcAll();
 
 		var FM_l = _FinanceManager.listofdebts;
 		
@@ -256,12 +257,7 @@ public class FinanceMenu : MonoBehaviour {
 	{
 		if(index >= 0 && index < 3)
 		{
-			_FinanceManager.CalcMonthlyCut();
-			_FinanceManager.CalcInterestPercent();
-			_FinanceManager.listofdebts[index].CalcInterest();
-			_FinanceManager.listofdebts[index].CalcDebtPayment();
-			_FinanceManager.CalcPaymentTotal(false);
-			_FinanceManager.CalcExistingCash();
+			_FinanceManager.CalcAll();
 		}
 		else
 		{
@@ -288,10 +284,7 @@ public class FinanceMenu : MonoBehaviour {
 		DebtsActivate[index_2 - 1].SetActive(true);
 		DebtsActivate[index_2].SetActive(false);
 
-		for(int i = 0; i < _FinanceManager.listofdebts.Count; i++)
-		{
-			_FinanceManager.original_debt_sum += _FinanceManager.listofdebts[i].left_tb_payed;
-		}
+		_FinanceManager.listofdebts[index_1].original_debt_sum = _FinanceManager.listofdebts[index_1].left_tb_payed;
 	}
 	
 	//function that activates DebtAdded and deactivates DebtEmpty of Debt1
@@ -301,12 +294,6 @@ public class FinanceMenu : MonoBehaviour {
 		if(DebtsActivate.Count > 0)
 		{
 			ActivateDebtProcess(0, 1);
-
-//			for(int i = 0; i < _FinanceManager.listofdebts.Count; i++)
-//			{
-//				_FinanceManager.listofdebts[i].original_debt_sum += _FinanceManager.listofdebts[i].left_tb_payed;
-//				_FinanceManager.listofdebts[i].CalcMonthlyCut();
-//			}
 		}
 	}
 	
@@ -320,12 +307,6 @@ public class FinanceMenu : MonoBehaviour {
 			if(DebtsActivate[0].activeInHierarchy)
 			{
 				ActivateDebtProcess(1, 3);
-
-//				for(int i = 0; i < _FinanceManager.listofdebts.Count; i++)
-//				{
-//					_FinanceManager.listofdebts[i].original_debt_sum += _FinanceManager.listofdebts[i].left_tb_payed;
-//					_FinanceManager.listofdebts[i].CalcMonthlyCut();
-//				}
 			}
 		}
 	}
@@ -340,12 +321,6 @@ public class FinanceMenu : MonoBehaviour {
 			if(DebtsActivate[2].activeInHierarchy)
 			{
 				ActivateDebtProcess(2, 5);
-
-//				for(int i = 0; i < _FinanceManager.listofdebts.Count; i++)
-//				{
-//					_FinanceManager.listofdebts[i].original_debt_sum += _FinanceManager.listofdebts[i].left_tb_payed;
-//					_FinanceManager.listofdebts[i].CalcMonthlyCut();
-//				}
 			}
 		}
 	}
@@ -391,10 +366,9 @@ public class FinanceMenu : MonoBehaviour {
 
 	private void UpdateOriginalDebtSum()
 	{
-		_FinanceManager.original_debt_sum = 0.0f;
 		for(int i = 0; i < _FinanceManager.listofdebts.Count; i++)
 		{
-			_FinanceManager.original_debt_sum += _FinanceManager.listofdebts[i].left_tb_payed;
+			_FinanceManager.listofdebts[i].original_debt_sum = _FinanceManager.listofdebts[i].left_tb_payed;
 		}
 	}
 
