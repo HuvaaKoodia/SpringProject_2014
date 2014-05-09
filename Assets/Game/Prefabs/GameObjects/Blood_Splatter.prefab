@@ -71,25 +71,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   emit: {fileID: 100002}
   delay: .100000001
-  limit: .5
+  limit: 10
+  max_delay: 5
+  max_limit: 5
 --- !u!198 &19800000
 ParticleSystem:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  lengthInSec: 5
+  lengthInSec: 1
   startDelay: 0
   speed: 1
   randomSeed: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   moveWithTransform: 1
   InitialModule:
     enabled: 1
     startLifetime:
-      scalar: .100000001
+      scalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -122,7 +124,7 @@ ParticleSystem:
         m_PostInfinity: 2
       minMaxState: 0
     startSpeed:
-      scalar: 1
+      scalar: 50
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -249,7 +251,7 @@ ParticleSystem:
         rgba: 4294967040
       minMaxState: 1
     startSize:
-      scalar: .300000012
+      scalar: .100000001
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -320,9 +322,9 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 2
     enabled: 1
-    type: 0
+    type: 4
     radius: .00999999978
-    angle: 25
+    angle: 10
     length: 5
     boxX: 1
     boxY: 1
@@ -1121,12 +1123,12 @@ ParticleSystem:
   randomSeed: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   moveWithTransform: 1
   InitialModule:
     enabled: 1
     startLifetime:
-      scalar: .5
+      scalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1159,7 +1161,7 @@ ParticleSystem:
         m_PostInfinity: 2
       minMaxState: 0
     startSpeed:
-      scalar: 30
+      scalar: 100
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1281,7 +1283,7 @@ ParticleSystem:
         rgba: 4294967040
       minMaxState: 1
     startSize:
-      scalar: .100000001
+      scalar: .300000012
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1346,15 +1348,15 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
       minMaxState: 0
-    gravityModifier: 10
-    inheritVelocity: 10
+    gravityModifier: 5
+    inheritVelocity: 0
     maxNumParticles: 1000
   ShapeModule:
     serializedVersion: 2
     enabled: 1
-    type: 0
+    type: 4
     radius: .00999999978
-    angle: 10
+    angle: 8
     length: 5
     boxX: 1
     boxY: 1
@@ -1366,7 +1368,7 @@ ParticleSystem:
     enabled: 1
     m_Type: 0
     rate:
-      scalar: 300
+      scalar: 100
       maxCurve:
         serializedVersion: 2
         m_Curve:
