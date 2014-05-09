@@ -34,36 +34,40 @@ Obstacle
 
 <ShipGenerator>
 	<RoomIndices>
-		<Tag index="R"  name="room" 				type="room" 			random_pos="true" random_doors="true"/>
-		<Tag index="RD"  name="room" 				type="room" 			random_pos="true"/>
+		<Tag index="R" 	 name="room" 					type="room" 			random_pos="true" random_doors="true"/>
+		<Tag index="RD"  name="roomDoors" 				type="room" 			random_pos="true" random_doors="false"/>
 						
 		<Tag index="AL" name="airlockLeft" 			type="airlock"/>
 		<Tag index="AR" name="airlockRight" 		type="airlock"/>
 		<Tag index="AU" name="airlockUp" 			type="airlock"/>
 		<Tag index="AD" name="airlockDown" 			type="airlock"/>
 			
-		<Tag index="EL" name="elevatorLeft" 		type="elevator"/>
-		<Tag index="ER" name="elevatorRight" 		type="elevator"/>
-		<Tag index="EU" name="elevatorUp" 			type="elevator"/>
-		<Tag index="ED" name="elevatorDown" 		type="elevator"/>
+		<Tag index="HL" name="elevatorLeft" 		type="elevator"/>
+		<Tag index="HR" name="elevatorRight" 		type="elevator"/>
+		<Tag index="HU" name="elevatorUp" 			type="elevator"/>
+		<Tag index="HD" name="elevatorDown" 		type="elevator"/>
 			
 		<Tag index="E"  name="engine" 				type="engine" 			random_pos="true" random_doors="true"/>
+		<Tag index="ED"  name="engineDoors" 			type="engine" 			random_pos="true" random_doors="false"/>
 		<Tag index="E1" name="engine1"				type="engine"/>
 						
+		<Tag index="KD"  name="commandbridgeDoors" 	type="commandbridge" 			random_pos="true"/>
 		<Tag index="K1" name="commandbridge1"		type="commandbridge"/>
 		<Tag index="K2" name="commandbridge2"       type="commandbridge"/>
 		<Tag index="K3" name="commandbridge3"       type="commandbridge"/>
 					   
 		<Tag index="V"  name="cargo" 				type="cargohold" 		random_pos="true" random_doors="true"/>
+		<Tag index="VD" name="cargoDoors"			type="cargohold" 		random_pos="true" random_doors="false"/>
 		<Tag index="V1" name="cargoHorizontal"		type="cargohold"/>
 		<Tag index="V2" name="cargoVerticalLeft"	type="cargohold"/>
 		<Tag index="V3" name="cargoVerticalRight"	type="cargohold"/>
 		<Tag index="V4" name="cargoLargeLR"			type="cargohold"/>
 						
 		<Tag index="M"  name="armory" 				type="armory" 			random_pos="true" random_doors="true"/>
+		<Tag index="MD" name="armoryDoors"			type="armory" 			random_pos="true" random_doors="false"/>
 		<Tag index="MH" name="armoryHorizontal"		type="armory"/>
-		<Tag index="ML" name="armoryLeft"	type="armory"/>
-		<Tag index="MR" name="armoryRight"	type="armory"/>
+		<Tag index="ML" name="armoryLeft"			type="armory"/>
+		<Tag index="MR" name="armoryRight"			type="armory"/>
 		
 		<Tag index="B1"  name="test1" 				type="room" 			random_pos="true" random_doors="false"/>
 	</RoomIndices>
@@ -76,12 +80,18 @@ Obstacle
 		<!--hardcoded end-->
 		
 		<Tag index="l"	type="Loot"/>
-		<Tag index="o"	type="Obstacle"/>
+		
+		<!-- <Tag index="o"	type="Obstacle"/>
 		<Tag index="o2"	type="Obstacle" rotation="90"/>
 		<Tag index="o3"	type="Obstacle" rotation="180"/>
-		<Tag index="o4"	type="Obstacle" rotation="270"/>
+		<Tag index="o4"	type="Obstacle" rotation="270"/> -->
 		
 		<Tag index="g"  type="GatlingGun"/>
+		
+		<!--- <Tag index="pg1" 	type="PowerGenerator"/>
+		<Tag index="pg2"	type="PowerGenerator" rotation="90"/>
+		<Tag index="pg3"	type="PowerGenerator" rotation="180"/>
+		<Tag index="pg4"	type="PowerGenerator" rotation="270"/> -->
 		
 		<Tag index="te1" 	type="EngineTerminal"/>
 		<Tag index="te2"	type="EngineTerminal" rotation="90"/>

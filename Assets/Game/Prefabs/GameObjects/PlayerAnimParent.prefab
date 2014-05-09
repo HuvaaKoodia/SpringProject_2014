@@ -7182,14 +7182,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ScreenCell_prefab: {fileID: 100000, guid: 32b435ea5ec623846af6780427089518, type: 2}
-  CellParent: {fileID: 400116}
-  ScreenPanel: {fileID: 11400290}
+  ScreenPanelSmall: {fileID: 0}
+  ScreenPanelBig: {fileID: 0}
   width: 5
   height: 6
-  x_size: 42
-  y_size: 42
+  x_size_small: 32
+  y_size_small: 32
+  x_size_big: 32
+  y_size_big: 32
   BaseScore: 100
   UpdateDelay: .400000006
+  Basic_color: {r: 1, g: 1, b: 1, a: 1}
+  Select_color: {r: 1, g: 0, b: 0, a: 1}
+  Highlight_color: {r: 0, g: 0, b: 1, a: 1}
+  Intro_color: {r: 1, g: 0, b: 1, a: 1}
 --- !u!114 &11400032
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8171,6 +8177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GC: {fileID: 0}
   player: {fileID: 11400162}
+  spriteDisableParent: {fileID: 0}
   spriteParent: {fileID: 100170}
   spritePositionParent: {fileID: 100068}
   zoom: 5
@@ -8750,6 +8757,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294794747
   graphics: {fileID: 100338}
+  verticalMovement: {fileID: 0}
+  horizontalMovement: {fileID: 0}
+  barrelEstimate: {fileID: 0}
   targetRotation: {x: 0, y: 0, z: 0, w: 0}
   rotationSpeed: 5
 --- !u!114 &11400136
@@ -9067,6 +9077,9 @@ MonoBehaviour:
   HudCamera: {fileID: 2000000}
   TargetingCamera: {fileID: 2000004}
   playerAnimation: {fileID: 11100000}
+  legAnimation: {fileID: 0}
+  AnimationsOn: 0
+  WeaponMouseLookOn: 0
 --- !u!114 &11400164
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9656,6 +9669,8 @@ MonoBehaviour:
   disperseHeatButton: {fileID: 100250}
   MechStats: {fileID: 11400320}
   targetMarkPanel: {fileID: 11400234}
+  TP: {fileID: 0}
+  UpdateComputerSystems: 1
 --- !u!114 &11400204
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10639,6 +10654,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294827515
   graphics: {fileID: 100336}
+  verticalMovement: {fileID: 0}
+  horizontalMovement: {fileID: 0}
+  barrelEstimate: {fileID: 0}
   targetRotation: {x: 0, y: 0, z: 0, w: 0}
   rotationSpeed: 5
 --- !u!114 &11400264
@@ -12082,6 +12100,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294794747
   graphics: {fileID: 100226}
+  verticalMovement: {fileID: 0}
+  horizontalMovement: {fileID: 0}
+  barrelEstimate: {fileID: 0}
   targetRotation: {x: 0, y: 0, z: 0, w: 0}
   rotationSpeed: 5
 --- !u!114 &11400354
@@ -12963,6 +12984,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294794747
   graphics: {fileID: 100188}
+  verticalMovement: {fileID: 0}
+  horizontalMovement: {fileID: 0}
+  barrelEstimate: {fileID: 0}
   targetRotation: {x: 0, y: 0, z: 0, w: 0}
   rotationSpeed: 5
 --- !u!114 &11400414
@@ -13128,6 +13152,8 @@ MonoBehaviour:
   - {fileID: 11400336}
   - {fileID: 11400088}
   - {fileID: 11400114}
+  weaponColors: []
+  inActiveColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &11400428
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -13161,6 +13187,9 @@ MonoBehaviour:
   HudCamera: {fileID: 2000000}
   TargetingCamera: {fileID: 2000004}
   playerAnimation: {fileID: 11100000}
+  legAnimation: {fileID: 0}
+  AnimationsOn: 0
+  WeaponMouseLookOn: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

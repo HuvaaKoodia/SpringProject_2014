@@ -1,0 +1,59 @@
+<Root>
+<!-- Types
+name defaults to type
+startamount defaults to maxamount
+showingame defaults to true
+sprite is required is showningame
+
+negative maxamount equals infinite ammo
+-->
+<<<<<<< HEAD
+	<Ammo type = "Standard" 	name = "Standard"	 	cost="3" 	sprite = "Ammo1" maxamount="30" startamount="15"/>
+	<Ammo type = "Heavy" 		name = "Heavy Slug" 	cost="4" 	sprite = "Ammo2" maxamount="12" startamount="6"/>
+	<Ammo type = "Light" 		name = "Light Slug" 	cost="1" 	sprite = "Ammo5" maxamount="40" startamount="20"/>
+	<Ammo type = "Scatter"	 	name = "Scatter Shot" 	cost="2" 	sprite = "Ammo4" maxamount="20" startamount="10"/>
+	<Ammo type = "Missile" 		name = "Missile" 		cost="10" 	sprite = "Ammo3" maxamount="10" startamount="5"/>
+	<Ammo type = "Melee" 		maxamount="-1" showingame="false"/>
+=======
+	<Ammo type = "Standard" 	name = "Standard Shell"	 	sprite = "Ammo1" maxamount="28" startamount="10"/>
+	<Ammo type = "Heavy" 		name = "Heavy Slug" 		sprite = "Ammo2" maxamount="12" startamount="6"/>
+	<Ammo type = "Light" 		name = "Light Rounds"	 	sprite = "Ammo5" maxamount="45" startamount="20"/>
+	<Ammo type = "Scatter"	 	name = "Scatter Shell" 		sprite = "Ammo4" maxamount="32" startamount="15"/>
+	<Ammo type = "Missile" 		name = "Missile" 			sprite = "Ammo3" maxamount="15" startamount="5"/>
+	<Ammo type = "Melee" maxamount="-1"	showingame="false"/>
+>>>>>>> Big XML Update (Firefly, Kentucky Alpha, Mercurius 2)
+	
+<!-- Ammo boxes-->
+	
+	<Item type = "AmmoBox" name = "Standard Shells" sprite="Ammo1">
+		<Description>Standard shells for small cannons.</Description>
+		<Ammo>Standard</Ammo>
+		<Amount min ="20" max="50"/>
+	</Item>
+	
+	<Item type = "AmmoBox" name = "Heavy Slugs" sprite="Ammo2">
+		<Description>Heavy duty slugs for railguns.</Description>
+		<Ammo>Heavy</Ammo>
+		<Amount min ="5" max="10"/>
+	</Item>
+	
+	<Item type = "AmmoBox" name = "Light Rounds" sprite="Ammo5">
+		<Description>Ammunition for rapid fire weapons.</Description>
+		<Ammo>Light</Ammo>
+		<Amount min ="10" max="30"/>
+	</Item>
+	
+	<Item type = "AmmoBox" name = "Scatter Shells" sprite="Ammo4">
+		<Description>Shells for scatterguns.</Description>
+		<Ammo>Scatter</Ammo>
+		<Amount min ="8" max="15"/>
+	</Item>
+	
+	<Item type = "AmmoBox" name = "Missiles" sprite="Ammo3">
+		<Description>Ammunition for light missile launchers.</Description>
+		<Ammo>Missile</Ammo>
+		<Amount min ="2" max="6"/>
+	</Item>
+	
+	
+</Root>
