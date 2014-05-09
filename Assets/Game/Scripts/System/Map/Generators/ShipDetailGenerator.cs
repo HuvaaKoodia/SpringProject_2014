@@ -24,17 +24,21 @@ public class ShipDetailGenerator : MonoBehaviour
     }
     
     /// <summary>
-    /// Generates items (loot & enemies) to the room and corridors of the ship to the TileObjectMap
+    /// Generates items (loot & enemies) to the rooms and corridors of the ship's TileObjectMap
     /// Call after GenerateObjectDataMap and before GenerateSceneMap
     /// </summary>
 
-    public void GenerateShipItems(GameController GC, FloorObjData floor,ShipObjData ship)
+    public void GenerateShipItems(FloorObjData floor,ShipObjData ship)
     {
         int current_floor = floor.FloorIndex;
         var xml_md = ship.XmlData.Floors [current_floor];
 
         int floor_amount_enemies = Subs.GetRandom(xml_md.EnemyAmountMin, xml_md.EnemyAmountMax);
         int floor_amount_loot = Subs.GetRandom(xml_md.LootAmountMin, xml_md.LootAmountMax);
+
+		int force_enemy_amount_to_corridors=(int)(Subs.GetRandom(XmlDatabase.MaxEnemyPercentageOnCorridors)*floor_amount_enemies);
+
+		floor_amount_enemies-=force_enemy_amount_to_corridors;
 
         //rooms
         List<TileObjData> free_tiles = new List<TileObjData>();
@@ -65,7 +69,7 @@ public class ShipDetailGenerator : MonoBehaviour
 
             while (free_tiles.Count>0)
             {
-                if (e_amount == 0 || floor_amount_enemies == 0)
+				if (e_amount == 0 || floor_amount_enemies == 0)
                     break;
 
                 var tile = Subs.GetRandom(free_tiles);
@@ -78,26 +82,9 @@ public class ShipDetailGenerator : MonoBehaviour
             }
         }
 
-
-        //add remaining loot to random lootareas on the map (floor tiles outside rooms included)
-        /*if (floor_amount_loot > 0)
-        {
-            GetFreeTilesOfType(GC,null, TileObjData.Type.Floor, free_tiles);
-            while (free_tiles.Count>0)
-            {
-                if (floor_amount_loot == 0)
-                    break;
-                
-                var tile = Subs.GetRandom(free_tiles);
-                free_tiles.Remove(tile);
-
-                floor_amount_loot--;
-                
-                tile.SetObj(TileObjData.Obj.Loot);
-            }
-        }*/
-
-        //add remaining enemies to corridors
+		floor_amount_enemies+=force_enemy_amount_to_corridors;
+        
+		//add remaining enemies to corridors
         if (floor_amount_enemies > 0)
         {
 			GetFreeTilesOfType(floor,null, TileObjData.Type.Corridor, free_tiles);
@@ -117,56 +104,21 @@ public class ShipDetailGenerator : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Returns all tiles of a certain type inside a room which don't have an object yet.
-    /// If room is null the whole map is scanned.
-    /// </summary>
-	void GetFreeTilesOfType(FloorObjData floor,ShipRoomObjData room, TileObjData.Type type, List<TileObjData> free_tiles)
-    {
-		GetTilesOfTypeWithObject(floor,room,type,TileObjData.Obj.None,free_tiles);
-    }
-
-    /// <summary>
-    /// Returns all tiles of a certain type inside a room which have an object.
-    /// If room is null the whole map is scanned.
-    /// </summary>
-	void GetTilesOfTypeWithObject(FloorObjData floor,ShipRoomObjData room, TileObjData.Type type,TileObjData.Obj obj, List<TileObjData> free_tiles)
-    {
-        free_tiles.Clear();
-        
-		int rx=0,ry=0,rw=floor.TileMapW,rh=floor.TileMapH;
-        
-        if (room!=null){
-            rx=room.X+room.XOFF;ry=room.Y+room.YOFF;
-            rw=room.W;rh=room.H;
-        }
-        
-        for (int x = 0; x < rw; x++)
-        {
-            for (int y = 0; y < rh; y++)
-            {
-				var tile = floor.TileObjectMap[rx+x, ry+y];
-                if (tile.TileType == type && tile.ObjType == obj)
-                {
-                    free_tiles.Add(tile);
-                }
-            }
-        }
-    }
-
     public void GenerateMissionObjectives(GameController GC, MissionObjData mission, ShipObjData ship){
 
-        if (mission.ContainsObjective(MissionObjData.Objective.FindItem)){
-			var objective=XmlDatabase.Objectives[MissionObjData.Objective.FindItem];
-			var quest_item=XmlDatabase.GetQuestItem(objective.Item);
+		if (!mission.ContainsObjective(MissionObjData.Objective.FindItem)) return;
 
-			if (quest_item==null){
-				Debug.LogError("Mission: "+mission.MissionType+" failed to create objective item "+objective.Item+" as it's not found in the xmldatabase");
-				return;
-			}
+		//generate quest item
+		var objective=XmlDatabase.Objectives[MissionObjData.Objective.FindItem];
+		var quest_item=XmlDatabase.GetQuestItem(objective.Item);
 
-			//generate item somewhere in ship
-            string obj_room=objective.Room;
+		if (quest_item==null){
+			Debug.LogError("Mission: "+mission.MissionType+" failed to create objective item "+objective.Item+" as it's not found in the xmldatabase");
+			return;
+		}
+
+		//find legit rooms in all floors
+	    string obj_room=objective.Room;
 			var LegitRooms=new Dictionary<int,List<ShipRoomObjData>>();
 			bool nonefound=true;
 			for (int i=0;i<ship.FloorRooms.Count;++i){
@@ -179,47 +131,101 @@ public class ShipDetailGenerator : MonoBehaviour
 					}
 	            }
 			}
-            if (nonefound){
-                Debug.LogError("Mission: "+mission.MissionType+" failed to create objective item in ship type "+ship.Name +" required room : "+obj_room);
-                return;
-            }
+	    if (nonefound){
+	        Debug.LogError("Mission: "+mission.MissionType+" failed to create objective item in ship type "+ship.Name +" required room : "+obj_room);
+	        return;
+	    }
+		//select one room
+		var legit_floors=new List<int>();
+		foreach(var f in LegitRooms){
+			if (f.Value.Count>0){
+				legit_floors.Add(f.Key);
+			}
+		}
+		int index=Subs.GetRandom(legit_floors);
+		var floor=GC.Floors[index];
+	    var room=Subs.GetRandom(LegitRooms[index]);
+	    int rx=room.X+room.XOFF,ry=room.Y+room.YOFF,rw=room.W,rh=room.H;
 
-			var legit_floors=new List<int>();
-			foreach(var f in LegitRooms){
-				if (f.Value.Count>0){
-					legit_floors.Add(f.Key);
+		//find all loot crates in room
+	    List<LootCrateMain> loot_crates=new List<LootCrateMain>();
+
+	    for (int x = 0; x < rw; x++)
+	    {
+	        for (int y = 0; y < rh; y++)
+	        {
+				var tile = floor.TileMainMap[rx+x,ry+y];
+	            if (tile.Data.ObjType == TileObjData.Obj.Loot)
+	            {
+						loot_crates.Add(tile.TileObject.GetComponent<LootCrateMain>());
+	            }
+	        }
+		}
+
+		if (loot_crates.Count==0){
+			Debug.LogWarning("Cannot generate quest item. No loot crates in room "+obj_room+ " ship type "+ship.Name);
+			return;
+		}
+
+		//select one loot crate and add item
+		var l=Subs.GetRandom(loot_crates);
+		var item=new InvGameItem(quest_item);
+    	l.Items.Add(item);
+	}
+
+	/// <summary>
+	/// Randomizes the door states (open,closed,locked,broken) in all ship floors
+	/// </summary>
+	public void RandomizeDoorStates(GameController GC, ShipObjData shi){
+		foreach (FloorObjData f in GC.Floors){
+			foreach(var t in f.TileMainMap){
+				var door=t.GetDoor();
+				if (door!=null&&door.canOpenDoorOnStartUp&&!door.isAirlockDoor){
+					if (Subs.RandomPercent()<XmlDatabase.OpenDoorChange){
+						door.ForceOpen();
+					}
 				}
 			}
-			int index=Subs.GetRandom(legit_floors);
-			var floor=GC.Floors[index];
-            var room=Subs.GetRandom(LegitRooms[index]);
-            int rx=room.X+room.XOFF,ry=room.Y+room.YOFF,rw=room.W,rh=room.H;
+		}
+	}
 
-            List<LootCrateMain> loot=new List<LootCrateMain>();
-
-            for (int x = 0; x < rw; x++)
-            {
-                for (int y = 0; y < rh; y++)
-                {
-					var tile = floor.TileMainMap[rx+x,ry+y];
-                    if (tile.Data.ObjType == TileObjData.Obj.Loot)
-                    {
-                        loot.Add(tile.TileObject.GetComponent<LootCrateMain>());
-                    }
-                }
-            
-
-            if (loot.Count==0){
-                Debug.LogWarning("Cannot generate quest item. No loot crates in room "+obj_room+ " ship type "+ship.Name);
-                return;
-            }
-
-            //DEV. temp mission item type to xml objective data
-            var l=Subs.GetRandom(loot);
-			var item=new InvGameItem(quest_item);
-            l.Items.Add(item);
-        }
-    }
+	//private subs
+	
+	/// <summary>
+	/// Returns all tiles of a certain type inside a room which don't have an object yet.
+	/// If room is null the whole map is scanned.
+	/// </summary>
+	void GetFreeTilesOfType(FloorObjData floor,ShipRoomObjData room, TileObjData.Type type, List<TileObjData> free_tiles)
+	{
+		GetTilesOfTypeWithObject(floor,room,type,TileObjData.Obj.None,free_tiles);
+	}
+	
+	/// <summary>
+	/// Returns all tiles of a certain type with a certain object inside a room.
+	/// If room is null the whole map is scanned.
+	/// </summary>
+	void GetTilesOfTypeWithObject(FloorObjData floor,ShipRoomObjData room, TileObjData.Type type,TileObjData.Obj obj, List<TileObjData> free_tiles)
+	{
+		free_tiles.Clear();
+		
+		int rx=0,ry=0,rw=floor.TileMapW,rh=floor.TileMapH;
+		
+		if (room!=null){
+			rx=room.X+room.XOFF;ry=room.Y+room.YOFF;
+			rw=room.W;rh=room.H;
+		}
+		
+		for (int x = 0; x < rw; x++)
+		{
+			for (int y = 0; y < rh; y++)
+			{
+				var tile = floor.TileObjectMap[rx+x, ry+y];
+				if (tile.TileType == type && tile.ObjType == obj)
+				{
+					free_tiles.Add(tile);
+				}
+			}
+		}
 	}
 }
 

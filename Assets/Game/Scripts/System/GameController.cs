@@ -25,7 +25,7 @@ public class FloorObjData{
 		Enemies=new List<EnemyMain>();
 		LootCrates= new List<LootCrateMain>();
 		AirlockPositions=new List<Vector2>();
-	}
+	} 
 
 	/// <summary>
 	/// Resets the tile object map.
@@ -91,7 +91,6 @@ public class GameController : MonoBehaviour {
 	public bool do_culling=false;
 
 	public HaxKnifeCulling culling_system;
-	public MeshCombiner MeshCombi;
 
 	public List<GameObject> FloorContainers{get;private set;}
 
@@ -103,6 +102,8 @@ public class GameController : MonoBehaviour {
 		FloorContainers=new List<GameObject>();
 	}
 
+	ShipObjData current_ship_data;
+
 	// Use this for initialization
 	void Start()
     {
@@ -113,7 +114,6 @@ public class GameController : MonoBehaviour {
 		#endif
 		aiController = new AIcontroller(this);
 		ShipObjData ship_objdata=null;
-
         //DEV.DEBUG generate mission
         if (SS.GDB.GameData.CurrentMission==null){
 			SS.GDB.GameData.CurrentMission=MissionGenerator.GenerateMission(Subs.GetRandom(XmlDatabase.MissionPool.Pools.Keys));
@@ -142,7 +142,7 @@ public class GameController : MonoBehaviour {
 			floor.FloorIndex=i;
 			Floors.Add(floor);
 			SS.MGen.GenerateObjectDataMap(floor,ship_objdata.Floors[i]);
-			SS.SDGen.GenerateShipItems(this,floor,ship_objdata);
+			SS.SDGen.GenerateShipItems(floor,ship_objdata);
 			SS.MGen.GenerateSceneMap(this,floor);
 			var cmis=SS.GDB.GameData.CurrentMission;
 			var xml=cmis.XmlData;
@@ -187,7 +187,6 @@ public class GameController : MonoBehaviour {
 
         Player.ActivateEquippedItems();
 
-
 		//init hud
 		HUD.player = Player;
 		HUD.SetGC(this);
@@ -203,6 +202,8 @@ public class GameController : MonoBehaviour {
 
 		if (c_mis.MissionShipPower==MissionObjData.ShipPower.Broken); //DEV.todo break generator
 
+		SS.SDGen.RandomizeDoorStates(this,ship_objdata);
+
 		Debug.Log("Power: "+power);
 
 		SetFloorsPowerState(power);
@@ -210,6 +211,9 @@ public class GameController : MonoBehaviour {
 		//misc
 		var ec=GetComponent<EngineController>();
 		ec.AfterRestart+=SS.GDB.StartNewGame;
+
+		//debug
+		current_ship_data=ship_objdata;
 	}
 
 	// Update is called once per frame
@@ -228,6 +232,10 @@ public class GameController : MonoBehaviour {
 		}
 
 #if UNITY_EDITOR 
+		if (Input.GetKeyDown(KeyCode.B)){
+			SS.SDGen.RandomizeDoorStates(this,current_ship_data);
+		}
+
 		if (Input.GetKeyDown(KeyCode.C)){
 			do_culling=!do_culling;
 			if (do_culling)
@@ -238,11 +246,6 @@ public class GameController : MonoBehaviour {
 
 		if (Input.GetKeyDown(KeyCode.V)){
 			Player.CullWorld(true);
-		}
-
-		//Dev. temp.
-		if (Input.GetKeyDown(KeyCode.B)){
-			MeshCombi.Combine(this,0);
 		}
 
 		if (Input.GetKeyDown(KeyCode.Alpha8)){

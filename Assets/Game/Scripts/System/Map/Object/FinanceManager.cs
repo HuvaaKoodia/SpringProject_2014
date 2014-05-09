@@ -181,6 +181,7 @@ public class FinanceManager
 	{
 		AddDebt(index);
 		GetDebt(index).SetStartingDepth(amount);
+		CalcMonthlyCut ();
 	}
 
 	public Debt GetDebt(int index)
