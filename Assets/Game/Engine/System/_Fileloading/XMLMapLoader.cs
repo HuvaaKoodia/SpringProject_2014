@@ -89,9 +89,6 @@ public class XMLMapLoader : MonoBehaviour{
 					if (Ships.ContainsKey(name))
 					{
 						Ships.TryGetValue(name,out ship);
-
-						//Debug.Log("Multiple floors aren't yet supported. Ship name: "+ship);
-						//continue;
 					}
 					else
 					{

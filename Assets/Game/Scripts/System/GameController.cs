@@ -142,7 +142,7 @@ public class GameController : MonoBehaviour {
 			floor.FloorIndex=i;
 			Floors.Add(floor);
 			SS.MGen.GenerateObjectDataMap(floor,ship_objdata.Floors[i]);
-			SS.SDGen.GenerateShipItems(floor,ship_objdata);
+			SS.SDGen.GenerateShipItems(floor,ship_objdata,SS.GDB.GameData.CurrentMission);
 			SS.MGen.GenerateSceneMap(this,floor);
 			var cmis=SS.GDB.GameData.CurrentMission;
 			var xml=cmis.XmlData;

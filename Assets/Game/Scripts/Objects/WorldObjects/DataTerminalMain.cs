@@ -8,10 +8,9 @@ public class DataTerminalMain : InteractableMain {
 	public DataTerminalGraphics graphics;
 
 	public static int TypeToIndex(TileObjData.Obj type){
-		return (int)type-7;
+		return (int)type-TileObjData.TerminalStartIndex;
 	}
-
-	// Use this for initialization
+	
 	void Awake (){
 		InteractCost = 0;
 	}

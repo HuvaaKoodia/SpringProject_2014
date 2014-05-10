@@ -43,20 +43,7 @@ public class PrefabStore : MonoBehaviour {
 		PlayerBlipSprite,
 		EnemyBlipSprite,
 		LootBlipSprite,
-		FloorSprite,
-		OneWallSprite,
-		TwoWallsSprite,
-		RoomCornerSprite,
-		CorridorCornerSprite,
-		CrossroadSprite,
-		DeadendSprite,
-		Floor1EdgeSprite,
-		Floor2EdgesSprite,
-		Floor3EdgesSprite,
-		OppositeEdgesSprite,
-		TCrossingSprite,
-		WallCornerSprite,
-		WallCornerMirroredSprite
+		FloorSprite
 		;
 
 	public UILabel
@@ -84,5 +71,12 @@ public class PrefabStore : MonoBehaviour {
 		targetHighlights.Add(Resources.Load("TargetingSprites/LeftUp") as GameObject);
 		targetHighlights.Add(Resources.Load("TargetingSprites/RightDown") as GameObject);
 		targetHighlights.Add(Resources.Load("TargetingSprites/RightUp") as GameObject);
+	}
+
+	public string MapSpritePrefabFolderName="MapSprites/";
+
+	public GameObject GetMapSpritePrefab(string graphicsName)
+	{
+		return Resources.Load(MapSpritePrefabFolderName+graphicsName) as GameObject;
 	}
 }

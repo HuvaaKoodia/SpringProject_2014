@@ -73,4 +73,12 @@ public class MissionObjData {
     public bool ContainsObjective(MissionObjData.Objective o){
 		return PrimaryObjectives.Exists(obj=>obj.Objective==o)||SecondaryObjectives.Exists(obj=>obj.Objective==o);
     }
+
+
+	//static functions
+	public static float GetSecurityPercent (MissionObjData.SecuritySystems missionSecuritySystem)
+	{
+		return (4-(int)missionSecuritySystem)/4f;//Dev.magnum!
+	}
+
 }
