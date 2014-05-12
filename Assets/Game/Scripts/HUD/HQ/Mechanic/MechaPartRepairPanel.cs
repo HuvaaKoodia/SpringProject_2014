@@ -31,19 +31,18 @@ public class MechaPartRepairPanel : MonoBehaviour {
     }
 
     public void UpdateStats(){
-		if (!gameObject.activeInHierarchy) return;
-
-        int con=(int)((float)Part.HP/MechaPartObjData.MaxHP*100f);
+		int con=(int)((float)Part.HP/MechaPartObjData.MaxHP*100f);
 		cost=(int)((MechaPartObjData.MaxHP-Part.HP)*XmlDatabase.MechaPartRepairCostMulti);
-
-        Condition.text=con+"%";
-        Cost.text="Cost: "+cost;
-
+		
+		Condition.text=con+"%";
+		Cost.text="Cost: "+cost;
+		
 		// Lazy. Best Regards, Your Divine Producer
 		if (AllowBuying) {
 			SetButtonActive(cost>0);
 		}
-		//FIX for lazyness.
+
+		//FIX for previous lazyness.
 		if (!AllowBuying){
 			ButtonActive = false;
 			Cost.gameObject.SetActive(false);
@@ -54,7 +53,7 @@ public class MechaPartRepairPanel : MonoBehaviour {
 	private void SetButtonActive(bool active){
 		ButtonActive = active;
 
-		var alpha = active ? 1f : 0.1f;
+		var alpha = active ? 1f : 0.05f;
 
 		Button.gameObject.GetComponent<UIButton> ().enabled = active; 
 		Button.gameObject.GetComponent<UIButtonScale> ().enabled = active;

@@ -21,7 +21,7 @@ public class GameDB : MonoBehaviour {
 		
 		GameData.PlayerData.Money=1000;
 
-		GameData.FinanceManager.AddDebt(0,10000);
+		GameData.FinanceManager.AddDebt(0,XmlDatabase.StartingDept);
 
 		//starting player equipment
 		for (int i=0;i<XmlDatabase.Player.StartingWeaponAmount;i++){

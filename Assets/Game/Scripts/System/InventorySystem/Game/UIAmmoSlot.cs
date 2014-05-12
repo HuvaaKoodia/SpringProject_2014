@@ -38,7 +38,7 @@ public class UIAmmoSlot : UIItemSlot
 
 	int Cost;
 	
-	void UpdateStats(){
+	public void UpdateStats(){
 		int amount=Player.GetAmmoAmount(AmmoType);
 		var data=Player.GetAmmoData(AmmoType);
 		int cost=(int)((data.MaxAmount-amount)*data.Cost);

@@ -62,6 +62,8 @@ public class FloorObjData{
 
 public class GameController : MonoBehaviour {
 
+	public System.Action OnPlayerTurnStart;
+
 	public string TestLoadShipName;
 	public bool UseTestMap,OverrideMissionShip=false;
 	public EngineController EngCont;
@@ -265,6 +267,7 @@ public class GameController : MonoBehaviour {
 
 	void StartPlayerTurn()
 	{
+		if (OnPlayerTurnStart!=null) OnPlayerTurnStart();
 		Player.StartPlayerPhase();
 	}
 

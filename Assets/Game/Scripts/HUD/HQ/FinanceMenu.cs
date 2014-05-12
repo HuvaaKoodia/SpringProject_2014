@@ -14,7 +14,8 @@ public class FinanceMenu : MonoBehaviour {
 	public List<UILabel> Payments;								//List that keeps track of the Debt Payments for each debt and Payment Total
 	public List<UILabel> ShortenDebt;							//List that keeps track of the Shorten Debt By component for each debt
 	public List<GameObject> DebtsActivate;						//List that keeps track of the Debt types ie, DebtAdded and DebtEmpty for each Debt
-	
+	public List<GameObject> DeptPanels;
+
 	public FinanceManager _FinanceManager;
 	
 	// Use this for initialization

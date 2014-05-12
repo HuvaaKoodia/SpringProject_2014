@@ -34,7 +34,7 @@ public class ShipDetailGenerator : MonoBehaviour
         int current_floor = floor.FloorIndex;
         var xml_md = ship.XmlData.Floors [current_floor];
 
-        int floor_amount_enemies = Subs.GetRandom(xml_md.EnemyAmountMin, xml_md.EnemyAmountMax);
+        int floor_amount_enemies = (int)(Subs.GetRandom(xml_md.EnemyAmountMin, xml_md.EnemyAmountMax)*mission.GetAlienPercent());
         int floor_amount_loot = Subs.GetRandom(xml_md.LootAmountMin, xml_md.LootAmountMax);
 
 		int force_enemy_amount_to_corridors=(int)(Subs.GetRandom(XmlDatabase.MaxEnemyPercentageOnCorridors)*floor_amount_enemies);
@@ -65,9 +65,7 @@ public class ShipDetailGenerator : MonoBehaviour
 		}
 
 		//security systems
-
-		float percent=MissionObjData.GetSecurityPercent(mission.MissionSecuritySystem);
-
+		float percent=mission.GetSecurityPercent();
 		Debug.Log("SecuritySystem percent: "+percent);
 
 		foreach (var room in rooms_list)

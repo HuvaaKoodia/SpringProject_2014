@@ -30,6 +30,8 @@ public class InGameInfoPanelMain : MonoBehaviour {
 
 		if (LootParent.activeSelf) LootParent.SetActive(false);
 
+		HUD.GC.OnPlayerTurnStart+=AmmoPanel.UpdateAllSlots;
+
 	#if !UNITY_EDITOR
 		temp_random_item_button.gameObject.SetActive(false);	
 	#endif

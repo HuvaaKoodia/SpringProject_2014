@@ -2,10 +2,11 @@
 Legend:
 
 Status info:
--Aliens: 	0=none,1=small,2=med,3=lots
--Security: 	0=none,1=small,2=med,3=lots
+-EnemyTypes 0=Aliens,1=Security,3=Both
+-Aliens: 	0=none,1=small,2=medium,3=lots
+-Security: 	0=none,1=small,2=medium,3=lots
 -Condition: 0=badly damaged,1=damaged,2=intact
--Power: 	0=generator broken,1=power off,2=poweron
+-Power: 	0=generator broken,1=power off,2=power on
 -->
 
 <Root>
@@ -27,6 +28,11 @@ Status info:
 		<Item name="1"/>
 		<Item name="2"/>
 	</LootQualityPool>
+	<Status name="EnemyTypes">
+		<Item name="0" weight="3"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+	</Status>
 	<Status name="Aliens">
 		<Item name="0"/>
 		<Item name="1" weight="3"/>
@@ -68,6 +74,11 @@ Status info:
 		<Item name="2" weight="3"/>
 		<Item name="3"/>
 	</LootQualityPool>
+	<Status name="EnemyTypes">
+		<Item name="0" weight="3"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+	</Status>
 	<Status name="Aliens">
 		<Item name="0" weight="2"/>
 		<Item name="1" weight="3"/>
@@ -307,6 +318,11 @@ Status info:
 		<Item name="2" weight="2"/>
 		<Item name="3"/>
 	</LootQualityPool>
+	<Status name="EnemyTypes">
+		<Item name="0" weight="3"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+	</Status>
 	<Status name="Aliens">
 		<Item name="0"/>
 		<Item name="1" weight="3"/>
@@ -349,6 +365,11 @@ Status info:
 		<Item name="1"/>
 		<Item name="2"/>
 	</LootQualityPool>
+	<Status name="EnemyTypes">
+		<Item name="0" weight="3"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+	</Status>
 	<Status name="Aliens">
 		<Item name="0"/>
 		<Item name="1" weight="3"/>

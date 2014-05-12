@@ -18,7 +18,8 @@ public class MissionObjData {
 	public MissionXmlData XmlData{get{return XmlDatabase.GetMission(MissionType);}}
 
     public enum Type{TradeVesselInfo,RetrieveCargo,EmergencyBeacon,ExploreVessel}
-    public enum AlienAmount{None,Small,Medium,Large}
+	public enum EnemyTypes{Aliens,Security,Both}
+	public enum AlienAmount{None,Small,Medium,Large}
     public enum SecuritySystems{None,Small,Medium,Large}
 	public enum ShipCondition{BadlyDamaged,Damaged,Intact}
 	public enum ShipPower{Broken,Off,On}
@@ -41,6 +42,7 @@ public class MissionObjData {
 
     //stats
 	public Type				MissionType	{get;set;}
+	public EnemyTypes		MissionEnemyTypes{get;set;}
 	public AlienAmount      MissionAlienAmount {get;set;}
 	public SecuritySystems  MissionSecuritySystem {get;set;}
 	public ShipCondition    MissionShipConditions {get;set;}
@@ -73,12 +75,16 @@ public class MissionObjData {
     public bool ContainsObjective(MissionObjData.Objective o){
 		return PrimaryObjectives.Exists(obj=>obj.Objective==o)||SecondaryObjectives.Exists(obj=>obj.Objective==o);
     }
-
-
-	//static functions
-	public static float GetSecurityPercent (MissionObjData.SecuritySystems missionSecuritySystem)
+	
+	//getters
+	public float GetSecurityPercent ()
 	{
-		return (4-(int)missionSecuritySystem)/4f;//Dev.magnum!
+		return (4-(int)MissionSecuritySystem)/4f;//Dev.magnum!
+	}
+	
+	public float GetAlienPercent ()
+	{
+		return (4-(int)MissionAlienAmount)/4f;//Dev.magnum!
 	}
 
 }

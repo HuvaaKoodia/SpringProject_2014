@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class PlayerInputSub : MonoBehaviour {
@@ -101,6 +101,11 @@ public class PlayerInputSub : MonoBehaviour {
 			InteractInput(false);
 		}
 
+		if (Input.GetButtonDown("Toggle Flashlight"))
+		{
+			player.ToggleFlashlight();
+		}
+
 		if (Input.GetButtonDown("Free look toggle"))
 		{
 			FreeLookToggleInput();
@@ -132,7 +137,6 @@ public class PlayerInputSub : MonoBehaviour {
 			player.AnimationsOn = false;
         }
 #endif
-
 	}
 	
 	void MouseInput()
@@ -141,12 +145,16 @@ public class PlayerInputSub : MonoBehaviour {
 		{
 			if (player.targetingMode)
 			{
-				player.targetingSub.TargetAtMousePosition(true);
+				player.targetingSub.ClickTargetAtMousePosition(true);
 				player.HUD.CheckTargetingModePanel();
                 player.HUD.gunInfoDisplay.UpdateAllDisplays();
 			}
 			else
 			{
+				if (player.targetingSub.HasTargetAtMousePosition ()){
+					TargetingModeInput();
+					ChangeWeaponInput(player.GetCurrentWeapon().weaponID);
+				}
 				InteractInput(true);
 			}
 		}
@@ -154,7 +162,7 @@ public class PlayerInputSub : MonoBehaviour {
 		{
 			if (player.targetingMode)
 			{
-				player.targetingSub.TargetAtMousePosition(false);
+				player.targetingSub.ClickTargetAtMousePosition(false);
 				player.HUD.CheckTargetingModePanel();
                 player.HUD.gunInfoDisplay.UpdateAllDisplays();
 			}
@@ -233,7 +241,7 @@ public class PlayerInputSub : MonoBehaviour {
 		if (this.enabled == false || !player.targetingMode)
 			return;
 
-		StartCoroutine(player.Attack());
+		if (player.targetingSub.HasAnyTargets()) StartCoroutine(player.Attack());
     }
 
 	public void DisperseHeatInput()

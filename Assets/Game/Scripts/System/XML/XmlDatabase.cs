@@ -32,7 +32,8 @@ public class XmlDatabase
 		AttackFrontBackPlayerTorsoHitChance,
 		AttackLeftRightPlayerTorsoHitChance,
 		AttackTorsoUtilityDamageChance,
-		MissionRewardRounding
+		MissionRewardRounding,
+		StartingDept
         ;
     public static float
         HullHeatAddMultiplier,

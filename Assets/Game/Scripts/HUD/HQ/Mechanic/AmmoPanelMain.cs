@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class AmmoPanelMain : MonoBehaviour {
     public Transform AmmoButtonsParent;
     public UIAmmoSlot AmmoPanelPrefab;
+
+	List<UIAmmoSlot> Slots=new List<UIAmmoSlot>();
 
 	public int xoff=105;
 
@@ -25,6 +28,13 @@ public class AmmoPanelMain : MonoBehaviour {
             button.AllowBuying=allow_buying;
             button.SetPlayer(player,m.Key);
 
+			Slots.Add(button);
         }
     }
+
+	public void UpdateAllSlots(){
+		foreach (var s in Slots){
+			s.UpdateStats();
+		}
+	}
 }

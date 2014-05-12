@@ -109,7 +109,7 @@ public abstract class UIItemSlot : MonoBehaviour
     {
         var t="[" + NGUIText.EncodeColor(item.color) + "]" + item.name + "[-]\n";
         
-        if (item.baseItem.type!=InvBaseItem.Type.QuestItem)
+		if (item.baseItem.type!=InvBaseItem.Type.QuestItem&&item.baseItem.type!=InvBaseItem.Type.Loot)
             t += "[AFAFAF]MK." + item.itemLevel + " ";
         
         t+=item.baseItem.type;
@@ -272,7 +272,7 @@ public abstract class UIItemSlot : MonoBehaviour
 
 			if (label != null)
 			{
-				string itemName = (i != null) ? (i.name + "\nLvl."+i.itemLevel): null;
+				string itemName = (i != null) ? (i.name + "\nMK."+i.itemLevel): null;
 				if (string.IsNullOrEmpty(mText)) mText = label.text;
 				label.text = (itemName != null) ? itemName : mText;
 			}

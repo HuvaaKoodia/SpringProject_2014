@@ -211,12 +211,22 @@ public class PlayerTargetingSub : MonoBehaviour {
 		targetableEnemies.Add(enemy, tmHandler);
 	}
 
-	public void TargetAtMousePosition(bool increase_amount)
+	public bool HasTargetAtMousePosition()
 	{
 		Component target;
-		//GameObject hover = UICamera.hoveredObject;
+		return HasTargetAtMousePosition(out target);
+	}
 
-		if (player.targetingMode && Subs.GetObjectMousePos(out target, 20, "TargetingClick", player.HudCamera))
+	private bool HasTargetAtMousePosition(out Component target)
+	{
+		return Subs.GetObjectMousePos(out target, 20, "TargetingClick", player.HudCamera);
+	}
+
+	public void ClickTargetAtMousePosition(bool increase_amount)
+	{
+		Component target;
+
+		if (HasTargetAtMousePosition(out target))
 		{
 			Transform trans = target.transform;
 			EnemyMain enemyTargeted = trans.gameObject.GetComponent<EnemyMain>();
