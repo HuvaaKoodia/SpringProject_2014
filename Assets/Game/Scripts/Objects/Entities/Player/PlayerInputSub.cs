@@ -155,7 +155,9 @@ public class PlayerInputSub : MonoBehaviour {
 					TargetingModeInput();
 					ChangeWeaponInput(player.GetCurrentWeapon().weaponID);
 				}
-				InteractInput(true);
+				else{
+					InteractInput(true);
+				}
 			}
 		}
 		else if (Input.GetMouseButtonDown(1))
