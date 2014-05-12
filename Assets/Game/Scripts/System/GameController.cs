@@ -260,7 +260,7 @@ public class GameController : MonoBehaviour {
     public void ChangeTurn(TurnState turn)
     {
 		currentTurn = turn;
-		Player.HUD.turnText.gameObject.SetActive(currentTurn == TurnState.PlayerTurn);
+		Player.HUD.turnText.gameObject.SetActive(currentTurn != TurnState.PlayerTurn);
     }
 
 	void StartPlayerTurn()
