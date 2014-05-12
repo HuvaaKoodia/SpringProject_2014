@@ -169,8 +169,6 @@ public class PlayerMain : EntityMain
 		gunsFinishedShooting = 0;
 		Shooting = true;
 
-		HUD.DeactivateTargetingHUD();
-
         foreach(WeaponMain weapon in weaponList)
 		{
             if (weapon.HasTargets)
@@ -192,6 +190,8 @@ public class PlayerMain : EntityMain
 		}
 
 		Shooting = false;
+		
+		HUD.DeactivateTargetingHUD();
 
 		EndPlayerPhase();
 	}
