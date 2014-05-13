@@ -26,8 +26,6 @@ public class MechaPartRepairPanel : MonoBehaviour {
         Player=player;
 		Part=part;
         AllowBuying=allow_buying;
-
-        UpdateStats();
     }
 
     public void UpdateStats(){

@@ -41,7 +41,7 @@ public class ShipDetailGenerator : MonoBehaviour
         int floor_amount_enemies = (int)(Subs.GetRandom(xml_md.EnemyAmountMin, xml_md.EnemyAmountMax)*alien_percent);
         int floor_amount_loot = Subs.GetRandom(xml_md.LootAmountMin, xml_md.LootAmountMax);
 
-		int force_enemy_amount_to_corridors=(int)(Subs.GetRandom(XmlDatabase.MaxEnemyPercentageOnCorridors)*floor_amount_enemies);
+		int force_enemy_amount_to_corridors=(int)(floor_amount_enemies*Subs.GetRandom(XmlDatabase.MaxEnemyPercentageOnCorridors));
 
         //rooms
         List<TileObjData> free_tiles = new List<TileObjData>();

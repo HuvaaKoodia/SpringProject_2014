@@ -79,12 +79,12 @@ public class MissionObjData {
 	//getters
 	public float GetSecurityPercent ()
 	{
-		return (int)MissionSecuritySystem/4f;//Dev.magnum!
+		return (int)MissionSecuritySystem/3f;//Dev.magnum!
 	}
 	
 	public float GetAlienPercent ()
 	{
-		return (int)MissionAlienAmount/4f;//Dev.magnum!
+		return (int)MissionAlienAmount/3f;//Dev.magnum!
 	}
 
 }

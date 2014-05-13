@@ -16,6 +16,10 @@ public class GunDisplayMain : MonoBehaviour {
 		inActiveColor = Color.black;
 	}
 
+	public void Start(){
+		UpdateAllDisplays();
+	}
+
 	public void SetWeaponToDisplay(WeaponID ID, WeaponMain weapon)
 	{
 		gunInfoScreens[(int)ID].weapon = weapon;
@@ -29,13 +33,14 @@ public class GunDisplayMain : MonoBehaviour {
 			UpdateDisplay((WeaponID)i);
 		}
 
+		//activate current item
 		if (!GC.Player.GetCurrentWeapon().Usable())
             gunInfoScreens[(int)GC.Player.currentWeaponID].SetHighlightColor(inActiveColor);
 	}
 
 	public void UpdateDisplay(WeaponID id)
 	{
-		gunInfoScreens[(int)id].UpdateGunInfo();
+		gunInfoScreens[(int)id].UpdateGunInfo(GC.Player);
 	}
 
 	public Color GetWeaponColor(WeaponID id)

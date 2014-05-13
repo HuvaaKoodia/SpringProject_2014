@@ -193,6 +193,8 @@ public class PlayerMain : EntityMain
 		
 		HUD.DeactivateTargetingHUD();
 
+		HUD.gunInfoDisplay.UpdateAllDisplays();
+
 		EndPlayerPhase();
 	}
 
@@ -247,6 +249,8 @@ public class PlayerMain : EntityMain
 			Debug.Log("Kuoli saatana");
 			GC.EngCont.Restart();
 		}
+
+		HUD.gunInfoDisplay.UpdateAllDisplays();
 	}
 
 	public bool StartTargetingMode()
