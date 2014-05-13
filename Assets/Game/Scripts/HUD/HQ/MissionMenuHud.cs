@@ -88,6 +88,7 @@ public class MissionMenuHud : MonoBehaviour {
     public void OpenMissionSelect(){
         Tabs.ActivateMenu(MissionMenu);
     }
+
     public void OpenVendor(){
         Tabs.ActivateMenu(_VendorMenu.gameObject);
     }
