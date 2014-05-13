@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class PlayerInputSub : MonoBehaviour {
@@ -101,6 +101,11 @@ public class PlayerInputSub : MonoBehaviour {
 			InteractInput(false);
 		}
 
+		if (Input.GetButtonDown("Toggle Flashlight"))
+		{
+			player.ToggleFlashlight();
+		}
+
 		if (Input.GetButtonDown("Free look toggle"))
 		{
 			FreeLookToggleInput();
@@ -132,29 +137,19 @@ public class PlayerInputSub : MonoBehaviour {
 			player.AnimationsOn = false;
         }
 #endif
-
 	}
 	
 	void MouseInput()
 	{
 		if (Input.GetMouseButtonDown(0))
 		{
-			if (player.targetingMode)
-			{
-				player.targetingSub.TargetAtMousePosition(true);
-				player.HUD.CheckTargetingModePanel();
-                player.HUD.gunInfoDisplay.UpdateAllDisplays();
-			}
-			else
-			{
-				InteractInput(true);
-			}
+			MouseLeftInput();
 		}
 		else if (Input.GetMouseButtonDown(1))
 		{
 			if (player.targetingMode)
 			{
-				player.targetingSub.TargetAtMousePosition(false);
+				player.targetingSub.ClickTargetAtMousePosition(false);
 				player.HUD.CheckTargetingModePanel();
                 player.HUD.gunInfoDisplay.UpdateAllDisplays();
 			}
@@ -233,7 +228,7 @@ public class PlayerInputSub : MonoBehaviour {
 		if (this.enabled == false || !player.targetingMode)
 			return;
 
-		StartCoroutine(player.Attack());
+		if (player.targetingSub.HasAnyTargets()) StartCoroutine(player.Attack());
     }
 
 	public void DisperseHeatInput()
@@ -258,6 +253,25 @@ public class PlayerInputSub : MonoBehaviour {
         if (NotUsable()) return;
 
 		player.EndPlayerPhase();
+	}
+
+	void MouseLeftInput(){
+		if (player.targetingMode)
+		{
+			player.targetingSub.ClickTargetAtMousePosition(true);
+			player.HUD.CheckTargetingModePanel();
+			player.HUD.gunInfoDisplay.UpdateAllDisplays();
+		}
+		else
+		{
+			if (player.interactSub.HasInteractable){
+				InteractInput(true);
+			}
+			else if (player.targetingSub.HasTargetAtMousePosition ()){
+				TargetingModeInput();
+				ChangeWeaponInput(player.GetCurrentWeapon().weaponID);
+			}
+		}
 	}
 
 	public void InteractInput(bool screenClick)

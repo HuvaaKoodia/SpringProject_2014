@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// Generic menu
+/// </summary>
 public class MenuTabController : MonoBehaviour {
 
     public List<GameObject> TabMenus;

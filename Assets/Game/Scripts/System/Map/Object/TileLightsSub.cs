@@ -12,6 +12,9 @@ public enum Lighting_State
 
 public class TileLightsSub : MonoBehaviour
 {	
+	public GameObject LightGraphics;
+	public Material on_material,off_material;
+
 	public List<Light> white_lights;																			//instantiate a list for the white lights in the various TilePrefabs under TestObjects of GameScene																		
 	public float delay;																							//instantiate time to delay by in inspector
 
@@ -95,6 +98,10 @@ public class TileLightsSub : MonoBehaviour
 				}
 
 				white_light.enabled=light_on;
+
+				if (LightGraphics!=null){
+				LightGraphics.renderer.material=light_on?on_material:off_material;
+				}
 			}
 		}
 	}

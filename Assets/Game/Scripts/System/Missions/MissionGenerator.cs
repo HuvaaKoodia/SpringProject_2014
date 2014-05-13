@@ -17,15 +17,25 @@ public class MissionGenerator{
 		var xml=mission.XmlData;
 
 		//mission status
+		var enemy_types=xml.StatusContainer.GetRandomItem("EnemyTypes");
 		var aliens=xml.StatusContainer.GetRandomItem("Aliens");
 		var security=xml.StatusContainer.GetRandomItem("Security");
 		var power=xml.StatusContainer.GetRandomItem("Power");
 		var condition=xml.StatusContainer.GetRandomItem("Condition");
 
-        mission.MissionAlienAmount=     (MissionObjData.AlienAmount)int.Parse(aliens);
+		mission.MissionEnemyTypes=    	(MissionObjData.EnemyTypes)int.Parse(enemy_types);
+		mission.MissionAlienAmount=     (MissionObjData.AlienAmount)int.Parse(aliens);
 		mission.MissionSecuritySystem=  (MissionObjData.SecuritySystems)int.Parse(security);
 		mission.MissionShipPower=       (MissionObjData.ShipPower)int.Parse(power);
 		mission.MissionShipConditions=  (MissionObjData.ShipCondition)int.Parse(condition);
+
+		//reset status
+		if (mission.MissionEnemyTypes==MissionObjData.EnemyTypes.Aliens) 
+			mission.MissionSecuritySystem=MissionObjData.SecuritySystems.None;
+
+		if (mission.MissionEnemyTypes==MissionObjData.EnemyTypes.Security) 
+			mission.MissionAlienAmount=MissionObjData.AlienAmount.None;
+
 
 		mission.LootQuality=xml.LootQualityPool.GetRandomItem();
 

@@ -218,8 +218,8 @@ public class PlayerHud : MonoBehaviour {
 			player.inputSub.ChangeWeaponInput(id);
 		}
 		else{
-			player.inputSub.TargetingModeInput();
 			player.inputSub.ChangeWeaponInput(id);
+			player.inputSub.TargetingModeInput();
 		}
 	}
 }

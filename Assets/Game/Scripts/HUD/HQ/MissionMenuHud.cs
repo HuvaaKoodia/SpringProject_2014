@@ -59,7 +59,6 @@ public class MissionMenuHud : MonoBehaviour {
             SS.GDB.GOTO_DEBRIEF=false;
 			MissionDebrief.SetMission(SS.GDB);
             OpenMissionDebrief();
-            
         }
         else{
             OpenMissionSelect();
@@ -89,13 +88,20 @@ public class MissionMenuHud : MonoBehaviour {
     public void OpenMissionSelect(){
         Tabs.ActivateMenu(MissionMenu);
     }
+
     public void OpenVendor(){
         Tabs.ActivateMenu(_VendorMenu.gameObject);
     }
 
     public void OpenMechanic(){
-        Tabs.ActivateMenu(_MechanicMenu.gameObject);
+		StartCoroutine(CallUpdateAfterOneUpdateStepBecauseUnitySetActiveShenanigans());
+		Tabs.ActivateMenu(_MechanicMenu.gameObject);
     }
+
+	IEnumerator CallUpdateAfterOneUpdateStepBecauseUnitySetActiveShenanigans(){
+		yield return null;
+		_MechanicMenu.OpenPanel();
+	}
 
 	public void OpenFinance()
 	{

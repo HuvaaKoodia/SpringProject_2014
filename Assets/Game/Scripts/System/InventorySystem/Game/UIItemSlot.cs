@@ -10,7 +10,7 @@ public abstract class UIItemSlot : MonoBehaviour
     public GameItemDelegate OnDragStart,OnItemDroppedToVendorSlot,OnItemReplaceEvent;
 	public UISprite icon;
 	public UIWidget background;
-	public UILabel label;
+	public UILabel label,lvl_label;
 
 	public AudioClip grabSound;
 	public AudioClip placeSound;
@@ -18,7 +18,6 @@ public abstract class UIItemSlot : MonoBehaviour
 
 	InvGameItem mItem;
     public InvGameItem Item{get;private set;}
-	string mText = "";
 
     //DEV. puukkoa!
 
@@ -109,7 +108,7 @@ public abstract class UIItemSlot : MonoBehaviour
     {
         var t="[" + NGUIText.EncodeColor(item.color) + "]" + item.name + "[-]\n";
         
-        if (item.baseItem.type!=InvBaseItem.Type.QuestItem)
+		if (item.baseItem.type!=InvBaseItem.Type.QuestItem&&item.baseItem.type!=InvBaseItem.Type.Loot&&item.baseItem.type!=InvBaseItem.Type.AmmoBox)
             t += "[AFAFAF]MK." + item.itemLevel + " ";
         
         t+=item.baseItem.type;
@@ -272,9 +271,14 @@ public abstract class UIItemSlot : MonoBehaviour
 
 			if (label != null)
 			{
-				string itemName = (i != null) ? (i.name + "\nLvl."+i.itemLevel): null;
-				if (string.IsNullOrEmpty(mText)) mText = label.text;
-				label.text = (itemName != null) ? itemName : mText;
+				string itemName = (i==null)? "":i.name;
+				label.text = itemName;
+			}
+			
+			if (lvl_label != null)
+			{
+				string itemName = (i==null)? "":"MK."+i.itemLevel;
+				lvl_label.text=itemName;
 			}
 			
 			if (icon != null)

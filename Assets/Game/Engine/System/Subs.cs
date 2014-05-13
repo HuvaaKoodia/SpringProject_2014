@@ -221,6 +221,13 @@ public class Subs{
 		return enumerable.ElementAt(Random.Range(0,enumerable.Count()));
 	}
 
+	
+	public static T GetRandomAndRemove<T>(IList<T> list){
+		T item=GetRandom(list);
+		if (item!=null) list.Remove (item);
+		return item;
+	}
+
 	/// <summary>
 	/// Get an object under mouse position in 3D space.
 	/// </summary>

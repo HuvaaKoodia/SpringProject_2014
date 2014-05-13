@@ -582,6 +582,8 @@ public class MapGenerator : MonoBehaviour
 			case TileObjData.Type.Airlock:
             case TileObjData.Type.Door:
                 tileobj = MapPrefabs.Corridor_Door;
+				if (tile.Data.TileType==TileObjData.Type.Airlock) tileobj = MapPrefabs.Corridor_Airlock_door;
+
 
 				if 	(CheckTypeEqual(FloorOrCorridor, tile_types, 2, 6)||
 				     (CheckTypeEqual(FloorOrCorridor, tile_types, 2)||CheckTypeEqual(FloorOrCorridor, tile_types, 6))
@@ -600,9 +602,10 @@ public class MapGenerator : MonoBehaviour
 				tile.TileObject=go;
             }
 
-			if (tile.Data.TileType==TileObjData.Type.Door||tile.Data.TileType==TileObjData.Type.ElevatorDoor){
+			if (tile.Data.TileType==TileObjData.Type.Door
+			    ||tile.Data.TileType==TileObjData.Type.ElevatorDoor
+			    ||tile.Data.TileType==TileObjData.Type.Airlock){
                 var door=tile.TileObject.GetComponent<DoorMain>();
-
                 door.GC=GC;
             }
             
@@ -611,11 +614,6 @@ public class MapGenerator : MonoBehaviour
 				elevator.GC=GC;
 			}
 
-			if (tile.Data.TileType==TileObjData.Type.Airlock){
-				var door=tile.TileObject.GetComponent<DoorMain>();
-				door.GC=GC;
-				door.isAirlockDoor=true;
-			}
         }
     }
 

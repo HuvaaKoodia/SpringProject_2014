@@ -34,6 +34,8 @@ public class PlayerMain : EntityMain
 	public Camera TargetingCamera;
 	public Camera PlayerCamera;
 
+	public GameObject Flashlight;
+
 	public Animation playerAnimation;
 	public bool AnimationsOn;
 
@@ -188,7 +190,11 @@ public class PlayerMain : EntityMain
 		}
 
 		Shooting = false;
+		
 		HUD.DeactivateTargetingHUD();
+
+		HUD.gunInfoDisplay.UpdateAllDisplays();
+
 		EndPlayerPhase();
 	}
 
@@ -243,6 +249,8 @@ public class PlayerMain : EntityMain
 			Debug.Log("Kuoli saatana");
 			GC.EngCont.Restart();
 		}
+
+		HUD.gunInfoDisplay.UpdateAllDisplays();
 	}
 
 	public bool StartTargetingMode()
@@ -280,7 +288,6 @@ public class PlayerMain : EntityMain
 
 	public void DisperseWeaponHeat(float multiplier)
 	{
-
         foreach(WeaponMain gun in weaponList)
 		{
             gun.ReduceHeat(multiplier);
@@ -428,7 +435,6 @@ public class PlayerMain : EntityMain
 
 	protected override void UpdateFloor(){
 		base.UpdateFloor();
-		//targetingSub.Update
 	}
 
 	public void SetMouseLook(bool look)
@@ -450,5 +456,10 @@ public class PlayerMain : EntityMain
 	public void GunFinishedShooting()
 	{
 		gunsFinishedShooting++;
+	}
+
+	public void ToggleFlashlight ()
+	{
+		Flashlight.SetActive(!Flashlight.activeSelf);
 	}
 }
