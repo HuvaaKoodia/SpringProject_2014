@@ -90,6 +90,7 @@ public class GameDB : MonoBehaviour {
 		int reward=CalculateQuestReward();
 		GameData.PlayerData.Money+=reward;
 		RemoveQuestItems();
+		GameData.PlayerData.ClearDownloadData();
 
 		//world simulation
 		GameData.CurrentTime+=GameData.CurrentMission.TravelTime;
