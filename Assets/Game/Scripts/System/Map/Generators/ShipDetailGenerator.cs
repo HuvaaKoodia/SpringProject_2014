@@ -34,32 +34,38 @@ public class ShipDetailGenerator : MonoBehaviour
         int current_floor = floor.FloorIndex;
         var xml_md = ship.XmlData.Floors [current_floor];
 
-        int floor_amount_enemies = (int)(Subs.GetRandom(xml_md.EnemyAmountMin, xml_md.EnemyAmountMax)*mission.GetAlienPercent());
+		Debug.Log("mission enemy types: "+mission.MissionEnemyTypes);
+
+		float alien_percent=mission.GetAlienPercent();
+		Debug.Log("Alien percent: "+alien_percent);
+        int floor_amount_enemies = (int)(Subs.GetRandom(xml_md.EnemyAmountMin, xml_md.EnemyAmountMax)*alien_percent);
         int floor_amount_loot = Subs.GetRandom(xml_md.LootAmountMin, xml_md.LootAmountMax);
 
 		int force_enemy_amount_to_corridors=(int)(Subs.GetRandom(XmlDatabase.MaxEnemyPercentageOnCorridors)*floor_amount_enemies);
 
         //rooms
         List<TileObjData> free_tiles = new List<TileObjData>();
-        var rooms_list = ship.FloorRooms [current_floor];
+
+		//reference
+		var rooms_list = ship.FloorRooms[current_floor];
+		//shallow copy
+		var rooms_list_copy = new List<ShipRoomObjData>(rooms_list);
 
 		//loot
-        foreach (var room in rooms_list)
+        while(rooms_list_copy.Count>0)
         {
+			var room = Subs.GetRandomAndRemove(rooms_list_copy);
+
 			GetTilesOfTypeWithObject(free_tiles, floor,room, TileObjData.Type.Floor,TileObjData.Obj.LootArea);
             int l_amount = Subs.GetRandom(room.RoomXmlData.LootAmountMin, room.RoomXmlData.LootAmountMax);
 
-            while (free_tiles.Count>0)
-            {
-                if (floor_amount_loot == 0 || l_amount == 0)
-                    break;
-                
-                var tile = Subs.GetRandom(free_tiles);
-                free_tiles.Remove(tile);
+			while (free_tiles.Count>0&&floor_amount_loot > 0 && l_amount > 0)
+            {                
+                var tile = Subs.GetRandomAndRemove(free_tiles);
                 
                 l_amount--;
                 floor_amount_loot--;
-                    
+
                 tile.SetObj(TileObjData.Obj.Loot);
             }
 		}
@@ -67,7 +73,7 @@ public class ShipDetailGenerator : MonoBehaviour
 		//security systems
 		float percent=mission.GetSecurityPercent();
 		Debug.Log("SecuritySystem percent: "+percent);
-
+		int amount=0;
 		foreach (var room in rooms_list)
 		{
 			GetTilesOfTypeWithObject(free_tiles, floor,room, TileObjData.Type.Floor,TileObjData.Obj.GatlingGunArea);
@@ -86,8 +92,10 @@ public class ShipDetailGenerator : MonoBehaviour
 				--floor_amount_loot;
 				
 				tile.SetObj(TileObjData.Obj.GatlingGun);
+				++amount;
 			}
 		}
+		Debug.Log("security amount: "+amount);
 
 		//change unused loot and security areas to empty (so that other things can be spawned on them).
 
@@ -99,39 +107,37 @@ public class ShipDetailGenerator : MonoBehaviour
 			}
 		}
 
-		//random enemies
+		//Add enemies to rooms
+	
+		rooms_list_copy = new List<ShipRoomObjData>(rooms_list);//shallow copy
 		floor_amount_enemies-=force_enemy_amount_to_corridors;
-
-		foreach (var room in rooms_list)
+	
+		while(rooms_list_copy.Count>0)
 		{
+			var room = Subs.GetRandomAndRemove(rooms_list_copy);
 			GetFreeTilesOfType(floor,room, TileObjData.Type.Floor, free_tiles);
-            int e_amount = Subs.GetRandom(room.RoomXmlData.EnemyAmountMin, room.RoomXmlData.EnemyAmountMax);
+			int e_amount = Subs.GetRandom(room.RoomXmlData.EnemyAmountMin, room.RoomXmlData.EnemyAmountMax);
 
-            while (free_tiles.Count>0)
-            {
-				if (e_amount == 0 || floor_amount_enemies == 0)
-                    break;
+			while (free_tiles.Count>0&&floor_amount_enemies>0&&e_amount>0)
+		    {
+		        var tile = Subs.GetRandomAndRemove(free_tiles);
 
-                var tile = Subs.GetRandom(free_tiles);
-                free_tiles.Remove(tile);
+		        --floor_amount_enemies;
+				--e_amount;
 
-                e_amount--;
-                floor_amount_enemies--;
+		        tile.SetObj(TileObjData.Obj.Enemy);
+		    }
+		}
 
-                tile.SetObj(TileObjData.Obj.Enemy);
-            }
-        }
-
+		//add remaining enemies to corridors
 		floor_amount_enemies+=force_enemy_amount_to_corridors;
         
-		//add remaining enemies to corridors
         if (floor_amount_enemies > 0)
         {
 			GetFreeTilesOfType(floor,null, TileObjData.Type.Corridor, free_tiles);
             while (free_tiles.Count>0)
             {
-                if (floor_amount_enemies == 0)
-                    break;
+                if (floor_amount_enemies == 0) break;
                 
                 var tile = Subs.GetRandom(free_tiles);
                 free_tiles.Remove(tile);

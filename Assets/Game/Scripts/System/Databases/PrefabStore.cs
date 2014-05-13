@@ -33,6 +33,7 @@ public class PrefabStore : MonoBehaviour {
 		Corridor_Deadend,
 		Corridor_Door,
 		Corridor_ElevatorDoor,
+		Corridor_Airlock_door,
 		Corridor_Elevator,
 		ElevatorTrigger
 		;

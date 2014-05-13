@@ -143,22 +143,7 @@ public class PlayerInputSub : MonoBehaviour {
 	{
 		if (Input.GetMouseButtonDown(0))
 		{
-			if (player.targetingMode)
-			{
-				player.targetingSub.ClickTargetAtMousePosition(true);
-				player.HUD.CheckTargetingModePanel();
-                player.HUD.gunInfoDisplay.UpdateAllDisplays();
-			}
-			else
-			{
-				if (player.targetingSub.HasTargetAtMousePosition ()){
-					TargetingModeInput();
-					ChangeWeaponInput(player.GetCurrentWeapon().weaponID);
-				}
-				else{
-					InteractInput(true);
-				}
-			}
+			MouseLeftInput();
 		}
 		else if (Input.GetMouseButtonDown(1))
 		{
@@ -268,6 +253,25 @@ public class PlayerInputSub : MonoBehaviour {
         if (NotUsable()) return;
 
 		player.EndPlayerPhase();
+	}
+
+	void MouseLeftInput(){
+		if (player.targetingMode)
+		{
+			player.targetingSub.ClickTargetAtMousePosition(true);
+			player.HUD.CheckTargetingModePanel();
+			player.HUD.gunInfoDisplay.UpdateAllDisplays();
+		}
+		else
+		{
+			if (player.interactSub.HasInteractable){
+				InteractInput(true);
+			}
+			else if (player.targetingSub.HasTargetAtMousePosition ()){
+				TargetingModeInput();
+				ChangeWeaponInput(player.GetCurrentWeapon().weaponID);
+			}
+		}
 	}
 
 	public void InteractInput(bool screenClick)
