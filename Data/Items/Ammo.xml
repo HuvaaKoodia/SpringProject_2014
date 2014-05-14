@@ -7,11 +7,11 @@ sprite is required is showningame
 
 negative maxamount equals infinite ammo
 -->
-	<Ammo type = "Standard" 	name = "Standard Shell"	 	sprite = "Ammo1" maxamount="28" startamount="10" cost="1"/>
-	<Ammo type = "Heavy" 		name = "Heavy Slug" 		sprite = "Ammo2" maxamount="12" startamount="6" cost="1"/>
-	<Ammo type = "Light" 		name = "Light Rounds"	 	sprite = "Ammo5" maxamount="45" startamount="20" cost="1"/>
-	<Ammo type = "Scatter"	 	name = "Scatter Shell" 		sprite = "Ammo4" maxamount="32" startamount="15" cost="1"/>
-	<Ammo type = "Missile" 		name = "Missile" 			sprite = "Ammo3" maxamount="15" startamount="5" cost="1"/>
+	<Ammo type = "Standard" 	name = "Standard Shell"	 	sprite = "Ammo1" maxamount="30" startamount="10" cost="130"/>
+	<Ammo type = "Heavy" 		name = "Heavy Slug" 		sprite = "Ammo2" maxamount="15" startamount="5" cost="250"/>
+	<Ammo type = "Light" 		name = "Light Rounds"	 	sprite = "Ammo5" maxamount="40" startamount="15" cost="100"/>
+	<Ammo type = "Scatter"	 	name = "Scatter Shell" 		sprite = "Ammo4" maxamount="25" startamount="10" cost="150"/>
+	<Ammo type = "Missile" 		name = "Missile" 			sprite = "Ammo3" maxamount="15" startamount="5" cost="250"/>
 	<Ammo type = "Melee" maxamount="-1"	showingame="false"/>
 	
 <!-- Ammo boxes-->
@@ -19,31 +19,31 @@ negative maxamount equals infinite ammo
 	<Item type = "AmmoBox" name = "Standard Shells" sprite="Ammo1">
 		<Description>Standard shells for small cannons.</Description>
 		<Ammo>Standard</Ammo>
-		<Amount min ="20" max="50"/>
+		<Amount min ="5" max="15"/>
 	</Item>
 	
 	<Item type = "AmmoBox" name = "Heavy Slugs" sprite="Ammo2">
 		<Description>Heavy duty slugs for railguns.</Description>
 		<Ammo>Heavy</Ammo>
-		<Amount min ="5" max="10"/>
+		<Amount min ="4" max="8"/>
 	</Item>
 	
 	<Item type = "AmmoBox" name = "Light Rounds" sprite="Ammo5">
 		<Description>Ammunition for rapid fire weapons.</Description>
 		<Ammo>Light</Ammo>
-		<Amount min ="10" max="30"/>
+		<Amount min ="10" max="20"/>
 	</Item>
 	
 	<Item type = "AmmoBox" name = "Scatter Shells" sprite="Ammo4">
 		<Description>Shells for scatterguns.</Description>
 		<Ammo>Scatter</Ammo>
-		<Amount min ="8" max="15"/>
+		<Amount min ="6" max="12"/>
 	</Item>
 	
 	<Item type = "AmmoBox" name = "Missiles" sprite="Ammo3">
 		<Description>Ammunition for light missile launchers.</Description>
 		<Ammo>Missile</Ammo>
-		<Amount min ="2" max="6"/>
+		<Amount min ="3" max="6"/>
 	</Item>
 	
 	
