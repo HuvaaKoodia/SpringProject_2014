@@ -37,17 +37,10 @@ public class WeaponMain : MonoBehaviour {
 	public LayerMask lookAtLayer;
 
 	public GameObject graphics;
+	WeaponMesh meshData;
 
 	public GameObject verticalMovement;
 	public GameObject horizontalMovement;
-
-	public Transform barrelEstimate;
-
-	string ShootingAnimation = "Shooting";
-	Animation shootAnimator;
-
-	ParticleSystem bulletEmitter;
-	ParticleSystem muzzleFlashEmitter;
 
     public int CurrentAmmo { 
         get{
@@ -107,36 +100,15 @@ public class WeaponMain : MonoBehaviour {
             NoAmmoConsumption=false;
         }
 
-		if (weaponID == WeaponID.LeftShoulder || weaponID == WeaponID.RightShoulder)
-			return;
-
 		bool graphicsFound = player.GC.SS.PS.weaponGraphics.ContainsKey(Weapon.baseItem.mesh);
 		GameObject.Destroy(graphics);
 
-		if (graphicsFound)
+		if (graphicsFound && (weaponID != WeaponID.LeftShoulder && weaponID != WeaponID.RightShoulder))
 		{
 			graphics = GameObject.Instantiate(player.GC.SS.PS.weaponGraphics[Weapon.baseItem.mesh]) as GameObject;
 			graphics.transform.parent = horizontalMovement.transform;
 			graphics.transform.localPosition = Vector3.zero;
 			graphics.transform.rotation = transform.rotation;
-
-			shootAnimator = graphics.GetComponentInChildren<Animation>();
-
-			ParticleSystem[] particleEmitters = graphics.GetComponentsInChildren<ParticleSystem>();
-
-			for (int i = 0; i < particleEmitters.Count(); i++)
-			{
-				if (particleEmitters[i].name == "bullets")
-				{
-					bulletEmitter = particleEmitters[i]; 
-					bulletEmitter.renderer.sortingLayerName = "BulletParticle";
-					bulletEmitter.renderer.sortingOrder = 19;
-				}
-				else if (particleEmitters[i].name == "muzzleFlash")
-				{
-					muzzleFlashEmitter = particleEmitters[i];
-				}
-			}
 		}
 		else
 		{
@@ -144,6 +116,22 @@ public class WeaponMain : MonoBehaviour {
 			graphics.transform.parent = horizontalMovement.transform;
 			graphics.transform.localPosition = Vector3.zero;
 			graphics.transform.rotation = transform.rotation;
+		}
+
+		meshData = graphics.GetComponent<WeaponMesh>();
+
+		if (player.GC.SS.PS.weaponParticleEmitters.ContainsKey(Weapon.baseItem.mesh + "Bullets"))
+		{
+			GameObject bulletEmitter = 
+				GameObject.Instantiate(player.GC.SS.PS.weaponParticleEmitters[Weapon.baseItem.mesh + "Bullets"]) as GameObject;
+			meshData.SetBulletParticles(bulletEmitter);
+		}
+
+		if (player.GC.SS.PS.weaponParticleEmitters.ContainsKey(Weapon.baseItem.mesh + "Muzzle"))
+		{
+			GameObject muzzleEmitter = 
+				GameObject.Instantiate(player.GC.SS.PS.weaponParticleEmitters[Weapon.baseItem.mesh + "Muzzle"]) as GameObject;
+			meshData.SetMuzzleParticles(muzzleEmitter);
 		}
 	}
 
@@ -280,33 +268,16 @@ public class WeaponMain : MonoBehaviour {
 			enemy.TakeDamage(dmg);
 		}
 
-		if (shootAnimator != null)
+		if (meshData != null)
 		{
-			shootAnimator[ShootingAnimation].normalizedTime = 0;
-			shootAnimator.Play(ShootingAnimation);
-	
-			if (bulletEmitter != null)
-			{
-				if (hit)
-				{
-					Physics.IgnoreLayerCollision(enemy.gameObject.layer, bulletEmitter.gameObject.layer, false);
-				}
-				else
-				{
-					Physics.IgnoreLayerCollision(enemy.gameObject.layer, bulletEmitter.gameObject.layer, true);
-				}
+			meshData.PlayShootAnimation();
 
-				bulletEmitter.Play();
-				Invoke("stopBulletEmiting",shootAnimator[ShootingAnimation].length * 0.7f);
+			if (meshData != null)
+			{
+				meshData.StartShootEffect();
 			}
 
-			if (muzzleFlashEmitter != null)
-			{
-				muzzleFlashEmitter.Play();
-				Invoke("stopMuzzleFlashEmiting",shootAnimator[ShootingAnimation].length * 0.8f);
-			}
-
-			while (shootAnimator.isPlaying)
+			while (meshData.IsEmiting || meshData.IsAnimating)
 			{
 				yield return null;
 			}
@@ -315,17 +286,7 @@ public class WeaponMain : MonoBehaviour {
 		can_disperse_heat=false;
 		waitingForShot = false;
 	}
-
-	void stopBulletEmiting()
-	{
-		bulletEmitter.Stop();
-	}
-
-	void stopMuzzleFlashEmiting()
-	{
-		muzzleFlashEmitter.Stop();
-	}
-
+	
     public void IncreaseHeat(float multi)
     {
 		if (WeaponSlot != null)

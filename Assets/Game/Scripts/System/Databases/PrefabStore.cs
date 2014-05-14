@@ -55,6 +55,7 @@ public class PrefabStore : MonoBehaviour {
 
 	//Weapon graphics
 	public Dictionary<string, GameObject> weaponGraphics;
+	public Dictionary<string, GameObject> weaponParticleEmitters;
 
 	public List<GameObject> targetHighlights;
 
@@ -66,6 +67,15 @@ public class PrefabStore : MonoBehaviour {
 		weaponGraphics.Add("Cannon", Resources.Load("Weapons/Cannon") as GameObject);
 		weaponGraphics.Add("Melee", Resources.Load("Weapons/Gladius") as GameObject);
 		weaponGraphics.Add("NotFound", Resources.Load("Weapons/WeaponNotFound") as GameObject);
+
+		weaponParticleEmitters = new Dictionary<string, GameObject>();
+		weaponParticleEmitters.Add("GatlingBullets", Resources.Load("WeaponParticleEmitters/GatlingBullets") as GameObject);
+		weaponParticleEmitters.Add("GatlingMuzzle", Resources.Load("WeaponParticleEmitters/GatlingMuzzle") as GameObject);
+		weaponParticleEmitters.Add("CannonBullets", Resources.Load("WeaponParticleEmitters/CannonBullets") as GameObject);
+		weaponParticleEmitters.Add("CannonMuzzle", Resources.Load("WeaponParticleEmitters/CannonMuzzle") as GameObject);
+		weaponParticleEmitters.Add("ShotgunBullets", Resources.Load("WeaponParticleEmitters/ShotgunBullets") as GameObject);
+		weaponParticleEmitters.Add("ShotgunMuzzle", Resources.Load("WeaponParticleEmitters/ShotgunMuzzle") as GameObject);
+		weaponParticleEmitters.Add("MeleeBullets", Resources.Load("WeaponParticleEmitters/GladiusBullets") as GameObject);
 
 		targetHighlights = new List<GameObject>();
 		targetHighlights.Add(Resources.Load("TargetingSprites/LeftDown") as GameObject);

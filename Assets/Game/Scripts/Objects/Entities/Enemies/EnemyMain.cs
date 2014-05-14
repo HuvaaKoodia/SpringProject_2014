@@ -185,4 +185,11 @@ public class EnemyMain : EntityMain {
 		movement.movementSpeed = normalMovementSpeed * culledSpeedMultiplier;
 		movement.turnSpeed = normalTurnSpeed * culledSpeedMultiplier;
 	}
+
+	void OnParticleCollision(GameObject other)
+	{
+		int lol;
+		lol = 0;
+		lol++;
+	}
 }
