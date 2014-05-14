@@ -15,6 +15,9 @@ public class WeaponMesh : MonoBehaviour {
 	Animation shootAnimation;
 	string shootAnimationName = "Shoot";
 
+	ParticleSystem.Particle[] bulletParticleArray;
+	int bulletParticleCount;
+
 	// Use this for initialization
 	void Start () {
 		shootAnimation = GetComponentInChildren<Animation>();
@@ -22,7 +25,7 @@ public class WeaponMesh : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+
 	}
 	
 	public void SetBulletParticles(GameObject particleEmitter)

@@ -222,7 +222,7 @@ public class WeaponMain : MonoBehaviour {
 			for (int i = 0; i < enemyPair.Value.numShots; i++)
 			{
 				if (Overheat || CurrentAmmo == 0) break;
-				if (enemyPair.Value.numShots == 0 || enemyPair.Key == null || enemyPair.Key.Dead) continue;
+				if (enemyPair.Value.numShots == 0 || IsEnemyDead(enemyPair.Key)) continue;
 
 				while (waitingForShot)
 				{
@@ -251,7 +251,16 @@ public class WeaponMain : MonoBehaviour {
 
 		while (!lookingAtEnemy(enemy))
 		{
+			if (IsEnemyDead(enemy))
+			{
+				yield break;
+			}
 			yield return null;
+		}
+
+		if (IsEnemyDead(enemy))
+		{
+			yield break;
 		}
 
 		if (!NoAmmoConsumption) CurrentAmmo--;
@@ -285,6 +294,11 @@ public class WeaponMain : MonoBehaviour {
 
 		can_disperse_heat=false;
 		waitingForShot = false;
+	}
+
+	bool IsEnemyDead(EnemyMain enemy)
+	{
+		return enemy == null || enemy.Dead;
 	}
 	
     public void IncreaseHeat(float multi)

@@ -76,6 +76,8 @@ public class PrefabStore : MonoBehaviour {
 		weaponParticleEmitters.Add("ShotgunBullets", Resources.Load("WeaponParticleEmitters/ShotgunBullets") as GameObject);
 		weaponParticleEmitters.Add("ShotgunMuzzle", Resources.Load("WeaponParticleEmitters/ShotgunMuzzle") as GameObject);
 		weaponParticleEmitters.Add("MeleeBullets", Resources.Load("WeaponParticleEmitters/GladiusBullets") as GameObject);
+		weaponParticleEmitters.Add("GaussBullets", Resources.Load("WeaponParticleEmitters/GaussBullets") as GameObject);
+		weaponParticleEmitters.Add("MissileBullets", Resources.Load("WeaponParticleEmitters/MissileBullets") as GameObject);
 
 		targetHighlights = new List<GameObject>();
 		targetHighlights.Add(Resources.Load("TargetingSprites/LeftDown") as GameObject);
