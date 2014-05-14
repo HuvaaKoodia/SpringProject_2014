@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class MechStatisticsMain : MonoBehaviour {
-
     PlayerObjData PlayerData;
 
 	public Color FullHealthColor = Color.green;
@@ -15,8 +14,11 @@ public class MechStatisticsMain : MonoBehaviour {
 	public MechPartsStatsSub upperTorso;
 	public MechPartsStatsSub lowerTorso;
 
+	public UISprite HeatMeter;
+	public GameObject DataPanel,OverheatSprite;
+
 	// Use this for initialization
-	void Start () {
+	void Start (){
 		lowerTorso.ChangePartColor(FullHealthColor);
 	}
 	
@@ -25,13 +27,18 @@ public class MechStatisticsMain : MonoBehaviour {
     }
 
 	// Update is called once per frame
-	void Update (){
+	public void UpdateStats(){
 		SetPartInfo(weaponSlots[(int)WeaponID.LeftShoulder], UIEquipmentSlot.Slot.WeaponLeftShoulder);
 		SetPartInfo(weaponSlots[(int)WeaponID.LeftHand], UIEquipmentSlot.Slot.WeaponLeftHand);
 		SetPartInfo(weaponSlots[(int)WeaponID.RightShoulder], UIEquipmentSlot.Slot.WeaponRightShoulder);
 		SetPartInfo(weaponSlots[(int)WeaponID.RightHand], UIEquipmentSlot.Slot.WeaponRightHand);
 
         SetPartInfo(upperTorso, PlayerData.Equipment.UpperTorso);
+
+		var percent=PlayerData.Equipment.UpperTorso.ObjData.HeatPercent();
+		HeatMeter.fillAmount=percent;
+		DataPanel.SetActive(percent<1);
+		OverheatSprite.SetActive(percent==1);
 	}
 
     void SetWeaponText(string text,UILabel label,UIEquipmentSlot.Slot slot){

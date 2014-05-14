@@ -114,7 +114,7 @@ public class PlayerMain : EntityMain
 
 		MovedLastPhase = false;
 
-		HUD.gunInfoDisplay.UpdateAllDisplays();
+		HUD.UpdateHudPanels();
         StartTurn();
     }
 
@@ -183,17 +183,17 @@ public class PlayerMain : EntityMain
 
 		ShotLastTurn = true;
 
+		HUD.UpdateHudPanels();
+
 		while (gunsFinishedShooting < weaponList.Count)
 		{
-			HUD.gunInfoDisplay.UpdateAllDisplays();
 			yield return null;
 		}
 
 		Shooting = false;
 		
 		HUD.DeactivateTargetingHUD();
-
-		HUD.gunInfoDisplay.UpdateAllDisplays();
+		HUD.UpdateHudPanels();
 
 		EndPlayerPhase();
 	}
@@ -250,7 +250,7 @@ public class PlayerMain : EntityMain
 			GC.EngCont.Restart();
 		}
 
-		HUD.gunInfoDisplay.UpdateAllDisplays();
+		HUD.UpdateHudPanels();
 	}
 
 	public bool StartTargetingMode()

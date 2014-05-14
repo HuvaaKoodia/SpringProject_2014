@@ -151,7 +151,7 @@ public class PlayerInputSub : MonoBehaviour {
 			{
 				player.targetingSub.ClickTargetAtMousePosition(false);
 				player.HUD.CheckTargetingModePanel();
-                player.HUD.gunInfoDisplay.UpdateAllDisplays();
+				player.HUD.UpdateHudPanels();
 			}
 		}
 	}
@@ -260,7 +260,7 @@ public class PlayerInputSub : MonoBehaviour {
 		{
 			player.targetingSub.ClickTargetAtMousePosition(true);
 			player.HUD.CheckTargetingModePanel();
-			player.HUD.gunInfoDisplay.UpdateAllDisplays();
+			player.HUD.UpdateHudPanels();
 		}
 		else
 		{

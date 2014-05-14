@@ -56,4 +56,8 @@ public class InvBaseItem
 		return type!=InvBaseItem.Type.QuestItem&&type!=InvBaseItem.Type.Loot&&type!=InvBaseItem.Type.AmmoBox;
 	}
 
+	public bool ShowItemValue ()
+	{
+		return type==InvBaseItem.Type.Loot;
+	}
 }

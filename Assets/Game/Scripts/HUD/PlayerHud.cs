@@ -222,4 +222,10 @@ public class PlayerHud : MonoBehaviour {
 			player.inputSub.TargetingModeInput();
 		}
 	}
+
+	public void UpdateHudPanels ()
+	{
+		gunInfoDisplay.UpdateAllDisplays();
+		MechStats.UpdateStats();
+	}
 }

@@ -63,8 +63,6 @@ public class WeaponMain : MonoBehaviour {
 	public Quaternion targetHorizontalRotation;
 	public float rotationSpeed;
 
-	bool can_disperse_heat=true;
-
     public bool NoAmmoConsumption{get;private set;}
 
     public bool Usable(){
@@ -291,8 +289,6 @@ public class WeaponMain : MonoBehaviour {
 				yield return null;
 			}
 		}
-
-		can_disperse_heat=false;
 		waitingForShot = false;
 	}
 
@@ -309,9 +305,8 @@ public class WeaponMain : MonoBehaviour {
 
 	public void ReduceHeat(float multi)
 	{
-		if (can_disperse_heat&&WeaponSlot != null)
+		if (WeaponSlot != null)
        		WeaponSlot.ObjData.ReduceHEAT(Weapon,multi);
-		can_disperse_heat=true;
 	}
 
 	public void AddAmmo(int amount)

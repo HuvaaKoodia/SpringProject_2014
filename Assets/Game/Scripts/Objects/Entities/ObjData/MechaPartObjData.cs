@@ -32,16 +32,18 @@ public class MechaPartObjData{
     }
 
 	public float ConditionPercent(){
-		return (float)HP/MaxHP;
+		return Mathf.Clamp01((float)HP/MaxHP);
 	}
 
 	public float HeatPercent(){
-		return (float)HEAT/MaxHEAT;
+		return Mathf.Clamp01((float)HEAT/MaxHEAT);
 	}
 
 	//gamedata
 	public int Overheat_limit_bonus=0;
 	public float armor_multi=0,cooling_multi=0,attack_multi=0,accuracy_multi=0;
+
+	bool can_disperse_heat=true;//Dev.lazy shouldn't be here necessarily
 
     public IntEvent TakeHeat;
 
@@ -73,6 +75,15 @@ public class MechaPartObjData{
     }
 
     public void AddHEAT(int heat){
+		if (heat<0){
+			if (!can_disperse_heat){
+				can_disperse_heat=true;
+				return;
+			}
+		}
+		else{
+			can_disperse_heat=false;
+		}
         HEAT+=heat;
 		var overheatlimit=MaxHEAT+Overheat_limit_bonus;
 		HEAT=Mathf.Clamp(HEAT,0,overheatlimit);
@@ -82,7 +93,8 @@ public class MechaPartObjData{
         if (HEAT<OVERHEAT_DISPERSE_THRESHOLD){
             OVERHEAT=false;
         }
-        if (heat>0&&TakeHeat!=null) TakeHeat(heat); 
+        if (heat>0&&TakeHeat!=null) TakeHeat(heat);
+
     }
 
     /// <summary>
@@ -96,16 +108,8 @@ public class MechaPartObjData{
     /// Reduces HEAT based on the weapons cooling value
     /// </summary>
     public void ReduceHEAT(InvGameItem weapon,float multi){
-        if (weapon==null) return;
+        if (weapon==null||!can_disperse_heat) return;
 		AddHEAT(-weapon.GetStat(InvStat.Type.Cooling)._amount*(1f+cooling_multi));
-	}
-
-	/// <summary>
-	/// Disperses HEAT based on the weapons cooling value
-	/// </summary>
-	public void DisperseHEAT(InvGameItem weapon,float multi){
-		if (weapon==null) return;
-		AddHEAT(-(XmlDatabase.WeaponHeatDisperseCoolingMultiplier*(1f+cooling_multi)*weapon.GetStat(InvStat.Type.Cooling)._amount)+HEAT*XmlDatabase.WeaponHeatDisperseHeatMultiplier);
 	}
 
     //effects

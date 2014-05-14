@@ -10,7 +10,8 @@ public abstract class UIItemSlot : MonoBehaviour
     public GameItemDelegate OnDragStart,OnItemDroppedToVendorSlot,OnItemReplaceEvent;
 	public UISprite icon;
 	public UIWidget background;
-	public UILabel label,lvl_label;
+	public UILabel label;
+	UILabel lvl_label;
 
 	public AudioClip grabSound;
 	public AudioClip placeSound;
@@ -21,8 +22,10 @@ public abstract class UIItemSlot : MonoBehaviour
 
     //DEV. puukkoa!
 
-    void Start(){
+    void Awake(){
         //OnDragStart+=UpdateSlotColors;
+		var go= transform.Find("LvlLabel");
+		if (go!=null) lvl_label=go.GetComponent<UILabel>();
     }
 
     public void UpdateSlotColors(InvGameItem item){
@@ -278,8 +281,13 @@ public abstract class UIItemSlot : MonoBehaviour
 			if (lvl_label != null)
 			{
 				string itemName = "";
-				if (i!=null&&i.baseItem.ShowItemLevel()){
-					itemName = "MK."+i.itemLevel;
+				if (i!=null){
+					if (i.baseItem.ShowItemLevel()){
+						itemName = "MK."+i.itemLevel;
+					}
+					else if (i.baseItem.ShowItemValue()){
+						itemName = "[ffa500]"+i.GetStat(InvStat.Type.Value)._amount;
+					}
 				}
 
 				lvl_label.text=itemName;
