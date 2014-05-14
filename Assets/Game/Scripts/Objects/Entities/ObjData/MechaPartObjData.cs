@@ -5,7 +5,7 @@ public delegate void IntEvent(int value);
 
 public class MechaPartObjData{
 
-	public static int MaxHP=100;//DEV.MAGNUM
+	public static int MaxHP=100,MaxHEAT=100;//DEV.MAGNUM
 
 	public UIEquipmentSlot.Slot Slot {get;set;}
 
@@ -33,6 +33,10 @@ public class MechaPartObjData{
 
 	public float ConditionPercent(){
 		return (float)HP/MaxHP;
+	}
+
+	public float HeatPercent(){
+		return (float)HEAT/MaxHEAT;
 	}
 
 	//gamedata
@@ -70,7 +74,7 @@ public class MechaPartObjData{
 
     public void AddHEAT(int heat){
         HEAT+=heat;
-		var overheatlimit=100+Overheat_limit_bonus;
+		var overheatlimit=MaxHEAT+Overheat_limit_bonus;
 		HEAT=Mathf.Clamp(HEAT,0,overheatlimit);
 		if (HEAT==overheatlimit){
             OVERHEAT=true;
@@ -111,6 +115,6 @@ public class MechaPartObjData{
 			return XmlDatabase.MechaPartConditionFairThreshold+accuracy_multi;
 		if (HP <= MechaPartObjData.MaxHP*XmlDatabase.MechaPartConditionBadThreshold)
 			return XmlDatabase.MechaPartConditionBadThreshold+accuracy_multi;
-		return 1f+accuracy_multi;
+		return accuracy_multi*100;
     }
 }

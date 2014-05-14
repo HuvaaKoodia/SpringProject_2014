@@ -70,6 +70,8 @@ public class WeaponMain : MonoBehaviour {
 	public Quaternion targetHorizontalRotation;
 	public float rotationSpeed;
 
+	bool can_disperse_heat=true;
+
     public bool NoAmmoConsumption{get;private set;}
 
     public bool Usable(){
@@ -310,6 +312,7 @@ public class WeaponMain : MonoBehaviour {
 			}
 		}
 
+		can_disperse_heat=false;
 		waitingForShot = false;
 	}
 
@@ -331,8 +334,9 @@ public class WeaponMain : MonoBehaviour {
 
 	public void ReduceHeat(float multi)
 	{
-		if (WeaponSlot != null)
+		if (can_disperse_heat&&WeaponSlot != null)
        		WeaponSlot.ObjData.ReduceHEAT(Weapon,multi);
+		can_disperse_heat=true;
 	}
 
 	public void AddAmmo(int amount)
@@ -487,7 +491,7 @@ public class WeaponMain : MonoBehaviour {
         var distance=Vector3.Distance(new Vector3(player.transform.position.x, player.transform.position.z),
 		                              new Vector3(enemy.transform.position.x, enemy.transform.position.z));
         var multi=WeaponSlot.ObjData.GetAccuracyMulti();
-        return (int)Mathf.Clamp((Accuracy-((distance-MapGenerator.TileSize.x)/(Range*0.01f)))*multi,0,100);
+        return (int)Mathf.Clamp((Accuracy-((distance-MapGenerator.TileSize.x)/(Range*0.01f)))+multi,0,95);
     }
 
     public float HitChance(EnemyMain enemy)

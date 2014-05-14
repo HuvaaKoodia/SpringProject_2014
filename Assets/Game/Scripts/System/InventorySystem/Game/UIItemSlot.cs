@@ -108,7 +108,7 @@ public abstract class UIItemSlot : MonoBehaviour
     {
         var t="[" + NGUIText.EncodeColor(item.color) + "]" + item.name + "[-]\n";
         
-		if (item.baseItem.type!=InvBaseItem.Type.QuestItem&&item.baseItem.type!=InvBaseItem.Type.Loot&&item.baseItem.type!=InvBaseItem.Type.AmmoBox)
+		if (item.baseItem.ShowItemLevel())
             t += "[AFAFAF]MK." + item.itemLevel + " ";
         
         t+=item.baseItem.type;
@@ -277,7 +277,11 @@ public abstract class UIItemSlot : MonoBehaviour
 			
 			if (lvl_label != null)
 			{
-				string itemName = (i==null)? "":"MK."+i.itemLevel;
+				string itemName = "";
+				if (i!=null&&i.baseItem.ShowItemLevel()){
+					itemName = "MK."+i.itemLevel;
+				}
+
 				lvl_label.text=itemName;
 			}
 			
@@ -299,7 +303,6 @@ public abstract class UIItemSlot : MonoBehaviour
 		}
 	}
 
-    
     /// <summary>
     /// Checks the vendor slot item interactions.
     /// Returns true if vendor slot and not vendor item.

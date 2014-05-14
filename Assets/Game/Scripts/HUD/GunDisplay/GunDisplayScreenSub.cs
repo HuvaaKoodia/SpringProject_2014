@@ -9,9 +9,9 @@ public class GunDisplayScreenSub : MonoBehaviour {
 	public WeaponMain weapon;
 
 	public UILabel infoLabel;
-	public UISprite highlight;
+	public UISprite highlight,heat_slider_spr;
 
-	GameObject overheat_icon,no_ammo_icon,broken_icon;
+	GameObject data_panel,overheat_icon,no_ammo_icon,broken_icon;
 
 	// Use this for initialization
 	void Awake () {
@@ -19,12 +19,12 @@ public class GunDisplayScreenSub : MonoBehaviour {
 		no_ammo_icon=transform.Find("NoAmmoIcon").gameObject;
 		broken_icon=transform.Find("BrokenIcon").gameObject;
 	
+		data_panel=transform.Find("DataPanel").gameObject;
+
 		overheat_icon.SetActive(false);
 		no_ammo_icon.SetActive(false);
 		broken_icon.SetActive(false);
 	}
-
-	void Start(){}
 
 	public void UpdateGunInfo(PlayerMain player)
 	{
@@ -53,21 +53,32 @@ public class GunDisplayScreenSub : MonoBehaviour {
 			no_ammo_icon.SetActive(player.ObjData.GetAmmoAmount(weapon.Weapon.baseItem.ammotype)==0);
 			broken_icon.SetActive(!weapon.WeaponSlot.ObjData.USABLE);
 
+			//hax fix
+			if (broken_icon.activeSelf){
+				no_ammo_icon.SetActive(false);
+				overheat_icon.SetActive(false);
+			}
+			else  if (no_ammo_icon.activeSelf){
+				overheat_icon.SetActive(false);
+			}
+
+
+			heat_slider_spr.fillAmount=weapon.WeaponSlot.ObjData.HeatPercent();
+
 			info += "\n";
-		
 			info += "ROF: " + weapon.GetNumShotsTargetedTotal() + "/" + weapon.RateOfFire;
 
 			infoLabel.text = info;
 
 			if (overheat_icon.activeSelf||no_ammo_icon.activeSelf||broken_icon.activeSelf){
-				infoLabel.gameObject.SetActive(false);
+				data_panel.SetActive(false);
 			}
 			else
-				infoLabel.gameObject.SetActive(true);
+				data_panel.SetActive(true);
 		}
 		else
 		{
-			infoLabel.text = "";
+			data_panel.SetActive(false);
 			SetHighlightColor(displayMain.inActiveColor);
 		}
 	}
