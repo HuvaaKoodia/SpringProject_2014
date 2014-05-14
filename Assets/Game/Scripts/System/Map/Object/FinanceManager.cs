@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class Debt
 {
-	public int left_tb_payed{get;set;}									//variable to keep track of amount left to be payed per debt
+	public int left_tb_payed{get;set;}										//variable to keep track of amount left to be payed per debt
 	public int monthly_cut{get;set;}										//variable to keep track of monthly cut per debt (default value = 1000)
 	public float interest_percent{get;set;}									//variable to keep track of interest percentage upon taking up a new debt
 	public int interest{get;set;}											//variable to keep track of interest value per debt
@@ -43,24 +43,24 @@ public class Debt
 
 public class FinanceManager
 {
-	public PlayerObjData Player{get;set;}									//access the Player's data
-	public List<Debt> listofdebts{get;set;}									//store all the debts taken
+	public PlayerObjData Player{get;set;}												//access the Player's data
+	public List<Debt> listofdebts{get;set;}												//store all the debts taken
 	
-	public int days_till_update{get;set;}									//variable to keep track of the number of days until the next update (default value = 30)
-	private int debt_max;													//variable for the maximum number of debts the Player can take
+	public int days_till_update{get;set;}												//variable to keep track of the number of days until the next update (default value = 30)
+	private int debt_max;																//variable for the maximum number of debts the Player can take
 	
-	public int player_money{get{return Player.Money;} set{Player.Money=value;}}										//variable to keep track of the amount of money the player has at the given moment
-	public int payment_total{get;set;}									//variable to store the sum of all the debts
-	public int existing_cash{get;set;}									//variable to keep track the resultant amount after minusing payment total from player money
+	public int player_money{get{return Player.Money;} set{Player.Money=value;}}			//variable to keep track of the amount of money the player has at the given moment
+	public int payment_total{get;set;}													//variable to store the sum of all the debts
+	public int existing_cash{get;set;}													//variable to keep track the resultant amount after minusing payment total from player money
 		
-	float default_percent;													//variable contributing to calculating interest percentage
-	float increase_percent;													//variable contributing to calculating interest percentage
+	float default_percent;																//variable contributing to calculating interest percentage
+	float increase_percent;																//variable contributing to calculating interest percentage
 
-	public int month{get;set;}												//variable to keep track of months (required in the calculation of interest percent)
+	public int month{get;set;}															//variable to keep track of months (required in the calculation of interest percent)
 	
-	public FinanceManager(){}													//empty constructor (needs to be introduced due to presence of public properties in the class)
+	public FinanceManager(){}															//empty constructor (needs to be introduced due to presence of public properties in the class)
 
-	public FinanceManager (PlayerObjData player)							//constructor that initializes variables, takes in a PlayerObjData
+	public FinanceManager (PlayerObjData player)										//constructor that initializes variables, takes in a PlayerObjData
 	{
 		Player = player;
 		listofdebts = new List<Debt>();
@@ -132,6 +132,7 @@ public class FinanceManager
 		}
 	}
 
+	//function to calculate all the necessary componets for Player's finances
 	public void CalcAll()
 	{
 		CalcMonthlyCut();
@@ -163,24 +164,6 @@ public class FinanceManager
 			Player.Money=existing_cash;
 		}
 	}
-
-//	//function to update values upon click of shorten debt button and upon update of month
-//	public void UpdateValues()
-//	{
-//		//update interest percents, interests, debt payments of each debt and peyment total
-//		CalcInterestPercent();
-//		
-//		for(int i = 0; i < listofdebts.Count; i++)
-//		{
-//			listofdebts[i].CalcInterest();
-//			listofdebts[i].CalcDebtPayment();
-//		}
-//
-//		//reset payment total and recalculate value of payment total
-//		payment_total = 0;
-//		CalcPaymentTotal(true);
-//		CalcExistingCash();
-//	}
 	
 	//function for Player to take on a new debt
 	//assign new debt into specific index
