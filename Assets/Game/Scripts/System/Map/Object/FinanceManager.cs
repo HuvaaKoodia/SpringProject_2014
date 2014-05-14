@@ -11,7 +11,8 @@ public class Debt
 
 	public bool active{get;set;}											//variable to keep track of debt's active state
 	public float original_debt_sum{get;set;}								//variable to keep track of the Player's original debt sum
-
+	public int month{get;set;}															//variable to keep track of months (required in the calculation of interest percent)
+	
 	public Debt()															//constructor that initializes variables
 	{
 		left_tb_payed = 0;
@@ -19,6 +20,7 @@ public class Debt
 
 		active = false;
 		original_debt_sum = 0.0f;
+		month = 0;
 	}
 
 	public void SetStartingDepth(int sum){
@@ -55,9 +57,7 @@ public class FinanceManager
 		
 	float default_percent;																//variable contributing to calculating interest percentage
 	float increase_percent;																//variable contributing to calculating interest percentage
-
-	public int month{get;set;}															//variable to keep track of months (required in the calculation of interest percent)
-	
+		
 	public FinanceManager(){}															//empty constructor (needs to be introduced due to presence of public properties in the class)
 
 	public FinanceManager (PlayerObjData player)										//constructor that initializes variables, takes in a PlayerObjData
@@ -78,8 +78,6 @@ public class FinanceManager
 		{
 			listofdebts.Add(new Debt());
 		}
-
-		month = 1;
 	}
 	
 	//function that calculates the Player's existing cash
@@ -87,17 +85,13 @@ public class FinanceManager
 	{
 		existing_cash = (int)(player_money - payment_total);
 	}
-	
+
 	//function to calculate the new interest percentage each time Player takes on a new debt
-	private void CalcInterestPercent()
+	private void CalcInterestPercent(int index)
 	{				
-		//as long as there is a debt, calculate interest percentage for the particular debt
-		for(int i = 0; i < listofdebts.Count; i++)
+		if(listofdebts[index] != null)
 		{
-			if(listofdebts[i] != null)
-			{
-				listofdebts[i].interest_percent = (increase_percent * month) + default_percent;
-			}
+			listofdebts[index].interest_percent = (increase_percent * listofdebts[index].month) + default_percent;
 		}
 	}
 
@@ -136,9 +130,10 @@ public class FinanceManager
 	public void CalcAll()
 	{
 		CalcMonthlyCut();
-		CalcInterestPercent();
+//		CalcInterestPercent();
 		for(int i = 0; i < listofdebts.Count; i++)
 		{
+			CalcInterestPercent(i);
 			listofdebts[i].CalcInterest();
 			listofdebts[i].CalcDebtPayment();
 		}
@@ -153,12 +148,26 @@ public class FinanceManager
 		//once, number of days are used up for the month, increase month value, update the necessary values and reset the value for the number of days
 		if(days_till_update == 0)
 		{
-			month++;
+			for(int i = 0; i < listofdebts.Count; i++)
+			{
+				if(listofdebts[i].active)
+				{
+					listofdebts[i].month++;
+				}
+			}
+//			month++;
 			days_till_update = 30;
 		}
 		else if(days_till_update < 0)
 		{
-			month++;
+			for(int i = 0; i < listofdebts.Count; i++)
+			{
+				if(listofdebts[i].active)
+				{
+					listofdebts[i].month++;
+				}
+			}
+			//			month++;
 			days_till_update = 30 + days_till_update;
 			CalcExistingCash();
 			Player.Money=existing_cash;

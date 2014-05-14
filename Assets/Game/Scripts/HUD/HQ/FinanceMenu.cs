@@ -14,7 +14,7 @@ public class FinanceMenu : MonoBehaviour {
 	public List<UILabel> Payments;								//List that keeps track of the Debt Payments for each debt and Payment Total
 	public List<UILabel> ShortenDebt;							//List that keeps track of the Shorten Debt By component for each debt
 	public List<GameObject> DebtsActivate;						//List that keeps track of the Debt types ie, DebtAdded and DebtEmpty for each Debt
-	public List<GameObject> DeptPanels;
+	public List<GameObject> DebtPanels;
 
 	public FinanceManager _FinanceManager;
 	
@@ -37,6 +37,7 @@ public class FinanceMenu : MonoBehaviour {
 			{
 				DebtsActivate[(2 * i)].SetActive(true);
 				DebtsActivate[(2 * i) + 1].SetActive(false);
+				DebtPanels[i].SetActive(true);
 			}
 		}
 	}
@@ -272,7 +273,7 @@ public class FinanceMenu : MonoBehaviour {
 	{
 		int amount=int.Parse(ShortenDebt[index_2].text);
 
-		if (_FinanceManager.Player.Money<amount) return;
+//		if (_FinanceManager.Player.Money<amount) return;
 		//add a debt
 		_FinanceManager.AddDebt(index_1);
 		
@@ -284,6 +285,7 @@ public class FinanceMenu : MonoBehaviour {
 		//enable DebtAdded and disable DebtEmpty for current panel
 		DebtsActivate[index_2 - 1].SetActive(true);
 		DebtsActivate[index_2].SetActive(false);
+		DebtPanels[index_1].SetActive(true);
 
 		_FinanceManager.listofdebts[index_1].original_debt_sum = _FinanceManager.listofdebts[index_1].left_tb_payed;
 	}
