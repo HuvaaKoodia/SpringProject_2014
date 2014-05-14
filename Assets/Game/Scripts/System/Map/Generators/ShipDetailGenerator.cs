@@ -78,7 +78,7 @@ public class ShipDetailGenerator : MonoBehaviour
 		{
 			GetTilesOfTypeWithObject(free_tiles, floor,room, TileObjData.Type.Floor,TileObjData.Obj.GatlingGunArea);
 
-			int l_amount =(int)((free_tiles.Count()*percent));
+			int l_amount =(int)Mathf.Ceil(free_tiles.Count()*percent);
 
 			if (free_tiles.Count()>0) Debug.Log("SecuritySystem amount: "+free_tiles.Count()+" -> "+l_amount);
 
@@ -108,7 +108,7 @@ public class ShipDetailGenerator : MonoBehaviour
 		}
 
 		//Add enemies to rooms
-	
+		amount=0;
 		rooms_list_copy = new List<ShipRoomObjData>(rooms_list);//shallow copy
 		floor_amount_enemies-=force_enemy_amount_to_corridors;
 	
@@ -126,6 +126,7 @@ public class ShipDetailGenerator : MonoBehaviour
 				--e_amount;
 
 		        tile.SetObj(TileObjData.Obj.Enemy);
+				++amount;
 		    }
 		}
 
@@ -145,8 +146,11 @@ public class ShipDetailGenerator : MonoBehaviour
                 floor_amount_enemies--;
                 
                 tile.SetObj(TileObjData.Obj.Enemy);
+				++amount;
             }
         }
+
+		Debug.Log("Alien amount: "+amount);
     }
 
     public void GenerateMissionObjectives(GameController GC, MissionObjData mission, ShipObjData ship){

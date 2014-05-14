@@ -50,4 +50,10 @@ public class InvBaseItem
 	public Color color = Color.white;
 	public UIAtlas iconAtlas;
 	public string iconName = "";
+
+	public bool ShowItemLevel()
+	{
+		return type!=InvBaseItem.Type.QuestItem&&type!=InvBaseItem.Type.Loot&&type!=InvBaseItem.Type.AmmoBox;
+	}
+
 }

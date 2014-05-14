@@ -18,7 +18,7 @@ public class EmitSystem : MonoBehaviour {
 	void Awake()
 	{
 		emit_active = false;
-		emit.particleSystem.Pause();
+		emit.particleSystem.Stop();
 	}
 
 	// Use this for initialization
