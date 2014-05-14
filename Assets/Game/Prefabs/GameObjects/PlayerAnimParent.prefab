@@ -8201,7 +8201,7 @@ MonoBehaviour:
   weapon: {fileID: 0}
   infoLabel: {fileID: 11400198}
   highlight: {fileID: 11400104}
-  overheat: {fileID: 11400376}
+  heat_slider_spr: {fileID: 0}
 --- !u!114 &11400090
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8522,7 +8522,7 @@ MonoBehaviour:
   weapon: {fileID: 0}
   infoLabel: {fileID: 11400304}
   highlight: {fileID: 11400348}
-  overheat: {fileID: 11400106}
+  heat_slider_spr: {fileID: 0}
 --- !u!114 &11400116
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8760,7 +8760,8 @@ MonoBehaviour:
   verticalMovement: {fileID: 0}
   horizontalMovement: {fileID: 0}
   barrelEstimate: {fileID: 0}
-  targetRotation: {x: 0, y: 0, z: 0, w: 0}
+  targetVerticalRotation: {x: 0, y: 0, z: 0, w: 0}
+  targetHorizontalRotation: {x: 0, y: 0, z: 0, w: 0}
   rotationSpeed: 5
 --- !u!114 &11400136
 MonoBehaviour:
@@ -9076,9 +9077,12 @@ MonoBehaviour:
   GameCamera: {fileID: 2000002}
   HudCamera: {fileID: 2000000}
   TargetingCamera: {fileID: 2000004}
+  PlayerCamera: {fileID: 0}
+  Flashlight: {fileID: 0}
   playerAnimation: {fileID: 11100000}
   AnimationsOn: 0
   WeaponMouseLookOn: 0
+  Shooting: 0
 --- !u!114 &11400164
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9110,6 +9114,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 69888
   wallMask: 0
+  deadZoneX: 0
+  deadZoneY: 0
 --- !u!114 &11400168
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10656,7 +10662,8 @@ MonoBehaviour:
   verticalMovement: {fileID: 0}
   horizontalMovement: {fileID: 0}
   barrelEstimate: {fileID: 0}
-  targetRotation: {x: 0, y: 0, z: 0, w: 0}
+  targetVerticalRotation: {x: 0, y: 0, z: 0, w: 0}
+  targetHorizontalRotation: {x: 0, y: 0, z: 0, w: 0}
   rotationSpeed: 5
 --- !u!114 &11400264
 MonoBehaviour:
@@ -11877,7 +11884,7 @@ MonoBehaviour:
   weapon: {fileID: 0}
   infoLabel: {fileID: 11400196}
   highlight: {fileID: 11400064}
-  overheat: {fileID: 11400398}
+  heat_slider_spr: {fileID: 0}
 --- !u!114 &11400338
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -12102,7 +12109,8 @@ MonoBehaviour:
   verticalMovement: {fileID: 0}
   horizontalMovement: {fileID: 0}
   barrelEstimate: {fileID: 0}
-  targetRotation: {x: 0, y: 0, z: 0, w: 0}
+  targetVerticalRotation: {x: 0, y: 0, z: 0, w: 0}
+  targetHorizontalRotation: {x: 0, y: 0, z: 0, w: 0}
   rotationSpeed: 5
 --- !u!114 &11400354
 MonoBehaviour:
@@ -12860,7 +12868,7 @@ MonoBehaviour:
   weapon: {fileID: 0}
   infoLabel: {fileID: 11400048}
   highlight: {fileID: 11400298}
-  overheat: {fileID: 11400034}
+  heat_slider_spr: {fileID: 0}
 --- !u!114 &11400402
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -12986,7 +12994,8 @@ MonoBehaviour:
   verticalMovement: {fileID: 0}
   horizontalMovement: {fileID: 0}
   barrelEstimate: {fileID: 0}
-  targetRotation: {x: 0, y: 0, z: 0, w: 0}
+  targetVerticalRotation: {x: 0, y: 0, z: 0, w: 0}
+  targetHorizontalRotation: {x: 0, y: 0, z: 0, w: 0}
   rotationSpeed: 5
 --- !u!114 &11400414
 MonoBehaviour:
@@ -13185,9 +13194,12 @@ MonoBehaviour:
   GameCamera: {fileID: 2000002}
   HudCamera: {fileID: 2000000}
   TargetingCamera: {fileID: 2000004}
+  PlayerCamera: {fileID: 0}
+  Flashlight: {fileID: 0}
   playerAnimation: {fileID: 11100000}
   AnimationsOn: 0
   WeaponMouseLookOn: 0
+  Shooting: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
