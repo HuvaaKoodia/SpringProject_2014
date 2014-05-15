@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class WeaponMesh : MonoBehaviour {
 
@@ -18,8 +19,13 @@ public class WeaponMesh : MonoBehaviour {
 	ParticleSystem.Particle[] bulletParticleArray;
 	int bulletParticleCount;
 
+	List<ParticleSystem> additionalParticles;
+
+	public bool IsEmiting { get; private set; }
+
 	// Use this for initialization
-	void Start () {
+	void Awake () {
+		additionalParticles = new List<ParticleSystem>();
 		shootAnimation = GetComponentInChildren<Animation>();
 	}
 	
@@ -32,18 +38,23 @@ public class WeaponMesh : MonoBehaviour {
 	{
 		setParentToEmitter(particleEmitter);
 		bulletParticles = particleEmitter.GetComponent<ParticleSystem>();
+		bulletParticles.enableEmission = true;
+		ShootEffectTime = bulletParticles.duration;
 	}
 
 	public void SetMuzzleParticles(GameObject particleEmitter)
 	{
 		setParentToEmitter(particleEmitter);
 		muzzleParticles = particleEmitter.GetComponent<ParticleSystem>();
+		muzzleParticles.enableEmission = true;
+		MuzzleEffectTime = muzzleParticles.duration;
 	}
 
-	public void SetEffectTimes(float bulletTime, float muzzleTime)
+	public void SetAdditionalParticleSystem(ParticleSystem particleEmitter)
 	{
-		ShootEffectTime = bulletTime;
-		MuzzleEffectTime = muzzleTime;
+		particleEmitter.enableEmission = true;
+
+		additionalParticles.Add(particleEmitter);
 	}
 
 	public void PlayShootAnimation()
@@ -58,14 +69,22 @@ public class WeaponMesh : MonoBehaviour {
 	{
 		if (bulletParticles != null)
 		{
+			bulletParticles.time = 0;
 			bulletParticles.Play();
-			Invoke("StopShootEffect",ShootEffectTime);
+			Invoke("StopShootEffect", ShootEffectTime);
+			IsEmiting = true;
 		}
 
 		if (muzzleParticles != null)
 		{
+			muzzleParticles.time = 0;
 			muzzleParticles.Play();
-			Invoke("StopMuzzleEffect", MuzzleEffectTime);
+		}
+
+		for (int i = 0; i < additionalParticles.Count; i++)
+		{
+			additionalParticles[i].time = 0;
+			additionalParticles[i].Play();
 		}
 	}
 
@@ -77,19 +96,9 @@ public class WeaponMesh : MonoBehaviour {
 	void StopShootEffect()
 	{
 		bulletParticles.Stop();
+		IsEmiting = false;
 	}
-
-	public bool IsEmiting
-	{
-		get 
-		{ 
-			if (bulletParticles == null)
-				return false;
-
-			return bulletParticles.isPlaying; 
-		}
-	}
-
+	
 	public bool IsAnimating
 	{
 		get
