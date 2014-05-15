@@ -259,6 +259,7 @@ public class FinanceMenu : MonoBehaviour {
 	{
 		if(index >= 0 && index < 3)
 		{
+			_FinanceManager.player_money += _FinanceManager.listofdebts[index].left_tb_payed;
 			_FinanceManager.CalcAll();
 		}
 		else
