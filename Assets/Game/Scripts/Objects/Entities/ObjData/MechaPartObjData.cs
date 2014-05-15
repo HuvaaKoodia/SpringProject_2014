@@ -108,7 +108,7 @@ public class MechaPartObjData{
     /// Reduces HEAT based on the weapons cooling value
     /// </summary>
     public void ReduceHEAT(InvGameItem weapon,float multi){
-        if (weapon==null||!can_disperse_heat) return;
+        if (weapon==null) return;
 		AddHEAT(-weapon.GetStat(InvStat.Type.Cooling)._amount*(1f+cooling_multi));
 	}
 
