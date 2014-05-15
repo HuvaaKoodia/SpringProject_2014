@@ -251,6 +251,7 @@ public class WeaponMain : MonoBehaviour {
 		{
 			if (IsEnemyDead(enemy))
 			{
+				waitingForShot = false;
 				yield break;
 			}
 			yield return null;
@@ -258,6 +259,7 @@ public class WeaponMain : MonoBehaviour {
 
 		if (IsEnemyDead(enemy))
 		{
+			waitingForShot = false;
 			yield break;
 		}
 

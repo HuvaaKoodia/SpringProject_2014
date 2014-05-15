@@ -27,6 +27,44 @@ T = room end (use if rooms right next to each other)
 A = airlock start
 E = elevator start
 -->
+
+<!-- 5x4 -->
+<Room name="cargoDoors" loot_a="0,2" enemy_a="0,2">
+w w w w w
+w tc3 : : w
+d . . . d
+w w d w w
+</Room>
+ 
+<!-- 5x12 -->
+<Room name="cargoDoors" loot_a="8,14" enemy_a="0,3">
+w d w d w
+d . ga . d
+w : . : w
+w : . : w
+w : . : w
+w : . : w
+w : . : w
+w : . : w
+w : . : w
+w : . : w
+d . ga . d
+w d w d w
+</Room>
+<Room name="cargoDoors" loot_a="8,12" enemy_a="0,3">
+w d w d w
+d . ga . d
+w : . : w
+w : . : w
+w : . : w
+w : . : w
+w w d w w
+w : . : w
+w : . : w
+w : . : w
+d . ga . d
+w d w d w
+</Room>
  
 <!-- 7x5 --> 
 <Room name="cargoDoors" loot_a="4,6" enemy_a="0,3">
@@ -191,16 +229,7 @@ w d w d w
 w d w d w
 d . . . d
 w . : : w
-w . : : w
-w . : : w
-d . . . d
-w d w d w
-</Room>
-<Room name="cargoDoors" loot_a="1,5" enemy_a="0,3">
-w d w d w
-d . . . d
-w . : : w
-w . : : w
+w . ga : w
 w . : : w
 d . . . d
 w d w d w
@@ -208,8 +237,17 @@ w d w d w
 <Room name="cargoDoors" loot_a="1,5" enemy_a="0,3">
 w d w d w
 d . . . d
+w . : : w
+w . ga : w
+w . : : w
+d . . . d
+w d w d w
+</Room>
+<Room name="cargoDoors" loot_a="1,5" enemy_a="0,3">
+w d w d w
+d . . . d
 w : : . w
-w : : . w
+w : ga . w
 w : : . w
 d . . . d
 w d w d w
@@ -218,116 +256,59 @@ w d w d w
 w d w d w
 d . . . d
 w : : . w
-w : : . w
+w : ga . w
 w : : . w
 d . . . d
 w d w d w
 </Room>
 
 <!-- 11x7 -->
- <Room name="cargo" loot_a="8,15" enemy_a="0,6">
-w w w w w w w w w w w
-w : . : : : . . . . w
+<!-- With turrets -->
+<Room name="cargoDoors" loot_a="8,13" enemy_a="0,6">
+w w d w w w w w d w w
+w : . : : : ga . . . d
 w : . . . . . . : : w
-w . . : : . : w w w w
+d . . : : . ga w w w w
 w : . : : . : w tc3 tc3 w
-w : : : : . . . . . w
-w w w w w w w w w w w
-</Room>
-<!-- TODO: Console -->
-<Room name="cargo" loot_a="6,12" enemy_a="0,6">
-w w w w w w w w w w w
-w : . . : : : : . : w
-w : . . . . . . . . w
-w . : : . : . : : . w
-w . . . . . . : : . w
-w : : . . : . . . . w
-w w w w w w w w w w w
-</Room>
-<Room name="cargoDoors" loot_a="8,15" enemy_a="0,6">
+w ga : : : . . . . . w
 w w w w w w d w w w w
-w tc4 . tc2 w : . : : : w
+</Room>
+<Room name="cargoDoors" loot_a="8,13" enemy_a="0,6">
+w w w w w w d w w w w
+w tc4 . tc2 w : . : : ga w
 w w d w w : . . . . w
 w : . . : : . : : . w
 d . . . . . . . . . d
-w . : : : : : : : . w
+w . ga : : : : : ga . w
 w d w w w w w w w d w
 </Room>
-<Room name="cargoDoors" loot_a="4,7" enemy_a="0,8">
+<Room name="cargoDoors" loot_a="8,13" enemy_a="0,6">
+w w w w w w d w w w w
+w tc4 . tc2 w : . : : ga w
+w w d w w : . . . . w
+w : . . : : . : : . w
+d . ga . . . . . . . d
+w . . . : : : : : . w
+w d w w w w w w w d w
+</Room>
+<Room name="cargoDoors" loot_a="4,6" enemy_a="0,8">
 w w w w w d w w w w w
 w tc4 . tc2 w . d . . : w
 w w d w w . w : . : w
-d . . . . . w : . . d
+d . . . . ga w : . . d
 w w d w w w w : . : w
-w : . . . . d . . : w
+w ga . . . . d . . ga w
 w w w w w w w w w w w
 </Room>
 <Room name="cargoDoors" loot_a="4,7" enemy_a="0,8">
 w w w w w d w w w w w
 w : . : w . d . . : w
 w w d w w . w : . : w
-d . . . . . w : . . d
+d . . . . ga w : . . d
 w w d w w w w : . : w
-w tc4 . . . . d . . : w
+w tc4 . . . . d . . ga w
 w w w w w w w w w w w
 </Room>
-<!-- TODO: Console -->
-<Room name="cargo" loot_a="6,12" enemy_a="0,6">
-w w w w w w w w w w w
-w : : : : : : : : : w
-w . . . . . . . . . w
-w . . . : . . . . . w
-w w w . . : : : . . w
-, , w : : w w w w tc1 w
-, , w w w w , , w w w
-</Room>
-<Room name="cargo" loot_a="6,12" enemy_a="0,6">
-w w w w w w w w w w w
-w : : : : : : : : : w
-w . . . . . . . . . w
-w . . . : . . . . . w
-w w w . . : : : . . w
-, , w : : w w w w tc1 w
-, , w w w w , , w w w
-</Room>
-<Room name="cargoDoors" loot_a="6,12" enemy_a="0,6">
-w d w w w w w w w d w
-w . : : : : : : : . w
-d . . . . . . . . . d
-w . . . : . . . . . w
-w w w . . : : : . . w
-, , w . : w w w w . w
-, , w d w w , , w d w
-</Room>
-<Room name="cargoDoors" loot_a="6,12" enemy_a="0,6">
-w d w w w w w w w d w
-w . : : : : : : : . w
-d . . . . . . . . . d
-w . . . : . . . . . w
-w w w . . : : : . . w
-, , w . tc2 w w w w . w
-, , w d w w , , w d w
-</Room>
-<Room name="cargoDoors" loot_a="6,12" enemy_a="0,6">
-w d w w w w w w w d w
-w . : : : : : : : . w
-d . . . . . . . . . d
-w . . . : . . . . . w
-w w w . . : : : . . w
-, , w . : w w w w tc1 w
-, , w d w w , , w w w
-</Room>
-<Room name="cargoDoors" loot_a="6,12" enemy_a="0,6">
-w d w w w w w w w d w
-w . : : : : : : : . w
-d . . . . . . . . . d
-w tc4 . . : . . . . . w
-w w w . . : : : . . w
-, , w . : w w w w . w
-, , w d w w , , w d w
-</Room>
-
-<!-- With Turret -->
 <Room name="cargoDoors" loot_a="6,12" enemy_a="0,6">
 w d w w w w w w w d w
 w . : : : : : : : . w
@@ -357,34 +338,6 @@ w w w . . : : : : . w
 </Room>
 
 <!-- 9x7 -->
-<Room name="cargo" loot_a="2,6" enemy_a="0,4">
-w w w w w w w w w
-w : . : w tc3 tc3 tc3 w
-w . . . w . . . w
-w . . . d . . . w
-w . . . w . . . w
-w : : : w : : : w
-w w w w w w w w w
-</Room>
-<Room name="cargoDoors" loot_a="4,7" enemy_a="0,4">
-w w d w w w w w w
-w : . : w tc3 tc3 tc3 w
-w : . : w . . . w
-d . . . d . . . d
-w . . . w . . . w
-w : . : w : : : w
-w w d w w w w w w
-</Room>
-<Room name="cargoDoors" loot_a="4,7" enemy_a="0,4">
-w w d w w w w w w
-w : . : w tc3 : tc3 w
-w : . : w . . . w
-d . . . d . . . d
-w . . . w . . . w
-w : . : w : : : w
-w w d w w w w w w
-</Room>
-
 <!-- With turret -->
 <Room name="cargoDoors" loot_a="4,7" enemy_a="0,4">
 w w d w w w w w w
@@ -406,15 +359,7 @@ w w d w w w w w w
 </Room>
 
 <!-- 8x6 -->
- <Room name="cargo" loot_a="3,5" enemy_a="0,4">
-w w w w w w w w
-w : . : w o o w
-w . . . d . . w
-w . . . w . . w
-w : : : w : : w
-w w w w w w w w
-</Room>
-<!-- 8x6 -->
+<!-- With turrets -->
  <Room name="cargoDoors" loot_a="3,5" enemy_a="0,4">
 w w d w w w w w
 w : . : w o o w
@@ -425,63 +370,6 @@ w w d w w w w w
 </Room>
 
 <!-- 7x12 -->
-<Room name="cargoDoors" loot_a="10,12" enemy_a="0,6">
-w d w w w d w
-w . : : : . w
-d . . . . . d
-w . : : : . w
-w d w w w d w
-w . : : : . w
-w . . . . . d
-w : . . . . w
-d . . : w d w
-w : . : w . w
-w : . : w tc1 w
-w w w w w w w
-</Room>
-<Room name="cargoDoors" loot_a="10,16" enemy_a="0,6">
-w d w w w d w
-d . . . . . d
-w . : : . : w
-w . : : . : w
-d . : : . . d
-w . : : . : w
-w . : : . : w
-d . : : . . d
-w . : : . : w
-w . : : . tc2 w
-d . . . . . d
-w d w w w d w
-</Room>
-<Room name="cargoDoors" loot_a="10,12" enemy_a="0,6">
-w d w w w d w
-d . : tc3 : . d
-w . . . . . w
-w : : : : . w
-w w w w w . w
-d . . . w d w
-w d w . . . d
-w . w w w w w
-w . : : : tc3 w
-w . . . . . w
-d . : : : . d
-w d w w w d w
-</Room>
-<Room name="cargoDoors" loot_a="10,12" enemy_a="0,8">
-w d w w w d w
-d . : : : . d
-w . . . . . w
-w : : . : . w
-w w w d w tc1 w
-d . . . w w w
-w w w . . . d
-w tc3 w d w w w
-w . : . : : w
-w . . . . . w
-d . : : : . d
-w d w w w d w
-</Room>
-
 <!-- With turrets -->
 <Room name="cargoDoors" loot_a="10,12" enemy_a="0,6">
 w d w w w d w
