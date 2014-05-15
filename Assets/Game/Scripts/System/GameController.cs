@@ -152,8 +152,7 @@ public class GameController : MonoBehaviour {
 			Debug.Log("Floor: "+i+" loaded");
 		}
 
-        if (!OverrideMissionShip)
-			SS.SDGen.GenerateMissionObjectives(this,SS.GDB.GameData.CurrentMission,ship_objdata);
+		SS.SDGen.GenerateMissionObjectives(this,SS.GDB.GameData.CurrentMission,ship_objdata);
 
 		//minimap data
 		MiniMapData = new MiniMapData();
@@ -176,12 +175,9 @@ public class GameController : MonoBehaviour {
 
 		//init player
 
-
-
-
 		var start_floor=Subs.GetRandom(legit_floors);
 		//DEv.temp
-		start_floor=Floors[0];
+		//start_floor=Floors[0];
 		SS.MGen.InitPlayer(Player, start_floor);
 		Player.SetObjData(SS.GDB.GameData.PlayerData);
 		Player.CurrentFloorIndex=start_floor.FloorIndex;
@@ -317,9 +313,10 @@ public class GameController : MonoBehaviour {
 		HUD.FadeOut();
 		SetFloor(index);
 		//DEV. elevator sound here + some delay
-		yield return null;
 
-		UpdateFloorStats(index);//DEV. haxy hax Thanks to having to be called one step after setActive 
+		yield return null;//DEV. haxy hax Thanks to having to call UpdateFloorStats one step after setActive
+
+		UpdateFloorStats(index);
 
 		while(HUD.FadeInProgress){
 			yield return null;
