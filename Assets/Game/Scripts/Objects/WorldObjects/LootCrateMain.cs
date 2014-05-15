@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class LootCrateMain : InteractableMain {
 
@@ -9,6 +10,8 @@ public class LootCrateMain : InteractableMain {
 
 	public Animation openAnimation;
 	public bool isOpen { get; private set; }
+
+	public List<Light> Lights=new List<Light>();
 
 	public bool Looted ()
 	{
@@ -26,11 +29,6 @@ public class LootCrateMain : InteractableMain {
 			FinishAnimation();
 		}
 		return true;
-		//else
-		{
-		//	GC.HUD.DeactivateInventoryHUD();
-		//	return false;
-		}
 	}
 
 	// Use this for initialization
@@ -43,10 +41,10 @@ public class LootCrateMain : InteractableMain {
 		openAnimation["Open_LootBox"].normalizedTime = 0;
 		openAnimation["Open_LootBox"].normalizedSpeed = 1;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+	void DisableLights(){
+		foreach(var l in Lights){
+			l.enabled=false;
+		}
 	}
 
 	public override bool Interact(PlayerInteractSub interactSub)
@@ -63,5 +61,6 @@ public class LootCrateMain : InteractableMain {
 	void FinishAnimation()
 	{
 		interactor.InteractFinished();
+		DisableLights();
 	}
 }
