@@ -196,8 +196,8 @@ public class ShipGenerator : MonoBehaviour
 			{
 				for(int y=0;y<h;y++)
 				{
-					var index=NewFloorMap.map_data[x,y].ToLower();
-					if (index==MapGenerator.RoomIcon||index==MapGenerator.RoomEndIcon)
+					var index=NewFloorMap.map_data[x,y];
+					if (index==MapGenerator.RoomIcon||index==MapGenerator.RoomEndIcon||IsRoomStartIndex(index))
 						NewFloorMap.map_data[x,y]=MapGenerator.SpaceIcon;
 				}
 			}
@@ -342,7 +342,7 @@ public class ShipGenerator : MonoBehaviour
 	private void CheckLegitWalls(ShipRoomObjData cell,MapXmlData floor){
 		cell.corridor_dirs.Clear();
 		bool upok=true,downok=true,leftok=true,rightok=true;
-		for (int i=0;i<cell.W;i++){
+		for (int i=1;i<cell.W-1;i++){
 			if (upok&&floor.GetIndex(cell.X+i,cell.Y-1)!=MapGenerator.CorridorIcon){
 				upok=false;
 			}

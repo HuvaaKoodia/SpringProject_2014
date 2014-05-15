@@ -176,11 +176,18 @@ public class GameController : MonoBehaviour {
 
 		//init player
 
+
+
+
 		var start_floor=Subs.GetRandom(legit_floors);
+		//DEv.temp
+		start_floor=Floors[0];
 		SS.MGen.InitPlayer(Player, start_floor);
 		Player.SetObjData(SS.GDB.GameData.PlayerData);
 		Player.CurrentFloorIndex=start_floor.FloorIndex;
 		Player.GC=this;
+
+		Debug.Log("StartFloor: "+start_floor.FloorIndex);
 
 		Player.InitPlayer();
 		Player.HUD.CheckTargetingModePanel();
