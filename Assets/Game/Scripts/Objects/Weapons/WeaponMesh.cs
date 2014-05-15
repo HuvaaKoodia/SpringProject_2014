@@ -32,12 +32,14 @@ public class WeaponMesh : MonoBehaviour {
 	{
 		setParentToEmitter(particleEmitter);
 		bulletParticles = particleEmitter.GetComponent<ParticleSystem>();
+		ShootEffectTime = bulletParticles.duration;
 	}
 
 	public void SetMuzzleParticles(GameObject particleEmitter)
 	{
 		setParentToEmitter(particleEmitter);
 		muzzleParticles = particleEmitter.GetComponent<ParticleSystem>();
+		MuzzleEffectTime = muzzleParticles.duration;
 	}
 
 	public void SetEffectTimes(float bulletTime, float muzzleTime)
@@ -58,12 +60,14 @@ public class WeaponMesh : MonoBehaviour {
 	{
 		if (bulletParticles != null)
 		{
+			bulletParticles.time = 0;
 			bulletParticles.Play();
 			Invoke("StopShootEffect",ShootEffectTime);
 		}
 
 		if (muzzleParticles != null)
 		{
+			muzzleParticles.time = 0;
 			muzzleParticles.Play();
 			Invoke("StopMuzzleEffect", MuzzleEffectTime);
 		}
