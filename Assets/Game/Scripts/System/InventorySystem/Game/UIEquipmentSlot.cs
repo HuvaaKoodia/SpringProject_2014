@@ -32,6 +32,7 @@ public class UIEquipmentSlot : UIItemSlot
 	/// </summary>
 	/// <param name="item">Item.</param>
     public void SetSlotColor(InvGameItem item){
+
 		var scale=GetComponent<UIButtonScale>();//DEV.lazy but works
 
         if (item==null){

@@ -77,8 +77,14 @@ public class GameDB : MonoBehaviour {
 
     public void PlayMission()
     {
-        Application.LoadLevel(GameScene);
+        LoadLevel(GameScene);
     }
+
+	void LoadLevel(string level){
+		UIEquipmentSlot.EquipmentSlots.Clear();
+		UIAmmoSlot.EquipmentSlots.Clear();
+		Application.LoadLevel(GameScene);
+	}
 
     public void EndMission()
     {
@@ -101,7 +107,7 @@ public class GameDB : MonoBehaviour {
 
 		UpdateFinanceManager(GameData.CurrentMission.TravelTime);
 
-        Application.LoadLevel(HQScene);
+        LoadLevel(HQScene);
     }
 
     public int CalculateQuestReward()
