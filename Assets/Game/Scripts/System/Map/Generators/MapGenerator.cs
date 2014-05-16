@@ -210,7 +210,15 @@ public class MapGenerator : MonoBehaviour
 					gatlingTurret.movement.Init();
 					//gatlingTurret.movement.GetCurrenTile().LeaveTile();
 					break;
-                }
+				case TileObjData.Obj.PowerGenerator:
+					var obj = GameObject.Instantiate(MapPrefabs.PowerGenerator, tile_pos, Quaternion.identity) as GameObject;
+					
+					obj.name = "PowerGenerator";
+
+					tile.TileObject=obj;
+					tile.TileObject.transform.parent = tile.transform;
+					break;
+				}
 
 				//rotation
 				if (tile.Data.ObjType!=TileObjData.Obj.None&&tile.TileObject!=null){

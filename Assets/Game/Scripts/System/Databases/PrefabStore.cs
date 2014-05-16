@@ -11,6 +11,8 @@ public class PrefabStore : MonoBehaviour {
 	public GameObject LootCratePrefab;
 	public DataTerminalMain DataTerminalPrefab;
 
+	public GameObject PowerGenerator;
+
 	public GameObject 
 			BasicWall,
 			BasicEmpty

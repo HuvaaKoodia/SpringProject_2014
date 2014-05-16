@@ -264,12 +264,25 @@ public class PlayerInputSub : MonoBehaviour {
 		}
 		else
 		{
-			if (player.interactSub.HasInteractable){
-				InteractInput(true);
-			}
-			else if (player.targetingSub.HasTargetAtMousePosition ()){
+			if (player.targetingSub.HasTargetAtMousePosition ())
+			{
+				if (player.interactSub.HasInteractable)
+				{
+					DoorMain doorInFront = player.movement.GetTileInFront().GetDoor();
+
+					if (doorInFront != null && doorInFront.IsOpen == false)
+					{
+						InteractInput(true);
+						return;
+					}
+				}
+
 				TargetingModeInput();
 				ChangeWeaponInput(player.GetCurrentWeapon().weaponID);
+			}
+			else if (player.interactSub.HasInteractable)
+			{
+				InteractInput(true);
 			}
 		}
 	}
