@@ -37,7 +37,7 @@ public class WeaponMain : MonoBehaviour {
 	public LayerMask lookAtLayer;
 
 	public GameObject graphics;
-	WeaponMesh meshData;
+	WeaponEffects meshData;
 
 	public GameObject verticalMovement;
 	public GameObject horizontalMovement;
@@ -118,7 +118,7 @@ public class WeaponMain : MonoBehaviour {
 			graphics.transform.rotation = transform.rotation;
 		}
 
-		meshData = graphics.GetComponent<WeaponMesh>();
+		meshData = graphics.GetComponent<WeaponEffects>();
 
 		ParticleSystem[] additionalParticleSystems = graphics.GetComponentsInChildren<ParticleSystem>();
 		for (int i = 0; i < additionalParticleSystems.Count(); i++)
@@ -144,6 +144,11 @@ public class WeaponMain : MonoBehaviour {
 					GameObject.Instantiate(player.GC.SS.PS.weaponParticleEmitters[Weapon.baseItem.mesh + "Muzzle"]) as GameObject;
 				meshData.AddMuzzleParticles(muzzleEmitter);
 			}
+		}
+
+		if (player.GC.SS.PS.weaponSoundFX.ContainsKey(Weapon.baseItem.mesh))
+		{
+			meshData.SetShootSoundFX(player.GC.SS.PS.weaponSoundFX[Weapon.baseItem.mesh]);
 		}
 	}
 

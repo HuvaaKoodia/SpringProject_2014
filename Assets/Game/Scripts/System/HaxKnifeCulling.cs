@@ -51,7 +51,7 @@ public class HaxKnifeCulling : MonoBehaviour {
 			}
 		}
 
-		CullEnemies(pos1, pos2, detect_radius, GC);
+		CullEnemies(pos1, pos2, detect_radius, GC,miniMapIgnoreDoors);
 	}
 
 	private static Vector3[] Positions={new Vector3(0,0,0),new Vector3(1,0,1),new Vector3(1,0,-1),new Vector3(-1,0,-1),new Vector3(-1,0,1)};
@@ -72,32 +72,36 @@ public class HaxKnifeCulling : MonoBehaviour {
 			WallHits=Physics.RaycastAll(ray,direction.magnitude,mask);
 
 			if (WallHits.Length<=1){
-				cull_this=false;
 
-				if (updateMap){
-					//map data culling
-					if (miniMapIgnoreDoors)
+				bool sees_tile=false;
+
+				//map data culling
+				if (miniMapIgnoreDoors)
+				{
+					if (tile.Data.TileType == TileObjData.Type.Door && i == 0 || WallHits.Length == 0 )
 					{
-						if (tile.Data.TileType == TileObjData.Type.Door && i == 0 || WallHits.Length == 0 )
+						sees_tile=true;
+					}
+				}
+				else
+				{
+					if (tile.Data.TileType == TileObjData.Type.Door || tile.Data.TileType == TileObjData.Type.ElevatorDoor)
+					{
+						if (i == 0)
 						{
-							miniMapData[GC.CurrentFloorIndex][tile.Data.X, tile.Data.Y].SeenByPlayer = true;
+							sees_tile=true;
 						}
 					}
 					else
-					{
-						if (tile.Data.TileType == TileObjData.Type.Door || tile.Data.TileType == TileObjData.Type.ElevatorDoor)
-						{
-							if (i == 0)
-							{
-								miniMapData[GC.CurrentFloorIndex][tile.Data.X, tile.Data.Y].SeenByPlayer = true;
-							}
-						}
-						else
-							miniMapData[GC.CurrentFloorIndex][tile.Data.X, tile.Data.Y].SeenByPlayer = true;
-					}
+						sees_tile=true;
 				}
-				if (DEBUG_ShowRays) Debug.DrawLine(ray.origin,tile_pos,Color.green,5);
-				break;
+
+				if (sees_tile){
+					if (updateMap) miniMapData[GC.CurrentFloorIndex][tile.Data.X, tile.Data.Y].SeenByPlayer = true;
+					cull_this=false;
+					if (DEBUG_ShowRays) Debug.DrawLine(ray.origin,tile_pos,Color.green,5);
+					break;
+				}
 			}else {
 
 				if (DEBUG_ShowRays) Debug.DrawLine(ray.origin,tile_pos,Color.red,5);
@@ -112,14 +116,14 @@ public class HaxKnifeCulling : MonoBehaviour {
 		}
 	}
 
-	public void CullEnemies(Vector3 pos1, Vector3 pos2, float detectRadius, GameController GC)
+	public void CullEnemies(Vector3 pos1, Vector3 pos2, float detectRadius, GameController GC,bool ignoreDoors)
 	{
 		List<EnemyMain> enemies = GC.CurrentFloorData.Enemies;
 
 		for (int i = 0; i < enemies.Count; i++)
 		{
-			if (IsCullable(GC.CurrentFloorData.TileMainMap[enemies[i].movement.currentGridX, enemies[i].movement.currentGridY], pos1, detectRadius, false,false) &&
-			    IsCullable(GC.CurrentFloorData.TileMainMap[enemies[i].movement.currentGridX, enemies[i].movement.currentGridY], pos2, detectRadius, false,false))
+			if (IsCullable(GC.CurrentFloorData.TileMainMap[enemies[i].movement.currentGridX, enemies[i].movement.currentGridY], pos1, detectRadius, ignoreDoors,false) &&
+			    IsCullable(GC.CurrentFloorData.TileMainMap[enemies[i].movement.currentGridX, enemies[i].movement.currentGridY], pos2, detectRadius, ignoreDoors,false))
 			{
 				enemies[i].CullHide();
 			}

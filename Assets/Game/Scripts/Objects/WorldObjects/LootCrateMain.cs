@@ -21,6 +21,7 @@ public class LootCrateMain : InteractableMain {
 		{
 			isOpen = true;
 			openAnimation.Play("Open_LootBox");
+			audio.Play();
 			Invoke ("SetLootToInventory", 0.9f);
 			Invoke("FinishAnimation", 0.9f);
 		}
