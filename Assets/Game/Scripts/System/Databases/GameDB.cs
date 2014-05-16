@@ -14,6 +14,10 @@ public class GameDB : MonoBehaviour {
 
     public string HQScene="MissionSelectScene",GameScene="GameScene";
 
+	void OnLevelWasLoaded(int i){
+		ResetStuff();
+	}
+
     public void StartNewGame(){
         GameStarted=true;
 		GameData=new GameObjData();
@@ -80,10 +84,15 @@ public class GameDB : MonoBehaviour {
         LoadLevel(GameScene);
     }
 
+	void ResetStuff(){
+		//haxy reset for haxy static lists!
+		if (UIEquipmentSlot.EquipmentSlots!=null) UIEquipmentSlot.EquipmentSlots.Clear();
+		if (UIAmmoSlot.EquipmentSlots!=null) UIAmmoSlot.EquipmentSlots.Clear();
+	}
+
 	void LoadLevel(string level){
-		UIEquipmentSlot.EquipmentSlots.Clear();
-		UIAmmoSlot.EquipmentSlots.Clear();
-		Application.LoadLevel(GameScene);
+
+		Application.LoadLevel(level);
 	}
 
     public void EndMission()

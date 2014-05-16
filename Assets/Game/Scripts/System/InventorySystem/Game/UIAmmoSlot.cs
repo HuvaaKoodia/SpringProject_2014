@@ -124,10 +124,6 @@ public class UIAmmoSlot : UIItemSlot
         EquipmentSlots.Add(this);
 	}
 
-    void OnSceneLoad(){
-        if (EquipmentSlots!=null) EquipmentSlots.Clear();
-    }
-
 	override protected InvGameItem observedItem
 	{
 		get{ return null;}

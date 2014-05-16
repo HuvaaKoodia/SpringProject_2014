@@ -223,8 +223,7 @@ public class MapGenerator : MonoBehaviour
 				//rotation
 				if (tile.Data.ObjType!=TileObjData.Obj.None&&tile.TileObject!=null){
 					var rotation=tile.Data.ObjXml.rotation;
-					if (rotation<0)
-						rotation=Subs.GetRandom(4)*90;
+					if (rotation<0) rotation=Subs.GetRandom(4)*90;
 					tile.TileObject.transform.rotation=Quaternion.AngleAxis(rotation,Vector3.up);
 				}
             }
