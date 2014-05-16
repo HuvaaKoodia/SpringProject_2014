@@ -21,6 +21,7 @@ public class FinanceMenu : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		InitializeValues();
+		Debug.Log(AnisotropicFiltering.Disable);
 	}
 	
 	// Update is called once per frame

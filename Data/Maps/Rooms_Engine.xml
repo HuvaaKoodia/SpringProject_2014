@@ -5,11 +5,11 @@
 w w w w w w w w w w
 w . . . . . . . . w
 w . . . . . . . . w
-w . te2 w w w w te4 . w
+w . te2 w pg1 pg1 w te4 . w
 w . . . . . . . . w
-w . te2 w w w w te4 . w
+w . te2 w pg1 pg1 w te4 . w
 w . . . . . . . . w
-w . te2 w w w w te4 . w
+w . te2 w pg1 pg1 w te4 . w
 w . . . . . . . . w
 w . . . . . . . . w
 w w w w w w w w w w
@@ -18,11 +18,11 @@ w w w w w w w w w w
 w w d w w w w d w w
 w : . : : : : . : w
 d . . . . . . . . d
-w . te2 w w w w te4 . w
+w . te2 w pg1 pg1 w te4 . w
 w . . . . . . . . w
-w . te2 w w w w te4 . w
+w . te2 w pg1 pg1 w te4 . w
 w . . . . . . . . w
-w . te2 w w w w te4 . w
+w . te2 w pg1 pg1 w te4 . w
 d . . . . . . . . d
 w : . : : : : . . w
 w w d w w w w d w w
@@ -31,11 +31,11 @@ w w d w w w w d w w
 w w d w w w w d w w
 w ga . : : : : . ga w
 d . . . . . . . . d
-w . te2 w w w w te4 . w
+w . te2 w pg1 pg1 w te4 . w
 w . . . . . . . . w
-w . te2 w w w w te4 . w
+w . te2 w pg1 pg1 w te4 . w
 w . . . . . . . . w
-w . te2 w w w w te4 . w
+w . te2 w pg1 pg1 w te4 . w
 d . . . . . . . . d
 w ga . : : : : . ga w
 w w d w w w w d w w
@@ -67,11 +67,11 @@ w w w w w w w w w w
 </Room>
 <Room name="engineDoors" loot_a="0,0" enemy_a="0,8">
 w d w w w w w w d w
-w . te3 w w w w te3 . w
+w . te3 pg1 pg1 pg1 pg1 te3 . w
 w . . . . . . . . w
-d . te2 w w w w te4 . d
+d . te2 w pg1 pg1 w te4 . d
 w . . . . . . . . w
-w . te1 w w w w te1 . w
+w . te1 pg1 pg1 pg1 pg1 te1 . w
 w d w w w w w w d w
 </Room>
 
@@ -90,26 +90,26 @@ w w w w w w w w
 </Room>
 <Room name="engineDoors" loot_a="0,4" enemy_a="0,8">
 w w d w w d w w
-w : . : : . : w
+w : . ga : . : w
 d . . . . . . d
-w . te2 w w te4 . w
-w . . . . . . w
-w . . . . . . w
-w . te2 w w te4 . w
+w te2 . pg2 pg2 . te4 w
+w . . pg2 pg2 . ga w
+w ga . pg2 pg2 . . w
+w te2 . pg2 pg2 . te4 w
 d . . . . . . d
-w : . : : . : w
+w : . : ga . : w
 w w d w w d w w
 </Room>
 <Room name="engineDoors" loot_a="0,4" enemy_a="0,8">
 w w d w w d w w
-w ga . : : . : w
+w ga . : : . ga w
 d . . . . . . d
-w . te2 w w te4 . w
-w . . . . . . w
-w . . . . . . w
-w . te2 w w te4 . w
+w te2 . pg2 pg2 . te4 w
+w . . pg2 pg2 . . w
+w . . pg2 pg2 . . w
+w te2 . pg2 pg2 . te4 w
 d . . . . . . d
-w : . : : . ga w
+w ga . : : . ga w
 w w d w w d w w
 </Room>
 
@@ -158,116 +158,108 @@ w w w w w w w w
 
 <Room name="engineDoors" loot_a="0,6" enemy_a="0,8">
 w w w w w w d w
-w te3 te3 w w . . w
+w te3 te3 pg1 pg1 . . w
 w . . . . . . w
 d . . . . . . d
-w . . w w . . w
+w ga . pg1 pg1 . ga w
 w w d w w d w w
 </Room>
 <Room name="engineDoors" loot_a="0,6" enemy_a="0,8">
 w w d w w w w w
-w . . w w te3 te3 w
+w ga . pg1 pg1 te3 te3 w
 w . . . . . . w
 d . . . . . . d
-w . . w w . . w
+w . ga pg1 pg1 ga . w
 w d w w w w d w
 </Room>
 <Room name="engineDoors" loot_a="0,6" enemy_a="0,8">
 w d w w w w d w
-d . . w w . . w
+d . ga pg1 pg1 . . w
 w . . . . . . d
 w . . . . . . w
-w . . w w te1 te1 w
+w . ga pg1 pg1 te1 te1 w
 w d w w w w w w
 </Room>
 <Room name="engineDoors" loot_a="0,6" enemy_a="0,8">
 w d w w w w d w
-w . . w w . . w
+w . ga pg1 pg1 ga . w
 w . . . . . . w
 d . . . . . . d
-w te1 te1 w w . . w
+w te1 te1 pg1 pg1 . . w
 w w w w w w d w
 </Room>
 <Room name="engineDoors" loot_a="0,6" enemy_a="0,8">
 w w w d w w w w
-w te3 te3 . . w w w
+w te3 te3 . ga pg1 pg1 w
 d . . . . . . w
 w . . . . . . d
-w w w . . w w w
+w pg1 pg1 . ga pg1 pg1 w
 w w w d w w w w
 </Room>
 <Room name="engineDoors" loot_a="0,6" enemy_a="0,8">
 w w w d w w w w
-w te3 te3 . . w w w
+w te3 te3 . ga pg1 pg1 w
 d . . . . . . w
 w . . . . . . d
-w w w . . w w w
+w pg1 pg1 . ga pg1 pg1 w
 w w w d w w w w
 </Room>
 
 <!-- With turrets -->
 <Room name="engineDoors" loot_a="0,6" enemy_a="0,8">
 w w w w w w d w
-w te3 te3 w w . . w
+w te3 te3 pg1 pg1 . . w
 w . . . . . . w
 d . . . ga . . d
-w . . w w . . w
+w ga . pg1 pg1 . ga w
 w w d w w d w w
 </Room>
 <Room name="engineDoors" loot_a="0,6" enemy_a="0,8">
 w w d w w w w w
-w . . w w te3 te3 w
+w ga . pg1 pg1 te3 te3 w
 w . . . . . . w
-d . . ga . . . d
-w . . w w . . w
+d . . . . . . d
+w . ga pg1 pg1 ga . w
 w d w w w w d w
 </Room>
 <Room name="engineDoors" loot_a="0,6" enemy_a="0,8">
 w d w w w w d w
-d . . w w . . w
+d . . pg1 pg1 . . w
 w . . . . . . d
-w . . ga . . . w
-w . . w w te1 te1 w
+w . . . . . . w
+w . ga pg1 pg1 te1 te1 w
 w d w w w w w w
 </Room>
 <Room name="engineDoors" loot_a="0,6" enemy_a="0,8">
 w d w w w w d w
-w . . w w . . w
-w . . . ga . . w
+w . ga pg1 pg1 . . w
+w . . . . . . w
 d . . . . . . d
-w te1 te1 w w . . w
+w te1 te1 pg1 pg1 ga . w
 w w w w w w d w
 </Room>
 <Room name="engineDoors" loot_a="0,6" enemy_a="0,8">
 w w w d w w w w
-w te3 te3 . . w w w
-d . . . . . . w
-w . . ga . . . d
-w w w . . w w w
-w w w d w w w w
-</Room>
-<Room name="engineDoors" loot_a="0,6" enemy_a="0,8">
-w w w d w w w w
-w te3 te3 . . w w w
-d . . . . . . w
-w . . . ga . . d
-w w w . . w w w
+w te3 te3 . ga pg1 pg1 w
+d . . . . . ga w
+w . . . . . . d
+w pg1 pg1 . ga pg1 pg1 w
 w w w d w w w w
 </Room>
 
 <!-- 7x5 -->
 <Room name="engine" loot_a="0,6" enemy_a="0,8">
 w w w w w w w
-w te3 te3 . w w w
+w te3 te3 . pg1 pg1 w
 w . . . . . w
-w w w . w w w
+w pg1 pg1 . pg1 pg1 w
 w w w w w w w
 </Room>
 <Room name="engineDoors" loot_a="0,6" enemy_a="0,8">
 w w w d w w w
-w te3 te3 . w w w
-d . . . . . d
-w w w . w w w
+w te3 te3 . pg1 pg1 w
+d . . ga . . d
+w pg1 pg1 . pg1 pg1 w
 w w w d w w w
 </Room>
  

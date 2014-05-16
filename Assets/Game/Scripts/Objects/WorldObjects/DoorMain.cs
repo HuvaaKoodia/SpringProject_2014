@@ -37,7 +37,7 @@ public class DoorMain : InteractableMain {
 			graphics.animation[close_animation].speed = 1;
 			graphics.animation.Play(close_animation);
 			audio.PlayOneShot(CloseSoundFX);
-            StartCoroutine(ToggleTimer(false,graphics.animation[open_animation].length));
+            StartCoroutine(ToggleTimer(false,graphics.animation[close_animation].length));
 			hitboxOn();
 		}
 		return true;
