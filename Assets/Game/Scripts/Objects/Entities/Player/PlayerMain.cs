@@ -165,6 +165,8 @@ public class PlayerMain : EntityMain
 
     public IEnumerator Attack()
     {
+		if (Shooting) yield break;
+
 		ap = 0;
 		gunsFinishedShooting = 0;
 		Shooting = true;
@@ -294,7 +296,6 @@ public class PlayerMain : EntityMain
 		}
 		
 		ObjData.UpperTorso.AddHEAT(-(XmlDatabase.HullHeatDisperseConstant+XmlDatabase.HullHeatDisperseHeatMultiplier*ObjData.UpperTorso.HEAT)*multiplier);
-
 		HUD.gunInfoDisplay.UpdateAllDisplays();
 	}
 

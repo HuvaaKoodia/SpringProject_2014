@@ -27,9 +27,16 @@ public class UIEquipmentSlot : UIItemSlot
     //DEv. puukkoa! Color all slots
     public static List<UIEquipmentSlot> EquipmentSlots;
    
+	/// <summary>
+	/// Sets the allowed/not allowed effect.
+	/// </summary>
+	/// <param name="item">Item.</param>
     public void SetSlotColor(InvGameItem item){
+		var scale=GetComponent<UIButtonScale>();//DEV.lazy but works
+
         if (item==null){
             background.color=Color.white;
+			scale.SendMessage("OnPermaHover",false);
             return;
         }
 		if (equipment==null){
@@ -40,9 +47,11 @@ public class UIEquipmentSlot : UIItemSlot
 
 		if (s.HasType(item.baseItem.type)&&s.ObjData.USABLE&&s.ObjData.CHANGEABLE){
             background.color=Color.green;
+			scale.SendMessage("OnPermaHover",true);
         }
         else{
             background.color=Color.red;
+			scale.DisableTween=true;
         }
     }
     //DEV. puukko end
