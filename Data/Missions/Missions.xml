@@ -9,6 +9,15 @@ Status info:
 -Power: 	0=generator broken,1=power off,2=power on
 -->
 
+<!--- REWARD CLASSES -->
+<RewardClass name="0" minmax="0"/>
+<RewardClass name="1" min="8000" max="12000"/>
+<RewardClass name="2" min="18000" max="22000"/>
+<RewardClass name="3" min="30000" max="40000"/>
+<RewardClass name="4" min="45000" max="55000"/>	
+
+<!-- Missions -->
+
 <Root>
 <Mission type="TradeVesselInfo" rewardClass="1" lootPool="1">
 	<Description>We've been contracted to investigate the fate of a trade vessel.\nFind out what happened.\n\nThe client doesn't care about the cargo. Grab whatever you can.</Description>
@@ -20,6 +29,8 @@ Status info:
 	</SecondaryObjectives>
 	<Ships>
 		firefly1
+		kentuckyalpha1
+		mercurius2
 	</Ships>
 	<TravelTime min="2" max="4"/>
 	<ExpirationTime min="2" max="4"/>
@@ -64,6 +75,8 @@ Status info:
 	</SecondaryObjectives>
 	<Ships>
 		firefly1
+		kentuckyalpha1
+		mercurius2
 	</Ships>
 	<TravelTime min="4" max="10"/>
 	<ExpirationTime min="2" max="4"/>
@@ -134,6 +147,7 @@ Status info:
 	</Status>
 </Mission>
 -->
+
 <!--
 <Mission type="RetrieveData"  rewardClass="1" lootPool="1">
 <Description>There's a certain shipwreck with some very valuable data onboard that we've been contracted to recover. \nFind the right console, download the data and bring it back.</Description>
@@ -294,6 +308,8 @@ Status info:
 	</PrimaryObjectives>
 	<Ships>
 		firefly1
+		kentuckyalpha1
+		mercurius2
 	</Ships>
 	<TravelTime min="4" max="8"/>
 	<ExpirationTime min="2" max="4"/>
@@ -339,6 +355,8 @@ Status info:
 	</SecondaryObjectives>
 	<Ships>
 		firefly1
+		kentuckyalpha1
+		mercurius2
 	</Ships>
 	<TravelTime min="2" max="4"/>
 	<ExpirationTime min="2" max="4"/>
@@ -373,12 +391,52 @@ Status info:
 	</Status>
 </Mission>
 
-<!--- REWARD CLASSES -->
+<Mission type="RetrieveCargo"  rewardClass="2" lootPool="1">
+<Description>There is an Alien Artifact onboard somewhere on the ship and our client wants us to recover it. \nEverything else you find is yours to keep.</Description>
+	<PrimaryObjectives>
+		FindItem_Artifact
+	</PrimaryObjectives>
+	<SecondaryObjectives>
+		Loot
+	</SecondaryObjectives>
+	<Ships>
+		firefly1
+		kentuckyalpha1
+		mercurius2
+	</Ships>
+	<TravelTime min="4" max="10"/>
+	<ExpirationTime min="2" max="4"/>
+	<LootQualityPool>
+		<Item name="2" weight="3"/>
+		<Item name="3"/>
+	</LootQualityPool>
+	<Status name="EnemyTypes">
+		<Item name="0" weight="3"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+	</Status>
+	<Status name="Aliens">
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+		<Item name="3"/>
+	</Status>
+	<Status name="Security">
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+	</Status>
+	<Status name="Condition">
+		<Item name="0"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+	</Status>
+	<Status name="Power">
+		<Item name="0"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+	</Status>
+</Mission>
 
-<RewardClass name="1" min="800" max="1200"/>
-<RewardClass name="2" min="1800" max="2200"/>
-<RewardClass name="3" min="3000" max="4000"/>
-<RewardClass name="4" min="4500" max="5500"/>	
+
 
 
 </Root>
