@@ -15,7 +15,7 @@ public class TileLightsSub : MonoBehaviour
 	public GameObject LightGraphics;
 	public Material on_material,off_material;
 
-	public List<Light> white_lights;																			//instantiate a list for the white lights in the various TilePrefabs under TestObjects of GameScene																		
+	public List<Light> white_lights,orange_lights;																			//instantiate a list for the white lights in the various TilePrefabs under TestObjects of GameScene																		
 	public float delay;																							//instantiate time to delay by in inspector
 
 	private float ticks;																						//instantiate time since last toggle
@@ -26,7 +26,7 @@ public class TileLightsSub : MonoBehaviour
 
 	/// <summary>
 	/// Power state property.
-	/// Automatically updates the light.
+	/// Automatically updates the lights.
 	/// </summary>
 	public bool PowerOn {
 		get {return power_on;}
@@ -68,7 +68,7 @@ public class TileLightsSub : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Turns the light on/off based on its state and power setting.
+	/// Turns the lights on/off based on its state and power setting.
 	/// </summary>
 	public void EnableLights()
 	{
@@ -77,31 +77,39 @@ public class TileLightsSub : MonoBehaviour
 			var white_light=white_lights[i];
 			bool light_on=true;
 
-			if(white_light != null)
-			{
 			if (power_on){
-					switch(lighting_state)
-					{
-					case Lighting_State.Broken:
-						light_on = false;
-						break;
-					case Lighting_State.Flickering:
-						light_on = light_flicker;
-						break;
-					case Lighting_State.Normal:
-						light_on = true;
-						break;
-					}
-				}
-				else{
+				switch(lighting_state)
+				{
+				case Lighting_State.Broken:
 					light_on = false;
+					break;
+				case Lighting_State.Flickering:
+					light_on = light_flicker;
+					break;
+				case Lighting_State.Normal:
+					light_on = true;
+					break;
 				}
+			}
+			else{
+				light_on = false;
+			}
 
-				white_light.enabled=light_on;
+			white_light.enabled=light_on;
 
-				if (LightGraphics!=null){
+			if (LightGraphics!=null){
 				LightGraphics.renderer.material=light_on?on_material:off_material;
-				}
+			}
+		}
+
+		//orange lights
+		for(int i = 0; i < orange_lights.Count; i++)
+		{
+			var l=orange_lights[i];
+			
+			if(l != null)
+			{
+				l.enabled=!power_on;
 			}
 		}
 	}

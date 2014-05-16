@@ -53,11 +53,11 @@ public class MissionGenerator{
         //objectives
 
         foreach(var o in mission.XmlData.PrimaryObjectives){
-            mission.AddPrimaryObjective((MissionObjData.Objective)System.Enum.Parse(typeof(MissionObjData.Objective),o,true));
+            mission.AddPrimaryObjective(o);
         }
 
         foreach(var o in mission.XmlData.SecondaryObjectives){
-            mission.AddSecondaryObjective((MissionObjData.Objective)System.Enum.Parse(typeof(MissionObjData.Objective),o,true));
+            mission.AddSecondaryObjective(o);
         }
 
 		//time 

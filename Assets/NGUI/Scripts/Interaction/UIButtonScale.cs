@@ -19,6 +19,7 @@ public class UIButtonScale : MonoBehaviour
 
 	Vector3 mScale;
 	bool mStarted = false;
+	public bool DisableTween=false;
 
 	void Start ()
 	{
@@ -26,7 +27,7 @@ public class UIButtonScale : MonoBehaviour
 		{
 			mStarted = true;
 			if (tweenTarget == null) tweenTarget = transform;
-			mScale = tweenTarget.localScale;
+			mScale =tweenTarget.localScale;
 		}
 	}
 
@@ -51,7 +52,7 @@ public class UIButtonScale : MonoBehaviour
 		if (enabled)
 		{
 			if (!mStarted) Start();
-			TweenScale.Begin(tweenTarget.gameObject, duration, isPressed ? Vector3.Scale(mScale, pressed) :
+			if (!DisableTween) TweenScale.Begin(tweenTarget.gameObject, duration, isPressed ? Vector3.Scale(mScale, pressed) :
 				(UICamera.IsHighlighted(gameObject) ? Vector3.Scale(mScale, hover) : mScale)).method = UITweener.Method.EaseInOut;
 		}
 	}
@@ -61,8 +62,14 @@ public class UIButtonScale : MonoBehaviour
 		if (enabled)
 		{
 			if (!mStarted) Start();
-			TweenScale.Begin(tweenTarget.gameObject, duration, isOver ? Vector3.Scale(mScale, hover) : mScale).method = UITweener.Method.EaseInOut;
+			if (!DisableTween) TweenScale.Begin(tweenTarget.gameObject, duration, isOver ? Vector3.Scale(mScale, hover) : mScale).method = UITweener.Method.EaseInOut;
 		}
+	}
+
+	void OnPermaHover(bool Enter){
+		if (!Enter) DisableTween=false;
+		OnHover(Enter);
+		if (Enter) DisableTween=true;
 	}
 
 	void OnSelect (bool isSelected)

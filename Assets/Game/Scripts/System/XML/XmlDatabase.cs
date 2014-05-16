@@ -12,7 +12,7 @@ public class XmlDatabase
 	public static Dictionary<MissionObjData.Type,MissionXmlData> Missions{ get; private set; }
 	public static Dictionary<string,InvBaseItem> QuestItems=new Dictionary<string,InvBaseItem>();
 	public static Dictionary<string,AmmoXmlData> AmmoTypes=new Dictionary<string,AmmoXmlData>();
-	public static Dictionary<MissionObjData.Objective,ObjectiveXmlData> Objectives=new Dictionary<MissionObjData.Objective,ObjectiveXmlData>();
+	public static Dictionary<string,ObjectiveXmlData> Objectives=new Dictionary<string,ObjectiveXmlData>();
 	public static Dictionary<string,RewardClassXmlData> RewardClasses=new Dictionary<string,RewardClassXmlData>();
 	public static PoolContainerXmlData LootPool=new PoolContainerXmlData("LootPool");
 	public static PoolContainerXmlData MissionPool=new PoolContainerXmlData("MissionPool");
@@ -103,10 +103,9 @@ public class XmlDatabase
 		}
 		RewardClasses.Add(name,data);
 	}
-	public static void AddObjective(string name,ObjectiveXmlData data){
-		var type=(MissionObjData.Objective)System.Enum.Parse(typeof(MissionObjData.Objective),name,true);
+	public static void AddObjective(string type,ObjectiveXmlData data){
 		if (Objectives.ContainsKey(type)){
-			Debug.LogWarning(data.GetType().ToString()+" redefinition: "+name);
+			Debug.LogWarning(data.GetType().ToString()+" redefinition: "+type);
 			return;
 		}
 		Objectives.Add(type,data);
