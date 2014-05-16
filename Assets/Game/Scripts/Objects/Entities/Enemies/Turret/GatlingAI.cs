@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using TreeSharp;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GatlingAI : AIBase {
 
@@ -55,6 +56,8 @@ public class GatlingAI : AIBase {
     public AudioClip OpenSoundFX;
     public AudioClip CloseSoundFX;
     public AudioClip VerticalRotationSoundFX;
+
+	public List<ParticleSystem> shootEffects;
 
 	// Use this for initialization
 	void Start()
@@ -214,6 +217,11 @@ public class GatlingAI : AIBase {
 		turretAnimation.Play(GunShootAnimation);
 
 		audio.PlayOneShot(ShootSoundFX);
+
+		for (int i = 0; i < shootEffects.Count; i++)
+		{
+			shootEffects[i].Play();
+		}
 
 		Invoke("DamagePlayer", turretAnimation[GunShootAnimation].clip.length / 2.0f);
 		AP -= AttackCost;

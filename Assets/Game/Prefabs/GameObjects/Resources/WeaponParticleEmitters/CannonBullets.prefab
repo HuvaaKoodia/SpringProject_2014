@@ -41,7 +41,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 1, y: 4.37113883e-08, z: 4.37113883e-08, w: 1.91068547e-15}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 11.5087938, y: -3.38692236, z: 27.0856361}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400002}
@@ -70,11 +70,11 @@ ParticleSystem:
   looping: 0
   prewarm: 0
   playOnAwake: 0
-  moveWithTransform: 0
+  moveWithTransform: 1
   InitialModule:
     enabled: 1
     startLifetime:
-      scalar: 2
+      scalar: .300000012
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1072,7 +1072,7 @@ ParticleSystem:
       minMaxState: 1
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     type: 1
     plane0: {fileID: 0}
     plane1: {fileID: 0}
@@ -1087,7 +1087,7 @@ ParticleSystem:
     particleRadius: .00999999978
     collidesWith:
       serializedVersion: 2
-      m_Bits: 268288
+      m_Bits: 268289
     quality: 0
     voxelSize: .5
     collisionMessages: 0
@@ -1112,7 +1112,7 @@ ParticleSystem:
   looping: 0
   prewarm: 0
   playOnAwake: 0
-  moveWithTransform: 0
+  moveWithTransform: 1
   InitialModule:
     enabled: 1
     startLifetime:

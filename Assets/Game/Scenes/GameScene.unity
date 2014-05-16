@@ -6828,6 +6828,7 @@ MonoBehaviour:
   targetVerticalRotation: {x: 0, y: 0, z: 0, w: 0}
   targetHorizontalRotation: {x: 0, y: 0, z: 0, w: 0}
   rotationSpeed: 5
+  NumParticleEmitters: 2
 --- !u!1 &216458950
 GameObject:
   m_ObjectHideFlags: 0
@@ -10210,7 +10211,7 @@ MonoBehaviour:
   TargetingHud: {fileID: 776641487}
   InteractHud: {fileID: 517664606}
   engageButton: {fileID: 2039739295}
-  disperseHeatButton: {fileID: 1965567893}
+  disperseHeatButton: {fileID: 383681011}
   MechStats: {fileID: 931676325}
   targetMarkPanel: {fileID: 2084999489}
   TP: {fileID: 521904697}
@@ -12424,7 +12425,7 @@ GameObject:
   - 114: {fileID: 383681014}
   - 114: {fileID: 383681013}
   m_Layer: 9
-  m_Name: Inventory
+  m_Name: DisperseHeat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12456,7 +12457,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 313350744}
-  functionName: ToggleInventory
+  functionName: DisperseHeatPressed
   trigger: 0
   includeChildren: 0
   OnPressInputIndex: 0
@@ -12618,6 +12619,7 @@ MonoBehaviour:
   targetVerticalRotation: {x: 0, y: 0, z: 0, w: 0}
   targetHorizontalRotation: {x: 0, y: 0, z: 0, w: 0}
   rotationSpeed: 5
+  NumParticleEmitters: 2
 --- !u!1 &385665021
 GameObject:
   m_ObjectHideFlags: 0
@@ -12754,6 +12756,7 @@ MonoBehaviour:
   targetVerticalRotation: {x: 0, y: 0, z: 0, w: 0}
   targetHorizontalRotation: {x: 0, y: 0, z: 0, w: 0}
   rotationSpeed: 5
+  NumParticleEmitters: 2
 --- !u!1 &392504491
 GameObject:
   m_ObjectHideFlags: 0
@@ -13535,7 +13538,7 @@ GameObject:
   - 114: {fileID: 424481452}
   - 114: {fileID: 424481451}
   m_Layer: 9
-  m_Name: Inventory
+  m_Name: DisperseHeat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13567,7 +13570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1815927261}
-  functionName: ToggleInventory
+  functionName: DisperseHeatPressed
   trigger: 0
   includeChildren: 0
   OnPressInputIndex: 0
@@ -13915,6 +13918,7 @@ MonoBehaviour:
   targetVerticalRotation: {x: 0, y: 0, z: 0, w: 0}
   targetHorizontalRotation: {x: 0, y: 0, z: 0, w: 0}
   rotationSpeed: 5
+  NumParticleEmitters: 2
 --- !u!1 &433596091
 GameObject:
   m_ObjectHideFlags: 0
@@ -16205,7 +16209,7 @@ MonoBehaviour:
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 0}
   mFont: {fileID: 11400000, guid: ac44b8a25154a9d40a172ab5851e0986, type: 2}
-  mText: Inventory
+  mText: Disperse Heat
   mFontSize: 20
   mFontStyle: 0
   mEncoding: 1
@@ -18046,6 +18050,34 @@ Prefab:
     - target: {fileID: 11400376, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
       propertyPath: mWidth
       value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 400434, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -1.1018157
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -1217.3114
+      objectReference: {fileID: 0}
+    - target: {fileID: 400278, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -1.1018157
+      objectReference: {fileID: 0}
+    - target: {fileID: 400164, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -1.1018157
+      objectReference: {fileID: 0}
+    - target: {fileID: 400538, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -1.10163927
+      objectReference: {fileID: 0}
+    - target: {fileID: 400294, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -1.1018157
+      objectReference: {fileID: 0}
+    - target: {fileID: 400274, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -1.10163927
       objectReference: {fileID: 0}
     - target: {fileID: 400434, guid: 043c7f41ae0d0374187e4c88b7d9edb9, type: 2}
       propertyPath: m_LocalPosition.x
@@ -20503,7 +20535,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1815927261}
-  functionName: TargetingModeButtonPressed
+  functionName: ToggleInventory
   trigger: 0
   includeChildren: 0
   OnPressInputIndex: 0
@@ -29021,7 +29053,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 313350744}
-  functionName: TargetingModeButtonPressed
+  functionName: ToggleInventory
   trigger: 0
   includeChildren: 0
   OnPressInputIndex: 0
@@ -29269,6 +29301,7 @@ MonoBehaviour:
   targetVerticalRotation: {x: 0, y: 0, z: 0, w: 0}
   targetHorizontalRotation: {x: 0, y: 0, z: 0, w: 0}
   rotationSpeed: 5
+  NumParticleEmitters: 2
 --- !u!1 &919251442
 GameObject:
   m_ObjectHideFlags: 0
@@ -33750,6 +33783,7 @@ MonoBehaviour:
   targetVerticalRotation: {x: 0, y: 0, z: 0, w: 0}
   targetHorizontalRotation: {x: 0, y: 0, z: 0, w: 0}
   rotationSpeed: 5
+  NumParticleEmitters: 2
 --- !u!1 &1050427130
 GameObject:
   m_ObjectHideFlags: 0
@@ -34323,6 +34357,7 @@ MonoBehaviour:
   targetVerticalRotation: {x: 0, y: 0, z: 0, w: 0}
   targetHorizontalRotation: {x: 0, y: 0, z: 0, w: 0}
   rotationSpeed: 5
+  NumParticleEmitters: 2
 --- !u!1 &1066030368
 GameObject:
   m_ObjectHideFlags: 0
@@ -34792,7 +34827,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1073335189}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -.5, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1441418370}
@@ -39808,7 +39843,7 @@ GameObject:
   - 4: {fileID: 1220138172}
   - 114: {fileID: 1220138173}
   m_Layer: 9
-  m_Name: Label
+  m_Name: Inventory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39863,7 +39898,7 @@ MonoBehaviour:
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 0}
   mFont: {fileID: 11400000, guid: ac44b8a25154a9d40a172ab5851e0986, type: 2}
-  mText: Target
+  mText: Inventory
   mFontSize: 20
   mFontStyle: 0
   mEncoding: 1
@@ -40105,6 +40140,7 @@ MonoBehaviour:
   targetVerticalRotation: {x: 0, y: 0, z: 0, w: 0}
   targetHorizontalRotation: {x: 0, y: 0, z: 0, w: 0}
   rotationSpeed: 5
+  NumParticleEmitters: 2
 --- !u!1 &1231083567
 GameObject:
   m_ObjectHideFlags: 0
@@ -54315,7 +54351,7 @@ MonoBehaviour:
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 0}
   mFont: {fileID: 11400000, guid: ac44b8a25154a9d40a172ab5851e0986, type: 2}
-  mText: Disperse heat
+  mText: Target
   mFontSize: 20
   mFontStyle: 0
   mEncoding: 1
@@ -56566,7 +56602,7 @@ MonoBehaviour:
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 0}
   mFont: {fileID: 11400000, guid: ac44b8a25154a9d40a172ab5851e0986, type: 2}
-  mText: Disperse heat
+  mText: Target
   mFontSize: 20
   mFontStyle: 0
   mEncoding: 1
@@ -58727,7 +58763,7 @@ MonoBehaviour:
   TargetingHud: {fileID: 1039939676}
   InteractHud: {fileID: 247005964}
   engageButton: {fileID: 1114898393}
-  disperseHeatButton: {fileID: 1976901779}
+  disperseHeatButton: {fileID: 424481449}
   MechStats: {fileID: 103009574}
   targetMarkPanel: {fileID: 953975086}
   TP: {fileID: 1726801055}
@@ -63247,7 +63283,7 @@ GameObject:
   - 114: {fileID: 1965567896}
   - 114: {fileID: 1965567895}
   m_Layer: 9
-  m_Name: DisperseHeat
+  m_Name: Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63279,7 +63315,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 313350744}
-  functionName: DisperseHeatPressed
+  functionName: TargetingModeButtonPressed
   trigger: 0
   includeChildren: 0
   OnPressInputIndex: 0
@@ -63931,7 +63967,7 @@ GameObject:
   - 114: {fileID: 1976901782}
   - 114: {fileID: 1976901781}
   m_Layer: 9
-  m_Name: DisperseHeat
+  m_Name: Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63963,7 +63999,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1815927261}
-  functionName: DisperseHeatPressed
+  functionName: TargetingModeButtonPressed
   trigger: 0
   includeChildren: 0
   OnPressInputIndex: 0
@@ -67304,7 +67340,7 @@ GameObject:
   - 4: {fileID: 2070565752}
   - 114: {fileID: 2070565753}
   m_Layer: 9
-  m_Name: Label
+  m_Name: Inventory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67359,7 +67395,7 @@ MonoBehaviour:
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 0}
   mFont: {fileID: 11400000, guid: ac44b8a25154a9d40a172ab5851e0986, type: 2}
-  mText: Target
+  mText: Inventory
   mFontSize: 20
   mFontStyle: 0
   mEncoding: 1
@@ -70620,7 +70656,7 @@ MonoBehaviour:
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 0}
   mFont: {fileID: 11400000, guid: ac44b8a25154a9d40a172ab5851e0986, type: 2}
-  mText: Inventory
+  mText: Disperse Heat
   mFontSize: 20
   mFontStyle: 0
   mEncoding: 1
