@@ -1158,7 +1158,7 @@ GameObject:
   - 114: {fileID: 11400112}
   - 114: {fileID: 11400110}
   m_Layer: 9
-  m_Name: DisperseHeat
+  m_Name: Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1719,7 +1719,7 @@ GameObject:
   - 4: {fileID: 400206}
   - 114: {fileID: 11400220}
   m_Layer: 9
-  m_Name: Label
+  m_Name: Inventory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2334,7 +2334,7 @@ GameObject:
   - 114: {fileID: 11400352}
   - 114: {fileID: 11400350}
   m_Layer: 9
-  m_Name: Inventory
+  m_Name: DisperseHeat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8217,6 +8217,7 @@ MonoBehaviour:
   targetVerticalRotation: {x: 0, y: 0, z: 0, w: 0}
   targetHorizontalRotation: {x: 0, y: 0, z: 0, w: 0}
   rotationSpeed: 5
+  NumParticleEmitters: 2
 --- !u!114 &11400014
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8239,6 +8240,7 @@ MonoBehaviour:
   targetVerticalRotation: {x: 0, y: 0, z: 0, w: 0}
   targetHorizontalRotation: {x: 0, y: 0, z: 0, w: 0}
   rotationSpeed: 5
+  NumParticleEmitters: 2
 --- !u!114 &11400016
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8261,6 +8263,7 @@ MonoBehaviour:
   targetVerticalRotation: {x: 0, y: 0, z: 0, w: 0}
   targetHorizontalRotation: {x: 0, y: 0, z: 0, w: 0}
   rotationSpeed: 5
+  NumParticleEmitters: 2
 --- !u!114 &11400018
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8283,6 +8286,7 @@ MonoBehaviour:
   targetVerticalRotation: {x: 0, y: 0, z: 0, w: 0}
   targetHorizontalRotation: {x: 0, y: 0, z: 0, w: 0}
   rotationSpeed: 5
+  NumParticleEmitters: 2
 --- !u!114 &11400020
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9068,10 +9072,10 @@ MonoBehaviour:
   mColor: {r: 1, g: .0509803928, b: 0, a: .250980407}
   mPivot: 4
 <<<<<<< HEAD
-  mWidth: 419
+  mWidth: 409
 =======
-  mWidth: 412
->>>>>>> 19e157f2b5a32dcc02516d2c622badc26f28e5ac
+  mWidth: 414
+>>>>>>> Quality Settings
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -9737,7 +9741,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 100046}
-  functionName: DisperseHeatPressed
+  functionName: TargetingModeButtonPressed
   trigger: 0
   includeChildren: 0
   OnPressInputIndex: 0
@@ -10878,7 +10882,7 @@ MonoBehaviour:
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 0}
   mFont: {fileID: 11400000, guid: ac44b8a25154a9d40a172ab5851e0986, type: 2}
-  mText: Disperse heat
+  mText: Target
   mFontSize: 20
   mFontStyle: 0
   mEncoding: 1
@@ -11340,7 +11344,7 @@ MonoBehaviour:
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 0}
   mFont: {fileID: 11400000, guid: ac44b8a25154a9d40a172ab5851e0986, type: 2}
-  mText: Target
+  mText: Inventory
   mFontSize: 20
   mFontStyle: 0
   mEncoding: 1
@@ -11430,7 +11434,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 100046}
-  functionName: TargetingModeButtonPressed
+  functionName: ToggleInventory
   trigger: 0
   includeChildren: 0
   OnPressInputIndex: 0
@@ -12163,12 +12167,12 @@ MonoBehaviour:
   mColor: {r: 1, g: .0509803928, b: 0, a: .250980407}
   mPivot: 4
 <<<<<<< HEAD
-  mWidth: 420
-  mHeight: 50
+  mWidth: 724
+  mHeight: 149
 =======
-  mWidth: 729
-  mHeight: 150
->>>>>>> 19e157f2b5a32dcc02516d2c622badc26f28e5ac
+  mWidth: 418
+  mHeight: 50
+>>>>>>> Quality Settings
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -13171,7 +13175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 100046}
-  functionName: ToggleInventory
+  functionName: DisperseHeatPressed
   trigger: 0
   includeChildren: 0
   OnPressInputIndex: 0
@@ -13487,7 +13491,7 @@ MonoBehaviour:
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 0}
   mFont: {fileID: 11400000, guid: ac44b8a25154a9d40a172ab5851e0986, type: 2}
-  mText: Inventory
+  mText: Disperse Heat
   mFontSize: 20
   mFontStyle: 0
   mEncoding: 1
@@ -14137,7 +14141,7 @@ MonoBehaviour:
   TargetingHud: {fileID: 100284}
   InteractHud: {fileID: 100082}
   engageButton: {fileID: 100244}
-  disperseHeatButton: {fileID: 100138}
+  disperseHeatButton: {fileID: 100276}
   MechStats: {fileID: 11400376}
   targetMarkPanel: {fileID: 11400312}
   TP: {fileID: 11400176}
@@ -15298,7 +15302,7 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: 1, g: .0509803928, b: 0, a: .250980407}
   mPivot: 4
-  mWidth: 49
+  mWidth: 48
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -15397,7 +15401,7 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: 1, g: .0509803928, b: 0, a: .250980407}
   mPivot: 4
-  mWidth: 1082
+  mWidth: 1078
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -15496,7 +15500,7 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
-  mWidth: 49
+  mWidth: 48
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -15677,8 +15681,8 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: 1, g: .0509803928, b: 0, a: .250980407}
   mPivot: 4
-  mWidth: 888
-  mHeight: 150
+  mWidth: 881
+  mHeight: 149
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -16002,7 +16006,7 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: 1, g: .0509803928, b: 0, a: .250980407}
   mPivot: 4
-  mWidth: 417
+  mWidth: 414
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0

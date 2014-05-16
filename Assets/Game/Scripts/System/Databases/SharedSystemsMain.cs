@@ -9,6 +9,7 @@ public class SharedSystemsMain : MonoBehaviour {
 	public MapGenerator MGen;
 	public ShipGenerator SGen;
     public ShipDetailGenerator SDGen;
+	public GameOptionsMain GOps;
 
 	public UIAtlas ItemAtlas;
 
