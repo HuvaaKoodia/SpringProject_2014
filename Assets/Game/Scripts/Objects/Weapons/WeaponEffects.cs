@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class WeaponMesh : MonoBehaviour {
+public class WeaponEffects : MonoBehaviour {
 
 	public GameObject graphics;
 	public GameObject particleParent;
@@ -24,6 +24,8 @@ public class WeaponMesh : MonoBehaviour {
 	List<ParticleSystem> additionalParticles;
 
 	public bool IsEmiting { get; private set; }
+
+	AudioClip shootSoundFX;
 
 	// Use this for initialization
 	void Awake () {
@@ -60,6 +62,11 @@ public class WeaponMesh : MonoBehaviour {
 		additionalParticles.Add(particleEmitter);
 	}
 
+	public void SetShootSoundFX(AudioClip sfx)
+	{
+		shootSoundFX = sfx;
+	}
+
 	public void PlayShootAnimation()
 	{
 		if (shootAnimation == null) return;
@@ -84,7 +91,7 @@ public class WeaponMesh : MonoBehaviour {
 			IsEmiting = true;
 		}
 
-		if (muzzleParticles != null)
+		if (muzzleParticles.Count > 0)
 		{
 			ParticleSystem currentMuzzle = bulletParticles[currentMuzzleIndex];
 			currentMuzzle.transform.parent = particleParent.transform;
@@ -102,6 +109,11 @@ public class WeaponMesh : MonoBehaviour {
 		{
 			additionalParticles[i].time = 0;
 			additionalParticles[i].Play();
+		}
+
+		if (shootSoundFX != null)
+		{
+			audio.PlayOneShot(shootSoundFX);
 		}
 	}
 
