@@ -63,6 +63,8 @@ public class WeaponMain : MonoBehaviour {
 	public Quaternion targetHorizontalRotation;
 	public float rotationSpeed;
 
+	public float NumParticleEmitters = 2;
+
     public bool NoAmmoConsumption{get;private set;}
 
     public bool Usable(){
@@ -121,21 +123,27 @@ public class WeaponMain : MonoBehaviour {
 		ParticleSystem[] additionalParticleSystems = graphics.GetComponentsInChildren<ParticleSystem>();
 		for (int i = 0; i < additionalParticleSystems.Count(); i++)
 		{
-			meshData.SetAdditionalParticleSystem(additionalParticleSystems[i]);
+			meshData.AddAdditionalParticleSystem(additionalParticleSystems[i]);
 		}
 
 		if (player.GC.SS.PS.weaponParticleEmitters.ContainsKey(Weapon.baseItem.mesh + "Bullets"))
 		{
+			for (int i = 0; i < NumParticleEmitters; i++)
+			{
 			GameObject bulletEmitter = 
 				GameObject.Instantiate(player.GC.SS.PS.weaponParticleEmitters[Weapon.baseItem.mesh + "Bullets"]) as GameObject;
-			meshData.SetBulletParticles(bulletEmitter);
+			meshData.AddBulletParticles(bulletEmitter);
+			}
 		}
 
 		if (player.GC.SS.PS.weaponParticleEmitters.ContainsKey(Weapon.baseItem.mesh + "Muzzle"))
-		{
-			GameObject muzzleEmitter = 
-				GameObject.Instantiate(player.GC.SS.PS.weaponParticleEmitters[Weapon.baseItem.mesh + "Muzzle"]) as GameObject;
-			meshData.SetMuzzleParticles(muzzleEmitter);
+		{	
+			for (int i = 0; i < NumParticleEmitters; i++)
+			{
+				GameObject muzzleEmitter = 
+					GameObject.Instantiate(player.GC.SS.PS.weaponParticleEmitters[Weapon.baseItem.mesh + "Muzzle"]) as GameObject;
+				meshData.AddMuzzleParticles(muzzleEmitter);
+			}
 		}
 	}
 
