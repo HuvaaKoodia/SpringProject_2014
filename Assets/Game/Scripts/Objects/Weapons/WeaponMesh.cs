@@ -40,6 +40,9 @@ public class WeaponMesh : MonoBehaviour {
 		bulletParticles = particleEmitter.GetComponent<ParticleSystem>();
 		bulletParticles.enableEmission = true;
 		ShootEffectTime = bulletParticles.duration;
+
+		bulletParticles.Play();
+		bulletParticles.Stop();
 	}
 
 	public void SetMuzzleParticles(GameObject particleEmitter)
@@ -48,6 +51,9 @@ public class WeaponMesh : MonoBehaviour {
 		muzzleParticles = particleEmitter.GetComponent<ParticleSystem>();
 		muzzleParticles.enableEmission = true;
 		MuzzleEffectTime = muzzleParticles.duration;
+
+		muzzleParticles.Play();
+		muzzleParticles.Stop();
 	}
 
 	public void SetAdditionalParticleSystem(ParticleSystem particleEmitter)
@@ -55,6 +61,9 @@ public class WeaponMesh : MonoBehaviour {
 		particleEmitter.enableEmission = true;
 
 		additionalParticles.Add(particleEmitter);
+
+		particleEmitter.Play();
+		particleEmitter.Stop();
 	}
 
 	public void PlayShootAnimation()
@@ -69,6 +78,8 @@ public class WeaponMesh : MonoBehaviour {
 	{
 		if (bulletParticles != null)
 		{
+			bulletParticles.transform.position = particleParent.transform.position;
+			bulletParticles.transform.rotation = particleParent.transform.rotation;
 			bulletParticles.time = 0;
 			bulletParticles.Play();
 			Invoke("StopShootEffect", ShootEffectTime);
@@ -77,6 +88,8 @@ public class WeaponMesh : MonoBehaviour {
 
 		if (muzzleParticles != null)
 		{
+			muzzleParticles.transform.position = particleParent.transform.position;
+			muzzleParticles.transform.rotation = particleParent.transform.rotation;
 			muzzleParticles.time = 0;
 			muzzleParticles.Play();
 		}
@@ -98,6 +111,8 @@ public class WeaponMesh : MonoBehaviour {
 		bulletParticles.Stop();
 		IsEmiting = false;
 	}
+
+
 	
 	public bool IsAnimating
 	{
