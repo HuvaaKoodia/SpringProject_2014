@@ -58,6 +58,7 @@ public class PrefabStore : MonoBehaviour {
 	//Weapon graphics
 	public Dictionary<string, GameObject> weaponGraphics;
 	public Dictionary<string, GameObject> weaponParticleEmitters;
+	public Dictionary<string, AudioClip> weaponSoundFX;
 
 	public List<GameObject> targetHighlights;
 
@@ -80,6 +81,12 @@ public class PrefabStore : MonoBehaviour {
 		weaponParticleEmitters.Add("MeleeBullets", Resources.Load("WeaponParticleEmitters/GladiusBullets") as GameObject);
 		weaponParticleEmitters.Add("GaussBullets", Resources.Load("WeaponParticleEmitters/GaussBullets") as GameObject);
 		weaponParticleEmitters.Add("MissileBullets", Resources.Load("WeaponParticleEmitters/MissileBullets") as GameObject);
+
+
+		weaponSoundFX = new Dictionary<string, AudioClip>();
+		weaponSoundFX.Add("Gatling", Resources.Load("Weapons/Gatling_gun_v3") as AudioClip);
+		weaponSoundFX.Add("Cannon", Resources.Load("Weapons/Cannon_v2") as AudioClip);
+		weaponSoundFX.Add("Shotgun", Resources.Load("Weapons/Shotgun_v1") as AudioClip);
 
 		targetHighlights = new List<GameObject>();
 		targetHighlights.Add(Resources.Load("TargetingSprites/LeftDown") as GameObject);

@@ -57,6 +57,10 @@ public class AlienAI : AIBase {
 
     public AudioClip MeleeAttackSoundFX;
     public AudioClip RangedAttackSoundFX;
+	public AudioClip DieSoundFX;
+
+	public AudioClip TakeHeavyDamageFX;
+	public AudioClip TakeNormalDamageFX;
 
 	// Use this for initialization
 	void Start()
@@ -611,16 +615,19 @@ public class AlienAI : AIBase {
 		if (damageAmount < HeavyDamageAnimationTreshold)
 		{
 			PlayAnimation(Damage01Animation, 1);
+			audio.PlayOneShot(TakeNormalDamageFX);
 		}
 		else
 		{
 			PlayAnimation(Damage02Animation, 1);
+			audio.PlayOneShot(TakeHeavyDamageFX);
 		}
 	}
 
 	public void PlayDeathAnimation()
 	{
 		BlendAnimation(DeathAnimation, 1);
+		audio.PlayOneShot(DieSoundFX);
 	}
 
 	protected override void CreateBehaviourTree()
