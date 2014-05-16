@@ -196,9 +196,6 @@ public class GameController : MonoBehaviour {
 		HUD.player = Player;
 		HUD.SetGC(this);
 
-		//floor stats
-		SetFloor(CurrentFloorIndex);
-
 		RandomizeLightsInAllFloors(10,20);
 
 		//set ship status to mission status
@@ -219,6 +216,9 @@ public class GameController : MonoBehaviour {
 
 		//debug
 		current_ship_data=ship_objdata;
+
+		//floor stats
+		SetFloor(CurrentFloorIndex);
 	}
 
 	// Update is called once per frame
@@ -236,7 +236,7 @@ public class GameController : MonoBehaviour {
 			ChangeTurn(TurnState.PlayerTurn);
 		}
 
-#if UNITY_EDITOR 
+#if UNITY_EDITOR
 		if (Input.GetKeyDown(KeyCode.B)){
 			SS.SDGen.RandomizeDoorStates(this,current_ship_data);
 		}
@@ -298,10 +298,20 @@ public class GameController : MonoBehaviour {
 		SetFloorPowerState(index,CurrentFloorData.PowerOn);//DEV. lazy
 
 		Player.CurrentFloorIndex=index;
-		culling_system.DisableOtherFloors(index,this);
 		aiController.SetFloor(CurrentFloorData);
 		Player.interactSub.CheckForInteractables();
 		Player.HUD.ChangeFloor(index);
+
+		StartCoroutine (CallAfterAFewUpdateSteps());
+	}
+
+	IEnumerator CallAfterAFewUpdateSteps(){
+		yield return null;
+		yield return null;
+		yield return null;
+
+		culling_system.DisableOtherFloors(CurrentFloorIndex,this);
+		Player.CullWorld (false);
 	}
 
 	private IEnumerator GotoFloorTimer(int index){
