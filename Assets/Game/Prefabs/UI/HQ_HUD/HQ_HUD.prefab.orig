@@ -2195,14 +2195,13 @@ GameObject:
   m_Component:
   - 4: {fileID: 400296}
   - 114: {fileID: 11400390}
-  - 114: {fileID: 11400392}
   m_Layer: 13
   m_Name: MechanicMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &100302
 GameObject:
   m_ObjectHideFlags: 1
@@ -6500,7 +6499,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100096}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -9.94347477, z: 0}
+  m_LocalPosition: {x: -1.002985, y: -9.94347477, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400176}
@@ -8276,7 +8275,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100448}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -16.0300007, z: 0}
+  m_LocalPosition: {x: -1.002985, y: -16.0300007, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400046}
@@ -10215,7 +10214,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100796}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -288.893738, y: -241.691772, z: 0}
+  m_LocalPosition: {x: -295, y: -241.691772, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400448}
@@ -11393,6 +11392,7 @@ MonoBehaviour:
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400016
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -11770,6 +11770,7 @@ MonoBehaviour:
   hover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   pressed: {x: 1.04999995, y: 1.04999995, z: 1.04999995}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400046
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -11861,7 +11862,7 @@ MonoBehaviour:
     target: {fileID: 0}
     relative: 1
     absolute: 0
-  mColor: {r: 1, g: 1, b: 1, a: 1}
+  mColor: {r: 1, g: 1, b: 1, a: .0509803928}
   mPivot: 4
   mWidth: 200
   mHeight: 50
@@ -12316,12 +12317,12 @@ MonoBehaviour:
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 1
 <<<<<<< HEAD
-  mWidth: 481
-  mHeight: 80
+  mWidth: 118
+  mHeight: 20
 =======
-  mWidth: 490
-  mHeight: 81
->>>>>>> Lots of small fixes + restructuring  asset folders
+  mWidth: 486
+  mHeight: 80
+>>>>>>> origin/master
   mDepth: 3
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -12376,7 +12377,7 @@ MonoBehaviour:
     target: {fileID: 0}
     relative: 1
     absolute: 0
-  mColor: {r: 1, g: 1, b: 1, a: 1}
+  mColor: {r: 1, g: 1, b: 1, a: .0509803928}
   mPivot: 4
   mWidth: 200
   mHeight: 50
@@ -13238,7 +13239,7 @@ MonoBehaviour:
     target: {fileID: 0}
     relative: 1
     absolute: 0
-  mColor: {r: 1, g: 1, b: 1, a: 1}
+  mColor: {r: 1, g: 1, b: 1, a: .0509803928}
   mPivot: 4
   mWidth: 200
   mHeight: 50
@@ -13567,6 +13568,7 @@ MonoBehaviour:
   hover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   pressed: {x: 1.04999995, y: 1.04999995, z: 1.04999995}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400152
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -13941,7 +13943,7 @@ MonoBehaviour:
     target: {fileID: 0}
     relative: 1
     absolute: 0
-  mColor: {r: 1, g: 1, b: 1, a: 1}
+  mColor: {r: 1, g: 1, b: 1, a: .0509803928}
   mPivot: 4
   mWidth: 200
   mHeight: 50
@@ -14287,6 +14289,7 @@ MonoBehaviour:
   hover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   pressed: {x: 1.04999995, y: 1.04999995, z: 1.04999995}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400192
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -14782,7 +14785,7 @@ MonoBehaviour:
     e00: 479.999969
     e01: 0
     e02: 0
-    e03: 30.5069332
+    e03: 31.5099182
     e10: 0
     e11: 479.999969
     e12: 0
@@ -14840,7 +14843,7 @@ MonoBehaviour:
     target: {fileID: 0}
     relative: 1
     absolute: 0
-  mColor: {r: 1, g: 1, b: 1, a: 1}
+  mColor: {r: 1, g: 1, b: 1, a: .0509803928}
   mPivot: 4
   mWidth: 200
   mHeight: 50
@@ -15076,7 +15079,7 @@ MonoBehaviour:
     target: {fileID: 0}
     relative: 1
     absolute: 0
-  mColor: {r: 1, g: 1, b: 1, a: 1}
+  mColor: {r: 1, g: 1, b: 1, a: .0509803928}
   mPivot: 4
   mWidth: 200
   mHeight: 50
@@ -15313,6 +15316,7 @@ MonoBehaviour:
   hover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   pressed: {x: 1.04999995, y: 1.04999995, z: 1.04999995}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400244
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -15432,6 +15436,7 @@ MonoBehaviour:
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400254
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -15524,6 +15529,7 @@ MonoBehaviour:
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400262
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -15652,6 +15658,7 @@ MonoBehaviour:
   hover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   pressed: {x: 1.04999995, y: 1.04999995, z: 1.04999995}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400270
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -15753,7 +15760,7 @@ MonoBehaviour:
     target: {fileID: 0}
     relative: 1
     absolute: 0
-  mColor: {r: 1, g: 1, b: 1, a: 1}
+  mColor: {r: 1, g: 1, b: 1, a: .152941182}
   mPivot: 4
   mWidth: 63
   mHeight: 20
@@ -15815,6 +15822,7 @@ MonoBehaviour:
   hover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   pressed: {x: 1.04999995, y: 1.04999995, z: 1.04999995}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400280
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -16626,7 +16634,7 @@ MonoBehaviour:
     target: {fileID: 0}
     relative: 1
     absolute: 0
-  mColor: {r: 1, g: 1, b: 1, a: 1}
+  mColor: {r: 1, g: 1, b: 1, a: .0509803928}
   mPivot: 4
   mWidth: 200
   mHeight: 50
@@ -16679,7 +16687,7 @@ MonoBehaviour:
     target: {fileID: 0}
     relative: 1
     absolute: 0
-  mColor: {r: 1, g: 1, b: 1, a: 1}
+  mColor: {r: 1, g: 1, b: 1, a: .0509803928}
   mPivot: 4
   mWidth: 200
   mHeight: 50
@@ -16858,6 +16866,7 @@ MonoBehaviour:
   hover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   pressed: {x: 1.04999995, y: 1.04999995, z: 1.04999995}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400338
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -16960,7 +16969,7 @@ MonoBehaviour:
     target: {fileID: 0}
     relative: 1
     absolute: 0
-  mColor: {r: 1, g: 1, b: 1, a: 1}
+  mColor: {r: 1, g: 1, b: 1, a: .0509803928}
   mPivot: 4
   mWidth: 200
   mHeight: 50
@@ -17035,6 +17044,7 @@ MonoBehaviour:
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400364
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -17232,6 +17242,7 @@ MonoBehaviour:
   hover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   pressed: {x: 1.04999995, y: 1.04999995, z: 1.04999995}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400380
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -17369,7 +17380,7 @@ MonoBehaviour:
   Statistics: {fileID: 11400128}
   MoneyLabel: {fileID: 11400284}
   allow_buying: 1
-  AmmoPanel: {fileID: 11400392}
+  AmmoPanel: {fileID: 0}
   UT: {fileID: 11400384}
   LT: {fileID: 0}
   RepairPanels:
@@ -17381,20 +17392,6 @@ MonoBehaviour:
   - {fileID: 11400226}
   - {fileID: 11400188}
   - {fileID: 11400134}
---- !u!114 &11400392
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100296}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e65e8d5a54a25874782ad9c4e8ff4ca4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AmmoButtonsParent: {fileID: 0}
-  AmmoPanelPrefab: {fileID: 0}
-  xoff: 0
 --- !u!114 &11400394
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -17410,6 +17407,7 @@ MonoBehaviour:
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400396
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -17608,6 +17606,7 @@ MonoBehaviour:
   hover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   pressed: {x: 1.04999995, y: 1.04999995, z: 1.04999995}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400414
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -17638,6 +17637,7 @@ MonoBehaviour:
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400418
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -17825,6 +17825,7 @@ MonoBehaviour:
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400432
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -18383,6 +18384,7 @@ MonoBehaviour:
   hover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   pressed: {x: 1.04999995, y: 1.04999995, z: 1.04999995}
   duration: .25
+  DisableTween: 0
 --- !u!114 &11400476
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -18412,13 +18414,8 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-<<<<<<< HEAD
-  mWidth: 338
-  mHeight: 51
-=======
-  mWidth: 330
-  mHeight: 49
->>>>>>> Lots of small fixes + restructuring  asset folders
+  mWidth: 336
+  mHeight: 50
   mDepth: 5
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -18482,6 +18479,7 @@ MonoBehaviour:
   hover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   pressed: {x: 1.04999995, y: 1.04999995, z: 1.04999995}
   duration: .25
+  DisableTween: 0
 --- !u!114 &11400482
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -18632,6 +18630,7 @@ MonoBehaviour:
   hover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   pressed: {x: 1.04999995, y: 1.04999995, z: 1.04999995}
   duration: .25
+  DisableTween: 0
 --- !u!114 &11400492
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -18794,6 +18793,7 @@ MonoBehaviour:
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400504
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -18990,6 +18990,7 @@ MonoBehaviour:
   hover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   pressed: {x: 1.04999995, y: 1.04999995, z: 1.04999995}
   duration: .25
+  DisableTween: 0
 --- !u!114 &11400516
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -19082,6 +19083,7 @@ MonoBehaviour:
   hover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   pressed: {x: 1.04999995, y: 1.04999995, z: 1.04999995}
   duration: .25
+  DisableTween: 0
 --- !u!114 &11400524
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -19289,6 +19291,7 @@ MonoBehaviour:
   hover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   pressed: {x: 1.04999995, y: 1.04999995, z: 1.04999995}
   duration: .25
+  DisableTween: 0
 --- !u!114 &11400538
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -19677,6 +19680,7 @@ MonoBehaviour:
   hover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   pressed: {x: 1.04999995, y: 1.04999995, z: 1.04999995}
   duration: .25
+  DisableTween: 0
 --- !u!114 &11400560
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -20123,6 +20127,7 @@ MonoBehaviour:
   hover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   pressed: {x: 1.04999995, y: 1.04999995, z: 1.04999995}
   duration: .25
+  DisableTween: 0
 --- !u!114 &11400584
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -20344,12 +20349,11 @@ MonoBehaviour:
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
 <<<<<<< HEAD
-  mWidth: 257
-  mHeight: 54
+  mWidth: 254
 =======
-  mWidth: 252
-  mHeight: 53
->>>>>>> Lots of small fixes + restructuring  asset folders
+  mWidth: 256
+>>>>>>> origin/master
+  mHeight: 54
   mDepth: 5
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -20629,6 +20633,7 @@ MonoBehaviour:
   hover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   pressed: {x: 1.04999995, y: 1.04999995, z: 1.04999995}
   duration: .25
+  DisableTween: 0
 --- !u!114 &11400614
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -27410,7 +27415,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AmmoButtonsParent: {fileID: 400796}
   AmmoPanelPrefab: {fileID: 11400026, guid: c007a0d1586a03a4dbea1154b1b2cc6d, type: 2}
-  xoff: 140
+  xoff: 150
 --- !u!114 &11401132
 MonoBehaviour:
   m_ObjectHideFlags: 1
