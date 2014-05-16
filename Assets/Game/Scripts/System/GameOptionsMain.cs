@@ -104,6 +104,7 @@ public class GameOptionsMain : MonoBehaviour {
 			GOpsObjD.anti_Aliasing = 8;
 			break;
 		}
+		QualitySettings.antiAliasing = GOpsObjD.anti_Aliasing;
 	}
 
 	public void SetShadowQuality(ShadowQuality SQ)
@@ -112,14 +113,14 @@ public class GameOptionsMain : MonoBehaviour {
 		{
 		case ShadowQuality.OFF:
 			GOpsObjD.shadow_projection = ShadowProjection.CloseFit.ToString();
-			QualitySettings.shadowProjection = ShadowProjection.StableFit;
+			QualitySettings.shadowProjection = ShadowProjection.CloseFit;
 
 			GOpsObjD.shadow_cascades = 0;
 			GOpsObjD.shadow_distance = 0;
 			break;
 		case ShadowQuality.LOW:
 			GOpsObjD.shadow_projection = ShadowProjection.CloseFit.ToString();
-			QualitySettings.shadowProjection = ShadowProjection.StableFit;
+			QualitySettings.shadowProjection = ShadowProjection.CloseFit;
 
 			GOpsObjD.shadow_cascades = 0;
 			GOpsObjD.shadow_distance = 15;
