@@ -9,12 +9,7 @@ Status info:
 -Power: 	0=generator broken,1=power off,2=power on
 -->
 
-<!--- REWARD CLASSES -->
-<RewardClass name="0" minmax="0"/>
-<RewardClass name="1" min="8000" max="12000"/>
-<RewardClass name="2" min="18000" max="22000"/>
-<RewardClass name="3" min="30000" max="40000"/>
-<RewardClass name="4" min="45000" max="55000"/>	
+
 
 <!-- Missions -->
 
@@ -391,7 +386,7 @@ Status info:
 	</Status>
 </Mission>
 
-<Mission type="RetrieveCargo"  rewardClass="2" lootPool="1">
+<!-- <Mission type="RetrieveCargo"  rewardClass="2" lootPool="1">
 <Description>There is an Alien Artifact onboard somewhere on the ship and our client wants us to recover it. \nEverything else you find is yours to keep.</Description>
 	<PrimaryObjectives>
 		FindItem_Artifact
@@ -434,8 +429,14 @@ Status info:
 		<Item name="1" weight="3"/>
 		<Item name="2" weight="2"/>
 	</Status>
-</Mission>
+</Mission> -->
 
+<!--- REWARD CLASSES -->
+<!-- <RewardClass name="0" minmax="0"/> -->
+<RewardClass name="1" min="8000" max="12000"/>
+<RewardClass name="2" min="18000" max="22000"/>
+<RewardClass name="3" min="30000" max="40000"/>
+<RewardClass name="4" min="45000" max="55000"/>	
 
 
 
