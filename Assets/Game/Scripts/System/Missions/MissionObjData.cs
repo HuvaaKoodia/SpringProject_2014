@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class MissionObjective{
-	public MissionObjData.Objective Objective{get;private set;}
+	public string Objective{get;private set;}
 	public int status{get;set;}
 
 	public MissionObjective(){}
 
-	public MissionObjective(MissionObjData.Objective obj){
+	public MissionObjective(string obj){
 		Objective=obj;
 	}
 }
@@ -23,8 +23,6 @@ public class MissionObjData {
     public enum SecuritySystems{None,Small,Medium,Large}
 	public enum ShipCondition{BadlyDamaged,Damaged,Intact}
 	public enum ShipPower{Broken,Off,On}
-
-    public enum Objective{FindLogs,FindItem,Explore,Loot}
    
     public enum InformationRating{None,Something,Everything}
 
@@ -64,15 +62,15 @@ public class MissionObjData {
 		SecondaryObjectives=new List<MissionObjective>();
     }
 
-	public void AddPrimaryObjective(Objective obj){
+	public void AddPrimaryObjective(string obj){
 		PrimaryObjectives.Add(new MissionObjective(obj));
 	}
 
-	public void AddSecondaryObjective(Objective obj){
+	public void AddSecondaryObjective(string obj){
 		SecondaryObjectives.Add(new MissionObjective(obj));
 	}
 
-    public bool ContainsObjective(MissionObjData.Objective o){
+	public bool ContainsObjective(string o){
 		return PrimaryObjectives.Exists(obj=>obj.Objective==o)||SecondaryObjectives.Exists(obj=>obj.Objective==o);
     }
 	

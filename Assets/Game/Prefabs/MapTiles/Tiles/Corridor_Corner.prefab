@@ -340,7 +340,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GraphicsObject: {fileID: 100012}
-  Colliders: {fileID: 100004}
   TileLights: {fileID: 11400002}
 --- !u!114 &11400002
 MonoBehaviour:
@@ -353,7 +352,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46a4daa2282b9b34f948d527603a44f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LightGraphics: {fileID: 0}
+  on_material: {fileID: 0}
+  off_material: {fileID: 0}
   white_lights: []
+  orange_lights:
+  - {fileID: 10800000}
   delay: 0
 --- !u!122 &12200000
 Halo:

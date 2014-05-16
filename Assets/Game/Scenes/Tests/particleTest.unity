@@ -84,6 +84,7 @@ GameObject:
   - 4: {fileID: 167261239}
   - 198: {fileID: 167261238}
   - 199: {fileID: 167261237}
+  - 114: {fileID: 167261240}
   m_Layer: 0
   m_Name: AnimationTest
   m_TagString: Untagged
@@ -130,11 +131,11 @@ ParticleSystem:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 167261236}
-  lengthInSec: 5
+  lengthInSec: 50
   startDelay: 0
   speed: 1
   randomSeed: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   moveWithTransform: 1
@@ -1187,6 +1188,17 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+--- !u!114 &167261240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 167261236}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acd1da44382386e4db2a3aefbca3200d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &619438508
 GameObject:
   m_ObjectHideFlags: 0

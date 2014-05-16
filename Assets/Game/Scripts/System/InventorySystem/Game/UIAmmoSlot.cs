@@ -6,10 +6,13 @@ public class UIAmmoSlot : UIItemSlot
 	public PlayerObjData Player;
 	public UILabel amount_label,cost_label;
 
-	public UIButton BuyButton;
+	public GameObject Buttons;
 
 	string AmmoType;
 	public bool AllowBuying=true;
+	
+	int Cost,SingleCost,FillCost,FillAmount;
+	bool on_hover_single=false,on_hover_all=false;
 
 	//ammo code
 
@@ -23,12 +26,6 @@ public class UIAmmoSlot : UIItemSlot
 		amount_label.text=min+"/"+max;
 	}
 
-	void SetCost (int cost)
-	{
-		Cost=cost;
-		cost_label.text=""+cost+" "+XmlDatabase.MoneyUnit;
-	}
-
 	public void SetPlayer(PlayerObjData player,string type){
 		Player=player;
 		SetAmmoType(type);
@@ -36,20 +33,25 @@ public class UIAmmoSlot : UIItemSlot
 		UpdateStats();
 	}
 
-	int Cost;
-	
 	public void UpdateStats(){
 		int amount=Player.GetAmmoAmount(AmmoType);
 		var data=Player.GetAmmoData(AmmoType);
-		int cost=(int)((data.MaxAmount-amount)*data.Cost);
 
-		if (!AllowBuying||cost==0){
-			BuyButton.gameObject.SetActive(false);
-			cost_label.gameObject.SetActive(false);
+		SingleCost=data.Cost;
+		FillAmount=(int)Mathf.Floor(Player.Money/SingleCost);
+		FillCost=FillAmount*SingleCost;
+		Cost=(int)((data.MaxAmount-amount)*SingleCost);
+
+		cost_label.text="";
+
+		if (!AllowBuying||Cost==0){
+			Buttons.gameObject.SetActive(false);
 		}
 
+		if (on_hover_single) cost_label.text=""+SingleCost;
+		if (on_hover_all) cost_label.text=""+Cost;
+
 		SetAmount(Player.GetAmmoAmount(AmmoType),Player.GetAmmoData(AmmoType).MaxAmount);
-		SetCost(cost);
 	}
 	
 	public void FillAmmo(){
@@ -57,9 +59,43 @@ public class UIAmmoSlot : UIItemSlot
 			Player.Money-=Cost;
 			
 			Player.FillAmmo(AmmoType);
-			
 			UpdateStats();
 		}
+		else if (Player.Money>=FillCost){
+			Player.Money-=FillCost;
+			
+			Player.AddAmmoAmount(AmmoType,FillAmount);
+			UpdateStats();
+		}
+	}
+
+	public void BuySingleAmmo(){
+		if (Player.Money>=SingleCost){
+			Player.Money-=SingleCost;
+			
+			Player.AddAmmoAmount(AmmoType,1);
+			UpdateStats();
+		}
+	}
+
+	public void OnEnterSingle(){
+		on_hover_single=true;
+		UpdateStats();
+	}
+
+	public void OnEnterAll(){
+		on_hover_all=true;
+		UpdateStats();
+	}
+
+	public void OnLeaveSingle(){
+		on_hover_single=false;
+		UpdateStats();
+	}
+
+	public void OnLeaveAll(){
+		on_hover_all=false;
+		UpdateStats();
 	}
 
 	//ui slot code

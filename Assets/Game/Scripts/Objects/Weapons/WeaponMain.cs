@@ -118,6 +118,12 @@ public class WeaponMain : MonoBehaviour {
 
 		meshData = graphics.GetComponent<WeaponMesh>();
 
+		ParticleSystem[] additionalParticleSystems = graphics.GetComponentsInChildren<ParticleSystem>();
+		for (int i = 0; i < additionalParticleSystems.Count(); i++)
+		{
+			meshData.SetAdditionalParticleSystem(additionalParticleSystems[i]);
+		}
+
 		if (player.GC.SS.PS.weaponParticleEmitters.ContainsKey(Weapon.baseItem.mesh + "Bullets"))
 		{
 			GameObject bulletEmitter = 
@@ -482,8 +488,8 @@ public class WeaponMain : MonoBehaviour {
 		Quaternion lookToEnemyX =  Quaternion.LookRotation(targets[enemy].targetPosition - verticalMovement.transform.position);
 		Quaternion lookToEnemyY =  Quaternion.LookRotation(targets[enemy].targetPosition - horizontalMovement.transform.position);
 
-		bool x = Subs.ApproximatelySame(verticalMovement.transform.rotation.eulerAngles.x, lookToEnemyX.eulerAngles.x, 0.04f);
-		bool y = Subs.ApproximatelySame(horizontalMovement.transform.rotation.eulerAngles.y, lookToEnemyY.eulerAngles.y, 0.04f);
+		bool x = Subs.ApproximatelySame(verticalMovement.transform.rotation.eulerAngles.x, lookToEnemyX.eulerAngles.x, 0.2f);
+		bool y = Subs.ApproximatelySame(horizontalMovement.transform.rotation.eulerAngles.y, lookToEnemyY.eulerAngles.y, 0.2f);
 
 		return x && y;
 	}

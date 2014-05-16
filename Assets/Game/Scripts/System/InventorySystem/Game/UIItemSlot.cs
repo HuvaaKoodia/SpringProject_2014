@@ -29,11 +29,12 @@ public abstract class UIItemSlot : MonoBehaviour
     }
 
     public void UpdateSlotColors(InvGameItem item){
-        foreach (var slot in UIEquipmentSlot.EquipmentSlots){
+        
+		foreach (var slot in UIEquipmentSlot.EquipmentSlots){
             if (slot.slot!=UIEquipmentSlot.Slot.RecycleBin)
                 slot.SetSlotColor(item);
         }
-
+		//ammo slots
 		foreach (var slot in UIAmmoSlot.EquipmentSlots){
 			slot.SetSlotColor(item);
 		}

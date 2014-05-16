@@ -155,71 +155,75 @@ public class ShipDetailGenerator : MonoBehaviour
 
     public void GenerateMissionObjectives(GameController GC, MissionObjData mission, ShipObjData ship){
 
-		if (!mission.ContainsObjective(MissionObjData.Objective.FindItem)) return;
+		foreach(var o in mission.PrimaryObjectives){
+			var objective=XmlDatabase.Objectives[o.Objective];
 
-		//generate quest item
-		var objective=XmlDatabase.Objectives[MissionObjData.Objective.FindItem];
-		var quest_item=XmlDatabase.GetQuestItem(objective.Item);
+			if (objective.Item!=""){
+				//generate quest item
+				
+				var quest_item=XmlDatabase.GetQuestItem(objective.Item);
 
-		if (quest_item==null){
-			Debug.LogError("Mission: "+mission.MissionType+" failed to create objective item "+objective.Item+" as it's not found in the xmldatabase");
-			return;
-		}
+				if (quest_item==null){
+					Debug.LogError("Mission: "+mission.MissionType+" failed to create objective item "+objective.Item+" as it's not found in the xmldatabase");
+					return;
+				}
 
-		//find legit rooms in all floors
-	    string obj_room=objective.Room;
-			var LegitRooms=new Dictionary<int,List<ShipRoomObjData>>();
-			bool nonefound=true;
-			for (int i=0;i<ship.FloorRooms.Count;++i){
-				LegitRooms.Add(i,new List<ShipRoomObjData>());
-				foreach(var r in ship.FloorRooms[i]){
-					if (r.roomStats.type==obj_room) 
-					{
-						LegitRooms[i].Add(r);
-						nonefound=false;
+				//find legit rooms in all floors
+			    string obj_room=objective.Room;
+					var LegitRooms=new Dictionary<int,List<ShipRoomObjData>>();
+					bool nonefound=true;
+					for (int i=0;i<ship.FloorRooms.Count;++i){
+						LegitRooms.Add(i,new List<ShipRoomObjData>());
+						foreach(var r in ship.FloorRooms[i]){
+							if (r.roomStats.type==obj_room) 
+							{
+								LegitRooms[i].Add(r);
+								nonefound=false;
+							}
+			            }
 					}
-	            }
+			    if (nonefound){
+			        Debug.LogError("Mission: "+mission.MissionType+" failed to create objective item in ship type "+ship.Name +" required room : "+obj_room);
+			        return;
+			    }
+				//select one room
+				var legit_floors=new List<int>();
+				foreach(var f in LegitRooms){
+					if (f.Value.Count>0){
+						legit_floors.Add(f.Key);
+					}
+				}
+				int index=Subs.GetRandom(legit_floors);
+				var floor=GC.Floors[index];
+			    var room=Subs.GetRandom(LegitRooms[index]);
+			    int rx=room.X+room.XOFF,ry=room.Y+room.YOFF,rw=room.W,rh=room.H;
+
+				//find all loot crates in room
+			    List<LootCrateMain> loot_crates=new List<LootCrateMain>();
+
+			    for (int x = 0; x < rw; x++)
+			    {
+			        for (int y = 0; y < rh; y++)
+			        {
+						var tile = floor.TileMainMap[rx+x,ry+y];
+			            if (tile.Data.ObjType == TileObjData.Obj.Loot)
+			            {
+								loot_crates.Add(tile.TileObject.GetComponent<LootCrateMain>());
+			            }
+			        }
+				}
+
+				if (loot_crates.Count==0){
+					Debug.LogWarning("Cannot generate quest item. No loot crates in room "+obj_room+ " ship type "+ship.Name);
+					return;
+				}
+
+				//select one loot crate and add item
+				var l=Subs.GetRandom(loot_crates);
+				var item=new InvGameItem(quest_item);
+		    	l.Items.Add(item);
 			}
-	    if (nonefound){
-	        Debug.LogError("Mission: "+mission.MissionType+" failed to create objective item in ship type "+ship.Name +" required room : "+obj_room);
-	        return;
-	    }
-		//select one room
-		var legit_floors=new List<int>();
-		foreach(var f in LegitRooms){
-			if (f.Value.Count>0){
-				legit_floors.Add(f.Key);
-			}
 		}
-		int index=Subs.GetRandom(legit_floors);
-		var floor=GC.Floors[index];
-	    var room=Subs.GetRandom(LegitRooms[index]);
-	    int rx=room.X+room.XOFF,ry=room.Y+room.YOFF,rw=room.W,rh=room.H;
-
-		//find all loot crates in room
-	    List<LootCrateMain> loot_crates=new List<LootCrateMain>();
-
-	    for (int x = 0; x < rw; x++)
-	    {
-	        for (int y = 0; y < rh; y++)
-	        {
-				var tile = floor.TileMainMap[rx+x,ry+y];
-	            if (tile.Data.ObjType == TileObjData.Obj.Loot)
-	            {
-						loot_crates.Add(tile.TileObject.GetComponent<LootCrateMain>());
-	            }
-	        }
-		}
-
-		if (loot_crates.Count==0){
-			Debug.LogWarning("Cannot generate quest item. No loot crates in room "+obj_room+ " ship type "+ship.Name);
-			return;
-		}
-
-		//select one loot crate and add item
-		var l=Subs.GetRandom(loot_crates);
-		var item=new InvGameItem(quest_item);
-    	l.Items.Add(item);
 	}
 
 	/// <summary>
