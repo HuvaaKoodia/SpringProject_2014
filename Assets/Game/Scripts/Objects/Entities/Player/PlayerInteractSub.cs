@@ -58,7 +58,7 @@ public class PlayerInteractSub : MonoBehaviour {
 			WaitingInteractToFinish = false;
 		}
 		
-		player.CullWorld(false);
+		player.GC.CullWorldBasedOnPlayer(false);
 
 		if (player.ap == 0)
 			player.EndPlayerPhase();
@@ -81,6 +81,8 @@ public class PlayerInteractSub : MonoBehaviour {
 	public void InteractFinished()
 	{
 		WaitingInteractToFinish = false;
+
+		player.GC.CullWorldBasedOnPlayer(false);
 
 		if (player.Finished)
 			player.EndPlayerPhase();

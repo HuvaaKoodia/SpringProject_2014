@@ -65,7 +65,7 @@ public class GameController : MonoBehaviour {
 	public System.Action OnPlayerTurnStart;
 
 	public string TestLoadShipName;
-	public bool UseTestMap,OverrideMissionShip=false;
+	public bool UseTestMap,OverrideMissionShip=false,randomizeDoorStates=true;
 	public EngineController EngCont;
 	
 	public SharedSystemsMain SS {get;private set;}
@@ -204,7 +204,7 @@ public class GameController : MonoBehaviour {
 
 		if (c_mis.MissionShipPower==MissionObjData.ShipPower.Broken); //DEV.todo break generator
 
-		SS.SDGen.RandomizeDoorStates(this,ship_objdata);
+		if (randomizeDoorStates)SS.SDGen.RandomizeDoorStates(this,ship_objdata);
 
 		Debug.Log("Power: "+power);
 
@@ -244,13 +244,13 @@ public class GameController : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.C)){
 			do_culling=!do_culling;
 			if (do_culling)
-				Player.CullWorld(true);
+				CullWorldBasedOnPlayer(true);
 			else
 				culling_system.ResetCulling(this);
 		}
 
 		if (Input.GetKeyDown(KeyCode.V)){
-			Player.CullWorld(true);
+			CullWorldBasedOnPlayer(true);
 		}
 
 		if (Input.GetKeyDown(KeyCode.Alpha8)){
@@ -273,10 +273,9 @@ public class GameController : MonoBehaviour {
 		if (OnPlayerTurnStart!=null) OnPlayerTurnStart();
 		Player.StartPlayerPhase();
 	}
-
-	public void CullWorld (Vector3 position, Vector3 targetPosition,float max_distance, bool miniMapIgnoreDoors,bool updateMap)
-	{
-		if (do_culling) culling_system.CullBasedOnPositions(position,targetPosition,max_distance,this, miniMapIgnoreDoors,updateMap);
+	
+	public void CullWorldBasedOnPlayer(bool StopAtDoors){
+		if (do_culling) culling_system.CullBasedOnPositions(Player.transform.position,Player.movement.targetPosition,Player.GameCamera.farClipPlane,this, StopAtDoors,Player.HasMap);
 	}
 
 	public FloorObjData GetFloor (int index)
@@ -311,7 +310,7 @@ public class GameController : MonoBehaviour {
 		yield return null;
 
 		culling_system.DisableOtherFloors(CurrentFloorIndex,this);
-		Player.CullWorld (false);
+		CullWorldBasedOnPlayer (true);
 	}
 
 	private IEnumerator GotoFloorTimer(int index){
@@ -340,7 +339,7 @@ public class GameController : MonoBehaviour {
 	{
 		//update tiles based on floor stats
 		SetFloorPowerState(index,CurrentFloorData.PowerOn);//DEV. lazy
-		Player.CullWorld(true);
+		CullWorldBasedOnPlayer(true);
 	}
 
 	public void UseElevator ()
