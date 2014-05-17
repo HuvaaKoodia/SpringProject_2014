@@ -229,17 +229,18 @@ public class Subs{
 	}
 
 	/// <summary>
-	/// Get an object under mouse position in 3D space.
+	/// Get an object under mouse position in the 3D space.
+	/// Return true if the object was under mouse position.
 	/// </summary>
-	/// <returns><c>true</c>, if object was under mouse position <c>false</c> otherwise.</returns>
-	public static bool GetObjectMousePos(out Component obj,float distance,string layer){
-		var ray=Camera.main.ScreenPointToRay(Input.mousePosition);
-		int mask=1<<LayerMask.NameToLayer(layer);
-		RaycastHit info;
 
+	public static bool GetObjectMousePos(out Component obj,float distance,int mask, Camera camera){
+		var ray= camera.ScreenPointToRay(Input.mousePosition);
+
+		RaycastHit info;
+		
 		//Debug.DrawLine(ray.origin, ray.origin + ray.direction*distance, Color.red, 2.0f);
 		if (Physics.Raycast(ray,out info,distance,mask)){
-
+			
 			obj= info.collider.gameObject.GetComponent<Component>();
 			return true;
 		}
@@ -247,15 +248,33 @@ public class Subs{
 		return false;
 	}
 
-	public static bool GetObjectMousePos(out Component obj,float distance,string layer, Camera camera){
-		var ray= camera.ScreenPointToRay(Input.mousePosition);
+	/// <summary>
+	/// Get an object under mouse position in the 3D space.
+	/// Return true if the object was under mouse position.
+	/// </summary>
+	public static bool GetObjectMousePos(out Component obj,float distance,int mask){
+		return GetObjectMousePos(out obj,distance,mask,Camera.main);
+	}
+
+	public static bool GetObjectMousePos(out Component obj,float distance,string layer){
 		int mask=1<<LayerMask.NameToLayer(layer);
-		RaycastHit info;
-		
-		//Debug.DrawLine(ray.origin, ray.origin + ray.direction*distance, Color.red, 2.0f);
-		if (Physics.Raycast(ray,out info,distance,mask)){
-			
-			obj= info.collider.gameObject.GetComponent<Component>();
+		return GetObjectMousePos(out obj,distance,mask);
+	}
+
+	public static bool GetObjectMousePos(out Component obj,float distance,string layer, Camera camera){
+		int mask=1<<LayerMask.NameToLayer(layer);
+		return GetObjectMousePos(out obj,distance,mask,camera);
+	}
+
+
+	/// <summary>
+	/// Gets the object at mouse position if it's not blocked by anything else on the layer.
+	/// </summary>
+	public static bool GetObjectMousePosUnBlocked(out Component obj,float distance,int mask, Camera camera){
+		var ray= camera.ScreenPointToRay(Input.mousePosition);
+		var hits=Physics.RaycastAll(ray,distance,mask);
+		if (hits.Length==1){
+			obj= hits[0].collider.gameObject.GetComponent<Component>();
 			return true;
 		}
 		obj=null;

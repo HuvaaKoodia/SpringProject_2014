@@ -86,7 +86,7 @@ public class PlayerMain : EntityMain
     {
 		if (!OneUpdateDone){//start game cull
 			if (updates_todo==0){
-				CullWorld(false);
+				 //CullWorld(false);
 				OneUpdateDone=true;
 			}
 			--updates_todo;
@@ -147,7 +147,7 @@ public class PlayerMain : EntityMain
 	public void StartedMoving()
 	{
 		if (transform.position!=movement.targetPosition){
-			CullWorld(true);
+			GC.CullWorldBasedOnPlayer(true);
 		}
 
 		inputSub.enabled = false;
@@ -157,10 +157,6 @@ public class PlayerMain : EntityMain
 		{	
 			playerAnimation.Play("Walk");
 		}
-	}
-
-	public void CullWorld(bool miniMapIgnoreDoors){
-		GC.CullWorld(transform.position,movement.targetPosition,GameCamera.farClipPlane, miniMapIgnoreDoors,HasMap);
 	}
 
     public IEnumerator Attack()

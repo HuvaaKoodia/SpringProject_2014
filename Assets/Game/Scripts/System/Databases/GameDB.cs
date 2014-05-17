@@ -202,7 +202,6 @@ public class GameDB : MonoBehaviour {
 		GameData.VendorStore.Clear();
 		
 		for (int i=0;i<Subs.GetRandom(6,8);i++){
-			//GameData.VendorStore.Eq
 			InvItemStorage.EquipRandomItem(GameData.VendorStore,"vendor_items","vendor_quality");
 		}
 	}

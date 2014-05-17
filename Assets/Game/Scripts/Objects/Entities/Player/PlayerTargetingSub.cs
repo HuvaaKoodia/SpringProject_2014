@@ -20,7 +20,6 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 	public LayerMask targetingRayMask;
 	public LayerMask canSeeMask;
-	public int wallMask;
 
 	float cameraFarZ;
 
@@ -35,8 +34,6 @@ public class PlayerTargetingSub : MonoBehaviour {
 		player = gameObject.GetComponent<PlayerMain>();
 		targetableEnemies = new Dictionary<EnemyMain, TargetMarkHandler>();
 		targetPositions = new Dictionary<WeaponMain, Dictionary<EnemyMain, Vector3>>();
-
-		wallMask = LayerMask.NameToLayer("Wall");
 	}
 
 	void Start() {
@@ -219,7 +216,12 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 	private bool HasTargetAtMousePosition(out Component target)
 	{
-		return Subs.GetObjectMousePos(out target, 20, "TargetingClick", player.HudCamera);
+		int mask=1<<LayerMask.NameToLayer("TargetingClick")|1<<LayerMask.NameToLayer("Wall");//|1<<LayerMask.NameToLayer("Interactable"); breaks targeting
+		Subs.GetObjectMousePos(out target, 20, mask, player.HudCamera);
+		if (target!=null&&LayerMask.LayerToName(target.gameObject.layer)=="TargetingClick"){
+			return true;
+		}
+		return false;
 	}
 
 	public void ClickTargetAtMousePosition(bool increase_amount)

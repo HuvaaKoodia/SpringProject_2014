@@ -93,7 +93,7 @@ public class WeaponEffects : MonoBehaviour {
 
 		if (muzzleParticles.Count > 0)
 		{
-			ParticleSystem currentMuzzle = bulletParticles[currentMuzzleIndex];
+			ParticleSystem currentMuzzle = muzzleParticles[currentMuzzleIndex];
 			currentMuzzle.transform.parent = particleParent.transform;
 			currentMuzzle.transform.position = particleParent.transform.position;
 			currentMuzzle.transform.rotation = particleParent.transform.rotation;

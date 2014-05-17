@@ -31,14 +31,17 @@ public class DoorMain : InteractableMain {
 			graphics.animation.Play(open_animation);
 			audio.PlayOneShot(OpenSoundFX);
             StartCoroutine(ToggleTimer(true,graphics.animation[open_animation].length));
-			Invoke("hitboxOff", graphics.animation[open_animation].length / 1.25f);
+			//Invoke("hitboxOff", graphics.animation[open_animation].length / 1.25f);
+			hitboxOff();
 		}
 		else{
 			graphics.animation[close_animation].speed = 1;
 			graphics.animation.Play(close_animation);
 			audio.PlayOneShot(CloseSoundFX);
-            StartCoroutine(ToggleTimer(false,graphics.animation[open_animation].length));
-			hitboxOn();
+            StartCoroutine(ToggleTimer(false,graphics.animation[close_animation].length));
+
+			Invoke("hitboxOn", graphics.animation[close_animation].length*0.5f);
+			//hitboxOn();
 		}
 		return true;
 	}
