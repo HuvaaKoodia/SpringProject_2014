@@ -484,4 +484,9 @@ public class GameController : MonoBehaviour {
 			}
 		}
 	}
+
+	public void EndMission ()
+	{
+		SS.GDB.EndMission(this);
+	}
 }

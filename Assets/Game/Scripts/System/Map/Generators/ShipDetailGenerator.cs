@@ -165,7 +165,7 @@ public class ShipDetailGenerator : MonoBehaviour
 				var quest_item=XmlDatabase.GetQuestItem(objective.Item);
 
 				if (quest_item==null){
-					Debug.LogError("Mission: "+mission.MissionType+" failed to create objective item "+objective.Item+" as it's not found in the xmldatabase");
+					Debug.LogError("Mission: "+mission.XmlData.Name+" failed to create objective item "+objective.Item+" as it's not found in the xmldatabase");
 					return;
 				}
 
@@ -184,7 +184,7 @@ public class ShipDetailGenerator : MonoBehaviour
 		            }
 				}
 			    if (nonefound){
-			        Debug.LogWarning("Mission: "+mission.MissionType+" failed to create objective item in ship type "+ship.Name +" required room : "+obj_room);
+					Debug.LogWarning("Mission: "+mission.XmlData.Name+" failed to create objective item in ship type "+ship.Name +" required room : "+obj_room);
 					Debug.LogWarning("A random room selected for the item");
 
 					LegitRooms.Clear ();

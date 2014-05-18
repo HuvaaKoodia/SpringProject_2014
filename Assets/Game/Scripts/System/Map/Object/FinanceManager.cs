@@ -23,8 +23,9 @@ public class Debt
 		month = 0;
 	}
 
-	public void SetStartingDepth(int sum){
+	public void SetStartingDebt(int sum){
 		left_tb_payed=sum;
+		original_debt_sum=sum;
 	}
 
 	//function that calculates interest per debt
@@ -40,6 +41,14 @@ public class Debt
 	public void CalcDebtPayment()
 	{
 		debt_payment = monthly_cut + interest;
+	}
+
+	public void ShortenAmount (int amount)
+	{
+		left_tb_payed -= amount;
+		if (left_tb_payed<=0){
+			active=false;
+		}
 	}
 }
 
@@ -186,8 +195,7 @@ public class FinanceManager
 	public void AddDebt(int index,int amount)
 	{
 		AddDebt(index);
-		GetDebt(index).SetStartingDepth(amount);
-		listofdebts[index].original_debt_sum = amount;
+		GetDebt(index).SetStartingDebt(amount);
 	}
 
 	public Debt GetDebt(int index)
