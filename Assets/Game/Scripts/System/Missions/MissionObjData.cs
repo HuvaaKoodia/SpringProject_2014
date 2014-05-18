@@ -16,8 +16,7 @@ public class MissionObjective{
 public class MissionObjData {
 	
 	public MissionXmlData XmlData{get{return XmlDatabase.GetMission(MissionType);}}
-
-    public enum Type{TradeVesselInfo,RetrieveCargo,EmergencyBeacon,ExploreVessel}
+	
 	public enum EnemyTypes{Aliens,Security,Both}
 	public enum AlienAmount{None,Small,Medium,Large}
     public enum SecuritySystems{None,Small,Medium,Large}
@@ -41,7 +40,7 @@ public class MissionObjData {
 	public Risk MissionRisk{get;set;}
 
     //stats
-	public Type				MissionType	{get;set;}
+	public string			MissionType	{get;set;}
 	public EnemyTypes		MissionEnemyTypes{get;set;}
 	public AlienAmount      MissionAlienAmount {get;set;}
 	public SecuritySystems  MissionSecuritySystem {get;set;}

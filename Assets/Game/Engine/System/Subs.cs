@@ -208,6 +208,10 @@ public class Subs{
     }
 
 	//templates
+
+	public static T  ParseEnum<T>(string str){
+		return(T)System.Enum.Parse(typeof(T),str,true);
+	}
 	
 	public static IEnumerable<T> EnumValues<T>() {
 		return System.Enum.GetValues(typeof(T)).Cast<T>();

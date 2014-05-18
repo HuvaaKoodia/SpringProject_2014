@@ -200,7 +200,7 @@ public class MasterHudMain : MonoBehaviour {
     }
 
     public void EndMission(){
-        GC.SS.GDB.EndMission();
+        GC.EndMission();
     }
 
 	void DrawFPS(){

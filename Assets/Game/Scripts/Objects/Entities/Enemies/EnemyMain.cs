@@ -4,6 +4,10 @@ using System.Collections.Generic;
 
 public class EnemyMain : EntityMain {
 
+	public enum Type{Alien,Turret,Mecha};
+
+	public Type MyType;
+
 	AIcontroller aiController;
 	public AIBase ai;
 

@@ -9,7 +9,7 @@ public class MissionGenerator{
         var mission=new MissionObjData();
 		mission.MissionPoolIndex=missionpool;
 
-		mission.MissionType=(MissionObjData.Type)System.Enum.Parse(typeof(MissionObjData.Type),type);
+		mission.MissionType=type;
 		
         //DEV.TEMP force type
         //mission.MissionType= MissionObjData.Type.RetrieveCargo;
@@ -299,7 +299,7 @@ public class MissionGenerator{
         return text;
     }
 	
-	public static void UpdateMissionObjectiveStatus(MissionObjData mission,PlayerObjData player){
+	public static void UpdateMissionObjectiveStatus(MissionObjData mission,PlayerObjData player,GameController GC){
 		var quest_items=player.Items.GetItems(item=>{return item.baseItem.type==InvBaseItem.Type.QuestItem;});
 
 		foreach (var o in mission.PrimaryObjectives){
@@ -329,6 +329,26 @@ public class MissionGenerator{
 						break;
 					}
 				}
+				if (!complete) continue;
+			}
+
+			if (xml.KillTypes.Count>0){
+				complete=true;
+
+				foreach (var t in xml.KillTypes){
+					foreach (var f in GC.Floors){
+						foreach (var e in f.Enemies){
+							if (e.MyType==t) {
+								complete=false;
+								break;
+							}
+						}	
+						if (!complete) break;
+					}
+					if (!complete) break;
+				}
+
+				if (!complete) continue;
 			}
 
 			if (complete) o.status=1;
@@ -394,6 +414,6 @@ public class MissionGenerator{
 	//DEV. temp
 	public static string MissionName (MissionObjData mission)
 	{
-		return mission.MissionType.ToString();
+		return mission.XmlData.Name;
 	}
 }
