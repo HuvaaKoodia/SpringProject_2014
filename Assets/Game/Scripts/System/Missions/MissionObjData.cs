@@ -23,6 +23,7 @@ public class MissionObjData {
     public enum SecuritySystems{None,Small,Medium,Large}
 	public enum ShipCondition{BadlyDamaged,Damaged,Intact}
 	public enum ShipPower{Broken,Off,On}
+	public enum Risk{Unknown,Low,Medium,High,Extreme}
    
     public enum InformationRating{None,Something,Everything}
 
@@ -37,6 +38,7 @@ public class MissionObjData {
 
 	public int Reward{get;set;}
 	public string MissionPoolIndex{get;set;}
+	public Risk MissionRisk{get;set;}
 
     //stats
 	public Type				MissionType	{get;set;}
@@ -84,5 +86,4 @@ public class MissionObjData {
 	{
 		return (int)MissionAlienAmount/3f;//Dev.magnum!
 	}
-
 }
