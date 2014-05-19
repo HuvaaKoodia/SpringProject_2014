@@ -44,14 +44,15 @@ public class UIAmmoSlot : UIItemSlot
 
 		cost_label.text="";
 
+		SetAmount(Player.GetAmmoAmount(AmmoType),Player.GetAmmoData(AmmoType).MaxAmount);
+
 		if (!AllowBuying||Cost==0){
 			Buttons.gameObject.SetActive(false);
+			return;
 		}
 
 		if (on_hover_single) cost_label.text=""+SingleCost;
 		if (on_hover_all) cost_label.text=""+Cost;
-
-		SetAmount(Player.GetAmmoAmount(AmmoType),Player.GetAmmoData(AmmoType).MaxAmount);
 	}
 	
 	public void FillAmmo(){

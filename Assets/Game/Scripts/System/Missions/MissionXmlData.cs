@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class MissionXmlData{
-    public string Description;
-    public string RewardClass,LootPool;
+	public string Name,Description, RewardClass,LootPool;
 	public PoolXmlData LootQualityPool=new PoolXmlData();
 	public int TravelTimeMin,TravelTimeMax,ExpirationTimeMin,ExpirationTimeMax;
 	public PoolContainerXmlData StatusContainer=new PoolContainerXmlData("Status");

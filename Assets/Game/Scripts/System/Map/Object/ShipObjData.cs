@@ -16,7 +16,8 @@ public class ShipObjData : ShipMapXmlData {
 public class ShipRoomObjData{
 	public int X,Y,W=1,H=1,XOFF,YOFF;
 	public List<int> corridor_dirs=new List<int>();
-	
+	public List<TileObjData> LootCrateTiles=new List<TileObjData>();
+
 	public RoomXmlIndex roomStats {get;set;}
 	public MapXmlData RoomXmlData {get;set;}
 }

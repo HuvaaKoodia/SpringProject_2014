@@ -9,7 +9,7 @@ public class XmlDatabase
 	public static Dictionary<string,InvBaseItem> Items{get;private set;}
 	public static List<EnemyXmlData> enemies { get; private set; }
 	public static List<ObstacleXmlData> obstacles { get; private set; }
-	public static Dictionary<MissionObjData.Type,MissionXmlData> Missions{ get; private set; }
+	public static Dictionary<string,MissionXmlData> Missions=new Dictionary<string, MissionXmlData>();
 	public static Dictionary<string,InvBaseItem> QuestItems=new Dictionary<string,InvBaseItem>();
 	public static Dictionary<string,AmmoXmlData> AmmoTypes=new Dictionary<string,AmmoXmlData>();
 	public static Dictionary<string,ObjectiveXmlData> Objectives=new Dictionary<string,ObjectiveXmlData>();
@@ -51,7 +51,6 @@ public class XmlDatabase
 	//Logic
 	public static void LoadData(UIAtlas ItemAtlas)
     {
-        Missions =new Dictionary<MissionObjData.Type, MissionXmlData>();
         enemies = new List<EnemyXmlData>();
         obstacles = new List<ObstacleXmlData>();
 
@@ -74,7 +73,7 @@ public class XmlDatabase
     }
 
 	//getters
-	public static MissionXmlData GetMission (MissionObjData.Type type)
+	public static MissionXmlData GetMission (string type)
 	{
 		return Missions[type];
 	}
@@ -137,8 +136,7 @@ public class XmlDatabase
 		QuestItems.Add(name,data);
 	}
 
-	public static void AddMission(string name,MissionXmlData data){
-		var type=(MissionObjData.Type)System.Enum.Parse(typeof(MissionObjData.Type),name,true);
+	public static void AddMission(string type,MissionXmlData data){
 		if (Missions.ContainsKey(type)){
 			Debug.LogWarning(data.GetType().ToString()+" redefinition: "+data);
 			return;

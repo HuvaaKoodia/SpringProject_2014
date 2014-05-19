@@ -95,13 +95,12 @@ public class GameDB : MonoBehaviour {
 		Application.LoadLevel(level);
 	}
 
-    public void EndMission()
+    public void EndMission(GameController GC)
     {
         GOTO_DEBRIEF=true;
 
 		//mission status
-
-		MissionGenerator.UpdateMissionObjectiveStatus(GameData.CurrentMission,GameData.PlayerData);
+		MissionGenerator.UpdateMissionObjectiveStatus(GameData.CurrentMission,GameData.PlayerData,GC);
 		int reward=CalculateQuestReward();
 		GameData.PlayerData.Money+=reward;
 		RemoveQuestItems();
@@ -202,7 +201,6 @@ public class GameDB : MonoBehaviour {
 		GameData.VendorStore.Clear();
 		
 		for (int i=0;i<Subs.GetRandom(6,8);i++){
-			//GameData.VendorStore.Eq
 			InvItemStorage.EquipRandomItem(GameData.VendorStore,"vendor_items","vendor_quality");
 		}
 	}

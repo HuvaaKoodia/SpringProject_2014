@@ -137,6 +137,7 @@ public class XMLDataLoader : XML_Loader
         {
             var mission=new MissionXmlData();
 			var type=getAttStr(node,"type");
+			mission.Name=getAttStr(node,"name");
             mission.Description=getStr(node,"Description").Replace("\\n","\n");
             mission.RewardClass=getAttStr(node,"rewardClass");
 			mission.LootPool=getAttStr(node,"lootPool");
@@ -202,6 +203,9 @@ public class XMLDataLoader : XML_Loader
 			foreach(XmlNode n in node){
 				if (n.Name=="Data"){
 					data.Data.Add(n.InnerText);
+				}
+				if (n.Name=="Kill"){
+					data.KillTypes.Add(Subs.ParseEnum<EnemyMain.Type>(n.InnerText));
 				}
 			}
 
@@ -282,8 +286,8 @@ public class XMLDataLoader : XML_Loader
 	static bool ReadPools (XmlNode node)
 	{
 		if (loadPoolContainer(node,XmlDatabase.LootPool)) return true;
-		if (loadPoolContainer(node,XmlDatabase.MissionPool)) return true;
 		if (loadPoolContainer(node,XmlDatabase.LootQualityPool)) return true;
+		if (loadPoolContainer(node,XmlDatabase.MissionPool)) return true;
 		return false;
 	}
 	

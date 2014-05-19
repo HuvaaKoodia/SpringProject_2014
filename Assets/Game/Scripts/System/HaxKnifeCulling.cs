@@ -35,14 +35,14 @@ public class HaxKnifeCulling : MonoBehaviour {
 		}
 	}
 
-	public void CullBasedOnPositions(Vector3 pos1,Vector3 pos2,float detect_radius,GameController GC, bool miniMapIgnoreDoors,bool updateMap){
+	public void CullBasedOnPositions(Vector3 pos1,Vector3 pos2,float detect_radius,GameController GC, bool StopAtDoors,bool updateMap){
 		//Debug.Log("Start Culling.");
 
 		for(int y=0;y<GC.CurrentFloorData.TileMapH;++y){
 			for(int x=0;x<GC.CurrentFloorData.TileMapW;++x){
 				tile = GC.CurrentFloorData.TileMainMap[x,y];
 				if (tile.TileGraphics==null) continue;
-				if (IsCullable(tile,pos1,detect_radius, miniMapIgnoreDoors,updateMap)&&IsCullable(tile,pos2,detect_radius, miniMapIgnoreDoors,updateMap)){
+				if (IsCullable(tile,pos1,detect_radius, StopAtDoors,updateMap)&&IsCullable(tile,pos2,detect_radius, StopAtDoors,updateMap)){
 					tile.ShowGraphicsUnsafe(false);
 				}
 				else{
@@ -51,13 +51,13 @@ public class HaxKnifeCulling : MonoBehaviour {
 			}
 		}
 
-		CullEnemies(pos1, pos2, detect_radius, GC,miniMapIgnoreDoors);
+		CullEnemies(pos1, pos2, detect_radius, GC,StopAtDoors);
 	}
 
 	private static Vector3[] Positions={new Vector3(0,0,0),new Vector3(1,0,1),new Vector3(1,0,-1),new Vector3(-1,0,-1),new Vector3(-1,0,1)};
 
 	//DEV. todo optimize
-	private bool IsCullable(TileMain tile,Vector3 position,float detect_radius, bool miniMapIgnoreDoors,bool updateMap){
+	private bool IsCullable(TileMain tile,Vector3 position,float detect_radius, bool StopAtDoors,bool updateMap){
 		bool cull_this=true;
 
 		position+=Vector3.up;
@@ -71,17 +71,21 @@ public class HaxKnifeCulling : MonoBehaviour {
 			ray=new Ray(position,direction);
 			WallHits=Physics.RaycastAll(ray,direction.magnitude,mask);
 
-			if (WallHits.Length<=1){
+			bool sees_tile=false;
 
-				bool sees_tile=false;
+			if (WallHits.Length == 0){
+				sees_tile=true;//show directly seen tiles all the time
+			}
+			
+			if (WallHits.Length==1){
 
-				//map data culling
-				if (miniMapIgnoreDoors)
+				if (StopAtDoors)
 				{
-					if (tile.Data.TileType == TileObjData.Type.Door && i == 0 || WallHits.Length == 0 )
-					{
-						sees_tile=true;
-					}
+					// show only directly seen doors
+					//if (i==0&&tile.Data.TileType == TileObjData.Type.Door)
+					//{
+					//	sees_tile=true;
+					//}
 				}
 				else
 				{
@@ -92,19 +96,18 @@ public class HaxKnifeCulling : MonoBehaviour {
 							sees_tile=true;
 						}
 					}
-					else
-						sees_tile=true;
 				}
+			}
+//			}else {
+//
+//				if (DEBUG_ShowRays) Debug.DrawLine(ray.origin,tile_pos,Color.red,5);
+//			}
 
-				if (sees_tile){
-					if (updateMap) miniMapData[GC.CurrentFloorIndex][tile.Data.X, tile.Data.Y].SeenByPlayer = true;
-					cull_this=false;
-					if (DEBUG_ShowRays) Debug.DrawLine(ray.origin,tile_pos,Color.green,5);
-					break;
-				}
-			}else {
-
-				if (DEBUG_ShowRays) Debug.DrawLine(ray.origin,tile_pos,Color.red,5);
+			if (sees_tile){
+				if (updateMap) miniMapData[GC.CurrentFloorIndex][tile.Data.X, tile.Data.Y].SeenByPlayer = true;
+				cull_this=false;
+				if (DEBUG_ShowRays) Debug.DrawLine(ray.origin,tile_pos,Color.green,5);
+				break;
 			}
 		}
 		return cull_this;
@@ -116,14 +119,14 @@ public class HaxKnifeCulling : MonoBehaviour {
 		}
 	}
 
-	public void CullEnemies(Vector3 pos1, Vector3 pos2, float detectRadius, GameController GC,bool ignoreDoors)
+	private void CullEnemies(Vector3 pos1, Vector3 pos2, float detectRadius, GameController GC,bool StopAtDoors)
 	{
 		List<EnemyMain> enemies = GC.CurrentFloorData.Enemies;
 
 		for (int i = 0; i < enemies.Count; i++)
 		{
-			if (IsCullable(GC.CurrentFloorData.TileMainMap[enemies[i].movement.currentGridX, enemies[i].movement.currentGridY], pos1, detectRadius, ignoreDoors,false) &&
-			    IsCullable(GC.CurrentFloorData.TileMainMap[enemies[i].movement.currentGridX, enemies[i].movement.currentGridY], pos2, detectRadius, ignoreDoors,false))
+			if (IsCullable(GC.CurrentFloorData.TileMainMap[enemies[i].movement.currentGridX, enemies[i].movement.currentGridY], pos1, detectRadius, StopAtDoors,false) &&
+			    IsCullable(GC.CurrentFloorData.TileMainMap[enemies[i].movement.currentGridX, enemies[i].movement.currentGridY], pos2, detectRadius, StopAtDoors,false))
 			{
 				enemies[i].CullHide();
 			}

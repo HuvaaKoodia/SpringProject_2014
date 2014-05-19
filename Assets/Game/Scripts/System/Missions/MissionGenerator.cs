@@ -9,7 +9,7 @@ public class MissionGenerator{
         var mission=new MissionObjData();
 		mission.MissionPoolIndex=missionpool;
 
-		mission.MissionType=(MissionObjData.Type)System.Enum.Parse(typeof(MissionObjData.Type),type);
+		mission.MissionType=type;
 		
         //DEV.TEMP force type
         //mission.MissionType= MissionObjData.Type.RetrieveCargo;
@@ -50,6 +50,9 @@ public class MissionGenerator{
         	mission.InfoShipPower=GetRandomInfo();
         	mission.InfoShipConditions=GetRandomInfo();
 		}
+
+		mission.MissionRisk=CalculateRisk(mission);
+
         //objectives
 
         foreach(var o in mission.XmlData.PrimaryObjectives){
@@ -80,6 +83,51 @@ public class MissionGenerator{
         if (ScanningRating>=XmlDatabase.MissionInfoSuccessRating) return MissionObjData.InformationRating.Everything;
         return MissionObjData.InformationRating.Something;
     }
+	
+	static MissionObjData.Risk CalculateRisk(MissionObjData mission)
+	{
+		int risk=0,alien_risk=0,security_risk=0;
+		//aliens
+		if (mission.InfoAlienAmount>=MissionObjData.InformationRating.Something){
+			alien_risk=(int)mission.MissionAlienAmount;
+
+			if (mission.InfoAlienAmount==MissionObjData.InformationRating.Everything){
+				alien_risk*=2;
+			}
+		}
+		risk+=alien_risk;
+
+		//security
+		if (mission.InfoSecuritySystem>=MissionObjData.InformationRating.Something){
+			security_risk=(int)mission.MissionSecuritySystem;
+			
+			if (mission.InfoSecuritySystem==MissionObjData.InformationRating.Everything){
+				security_risk*=2;
+			}
+		}
+		risk+=security_risk;
+
+		//output
+		return GetRiskEnum(risk); 
+	}
+
+	static MissionObjData.Risk GetRiskEnum(int risk)
+	{
+		//output
+		if (risk<=1){
+			return MissionObjData.Risk.Unknown;
+		}
+		else if (risk<2){
+			return MissionObjData.Risk.Low;
+		}
+		else if (risk<4){
+			return MissionObjData.Risk.Medium;
+		}
+		else if (risk<7){
+			return MissionObjData.Risk.High;
+		}
+		return MissionObjData.Risk.Extreme;
+	}
 
     /// <summary>
     /// Switch case from hell!
@@ -179,7 +227,7 @@ public class MissionGenerator{
                 return "The ship might have a simple security system.";
             case MissionObjData.SecuritySystems.Medium:
             case MissionObjData.SecuritySystems.Large:
-                return "The ship has an advanced security system of some sort.";
+                return "The ship seems to have an advanced security system of some sort.";
         }
         return "";
     }
@@ -251,7 +299,7 @@ public class MissionGenerator{
         return text;
     }
 	
-	public static void UpdateMissionObjectiveStatus(MissionObjData mission,PlayerObjData player){
+	public static void UpdateMissionObjectiveStatus(MissionObjData mission,PlayerObjData player,GameController GC){
 		var quest_items=player.Items.GetItems(item=>{return item.baseItem.type==InvBaseItem.Type.QuestItem;});
 
 		foreach (var o in mission.PrimaryObjectives){
@@ -281,6 +329,26 @@ public class MissionGenerator{
 						break;
 					}
 				}
+				if (!complete) continue;
+			}
+
+			if (xml.KillTypes.Count>0){
+				complete=true;
+
+				foreach (var t in xml.KillTypes){
+					foreach (var f in GC.Floors){
+						foreach (var e in f.Enemies){
+							if (e.MyType==t) {
+								complete=false;
+								break;
+							}
+						}	
+						if (!complete) break;
+					}
+					if (!complete) break;
+				}
+
+				if (!complete) continue;
 			}
 
 			if (complete) o.status=1;
@@ -317,12 +385,35 @@ public class MissionGenerator{
 		text+="\n\n";
 		text+="Expires in\n"+(mission.TravelTime+mission.ExpirationTime)+" days";
 
+		text+="\n\nRisk:\n";
+		var risk=mission.MissionRisk;
+
+		Color color=Color.grey;
+
+		if (risk==MissionObjData.Risk.Low){
+			color=Color.cyan;
+		}
+		
+		if (risk==MissionObjData.Risk.Medium){
+			color=Color.yellow;
+		}
+		
+		if (risk==MissionObjData.Risk.High){
+			color=new Color(250/255f,105/255f,0,1f);
+		}
+		
+		if (risk==MissionObjData.Risk.Extreme){
+			color=Color.red;
+		}
+
+		text+="["+NGUIText.EncodeColor(color)+"]"+risk+"[-]";
+
 		return text;
 	}
 
 	//DEV. temp
 	public static string MissionName (MissionObjData mission)
 	{
-		return mission.MissionType.ToString();
+		return mission.XmlData.Name;
 	}
 }

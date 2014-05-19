@@ -67,6 +67,7 @@ public class ShipDetailGenerator : MonoBehaviour
                 floor_amount_loot--;
 
                 tile.SetObj(TileObjData.Obj.Loot);
+				room.LootCrateTiles.Add(tile);
             }
 		}
 
@@ -152,7 +153,7 @@ public class ShipDetailGenerator : MonoBehaviour
 
 		Debug.Log("Alien amount: "+amount);
     }
-
+	
     public void GenerateMissionObjectives(GameController GC, MissionObjData mission, ShipObjData ship){
 
 		foreach(var o in mission.PrimaryObjectives){
@@ -164,28 +165,44 @@ public class ShipDetailGenerator : MonoBehaviour
 				var quest_item=XmlDatabase.GetQuestItem(objective.Item);
 
 				if (quest_item==null){
-					Debug.LogError("Mission: "+mission.MissionType+" failed to create objective item "+objective.Item+" as it's not found in the xmldatabase");
+					Debug.LogError("Mission: "+mission.XmlData.Name+" failed to create objective item "+objective.Item+" as it's not found in the xmldatabase");
 					return;
 				}
 
 				//find legit rooms in all floors
 			    string obj_room=objective.Room;
-					var LegitRooms=new Dictionary<int,List<ShipRoomObjData>>();
-					bool nonefound=true;
+				var LegitRooms=new Dictionary<int,List<ShipRoomObjData>>();
+				bool nonefound=true;
+				for (int i=0;i<ship.FloorRooms.Count;++i){
+					LegitRooms.Add(i,new List<ShipRoomObjData>());
+					foreach(var r in ship.FloorRooms[i]){
+						if (r.roomStats.type==obj_room&&r.LootCrateTiles.Count>0) 
+						{
+							LegitRooms[i].Add(r);
+							nonefound=false;
+						}
+		            }
+				}
+			    if (nonefound){
+					Debug.LogWarning("Mission: "+mission.XmlData.Name+" failed to create objective item in ship type "+ship.Name +" required room : "+obj_room);
+					Debug.LogWarning("A random room selected for the item");
+
+					LegitRooms.Clear ();
 					for (int i=0;i<ship.FloorRooms.Count;++i){
-						LegitRooms.Add(i,new List<ShipRoomObjData>());
 						foreach(var r in ship.FloorRooms[i]){
-							if (r.roomStats.type==obj_room) 
+							if (r.LootCrateTiles.Count>0) 
 							{
 								LegitRooms[i].Add(r);
-								nonefound=false;
 							}
-			            }
+						}
 					}
-			    if (nonefound){
-			        Debug.LogError("Mission: "+mission.MissionType+" failed to create objective item in ship type "+ship.Name +" required room : "+obj_room);
-			        return;
+
+					if (LegitRooms.Count==0){
+						Debug.LogWarning("Cannot generate the quest item. No loot crates in the ship "+ship.Name);
+						continue;
+					}
 			    }
+
 				//select one room
 				var legit_floors=new List<int>();
 				foreach(var f in LegitRooms){
@@ -193,6 +210,7 @@ public class ShipDetailGenerator : MonoBehaviour
 						legit_floors.Add(f.Key);
 					}
 				}
+
 				int index=Subs.GetRandom(legit_floors);
 				var floor=GC.Floors[index];
 			    var room=Subs.GetRandom(LegitRooms[index]);
@@ -208,14 +226,9 @@ public class ShipDetailGenerator : MonoBehaviour
 						var tile = floor.TileMainMap[rx+x,ry+y];
 			            if (tile.Data.ObjType == TileObjData.Obj.Loot)
 			            {
-								loot_crates.Add(tile.TileObject.GetComponent<LootCrateMain>());
+							loot_crates.Add(tile.TileObject.GetComponent<LootCrateMain>());
 			            }
 			        }
-				}
-
-				if (loot_crates.Count==0){
-					Debug.LogWarning("Cannot generate quest item. No loot crates in room "+obj_room+ " ship type "+ship.Name);
-					return;
 				}
 
 				//select one loot crate and add item

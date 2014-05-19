@@ -179,7 +179,7 @@ public class PlayerHud : MonoBehaviour {
 			map.SetDisabled(!player.HasMap);
 			//radar.radarZoom=2f+1f*(1f-(player.RadarRange/player.RadarRangeMax));
 
-			if (player.HasMap&&player.OneUpdateDone) player.CullWorld(false);
+			//if (player.HasMap&&player.OneUpdateDone) player.CullWorld(false);
 		}
 		else
 		{
