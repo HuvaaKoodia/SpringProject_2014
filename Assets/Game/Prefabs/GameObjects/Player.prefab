@@ -3532,6 +3532,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &100424
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400424}
+  m_Layer: 0
+  m_Name: ParticleTempParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &100428
 GameObject:
   m_ObjectHideFlags: 1
@@ -3739,6 +3754,7 @@ Transform:
   - {fileID: 400386}
   - {fileID: 400358}
   - {fileID: 400398}
+  - {fileID: 400424}
   m_Father: {fileID: 0}
 --- !u!4 &400002
 Transform:
@@ -6271,6 +6287,17 @@ Transform:
   - {fileID: 400432}
   - {fileID: 400436}
   m_Father: {fileID: 400104}
+--- !u!4 &400424
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100424}
+  m_LocalRotation: {x: -8.94069672e-08, y: 0, z: 0, w: -1}
+  m_LocalPosition: {x: -0, y: -.0494603813, z: -.231984958}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 400000}
 --- !u!4 &400428
 Transform:
   m_ObjectHideFlags: 1
@@ -7129,7 +7156,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100388}
-  m_Mesh: {fileID: 4300000, guid: eefe7edec8b3aa34b85e954d98216368, type: 3}
+  m_Mesh: {fileID: 0}
 --- !u!33 &3300008
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -8118,7 +8145,7 @@ MonoBehaviour:
   AnimationsOn: 1
   WeaponMouseLookOn: 0
   Shooting: 0
-  ParticleTempParent: {fileID: 0}
+  ParticleTempParent: {fileID: 100424}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9071,8 +9098,8 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: 1, g: .0509803928, b: 0, a: .250980407}
   mPivot: 4
-  mWidth: 418
-  mHeight: 51
+  mWidth: 412
+  mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -12163,7 +12190,7 @@ MonoBehaviour:
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
   mWidth: 49
-  mHeight: 51
+  mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -15290,7 +15317,7 @@ MonoBehaviour:
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
   mWidth: 49
-  mHeight: 51
+  mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -15348,7 +15375,7 @@ MonoBehaviour:
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
   mWidth: 49
-  mHeight: 51
+  mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -15405,8 +15432,8 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
-  mWidth: 1102
-  mHeight: 51
+  mWidth: 1082
+  mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -15586,8 +15613,8 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
-  mWidth: 902
-  mHeight: 152
+  mWidth: 888
+  mHeight: 150
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -15853,8 +15880,8 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
-  mWidth: 423
-  mHeight: 51
+  mWidth: 417
+  mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -15994,7 +16021,7 @@ MonoBehaviour:
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
   mWidth: 49
-  mHeight: 51
+  mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
