@@ -102,9 +102,9 @@ public abstract class UIItemSlot : MonoBehaviour
             t += "[-]";
         }
 
-        t+="\n"+GetSellPriceText(item);
+        t+="\n\n"+GetSellPriceText(item);
         
-        t += "\n"+GetItemDescription(item);
+        t += "\n\n"+GetItemDescription(item);
         return t;
     }
 
