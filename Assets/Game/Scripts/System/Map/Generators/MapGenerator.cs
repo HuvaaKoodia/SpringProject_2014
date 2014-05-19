@@ -208,7 +208,8 @@ public class MapGenerator : MonoBehaviour
 					gatlingTurret.transform.parent = enemy_container.transform;
 
 					gatlingTurret.movement.Init();
-					//gatlingTurret.movement.GetCurrenTile().LeaveTile();
+
+					tile.TileGraphics.DisableLightGraphics();
 					break;
 				case TileObjData.Obj.PowerGenerator:
 					var obj = GameObject.Instantiate(MapPrefabs.PowerGenerator, tile_pos, Quaternion.identity) as GameObject;

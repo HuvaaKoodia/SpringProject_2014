@@ -26,7 +26,7 @@ public class MissionMenuHud : MonoBehaviour {
 
         //Dev.debug
         if (!SS.GDB.GameStarted)
-            SS.GDB.StartNewGame();
+            SS.GDB.CreateNewGame();
 
         //create mission buttons
         int i=0;

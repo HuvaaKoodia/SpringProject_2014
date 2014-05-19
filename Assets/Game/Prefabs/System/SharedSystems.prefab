@@ -45,6 +45,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 400004}
   - 114: {fileID: 11400004}
+  - 114: {fileID: 11400006}
   - 114: {fileID: 11400008}
   m_Layer: 0
   m_Name: Databases
@@ -133,7 +134,7 @@ MonoBehaviour:
   MGen: {fileID: 11400002}
   SGen: {fileID: 11400014}
   SDGen: {fileID: 11400024}
-  GOps: {fileID: 0}
+  GOps: {fileID: 11400006}
   ItemAtlas: {fileID: 11400000, guid: f95e07e3d350bf748b0c42b453a69d2e, type: 2}
 --- !u!114 &11400002
 MonoBehaviour:
@@ -164,6 +165,19 @@ MonoBehaviour:
   GameStarted: 0
   HQScene: MissionSelectScene
   GameScene: GameScene
+  MainMenuScene: MainMenuScene
+  HasSave: 0
+--- !u!114 &11400006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c095c53db916314885dcafc4466fe90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1

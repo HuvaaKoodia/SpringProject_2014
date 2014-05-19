@@ -2,29 +2,63 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
 public class GameDB : MonoBehaviour {
 
     public SharedSystemsMain SS;
 
 	public GameObjData  GameData;
+	public GameOptionsObjData GameOptionsData;
 
 	public bool GOTO_DEBRIEF=false;
 	public bool GameStarted=false;
 
-    public string HQScene="MissionSelectScene",GameScene="GameScene";
+    public string HQScene="MissionSelectScene",GameScene="GameScene",MainMenuScene="MainMenuScene";
 
-	void OnLevelWasLoaded(int i){
-		ResetStuff();
+	public bool HasSave;
+
+	public void CheckForSaves()
+	{
+		HasSave=false;
+#if UNITY_WEBPLAYER
+		//Playerprefs
+		if (PlayerPrefs.HasKey("Save")){
+			//check file integrity DEV.Lazy as hell.
+			if (SaveLoadSys.LoadGameWeb("Save")!=null){
+				HasSave=true;
+			}
+		}
+#else
+
+#endif
+
+		//files
+		if (File.Exists("Saves/Save.sav")){
+			//check file integrity DEV.Lazy as hell.
+			if (SaveLoadSys.LoadGame("Save")!=null){
+				HasSave=true;
+			}
+		}
 	}
 
-    public void StartNewGame(){
+	public void CheckForGameoptions(){
+		if (File.Exists("Options.txt")){
+			//load options
+		}
+		else{
+			GameOptionsData=new GameOptionsObjData();
+		}
+	}
+	
+    public void CreateNewGame(){
         GameStarted=true;
 		GameData=new GameObjData();
+		GameData.NewGame();
+
         GenerateNewMissions();
 		
-		GameData.PlayerData.Money=1000;
-
+		GameData.PlayerData.Money=XmlDatabase.StartingMoney;
 		GameData.FinanceManager.AddDebt(0,XmlDatabase.StartingDept);
 
 		//starting player equipment
@@ -59,6 +93,8 @@ public class GameDB : MonoBehaviour {
 		GameStarted=true;
 		GameData=SaveLoadSys.LoadGame("Save");
 
+		if (GameData==null) return;
+
 		//init GameData
 		
 		foreach(var e in GameData.VendorStore.items){
@@ -79,21 +115,39 @@ public class GameDB : MonoBehaviour {
         GameData.CurrentMission=mission;
     }
 
+	/// <summary>
+	/// Goes to the start game scene.
+	/// Does not call CreateNewGame.
+	/// </summary>
+	public void PlayGame(){
+		LoadLevel(HQScene);
+	}
+
     public void PlayMission()
     {
         LoadLevel(GameScene);
     }
+
+	public void GotoMenu ()
+	{
+		LoadLevel(MainMenuScene);
+	}
 
 	void ResetStuff(){
 		//haxy reset for haxy static lists!
 		if (UIEquipmentSlot.EquipmentSlots!=null) UIEquipmentSlot.EquipmentSlots.Clear();
 		if (UIAmmoSlot.EquipmentSlots!=null) UIAmmoSlot.EquipmentSlots.Clear();
 	}
+	
+	void OnLevelWasLoaded(int i){
+		ResetStuff();
+	}
 
 	void LoadLevel(string level){
 
 		Application.LoadLevel(level);
 	}
+
 
     public void EndMission(GameController GC)
     {
@@ -207,6 +261,8 @@ public class GameDB : MonoBehaviour {
 }
 
 public class GameObjData{
+	public bool IronManMode {get;set;}
+
 	public PlayerObjData PlayerData{get; set;}
 	public List<MissionObjData> AvailableMissions{get; set;}
 	
@@ -218,8 +274,11 @@ public class GameObjData{
 	public int CurrentTime{get;set;}
 
 	public int[] TPhighScores{get;set;}
+	//serializer constructor
+	public GameObjData(){}
 
-	public GameObjData(){
+	public void NewGame(){
+		IronManMode=false;
 		CurrentTime=1;
 		AvailableMissions=new List<MissionObjData>();
 		PlayerData=new PlayerObjData();

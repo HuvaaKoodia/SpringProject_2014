@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 public class GameOptionsMenu : MonoBehaviour
 {
-	[HideInInspector]public GameOptionsMain GOpsMain;
+	GameOptionsMain GOpsMain;
 	public List<UILabel> SettingsLabel;
 
 	// Use this for initialization
 	void Start ()
 	{
-		GOpsMain = new GameOptionsMain();
+		GOpsMain = SharedSystemsMain.I.GOps;
 	}
 	
 	// Update is called once per frame

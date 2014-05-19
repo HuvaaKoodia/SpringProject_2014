@@ -25,6 +25,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 400002}
   - 114: {fileID: 11400000}
+  - 114: {fileID: 11400002}
   m_Layer: 0
   m_Name: Corridor_RoomCorner
   m_TagString: Untagged
@@ -275,7 +276,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GraphicsObject: {fileID: 100010}
-  TileLights: {fileID: 0}
+  TileLights: {fileID: 11400002}
+--- !u!114 &11400002
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46a4daa2282b9b34f948d527603a44f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WhiteLightGraphics: {fileID: 0}
+  OrangeLightsGraphics: {fileID: 100006}
+  on_material: {fileID: 2100000, guid: 255d8777929902b478aee388c1b1218b, type: 2}
+  off_material: {fileID: 2100000, guid: fa50e21716e487a44b88b33e00133357, type: 2}
+  white_lights: []
+  orange_lights: []
+  delay: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

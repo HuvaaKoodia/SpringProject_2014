@@ -15,12 +15,16 @@ public class SharedSystemsMain : MonoBehaviour {
 
 	bool loaded=false;
 
+	public static SharedSystemsMain I;
+
     void Awake(){
 		if (loaded) return;
 		loaded=true;
+		I=this;
 
         XMAP.LoadData();
 		XmlDatabase.LoadData(ItemAtlas);
-        GDB.StartNewGame();
+
+		GDB.CheckForGameoptions();
     }
 }

@@ -6,6 +6,7 @@ public class GatlingEnemySub : EnemyMain {
 
 	public Transform TurretTransform;
 	public Transform BaseTransform;
+	public GameObject Gibs;
 		
 	public List<BoxCollider> HitboxesHidden;
 	public List<BoxCollider> HitboxesVisible;
@@ -15,11 +16,6 @@ public class GatlingEnemySub : EnemyMain {
 		hitboxes = new List<BoxCollider>();
 		HitboxesHidden = new List<BoxCollider>();
 		hitboxes = HitboxesHidden;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
 	}
 
 	public void SwitchHitboxes(bool visible)
@@ -32,5 +28,12 @@ public class GatlingEnemySub : EnemyMain {
 		{
 			hitboxes = HitboxesHidden;
 		}
+	}
+
+	protected override void OnDeath(){
+		Gibs.SetActive(true);
+		Gibs.transform.parent=null;
+
+		BaseTransform.parent=null;
 	}
 }

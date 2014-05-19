@@ -3,7 +3,11 @@ using System.Collections;
 
 public class GameOptionsMain : MonoBehaviour {
 
-	GameOptionsObjData GOpsObjD = new GameOptionsObjData();
+	GameOptionsObjData GOpsObjD;
+
+	void Start(){
+		GOpsObjD=SharedSystemsMain.I.GDB.GameOptionsData;
+	}
 
 	public void SetQuality(Quality Q)
 	{

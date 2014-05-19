@@ -105,16 +105,23 @@ public class UIAmmoSlot : UIItemSlot
     public static List<UIAmmoSlot> EquipmentSlots;
 	
     public void SetSlotColor(InvGameItem item){
+
+		var scale=GetComponent<UIButtonScale>();//DEV.lazy but works
+		
         if (item==null||item.baseItem.type!=InvBaseItem.Type.AmmoBox){
             background.color=Color.white;
+			scale.SendMessage("OnPermaHover",false);
             return;
         }
 
 		if (item.baseItem.ammotype==AmmoType){
             background.color=Color.green;
+
+			scale.SendMessage("OnPermaHover",true);
         }
         else{
             background.color=Color.red;
+			scale.DisableTween=true;
         }
     }
     //DEV. puukko end

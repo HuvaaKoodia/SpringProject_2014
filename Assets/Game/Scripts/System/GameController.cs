@@ -196,7 +196,7 @@ public class GameController : MonoBehaviour {
 		HUD.player = Player;
 		HUD.SetGC(this);
 
-		RandomizeLightsInAllFloors(10,20);
+		RandomizeLightsInAllFloors(XmlDatabase.LightsBrokenPercent,XmlDatabase.LightsFlickerPercent);
 
 		//set ship status to mission status
 		var c_mis=SS.GDB.GameData.CurrentMission;
@@ -212,13 +212,16 @@ public class GameController : MonoBehaviour {
 
 		//misc
 		var ec=GetComponent<EngineController>();
-		ec.AfterRestart+=SS.GDB.StartNewGame;
+		ec.AfterRestart+=SS.GDB.CreateNewGame;
 
 		//debug
 		current_ship_data=ship_objdata;
 
 		//floor stats
 		SetFloor(CurrentFloorIndex);
+
+		HUD.SetAlpha(1f);
+		HUD.FadeOut(0.5f);
 	}
 
 	// Update is called once per frame
@@ -319,6 +322,8 @@ public class GameController : MonoBehaviour {
 		while(HUD.FadeInProgress){
 			yield return null;
 		}
+		yield return new WaitForSeconds(2f);
+		//dev. elevator sound
 		HUD.FadeOut();
 		SetFloor(index);
 		//DEV. elevator sound here + some delay
@@ -351,67 +356,7 @@ public class GameController : MonoBehaviour {
 			GotoFloor(CurrentFloorIndex-1);
 	}
 
-	//FUNCTIONS TO ENABLE LIGHTS
-
-	//function to enable the white lights in a specific TileMain in the environment for a specific floor
-	//intensity of the white lights is passed in here
-	public void EnableLights_FloorNum(int floor_num, int tilemain_X, int tilemain_Y,bool on)
-	{
-		var tilegraphics = GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y).TileGraphics;
-		
-		//as long as there are TileGraphics and TileLights
-		if(tilegraphics != null)
-		{
-			if(tilegraphics.TileLights != null)
-			{
-				//set electricity to flow for the white light in particular TileMainMap in particular floor
-				//tilegraphics.TileLights.SetPowerOn(on);
-				tilegraphics.TileLights.PowerOn = on;
-			}
-		}
-	}
-
-	//function to enable all white lights in the environment for a specific floor
-	//intensity of the white lights is passed in here
-	public void EnableLights_FloorNum(int floor_num, float power, bool on)
-	{
-		//as long as there are TileMainMaps
-		if(GetFloor(floor_num).TileMainMap != null)
-		{
-			//traverse through all the TileMainMaps
-			for(int x = 0; x < GetFloor(floor_num).TileMainMap.GetLength(0); x++)
-			{
-				for(int y = 0; y < GetFloor(floor_num).TileMainMap.GetLength(1); y++)
-				{
-					//enable lights in the particular TieMainMap in particular floor
-					EnableLights_FloorNum(floor_num, x, y, on);
-				}
-			}
-		}
-	}
-
-	//function to enable all white lights in the environment for all floors
-	//intensity of the white light is passed in here
-	public void EnableLights_AllFloors(float power, bool on)
-	{
-		//as long as there are Floors
-		if(Floors != null)
-		{
-			//traverse through all the floors
-			for(int floornum = 0; floornum < Floors.Count; floornum++)
-			{
-				//enable lights in the particular floor
-				EnableLights_FloorNum(floornum, power, on);
-			}
-		}
-	}
 	//FUNCTIONS TO SET STATE OF THE WHITE LIGHTS
-
-	//function to set the state of the white lights in a specific TileMain in aspecific floor
-	public void SetState_FloorNum(int floor_num, int tilemain_X, int tilemain_Y, Lighting_State LS)
-	{
-		SetTileLightState(GetFloor(floor_num).GetTileMain(tilemain_X, tilemain_Y),LS,true);
-	}
 
 	private void SetTileLightState(TileMain tile, Lighting_State LS,bool power){
 		var tilegraphics = tile.TileGraphics;
@@ -487,6 +432,23 @@ public class GameController : MonoBehaviour {
 
 	public void EndMission ()
 	{
+		HUD.FadeIn(0.5f);
+		StartCoroutine(EndMissionAfterFade());
+	}
+
+	IEnumerator EndMissionAfterFade(){
+		while(HUD.FadeInProgress) yield return null;
 		SS.GDB.EndMission(this);
+	}
+
+	public void EndGame ()
+	{
+		HUD.FadeIn(0.3f);
+		StartCoroutine(EndGameAfterFade());
+	}
+
+	IEnumerator EndGameAfterFade(){
+		while(HUD.FadeInProgress) yield return null;
+		HUD.ShowGameoverPanel();
 	}
 }

@@ -17,7 +17,8 @@ public class MasterHudMain : MonoBehaviour {
 
 	public InGameInfoPanelMain InfoHud;
     public MissionBriefingMenu MissionBriefing;
-    public GameObject EndMissionPanel;
+	public GameObject EndMissionPanel;
+	public GameoverPanel _GameoverPanel;
 	public UISprite FadePanel;
 
 	public UILabel FPS;
@@ -33,6 +34,8 @@ public class MasterHudMain : MonoBehaviour {
 		if (!ShowFPS){
 			FPS.gameObject.SetActive(false);
 		}
+
+		_GameoverPanel.gameObject.SetActive(false);
 	}
 
     public void SetGC(GameController gc){
@@ -231,11 +234,23 @@ public class MasterHudMain : MonoBehaviour {
 	}
 
 	public void FadeIn(){
-		StartCoroutine(Fader(Time.deltaTime));
+		FadeIn(1);
+	}
+	
+	public void FadeOut(){
+		FadeOut(1);
 	}
 
-	public void FadeOut(){
-		StartCoroutine(Fader(-Time.deltaTime));
+	public void FadeIn(float fade_speed){
+		StartCoroutine(Fader(Time.deltaTime*fade_speed));
+	}
+
+	public void FadeOut(float fade_speed){
+		StartCoroutine(Fader(-Time.deltaTime*fade_speed));
+	}
+
+	public void SetAlpha(float alpha){
+		FadePanel.alpha=alpha;
 	}
 
 	public bool FadeInProgress{get;private set;}
@@ -255,5 +270,10 @@ public class MasterHudMain : MonoBehaviour {
 			else yield return null;
 		}
 		FadeInProgress=false;
+	}
+
+	public void ShowGameoverPanel()
+	{
+		_GameoverPanel.Activate(true);
 	}
 }

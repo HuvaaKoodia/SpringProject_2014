@@ -15,6 +15,7 @@ public class UIButtonScale : MonoBehaviour
 	public Transform tweenTarget;
 	public Vector3 hover = new Vector3(1.1f, 1.1f, 1.1f);
 	public Vector3 pressed = new Vector3(1.05f, 1.05f, 1.05f);
+	public Vector3 permahover = new Vector3(1.1f, 1.1f, 1.1f);
 	public float duration = 0.2f;
 
 	Vector3 mScale;
@@ -59,16 +60,21 @@ public class UIButtonScale : MonoBehaviour
 
 	void OnHover (bool isOver)
 	{
+		OnHover(isOver,hover);
+	}
+
+	void OnHover (bool isOver,Vector3 scale)
+	{
 		if (enabled)
 		{
 			if (!mStarted) Start();
-			if (!DisableTween) TweenScale.Begin(tweenTarget.gameObject, duration, isOver ? Vector3.Scale(mScale, hover) : mScale).method = UITweener.Method.EaseInOut;
+			if (!DisableTween) TweenScale.Begin(tweenTarget.gameObject, duration, isOver ? Vector3.Scale(mScale, scale) : mScale).method = UITweener.Method.EaseInOut;
 		}
 	}
 
 	void OnPermaHover(bool Enter){
 		if (!Enter) DisableTween=false;
-		OnHover(Enter);
+		OnHover(Enter,permahover);
 		if (Enter) DisableTween=true;
 	}
 

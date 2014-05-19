@@ -44,6 +44,10 @@ public class PlayerMain : EntityMain
 	
 	int gunsFinishedShooting;
 
+	public bool SystemOverheat {
+		get{return ObjData.UpperTorso.OVERHEAT;}
+	}
+
     public void SetObjData(PlayerObjData data){
         ObjData=data;
     }
@@ -77,21 +81,10 @@ public class PlayerMain : EntityMain
 		HUD.Init(this,GC);
 		
 		TargetingCamera.aspect = 16.0f / 9.0f;
-		OneUpdateDone=false;
 	}
-
-	int updates_todo=1;
-	public bool OneUpdateDone{get;private set;}
+	
 	void Update()
     {
-		if (!OneUpdateDone){//start game cull
-			if (updates_todo==0){
-				 //CullWorld(false);
-				OneUpdateDone=true;
-			}
-			--updates_todo;
-		}
-
         foreach (WeaponMain weapon in weaponList)
 		{
 			//Mouse look was taken off by default when 2 pivot point rotation was implemented
@@ -103,7 +96,6 @@ public class PlayerMain : EntityMain
 			else
 				weapon.RotateGraphics();
 		}
-
 	}
 
     public void StartPlayerPhase()
@@ -244,8 +236,8 @@ public class PlayerMain : EntityMain
 
         if (Health <= 0)
 		{
-			Debug.Log("Kuoli saatana");
-			GC.EngCont.Restart();
+			inputSub.DISABLE_INPUT=true;
+			GC.EndGame();
 		}
 
 		HUD.UpdateHudPanels();

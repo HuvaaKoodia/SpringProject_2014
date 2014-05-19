@@ -158,8 +158,7 @@ public class PlayerInputSub : MonoBehaviour {
 	
 	public void MoveForwardInput()
 	{
-		if (NotUsableWorldInteractions())
-			return;
+		if (NotUsableWorldInteractions()) return;
 
 		if (playerMovement.MoveForward())
 			player.StartedMoving();
@@ -167,8 +166,7 @@ public class PlayerInputSub : MonoBehaviour {
 
 	public void MoveBackwardInput()
 	{
-		if (NotUsableWorldInteractions())
-			return;
+		if (NotUsableWorldInteractions()) return;
 		
 		if (playerMovement.MoveBackward())
 			player.StartedMoving();
@@ -176,8 +174,7 @@ public class PlayerInputSub : MonoBehaviour {
 
 	public void MoveLeftInput()
 	{
-		if (NotUsableWorldInteractions())
-			return;
+		if (NotUsableWorldInteractions()) return;
 		
 		if (playerMovement.MoveLeft())
 			player.StartedMoving();
@@ -185,8 +182,7 @@ public class PlayerInputSub : MonoBehaviour {
 
 	public void MoveRightInput()
 	{
-		if (NotUsableWorldInteractions())
-			return;
+		if (NotUsableWorldInteractions()) return;
 		
 		if (playerMovement.MoveRight())
 			player.StartedMoving();
@@ -194,8 +190,7 @@ public class PlayerInputSub : MonoBehaviour {
 
 	public void TurnLeftInput()
 	{
-		if (NotUsableWorldInteractions())
-			return;
+		if (NotUsableWorldInteractions()) return;
 		
 		playerMovement.TurnLeft();
 		player.StartedMoving();
@@ -203,8 +198,7 @@ public class PlayerInputSub : MonoBehaviour {
 
 	public void TurnRightInput()
 	{
-		if (NotUsableWorldInteractions())
-			return;
+		if (NotUsableWorldInteractions()) return;
 		
 		playerMovement.TurnRight();
 		player.StartedMoving();
@@ -212,7 +206,7 @@ public class PlayerInputSub : MonoBehaviour {
 
 	public void TargetingModeInput()
 	{
-        if (NotUsable()) return;
+		if (NotUsable()||player.SystemOverheat) return;
 
 		if (player.targetingMode){
 			player.EndTargetingMode();
@@ -225,8 +219,7 @@ public class PlayerInputSub : MonoBehaviour {
 
 	public void EngageCombatInput()
 	{
-		if (this.enabled == false || !player.targetingMode)
-			return;
+		if (this.enabled == false || !player.targetingMode) return;
 
 		if (player.targetingSub.HasAnyTargets()) StartCoroutine(player.Attack());
     }
@@ -307,6 +300,6 @@ public class PlayerInputSub : MonoBehaviour {
     }
 
 	bool NotUsableWorldInteractions(){
-		return NotUsable()|| player.targetingMode||player.ObjData.UpperTorso.OVERHEAT;
+		return NotUsable()|| player.targetingMode||player.SystemOverheat;
 	}
 }

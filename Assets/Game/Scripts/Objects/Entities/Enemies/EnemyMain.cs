@@ -48,12 +48,6 @@ public class EnemyMain : EntityMain {
     {
         waitingForAttackPhase = false;
 	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
-	
-	}
 
 	public virtual void StartEnemyTurn()
 	{
@@ -153,6 +147,7 @@ public class EnemyMain : EntityMain {
 	protected virtual void Die()
 	{
 		Dead = true;
+		OnDeath();
 		Remove();
 	}
 
@@ -160,8 +155,11 @@ public class EnemyMain : EntityMain {
 	{
 		movement.GetCurrenTile().LeaveTile();
 		CurrentFloor.Enemies.Remove(this);
+		OnDeath();
 		Destroy(this.gameObject);
 	}
+
+	protected virtual void OnDeath(){}
 
     public bool HasUsedTurn()
     {
