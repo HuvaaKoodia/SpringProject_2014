@@ -44,6 +44,8 @@ public class PlayerMain : EntityMain
 	
 	int gunsFinishedShooting;
 
+	public GameObject ParticleTempParent;
+
     public void SetObjData(PlayerObjData data){
         ObjData=data;
     }

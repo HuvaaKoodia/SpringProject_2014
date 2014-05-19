@@ -9947,8 +9947,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8491d5bbfde51a34a89da7bd6480fb55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TestLoadShipName: mercurius1b
-  UseTestMap: 1
+  TestLoadShipName: firefly1
+  UseTestMap: 0
   OverrideMissionShip: 1
   EngCont: {fileID: 453917343}
   currentTurn: 0
@@ -12465,6 +12465,34 @@ Prefab:
       propertyPath: mHeight
       value: 149
       objectReference: {fileID: 0}
+    - target: {fileID: 11100002, guid: bbc62e18456a7dc41a85be0653d92e94, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11100002, guid: bbc62e18456a7dc41a85be0653d92e94, type: 2}
+      propertyPath: m_PlayAutomatically
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400070, guid: bbc62e18456a7dc41a85be0653d92e94, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400070, guid: bbc62e18456a7dc41a85be0653d92e94, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400070, guid: bbc62e18456a7dc41a85be0653d92e94, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400018, guid: bbc62e18456a7dc41a85be0653d92e94, type: 2}
+      propertyPath: graphics
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: bbc62e18456a7dc41a85be0653d92e94, type: 2}
+      propertyPath: ParticleTempParent
+      value: 
+      objectReference: {fileID: 716452977}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bbc62e18456a7dc41a85be0653d92e94, type: 2}
   m_RootGameObject: {fileID: 1448605822}
@@ -16935,6 +16963,32 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3, y: 3, z: .100000001}
   m_Center: {x: 0, y: 0, z: -1.5}
+--- !u!1 &716452977
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 716452978}
+  m_Layer: 0
+  m_Name: ParticleTempParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &716452978
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 716452977}
+  m_LocalRotation: {x: -8.94069672e-08, y: 0, z: 0, w: -1}
+  m_LocalPosition: {x: -0, y: -.0494603813, z: -.231984958}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1448605823}
 --- !u!1 &722582498
 GameObject:
   m_ObjectHideFlags: 0
@@ -34197,6 +34251,7 @@ Transform:
   - {fileID: 491453543}
   - {fileID: 613558484}
   - {fileID: 1139544426}
+  - {fileID: 716452978}
   m_Father: {fileID: 0}
 --- !u!114 &1448605824
 MonoBehaviour:
@@ -34237,6 +34292,7 @@ MonoBehaviour:
   AnimationsOn: 1
   WeaponMouseLookOn: 0
   Shooting: 0
+  ParticleTempParent: {fileID: 716452977}
 --- !u!114 &1448605825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40384,11 +40440,11 @@ Prefab:
       objectReference: {fileID: 1448605824}
     - target: {fileID: 11400002, guid: 6344377a7c1aac8468eb70319349a8a3, type: 2}
       propertyPath: TestLoadShipName
-      value: mercurius1b
+      value: firefly1
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 6344377a7c1aac8468eb70319349a8a3, type: 2}
       propertyPath: UseTestMap
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6344377a7c1aac8468eb70319349a8a3, type: 2}

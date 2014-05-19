@@ -7,6 +7,8 @@ public class WeaponEffects : MonoBehaviour {
 	public GameObject graphics;
 	public GameObject particleParent;
 
+	public GameObject tempParent;
+
 	public float BulletEffectTime = 0.7f;
 	public float MuzzleEffectTime = 0.8f;
 
@@ -40,6 +42,11 @@ public class WeaponEffects : MonoBehaviour {
 	void Update () {
 
 	}
+
+	public void SetParticleTempParent(GameObject tp)
+	{
+		tempParent = tp;
+	}
 	
 	public void AddBulletParticles(GameObject particleEmitter)
 	{
@@ -47,6 +54,8 @@ public class WeaponEffects : MonoBehaviour {
 		BulletEffectTime = bulletParticle.duration;
 
 		bulletParticles.Add(bulletParticle);
+
+		particleEmitter.transform.parent = tempParent.transform;
 	}
 
 	public void AddMuzzleParticles(GameObject particleEmitter)
@@ -55,6 +64,8 @@ public class WeaponEffects : MonoBehaviour {
 		MuzzleEffectTime = muzzleParticle.duration;
 
 		muzzleParticles.Add(muzzleParticle);
+
+		particleEmitter.transform.parent = tempParent.transform;
 	}
 
 	public void AddAdditionalParticleSystem(ParticleSystem particleEmitter)
@@ -83,7 +94,7 @@ public class WeaponEffects : MonoBehaviour {
 			currentBullet.transform.parent = particleParent.transform;
 			currentBullet.transform.position = particleParent.transform.position;
 			currentBullet.transform.rotation = particleParent.transform.rotation;
-			currentBullet.transform.parent = null;
+			currentBullet.transform.parent = tempParent.transform;
 
 			currentBullet.time = 0;
 			currentBullet.Play();
@@ -97,7 +108,7 @@ public class WeaponEffects : MonoBehaviour {
 			currentMuzzle.transform.parent = particleParent.transform;
 			currentMuzzle.transform.position = particleParent.transform.position;
 			currentMuzzle.transform.rotation = particleParent.transform.rotation;
-			currentMuzzle.transform.parent = null;
+			currentMuzzle.transform.parent = tempParent.transform;
 
 			currentMuzzle.time = 0;
 			currentMuzzle.Play();
