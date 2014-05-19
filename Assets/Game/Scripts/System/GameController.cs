@@ -109,6 +109,9 @@ public class GameController : MonoBehaviour {
 	// Use this for initialization
 	void Start()
     {
+		//Dev.debug
+		if (!SS.GDB.GameStarted)
+			SS.GDB.CreateNewGame();
 
 		#if !UNITY_EDITOR
 		OverrideMissionShip=false;

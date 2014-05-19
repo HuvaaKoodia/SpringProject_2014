@@ -3532,6 +3532,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &100424
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400424}
+  m_Layer: 0
+  m_Name: ParticleTempParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &100428
 GameObject:
   m_ObjectHideFlags: 1
@@ -3739,6 +3754,7 @@ Transform:
   - {fileID: 400386}
   - {fileID: 400358}
   - {fileID: 400398}
+  - {fileID: 400424}
   m_Father: {fileID: 0}
 --- !u!4 &400002
 Transform:
@@ -6271,6 +6287,17 @@ Transform:
   - {fileID: 400432}
   - {fileID: 400436}
   m_Father: {fileID: 400104}
+--- !u!4 &400424
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100424}
+  m_LocalRotation: {x: -8.94069672e-08, y: 0, z: 0, w: -1}
+  m_LocalPosition: {x: -0, y: -.0494603813, z: -.231984958}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 400000}
 --- !u!4 &400428
 Transform:
   m_ObjectHideFlags: 1
@@ -7129,7 +7156,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100388}
-  m_Mesh: {fileID: 4300000, guid: eefe7edec8b3aa34b85e954d98216368, type: 3}
+  m_Mesh: {fileID: 0}
 --- !u!33 &3300008
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -8118,6 +8145,7 @@ MonoBehaviour:
   AnimationsOn: 1
   WeaponMouseLookOn: 0
   Shooting: 0
+  ParticleTempParent: {fileID: 100424}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8180,7 +8208,6 @@ MonoBehaviour:
   canSeeMask:
     serializedVersion: 2
     m_Bits: 69888
-  wallMask: 0
   deadZoneX: 0
   deadZoneY: 0
 --- !u!114 &11400010
@@ -8411,6 +8438,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400036
@@ -8607,6 +8635,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400050
@@ -9072,12 +9101,11 @@ MonoBehaviour:
   mColor: {r: 1, g: .0509803928, b: 0, a: .250980407}
   mPivot: 4
 <<<<<<< HEAD
-  mWidth: 416
-  mHeight: 50
+  mWidth: 412
 =======
   mWidth: 422
-  mHeight: 51
->>>>>>> origin/master
+>>>>>>> e7941224c57f50f8477f2c1b19f51d7daa4ced3c
+  mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -9449,6 +9477,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400094
@@ -9775,6 +9804,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400116
@@ -10020,6 +10050,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400132
@@ -10126,6 +10157,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400142
@@ -10232,6 +10264,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400152
@@ -10785,6 +10818,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400192
@@ -11468,6 +11502,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400230
@@ -11786,6 +11821,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400252
@@ -11876,6 +11912,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400260
@@ -12000,6 +12037,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400272
@@ -12168,12 +12206,11 @@ MonoBehaviour:
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
 <<<<<<< HEAD
-  mWidth: 737
-  mHeight: 151
+  mWidth: 49
 =======
   mWidth: 48
-  mHeight: 51
->>>>>>> origin/master
+>>>>>>> e7941224c57f50f8477f2c1b19f51d7daa4ced3c
+  mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -12287,6 +12324,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400292
@@ -12533,6 +12571,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400308
@@ -12696,6 +12735,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400320
@@ -12860,6 +12900,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400332
@@ -13205,6 +13246,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400356
@@ -15301,11 +15343,10 @@ MonoBehaviour:
   mPivot: 4
 <<<<<<< HEAD
   mWidth: 49
-  mHeight: 50
 =======
   mWidth: 48
-  mHeight: 51
->>>>>>> origin/master
+>>>>>>> e7941224c57f50f8477f2c1b19f51d7daa4ced3c
+  mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -15363,12 +15404,11 @@ MonoBehaviour:
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
 <<<<<<< HEAD
-  mWidth: 1093
-  mHeight: 50
+  mWidth: 49
 =======
   mWidth: 48
-  mHeight: 51
->>>>>>> origin/master
+>>>>>>> e7941224c57f50f8477f2c1b19f51d7daa4ced3c
+  mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -15426,12 +15466,11 @@ MonoBehaviour:
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
 <<<<<<< HEAD
-  mWidth: 49
-  mHeight: 50
+  mWidth: 1082
 =======
   mWidth: 1107
-  mHeight: 51
->>>>>>> origin/master
+>>>>>>> e7941224c57f50f8477f2c1b19f51d7daa4ced3c
+  mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -15612,12 +15651,11 @@ MonoBehaviour:
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
 <<<<<<< HEAD
-  mWidth: 894
-  mHeight: 151
+  mWidth: 888
 =======
   mWidth: 906
-  mHeight: 152
->>>>>>> origin/master
+>>>>>>> e7941224c57f50f8477f2c1b19f51d7daa4ced3c
+  mHeight: 150
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -15884,12 +15922,11 @@ MonoBehaviour:
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
 <<<<<<< HEAD
-  mWidth: 421
-  mHeight: 50
+  mWidth: 417
 =======
   mWidth: 427
-  mHeight: 51
->>>>>>> origin/master
+>>>>>>> e7941224c57f50f8477f2c1b19f51d7daa4ced3c
+  mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -16028,8 +16065,12 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
+<<<<<<< HEAD
+  mWidth: 49
+=======
   mWidth: 48
-  mHeight: 51
+>>>>>>> e7941224c57f50f8477f2c1b19f51d7daa4ced3c
+  mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0

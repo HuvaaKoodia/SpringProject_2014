@@ -6,12 +6,12 @@ using TreeSharp;
 public class AlienAI : AIBase {
 	EntityMovementSub movement;
 
-	public const int APmax = 6;
+	public int APmax = 6;
 
-	public const int MovementCost = 2;
-	public const int TurnCost = 1;
+	public int MovementCost = 2;
+	public int TurnCost = 1;
 
-	public const int AttackCost = 3;
+	public int AttackCost = 3;
 
 	public int DamageMelee = 30;
 	public int DamageRanged = 20;
@@ -100,7 +100,7 @@ public class AlienAI : AIBase {
 
 		MyPosition = new Point3D(movement.currentGridX, movement.currentGridY);
 
-		if ((AP < AttackCost || readyToAttack) && CanAttack())
+		if ((AP <= AttackCost+1 || readyToAttack) && CanAttack())
 		{
 			Attack();
 		}

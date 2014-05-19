@@ -47,6 +47,9 @@ public class PlayerMain : EntityMain
 	public bool SystemOverheat {
 		get{return ObjData.UpperTorso.OVERHEAT;}
 	}
+	
+	public GameObject ParticleTempParent;
+
 
     public void SetObjData(PlayerObjData data){
         ObjData=data;

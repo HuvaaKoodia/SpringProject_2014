@@ -119,6 +119,7 @@ public class WeaponMain : MonoBehaviour {
 		}
 
 		meshData = graphics.GetComponent<WeaponEffects>();
+		meshData.SetParticleTempParent(player.ParticleTempParent);
 
 		ParticleSystem[] additionalParticleSystems = graphics.GetComponentsInChildren<ParticleSystem>();
 		for (int i = 0; i < additionalParticleSystems.Count(); i++)
