@@ -7010,7 +7010,6 @@ MonoBehaviour:
   canSeeMask:
     serializedVersion: 2
     m_Bits: 69888
-  wallMask: 0
   deadZoneX: 0
   deadZoneY: 0
 --- !u!114 &11400010
@@ -7044,10 +7043,10 @@ MonoBehaviour:
   graphics: {fileID: 0}
   verticalMovement: {fileID: 100142}
   horizontalMovement: {fileID: 100144}
-  barrelEstimate: {fileID: 0}
   targetVerticalRotation: {x: 0, y: 0, z: 0, w: 0}
   targetHorizontalRotation: {x: 0, y: 0, z: 0, w: 0}
   rotationSpeed: 5
+  NumParticleEmitters: 2
 --- !u!114 &11400014
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7067,10 +7066,10 @@ MonoBehaviour:
   graphics: {fileID: 0}
   verticalMovement: {fileID: 100020}
   horizontalMovement: {fileID: 100380}
-  barrelEstimate: {fileID: 400394}
   targetVerticalRotation: {x: 0, y: 0, z: 0, w: 0}
   targetHorizontalRotation: {x: 0, y: 0, z: 0, w: 0}
   rotationSpeed: 5
+  NumParticleEmitters: 2
 --- !u!114 &11400016
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7090,10 +7089,10 @@ MonoBehaviour:
   graphics: {fileID: 0}
   verticalMovement: {fileID: 100168}
   horizontalMovement: {fileID: 100154}
-  barrelEstimate: {fileID: 400154}
   targetVerticalRotation: {x: 0, y: 0, z: 0, w: 0}
   targetHorizontalRotation: {x: 0, y: 0, z: 0, w: 0}
   rotationSpeed: 5
+  NumParticleEmitters: 2
 --- !u!114 &11400018
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7113,10 +7112,10 @@ MonoBehaviour:
   graphics: {fileID: 0}
   verticalMovement: {fileID: 100390}
   horizontalMovement: {fileID: 100064}
-  barrelEstimate: {fileID: 400156}
   targetVerticalRotation: {x: 0, y: 0, z: 0, w: 0}
   targetHorizontalRotation: {x: 0, y: 0, z: 0, w: 0}
   rotationSpeed: 5
+  NumParticleEmitters: 2
 --- !u!114 &11400020
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7242,6 +7241,7 @@ MonoBehaviour:
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400036
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7437,6 +7437,7 @@ MonoBehaviour:
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400050
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8307,6 +8308,7 @@ MonoBehaviour:
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400094
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8632,6 +8634,7 @@ MonoBehaviour:
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400116
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8835,6 +8838,7 @@ MonoBehaviour:
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400132
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8940,6 +8944,7 @@ MonoBehaviour:
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400142
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9045,6 +9050,7 @@ MonoBehaviour:
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400152
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9556,6 +9562,7 @@ MonoBehaviour:
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400192
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10238,6 +10245,7 @@ MonoBehaviour:
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400230
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10555,6 +10563,7 @@ MonoBehaviour:
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400252
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10644,6 +10653,7 @@ MonoBehaviour:
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400260
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10767,6 +10777,7 @@ MonoBehaviour:
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400272
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -11048,6 +11059,7 @@ MonoBehaviour:
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400292
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -11310,6 +11322,7 @@ MonoBehaviour:
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400308
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -11472,6 +11485,7 @@ MonoBehaviour:
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400320
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -11635,6 +11649,7 @@ MonoBehaviour:
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400332
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -11979,6 +11994,7 @@ MonoBehaviour:
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
   duration: .200000003
+  DisableTween: 0
 --- !u!114 &11400356
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -12316,6 +12332,9 @@ MonoBehaviour:
   - {fileID: 11400218}
   upperTorso: {fileID: 11400006}
   lowerTorso: {fileID: 11400208}
+  HeatMeter: {fileID: 0}
+  DataPanel: {fileID: 0}
+  OverheatSprite: {fileID: 0}
 --- !u!114 &11400378
 MonoBehaviour:
   m_ObjectHideFlags: 1
