@@ -274,6 +274,6 @@ public class MasterHudMain : MonoBehaviour {
 
 	public void ShowGameoverPanel()
 	{
-		_GameoverPanel.Activate(true);
+		_GameoverPanel.Activate(!GC.SS.GDB.GameData.IronManMode);
 	}
 }

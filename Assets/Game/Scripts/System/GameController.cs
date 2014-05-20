@@ -110,8 +110,7 @@ public class GameController : MonoBehaviour {
 	void Start()
     {
 		//Dev.debug
-		if (!SS.GDB.GameStarted)
-			SS.GDB.CreateNewGame();
+		if (!SS.GDB.GameStarted) SS.GDB.CreateNewGame();
 
 		#if !UNITY_EDITOR
 		OverrideMissionShip=false;
@@ -225,6 +224,8 @@ public class GameController : MonoBehaviour {
 
 		HUD.SetAlpha(1f);
 		HUD.FadeOut(0.5f);
+
+		SS.GDB.AllowEscHud=true;
 	}
 
 	// Update is called once per frame

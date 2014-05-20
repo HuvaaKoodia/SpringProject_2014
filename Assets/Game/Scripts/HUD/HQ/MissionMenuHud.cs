@@ -74,6 +74,8 @@ public class MissionMenuHud : MonoBehaviour {
 		}
 
 		Daylabel.text="Day: "+SS.GDB.GameData.CurrentTime;
+
+		SS.GDB.AllowEscHud=true;
 	}
 	
 	void Update (){

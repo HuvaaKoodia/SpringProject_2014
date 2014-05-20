@@ -19,6 +19,8 @@ public class MainMenuHud : MonoBehaviour {
 		if (!SharedSystemsMain.I.GDB.HasSave){
 			ContinueButton.SetActive(false);
 		}
+
+		GDB.AllowEscHud=false;
     }
 
 	void Update(){

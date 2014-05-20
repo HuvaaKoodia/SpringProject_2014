@@ -10,9 +10,15 @@ public class GameDB : MonoBehaviour {
 	public GameObjData  GameData;
 	public GameOptionsObjData GameOptionsData;
 
-	public bool GOTO_DEBRIEF=false,GameStarted=false,HasSave,GameLoaded;
+	public bool GOTO_DEBRIEF=false,GameStarted=false,HasSave,GameLoaded,AllowEscHud=true;
 
     public string HQScene="MissionSelectScene",GameScene="GameScene",MainMenuScene="MainMenuScene";
+
+	public EscHudMain EscHud;
+
+	void Start(){
+		EscHud.Activate(false);
+	}
 
 	public void CheckForSaves()
 	{
@@ -70,6 +76,11 @@ public class GameDB : MonoBehaviour {
 
 #if UNITY_EDITOR && !UNITY_WEBPLAYER
 	public void Update(){
+
+		if (AllowEscHud&&Input.GetKeyDown(KeyCode.Escape)){
+			EscHud.Toggle();
+		}
+
 		if (Input.GetKeyDown(KeyCode.F5)){
 			SaveGame();
 		}
