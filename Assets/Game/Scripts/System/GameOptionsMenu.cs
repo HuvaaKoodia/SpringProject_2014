@@ -2,15 +2,17 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+//class that updates the Options Menu in the game
+//allows for changes in Quality Settings to be made
 public class GameOptionsMenu : MonoBehaviour
 {
-	[HideInInspector]public GameOptionsMain GOpsMain;
-	public List<UILabel> SettingsLabel;
+	GameOptionsMain GOpsMain;
+	public List<UILabel> SettingsLabel;								//labels of the various properties in Quality Settings
 
 	// Use this for initialization
 	void Start ()
 	{
-		GOpsMain = new GameOptionsMain();
+		GOpsMain = SharedSystemsMain.I.GOps;
 	}
 	
 	// Update is called once per frame

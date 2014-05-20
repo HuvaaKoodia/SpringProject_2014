@@ -1,9 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//class that has methods to manipulate the data in GameOptionsObjData class
+//methods are to be called in GameOptionsMenu class
 public class GameOptionsMain : MonoBehaviour {
 
-	GameOptionsObjData GOpsObjD = new GameOptionsObjData();
+	GameOptionsObjData GOpsObjD;
+
+	void Start(){
+		GOpsObjD=SharedSystemsMain.I.GDB.GameOptionsData;
+	}
 
 	public void SetQuality(Quality Q)
 	{

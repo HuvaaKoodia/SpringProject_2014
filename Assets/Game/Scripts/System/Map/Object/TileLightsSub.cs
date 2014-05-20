@@ -12,16 +12,16 @@ public enum Lighting_State
 
 public class TileLightsSub : MonoBehaviour
 {	
-	public GameObject LightGraphics;
+	public GameObject WhiteLightGraphics,OrangeLightsGraphics;
 	public Material on_material,off_material;
 
 	public List<Light> white_lights,orange_lights;																			//instantiate a list for the white lights in the various TilePrefabs under TestObjects of GameScene																		
 	public float delay;																							//instantiate time to delay by in inspector
 
 	private float ticks;																						//instantiate time since last toggle
-	private bool light_flicker;																					//instantiate boolean to allow light to flick
+	private bool light_flicker;																	//instantiate boolean to allow light to flick
 
-	private bool power_on=true;																						//instantiate boolean to allow electricity to flow
+	private bool power_on=true;																				//instantiate boolean to allow electricity to flow
 	private Lighting_State lighting_state = Lighting_State.Normal;
 
 	/// <summary>
@@ -95,10 +95,10 @@ public class TileLightsSub : MonoBehaviour
 				light_on = false;
 			}
 
-			white_light.enabled=light_on;
+			white_light.gameObject.SetActive(light_on);
 
-			if (LightGraphics!=null){
-				LightGraphics.renderer.material=light_on?on_material:off_material;
+			if (WhiteLightGraphics!=null){
+				WhiteLightGraphics.renderer.material=light_on?on_material:off_material;
 			}
 		}
 
@@ -109,8 +109,12 @@ public class TileLightsSub : MonoBehaviour
 			
 			if(l != null)
 			{
-				l.enabled=!power_on;
+				l.gameObject.SetActive(!power_on);
 			}
+		}
+
+		if (OrangeLightsGraphics!=null){
+			OrangeLightsGraphics.renderer.material=power_on?off_material:on_material;
 		}
 	}
 

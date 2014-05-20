@@ -3,28 +3,54 @@ using System.Collections;
 
 using System.Collections.Generic;
 
-
-
 public class PlayerMain : EntityMain
 {
     public PlayerObjData ObjData{get;private set;}
+
+	public PlayerHud HUD;
 
 	public PlayerInputSub inputSub;
 	public PlayerTargetingSub targetingSub;
 	public PlayerInteractSub interactSub;
 
-	public List<WeaponMain> gunList;
-	public WeaponID currentGunID;
+	public List<WeaponMain> weaponList;
+	public WeaponID currentWeaponID;
 	
 	public bool targetingMode { get; private set; }
+
+	public bool ShotLastTurn = false;
+	public bool Finished = false;
 
 	public bool INVINCIBLE=false;
 
 	public int ap;
-	const int apMax = 2;
-	const int movementCost = 1;
-    const int lootPickupCost = 1;
-	const int attackCost = 2;
+	public const int apMax = 2;
+	public const int movementCost = 1;
+	public const int attackCost = 2;
+	public const int disperseHeatCost = 1;
+
+	public Camera GameCamera;
+	public Camera HudCamera;
+	public Camera TargetingCamera;
+	public Camera PlayerCamera;
+
+	public GameObject Flashlight;
+
+	public Animation playerAnimation;
+	public bool AnimationsOn;
+
+	public bool WeaponMouseLookOn = false;
+	public bool Shooting = false;
+	
+	int gunsFinishedShooting;
+
+<<<<<<< HEAD
+	public bool SystemOverheat {
+		get{return ObjData.UpperTorso.OVERHEAT;}
+	}
+=======
+	public GameObject ParticleTempParent;
+>>>>>>> e7941224c57f50f8477f2c1b19f51d7daa4ced3c
 
     public void SetObjData(PlayerObjData data){
         ObjData=data;
@@ -36,30 +62,40 @@ public class PlayerMain : EntityMain
 		base.Awake();
 		
 		GC = GameObject.Find("GameSystems").GetComponent<GameController>();
+
 		inputSub = GetComponent<PlayerInputSub>();
 
 		targetingMode = false;
 	}
 
-	void Start()
+	public void InitPlayer()
     {
 		ap = apMax;
-		GC.menuHandler.UpdateHealthText(maxHealth);
-
+		ShotLastTurn = false;
+		Finished = false;
+		movement.UpdateFloor();
 		interactSub.CheckForInteractables();
 
-        ActivateEquippedItems();
+        for (int i=0;i<4;++i){
+            weaponList[i].weaponID=(WeaponID)i;
+        }
 
-		if (GetCurrentWeapon().Weapon != null)
-			GC.menuHandler.gunInfoDisplay.ChangeCurrentHighlight(currentGunID);
+		GameCamera.GetComponent<MouseLook>().SetOriginalRot(GameCamera.transform.localRotation);
+		
+		HUD.Init(this,GC);
+		
+		TargetingCamera.aspect = 16.0f / 9.0f;
 	}
 	
-	// Update is called once per frame
 	void Update()
     {
-		foreach (WeaponMain weapon in gunList)
+        foreach (WeaponMain weapon in weaponList)
 		{
-			if (targetingMode && !weapon.HasTargets && weapon == GetCurrentWeapon())
+			//Mouse look was taken off by default when 2 pivot point rotation was implemented
+			//weapon graphics caused clipping and 2 pivot points weird vibration when moving mouse fast
+			//or around floor/ceiling
+
+			if (WeaponMouseLookOn && targetingMode && !weapon.HasTargets && weapon == GetCurrentWeapon())
 				weapon.LookAtMouse(targetingSub.TargetingArea);
 			else
 				weapon.RotateGraphics();
@@ -69,23 +105,29 @@ public class PlayerMain : EntityMain
     public void StartPlayerPhase()
     {
 		ap = apMax;
-		foreach(WeaponMain gun in gunList)
-		{
-			gun.ReduceHeat();
-		}
+		Finished = false;
+		DisperseWeaponHeat(1);
+
+		MovedLastPhase = false;
+
+		HUD.UpdateHudPanels();
         StartTurn();
     }
 
     void StartTurn()
     {
         inputSub.enabled = true;
+        interactSub.CheckForInteractables();
     }
 
     public void EndPlayerPhase()
     {
+		Finished = true;
 		inputSub.enabled = false;
 		EndTargetingMode();
-		GC.ChangeTurn(TurnState.StartAITurn);
+
+		if (!interactSub.WaitingInteractToFinish)
+			GC.ChangeTurn(TurnState.StartAITurn);
     }
 
     public override void FinishedMoving(bool wontMoveAnymore)
@@ -100,37 +142,56 @@ public class PlayerMain : EntityMain
 
 	public void StartedMoving()
 	{
+		if (transform.position!=movement.targetPosition){
+			GC.CullWorldBasedOnPlayer(true);
+		}
+
 		inputSub.enabled = false;
 		ap -= movementCost;
+
+		if (AnimationsOn && movement.currentMovement == MovementState.Moving)
+		{	
+			playerAnimation.Play("Walk");
+		}
 	}
 
-    public void Attack()
+    public IEnumerator Attack()
     {
-		ap = 0;
+		if (Shooting) yield break;
 
-		foreach(WeaponMain gun in gunList)
+		ap = 0;
+		gunsFinishedShooting = 0;
+		Shooting = true;
+
+        foreach(WeaponMain weapon in weaponList)
 		{
-			if (gun.HasTargets)
+            if (weapon.HasTargets)
 			{
-				gun.Shoot();
+				StartCoroutine(weapon.Shoot());
+			}
+			else
+			{
+				GunFinishedShooting();
 			}
 		}
 
-		GC.menuHandler.gunInfoDisplay.UpdateAllDisplays();
+		ShotLastTurn = true;
 
-		if (ap == 0)
-			EndPlayerPhase();
+		HUD.UpdateHudPanels();
+
+		while (gunsFinishedShooting < weaponList.Count)
+		{
+			yield return null;
+		}
+
+		Shooting = false;
+		
+		HUD.DeactivateTargetingHUD();
+		HUD.UpdateHudPanels();
+
+		EndPlayerPhase();
 	}
 
-    public void PickupLoot(LootCrateMain loot)
-    {
-        if (ap < lootPickupCost)
-            return;
-
-		GC.Inventory.SetLoot(loot);
-		GC.Inventory.ToggleInventory();
-		loot.Looted();
-    }
     /// <summary>
     /// Inflicts damage from grid position x,y
     /// </summary>
@@ -151,68 +212,108 @@ public class PlayerMain : EntityMain
         //Debug.Log("Damage from dir: "+dir+" rot "+rot);
         ObjData.TakeDMG(damage,dir);
 
-        Health = ObjData.Equipment.UpperTorso.ObjData.HP;
-        GC.menuHandler.UpdateHealthText(Health);
+        Health = ObjData.UpperTorso.HP;
+
+		switch(dir)
+		{
+		case 0:
+			playerAnimation["Damage_Right"].normalizedTime = 0;
+			playerAnimation["Damage_Right"].speed = 1;
+			playerAnimation.Blend("Damage_Right");
+			break;
+		case 1:
+			playerAnimation["Damage_Front"].normalizedTime = 0;
+			playerAnimation["Damage_Front"].speed = 1;
+			playerAnimation.Blend("Damage_Front");
+			break;
+		case 2:
+			playerAnimation["Damage_Left"].normalizedTime = 0;
+			playerAnimation["Damage_Left"].speed = 1;
+			playerAnimation.Blend("Damage_Left");
+			break;
+		case 3:
+			playerAnimation["Damage_Back"].normalizedTime = 0;
+			playerAnimation["Damage_Back"].speed = 1;
+			playerAnimation.Blend("Damage_Back");
+			break;
+		}
 
         if (Health <= 0)
 		{
-			Debug.Log("Kuoli saatana");
-			GC.EngCont.Restart();
+			inputSub.DISABLE_INPUT=true;
+			GC.EndGame();
 		}
+
+		HUD.UpdateHudPanels();
 	}
 
-	public void StartTargetingMode()
+	public bool StartTargetingMode()
 	{
         //check for usable weapons
         if (!GetCurrentWeapon().Usable()){
+			bool foundWeapon = false;
             for(int i=0;i<4;i++){
-                var w=gunList[i];
+                var w=weaponList[i];
                 if (w.Usable()){
                     ChangeWeapon((WeaponID)i);
+					foundWeapon = true;
                     break;
                 }
             }
 
-            return;
+			if (!foundWeapon)
+				return false;
         }
 
 		targetingMode = true;
-		targetingSub.CheckTargetableEnemies(Camera.main.transform.position);
-		GC.menuHandler.CheckTargetingModePanel();
+		targetingSub.CheckTargetableEnemies();
+		targetingSub.CheckGunSightToEnemies(GetCurrentWeapon().transform.position);
+		HUD.CheckTargetingModePanel();
+		HUD.gunInfoDisplay.ChangeCurrentHighlight(currentWeaponID);
+		return true;
 	}
 
 	public void EndTargetingMode()
 	{
 		targetingMode = false;
 		targetingSub.UnsightAllEnemies();
-		GC.menuHandler.CheckTargetingModePanel();
+		HUD.CheckTargetingModePanel();
+	}
+
+	public void DisperseWeaponHeat(float multiplier)
+	{
+        foreach(WeaponMain gun in weaponList)
+		{
+            gun.ReduceHeat(multiplier);
+		}
+		
+		ObjData.UpperTorso.AddHEAT(-(XmlDatabase.HullHeatDisperseConstant+XmlDatabase.HullHeatDisperseHeatMultiplier*ObjData.UpperTorso.HEAT)*multiplier);
+		HUD.gunInfoDisplay.UpdateAllDisplays();
 	}
 
 	public void ChangeWeapon(WeaponID id)
 	{
-<<<<<<< HEAD
-		if (GetWeapon(id).Weapon == null || gunList[(int)id].Overheat)
+        var weapon=weaponList[(int)id];
+        if (!weapon.Usable() || currentWeaponID == id) 
 			return;
-=======
-        var weapon=gunList[(int)id];
-        if (!weapon.Usable()) return;
->>>>>>> origin/master
 
-		currentGunID = id;
+		GetCurrentWeapon().Unselected();
+		currentWeaponID = id;
 		targetingSub.CheckGunTargets();
-		GC.menuHandler.CheckTargetingModePanel();
-		GC.menuHandler.gunInfoDisplay.ChangeCurrentHighlight(currentGunID);
+		targetingSub.CheckGunSightToEnemies(GetCurrentWeapon().transform.position);
+		HUD.CheckTargetingModePanel();
+		HUD.gunInfoDisplay.ChangeCurrentHighlight(currentWeaponID);
 		targetingSub.ShowTargetMarks(GetCurrentWeapon().Weapon != null);
 	}
 
 	public WeaponMain GetWeapon (WeaponID id)
 	{
-			return gunList[(int)id];
+        return weaponList[(int)id];
 	}
 	
 	public WeaponMain GetCurrentWeapon()
 	{
-			return gunList[(int)currentGunID];
+        return weaponList[(int)currentWeaponID];
 	}
 
     /// <summary>
@@ -223,9 +324,14 @@ public class PlayerMain : EntityMain
         var Slot=ObjData.Equipment.GetSlot(slot);
         weapon.SetWeapon(Slot);
 
-		GC.menuHandler.gunInfoDisplay.SetWeaponToDisplay(id, weapon);
+		HUD.gunInfoDisplay.SetWeaponToDisplay(id, weapon);
     }
-	
+
+	public bool HasRadar{get;private set;}
+	public bool HasMap{get;private set;}
+	public int RadarRange{get;private set;}
+	public float RadarRangeMax{get;private set;}
+
     public void ActivateEquippedItems()
     {
         //activate weapons
@@ -234,14 +340,119 @@ public class PlayerMain : EntityMain
         ActivateEquipment(WeaponID.RightHand,UIEquipmentSlot.Slot.WeaponRightHand);
         ActivateEquipment(WeaponID.RightShoulder,UIEquipmentSlot.Slot.WeaponRightShoulder);
         
-		if (GetCurrentWeapon().Weapon != null)
-			GC.menuHandler.gunInfoDisplay.ChangeCurrentHighlight(currentGunID);
-
-		foreach(WeaponMain weapon in gunList)
+		if (!GetCurrentWeapon().Usable())
 		{
-			weapon.gameObject.SetActive(weapon.Weapon != null);
+			for (int i = 0; i < 4; i++)
+			{
+				if (GetWeapon((WeaponID)i).Usable())
+					ChangeWeapon((WeaponID)i);
+			}
+		}
+
+		HUD.gunInfoDisplay.ChangeCurrentHighlight(currentWeaponID);
+
+		foreach(WeaponMain weapon in weaponList)
+		{
+			if (weapon.graphics != null)
+				weapon.graphics.SetActive(weapon.Weapon != null);
 		}
         //activate utilities
-        //DEV.TODO
+		HasRadar=false;
+		HUD.radar.radarViewSprite.enabled = false;
+		HasMap=false;
+		RadarRange=0;
+		int overheat_limit=0;
+		float accu_multi=0,def_multi=0,melee_multi=0,cooling_multi=0;
+		foreach (var s in ObjData.Equipment.EquipmentSlots){
+			if (s.Item==null||!s.ObjData.USABLE) continue;
+			if (s.Item.baseItem.type==InvBaseItem.Type.Utility||
+			    s.Item.baseItem.type==InvBaseItem.Type.Navigator||
+			    s.Item.baseItem.type==InvBaseItem.Type.Radar){
+
+				int value;
+				if (GetStatValue(s.Item,InvStat.Type.AccuracyBoost,out value)){
+					accu_multi+=value;
+				}
+				else if (GetStatValue(s.Item,InvStat.Type.HullArmor,out value)){
+					def_multi+=value;
+				}
+				else if (GetStatValue(s.Item,InvStat.Type.HullOverheatLimit,out value)){
+					overheat_limit+=value;
+				}
+				else if (GetStatValue(s.Item,InvStat.Type.MeleeDamage,out value)){
+					melee_multi+=value;
+				}
+				else if (GetStatValue(s.Item,InvStat.Type.RadarRange,out value)){
+					if (value>RadarRange) RadarRange=value;
+				}
+				else if (GetStatValue(s.Item,InvStat.Type.SystemCooling,out value)){
+					cooling_multi+=value;
+				}
+				if (s.Item.baseItem.type==InvBaseItem.Type.Navigator){
+					HasMap=true;
+				}
+				else if (s.Item.baseItem.type==InvBaseItem.Type.Radar){
+					HasRadar=true;
+					RadarRangeMax=s.Item.baseItem.GetStat(InvStat.Type.RadarRange).max_amount;
+				}
+			}
+		}
+
+		if (HasRadar && !HasMap)
+		{
+			HUD.radar.radarViewSprite.enabled = true;
+		}
+
+		ObjData.UpperTorso.armor_multi=def_multi*0.01f;
+		ObjData.UpperTorso.Overheat_limit_bonus=overheat_limit;
+
+		foreach(var w in ObjData.MechParts){
+			if (w.IsWeapon){
+				w.cooling_multi=cooling_multi*0.01f;
+				w.accuracy_multi=accu_multi*0.01f;
+
+				if (w.Equipment.Item!=null){
+					if (w.Equipment.Item.baseItem.type==InvBaseItem.Type.MeleeWeapon) w.attack_multi=melee_multi*0.01f;
+				}
+			}
+		}
     }
+
+	private bool GetStatValue(InvGameItem item,InvStat.Type type,out int value){
+		var stat=item.GetStat(type);
+		value=0;
+		if (stat==null) return false;
+		value=stat._amount;
+		return true;
+	}
+
+	protected override void UpdateFloor(){
+		base.UpdateFloor();
+	}
+
+	public void SetMouseLook(bool look)
+	{
+		GameCamera.GetComponent<MouseLook>().MouseLookOn = look;
+	}
+
+	public void ToggleMouseLook()
+	{
+		GameCamera.GetComponent<MouseLook>().ToggleMouseLookOn();
+	}
+
+	public void ActivateHaxMapNRadar ()
+	{
+		HasMap = true;
+		HasRadar = true;
+	}
+
+	public void GunFinishedShooting()
+	{
+		gunsFinishedShooting++;
+	}
+
+	public void ToggleFlashlight ()
+	{
+		Flashlight.SetActive(!Flashlight.activeSelf);
+	}
 }

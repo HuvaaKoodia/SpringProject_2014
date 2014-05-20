@@ -8,29 +8,54 @@ using System.IO;
 public class SaveLoadSys:TXT_Loader {
 
 #if !UNITY_WEBPLAYER
-	public static void SaveGame(string filename,GameObjData data){
+	public static void SaveGame(string savename,GameObjData obj){
+		var data=SaveGameDataToString(obj);
+		WriteDocument("Saves",savename,".sav",data);
+		Debug.Log("GameSaved");
+	}
+
+	public static GameObjData LoadGame(string savename)
+	{
+		var data=ReadDocument("Saves",savename,".sav");
+		return LoadGameDataFromString(data);
+	}
+#endif
+
+	public static void SaveGamePlayerPrefs(string savename,GameObjData obj){
+		var data=SaveGameDataToString(obj);
+		PlayerPrefs.SetString(savename,data);
+	}
+	
+	public static GameObjData LoadGamePlayerPrefs(string savename)
+	{
+		var data=PlayerPrefs.GetString(savename);
+		return LoadGameDataFromString(data);
+	}
+
+	static GameObjData LoadGameDataFromString(string data)
+	{
+		var serializer=new SharpSerializer(true);
+		var mstream=StreamFromString(data);
+		
+		GameObjData obj=null;
+		try{
+			obj=serializer.Deserialize(mstream) as GameObjData;
+		}
+		catch{
+			Debug.LogWarning("Game load failed");
+			return null;
+		}
+		return obj;
+	}
+
+	static string SaveGameDataToString(GameObjData data){
 		var serializer=new SharpSerializer(true);
 		var mstream=new MemoryStream();
 		
 		serializer.Serialize(data,mstream);
-		
-		WriteDocument("Saves",filename,".sav",StreamToString(mstream));
-		Debug.Log("Game saved.");
+		return StreamToString(mstream);
 	}
 
-	public static GameObjData LoadGame(string filename)
-	{
-		var data=ReadDocument("Saves",filename,".sav");
-		
-		var serializer=new SharpSerializer(true);
-		var mstream=StreamFromString(data);
-		
-		var obj=serializer.Deserialize(mstream) as GameObjData;
-		Debug.Log("Game loaded.");
-		return obj;
-	}
-
-#endif
 	//subs
 	static string StreamToString (MemoryStream mstream)
 	{

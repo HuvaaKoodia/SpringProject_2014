@@ -35,10 +35,10 @@ public class MechStatisticsMain : MonoBehaviour {
 
         SetPartInfo(upperTorso, PlayerData.Equipment.UpperTorso);
 
-		var percent=PlayerData.Equipment.UpperTorso.ObjData.HeatPercent();
+		var percent=PlayerData.UpperTorso.HeatPercent();
 		HeatMeter.fillAmount=percent;
-		DataPanel.SetActive(percent<1);
-		OverheatSprite.SetActive(percent==1);
+		DataPanel.SetActive(!PlayerData.UpperTorso.OVERHEAT);
+		OverheatSprite.SetActive(PlayerData.UpperTorso.OVERHEAT);
 	}
 
     void SetWeaponText(string text,UILabel label,UIEquipmentSlot.Slot slot){
