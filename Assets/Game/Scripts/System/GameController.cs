@@ -98,7 +98,7 @@ public class GameController : MonoBehaviour {
 
 	void Awake(){
 		
-		SS=GameObject.FindGameObjectWithTag("SharedSystems").GetComponent<SharedSystemsMain>();
+		SS=SharedSystemsMain.I;
 
 		Floors=new List<FloorObjData>();
 		FloorContainers=new List<GameObject>();

@@ -14,10 +14,10 @@ public class GameoverPanel : MonoBehaviour {
 	}
 
 	public void MainMenuPressed(){
-		HUD.GC.SS.GDB.GotoMenu();
+		SharedSystemsMain.I.GDB.LoadMainMenu();
 	}
 
 	public void LoadGamePressed(){
-		HUD.GC.SS.GDB.LoadGame();
+		SharedSystemsMain.I.GDB.LoadGame();
 	}
 }

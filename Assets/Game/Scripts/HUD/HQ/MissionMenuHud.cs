@@ -12,7 +12,7 @@ public class MissionMenuHud : MonoBehaviour {
     public Transform MissionButtonsParent;
     public MissionButtonMain MButtonPrefab;
     public MenuTabController Tabs;
-	public UILabel MoneyLabel;
+	public UILabel MoneyLabel,GameSavedLabel,Daylabel;
 
 	public int MissionButtonGap=8;
 
@@ -22,7 +22,7 @@ public class MissionMenuHud : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        SS=GameObject.FindGameObjectWithTag("SharedSystems").GetComponent<SharedSystemsMain>();
+        SS=SharedSystemsMain.I;
 
         //Dev.debug
         if (!SS.GDB.GameStarted)
@@ -63,9 +63,20 @@ public class MissionMenuHud : MonoBehaviour {
         else{
             OpenMissionSelect();
         }
-	}
 
-	void Update () {
+		if (SS.GDB.GameLoaded){
+			ShowSaveGameLabel("GAME LOADED");
+			SS.GDB.GameLoaded=true;
+		}
+		else{
+			SS.GDB.SaveGame();
+			ShowSaveGameLabel("GAME SAVED");
+		}
+
+		Daylabel.text="Day: "+SS.GDB.GameData.CurrentTime;
+	}
+	
+	void Update (){
 		MoneyLabel.text="Money: "+_player.Money+" "+XmlDatabase.MoneyUnit;
 	}
 
@@ -112,4 +123,15 @@ public class MissionMenuHud : MonoBehaviour {
         SS.GDB.SetCurrentMission(Mission);
         SS.GDB.PlayMission();
     }
+
+	
+	void ShowSaveGameLabel(string text){
+		GameSavedLabel.text=text;
+		GameSavedLabel.gameObject.SetActive(true);
+		Invoke("HideGameSavedLabel",3f);
+	}
+	
+	void HideGameSavedLabel(){
+		GameSavedLabel.gameObject.SetActive(false);
+	}
 }

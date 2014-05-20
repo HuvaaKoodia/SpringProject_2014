@@ -5,18 +5,14 @@ using System.Linq;
 using System.IO;
 
 public class GameDB : MonoBehaviour {
-
     public SharedSystemsMain SS;
 
 	public GameObjData  GameData;
 	public GameOptionsObjData GameOptionsData;
 
-	public bool GOTO_DEBRIEF=false;
-	public bool GameStarted=false;
+	public bool GOTO_DEBRIEF=false,GameStarted=false,HasSave,GameLoaded;
 
     public string HQScene="MissionSelectScene",GameScene="GameScene",MainMenuScene="MainMenuScene";
-
-	public bool HasSave;
 
 	public void CheckForSaves()
 	{
@@ -56,8 +52,7 @@ public class GameDB : MonoBehaviour {
 		GameData=new GameObjData();
 		GameData.NewGame();
 
-        GenerateNewMissions();
-		
+        GenerateNewMissions();		
 		GameData.PlayerData.Money=XmlDatabase.StartingMoney;
 		GameData.FinanceManager.AddDebt(0,XmlDatabase.StartingDept);
 
@@ -91,6 +86,7 @@ public class GameDB : MonoBehaviour {
 	
 	public void LoadGame(){
 		GameStarted=true;
+		GameLoaded=true;
 		GameData=SaveLoadSys.LoadGame("Save");
 
 		if (GameData==null) return;
@@ -128,9 +124,14 @@ public class GameDB : MonoBehaviour {
         LoadLevel(GameScene);
     }
 
-	public void GotoMenu ()
+	public void LoadMainMenu ()
 	{
 		LoadLevel(MainMenuScene);
+	}
+
+	void LoadLevel(string level){
+		
+		Application.LoadLevel(level);
 	}
 
 	void ResetStuff(){
@@ -142,12 +143,6 @@ public class GameDB : MonoBehaviour {
 	void OnLevelWasLoaded(int i){
 		ResetStuff();
 	}
-
-	void LoadLevel(string level){
-
-		Application.LoadLevel(level);
-	}
-
 
     public void EndMission(GameController GC)
     {
@@ -262,6 +257,7 @@ public class GameDB : MonoBehaviour {
 
 public class GameObjData{
 	public bool IronManMode {get;set;}
+	public bool UsedFinanceManager {get;set;}
 
 	public PlayerObjData PlayerData{get; set;}
 	public List<MissionObjData> AvailableMissions{get; set;}
