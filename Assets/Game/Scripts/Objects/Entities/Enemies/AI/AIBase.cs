@@ -35,12 +35,10 @@ public abstract class AIBase : MonoBehaviour
 	protected virtual void AnimationFinished()
 	{
 		Animating = false;
-		parent.DamageReactOff();
 	}
 
-	public virtual void ReactToDamage()
+	public virtual void ReactToDamage(int weaponSlot)
 	{
-		if (parent.WaitingForDamageReaction)
-			parent.DamageReactOn();
+			parent.StartDamageReact(weaponSlot);
 	}
 }

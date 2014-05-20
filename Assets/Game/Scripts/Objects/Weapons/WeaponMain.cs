@@ -133,7 +133,7 @@ public class WeaponMain : MonoBehaviour {
 			{
 			GameObject bulletEmitter = 
 				GameObject.Instantiate(player.GC.SS.PS.weaponParticleEmitters[Weapon.baseItem.mesh + "Bullets"]) as GameObject;
-			meshData.AddBulletParticles(bulletEmitter);
+			meshData.AddBulletParticles(bulletEmitter, (int)weaponID);
 			}
 		}
 
@@ -251,7 +251,7 @@ public class WeaponMain : MonoBehaviour {
 				if (Overheat || CurrentAmmo == 0) break;
 				if (enemyPair.Value.numShots == 0 || IsEnemyDead(enemyPair.Key)) continue;
 
-				while (waitingForShot)
+				while (waitingForShot || enemyPair.Key.GetWaitingForDamageReaction((int)weaponID))
 				{
 					yield return null;
 				}
@@ -303,7 +303,7 @@ public class WeaponMain : MonoBehaviour {
 		{
 			//hit
 			int dmg = (int)Random.Range(MinDamage, MaxDamage);
-			StartCoroutine(enemy.TakeDamage(dmg));
+			StartCoroutine(enemy.TakeDamage(dmg, (int)weaponID));
 		}
 
 		if (meshData != null)

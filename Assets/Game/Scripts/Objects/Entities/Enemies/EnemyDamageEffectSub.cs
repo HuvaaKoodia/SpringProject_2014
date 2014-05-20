@@ -25,7 +25,7 @@ public class EnemyDamageEffectSub : MonoBehaviour {
 
 		if (damageMaker != null && damageMaker.DidHit)
 		{
-			ai.ReactToDamage();
+			ai.ReactToDamage(damageMaker.WeaponSlot);
 
 			if (damageMaker.EffectReference.EffectType == DamageEffectType.Blood)
 			{

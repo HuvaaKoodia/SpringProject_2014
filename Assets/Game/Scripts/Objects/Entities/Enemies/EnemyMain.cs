@@ -27,8 +27,7 @@ public class EnemyMain : EntityMain {
 
 	public bool Dead { get; protected set; }
 
-	public bool WaitingForDamageReaction { get; private set; }
-	bool reactToDamage = false;
+	bool[] WaitingForDamageReaction;
 
 	// Use this for initialization
 	public override void Awake()
@@ -39,13 +38,14 @@ public class EnemyMain : EntityMain {
 			meshRenderer = graphics.GetComponent<MeshRenderer>();
 
 		Dead = false;
-		reactToDamage = false;
 
 		aiController = GC.aiController;
 		ai = transform.root.GetComponent<AIBase>();
 
 		normalMovementSpeed = movement.movementSpeed;
 		normalTurnSpeed = movement.turnSpeed;
+
+		WaitingForDamageReaction = new bool[] { false, false, false, false };
 	}
 
 	void Start ()
@@ -74,7 +74,6 @@ public class EnemyMain : EntityMain {
 
 				if (movement.currentMovement == MovementState.NotMoving)
 				{
-
 					FinishedMoving(false);
 				}
 				else
@@ -130,48 +129,56 @@ public class EnemyMain : EntityMain {
 	}
 	*/
 
-	public IEnumerator TakeDamage(int damage)
+	public IEnumerator TakeDamage(int damage, int weaponSlot)
 	{
-		WaitingForDamageReaction = true;
+		Health -= damage;
 
-		while (!reactToDamage)
+		if (Health <= 0)
 		{
+			Dead = true;
+		}
+
+		WaitingForDamageReaction[weaponSlot] = true;
+
+		float timeWaited = 0.0f;
+
+		while (WaitingForDamageReaction[weaponSlot])
+		{
+			timeWaited += Time.deltaTime;
+
+			if (timeWaited > 0.9f)
+				break;
+
 			yield return null;
 		}
 
-		WaitingForDamageReaction = false;
-
-		Health -= damage;
-
 		ReactToDamage(damage);
+		WaitingForDamageReaction[weaponSlot] = false;
 	}
 
 	protected virtual void ReactToDamage(int amount)
 	{ 
-		if (Health <= 0)
-		{
-			Die();
-		}
 	}
 
-	public void DamageReactOn()
+	public void StartDamageReact(int weaponSlot)
 	{
-		reactToDamage = true;
+		WaitingForDamageReaction[weaponSlot] = false;
 	}
 
-	public void DamageReactOff()
+	public bool GetWaitingForDamageReaction(int weaponSlot)
 	{
-		reactToDamage = false;
+		return WaitingForDamageReaction[weaponSlot];
 	}
 
-	protected virtual void Die()
+	public bool GetWaitingForDamageReaction()
 	{
-		Dead = true;
-		OnDeath();
-		Remove();
+		return WaitingForDamageReaction[0] ||
+			   WaitingForDamageReaction[1] ||
+			   WaitingForDamageReaction[2] ||
+			   WaitingForDamageReaction[3];
 	}
 
-	void Remove()
+	protected void Remove()
 	{
 		movement.GetCurrenTile().LeaveTile();
 		CurrentFloor.Enemies.Remove(this);
@@ -206,12 +213,5 @@ public class EnemyMain : EntityMain {
 
 		movement.movementSpeed = normalMovementSpeed * culledSpeedMultiplier;
 		movement.turnSpeed = normalTurnSpeed * culledSpeedMultiplier;
-	}
-
-	void OnParticleCollision(GameObject other)
-	{
-		int lol;
-		lol = 0;
-		lol++;
 	}
 }

@@ -30,6 +30,17 @@ public class GatlingEnemySub : EnemyMain {
 		}
 	}
 
+	protected override void ReactToDamage(int amount)
+	{
+		if (Dead)
+		{
+			Remove();
+		}
+		else
+		{	
+		}
+	}
+
 	protected override void OnDeath(){
 		Gibs.SetActive(true);
 		Gibs.transform.parent=null;

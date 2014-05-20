@@ -25,11 +25,6 @@ public class SpiderEnemySub : EnemyMain {
 
 	protected override void ReactToDamage(int amount)
 	{
-		if (Health <= 0)
-		{
-			Dead = true;
-		}
-
 		if (Dead)
 		{
 			Invoke("Remove", deathDelay);
@@ -40,10 +35,5 @@ public class SpiderEnemySub : EnemyMain {
 		{	
 			spiderAI.PlayDamageAnimation(amount);
 		}
-	}
-
-	protected override void Die()
-	{
-		Dead = true;
 	}
 }

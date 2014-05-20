@@ -62,7 +62,7 @@ public class WeaponEffects : MonoBehaviour {
 		EffectType = type;
 	}
 	
-	public void AddBulletParticles(GameObject particleEmitter)
+	public void AddBulletParticles(GameObject particleEmitter, int weaponSlot)
 	{
 		ParticleSystem bulletParticle = particleEmitter.GetComponent<ParticleSystem>();
 		BulletEffectTime = bulletParticle.duration;
@@ -73,6 +73,7 @@ public class WeaponEffects : MonoBehaviour {
 
 		particleEmitter.AddComponent("WeaponParticles");
 		particleEmitter.GetComponent<WeaponParticles>().EffectReference = this;
+		particleEmitter.GetComponent<WeaponParticles>().WeaponSlot = weaponSlot;
 	}
 
 	public void AddMuzzleParticles(GameObject particleEmitter)

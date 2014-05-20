@@ -5,4 +5,5 @@ public class WeaponParticles : MonoBehaviour
 {
 	public WeaponEffects EffectReference;
 	public bool DidHit;
+	public int WeaponSlot;
 }
