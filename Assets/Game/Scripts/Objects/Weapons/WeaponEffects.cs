@@ -2,6 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 
+public enum DamageEffectType
+{
+	Blood, ElectricShock
+}
+
 public class WeaponEffects : MonoBehaviour {
 
 	public GameObject graphics;
@@ -29,6 +34,8 @@ public class WeaponEffects : MonoBehaviour {
 
 	AudioClip shootSoundFX;
 
+	public DamageEffectType EffectType { get; private set; }
+
 	// Use this for initialization
 	void Awake () {
 		additionalParticles = new List<ParticleSystem>();
@@ -36,6 +43,8 @@ public class WeaponEffects : MonoBehaviour {
 
 		bulletParticles = new List<ParticleSystem>();
 		muzzleParticles = new List<ParticleSystem>();
+
+		EffectType = DamageEffectType.Blood;
 	}
 	
 	// Update is called once per frame
@@ -47,6 +56,11 @@ public class WeaponEffects : MonoBehaviour {
 	{
 		tempParent = tp;
 	}
+
+	public void SetDamageEffectType(DamageEffectType type)
+	{
+		EffectType = type;
+	}
 	
 	public void AddBulletParticles(GameObject particleEmitter)
 	{
@@ -56,6 +70,9 @@ public class WeaponEffects : MonoBehaviour {
 		bulletParticles.Add(bulletParticle);
 
 		particleEmitter.transform.parent = tempParent.transform;
+
+		particleEmitter.AddComponent("WeaponParticles");
+		particleEmitter.GetComponent<WeaponParticles>().EffectReference = this;
 	}
 
 	public void AddMuzzleParticles(GameObject particleEmitter)
@@ -86,7 +103,7 @@ public class WeaponEffects : MonoBehaviour {
 		shootAnimation.Play(shootAnimationName);
 	}
 
-	public void StartShootEffect()
+	public void StartShootEffect(bool hit)
 	{
 		if (bulletParticles.Count > 0)
 		{
@@ -94,7 +111,8 @@ public class WeaponEffects : MonoBehaviour {
 			currentBullet.transform.parent = particleParent.transform;
 			currentBullet.transform.position = particleParent.transform.position;
 			currentBullet.transform.rotation = particleParent.transform.rotation;
-			currentBullet.transform.parent = tempParent.transform;
+
+			currentBullet.GetComponent<WeaponParticles>().DidHit = hit;
 
 			currentBullet.time = 0;
 			currentBullet.Play();
@@ -136,6 +154,7 @@ public class WeaponEffects : MonoBehaviour {
 
 	void StopAndChangeBullet()
 	{
+		bulletParticles[currentBulletIndex].transform.parent = tempParent.transform;
 		bulletParticles[currentBulletIndex].Stop();
 		currentBulletIndex = (currentBulletIndex+1) % bulletParticles.Count;
 		IsEmiting = false;

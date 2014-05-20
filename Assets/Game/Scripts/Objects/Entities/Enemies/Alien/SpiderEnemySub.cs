@@ -23,13 +23,17 @@ public class SpiderEnemySub : EnemyMain {
 			base.StartEnemyTurn ();
 	}
 
-	public override void TakeDamage(int amount)
+	protected override void ReactToDamage(int amount)
 	{
-		base.TakeDamage(amount);
+		if (Health <= 0)
+		{
+			Dead = true;
+		}
 
 		if (Dead)
 		{
 			Invoke("Remove", deathDelay);
+			OnDeath();
 			spiderAI.PlayDeathAnimation();
 		}
 		else

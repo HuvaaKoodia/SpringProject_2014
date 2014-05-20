@@ -151,6 +151,15 @@ public class WeaponMain : MonoBehaviour {
 		{
 			meshData.SetShootSoundFX(player.GC.SS.PS.weaponSoundFX[Weapon.baseItem.mesh]);
 		}
+
+		if (Weapon.baseItem.mesh == "Melee")
+		{
+			meshData.SetDamageEffectType(DamageEffectType.ElectricShock);
+		}
+		else
+		{
+			meshData.SetDamageEffectType(DamageEffectType.Blood);
+		}
 	}
 
 	public bool HasTargets
@@ -294,17 +303,13 @@ public class WeaponMain : MonoBehaviour {
 		{
 			//hit
 			int dmg = (int)Random.Range(MinDamage, MaxDamage);
-			enemy.TakeDamage(dmg);
+			StartCoroutine(enemy.TakeDamage(dmg));
 		}
 
 		if (meshData != null)
 		{
 			meshData.PlayShootAnimation();
-
-			if (meshData != null)
-			{
-				meshData.StartShootEffect();
-			}
+			meshData.StartShootEffect(hit);
 
 			while (meshData.IsEmiting || meshData.IsAnimating)
 			{

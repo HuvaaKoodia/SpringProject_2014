@@ -35,5 +35,12 @@ public abstract class AIBase : MonoBehaviour
 	protected virtual void AnimationFinished()
 	{
 		Animating = false;
+		parent.DamageReactOff();
+	}
+
+	public virtual void ReactToDamage()
+	{
+		if (parent.WaitingForDamageReaction)
+			parent.DamageReactOn();
 	}
 }

@@ -27,6 +27,9 @@ public class EnemyMain : EntityMain {
 
 	public bool Dead { get; protected set; }
 
+	public bool WaitingForDamageReaction { get; private set; }
+	bool reactToDamage = false;
+
 	// Use this for initialization
 	public override void Awake()
 	{
@@ -36,6 +39,7 @@ public class EnemyMain : EntityMain {
 			meshRenderer = graphics.GetComponent<MeshRenderer>();
 
 		Dead = false;
+		reactToDamage = false;
 
 		aiController = GC.aiController;
 		ai = transform.root.GetComponent<AIBase>();
@@ -126,22 +130,38 @@ public class EnemyMain : EntityMain {
 	}
 	*/
 
-	public override void TakeDamage(int damage)
+	public IEnumerator TakeDamage(int damage)
 	{
-		Health -= damage;
+		WaitingForDamageReaction = true;
 
-		//temp
-		if (meshRenderer != null)
+		while (!reactToDamage)
 		{
-	        Color oldColor = meshRenderer.material.color;
-			Color newColor = new Color(oldColor.r, oldColor.g-0.2f, oldColor.b-0.2f);
-				meshRenderer.material.color = newColor;
+			yield return null;
 		}
 
-        if (Health <= 0)
+		WaitingForDamageReaction = false;
+
+		Health -= damage;
+
+		ReactToDamage(damage);
+	}
+
+	protected virtual void ReactToDamage(int amount)
+	{ 
+		if (Health <= 0)
 		{
 			Die();
 		}
+	}
+
+	public void DamageReactOn()
+	{
+		reactToDamage = true;
+	}
+
+	public void DamageReactOff()
+	{
+		reactToDamage = false;
 	}
 
 	protected virtual void Die()
