@@ -29,85 +29,87 @@
 		TODO
 	-->
 
-	<Item type = "LightWeapon" name = "Arbalest" sprite = "Minigun">
-		<Description>Good basic weapon for all kinds of situations</Description>
+	<Item type = "LightWeapon" name = "Arbalest" sprite = "Cannon" mesh="Cannon">
+		<Description>Light cannon that is good for all kinds of situations.</Description>
 		<Ammo>Standard</Ammo>
 		<Level min ="1" max="10"/>
 		<Damage min="25" max="50"/>
-		<Accuracy min="65" max="90"/>
-		<Range min="60" max="90"/>
+		<Accuracy min="85" max="90"/>
+		<Range min="25" max="35"/>
 		<Firerate min="1" max="2"/>
-		<Heat min="18" max="30"/>
-		<Cooling min="10" max="30"/>
+		<Heat min="26" max="33"/>
+		<Cooling min="10" max="25"/>
 		<Value min ="1100" max="6600"/>
 	</Item>
 	
-	<Weapon type = "HeavyWeapon" name = "Hades" sprite = "Missilerack">
-		<Description>Railgun that deals high damage but also generates lots of heat</Description>
+	<Weapon type = "HeavyWeapon" name = "Hades" sprite = "Railgun" mesh="Gauss">
+		<Description>Railgun that deals high damage but also generates lots of heat.</Description>
 		<Ammo>Heavy</Ammo>
 		<Level min ="1" max="10"/>
-		<Damage min="50" max="100"/>
-		<Accuracy min="60" max="80"/>
-		<Range min="80" max="100"/>
+		<Damage min="45" max="100"/>
+		<Accuracy min="80" max="85"/>
+		<Range min="60" max="95"/>
 		<Firerate min="1" max="1"/>
-		<Heat min="53" max="70"/>
-		<Cooling min="15" max="30"/>
+		<Heat min="55" max="70"/>
+		<Cooling min="15" max="25"/>
 		<Value min ="1900" max="9100"/>
 	</Weapon>
 	
-	<Weapon type = "LightWeapon" name = "Nemesis" sprite = "Minigun">
+	<Weapon type = "LightWeapon" name = "Nemesis" sprite = "Gatling" mesh = "Gatling">
 		<Description>Rapid-fire weapon capable of targeting multiple targets</Description>
 		<Ammo>Light</Ammo>
 		<Level min ="1" max="10"/>
-		<Damage min="15" max="40"/>
-		<Accuracy min="45" max="70"/>
-		<Range min="45" max="60"/>
+		<Damage min="15" max="35"/>
+		<Accuracy min="85" max="90"/>
+		<Range min="15" max="23"/>
 		<Firerate min="2" max="4"/>
-		<Heat min="16" max="19"/>
-		<Cooling min="11" max="25"/>
+		<Heat min="20" max="24"/>
+		<Cooling min="10" max="25"/>
 		<Value min ="1200" max="7300"/>
 	</Weapon>
 	
-	<Weapon type = "LightWeapon" name = "Vandal" sprite = "Minigun">
+	<Weapon type = "LightWeapon" name = "Vandal" sprite = "Shotgun" mesh = "Shotgun">
 		<Description>Scattergun for close quarter combat</Description>
 		<Ammo>Scatter</Ammo>
 		<Level min ="1" max="10"/>
-		<Damage min="30" max="45"/>
-		<Accuracy min="70" max="85"/>
-		<Range min="10" max="20"/>
+		<Damage min="25" max="50"/>
+		<Accuracy min="90" max="95"/>
+		<Range min="10" max="15"/>
 		<Firerate min="1" max="3"/>
-		<Heat min="21" max="24"/>
+		<Heat min="26" max="33"/>
 		<Cooling min="10" max="20"/>
 		<Value min ="1500" max="8100"/>
 	</Weapon>
 	
-	<Weapon type = "MeleeWeapon" name = "Gladius" sprite = "Minigun">
+	<Weapon type = "MeleeWeapon" name = "Gladius" sprite = "Melee" mesh = "Melee">
 		<Description>Hydraulic melee weapon for close quarter combat that requires no ammo</Description>
 		<Ammo>Melee</Ammo>
 		<Level min ="1" max="10"/>
-		<Damage min="20" max="50"/>
-		<Accuracy min="75" max="90"/>
+		<Damage min="20" max="45"/>
+		<Accuracy min="80" max="95"/>
 		<Range min="3" max="3"/>
 		<Firerate min="1" max="2"/>
-		<Heat min="10" max="14"/>
-		<Cooling min="5" max="10"/>
+		<Heat min="15" max="24"/>
+		<Cooling min="5" max="15"/>
 		<Value min ="1100" max="6800"/>
 	</Weapon>
 	
-	<Weapon type = "HeavyWeapon" name = "Mjolnir" sprite = "Missilerack">
-		<Description>High-Explosive missile rack</Description>
+	<Weapon type = "HeavyWeapon" name = "Mjolnir" sprite = "Missile-battery" mesh="Missile">
+		<Description>High-Explosive small missile launcher.</Description>
 		<Ammo>Missile</Ammo>
 		<Level min ="1" max="10"/>
 		<Damage min="45" max="90"/>
-		<Accuracy min="55" max="90"/>
-		<Range min="75" max="90"/>
+		<Accuracy min="70" max="85"/>
+		<Range min="80" max="100"/>
 		<Firerate min="1" max="3"/>
-		<Heat min="30" max="30"/>
-		<Cooling min="12" max="30"/>
+		<Heat min="40" max="40"/>
+		<Cooling min="10" max="30"/>
 		<Value min ="2000" max="9600"/>
 	</Weapon>
 	
-	<Weapon type = "Radar" name = "Radar" sprite = "Item">
+	<!--utilities-->
+	
+	<Weapon type = "Radar" name = "Radar" sprite = "Radar">
 		<Description>Radar that reveals moving enemies. Effect does not stack.</Description>
 		<Level minmax="1"/>
 		<Value min="100" max="400"/>
@@ -115,60 +117,60 @@
 		<RadarRange min="2" max="6"/>
 	</Weapon>
 	
-	<Weapon type = "Navigator" name = "Navigator" sprite = "Item">
+	<Weapon type = "Navigator" name = "Navigator" sprite = "Navigator">
 		<Description>Navigator map unit. Effect does not stack.</Description>
-		<Level min="1" max="5"/>
+		<Level minmax="1"/>
 		<Value min="900" max="4800"/>
 	</Weapon>
 	
-	<Weapon type = "Utility" name = "Heat Sink" sprite = "Item">
+	<Weapon type = "Utility" name = "Heat Sink" sprite = "Heat-sink2">
 		<Description>Increases main hull overheat limit.</Description>
 		<Level min ="1" max="10"/>
 		<Value min ="600" max="3600"/>
 		
-		<HullOverheatLimit min="5" max="20"/>
+		<HullOverheatLimit min="15" max="45"/>
 	</Weapon>
 	
-	<Weapon type = "Utility" name = "Radiator" sprite = "Item">
+	<Weapon type = "Utility" name = "Radiator" sprite = "Heat-sink">
 		<Description>All weapon systems cool faster.</Description>
 		<Level min ="1" max="10"/>
 		<Value min ="700" max="3900"/>
 		
-		<SystemCooling min="5" max="10"/>
+		<SystemCooling min="20" max="100"/>
 	</Weapon>
 	
-	<Weapon type = "Utility" name = "Aim Computer" sprite = "Item">
+	<Weapon type = "Utility" name = "Aim Computer" sprite = "Crosshair">
 		<Description>Increases accuracy of all weapon systems.</Description>
 		<Level min ="1" max="10"/>
 		<Value min ="1100" max="6800"/>
 		
-		<AccuracyBoost min="5" max="20"/>
+		<AccuracyBoost min="5" max="15"/>
 	</Weapon>
 	
-	<Weapon type = "Utility" name = "Armor Plating" sprite = "Item">
+	<Weapon type = "Utility" name = "Armor Plating" sprite = "Armor-plating">
 		<Description>Decreases all damage taken to the main hull.</Description>
 		<Level min ="1" max="10"/>
 		<Value min ="900" max="5400"/>
 		
-		<HullArmor min="5" max="15"/>
+		<HullArmor min="10" max="30"/>
 	</Weapon>
 	
-	<Item type = "Utility" name = "Hydraulic Booster" sprite = "Item">
+	<Item type = "Utility" name = "Hydraulic Booster" sprite = "Hydraulic-booster">
 		<Description>Increases all melee weapon damage.</Description>
 		<Level min ="1" max="10"/>
 		<Value min ="700" max="5500"/>
 		
-		<MeleeDamage min="10" max="25"/>
+		<MeleeDamage min="30" max="90"/>
 	</Item>
-	<!-- 
-	<Weapon type = "Utility" name = "Hacking Unit" sprite = "Item">
-		<Description>Enables advanced hacking of data consoles and locks.</Description>
+	
+	<Weapon type = "Utility" name = "Hacking Unit" sprite = "Hacking-unit">
+		<Description>Enables advanced hacking of data consoles.</Description>
 		<Level min ="1" max="10"/>
 		<Value min ="1200" max="4900"/>
 		
 		<Hacking min="10" max="50"/>
 	</Weapon> 
-	-->
+
 	
 	
 </Root>

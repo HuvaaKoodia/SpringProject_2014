@@ -32,6 +32,7 @@ public class MechanicalMenu : MonoBehaviour {
 			panel.UpdateStats();
 		}
 		UT.UpdateStats();
+		Statistics.UpdateStats();
     }
 
 	public void OpenPanel(){

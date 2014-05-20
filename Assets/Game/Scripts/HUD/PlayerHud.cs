@@ -202,6 +202,11 @@ public class PlayerHud : MonoBehaviour {
 	public void OpenMap(){
 		MasterHud.OpenMapInfopanel();
 	}
+
+	public void OpenStatus(){
+		UpdateHudPanels();
+		MasterHud.OpenStatusInfopanel();
+	}
 	
 	public void WeaponPressed(WeaponID id){
 		

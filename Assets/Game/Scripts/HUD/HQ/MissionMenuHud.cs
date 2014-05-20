@@ -64,13 +64,15 @@ public class MissionMenuHud : MonoBehaviour {
             OpenMissionSelect();
         }
 
+		var savetype=SS.GDB.GameData.IronManMode?"Ironman":"Normal";
+
 		if (SS.GDB.GameLoaded){
-			ShowSaveGameLabel("GAME LOADED");
+			ShowSaveGameLabel("GAME LOADED - "+savetype);
 			SS.GDB.GameLoaded=true;
 		}
 		else{
 			SS.GDB.SaveGame();
-			ShowSaveGameLabel("GAME SAVED");
+			ShowSaveGameLabel("GAME SAVED - "+savetype);
 		}
 
 		Daylabel.text="Day: "+SS.GDB.GameData.CurrentTime;

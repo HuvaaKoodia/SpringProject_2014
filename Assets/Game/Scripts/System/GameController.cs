@@ -447,6 +447,7 @@ public class GameController : MonoBehaviour {
 
 	public void EndGame ()
 	{
+		SS.GDB.RemoveSavesIfIronman();
 		HUD.FadeIn(0.3f);
 		StartCoroutine(EndGameAfterFade());
 	}

@@ -129,7 +129,7 @@ w w w . . . : : . . w
 , , w w w w , , w w w
 </Room>
  
- <Ship type="mercurius1" floor="0" loot_a="10,11" enemy_a="0,15">
+ <Ship type="mercurius1" floor="0" loot_a="10,11" enemy_a="10,25">
 , , , , , , , , K1 r r r r r r r , , , , , , , ,
 , , , , , , , , r r r r r r r r , , , , , , , ,
 , , , , , , , , r r r r r r r r , , , , , , , ,
@@ -140,7 +140,7 @@ w w w . . . : : . . w
 , , , , , , , , r r r r r r r r , , , , , , , ,
 , , , , , , , , r r r r r r r r , , , , , , , ,
 , , , , , , , , , , c c c c , , , , , , , , , ,
-, , , , , , , , A2 r r c c A2 r r , , , , , , , ,
+, , , , , , , , AL r r c c AR r r , , , , , , , ,
 , , , , , , , , r r r c c r r r , , , , , , , ,
 , , , , , , , , r r r c c r r r , , , , , , , ,
 , , , , , c c c c c d c c d c c c c c , , , , ,
@@ -153,17 +153,17 @@ r r r r r c r r r r r c c r r r r r c r r r r r
 , , , , , d r r r r r c c r r r r r d , , , , ,
 , , , , , c c c c c d c c d c c c c c , , , , ,
 , , , , , , , , , , , c c , , , , , , , , , , ,
-, , , A1 r r c c c c d c c d c c c c A1 r r , , ,
+, , , AL r r c c c c d c c d c c c c AR r r , , ,
 , , , r r r c V4 r r r r r r r r r c r r r , , ,
-, , , T r r c r r r r r r r r r r c T r r , , ,
-, , , R r r c r r r r r r r r r r c A1 r r , , ,
 , , , r r r c r r r r r r r r r r c r r r , , ,
-, , , T r r c r r r r r r r r r r c r r r , , ,
+, , , R r r c r r r r r r r r r r c AR r r , , ,
+, , , r r r c r r r r r r r r r r c r r r , , ,
+, , , r r r c r r r r r r r r r r c r r r , , ,
 , , , , , , c r r r r r r r r r r c , , , , , ,
-, , , A1 r r c r r r r r r r r r r c A1 r r , , ,
+, , , AL r r c r r r r r r r r r r c AR r r , , ,
 , , , r r r c r r r r r r r r r r c r r r , , ,
-, , , T r r c r r r r r r r r r r c T r r , , ,
-, , , A1 r r c r r r r r r r r r r c A1 r r , , ,
+, , , r r r c r r r r r r r r r r c r r r , , ,
+, , , AL r r c r r r r r r r r r r c AR r r , , ,
 , , , r r r c r r r r r r r r r r c r r r , , ,
 , , , r r r c d c c c c c c c c d c r r r , , ,
 , , , , , , , E1 r r r r r r r r r , , , , , , ,
@@ -199,9 +199,9 @@ w w w w w w w w w w
 
 <Room name="engine" loot_a="1,1" enemy_a="2,6">
 w w w w w w w w w w
-w : . . . . . . . w
-w : . . w t w . w w
-w : . . : w : . : w
+w pg2 . . . . . . . w
+w : . tc1 te1 ta1 tn1 . w w
+w : . . : w . . . w
 w w w w w w w w w w
 </Room>
 
@@ -218,14 +218,14 @@ w w w w w w w w w w
 , , , r  r r c r  r r r r r r r r r c r  r r ,
 , , , R r r c r  r r r r r r r r r c R r r ,
 , , , r  r r c r  r r r r r r r r r c r  r r ,
-, , , T  r r c r  r r r r r r r r r c T  r r ,
+, , , r  r r c r  r r r r r r r r r c r  r r ,
 , , , R r r c r  r r r r r r r r r c R r r ,
 , , , r  r r c r  r r r r r r r r r c r  r r ,
 , , , r  r r c c  c c c c c c c c c c r  r r ,
 , , , ,  , , c E  r r r r r r r r r c c  c c , 
-, , , A1 r r c r  r r r r r r r r r , ,  h , ,
-, , , r  r r c r  r r r r r r r r r , ,  , , ,
-, , , r  r r c r  r r r r r r r r r , ,  , , ,
+, , , AR r r c r  r r r r r r r r r , HU r r ,
+, , , r  r r c r  r r r r r r r r r , r  r r ,
+, , , r  r r c r  r r r r r r r r r , r  r r ,
 , , , ,  , , c r  r r r r r r r r r , ,  , , ,
 </Ship>
 
@@ -255,9 +255,80 @@ w w w w
 , , , , , , , ,  , ,  , , , , , , , c ,  c , ,
 , , , , , , , ,  , ,  , , , , , , , c ,  c , ,
 , , , ,  , , , ,  , , , , , , , , , c c  c c , 
-, , , ,  , , , ,  , , , , , , , , , , ,  h , ,
-, , , ,  , , , ,  , , , , , , , , , , ,  , , ,
-, , , ,  , , , ,  , , , , , , , , , , ,  , , ,
+, , , ,  , , , ,  , , , , , , , , , , HU r r ,
+, , , ,  , , , ,  , , , , , , , , , , r r r ,
+, , , ,  , , , ,  , , , , , , , , , , r r r ,
 , , , ,  , , , ,  , , , , , , , , , , ,  , , ,
 </Ship>
+
+<Ship type="mercurius2" floor="0" loot_a="12,20" enemy_a="18,20">
+, , , , , , , , , KD r r r r r r , , , , , , , , ,
+, , , , , , , , , r r r r r r r , , , , , , , , ,
+, , , , , , , , , r r r r r r r , , , , , , , , ,
+, , , , , , , , , r r r r r r r , , , , , , , , ,
+, , , , , , , , , r r r r r r r , , , , , , , , ,
+, , , , , , , , , r r r r r r r , , , , , , , , ,
+, , , , , , , , , r r r r r r r , , , , , , , , ,
+AR r r c c c c c c r r r r r r r c c c c c c AL r r
+r r r c c c c c c d c c c c c d c c c c c c r r r
+r r r RD r r r r r r r c c c RD r r r r r r r t r r
+, , , r r r r r r r r c c c r r r r r r r r , , ,
+, , , r r r r r r r r c c c r r r r r r r r , , ,
+, , , r r r r r r r r c c c r r r r r r r r , , ,
+, , , r r r r r r r r c c c r r r r r r r r , , ,
+, , , r r r r r r r r c c c r r r r r r r r , , ,
+, , , r r r r r r r r c c c r r r r r r r r , , ,
+, , , r r r r r r r r c c c r r r r r r r r , , ,
+, , , r r r r r r r r c c c r r r r r r r r , , ,
+, , , r r r r r r r r c c c r r r r r r r r , , ,
+, , , r r r r r r r r c c c r r r r r r r r , , ,
+AR r r t r r r r r r r c c c r r r r r r r r AL r r
+r r r c c c c d c c d c c c d c c d c c c c r r r
+r r r c c c c VD r r r r r r r r r r c c c c r r r
+, , , HU r r d r r r r r r r r r r r c HU r r , , ,
+, , , r r r c r r r r r r r r r r r c r r r , , ,
+, , , r r r c r r r r r r r r r r r c r r r , , ,
+, , , , , , c r r r r r r r r r r r c , , , , , ,
+, , , , , , c r r r r r r r r r r r c , , , , , ,
+, , , , , , c t r r r r r r r r r r c , , , , , ,
+, , , , , AU r r , , , , , , , , , AU r r , , , , ,
+, , , , , r r r , , , , , , , , , r r r , , , , ,
+, , , , , r r r , , , , , , , , , r r r , , , , ,
+</Ship>
+
+<Ship type="mercurius2" floor="1" loot_a="20,50" enemy_a="18,20">
+, , , , , , , , , , , , , , , , , , , , , , , , ,
+, , , , , , , , , , , , , , , , , , , , , , , , ,
+, , , , , , , , , , , , , , , , , , , , , , , , ,
+, , , , , , , , , , , , , , , , , , , , , , , , ,
+, , , , , , , , , , VD r r r r , , , , , , , , , ,
+, , , , , , , , , , r r r r r , , , , , , , , , ,
+, , , , , , , , , , r r r r r , , , , , , , , , ,
+AR r r c c c c c c , r r r r r , c c c c c c AL r r
+r r r c c c c c c d c c c c c d c c c c c c r r r
+r r r VD r r r r d VD r r r r r r d VD r r r r t r r
+, , , r r r r r c r r r r r r r c r r r r r , , ,
+, , , r r r r r c r r r r r r r c r r r r r , , ,
+, , , r r r r r c r r r r r r r c r r r r r , , ,
+, , , r r r r r c r r r r r r r c r r r r r , , ,
+, , , r r r r r c r r r r r r r c r r r r r , , ,
+, , , r r r r r c r r r r r r r c r r r r r , , ,
+, , , r r r r r c r r r r r r r c r r r r r , , ,
+, , , r r r r r c r r r r r r r c r r r r r , , ,
+, , , r r r r r c r r r r r r r c r r r r r , , ,
+, , , r r r r r c r r r r r r r c r r r r r , , ,
+AR r r t r r r r d r r r r r r r d r r r r r AL r r
+r r r c c c c d c c c c c c c c c d c c c c r r r
+t r r c c c c E r r r r r r r r r r c c c c r r r
+, , , HU r r d r r r r r r r r r r r c HU r r , , ,
+, , , r r r c r r r r r r r r r r r c r r r , , ,
+, , , r r r c r r r r r r r r r r r c r r r , , ,
+, , , , , , c r r r r r r r r r r r c , , , , , ,
+, , , , , , c r r r r r r r r r r r c , , , , , ,
+, , , , , , c t r r r r r r r r r r c , , , , , ,
+, , , , , AU r r , , , , , , , , , AU r r , , , , ,
+, , , , , r r r , , , , , , , , , r r r , , , , ,
+, , , , , r r r , , , , , , , , , r r r , , , , ,
+</Ship>
+
 </Root>

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HelpPanelMain : MonoBehaviour {
+public class MenuPageChanger : MonoBehaviour {
 
     int current=0;
     public GameObject[] Pages;

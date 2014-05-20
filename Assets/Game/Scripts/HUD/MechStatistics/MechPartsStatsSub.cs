@@ -11,11 +11,6 @@ public class MechPartsStatsSub : MonoBehaviour {
 		if (overheatSprite != null)
 			overheatSprite.enabled = false;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
 	public void ShowOverheat(bool show)
 	{

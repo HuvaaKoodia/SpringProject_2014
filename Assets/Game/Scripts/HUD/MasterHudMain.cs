@@ -118,6 +118,12 @@ public class MasterHudMain : MonoBehaviour {
 		ActivateInventoryHUD();
 	}
 
+	public void OpenStatusInfopanel()
+	{
+		InfoHud.OpenTab_Status();
+		ActivateInventoryHUD();
+	}
+
 	public void SetInteractVisibility(bool visible)
 	{
 		if (currentMenuState == MenuState.InventoryHUD ||
