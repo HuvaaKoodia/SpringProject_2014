@@ -22,6 +22,6 @@ public class SharedSystemsMain : MonoBehaviour {
         XMAP.LoadData();
 		XmlDatabase.LoadData(ItemAtlas);
 
-		GDB.CheckForGameoptions();
+		GDB.CheckForGameOptions();
     }
 }

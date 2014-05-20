@@ -248,10 +248,12 @@ public class MasterHudMain : MonoBehaviour {
 	}
 
 	public void FadeIn(float fade_speed){
+		StopCoroutine("Fader");
 		StartCoroutine(Fader(Time.deltaTime*fade_speed));
 	}
 
 	public void FadeOut(float fade_speed){
+		StopCoroutine("Fader");
 		StartCoroutine(Fader(-Time.deltaTime*fade_speed));
 	}
 

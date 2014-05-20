@@ -46,7 +46,7 @@ public class MainMenuHud : MonoBehaviour {
 	}
 
 	void ContinueClick(){
-		SharedSystemsMain.I.GDB.LoadGame();
+		if (GDB.HasSave) GDB.LoadGame();
 	}
 
 	void OptionsClick(){

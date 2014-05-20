@@ -58,9 +58,13 @@ public class MechaPartRepairPanel : MonoBehaviour {
 		Cost.gameObject.SetActive (active);
 
 		var bg = Button.GetComponentInChildren<UISprite> ();
-		var c = bg.color;
-		bg.color = new Color (c.r, c.g, c.b, alpha);
-		Button.gameObject.GetComponentInChildren<UILabel> ().alpha = alpha;
+		if (bg!=null){
+			var c = bg.color;
+			bg.color = new Color (c.r, c.g, c.b, alpha);
+		}
+		var lab=Button.gameObject.GetComponentInChildren<UILabel>();
+		if (lab!=null)
+			Button.gameObject.GetComponentInChildren<UILabel>().alpha = alpha;
 	}
 
     public void Repair(){

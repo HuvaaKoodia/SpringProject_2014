@@ -90,11 +90,11 @@ public abstract class UIItemSlot : MonoBehaviour
 
             if (stat._amount < 0)
             {
-                t += "\n[FF0000]" + stat._amount;
+                t += "\n[FF0000]  " + stat._amount;
             }
             else
             {
-                t += "\n[00FF00]" + stat._amount;
+                t += "\n[00FF00]  " + stat._amount;
             }
             
             //if (stat.modifier == InvStat.Modifier.Percent) t += "%";
@@ -158,6 +158,8 @@ public abstract class UIItemSlot : MonoBehaviour
                 color="00C6FF";//blue
                 sign=":<equal>";
             }
+
+			sign="";//DEV.TEMP remove
 
             string type=stat.type.ToString();
 

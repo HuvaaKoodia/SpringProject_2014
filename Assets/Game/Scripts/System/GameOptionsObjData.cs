@@ -62,7 +62,7 @@ public class GameOptionsObjData
 	public int quality_level{get;set;}
 	public int pixel_light_count{get;set;}
 	public int texture_quality{get;set;}
-	public string anisotropic_textures{get;set;}
+	public UnityEngine.AnisotropicFiltering anisotropic_filtering{get;set;}
 	public int anti_Aliasing{get;set;}
 	public string shadow_projection{get;set;}
 	public int shadow_cascades{get;set;}
@@ -74,7 +74,7 @@ public class GameOptionsObjData
 		quality_level = 0;
 		pixel_light_count = 0;
 		texture_quality = 0;
-		anisotropic_textures = "";
+		anisotropic_filtering = UnityEngine.AnisotropicFiltering.Disable;
 		anti_Aliasing = 0;
 		shadow_projection = "";
 		shadow_cascades = 0;

@@ -7,7 +7,8 @@ public class MissionMenuHud : MonoBehaviour {
     public MissionDebriefingMenu MissionDebrief;
     public MissionBriefingMenu MissionBrief;
     public VendorMenu _VendorMenu;
-    public MechanicalMenu _MechanicMenu;
+	public Instantiate_MechanicalMenu mm_init;
+	MechanicalMenu _MechanicMenu;
 	public FinanceMenu _FinanceMenu;
     public Transform MissionButtonsParent;
     public MissionButtonMain MButtonPrefab;
@@ -50,6 +51,7 @@ public class MissionMenuHud : MonoBehaviour {
 		_VendorMenu.SetVendor(SS.GDB.GameData.VendorStore);
         _VendorMenu.Init();
 
+		_MechanicMenu=mm_init.Instance;
 		_MechanicMenu.SetPlayer(_player);
 	
 		_FinanceMenu.SetFinanceManager(SS.GDB.GameData.FinanceManager);
@@ -109,14 +111,15 @@ public class MissionMenuHud : MonoBehaviour {
     }
 
     public void OpenMechanic(){
-		StartCoroutine(CallUpdateAfterOneUpdateStepBecauseUnitySetActiveShenanigans());
-		Tabs.ActivateMenu(_MechanicMenu.gameObject);
+		//StartCoroutine(CallUpdateAfterOneUpdateStepBecauseUnitySetActiveShenanigans());
+		Tabs.ActivateMenu(mm_init.gameObject);
+		_MechanicMenu.OpenPanel();
     }
 
-	IEnumerator CallUpdateAfterOneUpdateStepBecauseUnitySetActiveShenanigans(){
-		yield return null;
-		_MechanicMenu.OpenPanel();
-	}
+//	IEnumerator CallUpdateAfterOneUpdateStepBecauseUnitySetActiveShenanigans(){
+//		yield return null;
+//		_MechanicMenu.OpenPanel();
+//	}
 
 	public void OpenFinance()
 	{

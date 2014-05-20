@@ -42,11 +42,11 @@ public class GameDB : MonoBehaviour {
 #endif
 	}
 
-	public void CheckForGameoptions(){
+	public void CheckForGameOptions(){
 		if (File.Exists("Options.txt")){
 			GameOptionsData=SaveLoadSys.LoadOptions();
 			//set options to new data
-
+			SS.GOps.SetQualitySettingsToData(GameOptionsData);
 		}
 		else{
 			GameOptionsData=new GameOptionsObjData();
@@ -78,42 +78,36 @@ public class GameDB : MonoBehaviour {
 		RestockVendor();
     }
 
-#if UNITY_EDITOR && !UNITY_WEBPLAYER
+
 	public void Update(){
 
 		if (AllowEscHud&&Input.GetKeyDown(KeyCode.Escape)){
 			EscHud.Toggle();
 		}
-
-		if (Input.GetKeyDown(KeyCode.F5)){
-			SaveGame();
-		}
-
-		if (Input.GetKeyDown(KeyCode.F9)){
-			LoadGame();
-		}
 	}
-	#endif
-
+	
 	public void SaveGame(){
-
 #if UNITY_WEBPLAYER
-
+		SaveLoadSys.SaveGamePlayerPrefs("Save",GameData);
 #else
 		SaveLoadSys.SaveGame("Save",GameData);
 #endif
 	}
 	
 	public void LoadGame(){
-		GameStarted=true;
-		GameLoaded=true;
-		#if UNITY_WEBPLAYER
 
+		GameData=null;
+
+		#if UNITY_WEBPLAYER
+		GameData=SaveLoadSys.LoadGamePlayerPrefs("Save");
 		#else
 		GameData=SaveLoadSys.LoadGame("Save");
 		#endif
 		if (GameData==null) return;
 
+		GameStarted=true;
+		GameLoaded=true;
+		
 		//init GameData
 		
 		foreach(var e in GameData.VendorStore.items){

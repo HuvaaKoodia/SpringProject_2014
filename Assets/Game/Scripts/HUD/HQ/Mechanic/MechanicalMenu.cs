@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public class MechanicalMenu : MonoBehaviour {
 
     public MechStatisticsMain Statistics;
-    public UILabel MoneyLabel;
 
     public bool allow_buying=true;
 

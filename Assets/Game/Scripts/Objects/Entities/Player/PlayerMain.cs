@@ -195,7 +195,7 @@ public class PlayerMain : EntityMain
     /// </summary>
 	public void TakeDamage(int damage,int x,int y)
 	{
-		if (INVINCIBLE) return;
+		if (INVINCIBLE||Dead) return;
 
 		//calculate correct attack direction
         int dir=0;
@@ -238,6 +238,7 @@ public class PlayerMain : EntityMain
 
         if (Health <= 0)
 		{
+			Dead=true;
 			inputSub.DISABLE_INPUT=true;
 			GC.EndGame();
 
@@ -245,6 +246,7 @@ public class PlayerMain : EntityMain
 
 		HUD.UpdateHudPanels();
 	}
+	bool Dead=false;
 
 	public bool StartTargetingMode()
 	{
