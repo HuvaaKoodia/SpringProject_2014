@@ -26,7 +26,7 @@ public class NewGameMenuMain : MonoBehaviour {
 	public void NormalModeSelected(){
 		ironman_mode=false;
 
-		Description.text="Loading a save after death is permitted.";
+		Description.text="Loading a saved game after death is permitted.";
 	}
 	
 	public void IronmanModeSelected(){

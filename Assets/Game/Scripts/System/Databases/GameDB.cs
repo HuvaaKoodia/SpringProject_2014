@@ -27,14 +27,11 @@ public class GameDB : MonoBehaviour {
 		//Playerprefs
 		if (PlayerPrefs.HasKey("Save")){
 			//check file integrity DEV.Lazy as hell.
-			if (SaveLoadSys.LoadGameWeb("Save")!=null){
+			if (SaveLoadSys.LoadGamePlayerPrefs("Save")!=null){
 				HasSave=true;
 			}
 		}
 #else
-
-#endif
-
 		//files
 		if (File.Exists("Saves/Save.sav")){
 			//check file integrity DEV.Lazy as hell.
@@ -42,15 +39,22 @@ public class GameDB : MonoBehaviour {
 				HasSave=true;
 			}
 		}
+#endif
 	}
 
 	public void CheckForGameoptions(){
 		if (File.Exists("Options.txt")){
-			//load options
+			GameOptionsData=SaveLoadSys.LoadOptions();
+			//set options to new data
+
 		}
 		else{
 			GameOptionsData=new GameOptionsObjData();
 		}
+	}
+
+	void OnApplicationQuit(){
+		SaveLoadSys.SaveOptions(GameOptionsData);
 	}
 	
     public void CreateNewGame(){
@@ -92,14 +96,22 @@ public class GameDB : MonoBehaviour {
 	#endif
 
 	public void SaveGame(){
+
+#if UNITY_WEBPLAYER
+
+#else
 		SaveLoadSys.SaveGame("Save",GameData);
+#endif
 	}
 	
 	public void LoadGame(){
 		GameStarted=true;
 		GameLoaded=true;
-		GameData=SaveLoadSys.LoadGame("Save");
+		#if UNITY_WEBPLAYER
 
+		#else
+		GameData=SaveLoadSys.LoadGame("Save");
+		#endif
 		if (GameData==null) return;
 
 		//init GameData
@@ -262,6 +274,12 @@ public class GameDB : MonoBehaviour {
 		
 		for (int i=0;i<Subs.GetRandom(6,8);i++){
 			InvItemStorage.EquipRandomItem(GameData.VendorStore,"vendor_items","vendor_quality");
+		}
+	}
+
+	public void RemoveSavesIfIronman(){
+		if (GameData.IronManMode){
+			SaveLoadSys.ClearSaves("Save");
 		}
 	}
 }

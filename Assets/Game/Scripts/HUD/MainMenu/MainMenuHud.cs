@@ -3,8 +3,9 @@ using System.Collections;
 
 public class MainMenuHud : MonoBehaviour {
 	
-	public GameObject CreditsPanel,HelpPanel,OptionsPanel,QuitButton,MenuParent,ContinueButton,NewGameMenu;
+	public GameObject CreditsPanel,HelpPanel,OptionsPanel,QuitButton,FullScreenButton,MenuParent,NewGameMenu;
 	GameDB GDB;
+	public UIButton ContinueButton;
 
     void Start(){
 
@@ -12,12 +13,15 @@ public class MainMenuHud : MonoBehaviour {
 		GDB.CheckForSaves();
 
         DisableAll();
+
 #if UNITY_WEBPLAYER
         QuitButton.SetActive(false);
 #endif
 
 		if (!SharedSystemsMain.I.GDB.HasSave){
-			ContinueButton.SetActive(false);
+			//ContinueButton.SetActive(false);
+			ContinueButton.defaultColor=new Color(1f,1f,1f,0.3f);
+			ContinueButton.enabled=false;
 		}
 
 		GDB.AllowEscHud=false;

@@ -50,7 +50,6 @@ public class PlayerMain : EntityMain
 	
 	public GameObject ParticleTempParent;
 
-
     public void SetObjData(PlayerObjData data){
         ObjData=data;
     }
@@ -241,6 +240,7 @@ public class PlayerMain : EntityMain
 		{
 			inputSub.DISABLE_INPUT=true;
 			GC.EndGame();
+
 		}
 
 		HUD.UpdateHudPanels();
@@ -450,7 +450,7 @@ public class PlayerMain : EntityMain
 		gunsFinishedShooting++;
 	}
 
-	public void ToggleFlashlight ()
+	public void ToggleFlashlight()
 	{
 		Flashlight.SetActive(!Flashlight.activeSelf);
 	}

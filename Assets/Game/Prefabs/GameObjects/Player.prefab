@@ -830,6 +830,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 400098}
   - 114: {fileID: 11400074}
+  - 114: {fileID: 11400474}
+  - 65: {fileID: 6500002}
   m_Layer: 9
   m_Name: Sprite
   m_TagString: Untagged
@@ -7471,6 +7473,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: .839999974, z: 1}
   m_Center: {x: 0, y: .400000006, z: 0}
+--- !u!65 &6500002
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100098}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 256, y: 256, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &6500010
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -9046,8 +9060,8 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: 1, g: .0509803928, b: 0, a: .250980407}
   mPivot: 4
-  mWidth: 409
-  mHeight: 50
+  mWidth: 403
+  mHeight: 49
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -12147,7 +12161,7 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
-  mWidth: 48
+  mWidth: 46
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -15279,7 +15293,7 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
-  mWidth: 48
+  mWidth: 46
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -15337,7 +15351,7 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
-  mWidth: 48
+  mWidth: 46
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -15395,7 +15409,7 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
-  mWidth: 1078
+  mWidth: 1065
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -15465,6 +15479,27 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
+--- !u!114 &11400474
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fdca5042b1d12a4890ec1bd4f04290d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tweenTarget: {fileID: 100098}
+  hover: {r: .882352948, g: .784313738, b: .588235319, a: 1}
+  pressed: {r: .717647076, g: .639215708, b: .482352942, a: 1}
+  duration: .200000003
+  disabledColor: {r: .5, g: .5, b: .5, a: 1}
+  dragHighlight: 0
+  onClick:
+  - mTarget: {fileID: 11400410}
+    mMethodName: OpenStatus
+    oneShot: 0
 --- !u!114 &11400478
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -15576,7 +15611,7 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
-  mWidth: 881
+  mWidth: 877
   mHeight: 149
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -15983,7 +16018,7 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
-  mWidth: 48
+  mWidth: 46
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0

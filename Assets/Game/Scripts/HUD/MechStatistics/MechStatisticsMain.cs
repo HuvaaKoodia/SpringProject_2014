@@ -26,7 +26,6 @@ public class MechStatisticsMain : MonoBehaviour {
         PlayerData=player;
     }
 
-	// Update is called once per frame
 	public void UpdateStats(){
 		SetPartInfo(weaponSlots[(int)WeaponID.LeftShoulder], UIEquipmentSlot.Slot.WeaponLeftShoulder);
 		SetPartInfo(weaponSlots[(int)WeaponID.LeftHand], UIEquipmentSlot.Slot.WeaponLeftHand);
@@ -36,9 +35,10 @@ public class MechStatisticsMain : MonoBehaviour {
         SetPartInfo(upperTorso, PlayerData.Equipment.UpperTorso);
 
 		var percent=PlayerData.UpperTorso.HeatPercent();
-		HeatMeter.fillAmount=percent;
-		DataPanel.SetActive(!PlayerData.UpperTorso.OVERHEAT);
-		OverheatSprite.SetActive(PlayerData.UpperTorso.OVERHEAT);
+
+		if (HeatMeter!=null) HeatMeter.fillAmount=percent;
+		if (DataPanel!=null) DataPanel.SetActive(!PlayerData.UpperTorso.OVERHEAT);
+		if (OverheatSprite!=null)OverheatSprite.SetActive(PlayerData.UpperTorso.OVERHEAT);
 	}
 
     void SetWeaponText(string text,UILabel label,UIEquipmentSlot.Slot slot){
