@@ -8,7 +8,8 @@ public enum Quality
 	SIMPLE,
 	GOOD,
 	BEAUTIFUL,
-	FANTASTIC
+	FANTASTIC,
+	CUSTOM
 };
 
 public enum LightQuality
@@ -29,8 +30,7 @@ public enum TextureQuality
 public enum AnisotropicQuality
 {
 	DISABLE = 0,
-	ENABLE,
-	FORCE_ENABLE
+	ENABLE
 };
 
 public enum AntiAliasing
@@ -51,9 +51,8 @@ public enum ShadowQuality
 
 public enum VSync
 {
-	NO_SYNC = 0,
-	EVERY_VBLANK,
-	EVERY_2ND_VBLANK
+	OFF = 0,
+	ON
 };
 
 //class that holds only data of Quality Settings to be manipulated in GameOptionsMain class

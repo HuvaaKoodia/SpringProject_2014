@@ -11,12 +11,12 @@ public class MainMenuButtonGraphics : MonoBehaviour {
 	void Start () {
 		OnHover(false);
 
-	button=GetComponent<UIButton>();
+		button=GetComponent<UIButton>();
 	}
 
 	void OnHover (bool isOver)
 	{
-		if (button!=null&&!enabled) return;
+		if (button!=null&&!button.enabled) return;
 		Spr.spriteName=isOver?HoverSprite:NormalSprite;
 	}
 }

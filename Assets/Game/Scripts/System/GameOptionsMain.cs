@@ -33,6 +33,9 @@ public class GameOptionsMain : MonoBehaviour {
 		case Quality.FANTASTIC:
 			GOpsObjD.quality_level = 5;
 			break;
+		case Quality.CUSTOM:
+			GOpsObjD.quality_level = 6;
+			break;
 		}
 		QualitySettings.SetQualityLevel(GOpsObjD.quality_level);
 	}
@@ -83,10 +86,6 @@ public class GameOptionsMain : MonoBehaviour {
 			QualitySettings.anisotropicFiltering = AnisotropicFiltering.Disable;
 			break;
 		case AnisotropicQuality.ENABLE:
-			GOpsObjD.anisotropic_textures = AnisotropicFiltering.Enable.ToString();
-			QualitySettings.anisotropicFiltering = AnisotropicFiltering.Enable;
-			break;
-		case AnisotropicQuality.FORCE_ENABLE:
 			GOpsObjD.anisotropic_textures = AnisotropicFiltering.ForceEnable.ToString();
 			QualitySettings.anisotropicFiltering = AnisotropicFiltering.ForceEnable;
 			break;
@@ -154,16 +153,17 @@ public class GameOptionsMain : MonoBehaviour {
 	{
 		switch(VS)
 		{
-		case VSync.NO_SYNC:
+		case VSync.OFF:
 			GOpsObjD.vsync_count = 0;
 			break;
-		case VSync.EVERY_VBLANK:
+		case VSync.ON:
 			GOpsObjD.vsync_count = 1;
-			break;
-		case VSync.EVERY_2ND_VBLANK:
-			GOpsObjD.vsync_count = 2;
 			break;
 		}
 		QualitySettings.vSyncCount = GOpsObjD.vsync_count;
+	}
+
+	public void GetOptionsObjData()
+	{
 	}
 }

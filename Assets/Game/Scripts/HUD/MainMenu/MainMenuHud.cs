@@ -20,7 +20,7 @@ public class MainMenuHud : MonoBehaviour {
 
 		if (!SharedSystemsMain.I.GDB.HasSave){
 			//ContinueButton.SetActive(false);
-			ContinueButton.defaultColor=new Color(1f,1f,1f,0.5f);
+			ContinueButton.defaultColor=new Color(1f,1f,1f,0.3f);
 			ContinueButton.enabled=false;
 		}
 
