@@ -1,5 +1,6 @@
 using System.Collections;
 
+//all the enumerators fir settings that can be adjusted in game
 public enum Quality
 {
 	FASTEST = 0,
@@ -55,6 +56,8 @@ public enum VSync
 	EVERY_2ND_VBLANK
 };
 
+//class that holds only data of Quality Settings to be manipulated in GameOptionsMain class
+//data are all public properties for saving
 public class GameOptionsObjData
 {
 	public int quality_level{get;set;}

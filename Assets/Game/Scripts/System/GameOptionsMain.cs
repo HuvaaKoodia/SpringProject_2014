@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//class that has methods to manipulate the data in GameOptionsObjData class
+//methods are to be called in GameOptionsMenu class
 public class GameOptionsMain : MonoBehaviour {
 
 	GameOptionsObjData GOpsObjD;
