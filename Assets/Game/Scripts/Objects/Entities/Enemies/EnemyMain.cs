@@ -27,6 +27,8 @@ public class EnemyMain : EntityMain {
 
 	public bool Dead { get; protected set; }
 
+	bool[] WaitingForDamageReaction;
+
 	// Use this for initialization
 	public override void Awake()
 	{
@@ -42,6 +44,8 @@ public class EnemyMain : EntityMain {
 
 		normalMovementSpeed = movement.movementSpeed;
 		normalTurnSpeed = movement.turnSpeed;
+
+		WaitingForDamageReaction = new bool[] { false, false, false, false };
 	}
 
 	void Start ()
@@ -70,7 +74,6 @@ public class EnemyMain : EntityMain {
 
 				if (movement.currentMovement == MovementState.NotMoving)
 				{
-
 					FinishedMoving(false);
 				}
 				else
@@ -126,32 +129,56 @@ public class EnemyMain : EntityMain {
 	}
 	*/
 
-	public override void TakeDamage(int damage)
+	public IEnumerator TakeDamage(int damage, int weaponSlot)
 	{
 		Health -= damage;
 
-		//temp
-		if (meshRenderer != null)
+		if (Health <= 0)
 		{
-	        Color oldColor = meshRenderer.material.color;
-			Color newColor = new Color(oldColor.r, oldColor.g-0.2f, oldColor.b-0.2f);
-				meshRenderer.material.color = newColor;
+			Dead = true;
 		}
 
-        if (Health <= 0)
+		WaitingForDamageReaction[weaponSlot] = true;
+
+		float timeWaited = 0.0f;
+
+		while (WaitingForDamageReaction[weaponSlot])
 		{
-			Die();
+			timeWaited += Time.deltaTime;
+
+			if (timeWaited > 0.9f)
+				break;
+
+			yield return null;
 		}
+
+		ReactToDamage(damage);
+		WaitingForDamageReaction[weaponSlot] = false;
 	}
 
-	protected virtual void Die()
+	protected virtual void ReactToDamage(int amount)
+	{ 
+	}
+
+	public void StartDamageReact(int weaponSlot)
 	{
-		Dead = true;
-		OnDeath();
-		Remove();
+		WaitingForDamageReaction[weaponSlot] = false;
 	}
 
-	void Remove()
+	public bool GetWaitingForDamageReaction(int weaponSlot)
+	{
+		return WaitingForDamageReaction[weaponSlot];
+	}
+
+	public bool GetWaitingForDamageReaction()
+	{
+		return WaitingForDamageReaction[0] ||
+			   WaitingForDamageReaction[1] ||
+			   WaitingForDamageReaction[2] ||
+			   WaitingForDamageReaction[3];
+	}
+
+	protected void Remove()
 	{
 		movement.GetCurrenTile().LeaveTile();
 		CurrentFloor.Enemies.Remove(this);
@@ -186,12 +213,5 @@ public class EnemyMain : EntityMain {
 
 		movement.movementSpeed = normalMovementSpeed * culledSpeedMultiplier;
 		movement.turnSpeed = normalTurnSpeed * culledSpeedMultiplier;
-	}
-
-	void OnParticleCollision(GameObject other)
-	{
-		int lol;
-		lol = 0;
-		lol++;
 	}
 }

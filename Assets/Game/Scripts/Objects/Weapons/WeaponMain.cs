@@ -133,7 +133,7 @@ public class WeaponMain : MonoBehaviour {
 			{
 			GameObject bulletEmitter = 
 				GameObject.Instantiate(player.GC.SS.PS.weaponParticleEmitters[Weapon.baseItem.mesh + "Bullets"]) as GameObject;
-			meshData.AddBulletParticles(bulletEmitter);
+			meshData.AddBulletParticles(bulletEmitter, (int)weaponID);
 			}
 		}
 
@@ -150,6 +150,15 @@ public class WeaponMain : MonoBehaviour {
 		if (player.GC.SS.PS.weaponSoundFX.ContainsKey(Weapon.baseItem.mesh))
 		{
 			meshData.SetShootSoundFX(player.GC.SS.PS.weaponSoundFX[Weapon.baseItem.mesh]);
+		}
+
+		if (Weapon.baseItem.mesh == "Melee")
+		{
+			meshData.SetDamageEffectType(DamageEffectType.ElectricShock);
+		}
+		else
+		{
+			meshData.SetDamageEffectType(DamageEffectType.Blood);
 		}
 	}
 
@@ -242,7 +251,7 @@ public class WeaponMain : MonoBehaviour {
 				if (Overheat || CurrentAmmo == 0) break;
 				if (enemyPair.Value.numShots == 0 || IsEnemyDead(enemyPair.Key)) continue;
 
-				while (waitingForShot)
+				while (waitingForShot || enemyPair.Key.GetWaitingForDamageReaction((int)weaponID))
 				{
 					yield return null;
 				}
@@ -294,17 +303,13 @@ public class WeaponMain : MonoBehaviour {
 		{
 			//hit
 			int dmg = (int)Random.Range(MinDamage, MaxDamage);
-			enemy.TakeDamage(dmg);
+			StartCoroutine(enemy.TakeDamage(dmg, (int)weaponID));
 		}
 
 		if (meshData != null)
 		{
 			meshData.PlayShootAnimation();
-
-			if (meshData != null)
-			{
-				meshData.StartShootEffect();
-			}
+			meshData.StartShootEffect(hit);
 
 			while (meshData.IsEmiting || meshData.IsAnimating)
 			{

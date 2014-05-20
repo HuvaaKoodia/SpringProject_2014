@@ -36,4 +36,9 @@ public abstract class AIBase : MonoBehaviour
 	{
 		Animating = false;
 	}
+
+	public virtual void ReactToDamage(int weaponSlot)
+	{
+			parent.StartDamageReact(weaponSlot);
+	}
 }

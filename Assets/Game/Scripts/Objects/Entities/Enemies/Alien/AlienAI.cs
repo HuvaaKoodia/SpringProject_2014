@@ -95,7 +95,7 @@ public class AlienAI : AIBase {
 
 	public override void PlayAiTurn()
 	{
-		if (AP == 0 || Animating)
+		if (AP == 0 || Animating || parent.GetWaitingForDamageReaction())
 			return;
 
 		MyPosition = new Point3D(movement.currentGridX, movement.currentGridY);
