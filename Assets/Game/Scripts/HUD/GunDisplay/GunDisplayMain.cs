@@ -9,11 +9,18 @@ public class GunDisplayMain : MonoBehaviour {
 
 	public List<Color> weaponColors;
 	public Color inActiveColor;
+	
+	public float waitBeforeMissFades = 0.8f;
 
 	// Use this for initialization
 	void Awake()
 	{
 		inActiveColor = Color.black;
+
+		for (int i = 0; i < 4; i++)
+		{
+			gunInfoScreens[i].CreateMissTimer(waitBeforeMissFades);
+		}
 	}
 
 	public void Start(){
@@ -41,6 +48,16 @@ public class GunDisplayMain : MonoBehaviour {
 	public void UpdateDisplay(WeaponID id)
 	{
 		gunInfoScreens[(int)id].UpdateGunInfo(GC.Player);
+	}
+
+	public void ShowMissText(WeaponID id)
+	{
+		gunInfoScreens[(int)id].ShowMissedText();
+	}
+
+	public void HideMissText(WeaponID id)
+	{
+		gunInfoScreens[(int)id].HideMissedText();
 	}
 
 	public Color GetWeaponColor(WeaponID id)

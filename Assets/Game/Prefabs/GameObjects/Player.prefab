@@ -15,6 +15,7 @@ GameObject:
   - 114: {fileID: 11400020}
   - 65: {fileID: 6500000}
   - 82: {fileID: 8200000}
+  - 135: {fileID: 13500002}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -7471,8 +7472,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: .839999974, z: 1}
-  m_Center: {x: 0, y: .400000006, z: 0}
+  m_Size: {x: 1.27999997, y: 1.5, z: 1.5}
+  m_Center: {x: 0, y: .460000008, z: .180000007}
 --- !u!65 &6500002
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -8322,6 +8323,7 @@ MonoBehaviour:
   - {r: .463235319, g: .389846772, b: .0953719839, a: 1}
   - {r: .477941155, g: .0983996615, b: .0983996615, a: 1}
   inActiveColor: {r: 0, g: 0, b: 0, a: 1}
+  waitBeforeMissFades: .800000012
 --- !u!114 &11400026
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8336,6 +8338,7 @@ MonoBehaviour:
   displayMain: {fileID: 11400024}
   weapon: {fileID: 0}
   infoLabel: {fileID: 11400442}
+  missedLabel: {fileID: 0}
   highlight: {fileID: 11400236}
   heat_slider_spr: {fileID: 11400300}
 --- !u!114 &11400028
@@ -10453,6 +10456,7 @@ MonoBehaviour:
   displayMain: {fileID: 11400024}
   weapon: {fileID: 0}
   infoLabel: {fileID: 11400460}
+  missedLabel: {fileID: 0}
   highlight: {fileID: 11400060}
   heat_slider_spr: {fileID: 11400456}
 --- !u!114 &11400170
@@ -10469,6 +10473,7 @@ MonoBehaviour:
   displayMain: {fileID: 11400024}
   weapon: {fileID: 0}
   infoLabel: {fileID: 11400444}
+  missedLabel: {fileID: 0}
   highlight: {fileID: 11400198}
   heat_slider_spr: {fileID: 11400448}
 --- !u!114 &11400172
@@ -12928,6 +12933,7 @@ MonoBehaviour:
   displayMain: {fileID: 11400024}
   weapon: {fileID: 0}
   infoLabel: {fileID: 11400068}
+  missedLabel: {fileID: 0}
   highlight: {fileID: 11400206}
   heat_slider_spr: {fileID: 11400088}
 --- !u!114 &11400338
@@ -16059,6 +16065,18 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: .800000012
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &13500002
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: .949999988
+  m_Center: {x: 0, y: 1.21000004, z: 0}
 --- !u!198 &19800000
 ParticleSystem:
   m_ObjectHideFlags: 1

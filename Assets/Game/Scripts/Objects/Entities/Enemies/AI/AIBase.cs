@@ -22,6 +22,8 @@ public abstract class AIBase : MonoBehaviour
 	public bool Animating;
 	public bool Rotating;
 
+	protected bool waitingForAttackToHitPlayer;
+
 	public virtual void PlayAiTurn(){}
 
 	public virtual void Reset(){}
@@ -40,5 +42,10 @@ public abstract class AIBase : MonoBehaviour
 	public virtual void ReactToDamage(int weaponSlot)
 	{
 			parent.StartDamageReact(weaponSlot);
+	}
+
+	public virtual void DamageParticleHitPlayer()
+	{
+		waitingForAttackToHitPlayer = false;
 	}
 }

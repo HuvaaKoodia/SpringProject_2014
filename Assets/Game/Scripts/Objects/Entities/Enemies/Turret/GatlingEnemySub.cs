@@ -41,6 +41,24 @@ public class GatlingEnemySub : EnemyMain {
 		}
 	}
 
+	public override void CullShow()
+	{
+		graphics.SetActive(true);
+		
+		movement.movementSpeed = normalMovementSpeed;
+		movement.turnSpeed = normalTurnSpeed;
+	}
+	
+	public override void CullHide()
+	{
+		if (((GatlingAI)ai).open) return;
+
+		graphics.SetActive(false);
+		
+		movement.movementSpeed = normalMovementSpeed * culledSpeedMultiplier;
+		movement.turnSpeed = normalTurnSpeed * culledSpeedMultiplier;
+	}
+
 	protected override void OnDeath(){
 		Gibs.SetActive(true);
 		Gibs.transform.parent=null;
