@@ -104,7 +104,7 @@ public class PlayerMain : EntityMain
     {
 		ap = apMax;
 		Finished = false;
-		DisperseWeaponHeat(1);
+		DecreaseWeaponHeat();
 
 		MovedLastPhase = false;
 
@@ -281,14 +281,25 @@ public class PlayerMain : EntityMain
 		HUD.CheckTargetingModePanel();
 	}
 
-	public void DisperseWeaponHeat(float multiplier)
+	public void DisperseWeaponHeat()
 	{
         foreach(WeaponMain gun in weaponList)
 		{
-            gun.ReduceHeat(multiplier);
+            gun.DisperseHeat();
 		}
 		
-		ObjData.UpperTorso.AddHEAT(-(XmlDatabase.HullHeatDisperseConstant+XmlDatabase.HullHeatDisperseHeatMultiplier*ObjData.UpperTorso.HEAT)*multiplier);
+		ObjData.UpperTorso.AddHEAT(-(XmlDatabase.HullHeatDisperseConstant+ObjData.UpperTorso.HEAT*XmlDatabase.HullHeatDisperseHeatMultiplier));
+		HUD.gunInfoDisplay.UpdateAllDisplays();
+	}
+
+	public void DecreaseWeaponHeat()
+	{
+		foreach(WeaponMain gun in weaponList)
+		{
+			gun.ReduceHeat();
+		}
+		
+		ObjData.UpperTorso.AddHEAT(-XmlDatabase.HullHeatDisperseConstant);
 		HUD.gunInfoDisplay.UpdateAllDisplays();
 	}
 

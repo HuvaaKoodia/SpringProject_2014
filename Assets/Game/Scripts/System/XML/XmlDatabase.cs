@@ -42,7 +42,6 @@ public class XmlDatabase
         HullHeatAddMultiplier,
 		WeaponHeatDisperseCoolingMultiplier,
 		WeaponHeatDisperseHeatMultiplier,
-		DisperseHeatMultiplier,
 		HullHeatDisperseHeatMultiplier,
 		MechaPartConditionFairThreshold,
 		MechaPartConditionBadThreshold,

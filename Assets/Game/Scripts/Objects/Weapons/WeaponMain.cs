@@ -295,7 +295,7 @@ public class WeaponMain : MonoBehaviour {
 		if (!NoAmmoConsumption) CurrentAmmo--;
 		if (CurrentAmmo<0) CurrentAmmo=0;
 		
-		IncreaseHeat(1);
+		IncreaseHeat();
 
 		bool hit = HitChancePercent(enemy) > Subs.RandomPercent();
 
@@ -324,16 +324,19 @@ public class WeaponMain : MonoBehaviour {
 		return enemy == null || enemy.Dead;
 	}
 	
-    public void IncreaseHeat(float multi)
+    public void IncreaseHeat()
     {
-		if (WeaponSlot != null)
-        	WeaponSlot.ObjData.IncreaseHEAT(Weapon,multi);
+		if (WeaponSlot != null) WeaponSlot.ObjData.IncreaseHEAT(Weapon);
     }
 
-	public void ReduceHeat(float multi)
+	public void ReduceHeat()
 	{
-		if (WeaponSlot != null)
-       		WeaponSlot.ObjData.ReduceHEAT(Weapon,multi);
+		if (WeaponSlot != null) WeaponSlot.ObjData.ReduceHEAT(Weapon);
+	}
+
+	public void DisperseHeat()
+	{
+		if (WeaponSlot != null) WeaponSlot.ObjData.DisperceHEAT_Weapon(Weapon);
 	}
 
 	public void AddAmmo(int amount)
