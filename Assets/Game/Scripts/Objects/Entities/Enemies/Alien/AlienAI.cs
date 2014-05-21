@@ -389,7 +389,7 @@ public class AlienAI : AIBase {
 
 		//check that player is facing this general direction
 		float angleBetween = Quaternion.Angle(playerRot, playerToEnemyRot);
-		if (angleBetween >  90)
+		if (angleBetween >  80)
 			return false;
 	
 		if (PathFinder.CanSeeFromTileToTile(player, parent, position, PlayerSeeRadiusAware, 
