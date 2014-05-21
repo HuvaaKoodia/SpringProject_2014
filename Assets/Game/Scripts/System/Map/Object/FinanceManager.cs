@@ -176,7 +176,7 @@ public class FinanceManager
 					listofdebts[i].month++;
 				}
 			}
-			//			month++;
+			//month++;
 			days_till_update = 30 + days_till_update;
 			CalcExistingCash();
 			Player.Money=existing_cash;
