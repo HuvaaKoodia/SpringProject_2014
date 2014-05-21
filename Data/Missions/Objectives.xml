@@ -20,7 +20,6 @@ Turret
 	<Data>NavigationData</Data>
 </Objective>
 
-<!--
 <Objective type="FindItem_Artifact" name="Find the Alien Artifact">
 	<Item>Alien Artifact</Item>
 	<Room>cargohold</Room>
@@ -57,9 +56,17 @@ Turret
 <Objective type="FindLogs_Armory" name="Download Armory Logs">
 	<Data>ArmoryData</Data>
 </Objective>
--->
-<Objective type="KillAliens" name="Exterminate all aliens">
+
+<Objective type="FindLogs_Navigation" name="Download Navigation Logs">
+	<Data>ArmoryData</Data>
+</Objective>
+
+<Objective type="KillAliens" name="Kill All Aliens">
 	<Kill>Alien</Kill>
+</Objective>
+
+<Objective type="KillDefences" name="Destroy Automated Defences">
+	<Kill>Turret</Kill>
 </Objective>
 
 <Objective type="Explore" name="Explore the ship">
