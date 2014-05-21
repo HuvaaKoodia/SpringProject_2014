@@ -427,6 +427,7 @@ GameObject:
   - 198: {fileID: 19800012}
   - 199: {fileID: 19900012}
   - 114: {fileID: 11400000}
+  - 114: {fileID: 11400014}
   m_Layer: 19
   m_Name: GatlingBullets
   m_TagString: Untagged
@@ -1376,7 +1377,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100030}
   m_LocalRotation: {x: .698773563, y: .0819087699, z: .0686751083, w: .707311988}
-  m_LocalPosition: {x: -.211699709, y: -.0236434974, z: -2.81852408e-09}
+  m_LocalPosition: {x: -.211700901, y: -.0236434955, z: -.000703635742}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400120}
@@ -3396,7 +3397,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: .400000006, y: .100000001, z: .5}
+  m_Size: {x: .400000006, y: .200000003, z: .5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &6500002
 BoxCollider:
@@ -3756,7 +3757,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: .150000006, y: .949999988, z: .219999999}
+  m_Size: {x: .25, y: .949999988, z: .25}
   m_Center: {x: -.180000007, y: -.379999995, z: 0}
 --- !u!82 &8200000
 AudioSource:
@@ -3876,7 +3877,7 @@ Light:
   m_Type: 0
   m_Color: {r: .646626294, g: .95588237, b: .7767272, a: 1}
   m_Intensity: 2.58999991
-  m_Range: 16
+  m_Range: 20
   m_SpotAngle: 42.7999992
   m_CookieSize: 10
   m_Shadows:
@@ -4089,6 +4090,18 @@ MonoBehaviour:
   ai: {fileID: 11400002}
   BloodEffect: {fileID: 19800032}
   ElectricShockEffect: {fileID: 19800018}
+--- !u!114 &11400014
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e5424137e739f848994c30a92635e93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ai: {fileID: 11400002}
 --- !u!122 &12200000
 Halo:
   m_ObjectHideFlags: 1
@@ -11268,7 +11281,7 @@ ParticleSystem:
     particleRadius: .00999999978
     collidesWith:
       serializedVersion: 2
-      m_Bits: 6400
+      m_Bits: 7168
     quality: 0
     voxelSize: .5
     collisionMessages: 1

@@ -21,9 +21,9 @@ public class EnemyMain : EntityMain {
 	public int rangedRange = 3;
 	public int rangedAngleMax = 50;
 
-	float normalMovementSpeed;
-	float normalTurnSpeed;
-	float culledSpeedMultiplier = 7;
+	protected float normalMovementSpeed;
+	protected float normalTurnSpeed;
+	protected float culledSpeedMultiplier = 7;
 
 	public bool Dead { get; protected set; }
 
@@ -199,7 +199,7 @@ public class EnemyMain : EntityMain {
 		aiController.EnemyFinishedTurn(this);
 	}
 
-	public void CullShow()
+	public virtual void CullShow()
 	{
 		graphics.SetActive(true);
 
@@ -207,7 +207,7 @@ public class EnemyMain : EntityMain {
 		movement.turnSpeed = normalTurnSpeed;
 	}
 
-	public void CullHide()
+	public virtual void CullHide()
 	{
 		graphics.SetActive(false);
 

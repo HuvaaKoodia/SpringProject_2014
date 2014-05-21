@@ -18,7 +18,7 @@ public class GatlingAI : AIBase {
 	
 	Point3D MyPosition;
 
-	bool open;
+	public bool open { get; private set;}
 
 	public Animation baseAnimation;
 	public Animation turretAnimation;
@@ -223,12 +223,21 @@ public class GatlingAI : AIBase {
 			shootEffects[i].Play();
 		}
 
-		Invoke("DamagePlayer", turretAnimation[GunShootAnimation].clip.length / 2.0f);
+		waitingForAttackToHitPlayer = true;
+		StartCoroutine(DamagePlayer());
 		AP -= AttackCost;
 	}
 
-	void DamagePlayer()
+	IEnumerator DamagePlayer()
 	{
+		while (waitingForAttackToHitPlayer)
+		{
+			if (!shootEffects[0].isPlaying)
+				break;
+
+			yield return null;
+		}
+
 		player.TakeDamage(Damage, MyPosition.X, MyPosition.Y);
 	}
 
@@ -328,10 +337,24 @@ public class GatlingAI : AIBase {
 		Quaternion ninetyCCW = Quaternion.Euler(0, -90, 0);
 		verticalRot *= ninetyCCW;
 
+		Quaternion lastTransform;
+
 		while (turretTransform.rotation != verticalRot)
 		{
+			lastTransform = turretTransform.rotation; 
+
 			turretTransform.rotation = Quaternion.RotateTowards(turretTransform.rotation,
 			                                                    verticalRot, horizontalTurnSpeed * Time.deltaTime);
+
+			if (lastTransform == turretTransform.rotation)
+				break;
+
+			bool x = Subs.ApproximatelySame(turretTransform.rotation.eulerAngles.x, verticalRot.eulerAngles.x, 0.03f);
+			bool y = Subs.ApproximatelySame(turretTransform.rotation.eulerAngles.y, verticalRot.eulerAngles.y, 0.03f);
+			bool z = Subs.ApproximatelySame(turretTransform.rotation.eulerAngles.z, verticalRot.eulerAngles.z, 0.03f);
+
+			if (x && y && z)
+				break;
 			
 			yield return null;
 		}

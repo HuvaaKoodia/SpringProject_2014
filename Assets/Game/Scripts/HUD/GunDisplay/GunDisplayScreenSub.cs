@@ -8,7 +8,10 @@ public class GunDisplayScreenSub : MonoBehaviour {
 	public GunDisplayMain displayMain;
 	public WeaponMain weapon;
 
-	public UILabel infoLabel;
+	public UILabel infoLabel, missedLabel;
+
+	Timer missHideTimer;
+
 	public UISprite highlight,heat_slider_spr;
 
 	GameObject data_panel,overheat_icon,no_ammo_icon,broken_icon;
@@ -21,9 +24,17 @@ public class GunDisplayScreenSub : MonoBehaviour {
 	
 		data_panel=transform.Find("DataPanel").gameObject;
 
+		missedLabel.gameObject.SetActive(false);
+
 		overheat_icon.SetActive(false);
 		no_ammo_icon.SetActive(false);
 		broken_icon.SetActive(false);
+	}
+
+	public void CreateMissTimer(float waitTime)
+	{
+		missHideTimer = new Timer((int)(waitTime * 1000), new Timer.TimerEvent(HideMissedText));
+		missHideTimer.Active = false;
 	}
 
 	public void UpdateGunInfo(PlayerMain player)
@@ -49,9 +60,13 @@ public class GunDisplayScreenSub : MonoBehaviour {
 			{
 				info += "[FF0000]OVERHEAT![FFFFFF]";
 			}
-			overheat_icon.SetActive(weapon.WeaponSlot.ObjData.OVERHEAT);
-			no_ammo_icon.SetActive(player.ObjData.GetAmmoAmount(weapon.Weapon.baseItem.ammotype)==0);
-			broken_icon.SetActive(!weapon.WeaponSlot.ObjData.USABLE);
+
+			if (!missHideTimer.Active)
+			{
+				overheat_icon.SetActive(weapon.WeaponSlot.ObjData.OVERHEAT);
+				no_ammo_icon.SetActive(player.ObjData.GetAmmoAmount(weapon.Weapon.baseItem.ammotype)==0);
+				broken_icon.SetActive(!weapon.WeaponSlot.ObjData.USABLE);
+			}
 
 			//hax fix
 			if (broken_icon.activeSelf){
@@ -70,7 +85,7 @@ public class GunDisplayScreenSub : MonoBehaviour {
 
 			infoLabel.text = info;
 
-			if (overheat_icon.activeSelf||no_ammo_icon.activeSelf||broken_icon.activeSelf){
+			if (overheat_icon.activeSelf||no_ammo_icon.activeSelf||broken_icon.activeSelf || missHideTimer.Active){
 				data_panel.SetActive(false);
 			}
 			else
@@ -86,5 +101,25 @@ public class GunDisplayScreenSub : MonoBehaviour {
 	public void SetHighlightColor(Color color)
 	{
 		highlight.color = color;
+	}
+
+	public void ShowMissedText()
+	{
+		missedLabel.gameObject.SetActive(true);
+		data_panel.SetActive(false);
+		missHideTimer.Active = true;
+	}
+
+	public void HideMissedText()
+	{
+		missedLabel.gameObject.SetActive(false);
+		missHideTimer.Reset();
+		missHideTimer.Active = false;
+		UpdateGunInfo(weapon.player);
+	}
+
+	void Update()
+	{
+		missHideTimer.Update(Time.deltaTime);
 	}
 }
