@@ -405,7 +405,7 @@ public class PlayerMain : EntityMain
 				}
 				else if (s.Item.baseItem.type==InvBaseItem.Type.Radar){
 					HasRadar=true;
-					RadarRangeMax=s.Item.baseItem.GetStat(InvStat.Type.RadarRange).max_amount;
+					//RadarRangeMax=s.Item.baseItem.GetStat(InvStat.Type.RadarRange).max_amount;
 				}
 			}
 		}
