@@ -155,6 +155,8 @@ public class MapGenerator : MonoBehaviour
 					tile.TileObject.transform.parent=tile.transform;
 				}
 
+				bool random_small_rot_change_hax=false;
+
                 //game objects
                 switch (tile.Data.ObjType)
                 {
@@ -183,6 +185,7 @@ public class MapGenerator : MonoBehaviour
 					floor.LootCrates.Add(crate);
        				tile.TileObject=LootCrate;
                 	tile.TileObject.transform.parent = tile.transform;
+					random_small_rot_change_hax=true;
 	                break;
 				case TileObjData.Obj.NavigationTerminal:
 				case TileObjData.Obj.ArmoryTerminal:
@@ -225,7 +228,13 @@ public class MapGenerator : MonoBehaviour
 				if (tile.Data.ObjType!=TileObjData.Obj.None&&tile.TileObject!=null){
 					var rotation=tile.Data.ObjXml.rotation;
 					if (rotation<0) rotation=Subs.GetRandom(4)*90;
+
+					if (random_small_rot_change_hax){
+						rotation+=Subs.GetRandom(-5,5);
+					}
+
 					tile.TileObject.transform.rotation=Quaternion.AngleAxis(rotation,Vector3.up);
+
 				}
             }
         }

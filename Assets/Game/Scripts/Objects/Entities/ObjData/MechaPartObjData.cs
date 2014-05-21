@@ -94,22 +94,30 @@ public class MechaPartObjData{
             OVERHEAT=false;
         }
         if (heat>0&&TakeHeat!=null) TakeHeat(heat);
-
     }
 
     /// <summary>
     /// Increases HEAT based on the weapons heat value
     /// </summary>
-    public void IncreaseHEAT(InvGameItem weapon,float multi){
+    public void IncreaseHEAT(InvGameItem weapon){
         if (weapon==null) return;
-        AddHEAT(weapon.GetStat(InvStat.Type.Heat)._amount*multi);
+        AddHEAT(weapon.GetStat(InvStat.Type.Heat)._amount);
     }
     /// <summary>
     /// Reduces HEAT based on the weapons cooling value
     /// </summary>
-    public void ReduceHEAT(InvGameItem weapon,float multi){
+    public void ReduceHEAT(InvGameItem weapon){
         if (weapon==null) return;
 		AddHEAT(-weapon.GetStat(InvStat.Type.Cooling)._amount*(1f+cooling_multi));
+	}
+	/// <summary>
+	/// Disperce HEAT based on the weapons cooling values.
+	/// </summary>
+	public void DisperceHEAT_Weapon(InvGameItem weapon){
+		if (weapon==null) return;
+
+		AddHEAT(-(weapon.GetStat(InvStat.Type.Cooling)._amount*XmlDatabase.WeaponHeatDisperseCoolingMultiplier*(1f+cooling_multi)+HEAT*XmlDatabase.WeaponHeatDisperseHeatMultiplier));
+		can_disperse_heat=false;
 	}
 
     //effects
