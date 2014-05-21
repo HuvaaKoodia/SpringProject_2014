@@ -21,9 +21,12 @@ public class EnemyMain : EntityMain {
 	public int rangedRange = 3;
 	public int rangedAngleMax = 50;
 
-	float normalMovementSpeed;
-	float normalTurnSpeed;
-	float culledSpeedMultiplier = 7;
+	protected float normalMovementSpeed;
+	protected float normalTurnSpeed;
+	protected float culledSpeedMultiplier = 7;
+
+	float damageAfterReaction;
+	public bool GoingToDie { get { return damageAfterReaction <= 0; } }
 
 	public bool Dead { get; protected set; }
 
@@ -36,6 +39,8 @@ public class EnemyMain : EntityMain {
 
 		if (graphics != null)
 			meshRenderer = graphics.GetComponent<MeshRenderer>();
+
+		damageAfterReaction = Health;
 
 		Dead = false;
 
@@ -131,12 +136,7 @@ public class EnemyMain : EntityMain {
 
 	public IEnumerator TakeDamage(int damage, int weaponSlot)
 	{
-		Health -= damage;
-
-		if (Health <= 0)
-		{
-			Dead = true;
-		}
+		damageAfterReaction -= damage;
 
 		WaitingForDamageReaction[weaponSlot] = true;
 
@@ -152,7 +152,17 @@ public class EnemyMain : EntityMain {
 			yield return null;
 		}
 
-		ReactToDamage(damage);
+		if (!Dead)
+		{
+			Health -= damage;
+			if (Health <= 0)
+			{
+				Dead = true;
+			}
+
+			ReactToDamage(damage);
+		}
+
 		WaitingForDamageReaction[weaponSlot] = false;
 	}
 
@@ -183,6 +193,7 @@ public class EnemyMain : EntityMain {
 		movement.GetCurrenTile().LeaveTile();
 		CurrentFloor.Enemies.Remove(this);
 		OnDeath();
+
 		Destroy(this.gameObject);
 	}
 
@@ -199,7 +210,7 @@ public class EnemyMain : EntityMain {
 		aiController.EnemyFinishedTurn(this);
 	}
 
-	public void CullShow()
+	public virtual void CullShow()
 	{
 		graphics.SetActive(true);
 
@@ -207,7 +218,7 @@ public class EnemyMain : EntityMain {
 		movement.turnSpeed = normalTurnSpeed;
 	}
 
-	public void CullHide()
+	public virtual void CullHide()
 	{
 		graphics.SetActive(false);
 
