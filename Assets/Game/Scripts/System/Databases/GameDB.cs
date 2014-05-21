@@ -43,7 +43,7 @@ public class GameDB : MonoBehaviour {
 	}
 
 	public void CheckForGameOptions(){
-		if (File.Exists("Options.txt")){
+		if (SaveLoadSys.HasOptions()){
 			GameOptionsData=SaveLoadSys.LoadOptions();
 			//set options to new data
 			SS.GOps.SetQualitySettingsToData(GameOptionsData);

@@ -37,24 +37,31 @@ public class GameOptionsMain : MonoBehaviour {
 			GOpsObjD.quality_level = 6;
 			break;
 		}
-		SetQualitySettingsToData(GOpsObjD);
+		//SetQualitySettingsToData(GOpsObjD);
+		QualitySettings.SetQualityLevel(GOpsObjD.quality_level);
 	}
 
 	public void SetPixelLightCount(LightQuality LQ)
 	{
 		switch(LQ)
 		{
+		case LightQuality.VERYLOW:
+			GOpsObjD.pixel_light_count = 0;
+			break;
 		case LightQuality.LOW:
-			GOpsObjD.pixel_light_count = 3;
+			GOpsObjD.pixel_light_count = 1;
 			break;
 		case LightQuality.MEDIUM:
-			GOpsObjD.pixel_light_count = 5;
+			GOpsObjD.pixel_light_count = 2;
 			break;
 		case LightQuality.HIGH:
-			GOpsObjD.pixel_light_count = 10;
+			GOpsObjD.pixel_light_count = 3;
+			break;
+		case LightQuality.EXTRA:
+			GOpsObjD.pixel_light_count = 4;
 			break;
 		}
-		SetQualitySettingsToData(GOpsObjD);
+		QualitySettings.pixelLightCount = GOpsObjD.pixel_light_count;
 	}
 
 	public void SetTextureQuality(TextureQuality TQ)
@@ -74,7 +81,7 @@ public class GameOptionsMain : MonoBehaviour {
 			GOpsObjD.texture_quality = 3;
 			break;
 		}
-		SetQualitySettingsToData(GOpsObjD);
+		QualitySettings.masterTextureLimit = GOpsObjD.texture_quality;
 	}
 
 	public void SetAnisotropicQuality(AnisotropicQuality AQ)
@@ -89,7 +96,7 @@ public class GameOptionsMain : MonoBehaviour {
 			break;
 		}
 
-		SetQualitySettingsToData(GOpsObjD);
+		QualitySettings.anisotropicFiltering=GOpsObjD.anisotropic_filtering;
 	}
 
 	public void SetAntiAliasing(AntiAliasing AA)
@@ -109,7 +116,7 @@ public class GameOptionsMain : MonoBehaviour {
 			GOpsObjD.anti_Aliasing = 8;
 			break;
 		}
-		SetQualitySettingsToData(GOpsObjD);
+		QualitySettings.antiAliasing = GOpsObjD.anti_Aliasing;
 	}
 
 	public void SetShadowQuality(ShadowQuality SQ)
@@ -145,7 +152,8 @@ public class GameOptionsMain : MonoBehaviour {
 			GOpsObjD.shadow_distance = 150;
 			break;
 		}
-		SetQualitySettingsToData(GOpsObjD);
+		QualitySettings.shadowCascades = GOpsObjD.shadow_cascades;
+		QualitySettings.shadowDistance = GOpsObjD.shadow_distance;
 	}
 
 	public void SetVSync(VSync VS)
@@ -159,7 +167,7 @@ public class GameOptionsMain : MonoBehaviour {
 			GOpsObjD.vsync_count = 1;
 			break;
 		}
-		SetQualitySettingsToData(GOpsObjD);
+		QualitySettings.vSyncCount = GOpsObjD.vsync_count;
 	}
 
 	/// <summary>
@@ -167,14 +175,14 @@ public class GameOptionsMain : MonoBehaviour {
 	/// </summary>
 	/// <param name="data">Data.</param>
 	public void SetQualitySettingsToData(GameOptionsObjData data){
+		QualitySettings.SetQualityLevel(6);
 
-		QualitySettings.SetQualityLevel(GOpsObjD.quality_level);
-
-		QualitySettings.masterTextureLimit = GOpsObjD.texture_quality;
-		QualitySettings.pixelLightCount = GOpsObjD.pixel_light_count;
-		QualitySettings.vSyncCount = GOpsObjD.vsync_count;
-		QualitySettings.shadowCascades = GOpsObjD.shadow_cascades;
-		QualitySettings.shadowDistance = GOpsObjD.shadow_distance;
-		QualitySettings.antiAliasing = GOpsObjD.anti_Aliasing;
+		QualitySettings.masterTextureLimit = data.texture_quality;
+		QualitySettings.pixelLightCount = data.pixel_light_count;
+		QualitySettings.vSyncCount = data.vsync_count;
+		QualitySettings.shadowCascades = data.shadow_cascades;
+		QualitySettings.shadowDistance = data.shadow_distance;
+		QualitySettings.antiAliasing = data.anti_Aliasing;
+		QualitySettings.anisotropicFiltering=data.anisotropic_filtering;
 	}
 }

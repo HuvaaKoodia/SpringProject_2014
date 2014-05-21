@@ -40,6 +40,11 @@ public class SaveLoadSys:TXT_Loader {
 		PlayerPrefs.SetString("Options",data);
 	}
 
+	public static bool HasOptions ()
+	{
+		return PlayerPrefs.HasKey("Options");
+	}
+
 	public static GameOptionsObjData LoadOptions ()
 	{
 		var data=PlayerPrefs.GetString("Options");

@@ -10,7 +10,7 @@ public class TileMain : MonoBehaviour
 
     public EntityMain entityOnTile {get; private set;}
 
-	public bool BlockedForMovement{
+	public bool BlockedForMovementEnemy{
 		get{
 			if (entityOnTile != null){
               	//terrible hax alien can move under turret
@@ -30,6 +30,25 @@ public class TileMain : MonoBehaviour
 			return !((Data.TileType == TileObjData.Type.Floor
 			        ||Data.TileType == TileObjData.Type.Corridor
                       )&& TileObject==null);
+		}
+	}
+
+	public bool BlockedForMovement{
+		get{
+			if (entityOnTile != null){
+				return true;
+			}
+			
+			var door=GetDoor();
+			if (door!=null){
+				if (door.IsOpen)
+					return false;
+				return true;
+			}
+			
+			return !((Data.TileType == TileObjData.Type.Floor
+			          ||Data.TileType == TileObjData.Type.Corridor
+			          )&& TileObject==null);
 		}
 	}
 

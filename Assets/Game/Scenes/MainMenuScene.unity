@@ -487,8 +487,8 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: .0352941193, g: .164705887, b: .164705887, a: 1}
   mPivot: 4
-  mWidth: 329
-  mHeight: 99
+  mWidth: 335
+  mHeight: 101
   mDepth: 16
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -1555,7 +1555,7 @@ MonoBehaviour:
     mMethodName: SetCurrentSelection
     oneShot: 0
   - mTarget: {fileID: 1118732974}
-    mMethodName: DisableQuality
+    mMethodName: UpdateQualitySettingsToLabels
     oneShot: 0
   mSelectedItem: Disabled
   eventReceiver: {fileID: 0}
@@ -1563,6 +1563,7 @@ MonoBehaviour:
   textScale: 0
   font: {fileID: 0}
   textLabel: {fileID: 0}
+  DontSendSelectionMessagesAtStartUp: 1
 --- !u!114 &293784694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1885,6 +1886,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 11400086, guid: 678467b2abf6e884fa63d407e861f17b, type: 2}
+      propertyPath: items.Array.size
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 400048, guid: 678467b2abf6e884fa63d407e861f17b, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1911,6 +1916,110 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400048, guid: 678467b2abf6e884fa63d407e861f17b, type: 2}
       propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400064, guid: 678467b2abf6e884fa63d407e861f17b, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400064, guid: 678467b2abf6e884fa63d407e861f17b, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400070, guid: 678467b2abf6e884fa63d407e861f17b, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400070, guid: 678467b2abf6e884fa63d407e861f17b, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400104, guid: 678467b2abf6e884fa63d407e861f17b, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100082, guid: 678467b2abf6e884fa63d407e861f17b, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400060, guid: 678467b2abf6e884fa63d407e861f17b, type: 2}
+      propertyPath: OptionsPanel
+      value: 
+      objectReference: {fileID: 1118732974}
+    - target: {fileID: 11400128, guid: 678467b2abf6e884fa63d407e861f17b, type: 2}
+      propertyPath: onChange.Array.data[1].mMethodName
+      value: UpdateQualityToSelected
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400160, guid: 678467b2abf6e884fa63d407e861f17b, type: 2}
+      propertyPath: onChange.Array.data[1].mMethodName
+      value: UpdateQualitySettingsToLabels
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400040, guid: 678467b2abf6e884fa63d407e861f17b, type: 2}
+      propertyPath: onChange.Array.data[1].mMethodName
+      value: UpdateQualitySettingsToLabels
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400086, guid: 678467b2abf6e884fa63d407e861f17b, type: 2}
+      propertyPath: onChange.Array.data[1].mMethodName
+      value: UpdateQualitySettingsToLabels
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400186, guid: 678467b2abf6e884fa63d407e861f17b, type: 2}
+      propertyPath: onChange.Array.data[1].mMethodName
+      value: UpdateQualitySettingsToLabels
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400140, guid: 678467b2abf6e884fa63d407e861f17b, type: 2}
+      propertyPath: onChange.Array.data[1].mMethodName
+      value: UpdateQualitySettingsToLabels
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400048, guid: 678467b2abf6e884fa63d407e861f17b, type: 2}
+      propertyPath: onChange.Array.data[1].mMethodName
+      value: UpdateQualitySettingsToLabels
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400086, guid: 678467b2abf6e884fa63d407e861f17b, type: 2}
+      propertyPath: items.Array.data[3]
+      value: High
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400086, guid: 678467b2abf6e884fa63d407e861f17b, type: 2}
+      propertyPath: items.Array.data[0]
+      value: Very Low
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400086, guid: 678467b2abf6e884fa63d407e861f17b, type: 2}
+      propertyPath: items.Array.data[1]
+      value: Low
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400086, guid: 678467b2abf6e884fa63d407e861f17b, type: 2}
+      propertyPath: items.Array.data[2]
+      value: Medium
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400086, guid: 678467b2abf6e884fa63d407e861f17b, type: 2}
+      propertyPath: items.Array.data[4]
+      value: Extra
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400048, guid: 678467b2abf6e884fa63d407e861f17b, type: 2}
+      propertyPath: DontSendSelectionMessagesAtStartUp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400140, guid: 678467b2abf6e884fa63d407e861f17b, type: 2}
+      propertyPath: DontSendSelectionMessagesAtStartUp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400186, guid: 678467b2abf6e884fa63d407e861f17b, type: 2}
+      propertyPath: DontSendSelectionMessagesAtStartUp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400086, guid: 678467b2abf6e884fa63d407e861f17b, type: 2}
+      propertyPath: DontSendSelectionMessagesAtStartUp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400040, guid: 678467b2abf6e884fa63d407e861f17b, type: 2}
+      propertyPath: DontSendSelectionMessagesAtStartUp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400160, guid: 678467b2abf6e884fa63d407e861f17b, type: 2}
+      propertyPath: DontSendSelectionMessagesAtStartUp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400128, guid: 678467b2abf6e884fa63d407e861f17b, type: 2}
+      propertyPath: DontSendSelectionMessagesAtStartUp
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2044,7 +2153,7 @@ MonoBehaviour:
     mMethodName: SetCurrentSelection
     oneShot: 0
   - mTarget: {fileID: 1118732974}
-    mMethodName: DisableQuality
+    mMethodName: UpdateQualitySettingsToLabels
     oneShot: 0
   mSelectedItem: On
   eventReceiver: {fileID: 0}
@@ -2052,6 +2161,7 @@ MonoBehaviour:
   textScale: 0
   font: {fileID: 0}
   textLabel: {fileID: 0}
+  DontSendSelectionMessagesAtStartUp: 1
 --- !u!114 &349829784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2269,35 +2379,35 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400762, guid: 4e352aa64cbc07a40b14dd522f0506fb, type: 2}
       propertyPath: mWidth
-      value: 329
+      value: 335
       objectReference: {fileID: 0}
     - target: {fileID: 11400762, guid: 4e352aa64cbc07a40b14dd522f0506fb, type: 2}
       propertyPath: mHeight
-      value: 99
+      value: 101
       objectReference: {fileID: 0}
     - target: {fileID: 11400312, guid: 4e352aa64cbc07a40b14dd522f0506fb, type: 2}
       propertyPath: mWidth
-      value: 439
+      value: 434
       objectReference: {fileID: 0}
     - target: {fileID: 11400312, guid: 4e352aa64cbc07a40b14dd522f0506fb, type: 2}
       propertyPath: mHeight
-      value: 50
+      value: 49
       objectReference: {fileID: 0}
     - target: {fileID: 11400030, guid: 4e352aa64cbc07a40b14dd522f0506fb, type: 2}
       propertyPath: mWidth
-      value: 241
+      value: 237
       objectReference: {fileID: 0}
     - target: {fileID: 11400030, guid: 4e352aa64cbc07a40b14dd522f0506fb, type: 2}
       propertyPath: mHeight
-      value: 50
+      value: 49
       objectReference: {fileID: 0}
     - target: {fileID: 11400520, guid: 4e352aa64cbc07a40b14dd522f0506fb, type: 2}
       propertyPath: mWidth
-      value: 344
+      value: 338
       objectReference: {fileID: 0}
     - target: {fileID: 11400520, guid: 4e352aa64cbc07a40b14dd522f0506fb, type: 2}
       propertyPath: mHeight
-      value: 50
+      value: 49
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4e352aa64cbc07a40b14dd522f0506fb, type: 2}
@@ -2693,11 +2803,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CreditsPanel: {fileID: 124819559}
   HelpPanel: {fileID: 645136548}
-  OptionsPanel: {fileID: 1118732972}
   QuitButton: {fileID: 1361485522}
   FullScreenButton: {fileID: 1941503985}
   MenuParent: {fileID: 741056088}
   NewGameMenu: {fileID: 1004306410}
+  OptionsPanel: {fileID: 1118732974}
   ContinueButton: {fileID: 1849128134}
 --- !u!54 &423515621
 Rigidbody:
@@ -3639,8 +3749,8 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .0352941193, g: .164705887, b: .164705887, a: 1}
   mPivot: 4
-  mWidth: 439
-  mHeight: 50
+  mWidth: 434
+  mHeight: 49
   mDepth: 17
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -3745,7 +3855,7 @@ Transform:
   m_PrefabInternal: {fileID: 342576833}
   m_GameObject: {fileID: 741056088}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.773881495, y: -.774193585, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.00012493, y: 1.00012493, z: 1.00012493}
   m_Children:
   - {fileID: 467453540}
@@ -4097,7 +4207,7 @@ Transform:
   m_PrefabInternal: {fileID: 342576833}
   m_GameObject: {fileID: 885004119}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.773881495, y: -.774193585, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.00007999, y: 1.00007999, z: 1.00007999}
   m_Children:
   - {fileID: 1731659702}
@@ -4396,9 +4506,11 @@ MonoBehaviour:
   highlightSprite: Button
   position: 2
   items:
+  - Very Low
   - Low
   - Medium
   - High
+  - Extra
   padding: {x: 4, y: 4}
   textColor: {r: 1, g: 1, b: 1, a: .839215696}
   backgroundColor: {r: .888059676, g: .764287651, b: .550066829, a: 1}
@@ -4410,7 +4522,7 @@ MonoBehaviour:
     mMethodName: SetCurrentSelection
     oneShot: 0
   - mTarget: {fileID: 1118732974}
-    mMethodName: DisableQuality
+    mMethodName: UpdateQualitySettingsToLabels
     oneShot: 0
   mSelectedItem: Low
   eventReceiver: {fileID: 0}
@@ -4418,6 +4530,7 @@ MonoBehaviour:
   textScale: 0
   font: {fileID: 0}
   textLabel: {fileID: 0}
+  DontSendSelectionMessagesAtStartUp: 1
 --- !u!114 &971248937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4931,7 +5044,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1118732973
 Transform:
   m_ObjectHideFlags: 0
@@ -5720,8 +5833,8 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .0352941193, g: .164705887, b: .164705887, a: 1}
   mPivot: 4
-  mWidth: 241
-  mHeight: 50
+  mWidth: 237
+  mHeight: 49
   mDepth: 17
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -6118,7 +6231,7 @@ Transform:
   m_PrefabInternal: {fileID: 342576833}
   m_GameObject: {fileID: 1424056660}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.773881495, y: -360, z: 0}
+  m_LocalPosition: {x: 0, y: -360, z: 0}
   m_LocalScale: {x: 1.00012493, y: 1.00012493, z: 1.00012493}
   m_Children:
   - {fileID: 1961857072}
@@ -6360,7 +6473,7 @@ MonoBehaviour:
     mMethodName: SetCurrentSelection
     oneShot: 0
   - mTarget: {fileID: 1118732974}
-    mMethodName: EnableQuality
+    mMethodName: UpdateQualityToSelected
     oneShot: 0
   mSelectedItem: Fastest
   eventReceiver: {fileID: 0}
@@ -6368,6 +6481,7 @@ MonoBehaviour:
   textScale: 0
   font: {fileID: 0}
   textLabel: {fileID: 0}
+  DontSendSelectionMessagesAtStartUp: 1
 --- !u!114 &1446022572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7015,7 +7129,7 @@ MonoBehaviour:
     mMethodName: SetCurrentSelection
     oneShot: 0
   - mTarget: {fileID: 1118732974}
-    mMethodName: DisableQuality
+    mMethodName: UpdateQualitySettingsToLabels
     oneShot: 0
   mSelectedItem: Full Res
   eventReceiver: {fileID: 0}
@@ -7023,6 +7137,7 @@ MonoBehaviour:
   textScale: 0
   font: {fileID: 0}
   textLabel: {fileID: 0}
+  DontSendSelectionMessagesAtStartUp: 1
 --- !u!114 &1542289549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7193,8 +7308,8 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .0352941193, g: .164705887, b: .164705887, a: 1}
   mPivot: 4
-  mWidth: 344
-  mHeight: 50
+  mWidth: 338
+  mHeight: 49
   mDepth: 17
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -8133,7 +8248,7 @@ MonoBehaviour:
     mMethodName: SetCurrentSelection
     oneShot: 0
   - mTarget: {fileID: 1118732974}
-    mMethodName: DisableQuality
+    mMethodName: UpdateQualitySettingsToLabels
     oneShot: 0
   mSelectedItem: Disable
   eventReceiver: {fileID: 0}
@@ -8141,6 +8256,7 @@ MonoBehaviour:
   textScale: 0
   font: {fileID: 0}
   textLabel: {fileID: 0}
+  DontSendSelectionMessagesAtStartUp: 1
 --- !u!114 &1674886206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9067,7 +9183,7 @@ MonoBehaviour:
     mMethodName: SetCurrentSelection
     oneShot: 0
   - mTarget: {fileID: 1118732974}
-    mMethodName: DisableQuality
+    mMethodName: UpdateQualitySettingsToLabels
     oneShot: 0
   mSelectedItem: Off
   eventReceiver: {fileID: 0}
@@ -9075,6 +9191,7 @@ MonoBehaviour:
   textScale: 0
   font: {fileID: 0}
   textLabel: {fileID: 0}
+  DontSendSelectionMessagesAtStartUp: 1
 --- !u!114 &1933413329
 MonoBehaviour:
   m_ObjectHideFlags: 0

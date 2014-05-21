@@ -14,9 +14,11 @@ public enum Quality
 
 public enum LightQuality
 {
-	LOW = 0,
+	VERYLOW=0,
+	LOW,
 	MEDIUM,
-	HIGH
+	HIGH,
+	EXTRA
 };
 
 public enum TextureQuality

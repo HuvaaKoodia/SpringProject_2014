@@ -3,7 +3,8 @@ using System.Collections;
 
 public class MainMenuHud : MonoBehaviour {
 	
-	public GameObject CreditsPanel,HelpPanel,OptionsPanel,QuitButton,FullScreenButton,MenuParent,NewGameMenu;
+	public GameObject CreditsPanel,HelpPanel,QuitButton,FullScreenButton,MenuParent,NewGameMenu;
+	public GameOptionsMenu OptionsPanel;
 	GameDB GDB;
 	public UIButton ContinueButton;
 
@@ -50,7 +51,8 @@ public class MainMenuHud : MonoBehaviour {
 	}
 
 	void OptionsClick(){
-		ToggleOne(OptionsPanel);
+		ToggleOne(OptionsPanel.gameObject);
+		OptionsPanel.OpenMenu();
 	}
 
     void CreditsClick(){
@@ -64,7 +66,7 @@ public class MainMenuHud : MonoBehaviour {
     void DisableAll(){
         CreditsPanel.SetActive(false);
         HelpPanel.SetActive(false);
-		OptionsPanel.SetActive(false);
+		OptionsPanel.gameObject.SetActive(false);
 		NewGameMenu.SetActive(false);
 
 		MenuParent.SetActive(false);

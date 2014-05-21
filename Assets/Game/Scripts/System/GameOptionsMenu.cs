@@ -16,41 +16,39 @@ public class GameOptionsMenu : MonoBehaviour
 	public UILabel ShadowLabel;
 	public UILabel VSyncLabel;
 
-	bool editQuality = true;
-
 	// Use this for initialization
 	void Awake ()
 	{
 		GOpsMain = SharedSystemsMain.I.GOps;
-
-		UpdateSettings();
 	}
 
-	public void EnableQuality()
-	{
-		editQuality = true;
-		UpdateSettings();
+	public void OpenMenu(){
+		UpdateAllLabelsToCurrentQualitySettings();
 	}
 
-	public void DisableQuality()
-	{
-		editQuality = false;
-		UpdateSettings();
-	}
+	//label updaters
 
 	void GetLightProperty()
 	{
-		if(QualitySettings.pixelLightCount <= 3)
+		if(QualitySettings.pixelLightCount == 0)
+		{
+			LightLabel.text = "Very Low";
+		}
+		if(QualitySettings.pixelLightCount == 1)
 		{
 			LightLabel.text = "Low";
 		}
-		else if(QualitySettings.pixelLightCount <= 5)
+		else if(QualitySettings.pixelLightCount ==2)
 		{
 			LightLabel.text = "Medium";
 		}
-		else
+		else if(QualitySettings.pixelLightCount ==3)
 		{
 			LightLabel.text = "High";
+		}
+		else if(QualitySettings.pixelLightCount >=4)
+		{
+			LightLabel.text = "Extra";
 		}
 	}
 
@@ -144,50 +142,14 @@ public class GameOptionsMenu : MonoBehaviour
 		}
 	}
 
-	void GetAllProperties()
-	{
-		GetLightProperty();
-		GetTextureProperty();
-		GetAnisotropicProperty();
-		GetAntiAliasingProperty();
-		GetShadowProperty();
-		GetVSyncProperty();
-	}
-
-	void ChangeQuality()
-	{
-		if(QualityLabel.text == "Fastest")
-		{
-			GOpsMain.SetQuality(Quality.FASTEST);
-		}
-		else if(QualityLabel.text == "Fast")
-		{
-			GOpsMain.SetQuality(Quality.FAST);
-		}
-		else if(QualityLabel.text == "Simple")
-		{
-			GOpsMain.SetQuality(Quality.SIMPLE);
-		}
-		else if(QualityLabel.text == "Good")
-		{
-			GOpsMain.SetQuality(Quality.GOOD);
-		}
-		else if(QualityLabel.text == "Beautiful")
-		{
-			GOpsMain.SetQuality(Quality.BEAUTIFUL);
-		}
-		else if(QualityLabel.text == "Fantastic")
-		{
-			GOpsMain.SetQuality(Quality.FANTASTIC);
-		}
-//		else if(QualityLabel.text == "Custom")
-//		{
-//			GOpsMain.SetQuality(Quality.CUSTOM);
-//		}
-	}
+	//setting changers
 
 	void ChangeLight()
 	{
+		if(LightLabel.text == "Very Low")
+		{
+			GOpsMain.SetPixelLightCount(LightQuality.VERYLOW);
+		}
 		if(LightLabel.text == "Low")
 		{
 			GOpsMain.SetPixelLightCount(LightQuality.LOW);
@@ -197,6 +159,10 @@ public class GameOptionsMenu : MonoBehaviour
 			GOpsMain.SetPixelLightCount(LightQuality.MEDIUM);
 		}
 		else if(LightLabel.text == "High")
+		{
+			GOpsMain.SetPixelLightCount(LightQuality.HIGH);
+		}
+		else if(LightLabel.text == "Extra")
 		{
 			GOpsMain.SetPixelLightCount(LightQuality.HIGH);
 		}
@@ -286,25 +252,58 @@ public class GameOptionsMenu : MonoBehaviour
 		}
 	}
 
-	void UpdateSettings()
+	//update functions
+	
+	public void UpdateQualityToSelected()
 	{
-		ChangeQuality();
-
-		if(editQuality)
+		if(QualityLabel.text == "Fastest")
 		{
-			GetAllProperties();
+			GOpsMain.SetQuality(Quality.FASTEST);
 		}
-		else
+		else if(QualityLabel.text == "Fast")
 		{
-			QualityLabel.text = "Custom";
-
-			ChangeLight();
-			ChangeTexture();
-			ChangeAnisotropic();
-			ChangeAntiAliasing();
-			ChangeShadow();
-			ChangeVSync();
+			GOpsMain.SetQuality(Quality.FAST);
 		}
+		else if(QualityLabel.text == "Simple")
+		{
+			GOpsMain.SetQuality(Quality.SIMPLE);
+		}
+		else if(QualityLabel.text == "Good")
+		{
+			GOpsMain.SetQuality(Quality.GOOD);
+		}
+		else if(QualityLabel.text == "Beautiful")
+		{
+			GOpsMain.SetQuality(Quality.BEAUTIFUL);
+		}
+		else if(QualityLabel.text == "Fantastic")
+		{
+			GOpsMain.SetQuality(Quality.FANTASTIC);
+		}
+
+		UpdateAllLabelsToCurrentQualitySettings();
+	}
+	
+	public void UpdateAllLabelsToCurrentQualitySettings()
+	{
+		GetLightProperty();
+		GetTextureProperty();
+		GetAnisotropicProperty();
+		GetAntiAliasingProperty();
+		GetShadowProperty();
+		GetVSyncProperty();
+	}
+
+	public void UpdateQualitySettingsToLabels()
+	{
+		QualityLabel.text = "Custom";
+
+		ChangeLight();
+		ChangeTexture();
+		ChangeAnisotropic();
+		ChangeAntiAliasing();
+		ChangeShadow();
+		ChangeVSync();
 	}
 }
 
