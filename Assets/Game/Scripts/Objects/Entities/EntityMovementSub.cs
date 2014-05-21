@@ -16,6 +16,8 @@ public class EntityMovementSub : MonoBehaviour
     int mapWidth;
     int mapHeight;
 
+	public bool hax_is_enemy=false;
+
 	public int currentGridX;// { get; private set; }
 	public int currentGridY;// { get; private set; }
     public MovementState currentMovement = MovementState.NotMoving;
@@ -233,6 +235,8 @@ public class EntityMovementSub : MonoBehaviour
             return false;
         }
         TileMain nextTile = tilemap[x, y];
+		if (hax_is_enemy)
+			return !nextTile.BlockedForMovementEnemy;
         return !nextTile.BlockedForMovement;
     }
 

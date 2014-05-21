@@ -356,6 +356,8 @@ public class UIPopupList : UIWidgetContainer
 		}
 	}
 
+	public bool DontSendSelectionMessagesAtStartUp=false;
+
 	/// <summary>
 	/// Send out the selection message on start.
 	/// </summary>
@@ -371,6 +373,8 @@ public class UIPopupList : UIWidgetContainer
 			UnityEditor.EditorUtility.SetDirty(this);
 #endif
 		}
+
+		if(DontSendSelectionMessagesAtStartUp) return;
 
 		if (Application.isPlaying)
 		{

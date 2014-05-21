@@ -42,7 +42,6 @@ public class XmlDatabase
         HullHeatAddMultiplier,
 		WeaponHeatDisperseCoolingMultiplier,
 		WeaponHeatDisperseHeatMultiplier,
-		DisperseHeatMultiplier,
 		HullHeatDisperseHeatMultiplier,
 		MechaPartConditionFairThreshold,
 		MechaPartConditionBadThreshold,
@@ -145,5 +144,29 @@ public class XmlDatabase
 			return;
 		}
 		Missions.Add(type,data);
+	}
+
+	public static string GetAttributeName(InvStat.Type a)
+	{
+		switch (a) 
+		{
+		case InvStat.Type.AccuracyBoost:
+			return "% Accuracy Boost";
+		case InvStat.Type.Cooling:
+			return "Cooling Rate";
+		case InvStat.Type.Firerate:
+			return "Rate of Fire";
+		case InvStat.Type.HullArmor:
+			return "% Hull Damage Reduction";
+		case InvStat.Type.HullOverheatLimit:
+			return "Hull Overheat Limit";
+		case InvStat.Type.MeleeDamage:
+			return "% Melee Damage Boost";
+		case InvStat.Type.SystemCooling:
+			return "% Cooling Boost";
+		default:
+			return a.ToString();
+		}
+				
 	}
 }

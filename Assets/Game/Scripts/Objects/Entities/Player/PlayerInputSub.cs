@@ -25,8 +25,6 @@ public class PlayerInputSub : MonoBehaviour {
 
 			if (!UICamera.MenuButtonPressed)
             	MouseInput();
-
-			//player.GC.HUD.gunInfoDisplay.UpdateGunInfo();
         }
 
 		UICamera.MenuButtonPressed = false;
@@ -110,6 +108,7 @@ public class PlayerInputSub : MonoBehaviour {
 		{
 			FreeLookToggleInput();
 		}
+
 #if UNITY_EDITOR
         //DEV.DEBUG damage
         var x=playerMovement.currentGridX;
@@ -228,7 +227,7 @@ public class PlayerInputSub : MonoBehaviour {
 	{
         if (NotUsable()) return;
 
-		player.DisperseWeaponHeat(XmlDatabase.DisperseHeatMultiplier);
+		player.DisperseWeaponHeat();
 
 		player.EndPlayerPhase();
 	}

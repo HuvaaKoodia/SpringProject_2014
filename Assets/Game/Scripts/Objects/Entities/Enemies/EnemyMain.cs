@@ -21,11 +21,16 @@ public class EnemyMain : EntityMain {
 	public int rangedRange = 3;
 	public int rangedAngleMax = 50;
 
-	float normalMovementSpeed;
-	float normalTurnSpeed;
-	float culledSpeedMultiplier = 7;
+	protected float normalMovementSpeed;
+	protected float normalTurnSpeed;
+	protected float culledSpeedMultiplier = 7;
+
+	float damageAfterReaction;
+	public bool GoingToDie { get { return damageAfterReaction <= 0; } }
 
 	public bool Dead { get; protected set; }
+
+	bool[] WaitingForDamageReaction;
 
 	// Use this for initialization
 	public override void Awake()
@@ -35,6 +40,8 @@ public class EnemyMain : EntityMain {
 		if (graphics != null)
 			meshRenderer = graphics.GetComponent<MeshRenderer>();
 
+		damageAfterReaction = Health;
+
 		Dead = false;
 
 		aiController = GC.aiController;
@@ -42,6 +49,8 @@ public class EnemyMain : EntityMain {
 
 		normalMovementSpeed = movement.movementSpeed;
 		normalTurnSpeed = movement.turnSpeed;
+
+		WaitingForDamageReaction = new bool[] { false, false, false, false };
 	}
 
 	void Start ()
@@ -70,7 +79,6 @@ public class EnemyMain : EntityMain {
 
 				if (movement.currentMovement == MovementState.NotMoving)
 				{
-
 					FinishedMoving(false);
 				}
 				else
@@ -126,36 +134,66 @@ public class EnemyMain : EntityMain {
 	}
 	*/
 
-	public override void TakeDamage(int damage)
+	public IEnumerator TakeDamage(int damage, int weaponSlot)
 	{
-		Health -= damage;
+		damageAfterReaction -= damage;
 
-		//temp
-		if (meshRenderer != null)
+		WaitingForDamageReaction[weaponSlot] = true;
+
+		float timeWaited = 0.0f;
+
+		while (WaitingForDamageReaction[weaponSlot])
 		{
-	        Color oldColor = meshRenderer.material.color;
-			Color newColor = new Color(oldColor.r, oldColor.g-0.2f, oldColor.b-0.2f);
-				meshRenderer.material.color = newColor;
+			timeWaited += Time.deltaTime;
+
+			if (timeWaited > 0.9f)
+				break;
+
+			yield return null;
 		}
 
-        if (Health <= 0)
+		if (!Dead)
 		{
-			Die();
+			Health -= damage;
+			if (Health <= 0)
+			{
+				Dead = true;
+			}
+
+			ReactToDamage(damage);
 		}
+
+		WaitingForDamageReaction[weaponSlot] = false;
 	}
 
-	protected virtual void Die()
+	protected virtual void ReactToDamage(int amount)
+	{ 
+	}
+
+	public void StartDamageReact(int weaponSlot)
 	{
-		Dead = true;
-		OnDeath();
-		Remove();
+		WaitingForDamageReaction[weaponSlot] = false;
 	}
 
-	void Remove()
+	public bool GetWaitingForDamageReaction(int weaponSlot)
+	{
+		return WaitingForDamageReaction[weaponSlot];
+	}
+
+	public bool GetWaitingForDamageReaction()
+	{
+		return WaitingForDamageReaction[0] ||
+			   WaitingForDamageReaction[1] ||
+			   WaitingForDamageReaction[2] ||
+			   WaitingForDamageReaction[3];
+	}
+
+	protected void Remove()
 	{
 		movement.GetCurrenTile().LeaveTile();
 		CurrentFloor.Enemies.Remove(this);
 		OnDeath();
+
 		Destroy(this.gameObject);
 	}
 
@@ -172,7 +210,7 @@ public class EnemyMain : EntityMain {
 		aiController.EnemyFinishedTurn(this);
 	}
 
-	public void CullShow()
+	public virtual void CullShow()
 	{
 		graphics.SetActive(true);
 
@@ -180,18 +218,11 @@ public class EnemyMain : EntityMain {
 		movement.turnSpeed = normalTurnSpeed;
 	}
 
-	public void CullHide()
+	public virtual void CullHide()
 	{
 		graphics.SetActive(false);
 
 		movement.movementSpeed = normalMovementSpeed * culledSpeedMultiplier;
 		movement.turnSpeed = normalTurnSpeed * culledSpeedMultiplier;
-	}
-
-	void OnParticleCollision(GameObject other)
-	{
-		int lol;
-		lol = 0;
-		lol++;
 	}
 }

@@ -14,7 +14,8 @@ public class InGameInfoPanelMain : MonoBehaviour {
 	public EquipRandomItem temp_random_item_button;
 
     public MenuTabController Tabs;
-    public MechanicalMenu Mechanic;
+	public Instantiate_MechanicalMenu mm_init;
+	MechanicalMenu Mechanic;
 
 	public InfoMenuMap MenuMap;
 	PlayerMain Player;
@@ -52,12 +53,12 @@ public class InGameInfoPanelMain : MonoBehaviour {
 	}
 
 	public void OpenTab_Status(){
-		Mechanic.OpenPanel();
 		Tabs.OpenTab2();
+		Mechanic.OpenPanel();
 	}
 
 	public void ActivateInventory()
-	{ 
+	{
 		InfoPanel.SetActive(true);
     }
 
@@ -80,6 +81,7 @@ public class InGameInfoPanelMain : MonoBehaviour {
 		}
 
 		temp_random_item_button.equipment=player.ObjData.Equipment;
+		Mechanic=mm_init.Instance;
         Mechanic.SetPlayer(player.ObjData);
 
 		AmmoPanel.SetPlayer(player.ObjData,false);

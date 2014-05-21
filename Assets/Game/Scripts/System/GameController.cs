@@ -98,7 +98,7 @@ public class GameController : MonoBehaviour {
 
 	void Awake(){
 		
-		SS=GameObject.FindGameObjectWithTag("SharedSystems").GetComponent<SharedSystemsMain>();
+		SS=SharedSystemsMain.I;
 
 		Floors=new List<FloorObjData>();
 		FloorContainers=new List<GameObject>();
@@ -110,8 +110,7 @@ public class GameController : MonoBehaviour {
 	void Start()
     {
 		//Dev.debug
-		if (!SS.GDB.GameStarted)
-			SS.GDB.CreateNewGame();
+		if (!SS.GDB.GameStarted) SS.GDB.CreateNewGame();
 
 		#if !UNITY_EDITOR
 		OverrideMissionShip=false;
@@ -225,6 +224,8 @@ public class GameController : MonoBehaviour {
 
 		HUD.SetAlpha(1f);
 		HUD.FadeOut(0.5f);
+
+		SS.GDB.AllowEscHud=true;
 	}
 
 	// Update is called once per frame
@@ -446,6 +447,7 @@ public class GameController : MonoBehaviour {
 
 	public void EndGame ()
 	{
+		SS.GDB.RemoveSavesIfIronman();
 		HUD.FadeIn(0.3f);
 		StartCoroutine(EndGameAfterFade());
 	}

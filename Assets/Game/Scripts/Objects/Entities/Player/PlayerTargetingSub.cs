@@ -142,7 +142,16 @@ public class PlayerTargetingSub : MonoBehaviour {
 					{
 						enemyPair.Value.SetCrosshairVisible(true);
 
-						Vector3 targetPosition = enemyPair.Key.hitboxes[i].bounds.center+ Vector3.down*0.2f;
+						Vector3 targetPosition;
+					
+						if (enemyPair.Key.MyType == EnemyMain.Type.Alien)
+						{
+							targetPosition = enemyPair.Key.hitboxes[i].bounds.center + Vector3.down*0.2f;
+						}
+						else
+						{
+							targetPosition = enemyPair.Key.hitboxes[i].bounds.center + enemyPair.Key.transform.forward*0.1f;
+						}
 
 						if (targetPositions.ContainsKey(player.GetCurrentWeapon()))
 						{

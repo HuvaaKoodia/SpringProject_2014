@@ -118,6 +118,12 @@ public class MasterHudMain : MonoBehaviour {
 		ActivateInventoryHUD();
 	}
 
+	public void OpenStatusInfopanel()
+	{
+		InfoHud.OpenTab_Status();
+		ActivateInventoryHUD();
+	}
+
 	public void SetInteractVisibility(bool visible)
 	{
 		if (currentMenuState == MenuState.InventoryHUD ||
@@ -242,10 +248,12 @@ public class MasterHudMain : MonoBehaviour {
 	}
 
 	public void FadeIn(float fade_speed){
+		StopCoroutine("Fader");
 		StartCoroutine(Fader(Time.deltaTime*fade_speed));
 	}
 
 	public void FadeOut(float fade_speed){
+		StopCoroutine("Fader");
 		StartCoroutine(Fader(-Time.deltaTime*fade_speed));
 	}
 
@@ -274,6 +282,6 @@ public class MasterHudMain : MonoBehaviour {
 
 	public void ShowGameoverPanel()
 	{
-		_GameoverPanel.Activate(true);
+		_GameoverPanel.Activate(!GC.SS.GDB.GameData.IronManMode);
 	}
 }

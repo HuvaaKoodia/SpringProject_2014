@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//class that has methods to manipulate the data in GameOptionsObjData class
+//methods are to be called in GameOptionsMenu class
 public class GameOptionsMain : MonoBehaviour {
 
 	GameOptionsObjData GOpsObjD;
@@ -31,7 +33,11 @@ public class GameOptionsMain : MonoBehaviour {
 		case Quality.FANTASTIC:
 			GOpsObjD.quality_level = 5;
 			break;
+		case Quality.CUSTOM:
+			GOpsObjD.quality_level = 6;
+			break;
 		}
+		//SetQualitySettingsToData(GOpsObjD);
 		QualitySettings.SetQualityLevel(GOpsObjD.quality_level);
 	}
 
@@ -39,14 +45,20 @@ public class GameOptionsMain : MonoBehaviour {
 	{
 		switch(LQ)
 		{
+		case LightQuality.VERYLOW:
+			GOpsObjD.pixel_light_count = 0;
+			break;
 		case LightQuality.LOW:
-			GOpsObjD.pixel_light_count = 3;
+			GOpsObjD.pixel_light_count = 1;
 			break;
 		case LightQuality.MEDIUM:
-			GOpsObjD.pixel_light_count = 5;
+			GOpsObjD.pixel_light_count = 2;
 			break;
 		case LightQuality.HIGH:
-			GOpsObjD.pixel_light_count = 10;
+			GOpsObjD.pixel_light_count = 3;
+			break;
+		case LightQuality.EXTRA:
+			GOpsObjD.pixel_light_count = 4;
 			break;
 		}
 		QualitySettings.pixelLightCount = GOpsObjD.pixel_light_count;
@@ -77,18 +89,14 @@ public class GameOptionsMain : MonoBehaviour {
 		switch(AQ)
 		{
 		case AnisotropicQuality.DISABLE:
-			GOpsObjD.anisotropic_textures = AnisotropicFiltering.Disable.ToString();
-			QualitySettings.anisotropicFiltering = AnisotropicFiltering.Disable;
+			GOpsObjD.anisotropic_filtering = AnisotropicFiltering.Disable;
 			break;
 		case AnisotropicQuality.ENABLE:
-			GOpsObjD.anisotropic_textures = AnisotropicFiltering.Enable.ToString();
-			QualitySettings.anisotropicFiltering = AnisotropicFiltering.Enable;
-			break;
-		case AnisotropicQuality.FORCE_ENABLE:
-			GOpsObjD.anisotropic_textures = AnisotropicFiltering.ForceEnable.ToString();
-			QualitySettings.anisotropicFiltering = AnisotropicFiltering.ForceEnable;
+			GOpsObjD.anisotropic_filtering = AnisotropicFiltering.ForceEnable;
 			break;
 		}
+
+		QualitySettings.anisotropicFiltering=GOpsObjD.anisotropic_filtering;
 	}
 
 	public void SetAntiAliasing(AntiAliasing AA)
@@ -152,16 +160,29 @@ public class GameOptionsMain : MonoBehaviour {
 	{
 		switch(VS)
 		{
-		case VSync.NO_SYNC:
+		case VSync.OFF:
 			GOpsObjD.vsync_count = 0;
 			break;
-		case VSync.EVERY_VBLANK:
+		case VSync.ON:
 			GOpsObjD.vsync_count = 1;
-			break;
-		case VSync.EVERY_2ND_VBLANK:
-			GOpsObjD.vsync_count = 2;
 			break;
 		}
 		QualitySettings.vSyncCount = GOpsObjD.vsync_count;
+	}
+
+	/// <summary>
+	/// Sets the quality values to a game options data object
+	/// </summary>
+	/// <param name="data">Data.</param>
+	public void SetQualitySettingsToData(GameOptionsObjData data){
+		QualitySettings.SetQualityLevel(6);
+
+		QualitySettings.masterTextureLimit = data.texture_quality;
+		QualitySettings.pixelLightCount = data.pixel_light_count;
+		QualitySettings.vSyncCount = data.vsync_count;
+		QualitySettings.shadowCascades = data.shadow_cascades;
+		QualitySettings.shadowDistance = data.shadow_distance;
+		QualitySettings.antiAliasing = data.anti_Aliasing;
+		QualitySettings.anisotropicFiltering=data.anisotropic_filtering;
 	}
 }

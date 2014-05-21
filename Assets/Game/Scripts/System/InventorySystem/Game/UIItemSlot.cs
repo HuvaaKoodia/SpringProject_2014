@@ -90,15 +90,15 @@ public abstract class UIItemSlot : MonoBehaviour
 
             if (stat._amount < 0)
             {
-                t += "\n[FF0000]" + stat._amount;
+                t += "\n[FF0000]  " + stat._amount;
             }
             else
             {
-                t += "\n[00FF00]" + stat._amount;
+                t += "\n[00FF00]  " + stat._amount;
             }
             
             //if (stat.modifier == InvStat.Modifier.Percent) t += "%";
-            t += " " + stat.type;
+            t += " " + XmlDatabase.GetAttributeName(stat.type);
             t += "[-]";
         }
 
@@ -159,7 +159,9 @@ public abstract class UIItemSlot : MonoBehaviour
                 sign=":<equal>";
             }
 
-            string type=stat.type.ToString();
+			sign="";//DEV.TEMP remove
+
+			string type=XmlDatabase.GetAttributeName(stat.type);
 
             tt +=stat._amount+" " + type;
            // tt =tt.PadRight(20,' ');

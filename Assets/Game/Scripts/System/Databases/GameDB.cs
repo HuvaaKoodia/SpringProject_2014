@@ -5,18 +5,20 @@ using System.Linq;
 using System.IO;
 
 public class GameDB : MonoBehaviour {
-
     public SharedSystemsMain SS;
 
 	public GameObjData  GameData;
 	public GameOptionsObjData GameOptionsData;
 
-	public bool GOTO_DEBRIEF=false;
-	public bool GameStarted=false;
+	public bool GOTO_DEBRIEF=false,GameStarted=false,HasSave,GameLoaded,AllowEscHud=true;
 
     public string HQScene="MissionSelectScene",GameScene="GameScene",MainMenuScene="MainMenuScene";
 
-	public bool HasSave;
+	public EscHudMain EscHud;
+
+	void Start(){
+		EscHud.Activate(false);
+	}
 
 	public void CheckForSaves()
 	{
@@ -25,14 +27,11 @@ public class GameDB : MonoBehaviour {
 		//Playerprefs
 		if (PlayerPrefs.HasKey("Save")){
 			//check file integrity DEV.Lazy as hell.
-			if (SaveLoadSys.LoadGameWeb("Save")!=null){
+			if (SaveLoadSys.LoadGamePlayerPrefs("Save")!=null){
 				HasSave=true;
 			}
 		}
 #else
-
-#endif
-
 		//files
 		if (File.Exists("Saves/Save.sav")){
 			//check file integrity DEV.Lazy as hell.
@@ -40,15 +39,22 @@ public class GameDB : MonoBehaviour {
 				HasSave=true;
 			}
 		}
+#endif
 	}
 
-	public void CheckForGameoptions(){
-		if (File.Exists("Options.txt")){
-			//load options
+	public void CheckForGameOptions(){
+		if (SaveLoadSys.HasOptions()){
+			GameOptionsData=SaveLoadSys.LoadOptions();
+			//set options to new data
+			SS.GOps.SetQualitySettingsToData(GameOptionsData);
 		}
 		else{
 			GameOptionsData=new GameOptionsObjData();
 		}
+	}
+
+	void OnApplicationQuit(){
+		SaveLoadSys.SaveOptions(GameOptionsData);
 	}
 	
     public void CreateNewGame(){
@@ -56,8 +62,7 @@ public class GameDB : MonoBehaviour {
 		GameData=new GameObjData();
 		GameData.NewGame();
 
-        GenerateNewMissions();
-		
+        GenerateNewMissions();		
 		GameData.PlayerData.Money=XmlDatabase.StartingMoney;
 		GameData.FinanceManager.AddDebt(0,XmlDatabase.StartingDept);
 
@@ -73,28 +78,36 @@ public class GameDB : MonoBehaviour {
 		RestockVendor();
     }
 
-#if UNITY_EDITOR && !UNITY_WEBPLAYER
-	public void Update(){
-		if (Input.GetKeyDown(KeyCode.F5)){
-			SaveGame();
-		}
 
-		if (Input.GetKeyDown(KeyCode.F9)){
-			LoadGame();
+	public void Update(){
+
+		if (AllowEscHud&&Input.GetKeyDown(KeyCode.Escape)){
+			EscHud.Toggle();
 		}
 	}
-	#endif
-
+	
 	public void SaveGame(){
+#if UNITY_WEBPLAYER
+		SaveLoadSys.SaveGamePlayerPrefs("Save",GameData);
+#else
 		SaveLoadSys.SaveGame("Save",GameData);
+#endif
 	}
 	
 	public void LoadGame(){
-		GameStarted=true;
-		GameData=SaveLoadSys.LoadGame("Save");
 
+		GameData=null;
+
+		#if UNITY_WEBPLAYER
+		GameData=SaveLoadSys.LoadGamePlayerPrefs("Save");
+		#else
+		GameData=SaveLoadSys.LoadGame("Save");
+		#endif
 		if (GameData==null) return;
 
+		GameStarted=true;
+		GameLoaded=true;
+		
 		//init GameData
 		
 		foreach(var e in GameData.VendorStore.items){
@@ -128,9 +141,22 @@ public class GameDB : MonoBehaviour {
         LoadLevel(GameScene);
     }
 
-	public void GotoMenu ()
+	public void LoadMainMenu ()
 	{
 		LoadLevel(MainMenuScene);
+	}
+	/// <summary>
+	/// Ends the game. Removes saves if ironman and goes back to main menu.
+	/// </summary>
+	public void EndGame ()
+	{
+		RemoveSavesIfIronman();
+		LoadMainMenu();
+	}
+
+	void LoadLevel(string level){
+		
+		Application.LoadLevel(level);
 	}
 
 	void ResetStuff(){
@@ -142,12 +168,6 @@ public class GameDB : MonoBehaviour {
 	void OnLevelWasLoaded(int i){
 		ResetStuff();
 	}
-
-	void LoadLevel(string level){
-
-		Application.LoadLevel(level);
-	}
-
 
     public void EndMission(GameController GC)
     {
@@ -258,10 +278,17 @@ public class GameDB : MonoBehaviour {
 			InvItemStorage.EquipRandomItem(GameData.VendorStore,"vendor_items","vendor_quality");
 		}
 	}
+
+	public void RemoveSavesIfIronman(){
+		if (GameData.IronManMode){
+			SaveLoadSys.ClearSaves("Save");
+		}
+	}
 }
 
 public class GameObjData{
 	public bool IronManMode {get;set;}
+	public bool UsedFinanceManager {get;set;}
 
 	public PlayerObjData PlayerData{get; set;}
 	public List<MissionObjData> AvailableMissions{get; set;}

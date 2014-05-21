@@ -7,12 +7,15 @@ public class MissionMenuHud : MonoBehaviour {
     public MissionDebriefingMenu MissionDebrief;
     public MissionBriefingMenu MissionBrief;
     public VendorMenu _VendorMenu;
-    public MechanicalMenu _MechanicMenu;
+	public Instantiate_MechanicalMenu mm_init;
+	MechanicalMenu _MechanicMenu;
 	public FinanceMenu _FinanceMenu;
     public Transform MissionButtonsParent;
     public MissionButtonMain MButtonPrefab;
     public MenuTabController Tabs;
-	public UILabel MoneyLabel;
+	public UILabel MoneyLabel,GameSavedLabel,Daylabel;
+
+	public OutOfMoneyMenu outofmoney;
 
 	public int MissionButtonGap=8;
 
@@ -20,9 +23,11 @@ public class MissionMenuHud : MonoBehaviour {
     MissionObjData Mission;
 	PlayerObjData _player;
 
+	public bool GotoMoneyWarningMenu;
+
 	// Use this for initialization
 	void Start () {
-        SS=GameObject.FindGameObjectWithTag("SharedSystems").GetComponent<SharedSystemsMain>();
+        SS=SharedSystemsMain.I;
 
         //Dev.debug
         if (!SS.GDB.GameStarted)
@@ -50,12 +55,15 @@ public class MissionMenuHud : MonoBehaviour {
 		_VendorMenu.SetVendor(SS.GDB.GameData.VendorStore);
         _VendorMenu.Init();
 
+		_MechanicMenu=mm_init.Instance;
 		_MechanicMenu.SetPlayer(_player);
 	
 		_FinanceMenu.SetFinanceManager(SS.GDB.GameData.FinanceManager);
 
         //open correct menu
-        if (SS.GDB.GOTO_DEBRIEF){
+		CheckMoneyAmount();
+
+		if (SS.GDB.GOTO_DEBRIEF){
             SS.GDB.GOTO_DEBRIEF=false;
 			MissionDebrief.SetMission(SS.GDB);
             OpenMissionDebrief();
@@ -63,9 +71,29 @@ public class MissionMenuHud : MonoBehaviour {
         else{
             OpenMissionSelect();
         }
+
+		var savetype=SS.GDB.GameData.IronManMode?"Ironman":"Normal";
+
+		if (SS.GDB.GameLoaded){
+			ShowSaveGameLabel("GAME LOADED - "+savetype);
+			SS.GDB.GameLoaded=true;
+		}
+		else{
+			SS.GDB.SaveGame();
+			ShowSaveGameLabel("GAME SAVED - "+savetype);
+		}
+
+		Daylabel.text="Day: "+SS.GDB.GameData.CurrentTime;
+
+		SS.GDB.AllowEscHud=true;
 	}
 
-	void Update () {
+	//lazy public
+	public void CheckMoneyAmount(){
+		GotoMoneyWarningMenu=SS.GDB.GameData.PlayerData.Money<0;
+	}
+	
+	void Update (){
 		MoneyLabel.text="Money: "+_player.Money+" "+XmlDatabase.MoneyUnit;
 	}
 
@@ -86,22 +114,29 @@ public class MissionMenuHud : MonoBehaviour {
     }
 
     public void OpenMissionSelect(){
-        Tabs.ActivateMenu(MissionMenu);
-    }
+		if (GotoMoneyWarningMenu){
+			Tabs.ActivateMenu(outofmoney.gameObject);
+			outofmoney.OpenMenu(this);
+		}
+		else{
+        	Tabs.ActivateMenu(MissionMenu);
+		}
+	}
 
     public void OpenVendor(){
         Tabs.ActivateMenu(_VendorMenu.gameObject);
     }
 
     public void OpenMechanic(){
-		StartCoroutine(CallUpdateAfterOneUpdateStepBecauseUnitySetActiveShenanigans());
-		Tabs.ActivateMenu(_MechanicMenu.gameObject);
+		//StartCoroutine(CallUpdateAfterOneUpdateStepBecauseUnitySetActiveShenanigans());
+		Tabs.ActivateMenu(mm_init.gameObject);
+		_MechanicMenu.OpenPanel();
     }
 
-	IEnumerator CallUpdateAfterOneUpdateStepBecauseUnitySetActiveShenanigans(){
-		yield return null;
-		_MechanicMenu.OpenPanel();
-	}
+//	IEnumerator CallUpdateAfterOneUpdateStepBecauseUnitySetActiveShenanigans(){
+//		yield return null;
+//		_MechanicMenu.OpenPanel();
+//	}
 
 	public void OpenFinance()
 	{
@@ -112,4 +147,15 @@ public class MissionMenuHud : MonoBehaviour {
         SS.GDB.SetCurrentMission(Mission);
         SS.GDB.PlayMission();
     }
+
+	
+	void ShowSaveGameLabel(string text){
+		GameSavedLabel.text=text;
+		GameSavedLabel.gameObject.SetActive(true);
+		Invoke("HideGameSavedLabel",3f);
+	}
+	
+	void HideGameSavedLabel(){
+		GameSavedLabel.gameObject.SetActive(false);
+	}
 }

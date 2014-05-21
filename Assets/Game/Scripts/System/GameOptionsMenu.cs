@@ -2,67 +2,167 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+//class that updates the Options Menu in the game
+//allows for changes in Quality Settings to be made
 public class GameOptionsMenu : MonoBehaviour
 {
 	GameOptionsMain GOpsMain;
-	public List<UILabel> SettingsLabel;
+
+	public UILabel QualityLabel;
+	public UILabel LightLabel;
+	public UILabel TextureLabel;
+	public UILabel AnisotropicLabel;
+	public UILabel AntiAliasingLabel;
+	public UILabel ShadowLabel;
+	public UILabel VSyncLabel;
 
 	// Use this for initialization
-	void Start ()
+	void Awake ()
 	{
 		GOpsMain = SharedSystemsMain.I.GOps;
 	}
-	
-	// Update is called once per frame
-	void Update ()
-	{
-		UpdateSettings();
+
+	public void OpenMenu(){
+		UpdateAllLabelsToCurrentQualitySettings();
 	}
 
-	public void SetGameOptionsMain(GameOptionsMain newGOpsMain)
+	//label updaters
+
+	void GetLightProperty()
 	{
-		GOpsMain = newGOpsMain;
+		if(QualitySettings.pixelLightCount == 0)
+		{
+			LightLabel.text = "Very Low";
+		}
+		if(QualitySettings.pixelLightCount == 1)
+		{
+			LightLabel.text = "Low";
+		}
+		else if(QualitySettings.pixelLightCount ==2)
+		{
+			LightLabel.text = "Medium";
+		}
+		else if(QualitySettings.pixelLightCount ==3)
+		{
+			LightLabel.text = "High";
+		}
+		else if(QualitySettings.pixelLightCount >=4)
+		{
+			LightLabel.text = "Extra";
+		}
 	}
 
-	void ChangeQuality()
+	void GetTextureProperty()
 	{
-		if(SettingsLabel[0].text == "Fastest")
+		if(QualitySettings.masterTextureLimit == 0)
 		{
-			GOpsMain.SetQuality(Quality.FASTEST);
+			TextureLabel.text = "Full Res";
 		}
-		else if(SettingsLabel[0].text == "Fast")
+		else if(QualitySettings.masterTextureLimit == 1)
 		{
-			GOpsMain.SetQuality(Quality.FAST);
+			TextureLabel.text = "Half Res";
 		}
-		else if(SettingsLabel[0].text == "Simple")
+		else if(QualitySettings.masterTextureLimit == 2)
 		{
-			GOpsMain.SetQuality(Quality.SIMPLE);
+			TextureLabel.text = "Quarter Res";
 		}
-		else if(SettingsLabel[0].text == "Good")
+		else if(QualitySettings.masterTextureLimit == 3)
 		{
-			GOpsMain.SetQuality(Quality.GOOD);
-		}
-		else if(SettingsLabel[0].text == "Beautiful")
-		{
-			GOpsMain.SetQuality(Quality.BEAUTIFUL);
-		}
-		else if(SettingsLabel[0].text == "Fantastic")
-		{
-			GOpsMain.SetQuality(Quality.FANTASTIC);
+			TextureLabel.text = "Eighth Res";
 		}
 	}
+
+	void GetAnisotropicProperty()
+	{
+		if(QualitySettings.anisotropicFiltering == AnisotropicFiltering.Disable)
+		{
+			AnisotropicLabel.text = "Disable";
+		}
+		else if(QualitySettings.anisotropicFiltering == AnisotropicFiltering.ForceEnable)
+		{
+			AnisotropicLabel.text = "Enable";
+		}
+	}
+
+	void GetAntiAliasingProperty()
+	{
+		if(QualitySettings.antiAliasing == 0)
+		{
+			AntiAliasingLabel.text = "Disabled";
+		}
+		else if(QualitySettings.antiAliasing == 2)
+		{
+			AntiAliasingLabel.text = "x2";
+		}
+		else if(QualitySettings.antiAliasing == 4)
+		{
+			AntiAliasingLabel.text = "x4";
+		}
+		else if(QualitySettings.antiAliasing == 8)
+		{
+			AntiAliasingLabel.text = "x8";
+		}
+	}
+
+	void GetShadowProperty()
+	{
+		if(QualitySettings.shadowProjection == ShadowProjection.CloseFit)
+		{
+			if(QualitySettings.shadowDistance <= 0)
+			{
+				ShadowLabel.text = "Off";
+			}
+			else
+			{
+				ShadowLabel.text = "Low";
+			}
+		}
+		else
+		{
+			if(QualitySettings.shadowCascades == 2)
+			{
+				ShadowLabel.text = "Medium";
+			}
+			else if(QualitySettings.shadowCascades == 4)
+			{
+				ShadowLabel.text = "High";
+			}
+		}
+	}
+
+	void GetVSyncProperty()
+	{
+		if(QualitySettings.vSyncCount == 0)
+		{
+			VSyncLabel.text = "Off";
+		}
+		else if(QualitySettings.vSyncCount == 1)
+		{
+			VSyncLabel.text = "On";
+		}
+	}
+
+	//setting changers
 
 	void ChangeLight()
 	{
-		if(SettingsLabel[1].text == "Low")
+		if(LightLabel.text == "Very Low")
+		{
+			GOpsMain.SetPixelLightCount(LightQuality.VERYLOW);
+		}
+		if(LightLabel.text == "Low")
 		{
 			GOpsMain.SetPixelLightCount(LightQuality.LOW);
 		}
-		else if(SettingsLabel[1].text == "Medium")
+		else if(LightLabel.text == "Medium")
 		{
 			GOpsMain.SetPixelLightCount(LightQuality.MEDIUM);
 		}
-		else if(SettingsLabel[1].text == "High")
+		else if(LightLabel.text == "High")
+		{
+			GOpsMain.SetPixelLightCount(LightQuality.HIGH);
+		}
+		else if(LightLabel.text == "Extra")
 		{
 			GOpsMain.SetPixelLightCount(LightQuality.HIGH);
 		}
@@ -70,19 +170,19 @@ public class GameOptionsMenu : MonoBehaviour
 
 	void ChangeTexture()
 	{
-		if(SettingsLabel[2].text == "Full Res")
+		if(TextureLabel.text == "Full Res")
 		{
 			GOpsMain.SetTextureQuality(TextureQuality.FULL_RES);
 		}
-		else if(SettingsLabel[2].text == "Half Res")
+		else if(TextureLabel.text == "Half Res")
 		{
 			GOpsMain.SetTextureQuality(TextureQuality.HALF_RES);
 		}
-		else if(SettingsLabel[2].text == "Quarter Res")
+		else if(TextureLabel.text == "Quarter Res")
 		{
 			GOpsMain.SetTextureQuality(TextureQuality.QUARTER_RES);
 		}
-		else if(SettingsLabel[2].text == "Eighth Res")
+		else if(TextureLabel.text == "Eighth Res")
 		{
 			GOpsMain.SetTextureQuality(TextureQuality.EIGHTH_RES);
 		}
@@ -90,35 +190,31 @@ public class GameOptionsMenu : MonoBehaviour
 
 	void ChangeAnisotropic()
 	{
-		if(SettingsLabel[3].text == "Disable")
+		if(AnisotropicLabel.text == "Disable")
 		{
 			GOpsMain.SetAnisotropicQuality(AnisotropicQuality.DISABLE);
 		}
-		else if(SettingsLabel[3].text == "Enable")
+		else if(AnisotropicLabel.text == "Enable")
 		{
 			GOpsMain.SetAnisotropicQuality(AnisotropicQuality.ENABLE);
-		}
-		else if(SettingsLabel[3].text == "Force Enable")
-		{
-			GOpsMain.SetAnisotropicQuality(AnisotropicQuality.FORCE_ENABLE);
 		}
 	}
 
 	void ChangeAntiAliasing()
 	{
-		if(SettingsLabel[4].text == "Disabled")
+		if(AntiAliasingLabel.text == "Disabled")
 		{
 			GOpsMain.SetAntiAliasing(AntiAliasing.DISABLED);
 		}
-		else if(SettingsLabel[4].text == "x2")
+		else if(AntiAliasingLabel.text == "x2")
 		{
 			GOpsMain.SetAntiAliasing(AntiAliasing.X2);
 		}
-		else if(SettingsLabel[4].text == "x4")
+		else if(AntiAliasingLabel.text == "x4")
 		{
 			GOpsMain.SetAntiAliasing(AntiAliasing.X4);
 		}
-		else if(SettingsLabel[4].text == "x8")
+		else if(AntiAliasingLabel.text == "x8")
 		{
 			GOpsMain.SetAntiAliasing(AntiAliasing.X8);
 		}
@@ -126,19 +222,19 @@ public class GameOptionsMenu : MonoBehaviour
 
 	void ChangeShadow()
 	{
-		if(SettingsLabel[5].text == "Off")
+		if(ShadowLabel.text == "Off")
 		{
 			GOpsMain.SetShadowQuality(ShadowQuality.OFF);
 		}
-		else if(SettingsLabel[5].text == "Low")
+		else if(ShadowLabel.text == "Low")
 		{
 			GOpsMain.SetShadowQuality(ShadowQuality.LOW);
 		}
-		else if(SettingsLabel[5].text == "Medium")
+		else if(ShadowLabel.text == "Medium")
 		{
 			GOpsMain.SetShadowQuality(ShadowQuality.MEDIUM);
 		}
-		else if(SettingsLabel[5].text == "High")
+		else if(ShadowLabel.text == "High")
 		{
 			GOpsMain.SetShadowQuality(ShadowQuality.HIGH);
 		}
@@ -146,23 +242,62 @@ public class GameOptionsMenu : MonoBehaviour
 
 	void ChangeVSync()
 	{
-		if(SettingsLabel[6].text == "No Sync")
+		if(VSyncLabel.text == "Off")
 		{
-			GOpsMain.SetVSync(VSync.NO_SYNC);
+			GOpsMain.SetVSync(VSync.OFF);
 		}
-		else if(SettingsLabel[6].text == "Every VBlank")
+		else if(VSyncLabel.text == "On")
 		{
-			GOpsMain.SetVSync(VSync.EVERY_VBLANK);
-		}
-		else if(SettingsLabel[6].text == "Every 2nd VBlank")
-		{
-			GOpsMain.SetVSync(VSync.EVERY_2ND_VBLANK);
+			GOpsMain.SetVSync(VSync.ON);
 		}
 	}
 
-	void UpdateSettings()
+	//update functions
+	
+	public void UpdateQualityToSelected()
 	{
-		ChangeQuality();
+		if(QualityLabel.text == "Fastest")
+		{
+			GOpsMain.SetQuality(Quality.FASTEST);
+		}
+		else if(QualityLabel.text == "Fast")
+		{
+			GOpsMain.SetQuality(Quality.FAST);
+		}
+		else if(QualityLabel.text == "Simple")
+		{
+			GOpsMain.SetQuality(Quality.SIMPLE);
+		}
+		else if(QualityLabel.text == "Good")
+		{
+			GOpsMain.SetQuality(Quality.GOOD);
+		}
+		else if(QualityLabel.text == "Beautiful")
+		{
+			GOpsMain.SetQuality(Quality.BEAUTIFUL);
+		}
+		else if(QualityLabel.text == "Fantastic")
+		{
+			GOpsMain.SetQuality(Quality.FANTASTIC);
+		}
+
+		UpdateAllLabelsToCurrentQualitySettings();
+	}
+	
+	public void UpdateAllLabelsToCurrentQualitySettings()
+	{
+		GetLightProperty();
+		GetTextureProperty();
+		GetAnisotropicProperty();
+		GetAntiAliasingProperty();
+		GetShadowProperty();
+		GetVSyncProperty();
+	}
+
+	public void UpdateQualitySettingsToLabels()
+	{
+		QualityLabel.text = "Custom";
+
 		ChangeLight();
 		ChangeTexture();
 		ChangeAnisotropic();

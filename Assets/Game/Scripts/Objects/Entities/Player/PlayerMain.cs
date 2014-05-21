@@ -50,7 +50,6 @@ public class PlayerMain : EntityMain
 	
 	public GameObject ParticleTempParent;
 
-
     public void SetObjData(PlayerObjData data){
         ObjData=data;
     }
@@ -105,7 +104,7 @@ public class PlayerMain : EntityMain
     {
 		ap = apMax;
 		Finished = false;
-		DisperseWeaponHeat(1);
+		DecreaseWeaponHeat();
 
 		MovedLastPhase = false;
 
@@ -196,7 +195,7 @@ public class PlayerMain : EntityMain
     /// </summary>
 	public void TakeDamage(int damage,int x,int y)
 	{
-		if (INVINCIBLE) return;
+		if (INVINCIBLE||Dead) return;
 
 		//calculate correct attack direction
         int dir=0;
@@ -239,12 +238,15 @@ public class PlayerMain : EntityMain
 
         if (Health <= 0)
 		{
+			Dead=true;
 			inputSub.DISABLE_INPUT=true;
 			GC.EndGame();
+
 		}
 
 		HUD.UpdateHudPanels();
 	}
+	bool Dead=false;
 
 	public bool StartTargetingMode()
 	{
@@ -279,14 +281,25 @@ public class PlayerMain : EntityMain
 		HUD.CheckTargetingModePanel();
 	}
 
-	public void DisperseWeaponHeat(float multiplier)
+	public void DisperseWeaponHeat()
 	{
         foreach(WeaponMain gun in weaponList)
 		{
-            gun.ReduceHeat(multiplier);
+            gun.DisperseHeat();
 		}
 		
-		ObjData.UpperTorso.AddHEAT(-(XmlDatabase.HullHeatDisperseConstant+XmlDatabase.HullHeatDisperseHeatMultiplier*ObjData.UpperTorso.HEAT)*multiplier);
+		ObjData.UpperTorso.AddHEAT(-(XmlDatabase.HullHeatDisperseConstant+ObjData.UpperTorso.HEAT*XmlDatabase.HullHeatDisperseHeatMultiplier));
+		HUD.gunInfoDisplay.UpdateAllDisplays();
+	}
+
+	public void DecreaseWeaponHeat()
+	{
+		foreach(WeaponMain gun in weaponList)
+		{
+			gun.ReduceHeat();
+		}
+		
+		ObjData.UpperTorso.AddHEAT(-XmlDatabase.HullHeatDisperseConstant);
 		HUD.gunInfoDisplay.UpdateAllDisplays();
 	}
 
@@ -392,7 +405,7 @@ public class PlayerMain : EntityMain
 				}
 				else if (s.Item.baseItem.type==InvBaseItem.Type.Radar){
 					HasRadar=true;
-					RadarRangeMax=s.Item.baseItem.GetStat(InvStat.Type.RadarRange).max_amount;
+					//RadarRangeMax=s.Item.baseItem.GetStat(InvStat.Type.RadarRange).max_amount;
 				}
 			}
 		}
@@ -450,7 +463,7 @@ public class PlayerMain : EntityMain
 		gunsFinishedShooting++;
 	}
 
-	public void ToggleFlashlight ()
+	public void ToggleFlashlight()
 	{
 		Flashlight.SetActive(!Flashlight.activeSelf);
 	}

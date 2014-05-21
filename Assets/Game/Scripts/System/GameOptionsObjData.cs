@@ -1,5 +1,6 @@
 using System.Collections;
 
+//all the enumerators fir settings that can be adjusted in game
 public enum Quality
 {
 	FASTEST = 0,
@@ -7,14 +8,17 @@ public enum Quality
 	SIMPLE,
 	GOOD,
 	BEAUTIFUL,
-	FANTASTIC
+	FANTASTIC,
+	CUSTOM
 };
 
 public enum LightQuality
 {
-	LOW = 0,
+	VERYLOW=0,
+	LOW,
 	MEDIUM,
-	HIGH
+	HIGH,
+	EXTRA
 };
 
 public enum TextureQuality
@@ -28,8 +32,7 @@ public enum TextureQuality
 public enum AnisotropicQuality
 {
 	DISABLE = 0,
-	ENABLE,
-	FORCE_ENABLE
+	ENABLE
 };
 
 public enum AntiAliasing
@@ -50,17 +53,18 @@ public enum ShadowQuality
 
 public enum VSync
 {
-	NO_SYNC = 0,
-	EVERY_VBLANK,
-	EVERY_2ND_VBLANK
+	OFF = 0,
+	ON
 };
 
+//class that holds only data of Quality Settings to be manipulated in GameOptionsMain class
+//data are all public properties for saving
 public class GameOptionsObjData
 {
 	public int quality_level{get;set;}
 	public int pixel_light_count{get;set;}
 	public int texture_quality{get;set;}
-	public string anisotropic_textures{get;set;}
+	public UnityEngine.AnisotropicFiltering anisotropic_filtering{get;set;}
 	public int anti_Aliasing{get;set;}
 	public string shadow_projection{get;set;}
 	public int shadow_cascades{get;set;}
@@ -72,7 +76,7 @@ public class GameOptionsObjData
 		quality_level = 0;
 		pixel_light_count = 0;
 		texture_quality = 0;
-		anisotropic_textures = "";
+		anisotropic_filtering = UnityEngine.AnisotropicFiltering.Disable;
 		anti_Aliasing = 0;
 		shadow_projection = "";
 		shadow_cascades = 0;

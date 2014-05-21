@@ -3,8 +3,10 @@ using System.Collections;
 
 public class MainMenuHud : MonoBehaviour {
 	
-	public GameObject CreditsPanel,HelpPanel,OptionsPanel,QuitButton,MenuParent,ContinueButton,NewGameMenu;
+	public GameObject CreditsPanel,HelpPanel,QuitButton,FullScreenButton,MenuParent,NewGameMenu;
+	public GameOptionsMenu OptionsPanel;
 	GameDB GDB;
+	public UIButton ContinueButton;
 
     void Start(){
 
@@ -12,13 +14,18 @@ public class MainMenuHud : MonoBehaviour {
 		GDB.CheckForSaves();
 
         DisableAll();
+
 #if UNITY_WEBPLAYER
         QuitButton.SetActive(false);
 #endif
 
 		if (!SharedSystemsMain.I.GDB.HasSave){
-			ContinueButton.SetActive(false);
+			//ContinueButton.SetActive(false);
+			ContinueButton.defaultColor=new Color(1f,1f,1f,0.3f);
+			ContinueButton.enabled=false;
 		}
+
+		GDB.AllowEscHud=false;
     }
 
 	void Update(){
@@ -40,11 +47,12 @@ public class MainMenuHud : MonoBehaviour {
 	}
 
 	void ContinueClick(){
-		SharedSystemsMain.I.GDB.LoadGame();
+		if (GDB.HasSave) GDB.LoadGame();
 	}
 
 	void OptionsClick(){
-		ToggleOne(OptionsPanel);
+		ToggleOne(OptionsPanel.gameObject);
+		OptionsPanel.OpenMenu();
 	}
 
     void CreditsClick(){
@@ -58,7 +66,7 @@ public class MainMenuHud : MonoBehaviour {
     void DisableAll(){
         CreditsPanel.SetActive(false);
         HelpPanel.SetActive(false);
-		OptionsPanel.SetActive(false);
+		OptionsPanel.gameObject.SetActive(false);
 		NewGameMenu.SetActive(false);
 
 		MenuParent.SetActive(false);

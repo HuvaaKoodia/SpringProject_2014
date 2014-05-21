@@ -13,7 +13,14 @@ public class UITooltip : MonoBehaviour
 
     public UITooltipInstance Tooltip1,Tooltip2;
 
-    void Awake () { mInstance = Tooltip1;mInstance2=Tooltip2; }
+    void Awake () {
+		SetMembersToStatics();
+	}
+
+	public void SetMembersToStatics ()
+	{
+		mInstance = Tooltip1;mInstance2=Tooltip2; 
+	}
 
     static public void ClearTexts ()
     {

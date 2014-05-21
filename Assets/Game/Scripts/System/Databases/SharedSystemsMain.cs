@@ -13,18 +13,15 @@ public class SharedSystemsMain : MonoBehaviour {
 
 	public UIAtlas ItemAtlas;
 
-	bool loaded=false;
-
 	public static SharedSystemsMain I;
 
     void Awake(){
-		if (loaded) return;
-		loaded=true;
+		if (I!=null) return;
 		I=this;
 
         XMAP.LoadData();
 		XmlDatabase.LoadData(ItemAtlas);
 
-		GDB.CheckForGameoptions();
+		GDB.CheckForGameOptions();
     }
 }

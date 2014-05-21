@@ -90,7 +90,7 @@ public static class PathFinder
 
 						//if someone is blocking the way, make sure that this route
 						//doesn't get picked unless its only reasonable route
-							if (world[tmp.X, tmp.Y].BlockedForMovement)
+							if (world[tmp.X, tmp.Y].BlockedForMovementEnemy)
 							{
 								cost += currentBlockedPenalty;
 								currentBlockedPenalty += blockedPenaltyIncrease;
@@ -221,7 +221,7 @@ public static class PathFinder
 
 			//Debug.DrawLine(rays[i].origin, rays[i].origin + rays[i].direction*checkRadius, rayColors[i], 5.0f);
 			if (Physics.Raycast(rays[i], out hitInfo, checkRadius, mask))
-			{ 
+			{
 				//ray hit the entity to avoid -> can see!
 				if (hitInfo.transform == toSee.transform ||
 				    (hitInfo.transform.parent != null && hitInfo.transform.parent == toSee.transform))
@@ -317,7 +317,7 @@ public static class PathFinder
 			Debug.Log(position + " is out of map range");
 		}
 
-        return !nextTile.BlockedForMovement;
+        return !nextTile.BlockedForMovementEnemy;
     }
 
 	private static bool PositionIsWalkable(Point3D position, TileMain[,] world, int mapWidth, int mapHeight, int mapDepth)
@@ -348,7 +348,7 @@ public static class PathFinder
 			return true;
 		}
 
-        return !nextTile.BlockedForMovement;
+        return !nextTile.BlockedForMovementEnemy;
 	}
 
     class Surr
