@@ -329,7 +329,7 @@ public class WeaponMain : MonoBehaviour {
 
 	bool IsEnemyDead(EnemyMain enemy)
 	{
-		return enemy == null || enemy.Dead;
+		return enemy == null || enemy.GoingToDie || enemy.Dead;
 	}
 	
     public void IncreaseHeat(float multi)

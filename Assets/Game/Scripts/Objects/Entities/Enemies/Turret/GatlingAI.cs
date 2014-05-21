@@ -266,15 +266,20 @@ public class GatlingAI : AIBase {
 		StartCoroutine(RotateVertically());
 	}
 
+	Vector3 lastCheckedLookPos = Vector3.zero;
+
 	RunStatus FacingPlayer()
 	{
-		lookToPlayerRot = Quaternion.LookRotation(playerLookPosition - turretTransform.position);
-		lookToPlayerRot = Quaternion.Euler(lookToPlayerRot.eulerAngles.x-90,
-		                                   lookToPlayerRot.eulerAngles.y,
-		                                   lookToPlayerRot.eulerAngles.z-90);
+		Vector3 lookPos = playerLookPosition;
 
-		if (blackboard.LastKnownPlayerPosition == lastTargetedPosition)
+		bool check = lookPos == lastCheckedLookPos;
+
+		lastCheckedLookPos = lookPos;
+
+		if (check)
+		{
 			return RunStatus.Success;
+		}
 
 		return RunStatus.Failure;
 	}
