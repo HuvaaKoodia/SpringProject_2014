@@ -205,11 +205,13 @@ public class RadarMain : MonoBehaviour
 			currentBlip++;
 		}
 
+		/*
 		for (int i = currentBlip; i < blips.Count; i++)
 		{
 			if (blips[i].FinishedFading)
-				blips[i].enabled = false;
+				blips[i].blipSprite.enabled = false;
 		}
+		*/
 
 		float playerRot = GC.Player.transform.rotation.eulerAngles.y;
 		float radarRot = blipParent.transform.localRotation.eulerAngles.z;

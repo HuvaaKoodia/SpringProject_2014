@@ -368,6 +368,7 @@ public class MissionGenerator{
 			else{
 				text+="COMPLETED";
 			}
+			text+="\n";
 		}
 		
 		return text;

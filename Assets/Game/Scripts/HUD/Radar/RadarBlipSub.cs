@@ -12,7 +12,7 @@ public class RadarBlipSub : MonoBehaviour {
 	float alpha = 1.0f;
 	bool spriteSetThisCycle = false;
 
-	public bool FinishedFading { get { return fades && alpha >= 0.001f; }}
+	public bool FinishedFading { get { return fades && alpha <= 0.01f; }}
 
 	// Use this for initialization
 	void Start () {
