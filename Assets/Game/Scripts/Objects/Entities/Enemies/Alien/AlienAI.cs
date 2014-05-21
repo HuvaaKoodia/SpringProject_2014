@@ -62,6 +62,8 @@ public class AlienAI : AIBase {
 	public AudioClip TakeHeavyDamageFX;
 	public AudioClip TakeNormalDamageFX;
 
+	public ParticleSystem AcidSpitParticles;
+
 	// Use this for initialization
 	void Start()
 	{
@@ -389,7 +391,7 @@ public class AlienAI : AIBase {
 
 		//check that player is facing this general direction
 		float angleBetween = Quaternion.Angle(playerRot, playerToEnemyRot);
-		if (angleBetween >  90)
+		if (angleBetween >  80)
 			return false;
 	
 		if (PathFinder.CanSeeFromTileToTile(player, parent, position, PlayerSeeRadiusAware, 
@@ -570,7 +572,19 @@ public class AlienAI : AIBase {
         if (RangedAttackSoundFX != null)
 			audio.PlayOneShot(RangedAttackSoundFX);
 
-		yield return new WaitForSeconds(inflictDelay);
+		yield return new WaitForSeconds(0.4f);
+
+		waitingForAttackToHitPlayer = true;
+		AcidSpitParticles.Play();
+
+		while (waitingForAttackToHitPlayer)
+		{
+			if (!AcidSpitParticles.isPlaying)
+				break;
+			
+			yield return null;
+		}
+
 		player.TakeDamage(DamageRanged, MyPosition.X, MyPosition.Y);
 	}
 

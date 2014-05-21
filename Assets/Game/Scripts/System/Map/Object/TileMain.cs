@@ -12,8 +12,13 @@ public class TileMain : MonoBehaviour
 
 	public bool BlockedForMovement{
 		get{
-            if (entityOnTile != null)
-                return true;
+			if (entityOnTile != null){
+              	//terrible hax alien can move under turret
+				if (entityOnTile.GetComponent<GatlingEnemySub>()!=null){
+					return false;
+				}
+				return true;
+			}
 
 			var door=GetDoor();
 			if (door!=null){
@@ -51,7 +56,7 @@ public class TileMain : MonoBehaviour
 	/// Does a null check HUZZAA!
 	/// </summary>
 	public void ShowGraphicsSafe(bool show){
-		if (TileGraphics!=null) TileGraphics.GraphicsObject.SetActive(show);
+		if (TileGraphics!=null) ShowGraphicsUnsafe(show);
 	}
 
 	/// <summary>
@@ -59,5 +64,8 @@ public class TileMain : MonoBehaviour
 	/// </summary>
 	public void ShowGraphicsUnsafe(bool show){
 		TileGraphics.GraphicsObject.SetActive(show);
+		if (TileObject!=null){
+			TileObject.SetActive(show);
+		}
 	}
 }

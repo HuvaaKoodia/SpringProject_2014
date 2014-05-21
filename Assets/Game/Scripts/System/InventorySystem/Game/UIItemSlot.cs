@@ -98,7 +98,7 @@ public abstract class UIItemSlot : MonoBehaviour
             }
             
             //if (stat.modifier == InvStat.Modifier.Percent) t += "%";
-            t += " " + stat.type;
+            t += " " + XmlDatabase.GetAttributeName(stat.type);
             t += "[-]";
         }
 
@@ -161,7 +161,7 @@ public abstract class UIItemSlot : MonoBehaviour
 
 			sign="";//DEV.TEMP remove
 
-            string type=stat.type.ToString();
+			string type=XmlDatabase.GetAttributeName(stat.type);
 
             tt +=stat._amount+" " + type;
            // tt =tt.PadRight(20,' ');

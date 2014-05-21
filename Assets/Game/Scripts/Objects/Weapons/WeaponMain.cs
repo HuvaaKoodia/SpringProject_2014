@@ -249,7 +249,10 @@ public class WeaponMain : MonoBehaviour {
 			for (int i = 0; i < enemyPair.Value.numShots; i++)
 			{
 				if (Overheat || CurrentAmmo == 0) break;
-				if (enemyPair.Value.numShots == 0 || IsEnemyDead(enemyPair.Key)) continue;
+				if (enemyPair.Value.numShots == 0 || IsEnemyDead(enemyPair.Key))
+				{
+					continue;
+				}
 
 				while (waitingForShot || enemyPair.Key.GetWaitingForDamageReaction((int)weaponID))
 				{
@@ -295,15 +298,20 @@ public class WeaponMain : MonoBehaviour {
 		if (!NoAmmoConsumption) CurrentAmmo--;
 		if (CurrentAmmo<0) CurrentAmmo=0;
 		
-		IncreaseHeat(1);
+		IncreaseHeat();
 
 		bool hit = HitChancePercent(enemy) > Subs.RandomPercent();
 
 		if (hit)
 		{
 			//hit
+			player.HUD.gunInfoDisplay.HideMissText(weaponID);
 			int dmg = (int)Random.Range(MinDamage, MaxDamage);
 			StartCoroutine(enemy.TakeDamage(dmg, (int)weaponID));
+		}
+		else
+		{
+			player.HUD.gunInfoDisplay.ShowMissText(weaponID);
 		}
 
 		if (meshData != null)
@@ -321,19 +329,22 @@ public class WeaponMain : MonoBehaviour {
 
 	bool IsEnemyDead(EnemyMain enemy)
 	{
-		return enemy == null || enemy.Dead;
+		return enemy == null || enemy.GoingToDie || enemy.Dead;
 	}
 	
-    public void IncreaseHeat(float multi)
+    public void IncreaseHeat()
     {
-		if (WeaponSlot != null)
-        	WeaponSlot.ObjData.IncreaseHEAT(Weapon,multi);
+		if (WeaponSlot != null) WeaponSlot.ObjData.IncreaseHEAT(Weapon);
     }
 
-	public void ReduceHeat(float multi)
+	public void ReduceHeat()
 	{
-		if (WeaponSlot != null)
-       		WeaponSlot.ObjData.ReduceHEAT(Weapon,multi);
+		if (WeaponSlot != null) WeaponSlot.ObjData.ReduceHEAT(Weapon);
+	}
+
+	public void DisperseHeat()
+	{
+		if (WeaponSlot != null) WeaponSlot.ObjData.DisperceHEAT_Weapon(Weapon);
 	}
 
 	public void AddAmmo(int amount)
@@ -507,8 +518,8 @@ public class WeaponMain : MonoBehaviour {
 		Quaternion lookToEnemyX =  Quaternion.LookRotation(targets[enemy].targetPosition - verticalMovement.transform.position);
 		Quaternion lookToEnemyY =  Quaternion.LookRotation(targets[enemy].targetPosition - horizontalMovement.transform.position);
 
-		bool x = Subs.ApproximatelySame(verticalMovement.transform.rotation.eulerAngles.x, lookToEnemyX.eulerAngles.x, 0.2f);
-		bool y = Subs.ApproximatelySame(horizontalMovement.transform.rotation.eulerAngles.y, lookToEnemyY.eulerAngles.y, 0.2f);
+		bool x = Subs.ApproximatelySame(verticalMovement.transform.rotation.eulerAngles.x, lookToEnemyX.eulerAngles.x, 0.4f);
+		bool y = Subs.ApproximatelySame(horizontalMovement.transform.rotation.eulerAngles.y, lookToEnemyY.eulerAngles.y, 0.4f);
 
 		return x && y;
 	}

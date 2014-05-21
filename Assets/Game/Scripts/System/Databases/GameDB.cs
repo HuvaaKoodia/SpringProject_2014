@@ -145,6 +145,14 @@ public class GameDB : MonoBehaviour {
 	{
 		LoadLevel(MainMenuScene);
 	}
+	/// <summary>
+	/// Ends the game. Removes saves if ironman and goes back to main menu.
+	/// </summary>
+	public void EndGame ()
+	{
+		RemoveSavesIfIronman();
+		LoadMainMenu();
+	}
 
 	void LoadLevel(string level){
 		

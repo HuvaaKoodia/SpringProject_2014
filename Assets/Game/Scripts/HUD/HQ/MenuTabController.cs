@@ -45,4 +45,10 @@ public class MenuTabController : MonoBehaviour {
             m.SetActive(m==menu?true:false);
         }
     }
+
+	public void CloseOtherMenus(GameObject menu){
+		foreach (var m in TabMenus){
+			if (m!=menu) m.SetActive(false);
+		}
+	}
 }

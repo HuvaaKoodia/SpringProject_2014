@@ -15,11 +15,15 @@ public class MissionMenuHud : MonoBehaviour {
     public MenuTabController Tabs;
 	public UILabel MoneyLabel,GameSavedLabel,Daylabel;
 
+	public OutOfMoneyMenu outofmoney;
+
 	public int MissionButtonGap=8;
 
     SharedSystemsMain SS;
     MissionObjData Mission;
 	PlayerObjData _player;
+
+	public bool GotoMoneyWarningMenu;
 
 	// Use this for initialization
 	void Start () {
@@ -57,7 +61,9 @@ public class MissionMenuHud : MonoBehaviour {
 		_FinanceMenu.SetFinanceManager(SS.GDB.GameData.FinanceManager);
 
         //open correct menu
-        if (SS.GDB.GOTO_DEBRIEF){
+		CheckMoneyAmount();
+
+		if (SS.GDB.GOTO_DEBRIEF){
             SS.GDB.GOTO_DEBRIEF=false;
 			MissionDebrief.SetMission(SS.GDB);
             OpenMissionDebrief();
@@ -81,6 +87,11 @@ public class MissionMenuHud : MonoBehaviour {
 
 		SS.GDB.AllowEscHud=true;
 	}
+
+	//lazy public
+	public void CheckMoneyAmount(){
+		GotoMoneyWarningMenu=SS.GDB.GameData.PlayerData.Money<0;
+	}
 	
 	void Update (){
 		MoneyLabel.text="Money: "+_player.Money+" "+XmlDatabase.MoneyUnit;
@@ -103,8 +114,14 @@ public class MissionMenuHud : MonoBehaviour {
     }
 
     public void OpenMissionSelect(){
-        Tabs.ActivateMenu(MissionMenu);
-    }
+		if (GotoMoneyWarningMenu){
+			Tabs.ActivateMenu(outofmoney.gameObject);
+			outofmoney.OpenMenu(this);
+		}
+		else{
+        	Tabs.ActivateMenu(MissionMenu);
+		}
+	}
 
     public void OpenVendor(){
         Tabs.ActivateMenu(_VendorMenu.gameObject);
