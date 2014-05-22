@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -9,7 +9,7 @@ public enum TurnState
 
 public class FloorObjData{
 	public int FloorIndex{get;set;}
-
+	
 	public TileObjData[,] TileObjectMap {get;private set;}
 	public TileMain[,] TileMainMap {get;private set;}
 	public List<EnemyMain> Enemies {get;private set;}
@@ -63,6 +63,9 @@ public class FloorObjData{
 public class GameController : MonoBehaviour {
 
 	public System.Action OnPlayerTurnStart;
+
+	public Light DirLight;
+	public float PowerOffDirLightIntensity,PowerOnDirLightIntensity;
 
 	public string TestLoadShipName;
 	public bool UseTestMap,OverrideMissionShip=false,randomizeDoorStates=true;
@@ -224,8 +227,9 @@ public class GameController : MonoBehaviour {
 
 		HUD.SetAlpha(1f);
 		HUD.FadeOut(0.5f);
-
 		SS.GDB.AllowEscHud=true;
+
+		SS.MusicSystem.StartGameTrack();
 	}
 
 	// Update is called once per frame
@@ -313,7 +317,7 @@ public class GameController : MonoBehaviour {
 
 	IEnumerator CallAfterAFewUpdateSteps(){
 		yield return null;
-		yield return null;
+		yield return null;//is terrible hax!
 		yield return null;
 
 		culling_system.DisableOtherFloors(CurrentFloorIndex,this);
@@ -387,6 +391,8 @@ public class GameController : MonoBehaviour {
 		foreach(var t in f.TileMainMap){
 			SetTileLightState(t,on);
 		}
+
+		DirLight.intensity=on?PowerOnDirLightIntensity:PowerOffDirLightIntensity;
 	}
 
 	public void SetFloorsPowerState(bool on){

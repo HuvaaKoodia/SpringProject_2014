@@ -45,12 +45,14 @@ public class GameDB : MonoBehaviour {
 	public void CheckForGameOptions(){
 		if (SaveLoadSys.HasOptions()){
 			GameOptionsData=SaveLoadSys.LoadOptions();
-			//set options to new data
-			SS.GOps.SetQualitySettingsToData(GameOptionsData);
 		}
-		else{
+		if (GameOptionsData==null){
 			GameOptionsData=new GameOptionsObjData();
+			GameOptionsData.quality_level=QualitySettings.GetQualityLevel();
 		}
+
+		SS.GOps.SetQualitySettingsToData(GameOptionsData);
+
 	}
 
 	void OnApplicationQuit(){

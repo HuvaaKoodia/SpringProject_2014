@@ -52,6 +52,7 @@ public class PlayerInteractSub : MonoBehaviour {
 		if (interactableInfront.Interact(this))
 		{
 			player.ap -= interactableInfront.InteractCost;
+			player.HUD.ShowApBlips(player.ap);
 		}
 		else
 		{

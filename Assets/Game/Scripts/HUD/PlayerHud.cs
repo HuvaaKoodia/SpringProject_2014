@@ -27,6 +27,17 @@ public class PlayerHud : MonoBehaviour {
 
 	public bool UpdateComputerSystems=true;
 
+	public List<GameObject> ApBlips;
+
+	public Animation buttonAnimation;
+
+	void Awake()
+	{
+		
+		buttonAnimation.Play("Take 001");
+		StartCoroutine(stopButtonAnim());
+	}
+
 	// Use this for initialization
 	void Start()
 	{
@@ -59,13 +70,17 @@ public class PlayerHud : MonoBehaviour {
 	public void ToggleMovementHUD()
 	{
 		if (player.inputSub.NotUsable()) return;
-			MasterHud.ToggleMovementHUD();
+
+		PlayButton3Anim();
+		MasterHud.ToggleMovementHUD();
 	}
 	
 	public void ToggleTargetingHUD()
 	{
 		if (player.inputSub.NotUsable()) return;
-			MasterHud.ToggleTargetingHUD();
+
+		PlayButton5Anim();
+		MasterHud.ToggleTargetingHUD();
 	}
 
     public void DeactivateTargetingHUD()
@@ -87,7 +102,9 @@ public class PlayerHud : MonoBehaviour {
 	public void ToggleInventory()
 	{
 		if (player.inputSub.NotUsable()) return;
-			MasterHud.ToggleInventory();
+
+		PlayButton2Anim();
+		MasterHud.ToggleInventory();
 	}
 
 	//input
@@ -124,21 +141,29 @@ public class PlayerHud : MonoBehaviour {
 
 	void EndTurnButtonPressed()
 	{
+		if (player.inputSub.NotUsable()) return;
+		PlayButton6Anim();
 		player.inputSub.EndTurnInput();
 	}
 
 	void InteractButtonPressed()
 	{
+		if (player.inputSub.NotUsable()) return;
+		PlayButton1Anim();
 		player.inputSub.InteractInput(false);
 	}
 
 	void EngageCombatPressed()
 	{
+		if (player.inputSub.NotUsable()) return;
+		PlayButton6Anim();
 		player.inputSub.EngageCombatInput();
 	}
 
 	void DisperseHeatPressed()
 	{
+		if (player.inputSub.NotUsable()) return;
+		PlayButton4Anim();
 		player.inputSub.DisperseHeatInput();
 	}
 
@@ -164,9 +189,27 @@ public class PlayerHud : MonoBehaviour {
 
     void TargetingModeButtonPressed()
     {
+		PlayButton5Anim();
         player.inputSub.TargetingModeInput();
     }
-	
+
+	public void ShowApBlips(int count)
+	{
+		if (count > 2)
+			count = 2;
+
+		int i = 0;
+		for (; i < count; i++)
+		{
+			ApBlips[i].SetActive(true);
+		}
+
+		for (; i < 2; i++)
+		{
+			ApBlips[i].SetActive(false);
+		}
+	}
+
 	public void CheckTargetingModePanel()
 	{
 		engageButton.gameObject.SetActive(player.targetingSub.HasAnyTargets());
@@ -230,4 +273,42 @@ public class PlayerHud : MonoBehaviour {
 		gunInfoDisplay.UpdateAllDisplays();
 		MechStats.UpdateStats();
 	}
+
+	
+	IEnumerator stopButtonAnim()
+	{
+		yield return null;
+		buttonAnimation.Stop();
+	}
+
+	void PlayButton1Anim()
+	{
+		buttonAnimation.Play("Button1");
+	}
+
+	void PlayButton2Anim()
+	{
+		buttonAnimation.Play("Button2");
+	}
+
+	void PlayButton3Anim()
+	{
+		buttonAnimation.Play("Button3");
+	}
+
+	void PlayButton4Anim()
+	{
+		buttonAnimation.Play("Button4");
+	}
+
+	void PlayButton5Anim()
+	{
+		buttonAnimation.Play("Button5");
+	}
+
+	void PlayButton6Anim()
+	{
+		buttonAnimation.Play("Button6");
+	}
+
 }
