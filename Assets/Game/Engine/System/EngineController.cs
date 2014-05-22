@@ -4,7 +4,13 @@ public class EngineController : MonoBehaviour {
 	
 	public bool enable_Restart=true,enable_Quit=true,ClearConsoleOnRestart=true;
 	public System.Action AfterRestart,BeforeQuit;
-	
+
+	void Start(){
+#if !UNITY_EDITOR
+		enable_Restart=false;
+		enable_Quit=false;
+#endif
+	}
 	
 	//Update is called once per frame
 	void Update (){

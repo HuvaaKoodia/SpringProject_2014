@@ -10,6 +10,8 @@ public class TileGraphicsSub : MonoBehaviour {
 	public void DisableLightGraphics(){
 		if (TileLights!=null&&TileLights.WhiteLightGraphics!=null){
 			TileLights.WhiteLightGraphics.SetActive(false);
+			TileLights.HaxDisableWhiteLight=true;
+			TileLights.EnableLights();
 		}
 	}
 }
