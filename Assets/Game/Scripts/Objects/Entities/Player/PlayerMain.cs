@@ -46,6 +46,8 @@ public class PlayerMain : EntityMain
 
 	public List<ParticleSystem> DisperseHeatParkikkels;
 
+	public AudioClip TakeDamageFX;
+
 	public bool SystemOverheat {
 		get{return ObjData.UpperTorso.OVERHEAT;}
 	}
@@ -254,6 +256,11 @@ public class PlayerMain : EntityMain
 			inputSub.DISABLE_INPUT=true;
 			GC.EndGame();
 
+		}
+
+		if (TakeDamageFX != null)
+		{
+			audio.PlayOneShot(TakeDamageFX);
 		}
 
 		HUD.UpdateHudPanels();

@@ -99,8 +99,6 @@ public class GameController : MonoBehaviour {
 
 	public List<GameObject> FloorContainers{get;private set;}
 
-	public AudioSource RandomSoundPlayer;
-
 	void Awake(){
 		
 		SS=SharedSystemsMain.I;
@@ -230,6 +228,8 @@ public class GameController : MonoBehaviour {
 		HUD.SetAlpha(1f);
 		HUD.FadeOut(0.5f);
 		SS.GDB.AllowEscHud=true;
+
+		SS.MusicSystem.StartGameTrack();
 	}
 
 	// Update is called once per frame
