@@ -226,6 +226,8 @@ public class GameController : MonoBehaviour {
 		HUD.FadeOut(0.5f);
 
 		SS.GDB.AllowEscHud=true;
+
+		SS.MusicSystem.StartGameTrack();
 	}
 
 	// Update is called once per frame

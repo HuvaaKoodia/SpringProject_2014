@@ -236,7 +236,7 @@ public class EntityMovementSub : MonoBehaviour
         currentMovement = MovementState.NotMoving;
         parentEntity.FinishedMoving(false);
 
-        audio.Stop();
+        //audio.Stop();
     }
 
     bool CanMoveToTile(int x, int y)
