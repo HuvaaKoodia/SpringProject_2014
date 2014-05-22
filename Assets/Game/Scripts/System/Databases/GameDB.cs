@@ -46,7 +46,7 @@ public class GameDB : MonoBehaviour {
 		if (SaveLoadSys.HasOptions()){
 			GameOptionsData=SaveLoadSys.LoadOptions();
 		}
-		else{
+		if (GameOptionsData==null){
 			GameOptionsData=new GameOptionsObjData();
 			GameOptionsData.quality_level=QualitySettings.GetQualityLevel();
 		}
