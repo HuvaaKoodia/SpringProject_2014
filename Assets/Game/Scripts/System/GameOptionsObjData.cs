@@ -66,7 +66,7 @@ public class GameOptionsObjData
 	public int texture_quality{get;set;}
 	public UnityEngine.AnisotropicFiltering anisotropic_filtering{get;set;}
 	public int anti_Aliasing{get;set;}
-	public string shadow_projection{get;set;}
+	public UnityEngine.ShadowProjection shadow_projection{get;set;}
 	public int shadow_cascades{get;set;}
 	public float shadow_distance{get;set;}
 	public int vsync_count{get;set;}
@@ -78,7 +78,7 @@ public class GameOptionsObjData
 		texture_quality = 0;
 		anisotropic_filtering = UnityEngine.AnisotropicFiltering.Disable;
 		anti_Aliasing = 0;
-		shadow_projection = "";
+		shadow_projection = UnityEngine.ShadowProjection.CloseFit;
 		shadow_cascades = 0;
 		shadow_distance = 0.0f;
 		vsync_count = 0;

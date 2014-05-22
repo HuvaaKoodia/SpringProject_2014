@@ -6,6 +6,9 @@ using System.Collections.Generic;
 //allows for changes in Quality Settings to be made
 public class GameOptionsMenu : MonoBehaviour
 {
+	
+	public string[] quality_settings;
+
 	GameOptionsMain GOpsMain;
 
 	public UILabel QualityLabel;
@@ -19,6 +22,9 @@ public class GameOptionsMenu : MonoBehaviour
 	// Use this for initialization
 	void Awake ()
 	{
+		//set automatic texts
+		quality_settings=QualitySettings.names;
+
 		GOpsMain = SharedSystemsMain.I.GOps;
 	}
 
@@ -164,7 +170,7 @@ public class GameOptionsMenu : MonoBehaviour
 		}
 		else if(LightLabel.text == "Extra")
 		{
-			GOpsMain.SetPixelLightCount(LightQuality.HIGH);
+			GOpsMain.SetPixelLightCount(LightQuality.EXTRA);
 		}
 	}
 
@@ -252,6 +258,10 @@ public class GameOptionsMenu : MonoBehaviour
 		}
 	}
 
+	void UpdateLabel_preset(){
+		QualityLabel.text=quality_settings[GOpsMain.Data.quality_level];
+	}
+
 	//update functions
 	
 	public void UpdateQualityToSelected()
@@ -283,9 +293,10 @@ public class GameOptionsMenu : MonoBehaviour
 
 		UpdateAllLabelsToCurrentQualitySettings();
 	}
-	
+
 	public void UpdateAllLabelsToCurrentQualitySettings()
 	{
+		UpdateLabel_preset();
 		GetLightProperty();
 		GetTextureProperty();
 		GetAnisotropicProperty();
@@ -297,6 +308,7 @@ public class GameOptionsMenu : MonoBehaviour
 	public void UpdateQualitySettingsToLabels()
 	{
 		QualityLabel.text = "Custom";
+		GOpsMain.Data.quality_level=6;
 
 		ChangeLight();
 		ChangeTexture();
