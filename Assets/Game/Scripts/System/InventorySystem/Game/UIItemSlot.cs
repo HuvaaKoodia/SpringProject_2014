@@ -85,8 +85,6 @@ public abstract class UIItemSlot : MonoBehaviour
     string GetTooltipText(InvGameItem item){
         string t = GetItemBaseToolTip(item);
 
-		bool add_linefeed_if_true=true;
-
 		t+="\n";
 		bool added=false;
 

@@ -48,6 +48,8 @@ public class PlayerMain : EntityMain
 
 	public AudioClip TakeDamageFX;
 
+	public Animation buttonAnimation;
+
 	public bool SystemOverheat {
 		get{return ObjData.UpperTorso.OVERHEAT;}
 	}

@@ -500,7 +500,6 @@ public class WeaponMain : MonoBehaviour {
 		                              new Vector3(enemy.transform.position.x, enemy.transform.position.z));
         var multi=WeaponSlot.ObjData.GetAccuracyMulti();
 		var bonus=WeaponSlot.ObjData.GetAccuracyBonus();
-        //return (int)Mathf.Clamp((Accuracy-((distance-MapGenerator.TileSize.x)/(Range*0.01f)))+multi,0,95);
 		return XmlDatabase.GetAccuracy(Accuracy,Range,distance,bonus,multi);
     }
 
