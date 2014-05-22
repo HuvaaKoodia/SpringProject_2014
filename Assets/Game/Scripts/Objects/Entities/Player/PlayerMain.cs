@@ -44,6 +44,8 @@ public class PlayerMain : EntityMain
 	
 	int gunsFinishedShooting;
 
+	public List<ParticleSystem> DisperseHeatParkikkels;
+
 	public bool SystemOverheat {
 		get{return ObjData.UpperTorso.OVERHEAT;}
 	}
@@ -283,9 +285,14 @@ public class PlayerMain : EntityMain
 
 	public void DisperseWeaponHeat()
 	{
-        foreach(WeaponMain gun in weaponList)
+		for (int i = 0; i < DisperseHeatParkikkels.Count; i++)
 		{
-            gun.DisperseHeat();
+			DisperseHeatParkikkels[i].Play();
+		}
+
+		for (int i = 0; i < weaponList.Count; i++)
+		{
+			weaponList[i].DisperseHeat();
 		}
 		
 		ObjData.UpperTorso.AddHEAT(-(XmlDatabase.HullHeatDisperseConstant+ObjData.UpperTorso.HEAT*XmlDatabase.HullHeatDisperseHeatMultiplier));
