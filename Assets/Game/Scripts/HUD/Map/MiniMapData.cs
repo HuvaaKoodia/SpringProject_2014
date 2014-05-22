@@ -118,6 +118,7 @@ public class MiniMapData {
 	UISprite CreateTileSprite(int x, int y, MiniMapTileData tile, GameObject spriteParent, float zoom, int spriteWidth)
 	{
 		string graphicsName = tile.TileType;
+		Debug.Log(graphicsName);
 		var go=GameObject.Instantiate(GC.SS.PS.GetMapSpritePrefab(graphicsName)) as GameObject;
 		UISprite sprite = go.GetComponent<UISprite>();
 
