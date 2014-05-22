@@ -30,8 +30,8 @@ public class EntityMovementSub : MonoBehaviour
 
 	bool waitBeforeMoving;
 
-    AudioClip WalkSoundFX;
-    AudioClip TurnSoundFX;
+    public AudioClip WalkSoundFX;
+    public AudioClip TurnSoundFX;
 
 	// Use this for initialization
 	void Awake()
