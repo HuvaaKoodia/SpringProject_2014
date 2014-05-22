@@ -15,6 +15,7 @@ public class MissionMenuHud : MonoBehaviour {
     public MenuTabController Tabs;
 	public UILabel MoneyLabel,GameSavedLabel,Daylabel;
 
+	public VictoryMenu victoryMenu;
 	public OutOfMoneyMenu outofmoney;
 
 	public int MissionButtonGap=8;
@@ -22,7 +23,8 @@ public class MissionMenuHud : MonoBehaviour {
     SharedSystemsMain SS;
     MissionObjData Mission;
 	PlayerObjData _player;
-
+	
+	public AudioSource RandomSoundPlayer;
 	public bool GotoMoneyWarningMenu;
 
 	// Use this for initialization
@@ -85,6 +87,7 @@ public class MissionMenuHud : MonoBehaviour {
 
 		Daylabel.text="Day: "+SS.GDB.GameData.CurrentTime;
 
+		_FinanceMenu.OnDebtShorten+=OnFinancePayment;
 		SS.GDB.AllowEscHud=true;
 	}
 
@@ -128,15 +131,9 @@ public class MissionMenuHud : MonoBehaviour {
     }
 
     public void OpenMechanic(){
-		//StartCoroutine(CallUpdateAfterOneUpdateStepBecauseUnitySetActiveShenanigans());
 		Tabs.ActivateMenu(mm_init.gameObject);
 		_MechanicMenu.OpenPanel();
     }
-
-//	IEnumerator CallUpdateAfterOneUpdateStepBecauseUnitySetActiveShenanigans(){
-//		yield return null;
-//		_MechanicMenu.OpenPanel();
-//	}
 
 	public void OpenFinance()
 	{
@@ -157,5 +154,23 @@ public class MissionMenuHud : MonoBehaviour {
 	
 	void HideGameSavedLabel(){
 		GameSavedLabel.gameObject.SetActive(false);
+	}
+
+	//victory menu imp
+
+	void OnFinancePayment(){
+		if (!_FinanceMenu._FinanceManager.HasActiveDebts()){
+			//victory
+
+			//play sound
+			RandomSoundPlayer.Play();
+			//wait for a bit
+			Invoke("OpenVictoryMenu",3f);
+		}
+	}
+
+	void OpenVictoryMenu(){
+		Tabs.ActivateMenu(null);
+		victoryMenu.OpenMenu(this);
 	}
 }

@@ -12,6 +12,8 @@ public enum Lighting_State
 
 public class TileLightsSub : MonoBehaviour
 {	
+	public bool HaxDisableWhiteLight=false;
+
 	public GameObject WhiteLightGraphics,OrangeLightsGraphics;
 	public Material on_material,off_material;
 
@@ -94,6 +96,8 @@ public class TileLightsSub : MonoBehaviour
 			else{
 				light_on = false;
 			}
+
+			if (HaxDisableWhiteLight) light_on=false;
 
 			white_light.gameObject.SetActive(light_on);
 

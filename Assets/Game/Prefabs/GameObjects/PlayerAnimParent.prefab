@@ -6951,6 +6951,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400016
@@ -8105,6 +8106,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400082
@@ -8202,6 +8204,7 @@ MonoBehaviour:
   displayMain: {fileID: 11400426}
   weapon: {fileID: 0}
   infoLabel: {fileID: 11400198}
+  missedLabel: {fileID: 0}
   highlight: {fileID: 11400104}
   heat_slider_spr: {fileID: 0}
 --- !u!114 &11400090
@@ -8249,6 +8252,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400096
@@ -8524,6 +8528,7 @@ MonoBehaviour:
   displayMain: {fileID: 11400426}
   weapon: {fileID: 0}
   infoLabel: {fileID: 11400304}
+  missedLabel: {fileID: 0}
   highlight: {fileID: 11400348}
   heat_slider_spr: {fileID: 0}
 --- !u!114 &11400116
@@ -8571,6 +8576,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400122
@@ -8830,6 +8836,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400144
@@ -8936,6 +8943,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400154
@@ -9089,6 +9097,9 @@ MonoBehaviour:
   AnimationsOn: 0
   WeaponMouseLookOn: 0
   Shooting: 0
+  DisperseHeatParkikkels: []
+  TakeDamageFX: {fileID: 0}
+  ParticleTempParent: {fileID: 0}
 --- !u!114 &11400164
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9146,6 +9157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentTransform: {fileID: 400000}
   parentEntity: {fileID: 0}
+  hax_is_enemy: 0
   currentGridX: 0
   currentGridY: 0
   currentMovement: 0
@@ -9153,6 +9165,10 @@ MonoBehaviour:
   turnSpeed: 180
   targetPosition: {x: 0, y: 0, z: 0}
   targetRotationAngle: 0
+  WalkForwardFX: {fileID: 0}
+  WalkBackwardFX: {fileID: 0}
+  SideStepFX: {fileID: 0}
+  TurnSoundFX: {fileID: 0}
 --- !u!114 &11400172
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9386,6 +9402,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400188
@@ -9682,6 +9699,7 @@ MonoBehaviour:
   targetMarkPanel: {fileID: 11400234}
   TP: {fileID: 0}
   UpdateComputerSystems: 1
+  ApBlips: []
 --- !u!114 &11400204
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9727,6 +9745,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400210
@@ -10459,6 +10478,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400248
@@ -11053,6 +11073,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400286
@@ -11543,6 +11564,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400312
@@ -11822,6 +11844,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400332
@@ -11897,6 +11920,7 @@ MonoBehaviour:
   displayMain: {fileID: 11400426}
   weapon: {fileID: 0}
   infoLabel: {fileID: 11400196}
+  missedLabel: {fileID: 0}
   highlight: {fileID: 11400064}
   heat_slider_spr: {fileID: 0}
 --- !u!114 &11400338
@@ -11944,6 +11968,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400344
@@ -12288,6 +12313,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400364
@@ -12727,6 +12753,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400392
@@ -12884,6 +12911,7 @@ MonoBehaviour:
   displayMain: {fileID: 11400426}
   weapon: {fileID: 0}
   infoLabel: {fileID: 11400048}
+  missedLabel: {fileID: 0}
   highlight: {fileID: 11400298}
   heat_slider_spr: {fileID: 0}
 --- !u!114 &11400402
@@ -12931,6 +12959,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400408
@@ -13060,6 +13089,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 0}
   hover: {x: 1.03999996, y: 1.03999996, z: 1.03999996}
   pressed: {x: 1, y: 1, z: 1}
+  permahover: {x: 1.10000002, y: 1.10000002, z: 1.10000002}
   duration: .200000003
   DisableTween: 0
 --- !u!114 &11400420
@@ -13181,6 +13211,7 @@ MonoBehaviour:
   - {fileID: 11400114}
   weaponColors: []
   inActiveColor: {r: 0, g: 0, b: 0, a: 0}
+  waitBeforeMissFades: .800000012
 --- !u!114 &11400428
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -13219,6 +13250,9 @@ MonoBehaviour:
   AnimationsOn: 0
   WeaponMouseLookOn: 0
   Shooting: 0
+  DisperseHeatParkikkels: []
+  TakeDamageFX: {fileID: 0}
+  ParticleTempParent: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

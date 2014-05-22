@@ -3,7 +3,6 @@ using System.Collections;
 
 public class EnemyDamageEffectSub : MonoBehaviour {
 
-	public BoxCollider collider;
 	public AIBase ai;
 
 	public ParticleSystem BloodEffect;

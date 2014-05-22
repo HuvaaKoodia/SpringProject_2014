@@ -150,7 +150,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 						}
 						else
 						{
-							targetPosition = enemyPair.Key.hitboxes[i].bounds.center + enemyPair.Key.transform.forward*0.1f;
+							targetPosition = enemyPair.Key.hitboxes[i].bounds.center + enemyPair.Key.transform.forward*0.3f;
 						}
 
 						if (targetPositions.ContainsKey(player.GetCurrentWeapon()))
@@ -207,9 +207,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 	
 	public void AddEnemyToTargetables(EnemyMain enemy, Vector3 hitboxPosition, Vector3 enemyPosInScreen)
 	{
-		if (targetableEnemies.ContainsKey(enemy))
-			return;
-
+		if (targetableEnemies.ContainsKey(enemy))return;
 		
 		enemyPosInScreen.z = 0.7f + (enemyPosInScreen.z / cameraFarZ);
 

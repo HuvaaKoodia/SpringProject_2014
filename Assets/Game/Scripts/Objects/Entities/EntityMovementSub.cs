@@ -30,7 +30,10 @@ public class EntityMovementSub : MonoBehaviour
 
 	bool waitBeforeMoving;
 
-    public AudioClip WalkSoundFX;
+    public AudioClip WalkForwardFX;
+	public AudioClip WalkBackwardFX;
+	public AudioClip SideStepFX;
+
     public AudioClip TurnSoundFX;
 
 	// Use this for initialization
@@ -103,7 +106,6 @@ public class EntityMovementSub : MonoBehaviour
 
     bool TryToMove(int direction)
     {
-        //TODO CHECK OBSTACLES
         int nextX = GetNextTileX(direction, currentGridX);
         int nextY = GetNextTileY(direction, currentGridY);
 
@@ -123,10 +125,20 @@ public class EntityMovementSub : MonoBehaviour
 
                 UpdateTileEntityToThis();
 
-                if (WalkSoundFX != null)
+				int relationalDir = direction - targetRotationAngle;
+
+				if (relationalDir == 0 && WalkForwardFX != null)
                 {
-                    audio.PlayOneShot(WalkSoundFX);
+					audio.PlayOneShot(WalkForwardFX);
                 }
+				else if (Mathf.Abs(relationalDir) == 180 && WalkBackwardFX != null)
+				{
+					audio.PlayOneShot(WalkBackwardFX);
+				}
+				else if (SideStepFX != null)
+				{
+					audio.PlayOneShot(SideStepFX);
+				}
 
                 return true;
             }
@@ -224,7 +236,7 @@ public class EntityMovementSub : MonoBehaviour
         currentMovement = MovementState.NotMoving;
         parentEntity.FinishedMoving(false);
 
-        audio.Stop();
+        //audio.Stop();
     }
 
     bool CanMoveToTile(int x, int y)
