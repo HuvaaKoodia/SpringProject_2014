@@ -202,4 +202,16 @@ public class FinanceManager
 	{
 		return listofdebts[index];
 	}
+
+	public bool HasActiveDebts ()
+	{
+		bool has=false;
+		foreach (var debt in listofdebts){
+			if (debt.active){
+				has=true;
+				break;
+			}
+		}
+		return has;
+	}
 }

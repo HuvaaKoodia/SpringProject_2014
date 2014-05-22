@@ -18,6 +18,8 @@ public class FinanceMenu : MonoBehaviour {
 
 	public FinanceManager _FinanceManager;
 
+	public System.Action OnDebtShorten;
+
 	//function to search for currently active Debts and display in the FinanceScreen
 	private void SearchActiveDebt()
 	{
@@ -345,6 +347,8 @@ public class FinanceMenu : MonoBehaviour {
 			//update debts
 			SearchActiveDebt();
 			UpdateValues();
+
+			if (OnDebtShorten!=null) OnDebtShorten();
 		}
 	}
 }
