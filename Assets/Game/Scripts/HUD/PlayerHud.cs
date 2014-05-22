@@ -27,6 +27,8 @@ public class PlayerHud : MonoBehaviour {
 
 	public bool UpdateComputerSystems=true;
 
+	public List<GameObject> ApBlips;
+
 	// Use this for initialization
 	void Start()
 	{
@@ -166,7 +168,24 @@ public class PlayerHud : MonoBehaviour {
     {
         player.inputSub.TargetingModeInput();
     }
-	
+
+	public void ShowApBlips(int count)
+	{
+		if (count > 2)
+			count = 2;
+
+		int i = 0;
+		for (; i < count; i++)
+		{
+			ApBlips[i].SetActive(true);
+		}
+
+		for (; i < 2; i++)
+		{
+			ApBlips[i].SetActive(false);
+		}
+	}
+
 	public void CheckTargetingModePanel()
 	{
 		engageButton.gameObject.SetActive(player.targetingSub.HasAnyTargets());

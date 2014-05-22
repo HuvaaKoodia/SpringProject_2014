@@ -71,6 +71,8 @@ public class PlayerMain : EntityMain
 	public void InitPlayer()
     {
 		ap = apMax;
+		HUD.ShowApBlips(ap);
+
 		ShotLastTurn = false;
 		Finished = false;
 		movement.UpdateFloor();
@@ -105,6 +107,8 @@ public class PlayerMain : EntityMain
     public void StartPlayerPhase()
     {
 		ap = apMax;
+		HUD.ShowApBlips(ap);
+
 		Finished = false;
 		DecreaseWeaponHeat();
 
@@ -124,6 +128,9 @@ public class PlayerMain : EntityMain
     {
 		Finished = true;
 		inputSub.enabled = false;
+
+		HUD.ShowApBlips(0);
+	
 		EndTargetingMode();
 
 		if (!interactSub.WaitingInteractToFinish)
@@ -148,6 +155,7 @@ public class PlayerMain : EntityMain
 
 		inputSub.enabled = false;
 		ap -= movementCost;
+		HUD.ShowApBlips(ap);
 
 		if (AnimationsOn && movement.currentMovement == MovementState.Moving)
 		{	
@@ -160,6 +168,8 @@ public class PlayerMain : EntityMain
 		if (Shooting) yield break;
 
 		ap = 0;
+		HUD.ShowApBlips(ap);
+
 		gunsFinishedShooting = 0;
 		Shooting = true;
 
