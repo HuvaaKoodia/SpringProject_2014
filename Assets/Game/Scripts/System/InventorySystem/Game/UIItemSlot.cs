@@ -78,23 +78,33 @@ public abstract class UIItemSlot : MonoBehaviour
         UITooltip.ClearTexts();
 	}
 
+	string GetStatAmount(InvStat stat){
+		return ""+stat._amount;
+	}
+
     string GetTooltipText(InvGameItem item){
         string t = GetItemBaseToolTip(item);
+
+		bool add_linefeed_if_true=true;
+
+		t+="\n";
+		bool added=false;
 
         for (int i = 0, imax = item.Stats.Count; i < imax; ++i)
         {
             InvStat stat = item.Stats[i];
             if (stat._amount == 0) continue;
             //DEV.HAX
-            if (stat.type==InvStat.Type.Range||stat.type==InvStat.Type.Value) continue;
+			if (stat.type==InvStat.Type.Range||stat.type==InvStat.Type.Accuracy||stat.type==InvStat.Type.Value) continue;
+			added=true;
 
             if (stat._amount < 0)
             {
-                t += "\n[FF0000]  " + stat._amount;
+				t += "\n[FF0000]  " + GetStatAmount(stat);
             }
             else
             {
-                t += "\n[00FF00]  " + stat._amount;
+				t += "\n[00FF00]  " + GetStatAmount(stat);
             }
             
             //if (stat.modifier == InvStat.Modifier.Percent) t += "%";
@@ -102,33 +112,55 @@ public abstract class UIItemSlot : MonoBehaviour
             t += "[-]";
         }
 
-        t+="\n\n"+GetSellPriceText(item);
+		if (added) t+="\n";
+
+		var price=GetSellPriceText(item);
+
+		if (price!=""){
+        	t+="\n"+price+"\n";
+		}
         
-        t += "\n\n"+GetItemDescription(item);
+        t += "\n"+GetItemDescription(item);
         return t;
     }
 
     string GetItemBaseToolTip(InvGameItem item)
     {
-        var t="[" + NGUIText.EncodeColor(item.color) + "]" + item.name + "[-]\n";
+		var item_color="[" + NGUIText.EncodeColor(item.color) + "]";
+		var t=item_color + item.name + "[-]\n";
         
 		if (item.baseItem.ShowItemLevel())
-            t += "[AFAFAF]MK." + item.itemLevel + " ";
+			t += "[666699]MK." + item.itemLevel + " ";
         
         t+=item.baseItem.type;
 
-        if (item.baseItem.AmmoData!=null&&item.baseItem.AmmoData.ShowInGame){
-            t += "\n[AFAFAF]AmmoType: " + item.baseItem.AmmoData.Name + "[-]";
+		var accu=item.GetStat(InvStat.Type.Accuracy);
+		var range=item.GetStat(InvStat.Type.Range);
+
+		if (accu!=null&&range!=null){
+			t+="\n"+item_color+"Accuracy:\n[666699]("+
+				XmlDatabase.GetAccuracy(accu._amount,range._amount,3,0,1)+"/"+
+				XmlDatabase.GetAccuracy(accu._amount,range._amount,10,0,1)+"/"+
+				XmlDatabase.GetAccuracy(accu._amount,range._amount,15,0,1)+")"
+			;
+		}
+
+		if (item.baseItem.AmmoData!=null&&item.baseItem.AmmoData.ShowInGame&&item.baseItem.type!=InvBaseItem.Type.AmmoBox){
+			t += "\n"+item_color+"AmmoType:\n[666699]" + item.baseItem.AmmoData.Name + "[-]";
         }
 
-        return t;
+		return t;
     }
 
     string GetTooltipText(InvGameItem item,InvGameItem compare){
         string t = GetItemBaseToolTip(item);
+		//t+="\n";
 
         List<InvStat> stats = item.Stats;
         
+		t+="\n";
+		bool added=false;
+
         for (int i = 0, imax = stats.Count; i < imax; ++i)
         {
             string tt="";
@@ -141,12 +173,14 @@ public abstract class UIItemSlot : MonoBehaviour
             }
             if (stat._amount == 0) continue;
             //DEV.HAX
-            if (stat.type==InvStat.Type.Range||stat.type==InvStat.Type.Value) continue;
+			if (stat.type==InvStat.Type.Range||stat.type==InvStat.Type.Accuracy||stat.type==InvStat.Type.Value) continue;
 
             bool reverse_comparison=false;
 
             //DEV.HAX
             if (stat.type==InvStat.Type.Heat) reverse_comparison=true;
+
+			added=true;
 
             string color="00FF00";//green
             string sign=":<better>";
@@ -163,14 +197,22 @@ public abstract class UIItemSlot : MonoBehaviour
 
 			string type=XmlDatabase.GetAttributeName(stat.type);
 
-            tt +=stat._amount+" " + type;
+			tt +=GetStatAmount(stat)+" " + type;
            // tt =tt.PadRight(20,' ');
             //tt+=sign;
             t+="\n["+color+"] "+sign+" "+tt+"[-]";
         }
 
-        t+="\n"+GetSellPriceText(item);
-        t += "\n"+GetItemDescription(item);
+		if (added) t+="\n";
+
+		var price=GetSellPriceText(item);
+		
+		if (price!=""){
+			t+="\n"+price+"\n";
+		}
+		
+		t += "\n"+GetItemDescription(item);
+
         return t;
     }
 

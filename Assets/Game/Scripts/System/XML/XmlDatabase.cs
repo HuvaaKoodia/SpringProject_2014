@@ -167,6 +167,10 @@ public class XmlDatabase
 		default:
 			return a.ToString();
 		}
-				
+	}
+
+	public static int GetAccuracy(int AccuracyStat,int RangeStat,float distance,float bonus,float multi){
+		var a=(int)(Mathf.Clamp((AccuracyStat-((distance-MapGenerator.TileSize.x)/(RangeStat*0.01f)))+bonus,0,95)*multi);
+		return a;
 	}
 }
