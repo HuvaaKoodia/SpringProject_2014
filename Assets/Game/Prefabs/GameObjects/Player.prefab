@@ -8840,6 +8840,7 @@ MonoBehaviour:
   DisperseHeatParkikkels:
   - {fileID: 19800004}
   - {fileID: 19800002}
+  TakeDamageFX: {fileID: 8300000, guid: ace22830f805ac14a973edb2c956c465, type: 3}
   ParticleTempParent: {fileID: 100424}
 --- !u!114 &11400002
 MonoBehaviour:
@@ -8862,8 +8863,10 @@ MonoBehaviour:
   turnSpeed: 180
   targetPosition: {x: 0, y: 0, z: 0}
   targetRotationAngle: 0
-  WalkSoundFX: {fileID: 0}
-  TurnSoundFX: {fileID: 0}
+  WalkForwardFX: {fileID: 8300000, guid: d5b17c7d44500104d93d1b5e6a97dc5e, type: 3}
+  WalkBackwardFX: {fileID: 8300000, guid: b42115afab191ba40af62b7380781141, type: 3}
+  SideStepFX: {fileID: 8300000, guid: 3e35227b166ad064795e1e08dda0c93c, type: 3}
+  TurnSoundFX: {fileID: 8300000, guid: dcdccd185003d0245a23a5e4037271b3, type: 3}
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9800,7 +9803,7 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: 1, g: .0509803928, b: 0, a: .250980407}
   mPivot: 4
-  mWidth: 409
+  mWidth: 412
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -12903,7 +12906,7 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
-  mWidth: 48
+  mWidth: 49
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -16039,7 +16042,7 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
-  mWidth: 48
+  mWidth: 49
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -16097,7 +16100,7 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
-  mWidth: 48
+  mWidth: 49
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -16155,7 +16158,7 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
-  mWidth: 1078
+  mWidth: 1082
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -16415,8 +16418,8 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
-  mWidth: 881
-  mHeight: 149
+  mWidth: 888
+  mHeight: 150
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -16740,7 +16743,7 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
-  mWidth: 414
+  mWidth: 417
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -16880,7 +16883,7 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
-  mWidth: 48
+  mWidth: 49
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -17177,8 +17180,8 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
-  mWidth: 881
-  mHeight: 149
+  mWidth: 888
+  mHeight: 150
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0

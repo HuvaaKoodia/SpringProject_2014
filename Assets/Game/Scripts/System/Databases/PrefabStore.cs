@@ -85,8 +85,8 @@ public class PrefabStore : MonoBehaviour {
 
 		weaponSoundFX = new Dictionary<string, AudioClip>();
 		weaponSoundFX.Add("Gatling", Resources.Load("Weapons/Gatling_gun_v3") as AudioClip);
-		weaponSoundFX.Add("Cannon", Resources.Load("Weapons/Cannon_v2") as AudioClip);
-		weaponSoundFX.Add("Shotgun", Resources.Load("Weapons/Shotgun_v1") as AudioClip);
+		weaponSoundFX.Add("Cannon", Resources.Load("Weapons/Cannon_v3") as AudioClip);
+		weaponSoundFX.Add("Shotgun", Resources.Load("Weapons/Shotgun_v2") as AudioClip);
 
 		targetHighlights = new List<GameObject>();
 		targetHighlights.Add(Resources.Load("TargetingSprites/LeftDown") as GameObject);
