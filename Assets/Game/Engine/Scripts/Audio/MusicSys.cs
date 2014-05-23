@@ -10,7 +10,8 @@ public class MusicSys : MonoBehaviour {
 	
 	public float music_volume=0.5f;
 	
-	void Start(){	
+	void Start(){
+		source.loop = true;
 	}
 	
 	public void StartMenuTrack(){

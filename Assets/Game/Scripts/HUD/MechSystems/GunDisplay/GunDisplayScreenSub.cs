@@ -16,6 +16,9 @@ public class GunDisplayScreenSub : MonoBehaviour {
 
 	GameObject data_panel,overheat_icon,no_ammo_icon,broken_icon;
 
+	public List<UISprite> ROFempty;
+	public List<UISprite> ROFfilled;
+
 	// Use this for initialization
 	void Awake () {
 		overheat_icon=transform.Find("OverheatIcon").gameObject;
@@ -80,10 +83,22 @@ public class GunDisplayScreenSub : MonoBehaviour {
 
 			heat_slider_spr.fillAmount=weapon.WeaponSlot.ObjData.HeatPercent();
 
+
 			info += "\n";
-			info += "ROF: " + weapon.GetNumShotsTargetedTotal() + "/" + weapon.RateOfFire;
+			//info += "ROF: " + weapon.GetNumShotsTargetedTotal() + "/" + weapon.RateOfFire;
+
 
 			infoLabel.text = info;
+
+			int i = 0;
+			for (; i < weapon.GetNumShotsTargetedTotal(); i++)
+			{
+				ROFfilled[i].enabled = true;
+			}
+			for (; i < 5; i++)
+			{
+				ROFfilled[i].enabled = false;
+			}
 
 			if (overheat_icon.activeSelf||no_ammo_icon.activeSelf||broken_icon.activeSelf || missHideTimer.Active){
 				data_panel.SetActive(false);
@@ -116,6 +131,20 @@ public class GunDisplayScreenSub : MonoBehaviour {
 		missHideTimer.Reset();
 		missHideTimer.Active = false;
 		UpdateGunInfo(weapon.player);
+	}
+
+	public void SetMaxROF(int maxROF)
+	{
+		int i = 0;
+
+		for (; i < maxROF; i++)
+		{
+			ROFempty[i].enabled = true;
+		}
+		for (; i < 5; i++)
+		{
+			ROFempty[i].enabled = false;
+		}
 	}
 
 	void Update()
