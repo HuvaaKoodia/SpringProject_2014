@@ -60,6 +60,8 @@ public class PlayerMain : EntityMain
         ObjData=data;
     }
 
+	public bool InstaShoot { get; set; }
+
 	// Use this for initialization
 	public override void Awake()
 	{
@@ -72,6 +74,8 @@ public class PlayerMain : EntityMain
 		targetingMode = false;
 	
 		WeaponMouseLookOn=SharedSystemsMain.I.GOps.Data.MouseLook;
+
+		InstaShoot = !SharedSystemsMain.I.GOps.Data.CombatAnimations;
 
 	}
 

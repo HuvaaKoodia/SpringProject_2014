@@ -191,59 +191,55 @@ public class EntityMovementSub : MonoBehaviour
     {
         if (currentMovement == MovementState.Moving)
         {
-			if (InstantMovement){
-				parentTransform.position = targetPosition;
-				FinishMoving();
-			}
-			else{
-				Vector3 movementDir = targetPosition - parentTransform.position;
-	            float distance = movementDir.magnitude;
-	            movementDir.Normalize();
+			Vector3 movementDir = targetPosition - parentTransform.position;
+            float distance = movementDir.magnitude;
+            movementDir.Normalize();
 
-				Vector3 movement = movementDir * Time.deltaTime * movementSpeed;
-	            
-	            if (distance > movement.magnitude && movement != Vector3.zero)
-	            {
-					parentTransform.position += movement;
-	            }
-	            else
-	            {
-					parentTransform.position = targetPosition;
-		            FinishMoving();
-	            }
+			var speed=movementSpeed;
+			if (InstantMovement){
+				speed*=XmlDatabase.NoMovementAnimationsMultiplier;
 			}
+			Vector3 movement = movementDir * Time.deltaTime * speed;
+            
+            if (distance > movement.magnitude && movement != Vector3.zero)
+            {
+				parentTransform.position += movement;
+            }
+            else
+            {
+				parentTransform.position = targetPosition;
+	            FinishMoving();
+            }
         }
 
         else if (currentMovement == MovementState.Turning)
         {
+			float distance = targetRotationAngle - parentTransform.eulerAngles.y;
+            float direction = distance / Mathf.Abs(distance);
+
+			var speed=turnSpeed;
 			if (InstantMovement){
+				speed*=XmlDatabase.NoMovementAnimationsMultiplier;
+			}
+
+            //to prevent 270 degree turns
+            if (Mathf.Abs(distance) > 180)
+                direction *= -1;
+
+            //Debug.Log("direction: "+ direction + " distance: " + distance);
+			if (Mathf.Abs(direction * Time.deltaTime * speed) < Mathf.Abs(distance))
+            {
+				parentTransform.rotation = Quaternion.Euler(
+					parentTransform.rotation.eulerAngles.x, 
+					parentTransform.rotation.eulerAngles.y + (direction * Time.deltaTime * speed),
+					parentTransform.rotation.eulerAngles.z);
+				//parentTransform.Rotate(parentTransform.transform.up, direction * Time.deltaTime * turnSpeed);
+            }
+            else
+            {
 				parentTransform.eulerAngles = new Vector3(parentTransform.eulerAngles.x, targetRotationAngle, parentTransform.eulerAngles.z);
-				FinishMoving();
-			}
-			else{
-				float distance = targetRotationAngle - parentTransform.eulerAngles.y;
-	            float direction = distance / Mathf.Abs(distance);
-
-	            //to prevent 270 degree turns
-	            if (Mathf.Abs(distance) > 180)
-	                direction *= -1;
-
-
-	            //Debug.Log("direction: "+ direction + " distance: " + distance);
-	            if (Mathf.Abs(direction * Time.deltaTime * turnSpeed) < Mathf.Abs(distance))
-	            {
-					parentTransform.rotation = Quaternion.Euler(
-						parentTransform.rotation.eulerAngles.x, 
-						parentTransform.rotation.eulerAngles.y + (direction * Time.deltaTime * turnSpeed),
-						parentTransform.rotation.eulerAngles.z);
-					//parentTransform.Rotate(parentTransform.transform.up, direction * Time.deltaTime * turnSpeed);
-	            }
-	            else
-	            {
-					parentTransform.eulerAngles = new Vector3(parentTransform.eulerAngles.x, targetRotationAngle, parentTransform.eulerAngles.z);
-	                FinishMoving();
-	            }
-			}
+                FinishMoving();
+            }
         }
     }
 

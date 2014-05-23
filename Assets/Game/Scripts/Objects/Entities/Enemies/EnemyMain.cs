@@ -131,24 +131,26 @@ public class EnemyMain : EntityMain {
 	}
 	*/
 
-	public IEnumerator TakeDamage(int damage, int weaponSlot)
+	public IEnumerator TakeDamage(int damage, int weaponSlot, bool insta)
 	{
 		damageAfterReaction -= damage;
 
-		WaitingForDamageReaction[weaponSlot] = true;
-
-		float timeWaited = 0.0f;
-
-		while (WaitingForDamageReaction[weaponSlot])
+		if (!insta)
 		{
-			timeWaited += Time.deltaTime;
+			WaitingForDamageReaction[weaponSlot] = true;
 
-			if (timeWaited > 0.9f)
-				break;
+			float timeWaited = 0.0f;
 
-			yield return null;
+			while (WaitingForDamageReaction[weaponSlot])
+			{
+				timeWaited += Time.deltaTime;
+
+				if (timeWaited > 0.9f)
+					break;
+
+				yield return null;
+			}
 		}
-
 		if (!Dead)
 		{
 			Health -= damage;
