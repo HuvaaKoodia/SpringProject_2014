@@ -122,6 +122,8 @@ public class PlayerMain : EntityMain
 		MovedLastPhase = false;
 
 		HUD.UpdateHudPanels();
+		targetingSub.PlayerPhaseStart();
+
         StartTurn();
     }
 
@@ -176,6 +178,9 @@ public class PlayerMain : EntityMain
 
 		ap = 0;
 		HUD.ShowApBlips(ap);
+
+		targetingSub.PlayerStartedShooting();
+		HUD.PlayerStartedShooting();
 
 		gunsFinishedShooting = 0;
 		Shooting = true;

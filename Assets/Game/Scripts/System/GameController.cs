@@ -330,10 +330,11 @@ public class GameController : MonoBehaviour {
 		while(HUD.FadeInProgress){
 			yield return null;
 		}
-		yield return new WaitForSeconds(2f);
+		yield return new WaitForSeconds(1f);
+		SetFloor(index);
+		yield return new WaitForSeconds(1f);
 		//dev. elevator sound
 		HUD.FadeOut();
-		SetFloor(index);
 		//DEV. elevator sound here + some delay
 
 		yield return null;//DEV. haxy hax Thanks to having to call UpdateFloorStats one step after setActive
