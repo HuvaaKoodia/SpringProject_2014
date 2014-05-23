@@ -288,7 +288,7 @@ public class WeaponMain : MonoBehaviour {
 		SetTargetRotation(enemy);
 		waitingForShot = true;
 
-		while (!lookingAtEnemy(enemy) || player.targetingSub.shootingOrders[enemy][0] != this)
+		while ((enemy != null) && (!lookingAtEnemy(enemy) || player.targetingSub.shootingOrders[enemy][0] != this))
 		{
 			if (IsEnemyDead(enemy))
 			{
