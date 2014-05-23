@@ -57,6 +57,7 @@ public class WeaponMain : MonoBehaviour {
 
     public bool Overheat{get{return WeaponSlot.ObjData.OVERHEAT;}}
 
+	List<EnemyMain> enemyOrder;
 	public Dictionary<EnemyMain, TargetInfo> targets { get; private set;}
 
 	public Quaternion targetVerticalRotation;
@@ -173,6 +174,8 @@ public class WeaponMain : MonoBehaviour {
 		targetVerticalRotation = Quaternion.identity;
 		targetHorizontalRotation = Quaternion.identity;
 		targets = new Dictionary<EnemyMain, TargetInfo>();
+
+		enemyOrder = new List<EnemyMain>();
 	}
 
     public virtual void TargetEnemy(EnemyMain enemy,bool increase_amount)
@@ -197,10 +200,7 @@ public class WeaponMain : MonoBehaviour {
         }
         else{
             if (GetNumShotsTargetedTotal() < RateOfFire){
-				TargetInfo newInfo = new TargetInfo();
-				newInfo.numShots = 1;
-				newInfo.targetPosition = player.targetingSub.targetPositions[this][enemy];
-				targets.Add(enemy, newInfo);
+				AddTarget(enemy, 1);
             }
         }
 	}
@@ -219,22 +219,30 @@ public class WeaponMain : MonoBehaviour {
 		{
             if (GetNumShotsTargetedTotal() < RateOfFire)
 			{
-				TargetInfo newInfo = new TargetInfo();
-				newInfo.numShots = RateOfFire-GetNumShotsTargetedTotal();
-				newInfo.targetPosition = player.targetingSub.targetPositions[this][enemy];
-				targets.Add(enemy, newInfo);
+				AddTarget(enemy, RateOfFire-GetNumShotsTargetedTotal());
             }
         }
+	}
+
+	protected void AddTarget(EnemyMain enemy, int numshots)
+	{
+		TargetInfo newInfo = new TargetInfo();
+		newInfo.numShots = numshots;
+		newInfo.targetPosition = player.targetingSub.targetPositions[this][enemy];
+		targets.Add(enemy, newInfo);
+		enemyOrder.Add(enemy);
 	}
 
 	protected void RemoveTarget(EnemyMain enemy)
 	{
 		targets.Remove(enemy);
+		enemyOrder.Remove(enemy);
 	}
 
 	public void ClearTargets()
 	{
 		targets.Clear();
+		enemyOrder.Clear();
 	}
 
 	bool waitingForShot;
@@ -243,24 +251,23 @@ public class WeaponMain : MonoBehaviour {
 	{
 		waitingForShot = false;
 
-		foreach(KeyValuePair<EnemyMain, TargetInfo> enemyPair in targets)
+		for (int i = 0; i < enemyOrder.Count; i++)
 		{
-			//shoot all shots at one enemy consecutively
-			for (int i = 0; i < enemyPair.Value.numShots; i++)
+			for (int x = 0; x < targets[enemyOrder[i]].numShots; x++)
 			{
 				if (Overheat || CurrentAmmo == 0) break;
-				if (enemyPair.Value.numShots == 0 || IsEnemyDead(enemyPair.Key))
+				if (targets[enemyOrder[i]].numShots == 0 || IsEnemyDead(enemyOrder[i]))
 				{
 					continue;
 				}
-
-				while (waitingForShot || enemyPair.Key.GetWaitingForDamageReaction((int)weaponID))
+				
+				while (waitingForShot || enemyOrder[i].GetWaitingForDamageReaction((int)weaponID))
 				{
 					yield return null;
 				}
-
-				StartCoroutine(ShootEnemy(enemyPair.Key));
-
+				
+				StartCoroutine(ShootEnemy(enemyOrder[i]));
+				
 				yield return null;
 			}
 		}
@@ -271,6 +278,8 @@ public class WeaponMain : MonoBehaviour {
 		}
 
 		SetTargetRotationToDefault();
+		player.targetingSub.RemoveWeaponFromAllShootingOrders(this);
+		enemyOrder.Clear();
 		player.GunFinishedShooting();
 	}
 
@@ -279,11 +288,12 @@ public class WeaponMain : MonoBehaviour {
 		SetTargetRotation(enemy);
 		waitingForShot = true;
 
-		while (!lookingAtEnemy(enemy))
+		while (!lookingAtEnemy(enemy) || player.targetingSub.shootingOrders[enemy][0] != this)
 		{
 			if (IsEnemyDead(enemy))
 			{
 				waitingForShot = false;
+				player.targetingSub.RemoveWeaponFromEnemysOrder(this, enemy);
 				yield break;
 			}
 			yield return null;
@@ -292,6 +302,7 @@ public class WeaponMain : MonoBehaviour {
 		if (IsEnemyDead(enemy))
 		{
 			waitingForShot = false;
+			player.targetingSub.RemoveWeaponFromEnemysOrder(this, enemy);
 			yield break;
 		}
 
@@ -324,6 +335,8 @@ public class WeaponMain : MonoBehaviour {
 				yield return null;
 			}
 		}
+
+		player.targetingSub.shootingOrders[enemy].RemoveAt(0);
 		waitingForShot = false;
 	}
 
@@ -473,8 +486,8 @@ public class WeaponMain : MonoBehaviour {
 		if (HasTargets)
 		{
 			//targetRotation = Quaternion.LookRotation((targets.Keys.First().transform.position + Vector3.up *0.6f)- transform.position);
-			targetHorizontalRotation = Quaternion.LookRotation(targets[targets.Keys.First()].targetPosition - horizontalMovement.transform.position);
-			targetVerticalRotation = Quaternion.LookRotation(targets[targets.Keys.First()].targetPosition - verticalMovement.transform.position);
+			targetHorizontalRotation = Quaternion.LookRotation(targets[enemyOrder[0]].targetPosition - horizontalMovement.transform.position);
+			targetVerticalRotation = Quaternion.LookRotation(targets[enemyOrder[0]].targetPosition - verticalMovement.transform.position);
 		}
 		else
 		{
@@ -526,11 +539,7 @@ public class WeaponMain : MonoBehaviour {
 		    targets[enemy].targetPosition = position;
 	    else
 	    {
-			TargetInfo newInfo = new TargetInfo();
-			newInfo.numShots = 0;
-			newInfo.targetPosition = position;
-
-			targets.Add(enemy, newInfo);
+			AddTarget(enemy, 0);
 		}
 	}
 }
