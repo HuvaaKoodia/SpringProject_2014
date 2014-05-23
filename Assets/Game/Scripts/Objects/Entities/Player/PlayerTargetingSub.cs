@@ -362,4 +362,14 @@ public class PlayerTargetingSub : MonoBehaviour {
 	{
 		player.HUD.targetMarkPanel.gameObject.SetActive(show);
 	}
+
+	public void PlayerStartedShooting()
+	{
+		ShowTargetMarks(false);
+	}
+
+	public void PlayerPhaseStart()
+	{
+		ShowTargetMarks(true);
+	}
 }
