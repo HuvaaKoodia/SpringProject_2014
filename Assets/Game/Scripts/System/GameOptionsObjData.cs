@@ -61,6 +61,11 @@ public enum VSync
 //data are all public properties for saving
 public class GameOptionsObjData
 {
+	public bool MovementAnimations {get;set;}
+	public bool MouseLook {get;set;}
+	public bool CombatAnimations {get;set;}
+	public bool GuiTips{get;set;}
+
 	public int quality_level{get;set;}
 	public int pixel_light_count{get;set;}
 	public int texture_quality{get;set;}
@@ -73,6 +78,11 @@ public class GameOptionsObjData
 
 	public GameOptionsObjData()
 	{
+		MovementAnimations=true;
+		CombatAnimations=true;
+		MouseLook=false;
+		GuiTips=false;
+
 		quality_level = 0;
 		pixel_light_count = 0;
 		texture_quality = 0;

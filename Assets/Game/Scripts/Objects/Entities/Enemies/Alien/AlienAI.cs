@@ -737,7 +737,7 @@ public class AlienAI : AIBase {
 
 	void PlayAnimation(string animation, float speed)
 	{
-		if (parent.graphics.activeSelf == false)
+		if (parent.graphics.activeSelf == false||!SharedSystemsMain.I.GOps.Data.MovementAnimations)
 			return;
 
 		spiderAnimation[animation].normalizedTime = 0;
@@ -750,7 +750,7 @@ public class AlienAI : AIBase {
 
 	void BlendAnimation(string animation, float speed)
 	{
-		if (parent.graphics.activeSelf == false)
+		if (parent.graphics.activeSelf == false||!SharedSystemsMain.I.GOps.Data.MovementAnimations)
 			return;
 		
 		spiderAnimation[animation].normalizedTime = 0;

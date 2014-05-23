@@ -179,7 +179,7 @@ public class UIToggle : UIWidgetContainer
 	/// </summary>
 
 
-	bool instant_hax=true;
+	public bool instant_hax=true;
 
 	void Set (bool state)
 	{
@@ -244,5 +244,11 @@ public class UIToggle : UIWidgetContainer
 				ActiveAnimation.Play(activeAnimation, state ? Direction.Forward : Direction.Reverse);
 			}
 		}
+	}
+
+	public void SetValueInstant (bool on)
+	{
+		instant_hax=true;
+		value=on;
 	}
 }

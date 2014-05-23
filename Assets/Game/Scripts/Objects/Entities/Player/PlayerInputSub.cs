@@ -30,42 +30,58 @@ public class PlayerInputSub : MonoBehaviour {
 		UICamera.MenuButtonPressed = false;
 	}
 
+	bool pressed_once_moving=false,pressed_once_turning=false;
+
     void HotkeyInput()
     {
 		if (!player.targetingMode && player.GC.HUD.currentMenuState != MenuState.InventoryHUD)
 		{
-	        float verticalAxis = Input.GetAxis("Vertical");
-	        float horizontalAxis = Input.GetAxis("Horizontal");
+	        float verticalAxis = Input.GetAxisRaw("Vertical");
+			float horizontalAxis = Input.GetAxisRaw("Horizontal");
+			bool instant=player.movement.InstantMovement;
 
 	        if (verticalAxis > 0)
 	        {
-				MoveForwardInput();
+				if (!instant||instant&&!pressed_once_moving) MoveForwardInput();
+				pressed_once_moving=true;
 				return ;
 	        }
 	        else if (verticalAxis < 0)
 	        {
-				MoveBackwardInput();
+				if (!instant||instant&&!pressed_once_moving) MoveBackwardInput();
+				pressed_once_moving=true;
+
 				return ;
 	        }
 	        else if (horizontalAxis > 0)
 	        {
-				MoveRightInput();
+				if (!instant||instant&&!pressed_once_moving) MoveRightInput();
+				pressed_once_moving=true;
+
 	            return ;
 	        }
 	        else if (horizontalAxis < 0)
 	        {
-				MoveLeftInput();
+				if (!instant||instant&&!pressed_once_moving) MoveLeftInput();
+				pressed_once_moving=true;
+
 	            return;
 	        }
+			else{
+				pressed_once_moving=false;
+			}
 			
 			if (Input.GetButton("TurnLeft"))
 			{
-				TurnLeftInput();
+				if (!instant||instant&&!pressed_once_turning) TurnLeftInput();
+				pressed_once_turning=true;
 			}
 			else if (Input.GetButton("TurnRight"))
 			{
-				TurnRightInput();
+				if (!instant||instant&&!pressed_once_turning) TurnRightInput();
+				pressed_once_turning=true;
 			}
+			else pressed_once_turning=false;
 		}
 
 	 	if (Input.GetKeyDown(KeyCode.Alpha1))
