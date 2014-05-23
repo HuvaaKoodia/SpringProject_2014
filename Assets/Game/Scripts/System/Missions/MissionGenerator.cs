@@ -146,7 +146,7 @@ public class MissionGenerator{
 			info_text+="- ";
 			switch(mission.InfoAlienAmount){
 	            case MissionObjData.InformationRating.None:
-				info_text+="We were unable to determine the presence of organics.";
+				info_text+="Organic presence: No data available";
 	                break;
 	            case MissionObjData.InformationRating.Something:
 	                info_text+=MissionAlienInfoSomething(mission);
@@ -158,7 +158,7 @@ public class MissionGenerator{
 	        info_text+="\n- ";
 	        switch(mission.InfoSecuritySystem){
 	            case MissionObjData.InformationRating.None:
-	                info_text+="We were unable to determine the security system status.";
+	                info_text+="System security status: No data available";
 	                break;
 	            case MissionObjData.InformationRating.Something:
 	                info_text+=MissionSecurityInfoSomething(mission);
@@ -171,7 +171,7 @@ public class MissionGenerator{
 	        switch(mission.InfoShipPower){
 	            case MissionObjData.InformationRating.None:
 	            case MissionObjData.InformationRating.Something:
-	                info_text+="We were unable to determine the power status of the ship.";
+	                info_text+="Ship power status: No data available";
 	                break;
 	            case MissionObjData.InformationRating.Everything:
 	                info_text+=MissionPowerInfoEverything(mission);
@@ -180,7 +180,7 @@ public class MissionGenerator{
 	        info_text+="\n- ";
 	        switch(mission.InfoShipConditions){
 	            case MissionObjData.InformationRating.None:
-	                info_text+="We were unable to determine the ship condition.";
+	                info_text+="Ship condition: No data available";
 	                break;
 	            case MissionObjData.InformationRating.Something:
 	                info_text+=MissionConditionInfoSomething(mission);
@@ -198,10 +198,10 @@ public class MissionGenerator{
         switch(mission.MissionAlienAmount){
             case MissionObjData.AlienAmount.None:
             case MissionObjData.AlienAmount.Small:
-                return "The ship might have some organics.";
+                return "Organic presence: Unconfirmed";
             case MissionObjData.AlienAmount.Medium:
             case MissionObjData.AlienAmount.Large:
-                return "The ship has an undetermined amount of organics.";
+                return "Organic presence: Confirmed - Amount unknown";
         }
         return "";
     }
@@ -209,13 +209,13 @@ public class MissionGenerator{
     static string MissionAlienInfoEverything(MissionObjData mission){
         switch(mission.MissionAlienAmount){
             case MissionObjData.AlienAmount.None:
-                return "The ship has no organic signatures.";
+                return "Organic presence: None";
             case MissionObjData.AlienAmount.Small:
-                return "The ship has a small organic signature.";
+                return "Organic presence: Small";
             case MissionObjData.AlienAmount.Medium:
-                return "The ship has a medium organic signature.";
+                return "Organic presence: Medium";
             case MissionObjData.AlienAmount.Large:
-                return "The ship is crawling with organics.";
+                return "Organic presence: High";
         }
         return "";
     }
@@ -224,10 +224,10 @@ public class MissionGenerator{
         switch(mission.MissionSecuritySystem){
             case MissionObjData.SecuritySystems.None:
             case MissionObjData.SecuritySystems.Small:
-                return "The ship might have a simple security system.";
+                return "System security status: Unconfirmed";
             case MissionObjData.SecuritySystems.Medium:
             case MissionObjData.SecuritySystems.Large:
-                return "The ship seems to have an advanced security system of some sort.";
+                return "System security status: Confirmed - Amount unknown";
         }
         return "";
     }
@@ -235,13 +235,13 @@ public class MissionGenerator{
     static string MissionSecurityInfoEverything(MissionObjData mission){
         switch(mission.MissionSecuritySystem){
             case MissionObjData.SecuritySystems.None:
-                return "The ship doesn't have a security system.";
+				return "System security status: Offline";
             case MissionObjData.SecuritySystems.Small:
-                return "The ship has a simple security system.";
+                return "System security status: Online - Weak";
             case MissionObjData.SecuritySystems.Medium:
-                return "The ship has an average security system.";
+                return "System security status: Online - Medium";
             case MissionObjData.SecuritySystems.Large:
-                return "The ship has an advanced security system.";
+                return "System security status: Online - Strong";
         }
         return "";
     }
@@ -249,16 +249,16 @@ public class MissionGenerator{
     static string MissionPowerInfoEverything(MissionObjData mission){
         switch(mission.MissionShipPower){
             case MissionObjData.ShipPower.On:
-                return "The ship has no power.";
+                return "Ship power status: Online";
             case MissionObjData.ShipPower.Off:
-                return "The ship has power.";
+                return "Ship power status: Offline";
         }
                 
         return "";
     }
     //condition
     static string MissionConditionInfoSomething(MissionObjData mission){
-        string t1="The ship might be damaged.",t2="The ship is damaged to some degree.";
+		string t1="Ship condition: Unconfirmed",t2="Ship condition: Damages of uncertain scale";
         switch(mission.MissionShipConditions){
             case MissionObjData.ShipCondition.Intact:
                 return t1;
@@ -273,11 +273,11 @@ public class MissionGenerator{
     static string MissionConditionInfoEverything(MissionObjData mission){
         switch(mission.MissionShipConditions){
             case MissionObjData.ShipCondition.Intact:
-                return "The ship is intact.";
+                return "Ship condition: No visible damage";
             case MissionObjData.ShipCondition.Damaged:
-                return "The ship is damaged.";
+                return "Ship condition: Damaged";
             case MissionObjData.ShipCondition.BadlyDamaged:
-                return "The ship is badly damaged.";
+                return "Ship condition: Critically damaged";
         }
         return "";
     }
@@ -377,16 +377,15 @@ public class MissionGenerator{
 	public static string MissionShortDescription(MissionObjData mission){
 		var text="";
 
-		if (mission.Reward!=0){
-			text+="Reward:\n"+mission.Reward+" "+XmlDatabase.MoneyUnit;
-			text+="\n\n";
-		}
-
-		text+="Travel time:\n"+mission.TravelTime +" days";
+	
+		text+="Reward\n"+mission.Reward+" "+XmlDatabase.MoneyUnit;
 		text+="\n\n";
-		text+="Expires in\n"+(mission.TravelTime+mission.ExpirationTime)+" days";
 
-		text+="\n\nRisk:\n";
+		text+="Available for\n"+(mission.ExpirationTime)+" days";
+		text+="\n\n";
+		text+="Travel time\n"+mission.TravelTime +" days";
+
+		text+="\n\nRisk\n";
 		var risk=mission.MissionRisk;
 
 		Color color=Color.grey;
