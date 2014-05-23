@@ -299,6 +299,8 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 				WeaponMain currentWeapon = player.GetCurrentWeapon();
 
+				int startNumShots = currentWeapon.GetNumShotsAtTarget(enemyTargeted);
+
 				currentWeapon.TargetEnemy(enemyTargeted,increase_amount);
 
 				targetableEnemies[enemyTargeted].ChangeNumShots(
@@ -307,25 +309,33 @@ public class PlayerTargetingSub : MonoBehaviour {
 					currentWeapon.HitChancePercent(enemyTargeted)
                 );
 
-				if (increase_amount)
+				int currentNumShots = currentWeapon.GetNumShotsAtTarget(enemyTargeted);
+
+				if (currentNumShots == 0) //untarget
+				{
+					while (shootingOrders[enemyTargeted].Remove(currentWeapon))
+					{}
+				}
+				else if (currentNumShots > startNumShots) //added
 				{
 					if (!shootingOrders.ContainsKey(enemyTargeted))
 					{
 						shootingOrders.Add(enemyTargeted, new List<WeaponMain>());
 					}
-
-					shootingOrders[enemyTargeted].Add(currentWeapon);
+					int amount = currentNumShots - startNumShots;
+					for (int i = 0; i < amount;i++)
+					{
+						shootingOrders[enemyTargeted].Add(currentWeapon);
+					}
 				}
-				else
+				else if (currentNumShots < startNumShots) // removed
 				{
 					if (!shootingOrders.ContainsKey(enemyTargeted)) return;
 
-					for (int i = 0; i < shootingOrders[enemyTargeted].Count; i++)
+					int amount = startNumShots - currentNumShots;
+					for (int i = 0; i < amount; i++)
 					{
-						if (shootingOrders[enemyTargeted][i] == currentWeapon)
-						{
-							shootingOrders[enemyTargeted].RemoveAt(i);
-						}
+						shootingOrders[enemyTargeted].Remove(currentWeapon);
 					}
 				}
 			}
