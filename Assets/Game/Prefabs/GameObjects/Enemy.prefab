@@ -2407,7 +2407,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfa01db4135bcbe4d8548f080c20f642, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collider: {fileID: 6500000}
   ai: {fileID: 11400006}
   BloodEffect: {fileID: 19800036}
   ElectricShockEffect: {fileID: 19800042}
@@ -2436,6 +2435,7 @@ MonoBehaviour:
   WalkBackwardFX: {fileID: 0}
   SideStepFX: {fileID: 0}
   TurnSoundFX: {fileID: 0}
+  InstantMovement: 0
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2447,7 +2447,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfa01db4135bcbe4d8548f080c20f642, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collider: {fileID: 6500008}
   ai: {fileID: 11400006}
   BloodEffect: {fileID: 19800024}
   ElectricShockEffect: {fileID: 19800030}
@@ -2469,6 +2468,7 @@ MonoBehaviour:
   foundMove: 0
   Animating: 0
   Rotating: 0
+  waitingForAttackToHitPlayer: 0
   APmax: 6
   MovementCost: 2
   TurnCost: 1
@@ -2551,7 +2551,7 @@ MonoBehaviour:
   - {fileID: 6500002}
   - {fileID: 6500000}
   rangedRange: 3
-  rangedAngleMax: 40
+  rangedAngleMax: 4
   deathDelay: .883333325
 --- !u!114 &11400012
 MonoBehaviour:
@@ -2564,7 +2564,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfa01db4135bcbe4d8548f080c20f642, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collider: {fileID: 6500004}
   ai: {fileID: 11400006}
   BloodEffect: {fileID: 19800012}
   ElectricShockEffect: {fileID: 19800018}
@@ -2579,7 +2578,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfa01db4135bcbe4d8548f080c20f642, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collider: {fileID: 6500006}
   ai: {fileID: 11400006}
   BloodEffect: {fileID: 19800000}
   ElectricShockEffect: {fileID: 19800006}
@@ -2594,7 +2592,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfa01db4135bcbe4d8548f080c20f642, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collider: {fileID: 6500002}
   ai: {fileID: 11400006}
   BloodEffect: {fileID: 19800058}
   ElectricShockEffect: {fileID: 19800052}

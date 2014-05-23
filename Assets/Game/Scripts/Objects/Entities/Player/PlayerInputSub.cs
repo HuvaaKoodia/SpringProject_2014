@@ -39,6 +39,7 @@ public class PlayerInputSub : MonoBehaviour {
 	        float verticalAxis = Input.GetAxisRaw("Vertical");
 			float horizontalAxis = Input.GetAxisRaw("Horizontal");
 			bool instant=player.movement.InstantMovement;
+			instant=false;//Dev.temp un used
 
 	        if (verticalAxis > 0)
 	        {

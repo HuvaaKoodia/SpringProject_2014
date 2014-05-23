@@ -145,7 +145,7 @@ public class AlienAI : AIBase {
 		if (movedSuccessfully == MovementState.Moving)
 		{
 			parent.GC.culling_system.CullMovingEnemy(parent, player.transform.position, MyPosition, blackboard.Path.next.position, player.GameCamera.farClipPlane, parent.GC);
-			PlayAnimation(WalkAnimation, 1);
+			PlayAnimation(WalkAnimation, 1,true);
 
 			HasUsedTurn = true;
 			foundMove = true;
@@ -160,11 +160,11 @@ public class AlienAI : AIBase {
 
 			if (movement.targetRotationAngle < parent.transform.rotation.eulerAngles.y)
 			{
-				PlayAnimation(RotateLeftAnimation, 1);
+				PlayAnimation(RotateLeftAnimation, 1,true);
 			}
 			else
 			{
-				PlayAnimation(RotateRightAnimation, 1);
+				PlayAnimation(RotateRightAnimation, 1,true);
 			}
 		}
 		else
@@ -567,7 +567,7 @@ public class AlienAI : AIBase {
 
 	IEnumerator AttackRanged(float inflictDelay)
 	{
-		PlayAnimation(RangedAttackAnimation, 1);
+		PlayAnimation(RangedAttackAnimation, 1,false);
 
         if (RangedAttackSoundFX != null)
 			audio.PlayOneShot(RangedAttackSoundFX);
@@ -585,17 +585,22 @@ public class AlienAI : AIBase {
 			yield return null;
 		}
 
+		waitingForAttackToHitPlayer = false;
 		player.TakeDamage(DamageRanged, MyPosition.X, MyPosition.Y);
 	}
 
 	IEnumerator AttackMelee(float inflictDelay)
 	{
-		PlayAnimation(MeleeAttackAnimation, 1);
 
-        if (MeleeAttackSoundFX != null)
-			audio.PlayOneShot(MeleeAttackSoundFX);
 
-		yield return new WaitForSeconds(inflictDelay);
+		if (SharedSystemsMain.I.GOps.Data.CombatAnimations){
+			PlayAnimation(MeleeAttackAnimation, 1,false);
+
+			if (MeleeAttackSoundFX != null)
+					audio.PlayOneShot(MeleeAttackSoundFX);
+
+			yield return new WaitForSeconds(inflictDelay);
+		}
 		player.TakeDamage(DamageMelee, MyPosition.X, MyPosition.Y);
 	}
 
@@ -628,12 +633,12 @@ public class AlienAI : AIBase {
 
 		if (damageAmount < HeavyDamageAnimationTreshold)
 		{
-			PlayAnimation(Damage01Animation, 1);
+			PlayAnimation(Damage01Animation, 1,false);
 			audio.PlayOneShot(TakeNormalDamageFX);
 		}
 		else
 		{
-			PlayAnimation(Damage02Animation, 1);
+			PlayAnimation(Damage02Animation, 1,false);
 			audio.PlayOneShot(TakeHeavyDamageFX);
 		}
 	}
@@ -735,9 +740,15 @@ public class AlienAI : AIBase {
 		behaviourTree = root;
 	}
 
-	void PlayAnimation(string animation, float speed)
+	void PlayAnimation(string animation, float speed,bool movement_animation)
 	{
-		if (parent.graphics.activeSelf == false||!SharedSystemsMain.I.GOps.Data.MovementAnimations)
+		if (movement_animation&&!SharedSystemsMain.I.GOps.Data.MovementAnimations)
+			return;
+		
+		if (!movement_animation&&!SharedSystemsMain.I.GOps.Data.CombatAnimations)
+			return;
+
+		if (parent.graphics.activeSelf == false)
 			return;
 
 		spiderAnimation[animation].normalizedTime = 0;
