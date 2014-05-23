@@ -60,6 +60,8 @@ public class PlayerMain : EntityMain
         ObjData=data;
     }
 
+	public bool InstaShoot { get; set; }
+
 	// Use this for initialization
 	public override void Awake()
 	{
@@ -70,6 +72,8 @@ public class PlayerMain : EntityMain
 		inputSub = GetComponent<PlayerInputSub>();
 
 		targetingMode = false;
+
+		InstaShoot = false;
 	}
 
 	public void InitPlayer()
