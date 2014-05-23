@@ -14,6 +14,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 	}
 
 	Dictionary<EnemyMain, TargetMarkHandler> targetableEnemies;
+	public Dictionary<EnemyMain, List<WeaponMain>> shootingOrders { get; private set; }
 	public Dictionary<WeaponMain, Dictionary<EnemyMain, Vector3>> targetPositions { get; private set; }
 
 	//UISprite insightPrefab;
@@ -33,6 +34,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 	void Awake(){
 		player = gameObject.GetComponent<PlayerMain>();
 		targetableEnemies = new Dictionary<EnemyMain, TargetMarkHandler>();
+		shootingOrders = new Dictionary<EnemyMain, List<WeaponMain>>();
 		targetPositions = new Dictionary<WeaponMain, Dictionary<EnemyMain, Vector3>>();
 	}
 
@@ -193,7 +195,11 @@ public class PlayerTargetingSub : MonoBehaviour {
 		foreach (KeyValuePair<EnemyMain, TargetMarkHandler> enemyPair in targetableEnemies)
 			enemyPair.Value.DeInit();
 
+		shootingOrders.Clear();
+
 		targetableEnemies.Clear();
+
+		player.HUD.gunInfoDisplay.UpdateAllDisplays();
 	}
 
     public void UnsightWeapon(WeaponMain weapon)
@@ -203,8 +209,48 @@ public class PlayerTargetingSub : MonoBehaviour {
         foreach (var enemyPair in targetableEnemies){
             enemyPair.Value.ChangeNumShots(weapon.weaponID,0,0);
         }
+
+		foreach (var enemyPair in shootingOrders)
+		{
+			while (shootingOrders[enemyPair.Key].Remove(weapon))
+			{
+			}
+		}
+
+		player.HUD.gunInfoDisplay.UpdateAllDisplays();
     }
-	
+
+	public void RemoveWeaponFromAllShootingOrders(WeaponMain weapon)
+	{
+		foreach (var enemyPair in shootingOrders)
+		{
+			while (shootingOrders[enemyPair.Key].Remove(weapon))
+			{
+			}
+		}
+
+		player.HUD.gunInfoDisplay.UpdateAllDisplays();
+	}
+
+	public void RemoveWeaponFromEnemysOrder(WeaponMain weapon, EnemyMain enemy)
+	{
+		while (shootingOrders[enemy].Remove(weapon))
+		{
+		}
+
+		player.HUD.gunInfoDisplay.UpdateAllDisplays();
+	}
+
+	public void WeaponShotEnemy(WeaponMain weapon, EnemyMain enemy)
+	{
+		if (shootingOrders[enemy][0] != weapon)
+		{
+			Debug.Log("WRONG SHOOTING ORDER");
+		}
+
+		shootingOrders[enemy].Remove(weapon);
+	}
+
 	public void AddEnemyToTargetables(EnemyMain enemy, Vector3 hitboxPosition, Vector3 enemyPosInScreen)
 	{
 		if (targetableEnemies.ContainsKey(enemy))return;
@@ -251,13 +297,37 @@ public class PlayerTargetingSub : MonoBehaviour {
 				if (!targetableEnemies[enemyTargeted].IsVisible)
 					return;
 
-                player.GetCurrentWeapon().TargetEnemy(enemyTargeted,increase_amount);
+				WeaponMain currentWeapon = player.GetCurrentWeapon();
+
+				currentWeapon.TargetEnemy(enemyTargeted,increase_amount);
 
 				targetableEnemies[enemyTargeted].ChangeNumShots(
 					player.currentWeaponID, 
-                    player.GetCurrentWeapon().GetNumShotsAtTarget(enemyTargeted),
-                    player.GetCurrentWeapon().HitChancePercent(enemyTargeted)
+					currentWeapon.GetNumShotsAtTarget(enemyTargeted),
+					currentWeapon.HitChancePercent(enemyTargeted)
                 );
+
+				if (increase_amount)
+				{
+					if (!shootingOrders.ContainsKey(enemyTargeted))
+					{
+						shootingOrders.Add(enemyTargeted, new List<WeaponMain>());
+					}
+
+					shootingOrders[enemyTargeted].Add(currentWeapon);
+				}
+				else
+				{
+					if (!shootingOrders.ContainsKey(enemyTargeted)) return;
+
+					for (int i = 0; i < shootingOrders[enemyTargeted].Count; i++)
+					{
+						if (shootingOrders[enemyTargeted][i] == currentWeapon)
+						{
+							shootingOrders[enemyTargeted].RemoveAt(i);
+						}
+					}
+				}
 			}
 		}
 	}

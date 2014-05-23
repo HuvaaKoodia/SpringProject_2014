@@ -19,6 +19,8 @@ public class GameOptionsMenu : MonoBehaviour
 	public UILabel ShadowLabel;
 	public UILabel VSyncLabel;
 
+	public UISlider MasterVolume;
+
 	// Use this for initialization
 	void Awake ()
 	{
@@ -31,6 +33,15 @@ public class GameOptionsMenu : MonoBehaviour
 	public void OpenMenu(){
 		UpdateAllLabelsToCurrentQualitySettings();
 	}
+
+	//audio
+
+	public void UpdateMasterVolume(){
+		AudioListener.volume=MasterVolume.value;
+	}
+
+
+	//graphics
 
 	//label updaters
 

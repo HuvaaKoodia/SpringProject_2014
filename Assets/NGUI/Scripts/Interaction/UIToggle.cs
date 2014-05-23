@@ -164,6 +164,8 @@ public class UIToggle : UIWidgetContainer
 			mStarted = true;
 			Set(startsActive);
 		}
+
+		instant_hax=false;
 	}
 
 	/// <summary>
@@ -176,10 +178,14 @@ public class UIToggle : UIWidgetContainer
 	/// Fade out or fade in the active sprite and notify the OnChange event listener.
 	/// </summary>
 
+
+	bool instant_hax=true;
+
 	void Set (bool state)
 	{
-		if (!mStarted)
+		if (instant_hax||!mStarted)
 		{
+			instant_hax=false;
 			mIsActive = state;
 			startsActive = state;
 			if (activeSprite != null) activeSprite.alpha = state ? 1f : 0f;
