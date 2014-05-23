@@ -235,6 +235,7 @@ public class GatlingAI : AIBase {
 			yield return null;
 		}
 
+		waitingForAttackToHitPlayer = false;
 		player.TakeDamage(Damage, MyPosition.X, MyPosition.Y);
 	}
 
