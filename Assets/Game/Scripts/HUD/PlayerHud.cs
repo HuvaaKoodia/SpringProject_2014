@@ -29,6 +29,8 @@ public class PlayerHud : MonoBehaviour {
 
 	public List<GameObject> ApBlips;
 
+	public List<PlayerBloodArrowSub> bloodArrows;
+
 	public Animation buttonAnimation;
 
 	void Awake()
@@ -210,6 +212,11 @@ public class PlayerHud : MonoBehaviour {
 		}
 	}
 
+	public void ShowBloodArrow(int dir)
+	{
+		bloodArrows[dir].ShowArrow();
+	}
+
 	public void CheckTargetingModePanel()
 	{
 		engageButton.gameObject.SetActive(player.targetingSub.HasAnyTargets());
@@ -277,7 +284,11 @@ public class PlayerHud : MonoBehaviour {
 	
 	IEnumerator stopButtonAnim()
 	{
-		yield return null;
+		yield return new WaitForEndOfFrame();
+		buttonAnimation.Stop();
+		yield return new WaitForEndOfFrame();
+		buttonAnimation.Stop();
+		yield return new WaitForEndOfFrame();
 		buttonAnimation.Stop();
 	}
 

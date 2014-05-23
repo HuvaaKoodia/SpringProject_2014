@@ -252,6 +252,8 @@ public class PlayerMain : EntityMain
 			break;
 		}
 
+		HUD.ShowBloodArrow(dir);
+
         if (Health <= 0)
 		{
 			Dead=true;
