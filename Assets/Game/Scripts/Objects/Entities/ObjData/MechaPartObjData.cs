@@ -124,9 +124,14 @@ public class MechaPartObjData{
     public float GetAccuracyMulti()
     {
 		if (HP <= MechaPartObjData.MaxHP*XmlDatabase.MechaPartConditionFairThreshold)
-			return XmlDatabase.MechaPartConditionFairThreshold+accuracy_multi;
+			return XmlDatabase.MechaPartConditionFairThreshold;
 		if (HP <= MechaPartObjData.MaxHP*XmlDatabase.MechaPartConditionBadThreshold)
-			return XmlDatabase.MechaPartConditionBadThreshold+accuracy_multi;
-		return accuracy_multi*100;
+			return XmlDatabase.MechaPartConditionBadThreshold;
+		return 1f;
     }
+
+	public float GetAccuracyBonus()
+	{
+		return accuracy_multi;
+	}
 }

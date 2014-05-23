@@ -187,10 +187,13 @@ public class ShipDetailGenerator : MonoBehaviour
 					Debug.LogWarning("Mission: "+mission.XmlData.Name+" failed to create objective item in ship type "+ship.Name +" required room : "+obj_room);
 					Debug.LogWarning("A random room selected for the item");
 
-					LegitRooms.Clear ();
+					foreach (var lrlist in LegitRooms){
+						lrlist.Value.Clear();
+					}
+
 					for (int i=0;i<ship.FloorRooms.Count;++i){
 						foreach(var r in ship.FloorRooms[i]){
-							if (r.LootCrateTiles.Count>0) 
+							if (r.LootCrateTiles.Count>0)
 							{
 								LegitRooms[i].Add(r);
 							}
@@ -235,6 +238,7 @@ public class ShipDetailGenerator : MonoBehaviour
 				var l=Subs.GetRandom(loot_crates);
 				var item=new InvGameItem(quest_item);
 		    	l.Items.Add(item);
+				Debug.Log("Quest item generated successfully!");
 			}
 		}
 	}

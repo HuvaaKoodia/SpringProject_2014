@@ -47,8 +47,6 @@ public class GatlingAI : AIBase {
 	public Transform movingPartTransform;
 	public Transform turretTransform;
 
-	Point3D lastTargetedPosition;
-
 	public float horizontalTurnSpeed = 120;
 	public float verticalTurnSpeed = 90;
 
@@ -82,7 +80,6 @@ public class GatlingAI : AIBase {
 		open = false;
 
 		MyPosition = new Point3D(movement.currentGridX, movement.currentGridY);
-		lastTargetedPosition = new Point3D(-1,-1);
 
 		LightsOff();
 		
@@ -253,8 +250,6 @@ public class GatlingAI : AIBase {
 
 	void FacePlayer()
 	{
-		lastTargetedPosition = blackboard.LastKnownPlayerPosition;
-
 		lookToPlayerRot = Quaternion.LookRotation(playerLookPosition - turretTransform.position);
 		lookToPlayerRot = Quaternion.Euler(lookToPlayerRot.eulerAngles.x-90,
 		                                   lookToPlayerRot.eulerAngles.y,

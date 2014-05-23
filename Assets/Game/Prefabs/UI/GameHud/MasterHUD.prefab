@@ -254,7 +254,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 400030}
   - 114: {fileID: 11400050}
-  m_Layer: 9
+  m_Layer: 13
   m_Name: PlayerIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -469,6 +469,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 400056}
   - 114: {fileID: 11400084}
+  - 114: {fileID: 11400322}
+  - 65: {fileID: 6500054}
   m_Layer: 13
   m_Name: BG
   m_TagString: Untagged
@@ -2683,7 +2685,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400366}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: AmmoSlots
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4771,7 +4773,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100164}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.79590863, y: 0, z: 37.7843666}
+  m_LocalPosition: {x: 0, y: 1.10430264, z: 37.7843666}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400310}
@@ -6998,6 +7000,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 208, y: 42, z: 0}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &6500054
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100056}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1600, y: 1200, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &6500056
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -7622,16 +7636,16 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 8
-  mWidth: 94
-  mHeight: 53
-  mDepth: 5
+  mWidth: 0
+  mHeight: 0
+  mDepth: 10
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
   keepCrispWhenShrunk: 1
-  mTrueTypeFont: {fileID: 0}
-  mFont: {fileID: 11400000, guid: 16a2d4ace59bac64dbcf4085964b38eb, type: 2}
+  mTrueTypeFont: {fileID: 12800000, guid: 83831f88b8a199c41a5ad9534c14d4c6, type: 3}
+  mFont: {fileID: 0}
   mText: 
-  mFontSize: 28
+  mFontSize: 16
   mFontStyle: 0
   mEncoding: 1
   mMaxLineCount: 0
@@ -7639,7 +7653,7 @@ MonoBehaviour:
   mEffectColor: {r: 0, g: 0, b: 0, a: 1}
   mSymbols: 1
   mEffectDistance: {x: 1, y: 1}
-  mOverflow: 0
+  mOverflow: 2
   mMaterial: {fileID: 0}
   mApplyGradient: 0
   mGradientTop: {r: 1, g: 1, b: 1, a: 1}
@@ -7856,7 +7870,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 67
+  mWidth: 64
   mHeight: 16
   mDepth: 5
   autoResizeBoxCollider: 0
@@ -8143,7 +8157,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 0
-  mWidth: 458
+  mWidth: 454
   mHeight: 50
   mDepth: 6
   autoResizeBoxCollider: 0
@@ -8201,7 +8215,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 67
+  mWidth: 64
   mHeight: 16
   mDepth: 5
   autoResizeBoxCollider: 0
@@ -8259,7 +8273,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 0
-  mWidth: 458
+  mWidth: 454
   mHeight: 50
   mDepth: 6
   autoResizeBoxCollider: 0
@@ -8335,7 +8349,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 85
+  mWidth: 80
   mHeight: 16
   mDepth: 5
   autoResizeBoxCollider: 0
@@ -9338,16 +9352,16 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 8
-  mWidth: 94
-  mHeight: 53
-  mDepth: 5
+  mWidth: 0
+  mHeight: 0
+  mDepth: 10
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
   keepCrispWhenShrunk: 1
-  mTrueTypeFont: {fileID: 0}
-  mFont: {fileID: 11400000, guid: 16a2d4ace59bac64dbcf4085964b38eb, type: 2}
+  mTrueTypeFont: {fileID: 12800000, guid: 83831f88b8a199c41a5ad9534c14d4c6, type: 3}
+  mFont: {fileID: 0}
   mText: 
-  mFontSize: 28
+  mFontSize: 16
   mFontStyle: 0
   mEncoding: 1
   mMaxLineCount: 0
@@ -9355,7 +9369,7 @@ MonoBehaviour:
   mEffectColor: {r: 0, g: 0, b: 0, a: 1}
   mSymbols: 1
   mEffectDistance: {x: 1, y: 1}
-  mOverflow: 0
+  mOverflow: 2
   mMaterial: {fileID: 0}
   mApplyGradient: 0
   mGradientTop: {r: 1, g: 1, b: 1, a: 1}
@@ -9571,7 +9585,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 0
-  mWidth: 458
+  mWidth: 454
   mHeight: 50
   mDepth: 6
   autoResizeBoxCollider: 0
@@ -9818,16 +9832,16 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 8
-  mWidth: 94
-  mHeight: 53
-  mDepth: 5
+  mWidth: 0
+  mHeight: 0
+  mDepth: 10
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
   keepCrispWhenShrunk: 1
-  mTrueTypeFont: {fileID: 0}
-  mFont: {fileID: 11400000, guid: 16a2d4ace59bac64dbcf4085964b38eb, type: 2}
+  mTrueTypeFont: {fileID: 12800000, guid: 83831f88b8a199c41a5ad9534c14d4c6, type: 3}
+  mFont: {fileID: 0}
   mText: 
-  mFontSize: 28
+  mFontSize: 16
   mFontStyle: 0
   mEncoding: 1
   mMaxLineCount: 0
@@ -9835,7 +9849,7 @@ MonoBehaviour:
   mEffectColor: {r: 0, g: 0, b: 0, a: 1}
   mSymbols: 1
   mEffectDistance: {x: 1, y: 1}
-  mOverflow: 0
+  mOverflow: 2
   mMaterial: {fileID: 0}
   mApplyGradient: 0
   mGradientTop: {r: 1, g: 1, b: 1, a: 1}
@@ -10023,7 +10037,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 183
+  mWidth: 178
   mHeight: 14
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -10124,7 +10138,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 186
+  mWidth: 189
   mHeight: 28
   mDepth: 5
   autoResizeBoxCollider: 0
@@ -10898,7 +10912,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 79
+  mWidth: 80
   mHeight: 28
   mDepth: 5
   autoResizeBoxCollider: 0
@@ -11089,7 +11103,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 0
-  mWidth: 458
+  mWidth: 454
   mHeight: 50
   mDepth: 6
   autoResizeBoxCollider: 0
@@ -11147,7 +11161,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 0
-  mWidth: 458
+  mWidth: 454
   mHeight: 50
   mDepth: 6
   autoResizeBoxCollider: 0
@@ -11310,7 +11324,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 138
+  mWidth: 133
   mHeight: 16
   mDepth: 5
   autoResizeBoxCollider: 0
@@ -11421,8 +11435,8 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 0
-  mWidth: 671
-  mHeight: 101
+  mWidth: 666
+  mHeight: 99
   mDepth: 3
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -11759,7 +11773,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 0
-  mWidth: 458
+  mWidth: 454
   mHeight: 50
   mDepth: 6
   autoResizeBoxCollider: 0
@@ -11817,7 +11831,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 0
-  mWidth: 458
+  mWidth: 454
   mHeight: 50
   mDepth: 6
   autoResizeBoxCollider: 0
@@ -12006,16 +12020,16 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 8
-  mWidth: 94
-  mHeight: 53
-  mDepth: 5
+  mWidth: 0
+  mHeight: 0
+  mDepth: 10
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
   keepCrispWhenShrunk: 1
-  mTrueTypeFont: {fileID: 0}
-  mFont: {fileID: 11400000, guid: 16a2d4ace59bac64dbcf4085964b38eb, type: 2}
+  mTrueTypeFont: {fileID: 12800000, guid: 83831f88b8a199c41a5ad9534c14d4c6, type: 3}
+  mFont: {fileID: 0}
   mText: 
-  mFontSize: 28
+  mFontSize: 16
   mFontStyle: 0
   mEncoding: 1
   mMaxLineCount: 0
@@ -12023,7 +12037,7 @@ MonoBehaviour:
   mEffectColor: {r: 0, g: 0, b: 0, a: 1}
   mSymbols: 1
   mEffectDistance: {x: 1, y: 1}
-  mOverflow: 0
+  mOverflow: 2
   mMaterial: {fileID: 0}
   mApplyGradient: 0
   mGradientTop: {r: 1, g: 1, b: 1, a: 1}
@@ -12270,7 +12284,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 0
-  mWidth: 458
+  mWidth: 454
   mHeight: 50
   mDepth: 6
   autoResizeBoxCollider: 0
@@ -12328,7 +12342,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 0
-  mWidth: 458
+  mWidth: 454
   mHeight: 50
   mDepth: 6
   autoResizeBoxCollider: 0
@@ -12534,7 +12548,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 138
+  mWidth: 133
   mHeight: 16
   mDepth: 5
   autoResizeBoxCollider: 0
@@ -12608,7 +12622,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 153
+  mWidth: 148
   mHeight: 16
   mDepth: 5
   autoResizeBoxCollider: 0
@@ -12637,6 +12651,24 @@ MonoBehaviour:
   mMaxLineHeight: 0
   mLineWidth: 0
   mMultiline: 1
+--- !u!114 &11400322
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fdca5042b1d12a4890ec1bd4f04290d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tweenTarget: {fileID: 100056}
+  hover: {r: .996078432, g: .996078432, b: .996078432, a: 1}
+  pressed: {r: .992156863, g: .992156863, b: .992156863, a: 1}
+  duration: .200000003
+  disabledColor: {r: .988235295, g: .988235295, b: .988235295, a: 1}
+  dragHighlight: 0
+  onClick: []
 --- !u!114 &11400330
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -12666,7 +12698,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 0
-  mWidth: 571
+  mWidth: 567
   mHeight: 50
   mDepth: 3
   autoResizeBoxCollider: 0
@@ -12801,8 +12833,8 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: .0352941193, g: .164705887, b: .164705887, a: 1}
   mPivot: 0
-  mWidth: 661
-  mHeight: 100
+  mWidth: 656
+  mHeight: 99
   mDepth: 16
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -12979,7 +13011,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 153
+  mWidth: 148
   mHeight: 16
   mDepth: 5
   autoResizeBoxCollider: 0
@@ -13037,7 +13069,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 0
-  mWidth: 518
+  mWidth: 514
   mHeight: 50
   mDepth: 3
   autoResizeBoxCollider: 0
@@ -13133,7 +13165,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 67
+  mWidth: 64
   mHeight: 16
   mDepth: 5
   autoResizeBoxCollider: 0
@@ -13615,16 +13647,16 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 8
-  mWidth: 94
-  mHeight: 53
-  mDepth: 5
+  mWidth: 0
+  mHeight: 0
+  mDepth: 10
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
   keepCrispWhenShrunk: 1
-  mTrueTypeFont: {fileID: 0}
-  mFont: {fileID: 11400000, guid: 16a2d4ace59bac64dbcf4085964b38eb, type: 2}
+  mTrueTypeFont: {fileID: 12800000, guid: 83831f88b8a199c41a5ad9534c14d4c6, type: 3}
+  mFont: {fileID: 0}
   mText: 
-  mFontSize: 28
+  mFontSize: 16
   mFontStyle: 0
   mEncoding: 1
   mMaxLineCount: 0
@@ -13632,7 +13664,7 @@ MonoBehaviour:
   mEffectColor: {r: 0, g: 0, b: 0, a: 1}
   mSymbols: 1
   mEffectDistance: {x: 1, y: 1}
-  mOverflow: 0
+  mOverflow: 2
   mMaterial: {fileID: 0}
   mApplyGradient: 0
   mGradientTop: {r: 1, g: 1, b: 1, a: 1}
@@ -13673,16 +13705,16 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 8
-  mWidth: 94
-  mHeight: 53
-  mDepth: 5
+  mWidth: 0
+  mHeight: 0
+  mDepth: 10
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
   keepCrispWhenShrunk: 1
-  mTrueTypeFont: {fileID: 0}
-  mFont: {fileID: 11400000, guid: 16a2d4ace59bac64dbcf4085964b38eb, type: 2}
+  mTrueTypeFont: {fileID: 12800000, guid: 83831f88b8a199c41a5ad9534c14d4c6, type: 3}
+  mFont: {fileID: 0}
   mText: 
-  mFontSize: 28
+  mFontSize: 16
   mFontStyle: 0
   mEncoding: 1
   mMaxLineCount: 0
@@ -13690,7 +13722,7 @@ MonoBehaviour:
   mEffectColor: {r: 0, g: 0, b: 0, a: 1}
   mSymbols: 1
   mEffectDistance: {x: 1, y: 1}
-  mOverflow: 0
+  mOverflow: 2
   mMaterial: {fileID: 0}
   mApplyGradient: 0
   mGradientTop: {r: 1, g: 1, b: 1, a: 1}
@@ -13731,16 +13763,16 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 8
-  mWidth: 94
-  mHeight: 53
-  mDepth: 5
+  mWidth: 0
+  mHeight: 0
+  mDepth: 10
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
   keepCrispWhenShrunk: 1
-  mTrueTypeFont: {fileID: 0}
-  mFont: {fileID: 11400000, guid: 16a2d4ace59bac64dbcf4085964b38eb, type: 2}
+  mTrueTypeFont: {fileID: 12800000, guid: 83831f88b8a199c41a5ad9534c14d4c6, type: 3}
+  mFont: {fileID: 0}
   mText: 
-  mFontSize: 28
+  mFontSize: 16
   mFontStyle: 0
   mEncoding: 1
   mMaxLineCount: 0
@@ -13748,7 +13780,7 @@ MonoBehaviour:
   mEffectColor: {r: 0, g: 0, b: 0, a: 1}
   mSymbols: 1
   mEffectDistance: {x: 1, y: 1}
-  mOverflow: 0
+  mOverflow: 2
   mMaterial: {fileID: 0}
   mApplyGradient: 0
   mGradientTop: {r: 1, g: 1, b: 1, a: 1}
@@ -14007,7 +14039,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 0
-  mWidth: 458
+  mWidth: 454
   mHeight: 50
   mDepth: 6
   autoResizeBoxCollider: 0
@@ -14824,7 +14856,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 67
+  mWidth: 64
   mHeight: 16
   mDepth: 5
   autoResizeBoxCollider: 0
@@ -15017,16 +15049,16 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 8
-  mWidth: 94
-  mHeight: 53
-  mDepth: 5
+  mWidth: 0
+  mHeight: 0
+  mDepth: 10
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
   keepCrispWhenShrunk: 1
-  mTrueTypeFont: {fileID: 0}
-  mFont: {fileID: 11400000, guid: 16a2d4ace59bac64dbcf4085964b38eb, type: 2}
+  mTrueTypeFont: {fileID: 12800000, guid: 83831f88b8a199c41a5ad9534c14d4c6, type: 3}
+  mFont: {fileID: 0}
   mText: 
-  mFontSize: 28
+  mFontSize: 16
   mFontStyle: 0
   mEncoding: 1
   mMaxLineCount: 0
@@ -15034,7 +15066,7 @@ MonoBehaviour:
   mEffectColor: {r: 0, g: 0, b: 0, a: 1}
   mSymbols: 1
   mEffectDistance: {x: 1, y: 1}
-  mOverflow: 0
+  mOverflow: 2
   mMaterial: {fileID: 0}
   mApplyGradient: 0
   mGradientTop: {r: 1, g: 1, b: 1, a: 1}
@@ -15088,7 +15120,7 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .0352941193, g: .164705887, b: .164705887, a: 1}
   mPivot: 4
-  mWidth: 445
+  mWidth: 442
   mHeight: 50
   mDepth: 17
   autoResizeBoxCollider: 0
@@ -15426,7 +15458,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 0
-  mWidth: 512
+  mWidth: 508
   mHeight: 50
   mDepth: 3
   autoResizeBoxCollider: 0
@@ -15881,7 +15913,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: .0352941193, g: .164705887, b: .164705887, a: 1}
   mPivot: 0
-  mWidth: 544
+  mWidth: 540
   mHeight: 50
   mDepth: 3
   autoResizeBoxCollider: 0
@@ -16303,7 +16335,7 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .0352941193, g: .164705887, b: .164705887, a: 1}
   mPivot: 4
-  mWidth: 346
+  mWidth: 344
   mHeight: 50
   mDepth: 17
   autoResizeBoxCollider: 0

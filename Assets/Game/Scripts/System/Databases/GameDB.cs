@@ -199,6 +199,7 @@ public class GameDB : MonoBehaviour {
 		var mission =GameData.CurrentMission;
 		int max_reward=mission.Reward;
 		int max=mission.PrimaryObjectives.Count;
+		if (max==0) return 0;
 		float completed=mission.PrimaryObjectives.Count(obj=>obj.status==1);
 		float reward=max_reward*(completed/max);
 		return (int)reward;

@@ -55,8 +55,8 @@ public class HaxKnifeCulling : MonoBehaviour {
 	}
 
 	private static Vector3[] Positions={new Vector3(0,0,0),new Vector3(1,0,1),new Vector3(1,0,-1),new Vector3(-1,0,-1),new Vector3(-1,0,1)};
-
-	//DEV. todo optimize
+	
+	//DEv. StopAtDoors isn't used anymode. Get loose of it
 	private bool IsCullable(TileMain tile,Vector3 position,float detect_radius, bool StopAtDoors,bool updateMap){
 		bool cull_this=true;
 
@@ -76,32 +76,6 @@ public class HaxKnifeCulling : MonoBehaviour {
 			if (WallHits.Length == 0){
 				sees_tile=true;//show directly seen tiles all the time
 			}
-			
-			if (WallHits.Length==1){
-
-				if (StopAtDoors)
-				{
-					// show only directly seen doors
-					//if (i==0&&tile.Data.TileType == TileObjData.Type.Door)
-					//{
-					//	sees_tile=true;
-					//}
-				}
-				else
-				{
-					if (tile.Data.TileType == TileObjData.Type.Door || tile.Data.TileType == TileObjData.Type.ElevatorDoor)
-					{
-						if (i == 0)
-						{
-							sees_tile=true;
-						}
-					}
-				}
-			}
-//			}else {
-//
-//				if (DEBUG_ShowRays) Debug.DrawLine(ray.origin,tile_pos,Color.red,5);
-//			}
 
 			if (sees_tile){
 				if (updateMap) miniMapData[GC.CurrentFloorIndex][tile.Data.X, tile.Data.Y].SeenByPlayer = true;

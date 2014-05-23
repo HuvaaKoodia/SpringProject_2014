@@ -499,12 +499,8 @@ public class WeaponMain : MonoBehaviour {
         var distance=Vector3.Distance(new Vector3(player.transform.position.x, player.transform.position.z),
 		                              new Vector3(enemy.transform.position.x, enemy.transform.position.z));
         var multi=WeaponSlot.ObjData.GetAccuracyMulti();
-        return (int)Mathf.Clamp((Accuracy-((distance-MapGenerator.TileSize.x)/(Range*0.01f)))+multi,0,95);
-    }
-
-    public float HitChance(EnemyMain enemy)
-    {
-        return HitChance(enemy)*0.01f;
+		var bonus=WeaponSlot.ObjData.GetAccuracyBonus();
+		return XmlDatabase.GetAccuracy(Accuracy,Range,distance,bonus,multi);
     }
 
 	bool lookingAtTarget()
