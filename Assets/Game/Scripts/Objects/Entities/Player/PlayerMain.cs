@@ -48,6 +48,8 @@ public class PlayerMain : EntityMain
 
 	public AudioClip TakeDamageFX;
 
+	public Animation buttonAnimation;
+
 	public bool SystemOverheat {
 		get{return ObjData.UpperTorso.OVERHEAT;}
 	}
@@ -445,7 +447,7 @@ public class PlayerMain : EntityMain
 		foreach(var w in ObjData.MechParts){
 			if (w.IsWeapon){
 				w.cooling_multi=cooling_multi*0.01f;
-				w.accuracy_multi=accu_multi*0.01f;
+				w.accuracy_multi=accu_multi;
 
 				if (w.Equipment.Item!=null){
 					if (w.Equipment.Item.baseItem.type==InvBaseItem.Type.MeleeWeapon) w.attack_multi=melee_multi*0.01f;

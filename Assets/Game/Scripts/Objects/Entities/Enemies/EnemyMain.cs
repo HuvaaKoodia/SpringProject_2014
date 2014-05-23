@@ -16,8 +16,6 @@ public class EnemyMain : EntityMain {
 	public GameObject graphics;
 	public List<BoxCollider> hitboxes;
 
-	MeshRenderer meshRenderer;
-
 	public int rangedRange = 3;
 	public int rangedAngleMax = 50;
 
@@ -37,8 +35,7 @@ public class EnemyMain : EntityMain {
 	{
 		base.Awake();
 
-		if (graphics != null)
-			meshRenderer = graphics.GetComponent<MeshRenderer>();
+
 
 		damageAfterReaction = Health;
 

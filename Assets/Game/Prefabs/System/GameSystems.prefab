@@ -41,8 +41,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enable_Restart: 1
-  enable_Quit: 1
-  ClearConsoleOnRestart: 1
+  enable_Quit: 0
+  ClearConsoleOnRestart: 0
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -54,9 +54,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8491d5bbfde51a34a89da7bd6480fb55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TestLoadShipName: testmap2
+  DirLight: {fileID: 0}
+  PowerOffDirLightIntensity: 0
+  PowerOnDirLightIntensity: .200000003
+  TestLoadShipName: mercurius2
   UseTestMap: 0
-  OverrideMissionShip: 0
+  OverrideMissionShip: 1
   randomizeDoorStates: 1
   EngCont: {fileID: 11400000}
   currentTurn: 0
