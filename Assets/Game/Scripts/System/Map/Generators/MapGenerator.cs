@@ -631,6 +631,12 @@ public class MapGenerator : MonoBehaviour
 				elevator.GC=GC;
 			}
 
+			ElevatorScreenSub elevatorScreen = go.GetComponent<ElevatorScreenSub>();
+			if (elevatorScreen != null)
+			{
+				elevatorScreen.Init(floor.FloorIndex);
+			}
+
         }
     }
 
