@@ -80,7 +80,7 @@ public class AIcontroller
 
 				enemy.PlayTurn();
 
-				if (enemy != null && (enemy.ai.Animating || enemy.ai.Rotating || enemy.GetWaitingForDamageReaction()))
+				if (enemy != null && (enemy.ai.Animating || enemy.ai.Rotating || enemy.GetWaitingForDamageReaction() || enemy.ai.waitingForAttackToHitPlayer))
 					enemyAnimating = true;
 			}
 
