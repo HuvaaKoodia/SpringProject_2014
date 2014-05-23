@@ -60,6 +60,8 @@ public class PlayerMain : EntityMain
         ObjData=data;
     }
 
+	public bool InstaShoot { get; set; }
+
 	// Use this for initialization
 	public override void Awake()
 	{
@@ -70,6 +72,8 @@ public class PlayerMain : EntityMain
 		inputSub = GetComponent<PlayerInputSub>();
 
 		targetingMode = false;
+
+		InstaShoot = false;
 	}
 
 	public void InitPlayer()
@@ -119,6 +123,8 @@ public class PlayerMain : EntityMain
 		MovedLastPhase = false;
 
 		HUD.UpdateHudPanels();
+		targetingSub.PlayerPhaseStart();
+
         StartTurn();
     }
 
@@ -173,6 +179,9 @@ public class PlayerMain : EntityMain
 
 		ap = 0;
 		HUD.ShowApBlips(ap);
+
+		targetingSub.PlayerStartedShooting();
+		HUD.PlayerStartedShooting();
 
 		gunsFinishedShooting = 0;
 		Shooting = true;

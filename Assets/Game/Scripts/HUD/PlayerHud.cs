@@ -222,6 +222,11 @@ public class PlayerHud : MonoBehaviour {
 		engageButton.gameObject.SetActive(player.targetingSub.HasAnyTargets());
 	}
 
+	public void PlayerStartedShooting()
+	{
+		TargetingHud.SetActive(false);
+	}
+
 	public void SetHudToPlayerStats(){
 	
 		if (UpdateComputerSystems){

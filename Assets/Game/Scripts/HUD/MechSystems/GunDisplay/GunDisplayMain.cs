@@ -30,6 +30,7 @@ public class GunDisplayMain : MonoBehaviour {
 	public void SetWeaponToDisplay(WeaponID ID, WeaponMain weapon)
 	{
 		gunInfoScreens[(int)ID].weapon = weapon;
+		gunInfoScreens[(int)ID].SetMaxROF(weapon.RateOfFire);
 		UpdateDisplay(ID);
 	}
 

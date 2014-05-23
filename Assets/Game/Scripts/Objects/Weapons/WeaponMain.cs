@@ -285,25 +285,42 @@ public class WeaponMain : MonoBehaviour {
 
 	IEnumerator ShootEnemy(EnemyMain enemy)
 	{
-		SetTargetRotation(enemy);
 		waitingForShot = true;
 
-		while ((enemy != null) && (!lookingAtEnemy(enemy) || player.targetingSub.shootingOrders[enemy][0] != this))
+		if (!player.InstaShoot)
 		{
+			SetTargetRotation(enemy);
+
+			while ((enemy != null) && (!lookingAtEnemy(enemy) || player.targetingSub.shootingOrders[enemy][0] != this))
+			{
+				if (IsEnemyDead(enemy))
+				{
+					waitingForShot = false;
+					player.targetingSub.RemoveWeaponFromEnemysOrder(this, enemy);
+					yield break;
+				}
+				yield return null;
+			}
+
 			if (IsEnemyDead(enemy))
 			{
 				waitingForShot = false;
 				player.targetingSub.RemoveWeaponFromEnemysOrder(this, enemy);
 				yield break;
 			}
-			yield return null;
 		}
-
-		if (IsEnemyDead(enemy))
+		else
 		{
-			waitingForShot = false;
-			player.targetingSub.RemoveWeaponFromEnemysOrder(this, enemy);
-			yield break;
+			while (player.targetingSub.shootingOrders[enemy][0] != this)
+			{
+				if (IsEnemyDead(enemy))
+				{
+					waitingForShot = false;
+					player.targetingSub.RemoveWeaponFromEnemysOrder(this, enemy);
+					yield break;
+				}
+				yield return null;
+			}
 		}
 
 		if (!NoAmmoConsumption) CurrentAmmo--;
@@ -318,21 +335,24 @@ public class WeaponMain : MonoBehaviour {
 			//hit
 			player.HUD.gunInfoDisplay.HideMissText(weaponID);
 			int dmg = (int)Random.Range(MinDamage, MaxDamage);
-			StartCoroutine(enemy.TakeDamage(dmg, (int)weaponID));
+			StartCoroutine(enemy.TakeDamage(dmg, (int)weaponID, player.InstaShoot));
 		}
 		else
 		{
 			player.HUD.gunInfoDisplay.ShowMissText(weaponID);
 		}
 
-		if (meshData != null)
+		if (!player.InstaShoot)
 		{
-			meshData.PlayShootAnimation();
-			meshData.StartShootEffect(hit);
-
-			while (meshData.IsEmiting || meshData.IsAnimating)
+			if (meshData != null)
 			{
-				yield return null;
+				meshData.PlayShootAnimation();
+				meshData.StartShootEffect(hit);
+
+				while (meshData.IsEmiting || meshData.IsAnimating)
+				{
+					yield return null;
+				}
 			}
 		}
 
