@@ -585,6 +585,7 @@ public class AlienAI : AIBase {
 			yield return null;
 		}
 
+		waitingForAttackToHitPlayer = false;
 		player.TakeDamage(DamageRanged, MyPosition.X, MyPosition.Y);
 	}
 
