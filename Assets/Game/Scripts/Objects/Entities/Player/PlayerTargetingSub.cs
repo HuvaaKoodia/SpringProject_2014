@@ -309,14 +309,12 @@ public class PlayerTargetingSub : MonoBehaviour {
 					currentWeapon.HitChancePercent(enemyTargeted)
                 );
 
+
+                Debug.Log("ClickTargetAtMousePosition");
+
 				int currentNumShots = currentWeapon.GetNumShotsAtTarget(enemyTargeted);
 
-				if (currentNumShots == 0) //untarget
-				{
-					while (shootingOrders[enemyTargeted].Remove(currentWeapon))
-					{}
-				}
-				else if (currentNumShots > startNumShots) //added
+				if (currentNumShots > startNumShots) //added
 				{
 					if (!shootingOrders.ContainsKey(enemyTargeted))
 					{
