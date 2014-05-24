@@ -165,7 +165,7 @@ public class WeaponMain : MonoBehaviour {
 
 	public bool HasTargets
 	{
-		get { return targets.Count > 0; }
+        get { return targets.Count > 0; }
 	}
 
 	// Use this for initialization
