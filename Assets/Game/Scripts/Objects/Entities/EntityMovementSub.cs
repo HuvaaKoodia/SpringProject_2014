@@ -36,6 +36,8 @@ public class EntityMovementSub : MonoBehaviour
 
     public AudioClip TurnSoundFX;
 
+	public bool InstantMovement;
+
 	// Use this for initialization
 	void Awake()
     {
@@ -45,6 +47,8 @@ public class EntityMovementSub : MonoBehaviour
         parentEntity = transform.gameObject.GetComponent<EntityMain>();
         
 		waitBeforeMoving = false;
+
+		InstantMovement=!SharedSystemsMain.I.GOps.Data.MovementAnimations;
 	}
 
     public void Init(){
@@ -191,7 +195,11 @@ public class EntityMovementSub : MonoBehaviour
             float distance = movementDir.magnitude;
             movementDir.Normalize();
 
-			Vector3 movement = movementDir * Time.deltaTime * movementSpeed;
+			var speed=movementSpeed;
+			if (InstantMovement){
+				speed*=XmlDatabase.NoMovementAnimationsMultiplier;
+			}
+			Vector3 movement = movementDir * Time.deltaTime * speed;
             
             if (distance > movement.magnitude && movement != Vector3.zero)
             {
@@ -209,17 +217,21 @@ public class EntityMovementSub : MonoBehaviour
 			float distance = targetRotationAngle - parentTransform.eulerAngles.y;
             float direction = distance / Mathf.Abs(distance);
 
+			var speed=turnSpeed;
+			if (InstantMovement){
+				speed*=XmlDatabase.NoMovementAnimationsMultiplier;
+			}
+
             //to prevent 270 degree turns
             if (Mathf.Abs(distance) > 180)
                 direction *= -1;
 
-
             //Debug.Log("direction: "+ direction + " distance: " + distance);
-            if (Mathf.Abs(direction * Time.deltaTime * turnSpeed) < Mathf.Abs(distance))
+			if (Mathf.Abs(direction * Time.deltaTime * speed) < Mathf.Abs(distance))
             {
 				parentTransform.rotation = Quaternion.Euler(
 					parentTransform.rotation.eulerAngles.x, 
-					parentTransform.rotation.eulerAngles.y + (direction * Time.deltaTime * turnSpeed),
+					parentTransform.rotation.eulerAngles.y + (direction * Time.deltaTime * speed),
 					parentTransform.rotation.eulerAngles.z);
 				//parentTransform.Rotate(parentTransform.transform.up, direction * Time.deltaTime * turnSpeed);
             }

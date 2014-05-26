@@ -72,8 +72,11 @@ public class PlayerMain : EntityMain
 		inputSub = GetComponent<PlayerInputSub>();
 
 		targetingMode = false;
+	
+		WeaponMouseLookOn=SharedSystemsMain.I.GOps.Data.MouseLook;
 
-		InstaShoot = false;
+		InstaShoot = !SharedSystemsMain.I.GOps.Data.CombatAnimations;
+
 	}
 
 	public void InitPlayer()
@@ -169,7 +172,7 @@ public class PlayerMain : EntityMain
 
 		if (AnimationsOn && movement.currentMovement == MovementState.Moving)
 		{	
-			playerAnimation.Play("Walk");
+			if (!movement.InstantMovement) playerAnimation.Play("Walk");
 		}
 	}
 
@@ -237,28 +240,30 @@ public class PlayerMain : EntityMain
 
         Health = ObjData.UpperTorso.HP;
 
-		switch(dir)
-		{
-		case 0:
-			playerAnimation["Damage_Right"].normalizedTime = 0;
-			playerAnimation["Damage_Right"].speed = 1;
-			playerAnimation.Blend("Damage_Right");
-			break;
-		case 1:
-			playerAnimation["Damage_Front"].normalizedTime = 0;
-			playerAnimation["Damage_Front"].speed = 1;
-			playerAnimation.Blend("Damage_Front");
-			break;
-		case 2:
-			playerAnimation["Damage_Left"].normalizedTime = 0;
-			playerAnimation["Damage_Left"].speed = 1;
-			playerAnimation.Blend("Damage_Left");
-			break;
-		case 3:
-			playerAnimation["Damage_Back"].normalizedTime = 0;
-			playerAnimation["Damage_Back"].speed = 1;
-			playerAnimation.Blend("Damage_Back");
-			break;
+		if (!movement.InstantMovement){
+			switch(dir)
+			{
+			case 0:
+				playerAnimation["Damage_Right"].normalizedTime = 0;
+				playerAnimation["Damage_Right"].speed = 1;
+				playerAnimation.Blend("Damage_Right");
+				break;
+			case 1:
+				playerAnimation["Damage_Front"].normalizedTime = 0;
+				playerAnimation["Damage_Front"].speed = 1;
+				playerAnimation.Blend("Damage_Front");
+				break;
+			case 2:
+				playerAnimation["Damage_Left"].normalizedTime = 0;
+				playerAnimation["Damage_Left"].speed = 1;
+				playerAnimation.Blend("Damage_Left");
+				break;
+			case 3:
+				playerAnimation["Damage_Back"].normalizedTime = 0;
+				playerAnimation["Damage_Back"].speed = 1;
+				playerAnimation.Blend("Damage_Back");
+				break;
+			}
 		}
 
 		HUD.ShowBloodArrow(dir);

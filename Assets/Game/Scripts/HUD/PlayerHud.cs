@@ -19,6 +19,7 @@ public class PlayerHud : MonoBehaviour {
 	public GameObject InteractHud;
 	public GameObject engageButton;
 	public GameObject disperseHeatButton;
+    public GameObject noTargetsForWeapon;
 	public MechStatisticsMain MechStats;
 
 	public UIPanel targetMarkPanel;
@@ -285,6 +286,11 @@ public class PlayerHud : MonoBehaviour {
 		gunInfoDisplay.UpdateAllDisplays();
 		MechStats.UpdateStats();
 	}
+
+    public void ShowNoTargetsForWeapon(bool show)
+    {
+        noTargetsForWeapon.SetActive(show);
+    }
 
 	
 	IEnumerator stopButtonAnim()

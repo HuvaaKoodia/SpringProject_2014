@@ -47,7 +47,8 @@ public class XmlDatabase
 		MechaPartConditionBadThreshold,
 		MechaPartRepairCostMulti,
 		MaxEnemyPercentageOnCorridors,
-		OpenDoorChange
+		OpenDoorChange,
+		NoMovementAnimationsMultiplier
     ;
 
 	//Logic

@@ -232,7 +232,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &100028
 GameObject:
   m_ObjectHideFlags: 1
@@ -8911,7 +8911,7 @@ Camera:
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294663679
+    m_Bits: 4292566527
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
@@ -10814,6 +10814,7 @@ MonoBehaviour:
   WalkBackwardFX: {fileID: 8300000, guid: b42115afab191ba40af62b7380781141, type: 3}
   SideStepFX: {fileID: 8300000, guid: 3e35227b166ad064795e1e08dda0c93c, type: 3}
   TurnSoundFX: {fileID: 8300000, guid: dcdccd185003d0245a23a5e4037271b3, type: 3}
+  InstantMovement: 0
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -13068,7 +13069,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100396}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97b4768c3683045e4bfdb2e78272970c, type: 3}
   m_Name: 
@@ -14844,7 +14845,7 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
-  mWidth: 48
+  mWidth: 49
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -16287,7 +16288,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100398}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97b4768c3683045e4bfdb2e78272970c, type: 3}
   m_Name: 
@@ -16801,6 +16802,7 @@ MonoBehaviour:
   InteractHud: {fileID: 100082}
   engageButton: {fileID: 100244}
   disperseHeatButton: {fileID: 100276}
+  noTargetsForWeapon: {fileID: 100430}
   MechStats: {fileID: 11400376}
   targetMarkPanel: {fileID: 11400312}
   TP: {fileID: 11400176}
@@ -17970,7 +17972,7 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
-  mWidth: 48
+  mWidth: 49
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -18028,7 +18030,7 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
-  mWidth: 48
+  mWidth: 49
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -18086,7 +18088,7 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
-  mWidth: 1092
+  mWidth: 1091
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -18346,8 +18348,8 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
-  mWidth: 892
-  mHeight: 150
+  mWidth: 891
+  mHeight: 151
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -18671,7 +18673,7 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
-  mWidth: 420
+  mWidth: 421
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -18811,7 +18813,7 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
-  mWidth: 48
+  mWidth: 49
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -19108,8 +19110,8 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .631372571, g: .0196078438, b: .00784313772, a: .250980407}
   mPivot: 4
-  mWidth: 892
-  mHeight: 150
+  mWidth: 891
+  mHeight: 151
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -19529,7 +19531,7 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: 1, g: .0509803928, b: 0, a: .250980407}
   mPivot: 4
-  mWidth: 416
+  mWidth: 413
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -19840,7 +19842,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100396}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d1352984e3c6465088f6cc7c4ce6e22, type: 3}
   m_Name: 
@@ -19899,7 +19901,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100396}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9aaa3f5f2d574f228e4a21aa38b61e4, type: 3}
   m_Name: 

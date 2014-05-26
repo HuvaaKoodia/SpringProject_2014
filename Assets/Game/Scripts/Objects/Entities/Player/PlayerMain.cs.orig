@@ -44,17 +44,23 @@ public class PlayerMain : EntityMain
 	
 	int gunsFinishedShooting;
 
-<<<<<<< HEAD
+	public List<ParticleSystem> DisperseHeatParkikkels;
+
+	public AudioClip TakeDamageFX;
+
+	public Animation buttonAnimation;
+
 	public bool SystemOverheat {
 		get{return ObjData.UpperTorso.OVERHEAT;}
 	}
-=======
+	
 	public GameObject ParticleTempParent;
->>>>>>> e7941224c57f50f8477f2c1b19f51d7daa4ced3c
 
     public void SetObjData(PlayerObjData data){
         ObjData=data;
     }
+
+	public bool InstaShoot { get; set; }
 
 	// Use this for initialization
 	public override void Awake()
@@ -66,11 +72,21 @@ public class PlayerMain : EntityMain
 		inputSub = GetComponent<PlayerInputSub>();
 
 		targetingMode = false;
+<<<<<<< HEAD
+	
+		WeaponMouseLookOn=SharedSystemsMain.I.GOps.Data.MouseLook;
+
+=======
+
+		InstaShoot = false;
+>>>>>>> origin/master
 	}
 
 	public void InitPlayer()
     {
 		ap = apMax;
+		HUD.ShowApBlips(ap);
+
 		ShotLastTurn = false;
 		Finished = false;
 		movement.UpdateFloor();
@@ -105,12 +121,16 @@ public class PlayerMain : EntityMain
     public void StartPlayerPhase()
     {
 		ap = apMax;
+		HUD.ShowApBlips(ap);
+
 		Finished = false;
-		DisperseWeaponHeat(1);
+		DecreaseWeaponHeat();
 
 		MovedLastPhase = false;
 
 		HUD.UpdateHudPanels();
+		targetingSub.PlayerPhaseStart();
+
         StartTurn();
     }
 
@@ -124,6 +144,9 @@ public class PlayerMain : EntityMain
     {
 		Finished = true;
 		inputSub.enabled = false;
+
+		HUD.ShowApBlips(0);
+	
 		EndTargetingMode();
 
 		if (!interactSub.WaitingInteractToFinish)
@@ -148,10 +171,11 @@ public class PlayerMain : EntityMain
 
 		inputSub.enabled = false;
 		ap -= movementCost;
+		HUD.ShowApBlips(ap);
 
 		if (AnimationsOn && movement.currentMovement == MovementState.Moving)
 		{	
-			playerAnimation.Play("Walk");
+			if (!movement.InstantMovement) playerAnimation.Play("Walk");
 		}
 	}
 
@@ -160,6 +184,11 @@ public class PlayerMain : EntityMain
 		if (Shooting) yield break;
 
 		ap = 0;
+		HUD.ShowApBlips(ap);
+
+		targetingSub.PlayerStartedShooting();
+		HUD.PlayerStartedShooting();
+
 		gunsFinishedShooting = 0;
 		Shooting = true;
 
@@ -197,7 +226,7 @@ public class PlayerMain : EntityMain
     /// </summary>
 	public void TakeDamage(int damage,int x,int y)
 	{
-		if (INVINCIBLE) return;
+		if (INVINCIBLE||Dead) return;
 
 		//calculate correct attack direction
         int dir=0;
@@ -214,38 +243,50 @@ public class PlayerMain : EntityMain
 
         Health = ObjData.UpperTorso.HP;
 
-		switch(dir)
-		{
-		case 0:
-			playerAnimation["Damage_Right"].normalizedTime = 0;
-			playerAnimation["Damage_Right"].speed = 1;
-			playerAnimation.Blend("Damage_Right");
-			break;
-		case 1:
-			playerAnimation["Damage_Front"].normalizedTime = 0;
-			playerAnimation["Damage_Front"].speed = 1;
-			playerAnimation.Blend("Damage_Front");
-			break;
-		case 2:
-			playerAnimation["Damage_Left"].normalizedTime = 0;
-			playerAnimation["Damage_Left"].speed = 1;
-			playerAnimation.Blend("Damage_Left");
-			break;
-		case 3:
-			playerAnimation["Damage_Back"].normalizedTime = 0;
-			playerAnimation["Damage_Back"].speed = 1;
-			playerAnimation.Blend("Damage_Back");
-			break;
+		if (!movement.InstantMovement){
+			switch(dir)
+			{
+			case 0:
+				playerAnimation["Damage_Right"].normalizedTime = 0;
+				playerAnimation["Damage_Right"].speed = 1;
+				playerAnimation.Blend("Damage_Right");
+				break;
+			case 1:
+				playerAnimation["Damage_Front"].normalizedTime = 0;
+				playerAnimation["Damage_Front"].speed = 1;
+				playerAnimation.Blend("Damage_Front");
+				break;
+			case 2:
+				playerAnimation["Damage_Left"].normalizedTime = 0;
+				playerAnimation["Damage_Left"].speed = 1;
+				playerAnimation.Blend("Damage_Left");
+				break;
+			case 3:
+				playerAnimation["Damage_Back"].normalizedTime = 0;
+				playerAnimation["Damage_Back"].speed = 1;
+				playerAnimation.Blend("Damage_Back");
+				break;
+			}
 		}
+
+		HUD.ShowBloodArrow(dir);
 
         if (Health <= 0)
 		{
+			Dead=true;
 			inputSub.DISABLE_INPUT=true;
 			GC.EndGame();
+
+		}
+
+		if (TakeDamageFX != null)
+		{
+			audio.PlayOneShot(TakeDamageFX);
 		}
 
 		HUD.UpdateHudPanels();
 	}
+	bool Dead=false;
 
 	public bool StartTargetingMode()
 	{
@@ -280,14 +321,30 @@ public class PlayerMain : EntityMain
 		HUD.CheckTargetingModePanel();
 	}
 
-	public void DisperseWeaponHeat(float multiplier)
+	public void DisperseWeaponHeat()
 	{
-        foreach(WeaponMain gun in weaponList)
+		for (int i = 0; i < DisperseHeatParkikkels.Count; i++)
 		{
-            gun.ReduceHeat(multiplier);
+			DisperseHeatParkikkels[i].Play();
+		}
+
+		for (int i = 0; i < weaponList.Count; i++)
+		{
+			weaponList[i].DisperseHeat();
 		}
 		
-		ObjData.UpperTorso.AddHEAT(-(XmlDatabase.HullHeatDisperseConstant+XmlDatabase.HullHeatDisperseHeatMultiplier*ObjData.UpperTorso.HEAT)*multiplier);
+		ObjData.UpperTorso.AddHEAT(-(XmlDatabase.HullHeatDisperseConstant+ObjData.UpperTorso.HEAT*XmlDatabase.HullHeatDisperseHeatMultiplier));
+		HUD.gunInfoDisplay.UpdateAllDisplays();
+	}
+
+	public void DecreaseWeaponHeat()
+	{
+		foreach(WeaponMain gun in weaponList)
+		{
+			gun.ReduceHeat();
+		}
+		
+		ObjData.UpperTorso.AddHEAT(-XmlDatabase.HullHeatDisperseConstant);
 		HUD.gunInfoDisplay.UpdateAllDisplays();
 	}
 
@@ -393,7 +450,7 @@ public class PlayerMain : EntityMain
 				}
 				else if (s.Item.baseItem.type==InvBaseItem.Type.Radar){
 					HasRadar=true;
-					RadarRangeMax=s.Item.baseItem.GetStat(InvStat.Type.RadarRange).max_amount;
+					//RadarRangeMax=s.Item.baseItem.GetStat(InvStat.Type.RadarRange).max_amount;
 				}
 			}
 		}
@@ -409,7 +466,7 @@ public class PlayerMain : EntityMain
 		foreach(var w in ObjData.MechParts){
 			if (w.IsWeapon){
 				w.cooling_multi=cooling_multi*0.01f;
-				w.accuracy_multi=accu_multi*0.01f;
+				w.accuracy_multi=accu_multi;
 
 				if (w.Equipment.Item!=null){
 					if (w.Equipment.Item.baseItem.type==InvBaseItem.Type.MeleeWeapon) w.attack_multi=melee_multi*0.01f;
@@ -451,7 +508,7 @@ public class PlayerMain : EntityMain
 		gunsFinishedShooting++;
 	}
 
-	public void ToggleFlashlight ()
+	public void ToggleFlashlight()
 	{
 		Flashlight.SetActive(!Flashlight.activeSelf);
 	}

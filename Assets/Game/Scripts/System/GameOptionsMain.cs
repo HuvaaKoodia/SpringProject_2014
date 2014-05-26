@@ -6,7 +6,28 @@ using System.Collections;
 public class GameOptionsMain : MonoBehaviour {
 
 	public GameOptionsObjData Data{get;set;}
+	
+	public void ToggleMovementAnimations ()
+	{
+		Data.MovementAnimations=!Data.MovementAnimations;
+	}
 
+	public void ToggleCombatAnimations ()
+	{
+		Data.CombatAnimations=!Data.CombatAnimations;
+	}
+	
+	public void ToggleMouseLook()
+	{
+		Data.MouseLook=!Data.MouseLook;
+	}
+
+	public void ToggleGuiTips()
+	{
+		Data.GuiTips=!Data.GuiTips;
+	}
+
+	//graphics setting
 	public void SetQuality(Quality Q)
 	{
 		switch(Q)

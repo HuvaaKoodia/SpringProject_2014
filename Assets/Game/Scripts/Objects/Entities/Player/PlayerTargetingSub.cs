@@ -127,6 +127,8 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 	public void CheckGunSightToEnemies(Vector3 gunPosition)
 	{
+        bool enemiesSeenAtAll = false;
+
 		foreach(KeyValuePair<EnemyMain, TargetMarkHandler> enemyPair in targetableEnemies)
 		{
 			bool wasSeen = false;
@@ -143,6 +145,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 					if (hitInfo.transform.parent == enemyPair.Key.hitboxes[i].transform.parent)
 					{
 						enemyPair.Value.SetCrosshairVisible(true);
+                        enemiesSeenAtAll = true;
 
 						Vector3 targetPosition;
 					
@@ -183,6 +186,8 @@ public class PlayerTargetingSub : MonoBehaviour {
 			if (!wasSeen)
 				enemyPair.Value.SetCrosshairVisible(false);
 		}
+
+        player.HUD.ShowNoTargetsForWeapon(!enemiesSeenAtAll);
 	}
 
 	public void UnsightAllEnemies()
@@ -210,12 +215,7 @@ public class PlayerTargetingSub : MonoBehaviour {
             enemyPair.Value.ChangeNumShots(weapon.weaponID,0,0);
         }
 
-		foreach (var enemyPair in shootingOrders)
-		{
-			while (shootingOrders[enemyPair.Key].Remove(weapon))
-			{
-			}
-		}
+        RemoveWeaponFromAllShootingOrders(weapon);
 
 		player.HUD.gunInfoDisplay.UpdateAllDisplays();
     }
@@ -224,9 +224,13 @@ public class PlayerTargetingSub : MonoBehaviour {
 	{
 		foreach (var enemyPair in shootingOrders)
 		{
-			while (shootingOrders[enemyPair.Key].Remove(weapon))
-			{
-			}
+            for (int i = shootingOrders[enemyPair.Key].Count; i >= 0; i--)
+            {
+                while (shootingOrders[enemyPair.Key].Contains(weapon))
+                {
+                    shootingOrders[enemyPair.Key].Remove(weapon);
+                }
+            }
 		}
 
 		player.HUD.gunInfoDisplay.UpdateAllDisplays();
@@ -234,9 +238,10 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 	public void RemoveWeaponFromEnemysOrder(WeaponMain weapon, EnemyMain enemy)
 	{
-		while (shootingOrders[enemy].Remove(weapon))
-		{
-		}
+        while (shootingOrders[enemy].Contains(weapon))
+        {
+            shootingOrders[enemy].Remove(weapon);
+        }
 
 		player.HUD.gunInfoDisplay.UpdateAllDisplays();
 	}
@@ -309,14 +314,10 @@ public class PlayerTargetingSub : MonoBehaviour {
 					currentWeapon.HitChancePercent(enemyTargeted)
                 );
 
+
 				int currentNumShots = currentWeapon.GetNumShotsAtTarget(enemyTargeted);
 
-				if (currentNumShots == 0) //untarget
-				{
-					while (shootingOrders[enemyTargeted].Remove(currentWeapon))
-					{}
-				}
-				else if (currentNumShots > startNumShots) //added
+				if (currentNumShots > startNumShots) //added
 				{
 					if (!shootingOrders.ContainsKey(enemyTargeted))
 					{

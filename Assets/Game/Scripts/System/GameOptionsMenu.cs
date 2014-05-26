@@ -20,7 +20,8 @@ public class GameOptionsMenu : MonoBehaviour
 	public UILabel VSyncLabel;
 
 	public UISlider MasterVolume;
-
+	public UIToggle MovementAnimationsToggle,CombatAnimationsToggle,MouseLookToggle,GuiTips;
+	
 	// Use this for initialization
 	void Awake ()
 	{
@@ -32,6 +33,7 @@ public class GameOptionsMenu : MonoBehaviour
 
 	public void OpenMenu(){
 		UpdateAllLabelsToCurrentQualitySettings();
+		UpdateAllWidgetsToGameOptions();
 	}
 
 	//audio
@@ -40,6 +42,31 @@ public class GameOptionsMenu : MonoBehaviour
 		AudioListener.volume=MasterVolume.value;
 	}
 
+	//gameoptions
+
+	public void ToggleMovementAnimations(){
+		GOpsMain.ToggleMovementAnimations();
+	}
+
+	public void ToggleCombatAnimations(){
+		GOpsMain.ToggleCombatAnimations();
+	}
+
+	public void ToggleMouseLook(){
+		GOpsMain.ToggleMouseLook();
+	}
+
+	public void ToggleGuiTips(){
+		GOpsMain.ToggleGuiTips();
+	}
+
+	void UpdateAllWidgetsToGameOptions ()
+	{
+		MovementAnimationsToggle.SetValueInstant(GOpsMain.Data.MovementAnimations);
+		CombatAnimationsToggle.SetValueInstant(GOpsMain.Data.CombatAnimations);
+		MouseLookToggle.SetValueInstant(GOpsMain.Data.MouseLook);
+		GuiTips.SetValueInstant(GOpsMain.Data.GuiTips);
+	}
 
 	//graphics
 
