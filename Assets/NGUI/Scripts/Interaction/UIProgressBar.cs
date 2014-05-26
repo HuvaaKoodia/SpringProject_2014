@@ -193,6 +193,8 @@ public class UIProgressBar : UIWidgetContainer
 	/// Register the event listeners.
 	/// </summary>
 
+	public bool DontSendSelectionMessagesAtStartUp=true;
+
 	protected void Start ()
 	{
 		Upgrade();
@@ -210,7 +212,7 @@ public class UIProgressBar : UIWidgetContainer
 
 			OnStart();
 
-			if (onChange != null)
+			if (!DontSendSelectionMessagesAtStartUp&&onChange != null)
 			{
 				current = this;
 				EventDelegate.Execute(onChange);

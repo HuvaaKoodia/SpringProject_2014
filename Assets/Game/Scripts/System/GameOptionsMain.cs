@@ -12,6 +12,16 @@ public class GameOptionsMain : MonoBehaviour {
 		Data.MovementAnimations=!Data.MovementAnimations;
 	}
 
+	public void UpdateGameBrightness(){
+		var b=Data.Brightness;
+		RenderSettings.ambientLight=new Color(b,b,b,1);
+	}
+
+	public void UpdateMasterVolume ()
+	{
+		AudioListener.volume=Data.MasterVolume;
+	}
+
 	public void ToggleCombatAnimations ()
 	{
 		Data.CombatAnimations=!Data.CombatAnimations;
@@ -185,8 +195,13 @@ public class GameOptionsMain : MonoBehaviour {
 	public void SetQualitySettingsToData(GameOptionsObjData data){
 		Data=data;
 
-		QualitySettings.SetQualityLevel(data.quality_level);
+		UpdateGameBrightness();
+		UpdateMasterVolume();
 
+		//graphics
+
+		QualitySettings.SetQualityLevel(data.quality_level);
+	
 		//only read data if quality level is custom. Otherwize go with the preset.
 		if (data.quality_level!=6) return;
 
@@ -198,5 +213,7 @@ public class GameOptionsMain : MonoBehaviour {
 		QualitySettings.shadowProjection=data.shadow_projection;
 		QualitySettings.antiAliasing = data.anti_Aliasing;
 		QualitySettings.anisotropicFiltering=data.anisotropic_filtering;
+
+
 	}
 }

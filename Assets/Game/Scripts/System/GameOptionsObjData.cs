@@ -64,6 +64,9 @@ public class GameOptionsObjData
 	public bool CombatAnimations {get;set;}
 	public bool GuiTips{get;set;}
 
+	public float Brightness {get;set;}
+	public float MasterVolume {get;set;}
+
 	public int quality_level{get;set;}
 	public int pixel_light_count{get;set;}
 	public int texture_quality{get;set;}
@@ -86,6 +89,9 @@ public class GameOptionsObjData
 		anti_Aliasing_On=true;
 		GlowAndBloom_On=true;
 
+		MasterVolume=1f;
+		Brightness=0.2f;
+
 		quality_level = 0;
 		pixel_light_count = 0;
 		texture_quality = 0;
@@ -95,6 +101,8 @@ public class GameOptionsObjData
 		shadow_cascades = 0;
 		shadow_distance = 0.0f;
 		vsync_count = 0;
+
+
 	}
 }
 

@@ -52,7 +52,6 @@ public class GameDB : MonoBehaviour {
 		}
 
 		SS.GOps.SetQualitySettingsToData(GameOptionsData);
-
 	}
 
 	void OnApplicationQuit(){
@@ -169,6 +168,8 @@ public class GameDB : MonoBehaviour {
 	
 	void OnLevelWasLoaded(int i){
 		ResetStuff();
+
+		SS.GOps.UpdateGameBrightness();
 	}
 
     public void EndMission(GameController GC)

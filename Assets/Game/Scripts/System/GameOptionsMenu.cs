@@ -19,7 +19,7 @@ public class GameOptionsMenu : MonoBehaviour
 	public UILabel ShadowLabel;
 	public UILabel VSyncLabel;
 
-	public UISlider MasterVolume;
+	public UISlider MasterVolume, Brightness;
 	public UIToggle MovementAnimationsToggle,CombatAnimationsToggle,MouseLookToggle,GuiTips;
 	
 	// Use this for initialization
@@ -39,7 +39,13 @@ public class GameOptionsMenu : MonoBehaviour
 	//audio
 
 	public void UpdateMasterVolume(){
-		AudioListener.volume=MasterVolume.value;
+		GOpsMain.Data.MasterVolume=MasterVolume.value;
+		GOpsMain.UpdateMasterVolume();
+	}
+
+	public void UpdateBrightness(){
+		GOpsMain.Data.Brightness=Brightness.value;
+		GOpsMain.UpdateGameBrightness();
 	}
 
 	//gameoptions
@@ -66,6 +72,9 @@ public class GameOptionsMenu : MonoBehaviour
 		CombatAnimationsToggle.SetValueInstant(GOpsMain.Data.CombatAnimations);
 		MouseLookToggle.SetValueInstant(GOpsMain.Data.MouseLook);
 		GuiTips.SetValueInstant(GOpsMain.Data.GuiTips);
+
+		Brightness.value=GOpsMain.Data.Brightness;
+		MasterVolume.value=GOpsMain.Data.MasterVolume;
 	}
 
 	//graphics
