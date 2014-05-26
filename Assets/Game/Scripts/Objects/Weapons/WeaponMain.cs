@@ -165,7 +165,7 @@ public class WeaponMain : MonoBehaviour {
 
 	public bool HasTargets
 	{
-		get { return targets.Count > 0; }
+        get { return targets.Count > 0; }
 	}
 
 	// Use this for initialization
@@ -301,13 +301,6 @@ public class WeaponMain : MonoBehaviour {
 				}
 				yield return null;
 			}
-
-			if (IsEnemyDead(enemy))
-			{
-				waitingForShot = false;
-				player.targetingSub.RemoveWeaponFromEnemysOrder(this, enemy);
-				yield break;
-			}
 		}
 		else
 		{
@@ -322,6 +315,13 @@ public class WeaponMain : MonoBehaviour {
 				yield return null;
 			}
 		}
+
+        if (IsEnemyDead(enemy))
+        {
+            waitingForShot = false;
+            player.targetingSub.RemoveWeaponFromEnemysOrder(this, enemy);
+            yield break;
+        }
 
 		if (!NoAmmoConsumption) CurrentAmmo--;
 		if (CurrentAmmo<0) CurrentAmmo=0;

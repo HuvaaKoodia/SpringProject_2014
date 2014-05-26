@@ -1184,6 +1184,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &100134
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400134}
+  - 108: {fileID: 10800004}
+  m_Layer: 0
+  m_Name: Point light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &400000
 Transform:
   m_ObjectHideFlags: 1
@@ -1270,6 +1286,7 @@ Transform:
   - {fileID: 400046}
   - {fileID: 400038}
   - {fileID: 400018}
+  - {fileID: 400134}
   - {fileID: 400022}
   - {fileID: 400130}
   - {fileID: 400108}
@@ -1314,7 +1331,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100020}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 19.2929993, y: 0, z: 11.7653046}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400024}
@@ -1987,6 +2004,17 @@ Transform:
   - {fileID: 400114}
   - {fileID: 400128}
   m_Father: {fileID: 400130}
+--- !u!4 &400134
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100134}
+  m_LocalRotation: {x: -2.51214789e-15, y: 1, z: -2.5288108e-07, w: -4.37113918e-08}
+  m_LocalPosition: {x: -.138954625, y: .00799189787, z: -.889000058}
+  m_LocalScale: {x: .0037, y: .0037, z: .0179999992}
+  m_Children: []
+  m_Father: {fileID: 400012}
 --- !u!23 &2300000
 Renderer:
   m_ObjectHideFlags: 1
@@ -3901,6 +3929,41 @@ Light:
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
+--- !u!108 &10800004
+Light:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100134}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Type: 2
+  m_Color: {r: 1, g: .662474692, b: .235294104, a: 1}
+  m_Intensity: 8
+  m_Range: 2
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 2
+    m_Resolution: -1
+    m_Strength: 1
+    m_Bias: .0500000007
+    m_Softness: 4
+    m_SoftnessFade: 1
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_ActuallyLightmapped: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 1
+  m_ShadowSamples: 1
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_IndirectIntensity: 1
+  m_AreaSize: {x: 1, y: 1}
 --- !u!111 &11100000
 Animation:
   m_ObjectHideFlags: 1
@@ -3963,6 +4026,7 @@ MonoBehaviour:
   foundMove: 0
   Animating: 0
   Rotating: 0
+  waitingForAttackToHitPlayer: 0
   Damage: 20
   TurnsBeforeClose: 2
   PlayerSeeMask:
@@ -4038,6 +4102,7 @@ MonoBehaviour:
   WalkBackwardFX: {fileID: 0}
   SideStepFX: {fileID: 0}
   TurnSoundFX: {fileID: 8300000, guid: 5c356ec72271e79478ad3ba057e4d509, type: 3}
+  InstantMovement: 0
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4077,7 +4142,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfa01db4135bcbe4d8548f080c20f642, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collider: {fileID: 6500000}
   ai: {fileID: 11400002}
   BloodEffect: {fileID: 19800028}
   ElectricShockEffect: {fileID: 19800024}
@@ -4092,7 +4156,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfa01db4135bcbe4d8548f080c20f642, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collider: {fileID: 6500060}
   ai: {fileID: 11400002}
   BloodEffect: {fileID: 19800032}
   ElectricShockEffect: {fileID: 19800018}
@@ -9232,7 +9295,7 @@ ParticleSystem:
   InitialModule:
     enabled: 1
     startLifetime:
-      scalar: .400000006
+      scalar: .150000006
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9389,7 +9452,7 @@ ParticleSystem:
         rgba: 4294967295
       maxColor:
         serializedVersion: 2
-        rgba: 4284177311
+        rgba: 4287203787
       minMaxState: 0
     startSize:
       scalar: .100000001
@@ -9467,7 +9530,7 @@ ParticleSystem:
     enabled: 1
     m_Type: 0
     rate:
-      scalar: 4000
+      scalar: 3000
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9517,8 +9580,8 @@ ParticleSystem:
         m_Curve:
         - time: 0
           value: 1
-          inSlope: -2.60182357
-          outSlope: -2.60182357
+          inSlope: -3.12567663
+          outSlope: -3.12567663
           tangentMode: 0
         - time: 1
           value: 0
@@ -9584,10 +9647,10 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4278207160
+          rgba: 4278195128
         key1:
           serializedVersion: 2
-          rgba: 19
+          rgba: 4556216
         key2:
           serializedVersion: 2
           rgba: 73
