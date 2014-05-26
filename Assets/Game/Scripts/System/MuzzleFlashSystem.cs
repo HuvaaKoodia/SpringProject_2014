@@ -3,13 +3,32 @@ using System.Collections;
 
 public class MuzzleFlashSystem : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
+	bool on;
+	public int FlashTimes=-1;
+	public float life_time,flash_time_min,flash_time_max;
+	public GameObject LightGO;
+
+	public void Play(){
+		on=true;
+		StartCoroutine(Flash(FlashTimes));
+		if (FlashTimes<=0) Invoke("Stop",life_time);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	public void Stop(){
+		on=false;
 	}
+
+	IEnumerator Flash(int times){
+
+		while (on){
+			times--;
+			LightGO.SetActive(true);
+			yield return new WaitForSeconds(Subs.GetRandom(flash_time_min,flash_time_max));
+			LightGO.SetActive(false);
+			yield return new WaitForSeconds(Subs.GetRandom(flash_time_min,flash_time_max)*2);
+
+			if (times==0) break;
+		}
+	}
+
 }

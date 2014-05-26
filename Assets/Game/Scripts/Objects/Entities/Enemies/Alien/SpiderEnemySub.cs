@@ -28,7 +28,7 @@ public class SpiderEnemySub : EnemyMain {
 		if (Dead)
 		{
 			Invoke("Remove", deathDelay);
-			OnDeath();
+
 			spiderAI.PlayDeathAnimation();
 		}
 		else
@@ -38,7 +38,10 @@ public class SpiderEnemySub : EnemyMain {
 	}
 
 	protected override void OnDeath(){
+		graphics.SetActive(true);
 		graphics.transform.parent=null;
+		graphics.transform.localScale=transform.localScale;
+		graphics.transform.localRotation=transform.localRotation;
 		graphics.transform.position=transform.position;
 	}
 }

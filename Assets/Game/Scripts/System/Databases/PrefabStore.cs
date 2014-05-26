@@ -57,7 +57,7 @@ public class PrefabStore : MonoBehaviour {
 
 	//Weapon graphics
 	public Dictionary<string, GameObject> weaponGraphics;
-	public Dictionary<string, GameObject> weaponParticleEmitters;
+	public Dictionary<string, GameObject> weaponParticleEmitters,weaponFlashes;
 	public Dictionary<string, AudioClip> weaponSoundFX;
 
 	public List<GameObject> targetHighlights;
@@ -82,6 +82,13 @@ public class PrefabStore : MonoBehaviour {
 		weaponParticleEmitters.Add("GaussBullets", Resources.Load("WeaponParticleEmitters/GaussBullets") as GameObject);
 		weaponParticleEmitters.Add("MissileBullets", Resources.Load("WeaponParticleEmitters/MissileBullets") as GameObject);
 
+		weaponFlashes = new Dictionary<string, GameObject>();
+		LoadFlash("Melee");
+		LoadFlash("Gatling");
+		LoadFlash("Gauss");
+		LoadFlash("Shotgun");
+		LoadFlash("Missile");
+		LoadFlash("Cannon");
 
 		weaponSoundFX = new Dictionary<string, AudioClip>();
 		weaponSoundFX.Add("Gatling", Resources.Load("Weapons/Gatling_gun_v3") as AudioClip);
@@ -93,6 +100,11 @@ public class PrefabStore : MonoBehaviour {
 		targetHighlights.Add(Resources.Load("TargetingSprites/LeftUp") as GameObject);
 		targetHighlights.Add(Resources.Load("TargetingSprites/RightDown") as GameObject);
 		targetHighlights.Add(Resources.Load("TargetingSprites/RightUp") as GameObject);
+	}
+
+	private void LoadFlash(string weapon){
+		string name=weapon+"Flash";
+		weaponFlashes.Add(name, Resources.Load("WeaponFlashes/"+name) as GameObject);
 	}
 
 	public string MapSpritePrefabFolderName="MapSprites/";

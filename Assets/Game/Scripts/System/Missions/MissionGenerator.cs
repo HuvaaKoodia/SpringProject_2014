@@ -376,8 +376,7 @@ public class MissionGenerator{
 
 	public static string MissionShortDescription(MissionObjData mission){
 		var text="";
-
-	
+		
 		text+="Reward\n"+mission.Reward+" "+XmlDatabase.MoneyUnit;
 		text+="\n\n";
 
