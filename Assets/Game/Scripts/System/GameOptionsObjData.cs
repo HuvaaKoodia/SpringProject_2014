@@ -37,10 +37,8 @@ public enum AnisotropicQuality
 
 public enum AntiAliasing
 {
-	DISABLED = 0,
-	X2,
-	X4,
-	X8
+	Off,
+	On
 }
 
 public enum ShadowQuality
@@ -71,6 +69,8 @@ public class GameOptionsObjData
 	public int texture_quality{get;set;}
 	public UnityEngine.AnisotropicFiltering anisotropic_filtering{get;set;}
 	public int anti_Aliasing{get;set;}
+	public bool anti_Aliasing_On{get;set;}
+	public bool GlowAndBloom_On{get;set;}
 	public UnityEngine.ShadowProjection shadow_projection{get;set;}
 	public int shadow_cascades{get;set;}
 	public float shadow_distance{get;set;}
@@ -80,8 +80,11 @@ public class GameOptionsObjData
 	{
 		MovementAnimations=true;
 		CombatAnimations=true;
-		MouseLook=false;
-		GuiTips=false;
+		MouseLook=true;
+		GuiTips=true;
+
+		anti_Aliasing_On=true;
+		GlowAndBloom_On=true;
 
 		quality_level = 0;
 		pixel_light_count = 0;

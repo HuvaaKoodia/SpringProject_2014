@@ -10,7 +10,9 @@ public enum DamageEffectType
 public class WeaponEffects : MonoBehaviour {
 
 	public GameObject graphics;
-	public GameObject particleParent;
+	public GameObject particleParent,EffectLightPosition;
+
+	MuzzleFlashSystem Flash;
 
 	public GameObject tempParent;
 
@@ -24,9 +26,6 @@ public class WeaponEffects : MonoBehaviour {
 
 	Animation shootAnimation;
 	string shootAnimationName = "Shoot";
-
-	ParticleSystem.Particle[] bulletParticleArray;
-	int bulletParticleCount;
 
 	List<ParticleSystem> additionalParticles;
 
@@ -45,12 +44,12 @@ public class WeaponEffects : MonoBehaviour {
 		muzzleParticles = new List<ParticleSystem>();
 
 		EffectType = DamageEffectType.Blood;
+
+		if (EffectLightPosition==null) EffectLightPosition=particleParent;
 	}
 	
 	// Update is called once per frame
-	void Update () {
-
-	}
+	void Update () {}
 
 	public void SetParticleTempParent(GameObject tp)
 	{
@@ -89,6 +88,11 @@ public class WeaponEffects : MonoBehaviour {
 	public void AddAdditionalParticleSystem(ParticleSystem particleEmitter)
 	{
 		additionalParticles.Add(particleEmitter);
+	}
+
+	public void SetFlash (MuzzleFlashSystem obj)
+	{
+		Flash=obj;
 	}
 
 	public void SetShootSoundFX(AudioClip sfx)
@@ -144,6 +148,14 @@ public class WeaponEffects : MonoBehaviour {
 		if (shootSoundFX != null)
 		{
 			audio.PlayOneShot(shootSoundFX);
+		}
+
+		if (Flash!=null){
+
+			Flash.transform.parent = EffectLightPosition.transform;
+			Flash.transform.position = EffectLightPosition.transform.position;
+
+			Flash.Play();
 		}
 	}
 

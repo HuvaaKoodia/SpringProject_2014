@@ -148,6 +148,13 @@ public class WeaponMain : MonoBehaviour {
 			}
 		}
 
+		string name=Weapon.baseItem.mesh + "Flash";
+		if (player.GC.SS.PS.weaponFlashes.ContainsKey(name))
+		{	
+			GameObject obj = GameObject.Instantiate(player.GC.SS.PS.weaponFlashes[Weapon.baseItem.mesh + "Flash"]) as GameObject;
+			meshData.SetFlash(obj.GetComponent<MuzzleFlashSystem>());
+		}
+
 		if (player.GC.SS.PS.weaponSoundFX.ContainsKey(Weapon.baseItem.mesh))
 		{
 			meshData.SetShootSoundFX(player.GC.SS.PS.weaponSoundFX[Weapon.baseItem.mesh]);

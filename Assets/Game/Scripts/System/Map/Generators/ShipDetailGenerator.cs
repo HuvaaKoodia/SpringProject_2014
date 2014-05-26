@@ -208,11 +208,6 @@ public class ShipDetailGenerator : MonoBehaviour
 							}
 						}
 					}
-
-					if (LegitRooms.Count==0){
-						Debug.LogWarning("Cannot generate the quest item. No loot crates in the ship "+ship.Name);
-						continue;
-					}
 			    }
 
 				//select one room
@@ -222,6 +217,12 @@ public class ShipDetailGenerator : MonoBehaviour
 						legit_floors.Add(f.Key);
 					}
 				}
+
+				if (legit_floors.Count==0){
+					Debug.LogWarning("Cannot generate the quest item. No loot crates in the ship "+ship.Name);
+					continue;
+				}
+
 
 				int index=Subs.GetRandom(legit_floors);
 				var floor=GC.Floors[index];

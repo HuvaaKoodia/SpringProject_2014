@@ -120,20 +120,13 @@ public class GameOptionsMain : MonoBehaviour {
 	{
 		switch(AA)
 		{
-		case AntiAliasing.DISABLED:
-			Data.anti_Aliasing = 0;
+		case AntiAliasing.Off:
+			Data.anti_Aliasing_On = false;
 			break;
-		case AntiAliasing.X2:
-			Data.anti_Aliasing = 2;
-			break;
-		case AntiAliasing.X4:
-			Data.anti_Aliasing = 4;
-			break;
-		case AntiAliasing.X8:
-			Data.anti_Aliasing = 8;
+		case AntiAliasing.On:
+			Data.anti_Aliasing_On = true;
 			break;
 		}
-		QualitySettings.antiAliasing = Data.anti_Aliasing;
 	}
 
 	public void SetShadowQuality(ShadowQuality SQ)
@@ -149,20 +142,20 @@ public class GameOptionsMain : MonoBehaviour {
 		case ShadowQuality.LOW:
 			Data.shadow_projection = ShadowProjection.CloseFit;
 
-			Data.shadow_cascades = 0;
-			Data.shadow_distance = 15;
+			Data.shadow_cascades = 1;
+			Data.shadow_distance = 10;
 			break;
 		case ShadowQuality.MEDIUM:
 			Data.shadow_projection = ShadowProjection.StableFit;
 
 			Data.shadow_cascades = 2;
-			Data.shadow_distance = 70;
+			Data.shadow_distance = 20;
 			break;
 		case ShadowQuality.HIGH:
 			Data.shadow_projection = ShadowProjection.StableFit;
 
 			Data.shadow_cascades = 4;
-			Data.shadow_distance = 150;
+			Data.shadow_distance = 40;
 			break;
 		}
 

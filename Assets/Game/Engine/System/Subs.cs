@@ -27,6 +27,13 @@ public class Subs{
 	public static float GetRandom(float max){
 		return Random.Range(0f,max);
 	}
+
+	/// <summary>
+	/// Random float from min to max (ex).
+	/// </summary>
+	public static float GetRandom(float min,float max){
+		return Random.Range(min,max);
+	}
 	
 	/// <summary>
 	/// Random float from 0f to 1f(ex).
@@ -269,8 +276,7 @@ public class Subs{
 		int mask=1<<LayerMask.NameToLayer(layer);
 		return GetObjectMousePos(out obj,distance,mask,camera);
 	}
-
-
+	
 	/// <summary>
 	/// Gets the object at mouse position if it's not blocked by anything else on the layer.
 	/// </summary>

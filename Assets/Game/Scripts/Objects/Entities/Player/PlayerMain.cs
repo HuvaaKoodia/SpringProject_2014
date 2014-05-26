@@ -56,6 +56,11 @@ public class PlayerMain : EntityMain
 	
 	public GameObject ParticleTempParent;
 
+	//post FX
+	public GlowEffect PFX_Glow;
+	public FastBloom PFX_Bloom;
+	public AntialiasingAsPostEffect PFX_Antialiasing;
+
     public void SetObjData(PlayerObjData data){
         ObjData=data;
     }
@@ -74,6 +79,11 @@ public class PlayerMain : EntityMain
 	
 		SetMouseLook(SharedSystemsMain.I.GOps.Data.MouseLook);
 		InstaShoot = !SharedSystemsMain.I.GOps.Data.CombatAnimations;
+
+		PFX_Antialiasing.enabled=SharedSystemsMain.I.GOps.Data.anti_Aliasing_On;
+
+		PFX_Glow.enabled=SharedSystemsMain.I.GOps.Data.GlowAndBloom_On;
+		PFX_Bloom.enabled=SharedSystemsMain.I.GOps.Data.GlowAndBloom_On;
 	}
 
 	public void InitPlayer()

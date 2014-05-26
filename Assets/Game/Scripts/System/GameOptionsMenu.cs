@@ -11,7 +11,7 @@ public class GameOptionsMenu : MonoBehaviour
 
 	GameOptionsMain GOpsMain;
 
-	public UILabel QualityLabel;
+	public UILabel QualityLabel,GlowAndBloom;
 	public UILabel LightLabel;
 	public UILabel TextureLabel;
 	public UILabel AnisotropicLabel;
@@ -120,57 +120,56 @@ public class GameOptionsMenu : MonoBehaviour
 	{
 		if(QualitySettings.anisotropicFiltering == AnisotropicFiltering.Disable)
 		{
-			AnisotropicLabel.text = "Disable";
+			AnisotropicLabel.text = "Off";
 		}
 		else if(QualitySettings.anisotropicFiltering == AnisotropicFiltering.ForceEnable)
 		{
-			AnisotropicLabel.text = "Enable";
+			AnisotropicLabel.text = "On";
 		}
 	}
 
 	void GetAntiAliasingProperty()
 	{
-		if(QualitySettings.antiAliasing == 0)
+		if(GOpsMain.Data.anti_Aliasing_On)
 		{
-			AntiAliasingLabel.text = "Disabled";
+			AntiAliasingLabel.text = "On";
 		}
-		else if(QualitySettings.antiAliasing == 2)
+		else
 		{
-			AntiAliasingLabel.text = "x2";
+			AntiAliasingLabel.text = "Off";
 		}
-		else if(QualitySettings.antiAliasing == 4)
+	}
+
+	void GetGlowAndBloomProperty()
+	{
+		if(GOpsMain.Data.GlowAndBloom_On)
 		{
-			AntiAliasingLabel.text = "x4";
+			GlowAndBloom.text = "On";
 		}
-		else if(QualitySettings.antiAliasing == 8)
+		else
 		{
-			AntiAliasingLabel.text = "x8";
+			GlowAndBloom.text = "Off";
 		}
 	}
 
 	void GetShadowProperty()
 	{
-		if(QualitySettings.shadowProjection == ShadowProjection.CloseFit)
+		if(QualitySettings.shadowDistance == 0)
 		{
-			if(QualitySettings.shadowDistance <= 0)
-			{
-				ShadowLabel.text = "Off";
-			}
-			else
-			{
-				ShadowLabel.text = "Low";
-			}
+			ShadowLabel.text = "Off";
+			return;
 		}
-		else
+		if(QualitySettings.shadowCascades == 1)
 		{
-			if(QualitySettings.shadowCascades == 2)
-			{
-				ShadowLabel.text = "Medium";
-			}
-			else if(QualitySettings.shadowCascades == 4)
-			{
-				ShadowLabel.text = "High";
-			}
+			ShadowLabel.text = "Low";
+		}
+		else if(QualitySettings.shadowCascades == 2)
+		{
+			ShadowLabel.text = "Medium";
+		}
+		else if(QualitySettings.shadowCascades == 4)
+		{
+			ShadowLabel.text = "High";
 		}
 	}
 
@@ -234,33 +233,37 @@ public class GameOptionsMenu : MonoBehaviour
 
 	void ChangeAnisotropic()
 	{
-		if(AnisotropicLabel.text == "Disable")
+		if(AnisotropicLabel.text == "Off")
 		{
 			GOpsMain.SetAnisotropicQuality(AnisotropicQuality.DISABLE);
 		}
-		else if(AnisotropicLabel.text == "Enable")
+		else if(AnisotropicLabel.text == "On")
 		{
 			GOpsMain.SetAnisotropicQuality(AnisotropicQuality.ENABLE);
 		}
 	}
 
+	void ChangeGlowAndBloom()
+	{
+		if(GlowAndBloom.text == "On")
+		{
+			GOpsMain.Data.GlowAndBloom_On=true;
+		}
+		else if(GlowAndBloom.text == "Off")
+		{
+			GOpsMain.Data.GlowAndBloom_On=false;
+		}
+	}
+
 	void ChangeAntiAliasing()
 	{
-		if(AntiAliasingLabel.text == "Disabled")
+		if(AntiAliasingLabel.text == "Off")
 		{
-			GOpsMain.SetAntiAliasing(AntiAliasing.DISABLED);
+			GOpsMain.SetAntiAliasing(AntiAliasing.Off);
 		}
-		else if(AntiAliasingLabel.text == "x2")
+		else if(AntiAliasingLabel.text == "On")
 		{
-			GOpsMain.SetAntiAliasing(AntiAliasing.X2);
-		}
-		else if(AntiAliasingLabel.text == "x4")
-		{
-			GOpsMain.SetAntiAliasing(AntiAliasing.X4);
-		}
-		else if(AntiAliasingLabel.text == "x8")
-		{
-			GOpsMain.SetAntiAliasing(AntiAliasing.X8);
+			GOpsMain.SetAntiAliasing(AntiAliasing.On);
 		}
 	}
 
@@ -341,6 +344,7 @@ public class GameOptionsMenu : MonoBehaviour
 		GetAntiAliasingProperty();
 		GetShadowProperty();
 		GetVSyncProperty();
+		GetGlowAndBloomProperty();
 	}
 
 	public void UpdateQualitySettingsToLabels()
@@ -348,6 +352,7 @@ public class GameOptionsMenu : MonoBehaviour
 		QualityLabel.text = "Custom";
 		GOpsMain.Data.quality_level=6;
 
+		ChangeGlowAndBloom();
 		ChangeLight();
 		ChangeTexture();
 		ChangeAnisotropic();
