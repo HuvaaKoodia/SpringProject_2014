@@ -11,7 +11,7 @@ public class PrefabStore : MonoBehaviour {
 	public GameObject LootCratePrefab;
 	public DataTerminalMain DataTerminalPrefab;
 
-	public GameObject PowerGenerator;
+	public GameObject PowerGenerator,MechaDummy;
 
 	public GameObject 
 			BasicWall,
@@ -100,5 +100,12 @@ public class PrefabStore : MonoBehaviour {
 	public GameObject GetMapSpritePrefab(string graphicsName)
 	{
 		return Resources.Load(MapSpritePrefabFolderName+graphicsName) as GameObject;
+	}
+
+	public string[] clutter_names={"AmmoboxesPrefab","BarrelsPrefab","PlasticBarrelsPrefab","RandomBoxesPrefab","ServerThigiesPrefab"};//,"Turret_Parts"
+
+	public Object GetRandomClutter ()
+	{
+		return Resources.Load("Clutter/"+Subs.GetRandom(clutter_names));
 	}
 }

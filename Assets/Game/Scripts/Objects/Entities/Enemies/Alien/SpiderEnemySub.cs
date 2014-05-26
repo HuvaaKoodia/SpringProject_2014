@@ -36,4 +36,9 @@ public class SpiderEnemySub : EnemyMain {
 			spiderAI.PlayDamageAnimation(amount);
 		}
 	}
+
+	protected override void OnDeath(){
+		graphics.transform.parent=null;
+		graphics.transform.position=transform.position;
+	}
 }

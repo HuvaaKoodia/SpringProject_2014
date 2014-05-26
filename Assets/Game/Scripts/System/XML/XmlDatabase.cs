@@ -48,7 +48,8 @@ public class XmlDatabase
 		MechaPartRepairCostMulti,
 		MaxEnemyPercentageOnCorridors,
 		OpenDoorChange,
-		NoMovementAnimationsMultiplier
+		NoMovementAnimationsMultiplier,
+		ClutterChance
     ;
 
 	//Logic

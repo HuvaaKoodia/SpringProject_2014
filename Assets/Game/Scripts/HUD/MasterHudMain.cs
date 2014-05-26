@@ -89,6 +89,7 @@ public class MasterHudMain : MonoBehaviour {
 	
 	public void DeactivateInventoryHUD()
 	{
+		InfoHud.DataTerminalPanel.CloseDataTerminal();
 		ChangeMenuState(MenuState.NothingSelected);
 	}
 
@@ -97,19 +98,39 @@ public class MasterHudMain : MonoBehaviour {
 		TerminalHud.OpenDataTerminal(terminalType);
 		ChangeMenuState(MenuState.InventoryHUD);
 	}
+
+	private bool DeactivateInventoryHUDIfOpen(){
+		if (InfoHud.InfoPanelOpen)
+		{
+			DeactivateInventoryHUD();
+			return true;
+		}
+		return false;
+	}
 	
 	public void ToggleInventory()
 	{
-		if (InfoHud.InfoPanelOpen)
-		{
-			InfoHud.DataTerminalPanel.CloseDataTerminal();
-			DeactivateInventoryHUD();
-		}
-		else
-		{
-			InfoHud.OpenTab_Inventory();
-			ActivateInventoryHUD();
-		}
+		if (DeactivateInventoryHUDIfOpen()) return;
+		InfoHud.OpenTab_Inventory();
+		ActivateInventoryHUD();
+	}
+
+	public void ToggleStatus()
+	{
+		if (DeactivateInventoryHUDIfOpen()) return;
+		OpenStatusInfopanel();
+	}
+
+	public void ToggleMap()
+	{
+		if (DeactivateInventoryHUDIfOpen()) return;
+		OpenMapInfopanel();
+	}
+
+	public void ToggleLogs()
+	{
+		if (DeactivateInventoryHUDIfOpen()) return;
+		OpenLogsInfoPanel();
 	}
 
 	public void OpenMapInfopanel()
@@ -121,6 +142,12 @@ public class MasterHudMain : MonoBehaviour {
 	public void OpenStatusInfopanel()
 	{
 		InfoHud.OpenTab_Status();
+		ActivateInventoryHUD();
+	}
+
+	public void OpenLogsInfoPanel()
+	{
+		InfoHud.OpenTab_Logs();
 		ActivateInventoryHUD();
 	}
 
@@ -145,7 +172,7 @@ public class MasterHudMain : MonoBehaviour {
 		case MenuState.NothingSelected:
 			player.HUD.EndHud.SetActive(true);
 			player.HUD.MovementHud.SetActive(false);
-			player.HUD.TargetingHud.SetActive(false);
+			player.HUD.ShowTargetingHud(false);
 			player.HUD.disperseHeatButton.SetActive(true);
 			player.EndTargetingMode();
 
@@ -159,7 +186,7 @@ public class MasterHudMain : MonoBehaviour {
 		case MenuState.MovementHUD:
 			player.HUD.EndHud.SetActive(false);
 			player.HUD.MovementHud.SetActive(true);
-			player.HUD.TargetingHud.SetActive(false);
+			player.HUD.ShowTargetingHud(false);
 			player.HUD.disperseHeatButton.SetActive(false);
 			player.EndTargetingMode();
 
@@ -171,7 +198,7 @@ public class MasterHudMain : MonoBehaviour {
 		case MenuState.TargetingHUD:
 			player.HUD.EndHud.SetActive(false);
 			player.HUD.MovementHud.SetActive(false);
-			player.HUD.TargetingHud.SetActive(true);
+			player.HUD.ShowTargetingHud(true);
 			player.HUD.disperseHeatButton.SetActive(false);
 			//player.SetMouseLook(true);
 
@@ -183,7 +210,7 @@ public class MasterHudMain : MonoBehaviour {
 		case MenuState.InventoryHUD:
 			player.HUD.EndHud.SetActive(false);
 			player.HUD.MovementHud.SetActive(false);
-			player.HUD.TargetingHud.SetActive(false);
+			player.HUD.ShowTargetingHud(false);
 			player.HUD.disperseHeatButton.SetActive(false);
 			player.EndTargetingMode();
 

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class TileObjData
 {
 	public enum Type {Floor,Wall,Empty,Door,Corridor,ElevatorTrigger,ElevatorDoor,Airlock};
-	public enum Obj {None=0,Player,Enemy,Loot,Obstacle,LootArea,GatlingGun,GatlingGunArea,PowerGenerator,ArmoryTerminal=100,CargoTerminal,EngineTerminal,NavigationTerminal};
+	public enum Obj {None=0,Player,Enemy,Loot,Obstacle,LootArea,GatlingGun,GatlingGunArea,PowerGenerator,MechaDummy,Clutter,ArmoryTerminal=100,CargoTerminal,EngineTerminal,NavigationTerminal};
 
 	public const int TerminalStartIndex=100;
 

@@ -15,7 +15,7 @@ public class PlayerHud : MonoBehaviour {
 
 	public GameObject EndHud;
 	public GameObject MovementHud;
-	public GameObject TargetingHud;
+	public GameObject TargetingHud,TargetingHelpText;
 	public GameObject InteractHud;
 	public GameObject engageButton;
 	public GameObject disperseHeatButton;
@@ -36,7 +36,6 @@ public class PlayerHud : MonoBehaviour {
 
 	void Awake()
 	{
-		
 		buttonAnimation.Play("Take 001");
 		StartCoroutine(stopButtonAnim());
 	}
@@ -48,7 +47,7 @@ public class PlayerHud : MonoBehaviour {
 		UpdateComputerSystems=true;
 #endif
 		MovementHud.SetActive(false);
-		TargetingHud.SetActive(false);
+		ShowTargetingHud(false);
 	}
 
     public void Init(PlayerMain p, GameController gc){
@@ -225,7 +224,12 @@ public class PlayerHud : MonoBehaviour {
 
 	public void PlayerStartedShooting()
 	{
-		TargetingHud.SetActive(false);
+		ShowTargetingHud(false);
+	}
+
+	public void ShowTargetingHud(bool show){
+		TargetingHud.SetActive(show);
+		TargetingHelpText.SetActive(SharedSystemsMain.I.GOps.Data.GuiTips?show:false);
 	}
 
 	public void SetHudToPlayerStats(){

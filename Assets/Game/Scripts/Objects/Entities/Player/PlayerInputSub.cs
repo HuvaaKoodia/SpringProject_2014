@@ -120,10 +120,25 @@ public class PlayerInputSub : MonoBehaviour {
 		{
 			player.ToggleFlashlight();
 		}
-
-		if (Input.GetButtonDown("Free look toggle"))
+		if (Input.GetButtonDown("Toggle Freelook"))
 		{
 			FreeLookToggleInput();
+		}
+		if (Input.GetButtonDown("Toggle Inventory"))
+		{
+			player.HUD.ToggleInventory();
+		}
+		if (Input.GetButtonDown("Toggle Map"))
+		{
+			player.HUD.MasterHud.ToggleMap();
+		}
+		if (Input.GetButtonDown("Toggle Logs"))
+		{
+			player.HUD.MasterHud.ToggleLogs();
+		}
+		if (Input.GetButtonDown("Toggle Status"))
+		{
+			player.HUD.MasterHud.ToggleStatus();
 		}
 
 #if UNITY_EDITOR
