@@ -286,7 +286,7 @@ public class GameController : MonoBehaviour {
 	}
 	
 	public void CullWorldBasedOnPlayer(bool StopAtDoors){
-		if (do_culling) culling_system.CullBasedOnPositions(Player.transform.position,Player.movement.targetPosition,Player.GameCamera.farClipPlane,this, StopAtDoors,Player.HasMap);
+		if (do_culling) culling_system.CullBasedOnPositions(Player.transform.position,Player.movement.targetPosition,Player.GameCamera.farClipPlane+2,this, StopAtDoors,Player.HasMap);
 	}
 
 	public FloorObjData GetFloor (int index)
