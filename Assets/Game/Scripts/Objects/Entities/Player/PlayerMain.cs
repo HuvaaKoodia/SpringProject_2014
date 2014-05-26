@@ -70,13 +70,10 @@ public class PlayerMain : EntityMain
 		GC = GameObject.Find("GameSystems").GetComponent<GameController>();
 
 		inputSub = GetComponent<PlayerInputSub>();
-
 		targetingMode = false;
 	
-		WeaponMouseLookOn=SharedSystemsMain.I.GOps.Data.MouseLook;
-
+		SetMouseLook(SharedSystemsMain.I.GOps.Data.MouseLook);
 		InstaShoot = !SharedSystemsMain.I.GOps.Data.CombatAnimations;
-
 	}
 
 	public void InitPlayer()

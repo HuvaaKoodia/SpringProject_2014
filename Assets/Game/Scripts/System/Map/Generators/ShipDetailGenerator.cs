@@ -98,14 +98,23 @@ public class ShipDetailGenerator : MonoBehaviour
 		}
 		Debug.Log("security amount: "+amount);
 
+		//change some unused loot areas to clutter areas
+
+		GetTilesOfTypeWithObject(free_tiles,floor,null, TileObjData.Type.Floor,TileObjData.Obj.LootArea);
+		float clutter_percent=XmlDatabase.ClutterChance;
+		int clutter_amount=(int)(free_tiles.Count*clutter_percent);
+
+		while (clutter_amount>0){
+			var t=Subs.GetRandomAndRemove(free_tiles);
+			t.SetObj(TileObjData.Obj.Clutter);
+			--clutter_amount;
+		}
+
 		//change unused loot and security areas to empty (so that other things can be spawned on them).
 
-		foreach (var room in rooms_list)
-		{
-			GetTilesOfTypeWithObject(free_tiles,floor,room, TileObjData.Type.Floor,TileObjData.Obj.LootArea,TileObjData.Obj.GatlingGunArea);
-			foreach (var t in free_tiles){
-				t.SetObj(TileObjData.Obj.None);
-			}
+		GetTilesOfTypeWithObject(free_tiles,floor,null, TileObjData.Type.Floor,TileObjData.Obj.LootArea,TileObjData.Obj.GatlingGunArea);
+		foreach (var t in free_tiles){
+			t.SetObj(TileObjData.Obj.None);
 		}
 
 		//Add enemies to rooms

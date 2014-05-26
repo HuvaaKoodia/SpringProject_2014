@@ -2,7 +2,7 @@
 Legend:
 
 Status info:
--EnemyTypes 0=Aliens,1=Security,3=Both
+-EnemyTypes 0=Aliens,1=Security,2=Both
 -Aliens: 	0=none,1=small,2=medium,3=lots
 -Security: 	0=none,1=small,2=medium,3=lots
 -Condition: 0=badly damaged,1=damaged,2=intact
@@ -10,43 +10,44 @@ Status info:
 -->
 
 
-
 <!-- Missions -->
 
 <Root>
-<Mission type="TradeVesselInfo" name="TEMP" rewardClass="1" lootPool="1">
-	<Description>We've been contracted to investigate the fate of a trade vessel.\nFind out what happened.\n\nThe client doesn't care about the cargo. Grab whatever you can.</Description>
+
+<Mission type="FindItem_Artifact" name="Alien Artifact" rewardClass="1" lootPool="1">
+<Description>There is an Alien Artifact onboard somewhere on the ship and our client wants us to recover it. \nAnything else you find is yours to keep.</Description>
 	<PrimaryObjectives>
-		FindLogs
+		FindItem_Artifact
 	</PrimaryObjectives>
 	<SecondaryObjectives>
 		Loot
 	</SecondaryObjectives>
 	<Ships>
-		firefly1
-		kentuckyalpha1
 		mercurius2
+		dragonfly1
+		kentuckyalpha1
 	</Ships>
-	<TravelTime min="2" max="4"/>
-	<ExpirationTime min="2" max="4"/>
+	<TravelTime min="8" max="12"/>
+	<ExpirationTime min="7" max="14"/>
 	<LootQualityPool>
-		<Item name="1"/>
-		<Item name="2"/>
+		<Item name="1" weight="7"/>
+		<Item name="2" weight="2"/>
+		<Item name="3"/>
 	</LootQualityPool>
 	<Status name="EnemyTypes">
-		<Item name="0" weight="3"/>
-		<Item name="1" weight="3"/>
+		<Item name="0" weight="7"/>
+		<Item name="1" weight="1"/>
 		<Item name="2" weight="2"/>
 	</Status>
 	<Status name="Aliens">
-		<Item name="1" weight="3"/>
-		<Item name="2" weight="2"/>
+		<Item name="1" weight="5"/>
+		<Item name="2" weight="4"/>
 		<Item name="3"/>
 	</Status>
 	<Status name="Security">
-		<Item name="1" weight="3"/>
-		<Item name="2" weight="2"/>
-		<Item name="3"/>
+		<Item name="1" weight="6"/>
+		<Item name="2" weight="4"/>
+		<Item name="3" weight="0"/>
 	</Status>
 	<Status name="Condition">
 		<Item name="0"/>
@@ -54,120 +55,364 @@ Status info:
 		<Item name="2" weight="2"/>
 	</Status>
 	<Status name="Power">
-		<Item name="0"/>
-		<Item name="1" weight="3"/>
+		<Item name="1" weight="8"/>
 		<Item name="2" weight="2"/>
 	</Status>
 </Mission>
 
-<Mission type="RetrieveCargo" name="TEMP" rewardClass="1" lootPool="1">
-<Description>We've been contracted to retrieve a certain item of high value from a wrecked ship. \nGet in, find the package and come back in one piece. \nAnything else you find is yours to keep.</Description>
+<Mission type="FindItem_Helix" name="Find the Relic" rewardClass="1" lootPool="1">
+<Description>We've been contracted to find and retrieve an important religious relic from the cargo bay.\nBring it back and remember to clean the ship of any other valuables too.</Description>
 	<PrimaryObjectives>
-		FindItem_Blackbox
+		FindItem_Helix
 	</PrimaryObjectives>
 	<SecondaryObjectives>
 		Loot
 	</SecondaryObjectives>
 	<Ships>
-		firefly1
-		kentuckyalpha1
 		mercurius2
+		dragonfly1
+		kentuckyalpha1
 	</Ships>
-	<TravelTime min="4" max="10"/>
-	<ExpirationTime min="2" max="4"/>
+	<TravelTime min="8" max="12"/>
+	<ExpirationTime min="7" max="14"/>
 	<LootQualityPool>
+		<Item name="1" weight="7"/>
+		<Item name="2" weight="2"/>
+		<Item name="3"/>
+	</LootQualityPool>
+	<Status name="EnemyTypes">
+		<Item name="0" weight="4"/>
+		<Item name="1" weight="4"/>
+		<Item name="2" weight="2"/>
+	</Status>
+	<Status name="Aliens">
+		<Item name="1" weight="5"/>
+		<Item name="2" weight="4"/>
+		<Item name="3"/>
+	</Status>
+	<Status name="Security">
+		<Item name="1" weight="4"/>
+		<Item name="2" weight="6"/>
+		<Item name="3" weight="0"/>
+	</Status>
+	<Status name="Condition">
+		<Item name="0"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+	</Status>
+	<Status name="Power">
+		<Item name="1" weight="8"/>
+		<Item name="2" weight="2"/>
+	</Status>
+</Mission>
+
+<Mission type="FindItem_Prototype" name="Military Prototype" rewardClass="1" lootPool="2">
+<Description>An abandoned military vessel carried some experimental warfare. \nThere's a certain military prototype we've been asked to recover. \nFeel free to help yourself if you happen to find anything else.</Description>
+	<PrimaryObjectives>
+		FindItem_Prototype
+	</PrimaryObjectives>
+	<SecondaryObjectives>
+		Loot
+	</SecondaryObjectives>
+	<Ships>
+		blackone
+		kentuckyalpha1
+	</Ships>
+	<TravelTime min="8" max="12"/>
+	<ExpirationTime min="7" max="14"/>
+	<LootQualityPool>
+		<Item name="1" weight="7"/>
+		<Item name="2" weight="2"/>
+		<Item name="3"/>
+	</LootQualityPool>
+	<Status name="EnemyTypes">
+		<Item name="0" weight="1"/>
+		<Item name="1" weight="7"/>
+		<Item name="2" weight="2"/>
+	</Status>
+	<Status name="Aliens">
+		<Item name="1" weight="5"/>
+		<Item name="2" weight="4"/>
+		<Item name="3"/>
+	</Status>
+	<Status name="Security">
+		<Item name="1" weight="5"/>
+		<Item name="2" weight="5"/>
+		<Item name="3" weight="0"/>
+	</Status>
+	<Status name="Condition">
+		<Item name="0"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+	</Status>
+	<Status name="Power">
+		<Item name="1" weight="8"/>
+		<Item name="2" weight="2"/>
+	</Status>
+</Mission>
+
+<Mission type="FindItem_Exquisite" name="Valuable Cargo" rewardClass="1" lootPool="1">
+<Description>A trade vessel carrying some valuable Exquisite Wares got hit by hostiles. \nBring the luxories back and feel free to keep anything else you find.</Description>
+	<PrimaryObjectives>
+		FindItem_Exquisite
+	</PrimaryObjectives>
+	<SecondaryObjectives>
+		Loot
+	</SecondaryObjectives>
+	<Ships>
+		mercurius2
+		dragonfly1
+	</Ships>
+	<TravelTime min="8" max="12"/>
+	<ExpirationTime min="7" max="14"/>
+	<LootQualityPool>
+		<Item name="1" weight="6"/>
 		<Item name="2" weight="3"/>
 		<Item name="3"/>
 	</LootQualityPool>
 	<Status name="EnemyTypes">
-		<Item name="0" weight="3"/>
-		<Item name="1" weight="3"/>
-		<Item name="2" weight="2"/>
-	</Status>
-	<Status name="Aliens">
-		<Item name="1" weight="3"/>
-		<Item name="2" weight="2"/>
-		<Item name="3"/>
-	</Status>
-	<Status name="Security">
-		<Item name="1" weight="3"/>
-		<Item name="2" weight="2"/>
-	</Status>
-	<Status name="Condition">
-		<Item name="0"/>
-		<Item name="1" weight="3"/>
-		<Item name="2" weight="2"/>
-	</Status>
-	<Status name="Power">
-		<Item name="0"/>
-		<Item name="1" weight="3"/>
-		<Item name="2" weight="2"/>
-	</Status>
-</Mission>
-<!--
-<Mission type="FateOfVessel" name="TEMP" rewardClass="2" lootPool="1">
-<Description>A contractor wants to find out what happened to a certain shipwreck. \nBoard the vessel and try to extract data from as many data consoles as you can.</Description>
-	<PrimaryObjectives>
-		FindItem
-	</PrimaryObjectives>
-	<SecondaryObjectives>
-		Loot
-	</SecondaryObjectives>
-	<Ships>
-		mercurius1b
-	</Ships>
-	<TravelTime min="4" max="10"/>
-	<ExpirationTime min="2" max="4"/>
-	<LootQualityPool>
-		<Item name="2" weight=3/>
-		<Item name="3"/>
-	</LootQualityPool>
-	<Status name="Aliens">
-		<Item name="1" weight="3"/>
-		<Item name="2" weight="2"/>
-		<Item name="3"/>
-	</Status>
-	<Status name="Security">
-		<Item name="1" weight="3"/>
-		<Item name="2" weight="2"/>
-	</Status>
-	<Status name="Condition">
-		<Item name="0"/>
-		<Item name="1" weight="3"/>
-		<Item name="2" weight="2"/>
-	</Status>
-	<Status name="Power">
+		<Item name="0" weight="4"/>
 		<Item name="1" weight="4"/>
-		<Item name="2" weight="1"/>
+		<Item name="2" weight="2"/>
+	</Status>
+	<Status name="Aliens">
+		<Item name="1" weight="5"/>
+		<Item name="2" weight="4"/>
+		<Item name="3"/>
+	</Status>
+	<Status name="Security">
+		<Item name="1" weight="5"/>
+		<Item name="2" weight="5"/>
+	</Status>
+	<Status name="Condition">
+		<Item name="0"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+	</Status>
+	<Status name="Power">
+		<Item name="1" weight="8"/>
+		<Item name="2" weight="2"/>
 	</Status>
 </Mission>
--->
 
-<!--
-<Mission type="RetrieveData" name="TEMP" rewardClass="1" lootPool="1">
-<Description>There's a certain shipwreck with some very valuable data onboard that we've been contracted to recover. \nFind the right console, download the data and bring it back.</Description>
+<Mission type="FindItem_DataDrive" name="Valuable Cargo" rewardClass="1" lootPool="1">
+<Description>Our client has lost a very important external data drive.\nLocate the cargo bay and bring the data drive back.\nWhen it comes to other wares - carte blanche.</Description>
 	<PrimaryObjectives>
-		FindItem
+		FindItem_DataDrive
 	</PrimaryObjectives>
 	<SecondaryObjectives>
 		Loot
 	</SecondaryObjectives>
 	<Ships>
-		mercurius1b
+		mercurius2
+		dragonfly1
 	</Ships>
-	<TravelTime min="4" max="10"/>
-	<ExpirationTime min="2" max="4"/>
+	<TravelTime min="8" max="12"/>
+	<ExpirationTime min="7" max="14"/>
 	<LootQualityPool>
-		<Item name="2" weight=3/>
+		<Item name="1" weight="7"/>
+		<Item name="2" weight="2"/>
 		<Item name="3"/>
 	</LootQualityPool>
-	<Status name="Aliens">
-		<Item name="1" weight="3"/>
+	<Status name="EnemyTypes">
+		<Item name="0" weight="4"/>
+		<Item name="1" weight="4"/>
 		<Item name="2" weight="2"/>
+	</Status>
+	<Status name="Aliens">
+		<Item name="1" weight="5"/>
+		<Item name="2" weight="4"/>
 		<Item name="3"/>
 	</Status>
 	<Status name="Security">
+		<Item name="1" weight="5"/>
+		<Item name="2" weight="5"/>
+		<Item name="3" weight="0"/>
+	</Status>
+	<Status name="Condition">
+		<Item name="0"/>
 		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+	</Status>
+	<Status name="Power">
+		<Item name="1" weight="8"/>
+		<Item name="2" weight="2"/>
+	</Status>
+</Mission>
+
+<Mission type="VesselFaithMilitary" name="Fate of the Vessel" rewardClass="2" lootPool="2">
+<Description>Our client wants us to find out, what happened to a certain ship.\nGet in there and download any log files you can find.</Description>
+	<PrimaryObjectives>
+		FindLogs_Engine
+		FindLogs_Navigation
+		FindLogs_Cargo
+		FindLogs_Armory
+	</PrimaryObjectives>
+	<SecondaryObjectives>
+		Loot
+	</SecondaryObjectives>
+	<Ships>
+		blackone
+		kentuckyalpha1
+	</Ships>
+	<TravelTime min="5" max="10"/>
+	<ExpirationTime min="4" max="7"/>
+	<LootQualityPool>
+		<Item name="1" weight="7"/>
+		<Item name="2" weight="2"/>
+		<Item name="3"/>
+	</LootQualityPool>
+	<Status name="EnemyTypes">
+		<Item name="0" weight="6"/>
+		<Item name="1" weight="0"/>
+		<Item name="2" weight="4"/>
+	</Status>
+	<Status name="Aliens">
+		<Item name="1" weight="1"/>
+		<Item name="2" weight="5"/>
+		<Item name="3" weight="4"/>
+	</Status>
+	<Status name="Security">
+		<Item name="1" weight="5"/>
+		<Item name="2" weight="5"/>
+		<Item name="3" weight="0"/>
+	</Status>
+	<Status name="Condition">
+		<Item name="0"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+	</Status>
+	<Status name="Power">
+		<Item name="1" weight="8"/>
+		<Item name="2" weight="2"/>
+	</Status>
+
+</Mission>
+
+<Mission type="VesselFaithTrade" name="Fate of the Vessel" rewardClass="2" lootPool="1">
+<Description>Our client wants us to find out, what happened to a certain ship.\nGet in there and download any log files you can find.</Description>
+	<PrimaryObjectives>
+		FindLogs_Engine
+		FindLogs_Navigation
+		FindLogs_Cargo
+	</PrimaryObjectives>
+	<SecondaryObjectives>
+		Loot
+	</SecondaryObjectives>
+	<Ships>
+		mercurius2
+		dragonfly1
+	</Ships>
+	<TravelTime min="5" max="10"/>
+	<ExpirationTime min="4" max="7"/>
+	<LootQualityPool>
+		<Item name="1" weight="7"/>
+		<Item name="2" weight="2"/>
+		<Item name="3"/>
+	</LootQualityPool>
+	<Status name="EnemyTypes">
+		<Item name="0" weight="6"/>
+		<Item name="1" weight="0"/>
+		<Item name="2" weight="4"/>
+	</Status>
+	<Status name="Aliens">
+		<Item name="1" weight="1"/>
+		<Item name="2" weight="5"/>
+		<Item name="3" weight="4"/>
+	</Status>
+	<Status name="Security">
+		<Item name="1" weight="7"/>
+		<Item name="2" weight="3"/>
+		<Item name="3" weight="0"/>
+	</Status>
+	<Status name="Condition">
+		<Item name="0"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+	</Status>
+	<Status name="Power">
+		<Item name="1" weight="8"/>
+		<Item name="2" weight="2"/>
+	</Status>
+</Mission>
+
+<Mission type="NavigationLogs" name="Unknown Destination" rewardClass="2" lootPool="2">
+<Description>A military vessel got hit by hostile aliens.\nOur client wants to know where the ship was headed, so find the command bridge and download the Navigation Logs.</Description>
+	<PrimaryObjectives>
+		FindLogs_Navigation
+	</PrimaryObjectives>
+	<SecondaryObjectives>
+		Loot
+	</SecondaryObjectives>
+	<Ships>
+		blackone
+		kentuckyalpha1
+	</Ships>
+	<TravelTime min="5" max="10"/>
+	<ExpirationTime min="4" max="7"/>
+	<LootQualityPool>
+		<Item name="1" weight="2"/>
+		<Item name="2" weight="7"/>
+		<Item name="3"/>
+	</LootQualityPool>
+	<Status name="EnemyTypes">
+		<Item name="0" weight="0"/>
+		<Item name="1" weight="10"/>
+		<Item name="2" weight="0"/>
+	</Status>
+	<Status name="Aliens">
+		<Item name="1" weight="0"/>
+		<Item name="2" weight="6"/>
+		<Item name="3" weight="4"/>
+	</Status>
+	<Status name="Security">
+		<Item name="1" weight="0"/>
+		<Item name="2" weight="2"/>
+		<Item name="3" weight="8"/>
+	</Status>
+	<Status name="Condition">
+		<Item name="0"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+	</Status>
+	<Status name="Power">
+		<Item name="1" weight="8"/>
+		<Item name="2" weight="2"/>
+	</Status>
+</Mission>
+
+<Mission type="RogueAI" name="Rogue AI" rewardClass="3" lootPool="2">
+<Description>A ship got attacked by a virus that shut down engines and made the AI go rogue.\nClient wants us to retrieve the data files from the ship armory and engine room.\nThe defence systems are probably still online.</Description>
+	<PrimaryObjectives>
+		FindLogs_Engine
+		FindLogs_Armory
+	</PrimaryObjectives>
+	<SecondaryObjectives>
+		Loot
+	</SecondaryObjectives>
+	<Ships>
+		blackone
+		kentuckyalpha1
+	</Ships>
+	<TravelTime min="8" max="16"/>
+	<ExpirationTime min="10" max="14"/>
+	<LootQualityPool>
+		<Item name="1" weight="5"/>
+		<Item name="2" weight="4"/>
+		<Item name="3"/>
+	</LootQualityPool>
+	<Status name="EnemyTypes">
+		<Item name="0" weight="8"/>
+		<Item name="1" weight="0"/>
+		<Item name="2" weight="2"/>
+	</Status>
+	<Status name="Aliens">
+		<Item name="1" weight="6"/>
+		<Item name="2" weight="3"/>
+		<Item name="3" weight="1"/>
+	</Status>
+	<Status name="Security">
+		<Item name="1" weight="8"/>
 		<Item name="2" weight="2"/>
 	</Status>
 	<Status name="Condition">
@@ -176,88 +421,12 @@ Status info:
 		<Item name="2" weight="2"/>
 	</Status>
 	<Status name="Power">
-		<Item name="0"/>
-		<Item name="1" weight="3"/>
+		<Item name="1" weight="8"/>
 		<Item name="2" weight="2"/>
 	</Status>
 </Mission>
 
-<Mission type="RetrievePrototype" name="TEMP" rewardClass="1" lootPool="1">
-<Description>There's a highly wanted military prototype and our client is ready pay well for it. \nIt's in a military ship that was attacked by hostiles, but their current presence is unknown. \nGet in there and get the package to safety. </Description>
-	<PrimaryObjectives>
-		FindItem
-	</PrimaryObjectives>
-	<SecondaryObjectives>
-		Loot
-	</SecondaryObjectives>
-	<Ships>
-		mercurius1b
-	</Ships>
-	<TravelTime min="4" max="10"/>
-	<ExpirationTime min="2" max="4"/>
-	<LootQualityPool>
-		<Item name="2" weight=3/>
-		<Item name="3"/>
-	</LootQualityPool>
-	<Status name="Aliens">
-		<Item name="1" weight="3"/>
-		<Item name="2" weight="2"/>
-		<Item name="3"/>
-	</Status>
-	<Status name="Security">
-		<Item name="1" weight="3"/>
-		<Item name="2" weight="2"/>
-	</Status>
-	<Status name="Condition">
-		<Item name="0"/>
-		<Item name="1" weight="3"/>
-		<Item name="2" weight="2"/>
-	</Status>
-	<Status name="Power">
-		<Item name="0"/>
-		<Item name="1" weight="3"/>
-		<Item name="2" weight="2"/>
-	</Status>
-</Mission>
-
-<Mission type="Rogue AI" name="TEMP" rewardClass="3" lootPool="1">
-<Description>An AI went rogue an did some serious damage to a vessel \nThe client wants to avoid unnecessary attention and hired us to take care of it. \nFind the AI core and shut it down.</Description>
-	<PrimaryObjectives>
-		FindItem
-	</PrimaryObjectives>
-	<SecondaryObjectives>
-		Loot
-	</SecondaryObjectives>
-	<Ships>
-		mercurius1b
-	</Ships>
-	<TravelTime min="4" max="10"/>
-	<ExpirationTime min="2" max="4"/>
-	<LootQualityPool>
-		<Item name="2" weight=3/>
-		<Item name="3"/>
-	</LootQualityPool>
-	<Status name="Aliens">
-		<Item name="1" weight="3"/>
-		<Item name="2" weight="2"/>
-		<Item name="3"/>
-	</Status>
-	<Status name="Security">
-		<Item name="1" weight="3"/>
-		<Item name="2" weight="2"/>
-	</Status>
-	<Status name="Condition">
-		<Item name="0"/>
-		<Item name="1" weight="3"/>
-		<Item name="2" weight="2"/>
-	</Status>
-	<Status name="Power">
-		<Item name="0"/>
-		<Item name="1" weight="3"/>
-		<Item name="2" weight="2"/>
-	</Status>
-	-->
-<Mission type="CleaningMission" name="Alien Cleanup" rewardClass="3" lootPool="1">
+<Mission type="CleaningMission" name="Purge" rewardClass="3" lootPool="1">
 	<Description>A vessel got overrun by some hostile aliens. \nThe client wants to get rid of them, but needs the ship intact. \nCargo wasn't mentioned though, so feel free to help yourself.</Description>
 	<PrimaryObjectives>
 		KillAliens
@@ -266,21 +435,26 @@ Status info:
 		Loot
 	</SecondaryObjectives>
 	<Ships>
-		mercurius1b
+		mercurius2
+		dragonfly1
+		blackone
+		kentuckyalpha1
 	</Ships>
-	<TravelTime min="4" max="10"/>
-	<ExpirationTime min="2" max="4"/>
+	<TravelTime min="8" max="16"/>
+	<ExpirationTime min="10" max="14"/>
 	<LootQualityPool>
-		<Item name="2" weight="3"/>
-		<Item name="3"/>
+		<Item name="2" weight="8"/>
+		<Item name="3" weight="2"/>
 	</LootQualityPool>
 		<Status name="EnemyTypes">
-		<Item name="0"/>
+		<Item name="0" weight="8"/>
+		<Item name="1" weight="0"/>
+		<Item name="2" weight="2"/>
 	</Status>
 	<Status name="Aliens">
-		<Item name="1" weight="3"/>
-		<Item name="2" weight="2"/>
-		<Item name="3"/>
+		<Item name="0" weight="1"/>
+		<Item name="1" weight="4"/>
+		<Item name="2" weight="5"/>
 	</Status>
 	<Status name="Security">
 		<Item name="1" weight="3"/>
@@ -298,112 +472,64 @@ Status info:
 	</Status>
 </Mission>
 
-<Mission type="ExploreVessel" name="TEMP" rewardClass="1" lootPool="1">
-	<Description>We've located a seemingly abandoned derelict wreck.\nGet in and see if there's still anything of value left.</Description>
-	<PrimaryObjectives>
-		Explore
-	</PrimaryObjectives>
-	<Ships>
-		firefly1
-		kentuckyalpha1
-		mercurius2
-	</Ships>
-	<TravelTime min="4" max="8"/>
-	<ExpirationTime min="2" max="4"/>
-	<LootQualityPool>
-		<Item name="1" weight="2"/>
-		<Item name="2" weight="2"/>
-		<Item name="3"/>
-	</LootQualityPool>
-	<Status name="EnemyTypes">
-		<Item name="0" weight="3"/>
-		<Item name="1" weight="3"/>
-		<Item name="2" weight="2"/>
-	</Status>
-	<Status name="Aliens">
-		<Item name="1" weight="3"/>
-		<Item name="2" weight="2"/>
-		<Item name="3"/>
-	</Status>
-	<Status name="Security">
-		<Item name="1" weight="3"/>
-		<Item name="2" weight="2"/>
-		<Item name="3"/>
-	</Status>
-	<Status name="Condition">
-		<Item name="0"/>
-		<Item name="1" weight="3"/>
-		<Item name="2" weight="2"/>
-	</Status>
-	<Status name="Power">
-		<Item name="0"/>
-		<Item name="1" weight="3"/>
-		<Item name="2" weight="2"/>
-	</Status>
-</Mission>
-
-<Mission type="EmergencyBeacon" name="TEMP" rewardClass="1" lootPool="1">
-	<Description>We've spotted a derelict vessel.\nWe'll pay you a small fee if you find out what happened.\n\nOtherwise: loot, loot, loot!</Description>
-	<PrimaryObjectives>
-		FindLogs
-	</PrimaryObjectives>
+<Mission type="ExploreVessel1" name="Explore" rewardClass="0" lootPool="1">
+	<Description>We've located a seemingly abandoned derelict wreck.\nGet in and see if there's still anything of value left.\nThere's no reward but feel free to keep anything you find.</Description>
 	<SecondaryObjectives>
 		Explore
-	</SecondaryObjectives>
-	<Ships>
-		firefly1
-		kentuckyalpha1
-		mercurius2
-	</Ships>
-	<TravelTime min="2" max="4"/>
-	<ExpirationTime min="2" max="4"/>
-	<LootQualityPool>
-		<Item name="1"/>
-		<Item name="2"/>
-	</LootQualityPool>
-	<Status name="EnemyTypes">
-		<Item name="0" weight="3"/>
-		<Item name="1" weight="3"/>
-		<Item name="2" weight="2"/>
-	</Status>
-	<Status name="Aliens">
-		<Item name="1" weight="3"/>
-		<Item name="2" weight="2"/>
-		<Item name="3"/>
-	</Status>
-	<Status name="Security">
-		<Item name="1" weight="3"/>
-		<Item name="2" weight="2"/>
-		<Item name="3"/>
-	</Status>
-	<Status name="Condition">
-		<Item name="0"/>
-		<Item name="1" weight="3"/>
-		<Item name="2" weight="2"/>
-	</Status>
-	<Status name="Power">
-		<Item name="0"/>
-		<Item name="1" weight="3"/>
-		<Item name="2" weight="2"/>
-	</Status>
-</Mission>
-
-<!-- <Mission type="RetrieveCargo" name="TEMP" rewardClass="2" lootPool="1">
-<Description>There is an Alien Artifact onboard somewhere on the ship and our client wants us to recover it. \nEverything else you find is yours to keep.</Description>
-	<PrimaryObjectives>
-		FindItem_Artifact
-	</PrimaryObjectives>
-	<SecondaryObjectives>
 		Loot
 	</SecondaryObjectives>
 	<Ships>
-		firefly1
-		kentuckyalpha1
+		dragonfly1
 		mercurius2
 	</Ships>
-	<TravelTime min="4" max="10"/>
+	<TravelTime min="2" max="6"/>
 	<ExpirationTime min="2" max="4"/>
 	<LootQualityPool>
+		<Item name="1" weight="6"/>
+		<Item name="2" weight="3"/>
+		<Item name="3"/>
+	</LootQualityPool>
+	<Status name="EnemyTypes">
+		<Item name="0" weight="3"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+	</Status>
+	<Status name="Aliens">
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="4"/>
+		<Item name="3" weight="3"/>
+	</Status>
+	<Status name="Security">
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="4"/>
+		<Item name="3" weight="3"/>
+	</Status>
+	<Status name="Condition">
+		<Item name="0"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+	</Status>
+	<Status name="Power">
+		<Item name="0"/>
+		<Item name="1" weight="3"/>
+		<Item name="2" weight="2"/>
+	</Status>
+</Mission>
+
+<Mission type="ExploreVessel2" name="Explore" rewardClass="0" lootPool="2">
+	<Description>We've located a seemingly abandoned derelict wreck.\nGet in and see if there's still anything of value left.\nThere's no reward but feel free to keep anything you find.</Description>
+	<SecondaryObjectives>
+		Explore
+		Loot
+	</SecondaryObjectives>
+	<Ships>
+		blackone
+		kentuckyalpha1
+	</Ships>
+	<TravelTime min="2" max="6"/>
+	<ExpirationTime min="2" max="4"/>
+	<LootQualityPool>
+		<Item name="1" weight="6"/>
 		<Item name="2" weight="3"/>
 		<Item name="3"/>
 	</LootQualityPool>
@@ -420,6 +546,7 @@ Status info:
 	<Status name="Security">
 		<Item name="1" weight="3"/>
 		<Item name="2" weight="2"/>
+		<Item name="3"/>
 	</Status>
 	<Status name="Condition">
 		<Item name="0"/>
@@ -431,10 +558,10 @@ Status info:
 		<Item name="1" weight="3"/>
 		<Item name="2" weight="2"/>
 	</Status>
-</Mission> -->
+</Mission>
 
 <!--- REWARD CLASSES -->
-<!-- <RewardClass name="0" minmax="0"/> -->
+<RewardClass name="0" minmax="0"/>
 <RewardClass name="1" min="8000" max="12000"/>
 <RewardClass name="2" min="18000" max="22000"/>
 <RewardClass name="3" min="30000" max="40000"/>

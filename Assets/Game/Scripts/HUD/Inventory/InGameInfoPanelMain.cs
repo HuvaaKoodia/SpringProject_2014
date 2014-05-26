@@ -57,6 +57,10 @@ public class InGameInfoPanelMain : MonoBehaviour {
 		Mechanic.OpenPanel();
 	}
 
+	public void OpenTab_Logs(){
+		Tabs.OpenTab3();
+	}
+
 	public void ActivateInventory()
 	{
 		InfoPanel.SetActive(true);
@@ -70,7 +74,6 @@ public class InGameInfoPanelMain : MonoBehaviour {
 		Player.ActivateEquippedItems();
 		Player.HUD.SetHudToPlayerStats();
 		if (LootParent.activeSelf) LootParent.SetActive(false);
-
 	}
 
 	public void SetPlayer(PlayerMain player){

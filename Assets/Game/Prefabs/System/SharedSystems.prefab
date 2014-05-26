@@ -914,6 +914,7 @@ MonoBehaviour:
   LootCratePrefab: {fileID: 100002, guid: 4da49c52a07bcb442849f3c68c3d1116, type: 2}
   DataTerminalPrefab: {fileID: 11400000, guid: 3de05aaf2eb1f22429c6bc4761678a62, type: 2}
   PowerGenerator: {fileID: 100002, guid: c7bb07afaefc49a4dbbad91f6074ab8c, type: 2}
+  MechaDummy: {fileID: 0}
   BasicWall: {fileID: 100000, guid: 61a5c8fb07519b54a83facebee526035, type: 2}
   BasicEmpty: {fileID: 100000, guid: 744415d51b306c7439d0e4c0e97b3cbb, type: 2}
   Corridor_OneWall: {fileID: 100002, guid: 4bf5d683ca4441247be27d973b6ac2bf, type: 2}
@@ -949,6 +950,13 @@ MonoBehaviour:
   RadarBlip: {fileID: 11400002, guid: d75796e28e6683d479d65379c1cf997a, type: 2}
   targetHighlights: []
   MapSpritePrefabFolderName: MapSprites/
+  clutter_names:
+  - AmmoboxesPrefab
+  - BarrelsPrefab
+  - PlasticBarrelsPrefab
+  - RandomBoxesPrefab
+  - ServerThigiesPrefab
+  - Turret_Parts
 --- !u!114 &11400010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1169,7 +1177,7 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .0352941193, g: .164705887, b: .164705887, a: 1}
   mPivot: 4
-  mWidth: 235
+  mWidth: 234
   mHeight: 49
   mDepth: 17
   autoResizeBoxCollider: 0
@@ -1434,7 +1442,7 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .0352941193, g: .164705887, b: .164705887, a: 1}
   mPivot: 4
-  mWidth: 436
+  mWidth: 435
   mHeight: 49
   mDepth: 17
   autoResizeBoxCollider: 0
@@ -1599,7 +1607,7 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .0352941193, g: .164705887, b: .164705887, a: 1}
   mPivot: 4
-  mWidth: 339
+  mWidth: 338
   mHeight: 49
   mDepth: 17
   autoResizeBoxCollider: 0
@@ -1880,8 +1888,8 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: .0352941193, g: .164705887, b: .164705887, a: 1}
   mPivot: 4
-  mWidth: 335
-  mHeight: 101
+  mWidth: 334
+  mHeight: 100
   mDepth: 16
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0

@@ -135,6 +135,8 @@ public class MapGenerator : MonoBehaviour
 
 		floor.ResetTileMainMap(w,h);
 
+		GameObject obj=null;
+
         for (int x = 0; x < w; x++)
         {
             for (int y = 0; y < h; y++)
@@ -155,7 +157,7 @@ public class MapGenerator : MonoBehaviour
 					tile.TileObject.transform.parent=tile.transform;
 				}
 
-				bool random_small_rot_change_hax=false;
+				bool random_small_rot_change_hax=false,random_big_rot_change_hax=false;
 
                 //game objects
                 switch (tile.Data.ObjType)
@@ -175,7 +177,6 @@ public class MapGenerator : MonoBehaviour
 
 					newEnemy.movement.Init();
 	                break;
-
 	            case TileObjData.Obj.Loot:
 	                var LootCrate = GameObject.Instantiate(MapPrefabs.LootCratePrefab, tile_pos, Quaternion.identity) as GameObject;
 
@@ -215,13 +216,31 @@ public class MapGenerator : MonoBehaviour
 					tile.TileGraphics.DisableLightGraphics();
 					break;
 				case TileObjData.Obj.PowerGenerator:
-					var obj = GameObject.Instantiate(MapPrefabs.PowerGenerator, tile_pos, Quaternion.identity) as GameObject;
+					obj = GameObject.Instantiate(MapPrefabs.PowerGenerator, tile_pos, Quaternion.identity) as GameObject;
 					
 					obj.name = "PowerGenerator";
 
 					tile.TileObject=obj;
 					tile.TileObject.transform.parent = tile.transform;
 					break;
+				
+				case TileObjData.Obj.Clutter:
+					obj = GameObject.Instantiate(MapPrefabs.GetRandomClutter(), tile_pos, Quaternion.identity) as GameObject;
+					
+					obj.name = "Clutter";
+					
+					tile.TileObject=obj;
+					tile.TileObject.transform.parent = tile.transform;
+					random_big_rot_change_hax=true;
+				break;
+					case TileObjData.Obj.MechaDummy:
+					obj = GameObject.Instantiate(MapPrefabs.MechaDummy, tile_pos, Quaternion.identity) as GameObject;
+					obj.name = "Dummy";
+					
+					obj.transform.parent = tile.transform;
+					tile.TileObject=obj;
+				break;
+				
 				}
 
 				//rotation
@@ -231,6 +250,9 @@ public class MapGenerator : MonoBehaviour
 
 					if (random_small_rot_change_hax){
 						rotation+=Subs.GetRandom(-5,5);
+					}
+					else if (random_big_rot_change_hax){
+						rotation+=Subs.GetRandom(360);
 					}
 
 					tile.TileObject.transform.rotation=Quaternion.AngleAxis(rotation,Vector3.up);

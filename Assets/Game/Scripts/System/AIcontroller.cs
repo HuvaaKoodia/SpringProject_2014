@@ -95,7 +95,7 @@ public class AIcontroller
 			{
 				if (turnsPlayed < MaxTurnsPerPhase)
 				{
-					Debug.Log("AI new turn");
+					//Debug.Log("AI new turn");
 					enemiesFinishedTurn = 0;
 					finishedEnemies.Clear();
 					GC.ChangeTurn(TurnState.AITurn);
@@ -109,7 +109,7 @@ public class AIcontroller
 			turnsPlayed = 0;
 			enemiesFinishedTurn = 0;
 			finishedEnemies.Clear();
-			Debug.Log("AI start");
+			//Debug.Log("AI start");
 			for (int i = enemies.Count-1; i >= 0; i--)
 			{
 				enemies[i].StartEnemyTurn();
