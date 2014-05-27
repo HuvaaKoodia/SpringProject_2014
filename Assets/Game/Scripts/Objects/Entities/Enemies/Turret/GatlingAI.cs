@@ -54,8 +54,10 @@ public class GatlingAI : AIBase {
     public AudioClip OpenSoundFX;
     public AudioClip CloseSoundFX;
     public AudioClip VerticalRotationSoundFX;
+	public AudioClip DieSFX;
 
 	public List<ParticleSystem> shootEffects;
+	public MuzzleFlashSystem muzzleFlashSys;
 
 	// Use this for initialization
 	void Start()
@@ -215,6 +217,8 @@ public class GatlingAI : AIBase {
 
 		audio.PlayOneShot(ShootSoundFX);
 
+		muzzleFlashSys.Play();
+
 		for (int i = 0; i < shootEffects.Count; i++)
 		{
 			shootEffects[i].Play();
@@ -296,6 +300,11 @@ public class GatlingAI : AIBase {
 
 		GreenHalo.SetActive(true);
 		RedHalo.SetActive(false);
+	}
+
+	public void OnDeath()
+	{
+		audio.PlayOneShot(DieSFX);
 	}
 
 	protected override void CreateBehaviourTree()
