@@ -19,6 +19,14 @@ public class MechaPartObjData{
     public bool OVERHEAT{get; set;}
     public bool IsWeapon{get; set;}
 
+	public bool IsConditionCritical {
+		get{return HP<MaxHP*XmlDatabase.MechaPartConditionBadThreshold;}
+	}
+	
+	public bool IsConditionFair {
+		get{return HP<MaxHP*XmlDatabase.MechaPartConditionFairThreshold;}
+	}
+
     //getters
     public bool USABLE{get{return HP>0;}}
     public bool CHANGEABLE{get{return HEAT<XmlDatabase.WeaponChangeableHeatThreshold;}}

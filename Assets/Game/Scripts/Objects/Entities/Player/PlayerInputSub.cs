@@ -19,6 +19,19 @@ public class PlayerInputSub : MonoBehaviour {
 	void Update()
     {
 		if (DISABLE_INPUT) return;
+
+
+		//always usable hotkeys
+
+		if (Input.GetButtonDown("Toggle Flashlight"))
+		{
+			player.ToggleFlashlight();
+		}
+		if (Input.GetButtonDown("Toggle Freelook"))
+		{
+			FreeLookToggleInput();
+		}
+
         if (playerMovement.currentMovement == MovementState.NotMoving && !player.interactSub.WaitingInteractToFinish && !player.Shooting)
         {
             HotkeyInput();
@@ -116,14 +129,6 @@ public class PlayerInputSub : MonoBehaviour {
 			InteractInput(false);
 		}
 
-		if (Input.GetButtonDown("Toggle Flashlight"))
-		{
-			player.ToggleFlashlight();
-		}
-		if (Input.GetButtonDown("Toggle Freelook"))
-		{
-			FreeLookToggleInput();
-		}
 		if (Input.GetButtonDown("Toggle Inventory"))
 		{
 			player.HUD.ToggleInventory();

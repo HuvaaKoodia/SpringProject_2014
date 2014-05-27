@@ -104,7 +104,8 @@ public class PlayerMain : EntityMain
 		GameCamera.GetComponent<MouseLook>().SetOriginalRot(GameCamera.transform.localRotation);
 		
 		HUD.Init(this,GC);
-		
+		HUD.UpdateHudPanels();
+
 		TargetingCamera.aspect = 16.0f / 9.0f;
 	}
 	

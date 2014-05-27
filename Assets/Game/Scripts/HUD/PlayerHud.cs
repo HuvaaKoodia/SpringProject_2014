@@ -21,23 +21,29 @@ public class PlayerHud : MonoBehaviour {
 	public GameObject disperseHeatButton;
     public GameObject noTargetsForWeapon;
 	public MechStatisticsMain MechStats;
-
 	public UIPanel targetMarkPanel;
-
 	public ComputerSystems.TimanttiPeli TP;
 
 	public bool UpdateComputerSystems=true;
-
 	public List<GameObject> ApBlips;
-
 	public List<PlayerBloodArrowSub> bloodArrows;
-
 	public Animation buttonAnimation;
+
+	public GameObject HullCriticalWarningPanel;
 
 	void Awake()
 	{
 		buttonAnimation.Play("Take 001");
 		StartCoroutine(stopButtonAnim());
+	}
+	
+	void CheckHullOverheat(){
+		if (player.ObjData.UpperTorso.IsConditionCritical){
+			HullCriticalWarningPanel.SetActive(true);
+		}
+		else{
+			HullCriticalWarningPanel.SetActive(false);
+		}
 	}
 
 	// Use this for initialization
@@ -289,6 +295,7 @@ public class PlayerHud : MonoBehaviour {
 	{
 		gunInfoDisplay.UpdateAllDisplays();
 		MechStats.UpdateStats();
+		CheckHullOverheat();
 	}
 
     public void ShowNoTargetsForWeapon(bool show)

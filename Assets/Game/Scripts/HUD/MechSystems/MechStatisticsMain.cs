@@ -17,6 +17,8 @@ public class MechStatisticsMain : MonoBehaviour {
 	public UISprite HeatMeter;
 	public GameObject DataPanel,OverheatSprite;
 
+	public System.Action OnTorsoCritical;
+
 	// Use this for initialization
 	void Start (){
 		lowerTorso.ChangePartColor(FullHealthColor);
@@ -66,11 +68,11 @@ public class MechStatisticsMain : MonoBehaviour {
         {
             part.ChangePartColor(BrokenColor);
         }
-		else if (hp <= MechaPartObjData.MaxHP*XmlDatabase.MechaPartConditionBadThreshold)
+		else if (data.IsConditionCritical)
         {
             part.ChangePartColor(CriticalColor);
         }
-		else if (hp <= MechaPartObjData.MaxHP*XmlDatabase.MechaPartConditionFairThreshold)
+		else if (data.IsConditionFair)
         {
             part.ChangePartColor(DamagedColor);
         }
