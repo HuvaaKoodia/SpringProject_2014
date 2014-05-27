@@ -6,12 +6,14 @@ public class MusicSys : MonoBehaviour {
 	int game_track_index=0;
 	public AudioClip menu_track;
 	public AudioClip[] game_tracks;
-	public AudioSource source;
+	public AudioSource musicSource;
+	public AudioSource elevatorSource;
 	
 	public float music_volume=0.5f;
 	
 	void Start(){
-		source.loop = true;
+		musicSource.loop = true;
+		elevatorSource.loop = false;
 	}
 	
 	public void StartMenuTrack(){
@@ -29,13 +31,18 @@ public class MusicSys : MonoBehaviour {
 	}
 	
 	void startClip(AudioClip clip){
-		source.clip=clip;
+		musicSource.clip=clip;
 		VolumeInc();
-		source.Play();
+		musicSource.Play();
+	}
+
+	public void StartElevatorSound()
+	{
+		elevatorSource.Play();
 	}
 	
 	public void VolumeInc(){
-		source.volume=0f;
+		musicSource.volume=0f;
 		StartCoroutine(volumeChange(0.1f,1f,music_volume));
 	}
 	public void VolumeDec(){
@@ -48,12 +55,12 @@ public class MusicSys : MonoBehaviour {
 		bool on =true;
 		while (on){
 			yield return new WaitForSeconds(seconds);
-			source.volume+=music_volume*amount;
-			on=source.volume<target;
+			musicSource.volume+=music_volume*amount;
+			on=musicSource.volume<target;
 			if (amount<0){
-				on=source.volume>target;
+				on=musicSource.volume>target;
 				if (!on)
-					source.Stop();
+					musicSource.Stop();
 			}
 		}
 	}
