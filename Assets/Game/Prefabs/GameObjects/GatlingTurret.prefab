@@ -182,6 +182,7 @@ GameObject:
   - 114: {fileID: 11400006}
   - 82: {fileID: 8200000}
   - 114: {fileID: 11400016}
+  - 114: {fileID: 11400020}
   m_Layer: 0
   m_Name: GatlingTurret
   m_TagString: Untagged
@@ -1211,14 +1212,13 @@ GameObject:
   - 4: {fileID: 400136}
   - 82: {fileID: 8200002}
   - 114: {fileID: 11400018}
-  - 114: {fileID: 11400020}
   m_Layer: 0
   m_Name: DeathSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &400000
 Transform:
   m_ObjectHideFlags: 1
@@ -3882,10 +3882,10 @@ AudioSource:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100136}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_audioClip: {fileID: 8300000, guid: 72a2e02f9141074448e4f3926f82a4ca, type: 3}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -4142,7 +4142,7 @@ MonoBehaviour:
   horizontalTurnSpeed: 120
   verticalTurnSpeed: 120
   ShootSoundFX: {fileID: 8300000, guid: a2bc9c0c76fc753438977e07f969cbf3, type: 3}
-  OpenSoundFX: {fileID: 8300000, guid: f174f7814b1768c48a4df08fc9a0fc3f, type: 3}
+  OpenSoundFX: {fileID: 8300000, guid: 4f3193db1ccb7ec49889aa6c1b17c35c, type: 3}
   CloseSoundFX: {fileID: 0}
   VerticalRotationSoundFX: {fileID: 8300000, guid: 5c356ec72271e79478ad3ba057e4d509,
     type: 3}
@@ -4296,7 +4296,7 @@ MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100136}
+  m_GameObject: {fileID: 100020}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 839b2b97b722bae4db444428a7c85116, type: 3}

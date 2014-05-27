@@ -46,8 +46,7 @@ public class GatlingEnemySub : EnemyMain {
 
 	void PlayDeathSound()
 	{
-		DeathSoundObj.audio.Play();
-		DeathSoundObj.GetComponent<SND_AutoDestroy>().enabled = true;
+		DeathSoundObj.SetActive(true);
 	}
 
 	public override void CullShow()
