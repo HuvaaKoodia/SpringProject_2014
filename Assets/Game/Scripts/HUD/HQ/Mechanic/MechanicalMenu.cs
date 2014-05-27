@@ -21,9 +21,11 @@ public class MechanicalMenu : MonoBehaviour {
 		}
 
         UT.SetPlayer(player,player.Equipment.UpperTorso.ObjData,allow_buying);
-        //if (LT!=null)
-            //LT.SetPlayer(player,player.Equipment.LowerTorso,allow_buying);
-        //UpdateStats();
+        
+		foreach (var panel in RepairPanels){
+			panel.OnRepair+=UpdateStats;
+		}
+		UT.OnRepair+=UpdateStats;
     }
 
     void UpdateStats(){

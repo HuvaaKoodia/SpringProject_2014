@@ -9,6 +9,8 @@ public class MechaPartRepairPanel : MonoBehaviour {
     public UIButton Button;
 	private bool ButtonActive;
 
+	public System.Action OnRepair;
+
     public string _Name;
     public float cost_multi=2f;
     public bool AllowBuying=true;
@@ -72,6 +74,7 @@ public class MechaPartRepairPanel : MonoBehaviour {
             Player.Money-=cost;
             Part.ResetHP();
             UpdateStats();
+			if (OnRepair!=null)OnRepair();
         }
     }
 }
