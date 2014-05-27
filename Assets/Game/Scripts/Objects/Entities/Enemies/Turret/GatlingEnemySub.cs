@@ -10,6 +10,8 @@ public class GatlingEnemySub : EnemyMain {
 		
 	public List<BoxCollider> HitboxesHidden;
 	public List<BoxCollider> HitboxesVisible;
+
+	public GameObject DeathSoundObj;
 	
 	// Use this for initialization
 	void Start () {
@@ -34,11 +36,18 @@ public class GatlingEnemySub : EnemyMain {
 	{
 		if (Dead)
 		{
+			PlayDeathSound();
 			Remove();
 		}
 		else
 		{	
 		}
+	}
+
+	void PlayDeathSound()
+	{
+		DeathSoundObj.audio.Play();
+		DeathSoundObj.GetComponent<SND_AutoDestroy>().enabled = true;
 	}
 
 	public override void CullShow()
