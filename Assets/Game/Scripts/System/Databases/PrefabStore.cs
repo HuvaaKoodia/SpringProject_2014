@@ -91,9 +91,12 @@ public class PrefabStore : MonoBehaviour {
 		LoadFlash("Cannon");
 
 		weaponSoundFX = new Dictionary<string, AudioClip>();
-		weaponSoundFX.Add("Gatling", Resources.Load("Weapons/Gatling_gun_v3") as AudioClip);
-		weaponSoundFX.Add("Cannon", Resources.Load("Weapons/Cannon_v3") as AudioClip);
-		weaponSoundFX.Add("Shotgun", Resources.Load("Weapons/Shotgun_v2") as AudioClip);
+		weaponSoundFX.Add("Gatling", Resources.Load("Weapons/GatlingSFX") as AudioClip);
+		weaponSoundFX.Add("Cannon", Resources.Load("Weapons/CannonSFX") as AudioClip);
+		weaponSoundFX.Add("Shotgun", Resources.Load("Weapons/ShotgunSFX") as AudioClip);
+		weaponSoundFX.Add("Melee", Resources.Load("Weapons/MeleeSFX") as AudioClip);
+		weaponSoundFX.Add("Gauss", Resources.Load("Weapons/GaussSFX") as AudioClip);
+		weaponSoundFX.Add("Missile", Resources.Load("Weapons/MissileSFX") as AudioClip);
 
 		targetHighlights = new List<GameObject>();
 		targetHighlights.Add(Resources.Load("TargetingSprites/LeftDown") as GameObject);

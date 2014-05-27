@@ -47,6 +47,7 @@ public class PlayerMain : EntityMain
 	public List<ParticleSystem> DisperseHeatParkikkels;
 
 	public AudioClip TakeDamageFX;
+	public AudioClip DisperseHeatSFX;
 
 	public Animation buttonAnimation;
 
@@ -331,6 +332,8 @@ public class PlayerMain : EntityMain
 		{
 			DisperseHeatParkikkels[i].Play();
 		}
+
+		audio.PlayOneShot(DisperseHeatSFX);
 
 		for (int i = 0; i < weaponList.Count; i++)
 		{
