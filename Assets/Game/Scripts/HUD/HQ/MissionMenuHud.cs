@@ -100,7 +100,26 @@ public class MissionMenuHud : MonoBehaviour {
 	
 	void Update (){
 		MoneyLabel.text="Money: "+_player.Money+" "+XmlDatabase.MoneyUnit;
+
+		if (Input.GetButtonDown("Toggle Inventory"))
+		{
+			OpenVendor();
+		}
+		if (Input.GetButtonDown("Toggle Logs"))
+		{
+			OpenMissionSelect();
+		}
+		if (Input.GetButtonDown("Toggle Status"))
+		{
+			OpenMechanic();
+		}
+		
+		if (Input.GetButtonDown("Toggle Finances"))
+		{
+			OpenFinance();
+		}
 	}
+
 
     public void SelectMission(MissionObjData mission)
     {
@@ -119,6 +138,7 @@ public class MissionMenuHud : MonoBehaviour {
     }
 
     public void OpenMissionSelect(){
+		if (lock_input) return;
 		if (GotoMoneyWarningMenu){
 			Tabs.ActivateMenu(outofmoney.gameObject);
 			outofmoney.OpenMenu(this);
@@ -129,16 +149,19 @@ public class MissionMenuHud : MonoBehaviour {
 	}
 
     public void OpenVendor(){
+		if (lock_input) return;
         Tabs.ActivateMenu(_VendorMenu.gameObject);
     }
 
     public void OpenMechanic(){
+		if (lock_input) return;
 		Tabs.ActivateMenu(mm_init.gameObject);
 		_MechanicMenu.OpenPanel();
     }
 
 	public void OpenFinance()
 	{
+		if (lock_input) return;
 		Tabs.ActivateMenu(_FinanceMenu.gameObject);
 	}
 
@@ -163,7 +186,7 @@ public class MissionMenuHud : MonoBehaviour {
 	void OnFinancePayment(){
 		if (!_FinanceMenu._FinanceManager.HasActiveDebts()){
 			//victory
-
+			lock_input=true;
 			//play sound
 			RandomSoundPlayer.Play();
 			//wait for a bit
@@ -171,8 +194,10 @@ public class MissionMenuHud : MonoBehaviour {
 		}
 	}
 
+	public bool lock_input=false;
+
 	void OpenVictoryMenu(){
-		Tabs.ActivateMenu(null);
+		Tabs.ActivateMenu(victoryMenu.gameObject);
 		victoryMenu.OpenMenu(this);
 	}
 }

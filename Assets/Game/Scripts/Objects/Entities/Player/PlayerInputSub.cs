@@ -330,6 +330,11 @@ public class PlayerInputSub : MonoBehaviour {
 			|| player.GC.HUD.currentMenuState == MenuState.InventoryHUD || player.playerAnimation.isPlaying || player.Shooting;
     }
 
+	public bool NotUsableInGameInfoPanel(){
+		return this.enabled == false || playerMovement.currentMovement != MovementState.NotMoving  || player.interactSub.WaitingInteractToFinish
+			|| player.playerAnimation.isPlaying || player.Shooting;
+	}
+
 	bool NotUsableWorldInteractions(){
 		return NotUsable()|| player.targetingMode||player.SystemOverheat;
 	}

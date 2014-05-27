@@ -117,7 +117,7 @@ public class PrefabStore : MonoBehaviour {
 		return Resources.Load(MapSpritePrefabFolderName+graphicsName) as GameObject;
 	}
 
-	public string[] clutter_names={"AmmoboxesPrefab","BarrelsPrefab","PlasticBarrelsPrefab","RandomBoxesPrefab","ServerThigiesPrefab"};//,"Turret_Parts"
+	string[] clutter_names={"AmmoboxesPrefab","BarrelsPrefab","PlasticBarrelsPrefab","RandomBoxesPrefab","ServerThigiesPrefab"};
 
 	public Object GetRandomClutter ()
 	{

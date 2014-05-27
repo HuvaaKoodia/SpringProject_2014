@@ -22,6 +22,7 @@ public class VictoryMenu : MonoBehaviour {
 	}
 
 	public void ContinueGamePressed(){
+		_menu.lock_input=false;
 		_menu.OpenFinance();
 		CloseMenu();
 	}
