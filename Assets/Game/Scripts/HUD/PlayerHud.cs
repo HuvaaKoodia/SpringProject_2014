@@ -103,7 +103,7 @@ public class PlayerHud : MonoBehaviour {
 
 	public void ToggleInventory()
 	{
-		if (player.inputSub.NotUsable()) return;
+		if (player.inputSub.NotUsableInGameInfoPanel()) return;
 
 		PlayButton2Anim();
 		MasterHud.ToggleInventory();
