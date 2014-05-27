@@ -363,6 +363,8 @@ public class GameController : MonoBehaviour {
 			GotoFloor(CurrentFloorIndex+1);
 		else
 			GotoFloor(CurrentFloorIndex-1);
+
+		SS.MusicSystem.StartElevatorSound();
 	}
 
 	//FUNCTIONS TO SET STATE OF THE WHITE LIGHTS
