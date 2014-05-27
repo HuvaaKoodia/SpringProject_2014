@@ -31,6 +31,8 @@ public class MissionMenuHud : MonoBehaviour {
 	void Start () {
         SS=SharedSystemsMain.I;
 
+		SS.MusicSystem.StopCurrent();
+
         //Dev.debug
         if (!SS.GDB.GameStarted)
             SS.GDB.CreateNewGame();

@@ -9,7 +9,6 @@ public class MainMenuHud : MonoBehaviour {
 	public UIButton ContinueButton;
 
     void Start(){
-
 		GDB=SharedSystemsMain.I.GDB;
 		GDB.CheckForSaves();
 
@@ -26,6 +25,8 @@ public class MainMenuHud : MonoBehaviour {
 		}
 
 		GDB.AllowEscHud=false;
+
+		SharedSystemsMain.I.MusicSystem.StopCurrent();
     }
 
 	void Update(){

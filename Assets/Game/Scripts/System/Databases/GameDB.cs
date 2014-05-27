@@ -121,7 +121,7 @@ public class GameDB : MonoBehaviour {
 			if (e.Item!=null) e.Item.InitBaseItem();
 		}
 
-		Application.LoadLevel(HQScene);
+		LoadLevel(HQScene);
 	}
 
     public void SetCurrentMission(MissionObjData mission)
@@ -155,8 +155,8 @@ public class GameDB : MonoBehaviour {
 		LoadMainMenu();
 	}
 
-	void LoadLevel(string level){
-		
+	void LoadLevel(string level)
+	{
 		Application.LoadLevel(level);
 	}
 
