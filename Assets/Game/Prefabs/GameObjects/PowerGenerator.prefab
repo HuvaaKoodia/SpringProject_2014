@@ -26,6 +26,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400002}
+  - 82: {fileID: 8200000}
   m_Layer: 0
   m_Name: PowerGenerator
   m_TagString: Untagged
@@ -84,6 +85,79 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_Mesh: {fileID: 4300000, guid: 635c795d6ca0cdc4faa9ce41cf225a96, type: 3}
+--- !u!82 &8200000
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 8300000, guid: a55554fb27bd78d47b0af509b06cbe03, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: .300000012
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: .5
+  MaxDistance: 5.86999989
+  Pan2D: 0
+  rolloffMode: 2
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: .0908317715
+      value: 1
+      inSlope: -.0857583731
+      outSlope: -.0857583731
+      tangentMode: 0
+    - time: .403183877
+      value: 1
+      inSlope: 1.87727153e-06
+      outSlope: 1.87727153e-06
+      tangentMode: 0
+    - time: .612735748
+      value: 1
+      inSlope: -.0252026822
+      outSlope: -.0252026822
+      tangentMode: 0
+    - time: .991335809
+      value: .215643317
+      inSlope: -.154436886
+      outSlope: -.154436886
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: -.101254977
+      outSlope: -.101254977
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!95 &9500000
 Animator:
   serializedVersion: 2
