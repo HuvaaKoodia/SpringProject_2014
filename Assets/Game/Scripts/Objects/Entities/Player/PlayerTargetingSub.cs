@@ -224,6 +224,11 @@ public class PlayerTargetingSub : MonoBehaviour {
 	{
 		foreach (var enemyPair in shootingOrders)
 		{
+			if (!shootingOrders.ContainsKey(enemyPair.Key))
+			{
+				continue;
+			}
+
             for (int i = shootingOrders[enemyPair.Key].Count; i >= 0; i--)
             {
                 while (shootingOrders[enemyPair.Key].Contains(weapon))
@@ -238,6 +243,8 @@ public class PlayerTargetingSub : MonoBehaviour {
 
 	public void RemoveWeaponFromEnemysOrder(WeaponMain weapon, EnemyMain enemy)
 	{
+		if (!shootingOrders.ContainsKey(enemy)) return;
+
         while (shootingOrders[enemy].Contains(weapon))
         {
             shootingOrders[enemy].Remove(weapon);
@@ -246,8 +253,15 @@ public class PlayerTargetingSub : MonoBehaviour {
 		player.HUD.gunInfoDisplay.UpdateAllDisplays();
 	}
 
+	public void RemoveEnemyFromEnemyOrders(EnemyMain enemy)
+	{
+		shootingOrders.Remove(enemy);
+	}
+
 	public void WeaponShotEnemy(WeaponMain weapon, EnemyMain enemy)
 	{
+		if (!shootingOrders.ContainsKey(enemy)) return;
+
 		if (shootingOrders[enemy][0] != weapon)
 		{
 			Debug.Log("WRONG SHOOTING ORDER");

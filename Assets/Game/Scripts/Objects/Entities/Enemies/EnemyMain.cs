@@ -189,6 +189,7 @@ public class EnemyMain : EntityMain {
 
 	protected void Remove()
 	{
+		GC.Player.targetingSub.RemoveEnemyFromEnemyOrders(this);
 		movement.GetCurrenTile().LeaveTile();
 		CurrentFloor.Enemies.Remove(this);
 		OnDeath();

@@ -363,7 +363,9 @@ public class WeaponMain : MonoBehaviour {
 			}
 		}
 
-		player.targetingSub.shootingOrders[enemy].RemoveAt(0);
+		if (!IsEnemyDead(enemy))
+			player.targetingSub.WeaponShotEnemy(this, enemy);
+
 		waitingForShot = false;
 	}
 
