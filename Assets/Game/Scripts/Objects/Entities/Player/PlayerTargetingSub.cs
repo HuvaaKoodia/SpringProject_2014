@@ -155,7 +155,7 @@ public class PlayerTargetingSub : MonoBehaviour {
 						}
 						else
 						{
-							targetPosition = enemyPair.Key.hitboxes[i].bounds.center + enemyPair.Key.transform.forward;
+							targetPosition = enemyPair.Key.hitboxes[i].bounds.center + Vector3.down*0.2f;
 						}
 
 						if (targetPositions.ContainsKey(player.GetCurrentWeapon()))
