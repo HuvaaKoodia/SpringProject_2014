@@ -22,7 +22,7 @@ public class GameOptionsMenu : MonoBehaviour
 	public UISlider MasterVolume, Brightness;
 	public UIToggle MovementAnimationsToggle,CombatAnimationsToggle,MouseLookToggle,GuiTips,FPS;
 
-	// Use this for initialization
+	//Use this for initialization
 	void Awake ()
 	{
 		//set automatic texts

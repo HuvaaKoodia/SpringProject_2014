@@ -168,6 +168,7 @@ public class MissionMenuHud : MonoBehaviour {
     public void PlayMission(){
         SS.GDB.SetCurrentMission(Mission);
         SS.GDB.PlayMission();
+		MissionBrief.ShowLoadingLabel();
     }
 
 	
