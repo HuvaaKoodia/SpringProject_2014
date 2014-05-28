@@ -3,6 +3,7 @@ using System.Collections;
 
 using System.Collections.Generic;
 
+
 public class PlayerMain : EntityMain
 {
     public PlayerObjData ObjData{get;private set;}

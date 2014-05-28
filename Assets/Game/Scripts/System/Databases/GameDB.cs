@@ -60,6 +60,8 @@ public class GameDB : MonoBehaviour {
 	
     public void CreateNewGame(){
         GameStarted=true;
+		GameLoaded=false;
+
 		GameData=new GameObjData();
 		GameData.NewGame();
 

@@ -9,7 +9,7 @@ public class GameOptionsMenu : MonoBehaviour
 	
 	public string[] quality_settings;
 
-	GameOptionsMain GOpsMain;
+	GameOptionsMain Main;
 
 	public UILabel QualityLabel,GlowAndBloom;
 	public UILabel LightLabel;
@@ -20,15 +20,15 @@ public class GameOptionsMenu : MonoBehaviour
 	public UILabel VSyncLabel;
 
 	public UISlider MasterVolume, Brightness;
-	public UIToggle MovementAnimationsToggle,CombatAnimationsToggle,MouseLookToggle,GuiTips;
-	
+	public UIToggle MovementAnimationsToggle,CombatAnimationsToggle,MouseLookToggle,GuiTips,FPS;
+
 	// Use this for initialization
 	void Awake ()
 	{
 		//set automatic texts
 		quality_settings=QualitySettings.names;
 
-		GOpsMain = SharedSystemsMain.I.GOps;
+		Main = SharedSystemsMain.I.GOps;
 	}
 
 	public void OpenMenu(){
@@ -39,42 +39,47 @@ public class GameOptionsMenu : MonoBehaviour
 	//audio
 
 	public void UpdateMasterVolume(){
-		GOpsMain.Data.MasterVolume=MasterVolume.value;
-		GOpsMain.UpdateMasterVolume();
+		Main.Data.MasterVolume=MasterVolume.value;
+		Main.UpdateMasterVolume();
 	}
 
 	public void UpdateBrightness(){
-		GOpsMain.Data.Brightness=Brightness.value;
-		GOpsMain.UpdateGameBrightness();
+		Main.Data.Brightness=Brightness.value;
+		Main.UpdateGameBrightness();
 	}
 
 	//gameoptions
 
 	public void ToggleMovementAnimations(){
-		GOpsMain.ToggleMovementAnimations();
+		Main.ToggleMovementAnimations();
 	}
 
 	public void ToggleCombatAnimations(){
-		GOpsMain.ToggleCombatAnimations();
+		Main.ToggleCombatAnimations();
 	}
 
 	public void ToggleMouseLook(){
-		GOpsMain.ToggleMouseLook();
+		Main.ToggleMouseLook();
 	}
 
 	public void ToggleGuiTips(){
-		GOpsMain.ToggleGuiTips();
+		Main.ToggleGuiTips();
+	}
+	
+	public void ToggleFPS(){
+		Main.Data.ShowFPS=!Main.Data.ShowFPS;
 	}
 
 	void UpdateAllWidgetsToGameOptions ()
 	{
-		MovementAnimationsToggle.SetValueInstant(GOpsMain.Data.MovementAnimations);
-		CombatAnimationsToggle.SetValueInstant(GOpsMain.Data.CombatAnimations);
-		MouseLookToggle.SetValueInstant(GOpsMain.Data.MouseLook);
-		GuiTips.SetValueInstant(GOpsMain.Data.GuiTips);
+		MovementAnimationsToggle.SetValueInstant(Main.Data.MovementAnimations);
+		CombatAnimationsToggle.SetValueInstant(Main.Data.CombatAnimations);
+		MouseLookToggle.SetValueInstant(Main.Data.MouseLook);
+		GuiTips.SetValueInstant(Main.Data.GuiTips);
+		FPS.SetValueInstant(Main.Data.ShowFPS);
 
-		Brightness.value=GOpsMain.Data.Brightness;
-		MasterVolume.value=GOpsMain.Data.MasterVolume;
+		Brightness.value=Main.Data.Brightness;
+		MasterVolume.value=Main.Data.MasterVolume;
 	}
 
 	//graphics
@@ -139,7 +144,7 @@ public class GameOptionsMenu : MonoBehaviour
 
 	void GetAntiAliasingProperty()
 	{
-		if(GOpsMain.Data.anti_Aliasing_On)
+		if(Main.Data.anti_Aliasing_On)
 		{
 			AntiAliasingLabel.text = "On";
 		}
@@ -151,7 +156,7 @@ public class GameOptionsMenu : MonoBehaviour
 
 	void GetGlowAndBloomProperty()
 	{
-		if(GOpsMain.Data.GlowAndBloom_On)
+		if(Main.Data.GlowAndBloom_On)
 		{
 			GlowAndBloom.text = "On";
 		}
@@ -200,23 +205,23 @@ public class GameOptionsMenu : MonoBehaviour
 	{
 		if(LightLabel.text == "Very Low")
 		{
-			GOpsMain.SetPixelLightCount(LightQuality.VERYLOW);
+			Main.SetPixelLightCount(LightQuality.VERYLOW);
 		}
 		if(LightLabel.text == "Low")
 		{
-			GOpsMain.SetPixelLightCount(LightQuality.LOW);
+			Main.SetPixelLightCount(LightQuality.LOW);
 		}
 		else if(LightLabel.text == "Medium")
 		{
-			GOpsMain.SetPixelLightCount(LightQuality.MEDIUM);
+			Main.SetPixelLightCount(LightQuality.MEDIUM);
 		}
 		else if(LightLabel.text == "High")
 		{
-			GOpsMain.SetPixelLightCount(LightQuality.HIGH);
+			Main.SetPixelLightCount(LightQuality.HIGH);
 		}
 		else if(LightLabel.text == "Extra")
 		{
-			GOpsMain.SetPixelLightCount(LightQuality.EXTRA);
+			Main.SetPixelLightCount(LightQuality.EXTRA);
 		}
 	}
 
@@ -224,19 +229,19 @@ public class GameOptionsMenu : MonoBehaviour
 	{
 		if(TextureLabel.text == "Full Res")
 		{
-			GOpsMain.SetTextureQuality(TextureQuality.FULL_RES);
+			Main.SetTextureQuality(TextureQuality.FULL_RES);
 		}
 		else if(TextureLabel.text == "Half Res")
 		{
-			GOpsMain.SetTextureQuality(TextureQuality.HALF_RES);
+			Main.SetTextureQuality(TextureQuality.HALF_RES);
 		}
 		else if(TextureLabel.text == "Quarter Res")
 		{
-			GOpsMain.SetTextureQuality(TextureQuality.QUARTER_RES);
+			Main.SetTextureQuality(TextureQuality.QUARTER_RES);
 		}
 		else if(TextureLabel.text == "Eighth Res")
 		{
-			GOpsMain.SetTextureQuality(TextureQuality.EIGHTH_RES);
+			Main.SetTextureQuality(TextureQuality.EIGHTH_RES);
 		}
 	}
 
@@ -244,11 +249,11 @@ public class GameOptionsMenu : MonoBehaviour
 	{
 		if(AnisotropicLabel.text == "Off")
 		{
-			GOpsMain.SetAnisotropicQuality(AnisotropicQuality.DISABLE);
+			Main.SetAnisotropicQuality(AnisotropicQuality.DISABLE);
 		}
 		else if(AnisotropicLabel.text == "On")
 		{
-			GOpsMain.SetAnisotropicQuality(AnisotropicQuality.ENABLE);
+			Main.SetAnisotropicQuality(AnisotropicQuality.ENABLE);
 		}
 	}
 
@@ -256,11 +261,11 @@ public class GameOptionsMenu : MonoBehaviour
 	{
 		if(GlowAndBloom.text == "On")
 		{
-			GOpsMain.Data.GlowAndBloom_On=true;
+			Main.Data.GlowAndBloom_On=true;
 		}
 		else if(GlowAndBloom.text == "Off")
 		{
-			GOpsMain.Data.GlowAndBloom_On=false;
+			Main.Data.GlowAndBloom_On=false;
 		}
 	}
 
@@ -268,11 +273,11 @@ public class GameOptionsMenu : MonoBehaviour
 	{
 		if(AntiAliasingLabel.text == "Off")
 		{
-			GOpsMain.SetAntiAliasing(AntiAliasing.Off);
+			Main.SetAntiAliasing(AntiAliasing.Off);
 		}
 		else if(AntiAliasingLabel.text == "On")
 		{
-			GOpsMain.SetAntiAliasing(AntiAliasing.On);
+			Main.SetAntiAliasing(AntiAliasing.On);
 		}
 	}
 
@@ -280,19 +285,19 @@ public class GameOptionsMenu : MonoBehaviour
 	{
 		if(ShadowLabel.text == "Off")
 		{
-			GOpsMain.SetShadowQuality(ShadowQuality.OFF);
+			Main.SetShadowQuality(ShadowQuality.OFF);
 		}
 		else if(ShadowLabel.text == "Low")
 		{
-			GOpsMain.SetShadowQuality(ShadowQuality.LOW);
+			Main.SetShadowQuality(ShadowQuality.LOW);
 		}
 		else if(ShadowLabel.text == "Medium")
 		{
-			GOpsMain.SetShadowQuality(ShadowQuality.MEDIUM);
+			Main.SetShadowQuality(ShadowQuality.MEDIUM);
 		}
 		else if(ShadowLabel.text == "High")
 		{
-			GOpsMain.SetShadowQuality(ShadowQuality.HIGH);
+			Main.SetShadowQuality(ShadowQuality.HIGH);
 		}
 	}
 
@@ -300,16 +305,16 @@ public class GameOptionsMenu : MonoBehaviour
 	{
 		if(VSyncLabel.text == "Off")
 		{
-			GOpsMain.SetVSync(VSync.OFF);
+			Main.SetVSync(VSync.OFF);
 		}
 		else if(VSyncLabel.text == "On")
 		{
-			GOpsMain.SetVSync(VSync.ON);
+			Main.SetVSync(VSync.ON);
 		}
 	}
 
 	void UpdateLabel_preset(){
-		QualityLabel.text=quality_settings[GOpsMain.Data.quality_level];
+		QualityLabel.text=quality_settings[Main.Data.quality_level];
 	}
 
 	//update functions
@@ -318,27 +323,27 @@ public class GameOptionsMenu : MonoBehaviour
 	{
 		if(QualityLabel.text == "Fastest")
 		{
-			GOpsMain.SetQuality(Quality.FASTEST);
+			Main.SetQuality(Quality.FASTEST);
 		}
 		else if(QualityLabel.text == "Fast")
 		{
-			GOpsMain.SetQuality(Quality.FAST);
+			Main.SetQuality(Quality.FAST);
 		}
 		else if(QualityLabel.text == "Simple")
 		{
-			GOpsMain.SetQuality(Quality.SIMPLE);
+			Main.SetQuality(Quality.SIMPLE);
 		}
 		else if(QualityLabel.text == "Good")
 		{
-			GOpsMain.SetQuality(Quality.GOOD);
+			Main.SetQuality(Quality.GOOD);
 		}
 		else if(QualityLabel.text == "Beautiful")
 		{
-			GOpsMain.SetQuality(Quality.BEAUTIFUL);
+			Main.SetQuality(Quality.BEAUTIFUL);
 		}
 		else if(QualityLabel.text == "Fantastic")
 		{
-			GOpsMain.SetQuality(Quality.FANTASTIC);
+			Main.SetQuality(Quality.FANTASTIC);
 		}
 
 		UpdateAllLabelsToCurrentQualitySettings();
@@ -359,7 +364,7 @@ public class GameOptionsMenu : MonoBehaviour
 	public void UpdateQualitySettingsToLabels()
 	{
 		QualityLabel.text = "Custom";
-		GOpsMain.Data.quality_level=6;
+		Main.Data.quality_level=6;
 
 		ChangeGlowAndBloom();
 		ChangeLight();

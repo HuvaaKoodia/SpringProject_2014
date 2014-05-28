@@ -105,6 +105,8 @@ public class GameController : MonoBehaviour {
 
 		Floors=new List<FloorObjData>();
 		FloorContainers=new List<GameObject>();
+
+
 	}
 
 	ShipObjData current_ship_data;

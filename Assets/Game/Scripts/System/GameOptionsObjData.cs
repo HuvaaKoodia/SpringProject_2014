@@ -63,6 +63,7 @@ public class GameOptionsObjData
 	public bool MouseLook {get;set;}
 	public bool CombatAnimations {get;set;}
 	public bool GuiTips{get;set;}
+	public bool ShowFPS{get;set;}
 
 	public float Brightness {get;set;}
 	public float MasterVolume {get;set;}
@@ -85,6 +86,7 @@ public class GameOptionsObjData
 		CombatAnimations=true;
 		MouseLook=true;
 		GuiTips=true;
+		ShowFPS=false;
 
 		anti_Aliasing_On=true;
 		GlowAndBloom_On=true;
@@ -101,8 +103,6 @@ public class GameOptionsObjData
 		shadow_cascades = 0;
 		shadow_distance = 0.0f;
 		vsync_count = 0;
-
-
 	}
 }
 

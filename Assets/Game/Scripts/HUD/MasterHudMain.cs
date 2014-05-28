@@ -31,6 +31,8 @@ public class MasterHudMain : MonoBehaviour {
 	{
 		currentMenuState = MenuState.NothingSelected;
 
+		ShowFPS=SharedSystemsMain.I.GOps.Data.ShowFPS;
+
 		if (!ShowFPS){
 			FPS.gameObject.SetActive(false);
 		}
@@ -249,7 +251,7 @@ public class MasterHudMain : MonoBehaviour {
 		{
 			// display two fractional digits (f2 format)
 			float fps = accum/frames;
-			string format = System.String.Format("{0:F2} FPS",fps);
+			string format = System.String.Format("{0:F2}",fps);
 			
 			var color="[008009]";//green
 			if(fps < 30)

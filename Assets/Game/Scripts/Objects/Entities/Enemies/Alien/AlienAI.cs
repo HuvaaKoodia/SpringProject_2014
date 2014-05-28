@@ -591,8 +591,6 @@ public class AlienAI : AIBase {
 
 	IEnumerator AttackMelee(float inflictDelay)
 	{
-
-
 		if (SharedSystemsMain.I.GOps.Data.CombatAnimations){
 			PlayAnimation(MeleeAttackAnimation, 1,false);
 
@@ -761,7 +759,7 @@ public class AlienAI : AIBase {
 
 	void BlendAnimation(string animation, float speed)
 	{
-		if (parent.graphics.activeSelf == false||!SharedSystemsMain.I.GOps.Data.MovementAnimations)
+		if (parent.graphics.activeSelf == false)
 			return;
 		
 		spiderAnimation[animation].normalizedTime = 0;

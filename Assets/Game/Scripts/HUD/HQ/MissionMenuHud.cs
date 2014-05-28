@@ -80,7 +80,7 @@ public class MissionMenuHud : MonoBehaviour {
 
 		if (SS.GDB.GameLoaded){
 			ShowSaveGameLabel("GAME LOADED - "+savetype);
-			SS.GDB.GameLoaded=true;
+			SS.GDB.GameLoaded=false;
 		}
 		else{
 			SS.GDB.SaveGame();
