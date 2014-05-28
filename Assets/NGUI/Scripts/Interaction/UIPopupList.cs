@@ -639,6 +639,7 @@ public class UIPopupList : UIWidgetContainer
 			mBackground = NGUITools.AddSprite(mChild, atlas, backgroundSprite);
 			mBackground.pivot = UIWidget.Pivot.TopLeft;
 			mBackground.depth = NGUITools.CalculateNextDepth(mPanel.gameObject);
+			//mBackground.depth = GetComponent<UISprite>().depth+5;
 			mBackground.color = backgroundColor;
 
 			// We need to know the size of the background sprite for padding purposes
