@@ -260,19 +260,25 @@ public class WeaponMain : MonoBehaviour {
 
 		for (int i = 0; i < enemyOrder.Count; i++)
 		{
+			if (IsEnemyDead(enemyOrder[i])) continue;
+
 			for (int x = 0; x < targets[enemyOrder[i]].numShots; x++)
 			{
 				if (Overheat || CurrentAmmo == 0) break;
-				if (targets[enemyOrder[i]].numShots == 0 || IsEnemyDead(enemyOrder[i]))
+				if (IsEnemyDead(enemyOrder[i]) || targets[enemyOrder[i]].numShots == 0)
 				{
 					continue;
 				}
 				
 				while (waitingForShot || enemyOrder[i].GetWaitingForDamageReaction((int)weaponID))
 				{
+					if (IsEnemyDead(enemyOrder[i])) break;
+
 					yield return null;
 				}
-				
+
+				if (IsEnemyDead(enemyOrder[i])) continue;
+
 				StartCoroutine(ShootEnemy(enemyOrder[i]));
 				
 				yield return null;
