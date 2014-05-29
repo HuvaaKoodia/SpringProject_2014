@@ -65,7 +65,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &100008
 GameObject:
   m_ObjectHideFlags: 1
@@ -956,7 +956,7 @@ GameObject:
   - 4: {fileID: 400114}
   - 114: {fileID: 11400134}
   m_Layer: 12
-  m_Name: Shortcut names
+  m_Name: Shortcut names 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1904,7 +1904,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &100230
 GameObject:
   m_ObjectHideFlags: 1
@@ -2467,7 +2467,7 @@ GameObject:
   - 4: {fileID: 400296}
   - 114: {fileID: 11400410}
   m_Layer: 12
-  m_Name: Shortcut names
+  m_Name: Shortcut Keys 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2652,6 +2652,38 @@ GameObject:
   - 114: {fileID: 11400444}
   m_Layer: 12
   m_Name: Label
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &100320
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400320}
+  - 114: {fileID: 11400446}
+  m_Layer: 12
+  m_Name: Shortcut Keys 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &100322
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400322}
+  - 114: {fileID: 11400448}
+  m_Layer: 12
+  m_Name: Shortcut names 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3372,8 +3404,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100114}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -381.690369, y: 175.047302, z: 0}
-  m_LocalScale: {x: .400000006, y: .400000006, z: 0}
+  m_LocalPosition: {x: 1.55373335, y: 175.088531, z: 0}
+  m_LocalScale: {x: .399928004, y: .399928004, z: 0}
   m_Children: []
   m_Father: {fileID: 400228}
 --- !u!4 &400116
@@ -4040,6 +4072,8 @@ Transform:
   m_LocalPosition: {x: -0, y: -.000139713287, z: 0}
   m_LocalScale: {x: 1.00007999, y: 1.00007999, z: 1.00007999}
   m_Children:
+  - {fileID: 400320}
+  - {fileID: 400322}
   - {fileID: 400296}
   - {fileID: 400114}
   m_Father: {fileID: 400082}
@@ -4443,7 +4477,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100296}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -32.7979126, y: 175.075439, z: 0}
+  m_LocalPosition: {x: 293.462891, y: 175.146301, z: 0}
   m_LocalScale: {x: .399928004, y: .399928004, z: 0}
   m_Children: []
   m_Father: {fileID: 400228}
@@ -4576,6 +4610,28 @@ Transform:
   m_LocalScale: {x: .600000024, y: .600000024, z: 1}
   m_Children: []
   m_Father: {fileID: 400312}
+--- !u!4 &400320
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100320}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -162.319168, y: 175.103424, z: 0}
+  m_LocalScale: {x: .399928004, y: .399928004, z: 0}
+  m_Children: []
+  m_Father: {fileID: 400228}
+--- !u!4 &400322
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100322}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -418.041382, y: 175.061325, z: 0}
+  m_LocalScale: {x: .400000006, y: .400000006, z: 0}
+  m_Children: []
+  m_Father: {fileID: 400228}
 --- !u!20 &2000000
 Camera:
   m_ObjectHideFlags: 1
@@ -5036,7 +5092,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 37
+  mWidth: 36
   mHeight: 50
   mDepth: 3
   autoResizeBoxCollider: 0
@@ -6238,7 +6294,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 0
-  mWidth: 517
+  mWidth: 512
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -6563,8 +6619,8 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 0
-  mWidth: 357
-  mHeight: 100
+  mWidth: 356
+  mHeight: 99
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -6727,7 +6783,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 0
-  mWidth: 521
+  mWidth: 519
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -6861,7 +6917,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 193
+  mWidth: 192
   mHeight: 50
   mDepth: 3
   autoResizeBoxCollider: 0
@@ -7368,7 +7424,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 200
+  mWidth: 196
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -7426,42 +7482,29 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 0
-  mWidth: 748
-  mHeight: 948
+  mWidth: 662
+  mHeight: 495
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 12800000, guid: 83831f88b8a199c41a5ad9534c14d4c6, type: 3}
   mFont: {fileID: 0}
-  mText: 'Movement
-
-
-    Turn left/right
-
-
-    Interact
-
-
-    Inventory
+  mText: 'Inventory
 
 
     Mission log
 
 
-    Disperse heat
+    Map
 
 
-    Flashlight on/off
+    Status/Mechanic
 
 
-    Targeting mode
+    Flashlight/Finances
 
-
-    Select weapon 1/2/3/4
-
-
-    Engage'
+'
   mFontSize: 50
   mFontStyle: 0
   mEncoding: 1
@@ -7874,7 +7917,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 0
-  mWidth: 418
+  mWidth: 417
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -7973,7 +8016,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 0
-  mWidth: 535
+  mWidth: 531
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -8702,7 +8745,7 @@ MonoBehaviour:
   dragHighlight: 0
   onClick:
   - mTarget: {fileID: 11400314}
-    mMethodName: OpenTab1
+    mMethodName: OpenTab2
     oneShot: 0
 --- !u!114 &11400196
 MonoBehaviour:
@@ -8733,7 +8776,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 0
-  mWidth: 439
+  mWidth: 436
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -8898,7 +8941,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 197
+  mWidth: 195
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -9014,7 +9057,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 0
-  mWidth: 419
+  mWidth: 417
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -9088,7 +9131,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 0
-  mWidth: 1317
+  mWidth: 1305
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -9146,7 +9189,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 0
-  mWidth: 397
+  mWidth: 394
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -9459,7 +9502,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 3
-  mWidth: 372
+  mWidth: 366
   mHeight: 50
   mDepth: 3
   autoResizeBoxCollider: 0
@@ -9836,8 +9879,8 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 0
-  mWidth: 588
-  mHeight: 100
+  mWidth: 584
+  mHeight: 99
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -9896,7 +9939,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 0
-  mWidth: 495
+  mWidth: 490
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -9954,7 +9997,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 0
-  mWidth: 691
+  mWidth: 686
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -10012,7 +10055,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 0
-  mWidth: 546
+  mWidth: 538
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -10070,8 +10113,8 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 0
-  mWidth: 477
-  mHeight: 100
+  mWidth: 471
+  mHeight: 99
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -10130,8 +10173,8 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 0
-  mWidth: 442
-  mHeight: 100
+  mWidth: 436
+  mHeight: 99
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -10190,7 +10233,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 0
-  mWidth: 635
+  mWidth: 632
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -10248,7 +10291,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 0
-  mWidth: 498
+  mWidth: 492
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -10306,7 +10349,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 0
-  mWidth: 470
+  mWidth: 466
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -10364,8 +10407,8 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 0
-  mWidth: 119
-  mHeight: 100
+  mWidth: 118
+  mHeight: 99
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -10424,7 +10467,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 0
-  mWidth: 425
+  mWidth: 423
   mHeight: 50
   mDepth: 2
   autoResizeBoxCollider: 0
@@ -10482,8 +10525,8 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 0
-  mWidth: 235
-  mHeight: 100
+  mWidth: 234
+  mHeight: 99
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -10675,7 +10718,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 286
+  mWidth: 282
   mHeight: 50
   mDepth: 3
   autoResizeBoxCollider: 0
@@ -10902,9 +10945,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TabMenus:
-  - {fileID: 100244}
   - {fileID: 100006}
+  - {fileID: 100244}
   - {fileID: 100228}
+  OpenAtStart: 0
 --- !u!114 &11400316
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10975,7 +11019,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 150
+  mWidth: 147
   mHeight: 50
   mDepth: 3
   autoResizeBoxCollider: 0
@@ -11117,7 +11161,7 @@ MonoBehaviour:
   dragHighlight: 0
   onClick:
   - mTarget: {fileID: 11400314}
-    mMethodName: OpenTab2
+    mMethodName: OpenTab1
     oneShot: 0
 --- !u!114 &11400328
 MonoBehaviour:
@@ -11181,8 +11225,8 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 3
-  mWidth: 348
-  mHeight: 100
+  mWidth: 346
+  mHeight: 99
   mDepth: 4
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -11323,7 +11367,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 364
+  mWidth: 360
   mHeight: 50
   mDepth: 3
   autoResizeBoxCollider: 0
@@ -11689,7 +11733,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 3
-  mWidth: 629
+  mWidth: 626
   mHeight: 50
   mDepth: 3
   autoResizeBoxCollider: 0
@@ -12067,7 +12111,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 3
-  mWidth: 299
+  mWidth: 297
   mHeight: 50
   mDepth: 3
   autoResizeBoxCollider: 0
@@ -12285,7 +12329,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 3
-  mWidth: 719
+  mWidth: 716
   mHeight: 50
   mDepth: 3
   autoResizeBoxCollider: 0
@@ -12426,7 +12470,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 678
+  mWidth: 674
   mHeight: 50
   mDepth: 3
   autoResizeBoxCollider: 0
@@ -12484,42 +12528,29 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 0
-  mWidth: 280
-  mHeight: 948
+  mWidth: 52
+  mHeight: 495
   mDepth: 2
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 12800000, guid: 83831f88b8a199c41a5ad9534c14d4c6, type: 3}
   mFont: {fileID: 0}
-  mText: 'W/A/S/D
-
-
-    Q/E
-
-
-    Space
-
-
-    I
+  mText: 'I
 
 
     L
 
 
-    R
+    M
+
+
+    O
 
 
     F
 
-
-    T
-
-
-    1/2/3/4
-
-
-    TAB'
+'
   mFontSize: 50
   mFontStyle: 0
   mEncoding: 1
@@ -12569,7 +12600,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 323
+  mWidth: 321
   mHeight: 50
   mDepth: 3
   autoResizeBoxCollider: 0
@@ -12668,7 +12699,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 3
-  mWidth: 511
+  mWidth: 507
   mHeight: 50
   mDepth: 4
   autoResizeBoxCollider: 0
@@ -13139,6 +13170,170 @@ MonoBehaviour:
   mTrueTypeFont: {fileID: 12800000, guid: 83831f88b8a199c41a5ad9534c14d4c6, type: 3}
   mFont: {fileID: 0}
   mText: GUI tips
+  mFontSize: 50
+  mFontStyle: 0
+  mEncoding: 1
+  mMaxLineCount: 0
+  mEffectStyle: 0
+  mEffectColor: {r: 0, g: 0, b: 0, a: 1}
+  mSymbols: 1
+  mEffectDistance: {x: 1, y: 1}
+  mOverflow: 2
+  mMaterial: {fileID: 0}
+  mApplyGradient: 0
+  mGradientTop: {r: 1, g: 1, b: 1, a: 1}
+  mGradientBottom: {r: .699999988, g: .699999988, b: .699999988, a: 1}
+  mSpacingX: 0
+  mSpacingY: 0
+  mShrinkToFit: 0
+  mMaxLineWidth: 0
+  mMaxLineHeight: 0
+  mLineWidth: 0
+  mMultiline: 1
+--- !u!114 &11400446
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9d0b5f3bbe925a408bd595c79d0bf63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftAnchor:
+    target: {fileID: 0}
+    relative: 0
+    absolute: 0
+  rightAnchor:
+    target: {fileID: 0}
+    relative: 1
+    absolute: 0
+  bottomAnchor:
+    target: {fileID: 0}
+    relative: 0
+    absolute: 0
+  topAnchor:
+    target: {fileID: 0}
+    relative: 1
+    absolute: 0
+  mColor: {r: 1, g: 1, b: 1, a: 1}
+  mPivot: 0
+  mWidth: 327
+  mHeight: 842
+  mDepth: 2
+  autoResizeBoxCollider: 0
+  hideIfOffScreen: 0
+  keepCrispWhenShrunk: 1
+  mTrueTypeFont: {fileID: 12800000, guid: 83831f88b8a199c41a5ad9534c14d4c6, type: 3}
+  mFont: {fileID: 0}
+  mText: 'W/A/S/D
+
+
+    Q/E
+
+
+    Space
+
+
+    T/Control
+
+
+    1/2/3/4
+
+
+    TAB/Shift
+
+
+    R
+
+
+    X
+
+
+    Z'
+  mFontSize: 50
+  mFontStyle: 0
+  mEncoding: 1
+  mMaxLineCount: 0
+  mEffectStyle: 0
+  mEffectColor: {r: 0, g: 0, b: 0, a: 1}
+  mSymbols: 1
+  mEffectDistance: {x: 1, y: 1}
+  mOverflow: 2
+  mMaterial: {fileID: 0}
+  mApplyGradient: 0
+  mGradientTop: {r: 1, g: 1, b: 1, a: 1}
+  mGradientBottom: {r: .699999988, g: .699999988, b: .699999988, a: 1}
+  mSpacingX: 0
+  mSpacingY: 0
+  mShrinkToFit: 0
+  mMaxLineWidth: 0
+  mMaxLineHeight: 0
+  mLineWidth: 0
+  mMultiline: 1
+--- !u!114 &11400448
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9d0b5f3bbe925a408bd595c79d0bf63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftAnchor:
+    target: {fileID: 0}
+    relative: 0
+    absolute: 0
+  rightAnchor:
+    target: {fileID: 0}
+    relative: 1
+    absolute: 0
+  bottomAnchor:
+    target: {fileID: 0}
+    relative: 0
+    absolute: 0
+  topAnchor:
+    target: {fileID: 0}
+    relative: 1
+    absolute: 0
+  mColor: {r: 1, g: 1, b: 1, a: 1}
+  mPivot: 0
+  mWidth: 508
+  mHeight: 842
+  mDepth: 2
+  autoResizeBoxCollider: 0
+  hideIfOffScreen: 0
+  keepCrispWhenShrunk: 1
+  mTrueTypeFont: {fileID: 12800000, guid: 83831f88b8a199c41a5ad9534c14d4c6, type: 3}
+  mFont: {fileID: 0}
+  mText: 'Movement
+
+
+    Turn left/right
+
+
+    Interact
+
+
+    Targeting mode
+
+
+    Select weapon
+
+
+    Engage
+
+
+    Disperse heat
+
+
+    End Turn
+
+
+    MouseLook'
   mFontSize: 50
   mFontStyle: 0
   mEncoding: 1

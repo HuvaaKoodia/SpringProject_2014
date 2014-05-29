@@ -163,6 +163,7 @@ public class MissionMenuHud : MonoBehaviour {
 	{
 		if (lock_input) return;
 		Tabs.ActivateMenu(_FinanceMenu.gameObject);
+		_FinanceMenu.OpenMenu();
 	}
 
     public void PlayMission(){

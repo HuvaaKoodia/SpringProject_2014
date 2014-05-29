@@ -8,7 +8,7 @@ public class MissionBriefingMenu : MonoBehaviour {
 	public GameObject LoadingLabel;
 
 	void Awake(){
-		LoadingLabel.SetActive(false);
+		if (LoadingLabel!=null) LoadingLabel.SetActive(false);
 	}
 
 	public void SetMission(MissionObjData mission){

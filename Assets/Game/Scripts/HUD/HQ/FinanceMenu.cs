@@ -110,6 +110,10 @@ public class FinanceMenu : MonoBehaviour {
 		}
 	}
 
+	public void OpenMenu(){
+		UpdateValues();
+	}
+
 	//function that updates variables
 	private void UpdateValues()
 	{

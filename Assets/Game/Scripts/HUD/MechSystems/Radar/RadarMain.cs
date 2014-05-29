@@ -289,6 +289,8 @@ public class RadarMain : MonoBehaviour
 			
 			Vector3 position = blipParent.transform.localPosition + posOffset;
 
+			if (blips.Count<=currentBlip) return;
+
 			if (posOffset.magnitude <= scanRadius || !circleScanActive)
 			{
 

@@ -146,6 +146,15 @@ public class PlayerInputSub : MonoBehaviour {
 			player.HUD.MasterHud.ToggleStatus();
 		}
 
+		if (Input.GetButtonDown("Disperse Heat"))
+		{
+			DisperseHeatInput();
+		}
+		if (Input.GetButtonDown("End Turn"))
+		{
+			EndTurnInput();
+		}
+
 #if UNITY_EDITOR
         //DEV.DEBUG damage
         var x=playerMovement.currentGridX;
