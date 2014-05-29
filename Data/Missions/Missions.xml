@@ -353,22 +353,22 @@ Status info:
 	<LootQualityPool>
 		<Item name="1" weight="2"/>
 		<Item name="2" weight="7"/>
-		<Item name="3"/>
+		<Item name="3" />
 	</LootQualityPool>
 	<Status name="EnemyTypes">
-		<Item name="0" weight="0"/>
-		<Item name="1" weight="10"/>
-		<Item name="2" weight="0"/>
-	</Status>
-	<Status name="Aliens">
-		<Item name="1" weight="0"/>
-		<Item name="2" weight="6"/>
-		<Item name="3" weight="4"/>
-	</Status>
-	<Status name="Security">
+		<Item name="0" weight="8"/>
 		<Item name="1" weight="0"/>
 		<Item name="2" weight="2"/>
-		<Item name="3" weight="8"/>
+	</Status>
+	<Status name="Aliens">
+		<Item name="1" weight="1"/>
+		<Item name="2" weight="4"/>
+		<Item name="3" weight="5"/>
+	</Status>
+	<Status name="Security">
+		<Item name="1" weight="2"/>
+		<Item name="2" weight="7"/>
+		<Item name="3" weight="1"/>
 	</Status>
 	<Status name="Condition">
 		<Item name="0"/>
@@ -382,7 +382,7 @@ Status info:
 </Mission>
 
 <Mission type="RogueAI" name="Rogue AI" rewardClass="3" lootPool="2">
-<Description>A ship got attacked by a virus that shut down engines and made the AI go rogue.\nOur client wants us to retrieve the data files from the ship armory and engine room.\nThe defence systems are probably still online.</Description>
+<Description>A ship got attacked by a virus that shut down its engines and made the AI go rogue.\nOur client wants us to retrieve the data files from the ship armory and engine room.</Description>
 	<PrimaryObjectives>
 		FindLogs_Engine
 		FindLogs_Armory

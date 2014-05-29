@@ -291,6 +291,9 @@ public class PlayerHud : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// Updates the weapon panels and the mecha stats panel.
+	/// </summary>
 	public void UpdateHudPanels ()
 	{
 		gunInfoDisplay.UpdateAllDisplays();

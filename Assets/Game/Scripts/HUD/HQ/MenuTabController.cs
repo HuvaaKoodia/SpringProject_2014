@@ -9,10 +9,10 @@ public class MenuTabController : MonoBehaviour {
 
     public List<GameObject> TabMenus;
 
-	public int OpenAtStart=0;
+	public int OpenAtStart=-1;
 
 	void Awake(){
-		ActivateMenu(OpenAtStart);
+		if (OpenAtStart>-1) ActivateMenu(OpenAtStart);
 	}
 
     public void OpenTab1(){

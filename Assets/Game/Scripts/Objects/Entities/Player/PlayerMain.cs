@@ -201,6 +201,7 @@ public class PlayerMain : EntityMain
 
         foreach(WeaponMain weapon in weaponList)
 		{
+			if (SystemOverheat) break;
             if (weapon.HasTargets)
 			{
 				StartCoroutine(weapon.Shoot());

@@ -264,7 +264,7 @@ public class WeaponMain : MonoBehaviour {
 
 			for (int x = 0; x < targets[enemyOrder[i]].numShots; x++)
 			{
-				if (Overheat || CurrentAmmo == 0) break;
+				if (Overheat || CurrentAmmo == 0||player.SystemOverheat) break;
 				if (IsEnemyDead(enemyOrder[i]) || targets[enemyOrder[i]].numShots == 0)
 				{
 					continue;
@@ -340,6 +340,7 @@ public class WeaponMain : MonoBehaviour {
 		if (CurrentAmmo<0) CurrentAmmo=0;
 		
 		IncreaseHeat();
+		player.HUD.UpdateHudPanels();
 
 		bool hit = HitChancePercent(enemy) > Subs.RandomPercent();
 
