@@ -14,65 +14,29 @@ public class AIcontroller
 
 	public List<EnemyMain> finishedEnemies;
 
+	bool HaxMaxEnemyWaitTimerOn = true;
+	Dictionary<EnemyMain, int> enemyAP;
+	float timeWaitedForEnemies;
+	public float EnemyWaitTime = 4.0f;
+	float lastAiTurnTime;
+
 	public AIcontroller(GameController gc)
 	{
 		this.GC = gc;
 		enemies = new List<EnemyMain>();
 		finishedEnemies = new List<EnemyMain>();
+		enemyAP = new Dictionary<EnemyMain, int>();
 		enemiesFinishedTurn = 0;
 		turnsPlayed = 0;
 	}
 
 	// Update is called once per frame
 	public void UpdateAI(TurnState currentTurn)
-	{/*
-		if (currentTurn == TurnState.AIMovement)
-		{
-	        foreach (EnemyMain enemy in enemies)
-	        {
-	            enemy.PlayMovementTurn();
-
-	            if (!enemy.HasUsedTurn())
-					didntUseTurn.Add(enemy);
-	        }
-
-			for (int i = didntUseTurn.Count-1; i >= 0; i--)
-				didntUseTurn[i].PlayMovementTurn();
-
-			didntUseTurn.Clear();
-
-            foreach (EnemyMain enemy in enemies)
-            {
-                enemy.StartMoving();
-            }
-   
-
-			GC.ChangeTurn(TurnState.WaitingAIToFinish);
-		}
-        else if (currentTurn == TurnState.WaitingAIToFinish && !CheckForMovingEnemies())
-		{
-            if (finishedEnemies.Count < enemies.Count)
-            {
-                GC.ChangeTurn(TurnState.AIMovement);
-            }
-            else
-            {
-				finishedEnemies.Clear();
-
-				if (enemies.Count != 0)
-                	enemies[currentAttacker].PlayAttackingPhase();
-
-                GC.ChangeTurn(TurnState.AIAttack);
-            }
-		}
-		else if (currentTurn == TurnState.AIAttack && currentAttacker >= enemies.Count)
-		{
-            currentAttacker = 0;
-			GC.ChangeTurn(TurnState.StartPlayerTurn);
-		}*/
+	{
 		if (currentTurn == TurnState.AITurn)
 		{
 			bool enemyAnimating = false;
+			bool situationChanged = false;
 
 			for (int i = enemies.Count-1; i >= 0; i--)
 			{
@@ -81,8 +45,36 @@ public class AIcontroller
 				enemy.PlayTurn();
 
 				if (enemy != null && (enemy.ai.Animating || enemy.ai.Rotating || enemy.GetWaitingForDamageReaction() || enemy.ai.waitingForAttackToHitPlayer))
+				{
 					enemyAnimating = true;
+
+					if (enemyAP.ContainsKey(enemy))
+					{
+						if (enemyAP[enemy] != enemy.ai.AP)
+						{
+							enemyAP[enemy] = enemy.ai.AP;
+							situationChanged = true;
+						}
+					}
+					else
+					{
+						enemyAP.Add(enemy, enemy.ai.AP);
+						situationChanged = true;
+					}
+				}
 			}
+
+
+			if (situationChanged)
+			{
+				timeWaitedForEnemies = 0.0f;
+			}
+			else
+			{
+				timeWaitedForEnemies += Time.time - lastAiTurnTime;
+			}
+
+			lastAiTurnTime = Time.time;
 
 			if (!enemyAnimating)
 				turnsPlayed++;
@@ -103,12 +95,22 @@ public class AIcontroller
 				else
 					GC.ChangeTurn(TurnState.StartPlayerTurn);
 			}
+
+			if (HaxMaxEnemyWaitTimerOn && timeWaitedForEnemies >= EnemyWaitTime)
+			{
+				GC.ChangeTurn(TurnState.StartPlayerTurn);
+			}
 		}
 		else if (currentTurn == TurnState.StartAITurn)
 		{
 			turnsPlayed = 0;
 			enemiesFinishedTurn = 0;
 			finishedEnemies.Clear();
+
+			enemyAP.Clear();
+			timeWaitedForEnemies = 0.0f;
+			lastAiTurnTime = Time.time;
+
 			//Debug.Log("AI start");
 			for (int i = enemies.Count-1; i >= 0; i--)
 			{

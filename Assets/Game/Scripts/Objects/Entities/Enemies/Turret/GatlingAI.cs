@@ -364,7 +364,7 @@ public class GatlingAI : AIBase {
 		}
 
         audio.Stop();
-		Rotating = false;
+		StopRotating();
 	}
 
 	IEnumerator MoveDown()
@@ -440,7 +440,7 @@ public class GatlingAI : AIBase {
 			yield return null;
 		}
 
-		Rotating = false;
+		StopRotating();
 	}
 
 	void StopRotating()
