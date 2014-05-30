@@ -258,6 +258,17 @@ public class PlayerTargetingSub : MonoBehaviour {
 		shootingOrders.Remove(enemy);
 	}
 
+	public bool WeaponsTurnToShootEnemy(WeaponMain weapon, EnemyMain enemy)
+	{
+		if (!shootingOrders.ContainsKey(enemy))
+		{
+			Debug.Log("Asking if turn to shoot enemy that is not in shooting orders!");
+			return true;
+		}
+
+		return shootingOrders[enemy][0] == weapon;
+	}
+
 	public void WeaponShotEnemy(WeaponMain weapon, EnemyMain enemy)
 	{
 		if (!shootingOrders.ContainsKey(enemy)) return;

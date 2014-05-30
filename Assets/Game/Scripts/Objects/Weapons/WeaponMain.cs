@@ -304,7 +304,7 @@ public class WeaponMain : MonoBehaviour {
 		{
 			SetTargetRotation(enemy);
 
-			while ((enemy != null) && (!lookingAtEnemy(enemy) || player.targetingSub.shootingOrders[enemy][0] != this))
+			while (!IsEnemyDead(enemy) && (!lookingAtEnemy(enemy) || !player.targetingSub.WeaponsTurnToShootEnemy(this, enemy)))
 			{
 				if (IsEnemyDead(enemy))
 				{
@@ -317,7 +317,7 @@ public class WeaponMain : MonoBehaviour {
 		}
 		else
 		{
-			while (player.targetingSub.shootingOrders[enemy][0] != this)
+			while (!IsEnemyDead(enemy) && !player.targetingSub.WeaponsTurnToShootEnemy(this, enemy))
 			{
 				if (IsEnemyDead(enemy))
 				{

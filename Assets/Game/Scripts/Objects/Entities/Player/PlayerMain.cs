@@ -201,7 +201,12 @@ public class PlayerMain : EntityMain
 
         foreach(WeaponMain weapon in weaponList)
 		{
-			if (SystemOverheat) break;
+			if (SystemOverheat)
+			{
+				GunFinishedShooting();
+				continue;
+			}
+
             if (weapon.HasTargets)
 			{
 				StartCoroutine(weapon.Shoot());
