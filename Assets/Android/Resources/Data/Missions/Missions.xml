@@ -61,7 +61,7 @@ Status info:
 </Mission>
 
 <Mission type="FindItem_Helix" name="Find the Relic" rewardClass="1" lootPool="1">
-<Description>We've been contracted to find and retrieve an important religious relic from the cargo bay.\nBring it back and remember to clean the ship of any other valuables too.</Description>
+<Description>We've been contracted to find and retrieve an important religious relic from the cargo bay of the ship.\nBring it back and remember to clean the ship of any other valuables too.</Description>
 	<PrimaryObjectives>
 		FindItem_Helix
 	</PrimaryObjectives>
@@ -107,7 +107,7 @@ Status info:
 </Mission>
 
 <Mission type="FindItem_Prototype" name="Military Prototype" rewardClass="1" lootPool="2">
-<Description>An abandoned military vessel carried some experimental warfare. \nThere's a certain military prototype we've been asked to recover. \nFeel free to help yourself if you happen to find anything else.</Description>
+<Description>An abandoned military vessel carried some experimental warfare gear. \nThere's a certain military prototype we've been asked to recover. \nFeel free to help yourself if you happen to find anything else.</Description>
 	<PrimaryObjectives>
 		FindItem_Prototype
 	</PrimaryObjectives>
@@ -152,7 +152,7 @@ Status info:
 </Mission>
 
 <Mission type="FindItem_Exquisite" name="Valuable Cargo" rewardClass="1" lootPool="1">
-<Description>A trade vessel carrying some valuable Exquisite Wares got hit by hostiles. \nBring the luxories back and feel free to keep anything else you find.</Description>
+<Description>A trade vessel carrying some valuable Exquisite Wares got hit by hostiles. \nBring the luxuries back. Feel free to keep anything else you find.</Description>
 	<PrimaryObjectives>
 		FindItem_Exquisite
 	</PrimaryObjectives>
@@ -241,7 +241,7 @@ Status info:
 </Mission>
 
 <Mission type="VesselFaithMilitary" name="Fate of the Vessel" rewardClass="2" lootPool="2">
-<Description>Our client wants us to find out, what happened to a certain ship.\nGet in there and download any log files you can find.</Description>
+<Description>Our client wants us to find out what happened to a certain ship.\nGet in there and download any log files you can find.</Description>
 	<PrimaryObjectives>
 		FindLogs_Engine
 		FindLogs_Navigation
@@ -290,7 +290,7 @@ Status info:
 </Mission>
 
 <Mission type="VesselFaithTrade" name="Fate of the Vessel" rewardClass="2" lootPool="1">
-<Description>Our client wants us to find out, what happened to a certain ship.\nGet in there and download any log files you can find.</Description>
+<Description>Our client wants us to find out what happened to a certain ship.\nGet in there and download any log files you can find.</Description>
 	<PrimaryObjectives>
 		FindLogs_Engine
 		FindLogs_Navigation
@@ -337,7 +337,7 @@ Status info:
 </Mission>
 
 <Mission type="NavigationLogs" name="Unknown Destination" rewardClass="2" lootPool="2">
-<Description>A military vessel got hit by hostile aliens.\nOur client wants to know where the ship was headed, so find the command bridge and download the Navigation Logs.</Description>
+<Description>A military vessel got hit by hostile aliens.\nOur client wants to know where the ship was headed, so locate the command bridge and download the Navigation Logs.</Description>
 	<PrimaryObjectives>
 		FindLogs_Navigation
 	</PrimaryObjectives>
@@ -353,22 +353,22 @@ Status info:
 	<LootQualityPool>
 		<Item name="1" weight="2"/>
 		<Item name="2" weight="7"/>
-		<Item name="3"/>
+		<Item name="3" />
 	</LootQualityPool>
 	<Status name="EnemyTypes">
-		<Item name="0" weight="0"/>
-		<Item name="1" weight="10"/>
-		<Item name="2" weight="0"/>
-	</Status>
-	<Status name="Aliens">
-		<Item name="1" weight="0"/>
-		<Item name="2" weight="6"/>
-		<Item name="3" weight="4"/>
-	</Status>
-	<Status name="Security">
+		<Item name="0" weight="8"/>
 		<Item name="1" weight="0"/>
 		<Item name="2" weight="2"/>
-		<Item name="3" weight="8"/>
+	</Status>
+	<Status name="Aliens">
+		<Item name="1" weight="1"/>
+		<Item name="2" weight="4"/>
+		<Item name="3" weight="5"/>
+	</Status>
+	<Status name="Security">
+		<Item name="1" weight="2"/>
+		<Item name="2" weight="7"/>
+		<Item name="3" weight="1"/>
 	</Status>
 	<Status name="Condition">
 		<Item name="0"/>
@@ -382,7 +382,7 @@ Status info:
 </Mission>
 
 <Mission type="RogueAI" name="Rogue AI" rewardClass="3" lootPool="2">
-<Description>A ship got attacked by a virus that shut down engines and made the AI go rogue.\nClient wants us to retrieve the data files from the ship armory and engine room.\nThe defence systems are probably still online.</Description>
+<Description>A ship got attacked by a virus that shut down its engines and made the AI go rogue.\nOur client wants us to retrieve the data files from the ship armory and engine room.</Description>
 	<PrimaryObjectives>
 		FindLogs_Engine
 		FindLogs_Armory
@@ -402,18 +402,15 @@ Status info:
 		<Item name="3"/>
 	</LootQualityPool>
 	<Status name="EnemyTypes">
-		<Item name="0" weight="8"/>
-		<Item name="1" weight="0"/>
-		<Item name="2" weight="2"/>
+		<Item name="1" weight="1"/>
 	</Status>
 	<Status name="Aliens">
-		<Item name="1" weight="6"/>
-		<Item name="2" weight="3"/>
-		<Item name="3" weight="1"/>
+		<Item name="1" weight="1"/>
 	</Status>
 	<Status name="Security">
-		<Item name="1" weight="8"/>
-		<Item name="2" weight="2"/>
+		<Item name="1" weight="2"/>
+		<Item name="2" weight="5"/>
+		<Item name="3" weight="3"/>
 	</Status>
 	<Status name="Condition">
 		<Item name="0"/>
@@ -427,7 +424,7 @@ Status info:
 </Mission>
 
 <Mission type="CleaningMission" name="Purge" rewardClass="3" lootPool="1">
-	<Description>A vessel got overrun by some hostile aliens. \nThe client wants to get rid of them, but needs the ship intact. \nCargo wasn't mentioned though, so feel free to help yourself.</Description>
+	<Description>A vessel got overrun by some hostile aliens.\nThe client wants to get rid of them, but needs the ship intact.\nCargo wasn't mentioned though, so feel free to help yourself.</Description>
 	<PrimaryObjectives>
 		KillAliens
 	</PrimaryObjectives>

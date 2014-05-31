@@ -52,10 +52,12 @@ public class SaveLoadSys:TXT_Loader {
 	}
 
 	public static void RemoveSaveFile(string savename){
+#if UNITY_STANDALONE
 		var path=GetFilePath(savename);
 		if (File.Exists(path)){
 			File.Delete(path);
 		}
+#endif
 	}
 
 	public static void RemoveSavePlayerPref(string savename){

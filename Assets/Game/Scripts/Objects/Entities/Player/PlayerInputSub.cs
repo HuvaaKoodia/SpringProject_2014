@@ -49,6 +49,7 @@ public class PlayerInputSub : MonoBehaviour {
     {
 		if (!player.targetingMode && player.GC.HUD.currentMenuState != MenuState.InventoryHUD)
 		{
+			//movement
 	        float verticalAxis = Input.GetAxisRaw("Vertical");
 			float horizontalAxis = Input.GetAxisRaw("Horizontal");
 			bool instant=player.movement.InstantMovement;
@@ -58,7 +59,7 @@ public class PlayerInputSub : MonoBehaviour {
 	        {
 				if (!instant||instant&&!pressed_once_moving) MoveForwardInput();
 				pressed_once_moving=true;
-				return ;
+				return;
 	        }
 	        else if (verticalAxis < 0)
 	        {
@@ -96,6 +97,34 @@ public class PlayerInputSub : MonoBehaviour {
 				pressed_once_turning=true;
 			}
 			else pressed_once_turning=false;
+
+			//other input
+			
+			if (Input.GetButtonDown("Toggle Inventory"))
+			{
+				player.HUD.ToggleInventory();
+			}
+			if (Input.GetButtonDown("Toggle Map"))
+			{
+				player.HUD.MasterHud.ToggleMap();
+			}
+			if (Input.GetButtonDown("Toggle Logs"))
+			{
+				player.HUD.MasterHud.ToggleLogs();
+			}
+			if (Input.GetButtonDown("Toggle Status"))
+			{
+				player.HUD.MasterHud.ToggleStatus();
+			}
+			
+			if (Input.GetButtonDown("Disperse Heat"))
+			{
+				DisperseHeatInput();
+			}
+			if (Input.GetButtonDown("End Turn"))
+			{
+				EndTurnInput();
+			}
 		}
 
 	 	if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -127,32 +156,6 @@ public class PlayerInputSub : MonoBehaviour {
 		if (Input.GetButtonDown("Interact"))
 		{
 			InteractInput(false);
-		}
-
-		if (Input.GetButtonDown("Toggle Inventory"))
-		{
-			player.HUD.ToggleInventory();
-		}
-		if (Input.GetButtonDown("Toggle Map"))
-		{
-			player.HUD.MasterHud.ToggleMap();
-		}
-		if (Input.GetButtonDown("Toggle Logs"))
-		{
-			player.HUD.MasterHud.ToggleLogs();
-		}
-		if (Input.GetButtonDown("Toggle Status"))
-		{
-			player.HUD.MasterHud.ToggleStatus();
-		}
-
-		if (Input.GetButtonDown("Disperse Heat"))
-		{
-			DisperseHeatInput();
-		}
-		if (Input.GetButtonDown("End Turn"))
-		{
-			EndTurnInput();
 		}
 
 #if UNITY_EDITOR

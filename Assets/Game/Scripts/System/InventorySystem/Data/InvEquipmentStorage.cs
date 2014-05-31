@@ -51,10 +51,13 @@ public class InvEquipmentStorage
         //Hidden slots
         UpperTorso =new InvEquipmentSlot(player.UpperTorso);
         //LowerTorso =new InvEquipmentSlot(UIEquipmentSlot.Slot.LowerTorso,false);
+		Init();
+	}
 
-        foreach(var s in EquipmentSlots){
-            s.ObjData.TakeHeat+=HullTakeHeat;
-        }
+	public void Init(){
+		foreach(var s in EquipmentSlots){
+			s.ObjData.TakeHeat+=HullTakeHeat;
+		}
 	}
 
 

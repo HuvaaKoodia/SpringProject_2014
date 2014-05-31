@@ -17,8 +17,6 @@ public class MechStatisticsMain : MonoBehaviour {
 	public UISprite HeatMeter;
 	public GameObject DataPanel,OverheatSprite;
 
-	public System.Action OnTorsoCritical;
-
 	// Use this for initialization
 	void Start (){
 		lowerTorso.ChangePartColor(FullHealthColor);

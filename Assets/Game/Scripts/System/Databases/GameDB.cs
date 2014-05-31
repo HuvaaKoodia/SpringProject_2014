@@ -123,6 +123,8 @@ public class GameDB : MonoBehaviour {
 			if (e.Item!=null) e.Item.InitBaseItem();
 		}
 
+		GameData.PlayerData.Equipment.Init();
+
 		LoadLevel(HQScene);
 	}
 
@@ -171,7 +173,7 @@ public class GameDB : MonoBehaviour {
 	void OnLevelWasLoaded(int i){
 		ResetStuff();
 
-		SS.GOps.UpdateGameBrightness();
+		SS.GOps.UpdateGameBrightness();//must be called on each level start up
 	}
 
     public void EndMission(GameController GC)

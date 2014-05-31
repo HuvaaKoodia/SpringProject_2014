@@ -230,6 +230,9 @@ public class GameController : MonoBehaviour {
 		SS.GDB.AllowEscHud=true;
 
 		SS.MusicSystem.StartGameTrack();
+
+		//test
+		SaveLoadSys.ClearSaves("Save");
 	}
 
 	// Update is called once per frame
@@ -403,6 +406,7 @@ public class GameController : MonoBehaviour {
 			SetFloorPowerState(f,on);
 		}
 	}
+
 	//function to randomize the state of the white lights in the environment
 	//percentages passed in represents the chances of getting each state
 	//like a dice roll
@@ -456,7 +460,6 @@ public class GameController : MonoBehaviour {
 
 	public void EndGame ()
 	{
-		SS.GDB.RemoveSavesIfIronman();
 		HUD.FadeIn(0.3f);
 		StartCoroutine(EndGameAfterFade());
 	}
