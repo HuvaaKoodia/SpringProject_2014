@@ -133,7 +133,6 @@ GameObject:
   - 65: {fileID: 6500004}
   - 114: {fileID: 11400034}
   - 114: {fileID: 11400032}
-  - 114: {fileID: 11400698}
   m_Layer: 22
   m_Name: MenuButton
   m_TagString: Untagged
@@ -154,6 +153,38 @@ GameObject:
   - 82: {fileID: 8200002}
   m_Layer: 0
   m_Name: Ambient
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &100018
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400018}
+  - 114: {fileID: 11400042}
+  m_Layer: 22
+  m_Name: _Saved
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &100020
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400020}
+  - 114: {fileID: 11400044}
+  m_Layer: 13
+  m_Name: Anchor_BottomLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -246,14 +277,13 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400240}
-  - 114: {fileID: 11400012}
   m_Layer: 22
   m_Name: Hud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &100244
 GameObject:
   m_ObjectHideFlags: 1
@@ -267,14 +297,13 @@ GameObject:
   - 65: {fileID: 6500038}
   - 114: {fileID: 11400344}
   - 114: {fileID: 11400342}
-  - 114: {fileID: 11400340}
   m_Layer: 22
-  m_Name: LoadButton
+  m_Name: SaveButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &100378
 GameObject:
   m_ObjectHideFlags: 1
@@ -299,6 +328,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400400}
+  - 114: {fileID: 11400012}
   m_Layer: 22
   m_Name: ExcMenu
   m_TagString: Untagged
@@ -501,6 +531,29 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400002}
+--- !u!4 &400018
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100018}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 18.117981, y: 8.12371826, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 400020}
+--- !u!4 &400020
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100020}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1690.13879, y: -537.599976, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 400018}
+  m_Father: {fileID: 400490}
 --- !u!4 &400078
 Transform:
   m_ObjectHideFlags: 1
@@ -508,7 +561,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100078}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .878474593, y: -2.86148079e-05, z: 0}
+  m_LocalPosition: {x: 0, y: -1.88661766, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400108}
@@ -570,7 +623,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100240}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.40274882, y: .575137496, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400490}
@@ -634,6 +687,7 @@ Transform:
   m_LocalScale: {x: .00208333344, y: .00208333344, z: .00208333344}
   m_Children:
   - {fileID: 400400}
+  - {fileID: 400020}
   m_Father: {fileID: 400240}
 --- !u!4 &400514
 Transform:
@@ -909,6 +963,7 @@ MonoBehaviour:
   SDGen: {fileID: 11400024}
   GOps: {fileID: 11400006}
   MusicSystem: {fileID: 11400040}
+  EscHud: {fileID: 11400012}
   ItemAtlas: {fileID: 11400000, guid: f95e07e3d350bf748b0c42b453a69d2e, type: 2}
 --- !u!114 &11400002
 MonoBehaviour:
@@ -939,11 +994,11 @@ MonoBehaviour:
   GameStarted: 0
   HasSave: 0
   GameLoaded: 0
-  AllowEscHud: 1
+  EscHudShowEnabled: 1
+  EscHudShowSaveButton: 1
   HQScene: MissionSelectScene
   GameScene: GameScene
   MainMenuScene: MainMenuScene
-  EscHud: {fileID: 11400012}
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1025,13 +1080,15 @@ MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100240}
+  m_GameObject: {fileID: 100400}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 55c1a0b5bb43e8041885a1d7e6ff895d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   GDB: {fileID: 11400004}
+  GameSavedLabel: {fileID: 11400042}
+  SaveButton: {fileID: 100244}
 --- !u!114 &11400014
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1125,10 +1182,7 @@ MonoBehaviour:
   duration: .200000003
   disabledColor: {r: .5, g: .5, b: .5, a: 1}
   dragHighlight: 0
-  onClick:
-  - mTarget: {fileID: 11400012}
-    mMethodName: Close
-    oneShot: 0
+  onClick: []
 --- !u!114 &11400024
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1229,8 +1283,8 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .0352941193, g: .164705887, b: .164705887, a: 1}
   mPivot: 4
-  mWidth: 0
-  mHeight: 0
+  mWidth: 243
+  mHeight: 51
   mDepth: 17
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -1307,7 +1361,10 @@ MonoBehaviour:
   duration: .200000003
   disabledColor: {r: .250980407, g: .250980407, b: .250980407, a: 1}
   dragHighlight: 0
-  onClick: []
+  onClick:
+  - mTarget: {fileID: 11400012}
+    mMethodName: MainMenuPressed
+    oneShot: 0
 --- !u!114 &11400038
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1366,6 +1423,82 @@ MonoBehaviour:
   musicSource: {fileID: 8200000}
   elevatorSource: {fileID: 8200002}
   music_volume: 1
+--- !u!114 &11400042
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9d0b5f3bbe925a408bd595c79d0bf63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftAnchor:
+    target: {fileID: 0}
+    relative: 0
+    absolute: -98
+  rightAnchor:
+    target: {fileID: 0}
+    relative: 1
+    absolute: 100
+  bottomAnchor:
+    target: {fileID: 0}
+    relative: 0
+    absolute: -338
+  topAnchor:
+    target: {fileID: 0}
+    relative: 1
+    absolute: -313
+  mColor: {r: 1, g: 1, b: 1, a: 1}
+  mPivot: 6
+  mWidth: 300
+  mHeight: 32
+  mDepth: 5
+  autoResizeBoxCollider: 0
+  hideIfOffScreen: 0
+  keepCrispWhenShrunk: 1
+  mTrueTypeFont: {fileID: 12800000, guid: 83831f88b8a199c41a5ad9534c14d4c6, type: 3}
+  mFont: {fileID: 0}
+  mText: GAME SAVED
+  mFontSize: 50
+  mFontStyle: 0
+  mEncoding: 1
+  mMaxLineCount: 0
+  mEffectStyle: 0
+  mEffectColor: {r: 0, g: 0, b: 0, a: 1}
+  mSymbols: 1
+  mEffectDistance: {x: 1, y: 1}
+  mOverflow: 0
+  mMaterial: {fileID: 0}
+  mApplyGradient: 0
+  mGradientTop: {r: 1, g: 1, b: 1, a: 1}
+  mGradientBottom: {r: .5, g: .5, b: .5, a: 1}
+  mSpacingX: 0
+  mSpacingY: 0
+  mShrinkToFit: 0
+  mMaxLineWidth: 0
+  mMaxLineHeight: 0
+  mLineWidth: 0
+  mMultiline: 1
+--- !u!114 &11400044
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8077b76001d36d489868d20d28bddb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiCamera: {fileID: 2000000}
+  container: {fileID: 0}
+  side: 0
+  runOnlyOnce: 1
+  relativeOffset: {x: 0, y: 0}
+  pixelOffset: {x: 0, y: 0}
+  widgetContainer: {fileID: 0}
 --- !u!114 &11400112
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1495,8 +1628,8 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .0352941193, g: .164705887, b: .164705887, a: 1}
   mPivot: 4
-  mWidth: 0
-  mHeight: 0
+  mWidth: 451
+  mHeight: 51
   mDepth: 17
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -1524,22 +1657,6 @@ MonoBehaviour:
   mMaxLineHeight: 0
   mLineWidth: 0
   mMultiline: 1
---- !u!114 &11400340
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100244}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 100400}
-  functionName: LoadGamePressed
-  trigger: 0
-  includeChildren: 0
-  OnPressInputIndex: 0
 --- !u!114 &11400342
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1589,7 +1706,10 @@ MonoBehaviour:
   duration: .200000003
   disabledColor: {r: .250980407, g: .250980407, b: .250980407, a: 1}
   dragHighlight: 0
-  onClick: []
+  onClick:
+  - mTarget: {fileID: 11400012}
+    mMethodName: SaveGamePressed
+    oneShot: 0
 --- !u!114 &11400348
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1660,15 +1780,15 @@ MonoBehaviour:
     absolute: -4
   mColor: {r: .0352941193, g: .164705887, b: .164705887, a: 1}
   mPivot: 4
-  mWidth: 0
-  mHeight: 0
+  mWidth: 371
+  mHeight: 51
   mDepth: 17
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 12800000, guid: 83831f88b8a199c41a5ad9534c14d4c6, type: 3}
   mFont: {fileID: 0}
-  mText: Load Game
+  mText: Save Game
   mFontSize: 50
   mFontStyle: 0
   mEncoding: 1
@@ -1784,11 +1904,11 @@ MonoBehaviour:
     e00: 479.999969
     e01: 0
     e02: 0
-    e03: 1633.31934
+    e03: 0
     e10: 0
     e11: 479.999969
     e12: 0
-    e13: -276.065979
+    e13: 0
     e20: 0
     e21: 0
     e22: 479.999969
@@ -1802,22 +1922,6 @@ MonoBehaviour:
   mClipRange: {x: 0, y: 0, z: 0, w: 0}
   mClipSoftness: {x: 40, y: 40}
   mDepth: 15
---- !u!114 &11400698
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100014}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 100240}
-  functionName: MainMenuPressed
-  trigger: 0
-  includeChildren: 0
-  OnPressInputIndex: 0
 --- !u!114 &11400700
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1941,8 +2045,8 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: .0352941193, g: .164705887, b: .164705887, a: 1}
   mPivot: 4
-  mWidth: 0
-  mHeight: 0
+  mWidth: 340
+  mHeight: 101
   mDepth: 16
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0

@@ -24,7 +24,7 @@ public class MainMenuHud : MonoBehaviour {
 			ContinueButton.enabled=false;
 		}
 
-		GDB.AllowEscHud=false;
+		GDB.EscHudShowEnabled=false;
 
 		SharedSystemsMain.I.MusicSystem.StopCurrent();
     }

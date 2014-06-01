@@ -18,6 +18,7 @@ public class SaveLoadSys:TXT_Loader {
 
 	public static GameObjData LoadGame(string savename)
 	{
+		if (!File.Exists(GetFilePath(savename))) return null;
 		var data=ReadDocument(SaveLocation,savename,SaveExtension);
 		return LoadGameDataFromString(data);
 	}

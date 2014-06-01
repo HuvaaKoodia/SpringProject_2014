@@ -227,7 +227,9 @@ public class GameController : MonoBehaviour {
 
 		HUD.SetAlpha(1f);
 		HUD.FadeOut(0.5f);
-		SS.GDB.AllowEscHud=true;
+
+		SS.GDB.EscHudShowEnabled=true;
+		SS.GDB.EscHudShowSaveButton=false;
 
 		SS.MusicSystem.StartGameTrack();
 

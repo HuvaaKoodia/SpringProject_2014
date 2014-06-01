@@ -13,7 +13,7 @@ public class MissionMenuHud : MonoBehaviour {
     public Transform MissionButtonsParent;
     public MissionButtonMain MButtonPrefab;
     public MenuTabController Tabs;
-	public UILabel MoneyLabel,GameSavedLabel,Daylabel;
+	public UILabel MoneyLabel,Daylabel;
 
 	public VictoryMenu victoryMenu;
 	public OutOfMoneyMenu outofmoney;
@@ -76,21 +76,20 @@ public class MissionMenuHud : MonoBehaviour {
             OpenMissionSelect();
         }
 
-		var savetype=SS.GDB.GameData.IronManMode?"Ironman":"Normal";
-
 		if (SS.GDB.GameLoaded){
-			ShowSaveGameLabel("GAME LOADED - "+savetype);
 			SS.GDB.GameLoaded=false;
+			SS.EscHud.ShowGameLoadedLabel();
 		}
 		else{
 			SS.GDB.SaveGame();
-			ShowSaveGameLabel("GAME SAVED - "+savetype);
+			SS.EscHud.ShowGameSavedLabel();
 		}
 
 		Daylabel.text="Day: "+SS.GDB.GameData.CurrentTime;
 
 		_FinanceMenu.OnDebtShorten+=OnFinancePayment;
-		SS.GDB.AllowEscHud=true;
+		SS.GDB.EscHudShowEnabled=true;
+		SS.GDB.EscHudShowSaveButton=true;
 	}
 
 	//lazy public
@@ -171,17 +170,6 @@ public class MissionMenuHud : MonoBehaviour {
         SS.GDB.PlayMission();
 		MissionBrief.ShowLoadingLabel();
     }
-
-	
-	void ShowSaveGameLabel(string text){
-		GameSavedLabel.text=text;
-		GameSavedLabel.gameObject.SetActive(true);
-		Invoke("HideGameSavedLabel",3f);
-	}
-	
-	void HideGameSavedLabel(){
-		GameSavedLabel.gameObject.SetActive(false);
-	}
 
 	//victory menu imp
 
