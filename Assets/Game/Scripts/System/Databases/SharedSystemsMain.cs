@@ -3,6 +3,8 @@ using System.Collections;
 
 public class SharedSystemsMain : MonoBehaviour {
 
+	public string Version="1.0";
+
     public GameDB GDB;
     public XMLMapLoader XMAP;
 	public PrefabStore PS;

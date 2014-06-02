@@ -7,6 +7,7 @@ public class MainMenuHud : MonoBehaviour {
 	public GameOptionsMenu OptionsPanel;
 	GameDB GDB;
 	public UIButton ContinueButton;
+	public UILabel Version;
 
     void Start(){
 		GDB=SharedSystemsMain.I.GDB;
@@ -27,6 +28,8 @@ public class MainMenuHud : MonoBehaviour {
 		GDB.EscHudShowEnabled=false;
 
 		SharedSystemsMain.I.MusicSystem.StopCurrent();
+
+		Version.text = "V." + SharedSystemsMain.I.Version;
     }
 
 	void Update(){
