@@ -30,6 +30,8 @@ public class MainMenuHud : MonoBehaviour {
 		SharedSystemsMain.I.MusicSystem.StopCurrent();
 
 		Version.text = "V." + SharedSystemsMain.I.Version;
+
+		EscHudMain.I.FadeOut();
     }
 
 	void Update(){

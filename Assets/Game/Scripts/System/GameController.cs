@@ -225,8 +225,8 @@ public class GameController : MonoBehaviour {
 		//floor stats
 		SetFloor(CurrentFloorIndex);
 
-		HUD.SetAlpha(1f);
-		HUD.FadeOut(0.5f);
+		EscHudMain.I.SetAlpha(1f);
+		EscHudMain.I.FadeOut(0.5f);
 
 		SS.GDB.EscHudShowEnabled=true;
 		SS.GDB.EscHudShowSaveButton=false;
@@ -331,22 +331,22 @@ public class GameController : MonoBehaviour {
 
 	private IEnumerator GotoFloorTimer(int index){
 		Player.inputSub.DISABLE_INPUT=true;
-		HUD.FadeIn();
-		while(HUD.FadeInProgress){
+		EscHudMain.I.FadeIn();
+		while(EscHudMain.I.FadeInProgress){
 			yield return null;
 		}
 		yield return new WaitForSeconds(1f);
 		SetFloor(index);
 		yield return new WaitForSeconds(1f);
 		//dev. elevator sound
-		HUD.FadeOut();
+		EscHudMain.I.FadeOut();
 		//DEV. elevator sound here + some delay
 
 		yield return null;//DEV. haxy hax Thanks to having to call UpdateFloorStats one step after setActive
 
 		UpdateFloorStats(index);
 
-		while(HUD.FadeInProgress){
+		while(EscHudMain.I.FadeInProgress){
 			yield return null;
 		}
 
@@ -451,23 +451,23 @@ public class GameController : MonoBehaviour {
 
 	public void EndMission ()
 	{
-		HUD.FadeIn(0.5f);
+		EscHudMain.I.FadeIn(0.5f);
 		StartCoroutine(EndMissionAfterFade());
 	}
 
 	IEnumerator EndMissionAfterFade(){
-		while(HUD.FadeInProgress) yield return null;
+		while(EscHudMain.I.FadeInProgress) yield return null;
 		SS.GDB.EndMission(this);
 	}
 
 	public void EndGame ()
 	{
-		HUD.FadeIn(0.3f);
+		EscHudMain.I.FadeIn(0.3f);
 		StartCoroutine(EndGameAfterFade());
 	}
 
 	IEnumerator EndGameAfterFade(){
-		while(HUD.FadeInProgress) yield return null;
+		while(EscHudMain.I.FadeInProgress) yield return null;
 		HUD.ShowGameoverPanel();
 	}
 }

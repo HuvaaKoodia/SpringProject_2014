@@ -20,6 +20,8 @@ public class MissionMenuHud : MonoBehaviour {
 
 	public int MissionButtonGap=8;
 
+	public GameObject InputBlocker;
+
     SharedSystemsMain SS;
     MissionObjData Mission;
 	PlayerObjData _player;
@@ -165,16 +167,27 @@ public class MissionMenuHud : MonoBehaviour {
 		_FinanceMenu.OpenMenu();
 	}
 
-    public void PlayMission(){
-        SS.GDB.SetCurrentMission(Mission);
-        SS.GDB.PlayMission();
-		MissionBrief.ShowLoadingLabel();
+    public void PlayMission()
+	{
+		InputBlocker.SetActive(true);
+		EscHudMain.I.FadeIn();
+		StartCoroutine(StartAfterFade());
     }
 
-	//victory menu imp
+	IEnumerator StartAfterFade()
+	{
+		while(EscHudMain.I.FadeInProgress) yield return null;
 
-	void OnFinancePayment(){
-		if (!_FinanceMenu._FinanceManager.HasActiveDebts()){
+		SS.GDB.SetCurrentMission(Mission);
+		SS.GDB.PlayMission();
+		MissionBrief.ShowLoadingLabel();
+	}
+
+	//victory menu imp
+	void OnFinancePayment()
+	{
+		if (!_FinanceMenu._FinanceManager.HasActiveDebts())
+		{
 			//victory
 			lock_input=true;
 			//play sound

@@ -19,7 +19,6 @@ public class MasterHudMain : MonoBehaviour {
     public MissionBriefingMenu MissionBriefing;
 	public GameObject EndMissionPanel;
 	public GameoverPanel _GameoverPanel;
-	public UISprite FadePanel;
 
 	public UILabel FPS;
 	public bool ShowFPS=true;
@@ -231,10 +230,14 @@ public class MasterHudMain : MonoBehaviour {
 
     public void OpenEndMissionPanel(){
         EndMissionPanel.SetActive(true);
+		Time.timeScale=0;
+		GC.Player.inputSub.DISABLE_INPUT=true;
     }
 
     public void CloseEndMissionPanel(){
         EndMissionPanel.SetActive(false);
+		Time.timeScale=1;
+		GC.Player.inputSub.DISABLE_INPUT=false;
     }
 
     public void EndMission(){
@@ -268,46 +271,6 @@ public class MasterHudMain : MonoBehaviour {
 		}
 	}
 
-	public void FadeIn(){
-		FadeIn(1);
-	}
-	
-	public void FadeOut(){
-		FadeOut(1);
-	}
-
-	public void FadeIn(float fade_speed){
-		StopCoroutine("Fader");
-		StartCoroutine(Fader(Time.deltaTime*fade_speed));
-	}
-
-	public void FadeOut(float fade_speed){
-		StopCoroutine("Fader");
-		StartCoroutine(Fader(-Time.deltaTime*fade_speed));
-	}
-
-	public void SetAlpha(float alpha){
-		FadePanel.alpha=alpha;
-	}
-
-	public bool FadeInProgress{get;private set;}
-
-	IEnumerator Fader(float amount){
-		FadeInProgress=true;
-		while (true){
-			FadePanel.alpha+=amount;
-			if (FadePanel.alpha<=0){
-				FadePanel.alpha=0;
-				break;
-			}
-			else if (FadePanel.alpha>=1){
-				FadePanel.alpha=1;
-				break;
-			}
-			else yield return null;
-		}
-		FadeInProgress=false;
-	}
 
 	public void ShowGameoverPanel()
 	{

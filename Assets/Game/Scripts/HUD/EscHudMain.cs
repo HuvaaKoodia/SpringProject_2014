@@ -3,12 +3,22 @@ using System.Collections;
 
 public class EscHudMain : MonoBehaviour {
 
+	public static EscHudMain I;
+
 	public GameDB GDB;
 	public UILabel GameSavedLabel;
 	public GameObject SaveButton;
 
-	public bool Active{get{return gameObject.activeSelf;}}
+	public GameObject Anchor;
+
+	public bool Active{get{return Anchor.activeSelf;}}
+	[SerializeField] UISprite FadePanel;
 		
+	void Awake()
+	{
+		I=this;
+	}
+
 	public void ShowGameSavedLabel(){
 		var savetype=GDB.GameData.IronManMode?"Ironman":"Normal";
 		ShowLabel("GAME SAVED - "+savetype);
@@ -40,8 +50,7 @@ public class EscHudMain : MonoBehaviour {
 	}
 
 	public void Activate(bool on){
-		gameObject.SetActive(on);
-
+		Anchor.SetActive(on);
 		Time.timeScale=on?0:1f;
 	}
 
@@ -59,5 +68,56 @@ public class EscHudMain : MonoBehaviour {
 	public void SaveGamePressed(){
 		GDB.SaveGame();
 		ShowGameSavedLabel();
+	}
+
+	//fader
+
+	
+	public void FadeIn(){
+		FadeIn(1);
+	}
+	
+	public void FadeOut(){
+		FadeOut(1);
+	}
+	
+	public void FadeIn(float fade_speed){
+		StopCoroutine("Fader");
+		StartCoroutine(Fader(Time.fixedDeltaTime*fade_speed));
+	}
+	
+	public void FadeOut(float fade_speed){
+		StopCoroutine("Fader");
+		StartCoroutine(Fader(-Time.fixedDeltaTime*fade_speed));
+	}
+	
+	public void SetAlpha(float alpha){
+		FadePanel.alpha=alpha;
+	}
+	
+	public bool FadeInProgress{get;private set;}
+	
+	IEnumerator Fader(float amount){
+
+		if (!FadeInProgress)
+		{
+			if (amount<0) FadePanel.alpha=1;
+			if (amount>0) FadePanel.alpha=0;
+		}
+
+		FadeInProgress=true;
+		while (true){
+			FadePanel.alpha+=amount;
+			if (FadePanel.alpha<=0){
+				FadePanel.alpha=0;
+				break;
+			}
+			else if (FadePanel.alpha>=1){
+				FadePanel.alpha=1;
+				break;
+			}
+			else yield return null;
+		}
+		FadeInProgress=false;
 	}
 }

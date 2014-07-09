@@ -504,7 +504,16 @@ public class PlayerMain : EntityMain
 
 	public void SetMouseLook(bool look)
 	{
+		MouseLookOn=look;
 		GameCamera.GetComponent<MouseLook>().MouseLookOn = look;
+	}
+
+	public bool MouseLookOn;
+
+	public void SetMouseLookPreserveCurrentSetting(bool on)
+	{
+		if (!MouseLookOn) on=false;
+		GameCamera.GetComponent<MouseLook>().MouseLookOn = on;
 	}
 
 	public void ToggleMouseLook()

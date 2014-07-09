@@ -5,6 +5,7 @@ public class NewGameMenuMain : MonoBehaviour {
 
 	public UILabel Description;
 	public GameObject Warning_overwrite;
+	public GameObject InputBlocker;
 
 	GameDB GDB;
 
@@ -18,6 +19,16 @@ public class NewGameMenuMain : MonoBehaviour {
 	}
 
 	void PlayClick(){
+		EscHudMain.I.FadeIn();
+		InputBlocker.SetActive(true);
+
+		StartCoroutine(PlayAfterFade());
+	}
+
+	IEnumerator PlayAfterFade()
+	{
+		while(EscHudMain.I.FadeInProgress) yield return null;
+
 		GDB.CreateNewGame();
 		GDB.GameData.IronManMode=ironman_mode;
 		GDB.PlayGame();

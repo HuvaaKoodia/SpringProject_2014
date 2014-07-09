@@ -173,6 +173,9 @@ public class GameDB : MonoBehaviour {
 		ResetStuff();
 
 		SS.GOps.UpdateGameBrightness();//must be called on each level start up
+
+		EscHudMain.I.FadeOut();
+		Time.timeScale=1f;
 	}
 
     public void EndMission(GameController GC)
@@ -211,7 +214,8 @@ public class GameDB : MonoBehaviour {
 
     public void RemoveQuestItems()
     {
-		for(int i=0;i<GameData.PlayerData.Items.maxItemCount;++i){
+		for(int i=0;i<GameData.PlayerData.Items.maxItemCount;++i)
+		{
 			var item=GameData.PlayerData.Items.GetItem(i);
             if (item==null) continue;
             if (item.baseItem.type==InvBaseItem.Type.QuestItem){
