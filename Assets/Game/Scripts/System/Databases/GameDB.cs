@@ -301,6 +301,8 @@ public class GameObjData{
 	public bool IronManMode {get;set;}
 	public bool UsedFinanceManager {get;set;}
 
+	public bool FirstTimeInMissionMenu {get;set;}
+
 	public PlayerObjData PlayerData{get; set;}
 	public List<MissionObjData> AvailableMissions{get; set;}
 	
@@ -316,6 +318,7 @@ public class GameObjData{
 	public GameObjData(){}
 
 	public void NewGame(){
+		FirstTimeInMissionMenu=true;
 		IronManMode=false;
 		CurrentTime=1;
 		AvailableMissions=new List<MissionObjData>();

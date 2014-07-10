@@ -20,7 +20,8 @@ public class MissionMenuHud : MonoBehaviour {
 
 	public int MissionButtonGap=8;
 
-	public GameObject InputBlocker;
+	[SerializeField] GameObject InputBlocker;
+	[SerializeField] GameObject GameStartText,TabButtons;
 
     SharedSystemsMain SS;
     MissionObjData Mission;
@@ -63,28 +64,42 @@ public class MissionMenuHud : MonoBehaviour {
 
 		_MechanicMenu=mm_init.Instance;
 		_MechanicMenu.SetPlayer(_player);
+		_MechanicMenu.gameObject.SetActive(false);
 	
 		_FinanceMenu.SetFinanceManager(SS.GDB.GameData.FinanceManager);
 
-        //open correct menu
+        //open correct menus
 		CheckMoneyAmount();
 
-		if (SS.GDB.GOTO_DEBRIEF){
-            SS.GDB.GOTO_DEBRIEF=false;
-			MissionDebrief.SetMission(SS.GDB);
-            OpenMissionDebrief();
-        }
-        else{
-            OpenMissionSelect();
-        }
+		
+		if (SS.GDB.GameData.FirstTimeInMissionMenu)
+		{
+			GameStartText.SetActive(true);
+			TabButtons.SetActive(false);
+			SS.GDB.GameData.FirstTimeInMissionMenu=false;
+		}
+		else
+		{
+			if (SS.GDB.GOTO_DEBRIEF){
+	            SS.GDB.GOTO_DEBRIEF=false;
+				MissionDebrief.SetMission(SS.GDB);
+	            OpenMissionDebrief();
+	        }
+	        else{
+				SetStartUpMenus();
+	        }
+		}
 
+		//save load label
 		if (SS.GDB.GameLoaded){
 			SS.GDB.GameLoaded=false;
 			SS.EscHud.ShowGameLoadedLabel();
 		}
 		else{
-			SS.GDB.SaveGame();
 			SS.EscHud.ShowGameSavedLabel();
+
+			//autosave
+			SS.GDB.SaveGame();
 		}
 
 		Daylabel.text="Day: "+SS.GDB.GameData.CurrentTime;
@@ -203,4 +218,19 @@ public class MissionMenuHud : MonoBehaviour {
 		Tabs.ActivateMenu(victoryMenu.gameObject);
 		victoryMenu.OpenMenu(this);
 	}
+
+	//start up
+
+	public void OnStartButtonPressed(){
+		SetStartUpMenus();
+	}
+
+	void SetStartUpMenus()
+	{
+		GameStartText.SetActive(false);
+		TabButtons.SetActive(true);
+
+		OpenMissionSelect();
+	}
+
 }
