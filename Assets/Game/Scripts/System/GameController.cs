@@ -468,6 +468,6 @@ public class GameController : MonoBehaviour {
 
 	IEnumerator EndGameAfterFade(){
 		while(EscHudMain.I.FadeInProgress) yield return null;
-		HUD.ShowGameoverPanel();
+		SharedSystemsMain.I.EscHud.ShowGameoverPanel();
 	}
 }

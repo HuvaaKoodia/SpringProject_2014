@@ -99,11 +99,7 @@ public class PlayerInputSub : MonoBehaviour {
 			else pressed_once_turning=false;
 
 			//other input
-			
-			if (Input.GetButtonDown("Toggle Inventory"))
-			{
-				player.HUD.ToggleInventory();
-			}
+
 			if (Input.GetButtonDown("Toggle Map"))
 			{
 				player.HUD.MasterHud.ToggleMap();
@@ -116,7 +112,6 @@ public class PlayerInputSub : MonoBehaviour {
 			{
 				player.HUD.MasterHud.ToggleStatus();
 			}
-			
 			if (Input.GetButtonDown("Disperse Heat"))
 			{
 				DisperseHeatInput();
@@ -156,6 +151,11 @@ public class PlayerInputSub : MonoBehaviour {
 		if (Input.GetButtonDown("Interact"))
 		{
 			InteractInput(false);
+		}
+
+		if (Input.GetButtonDown("Toggle Inventory"))
+		{
+			player.HUD.ToggleInventory();
 		}
 
 #if UNITY_EDITOR

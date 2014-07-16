@@ -18,8 +18,10 @@ public class MasterHudMain : MonoBehaviour {
 	public InGameInfoPanelMain InfoHud;
     public MissionBriefingMenu MissionBriefing;
 	public GameObject EndMissionPanel;
-	public GameoverPanel _GameoverPanel;
 
+	[SerializeField] GameObject ManualMenuGO;
+	[SerializeField] GameObject InfoMenuGO;
+	
 	public UILabel FPS;
 	public bool ShowFPS=true;
 
@@ -35,8 +37,6 @@ public class MasterHudMain : MonoBehaviour {
 		if (!ShowFPS){
 			FPS.gameObject.SetActive(false);
 		}
-
-		_GameoverPanel.gameObject.SetActive(false);
 	}
 
     public void SetGC(GameController gc){
@@ -240,6 +240,23 @@ public class MasterHudMain : MonoBehaviour {
 		GC.Player.inputSub.DISABLE_INPUT=false;
     }
 
+	public void ToggleManual()
+	{
+		bool manualOn=ManualMenuGO.activeSelf;
+
+		ManualMenuGO.SetActive(!manualOn);
+		InfoMenuGO.SetActive(manualOn);
+
+		if (manualOn)
+		{
+
+		}
+		else
+		{
+
+		}
+	}
+
     public void EndMission(){
         GC.EndMission();
     }
@@ -271,9 +288,4 @@ public class MasterHudMain : MonoBehaviour {
 		}
 	}
 
-
-	public void ShowGameoverPanel()
-	{
-		_GameoverPanel.Activate(!GC.SS.GDB.GameData.IronManMode);
-	}
 }

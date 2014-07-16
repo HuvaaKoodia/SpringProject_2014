@@ -13,10 +13,13 @@ public class EscHudMain : MonoBehaviour {
 
 	public bool Active{get{return Anchor.activeSelf;}}
 	[SerializeField] UISprite FadePanel;
+	[SerializeField] GameoverPanel _GameoverPanel;
 		
 	void Awake()
 	{
 		I=this;
+
+		_GameoverPanel.gameObject.SetActive(false);
 	}
 
 	public void ShowGameSavedLabel(){
@@ -119,5 +122,12 @@ public class EscHudMain : MonoBehaviour {
 			else yield return null;
 		}
 		FadeInProgress=false;
+	}
+
+	
+	
+	public void ShowGameoverPanel()
+	{
+		_GameoverPanel.Activate(!SharedSystemsMain.I.GDB.GameData.IronManMode);
 	}
 }
