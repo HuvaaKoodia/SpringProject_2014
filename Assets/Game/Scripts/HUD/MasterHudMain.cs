@@ -37,6 +37,8 @@ public class MasterHudMain : MonoBehaviour {
 		if (!ShowFPS){
 			FPS.gameObject.SetActive(false);
 		}
+
+		ManualMenuGO.SetActive(false);
 	}
 
     public void SetGC(GameController gc){
@@ -85,6 +87,7 @@ public class MasterHudMain : MonoBehaviour {
 
 	public void ActivateInventoryHUD()
 	{
+		ActivateManual(false);
 		ChangeMenuState(MenuState.InventoryHUD);
 	}
 	
@@ -112,6 +115,7 @@ public class MasterHudMain : MonoBehaviour {
 	public void ToggleInventory()
 	{
 		if (DeactivateInventoryHUDIfOpen()) return;
+
 		InfoHud.OpenTab_Inventory();
 		ActivateInventoryHUD();
 	}
@@ -136,18 +140,21 @@ public class MasterHudMain : MonoBehaviour {
 
 	public void OpenMapInfopanel()
 	{
+		ActivateManual(false);
 		InfoHud.OpenTab_Map();
 		ActivateInventoryHUD();
 	}
 
 	public void OpenStatusInfopanel()
 	{
+		ActivateManual(false);
 		InfoHud.OpenTab_Status();
 		ActivateInventoryHUD();
 	}
 
 	public void OpenLogsInfoPanel()
 	{
+		ActivateManual(false);
 		InfoHud.OpenTab_Logs();
 		ActivateInventoryHUD();
 	}
@@ -242,19 +249,15 @@ public class MasterHudMain : MonoBehaviour {
 
 	public void ToggleManual()
 	{
-		bool manualOn=ManualMenuGO.activeSelf;
+		bool manualOn = ManualMenuGO.activeSelf;
 
-		ManualMenuGO.SetActive(!manualOn);
-		InfoMenuGO.SetActive(manualOn);
+		ActivateManual(!manualOn);
+	}
 
-		if (manualOn)
-		{
-
-		}
-		else
-		{
-
-		}
+	void ActivateManual(bool on)
+	{
+		ManualMenuGO.SetActive(on);
+		InfoMenuGO.SetActive(!on);
 	}
 
     public void EndMission(){

@@ -15,13 +15,16 @@ public class MissionMenuHud : MonoBehaviour {
     public MenuTabController Tabs;
 	public UILabel MoneyLabel,Daylabel;
 
+	public GameOverMenu gameOverMenu;
 	public VictoryMenu victoryMenu;
 	public OutOfMoneyMenu outofmoney;
 
 	public int MissionButtonGap=8;
 
-	[SerializeField] GameObject InputBlocker;
-	[SerializeField] GameObject GameStartText,TabButtons;
+	public GameObject InputBlocker;
+	public GameObject GameStartText,TabButtons;
+
+
 
     SharedSystemsMain SS;
     MissionObjData Mission;
@@ -59,13 +62,15 @@ public class MissionMenuHud : MonoBehaviour {
 
         //set references
         _VendorMenu.SetPlayer(_player);
+		_player.ClearHeat();
 		_VendorMenu.SetVendor(SS.GDB.GameData.VendorStore);
         _VendorMenu.Init();
 
 		_MechanicMenu=mm_init.Instance;
 		_MechanicMenu.SetPlayer(_player);
-		_MechanicMenu.gameObject.SetActive(false);
-	
+		//_MechanicMenu.gameObject.SetActive(false);
+		Tabs.CloseOtherMenus(null);
+
 		_FinanceMenu.SetFinanceManager(SS.GDB.GameData.FinanceManager);
 
         //open correct menus
@@ -134,6 +139,14 @@ public class MissionMenuHud : MonoBehaviour {
 		{
 			OpenFinance();
 		}
+
+		#if UNITY_EDITOR
+		if (Input.GetKey(KeyCode.Z))
+		{	
+			_player.Money += 1000;
+		}
+		#endif
+
 	}
 
 
@@ -150,7 +163,7 @@ public class MissionMenuHud : MonoBehaviour {
     }
 
     public void OpenMissionDebrief(){
-        Tabs. ActivateMenu(MissionDebrief.gameObject);
+        Tabs.ActivateMenu(MissionDebrief.gameObject);
     }
 
     public void OpenMissionSelect(){
@@ -162,6 +175,8 @@ public class MissionMenuHud : MonoBehaviour {
 		else{
         	Tabs.ActivateMenu(MissionMenu);
 		}
+
+		Tabs.gameObject.SetActive(true);
 	}
 
     public void OpenVendor(){
@@ -217,6 +232,15 @@ public class MissionMenuHud : MonoBehaviour {
 	void OpenVictoryMenu(){
 		Tabs.ActivateMenu(victoryMenu.gameObject);
 		victoryMenu.OpenMenu(this);
+	}
+
+	public void OpenGameoverMenu()
+	{
+		lock_input=true;
+
+		TabButtons.SetActive(false);
+		Tabs.ActivateMenu(gameOverMenu.gameObject);
+		gameOverMenu.gameObject.SetActive(true);
 	}
 
 	//start up

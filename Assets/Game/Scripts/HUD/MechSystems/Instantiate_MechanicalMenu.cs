@@ -17,6 +17,8 @@ public class Instantiate_MechanicalMenu : MonoBehaviour {
 		instance.transform.localScale=Vector3.one;
 		instance.transform.localPosition=Vector3.one;
 
+		instance.gameObject.SetActive(true);
+
 		instance.allow_buying=AllowBuying;
 	}
 }

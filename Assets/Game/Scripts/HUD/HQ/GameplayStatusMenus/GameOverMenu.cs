@@ -10,4 +10,9 @@ public class GameOverMenu : MonoBehaviour {
 
 		Warning_finances.SetActive(!SS.GDB.GameData.UsedFinanceManager);
 	}
+
+	public void OnBackToMenuPressed()
+	{
+		SharedSystemsMain.I.GDB.EndGame();
+	}
 }

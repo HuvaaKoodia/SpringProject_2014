@@ -269,7 +269,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &100032
 GameObject:
   m_ObjectHideFlags: 1
@@ -547,7 +547,7 @@ GameObject:
   - 4: {fileID: 400400}
   - 114: {fileID: 11400012}
   m_Layer: 22
-  m_Name: ExcMenu
+  m_Name: EscMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -776,7 +776,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100020}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -955.117432, y: -537.599976, z: 0}
+  m_LocalPosition: {x: -956.446472, y: -537.599976, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400018}
@@ -919,7 +919,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100042}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.84771824, y: 6650.91211, z: 0}
+  m_LocalPosition: {x: 0, y: 6650.66943, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400040}
@@ -2250,6 +2250,9 @@ MonoBehaviour:
   functionName: MainMenuPressed
   trigger: 0
   includeChildren: 0
+  useAutoIncrement: 0
+  AutoIncrementDelay: 1000
+  AutoIncrementDelayMulti: .800000012
   OnPressInputIndex: 0
 --- !u!114 &11400062
 MonoBehaviour:
@@ -2357,6 +2360,9 @@ MonoBehaviour:
   functionName: LoadGamePressed
   trigger: 0
   includeChildren: 0
+  useAutoIncrement: 0
+  AutoIncrementDelay: 1000
+  AutoIncrementDelayMulti: .800000012
   OnPressInputIndex: 0
 --- !u!114 &11400072
 MonoBehaviour:

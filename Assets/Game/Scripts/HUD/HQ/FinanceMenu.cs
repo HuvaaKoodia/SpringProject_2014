@@ -48,66 +48,31 @@ public class FinanceMenu : MonoBehaviour {
 	private void UpdateLeftToBePayed(int i)
 	{
 		var FM_l_i = _FinanceManager.GetDebt(i);
-		if(LeftToBePayed.Count > 0)
-		{
-			LeftToBePayed[i].text = FM_l_i.left_tb_payed.ToString();
-		}
+		LeftToBePayed[i].text = FM_l_i.left_tb_payed.ToString();
 	}
 
 	//function to update the value of monthly cut per debt
 	private void UpdateMonthlyCut(int i)
 	{
 		var FM_l_i = _FinanceManager.listofdebts[i];
-		if(MonthlyCut.Count > 0)
-		{
-			//as long as the debt is active, monthly_cut will have a value
-			if(!FM_l_i.active)
-			{
-				FM_l_i.monthly_cut = 0;
-			}
-			else
-			{
-				//_FinanceManager.CalcMonthlyCut();
-				MonthlyCut[i].text = FM_l_i.monthly_cut.ToString();
-			}
-		}
+		//_FinanceManager.CalcMonthlyCut();
+		MonthlyCut[i].text = FM_l_i.monthly_cut.ToString();
 	}
 
 	//function to update the value of interest per debt
 	private void UpdateInterest(int i)
 	{
 		var FM_l_i = _FinanceManager.listofdebts[i];
-		if(Interest.Count > 0)
-		{
-			//as long as the debt is active, interest will have a value
-			if(!FM_l_i.active)
-			{
-				FM_l_i.interest = 0;
-			}
-			else
-			{
-				Interest[i].text = ((int)FM_l_i.interest).ToString() + "\n(" + (FM_l_i.interest_percent * 100).ToString() + "%)";
-			}
-		}
+
+		Interest[i].text = ((int)FM_l_i.interest).ToString() + "\n(" + (FM_l_i.interest_percent * 100).ToString() + "%)";
 	}
 
 	//function to update the value of debt payment per debt and payment total
 	private void UpdatePayments(int i)
 	{
 		var FM_l_i = _FinanceManager.listofdebts[i];
-		if(Payments.Count > 0)
-		{
-			//as long as the debt is active, debt_payment will have a value
-			if(!FM_l_i.active)
-			{
-				FM_l_i.debt_payment = 0;
-			}
-			else
-			{
-				Payments[i].text = ((int)FM_l_i.debt_payment).ToString();
-			}
-			Payments[Payments.Count - 1].text = ((int)_FinanceManager.payment_total).ToString();
-		}
+		Payments[i].text = ((int)FM_l_i.debt_payment).ToString();
+		Payments[Payments.Count - 1].text = ((int)_FinanceManager.payment_total).ToString();
 	}
 
 	public void OpenMenu(){

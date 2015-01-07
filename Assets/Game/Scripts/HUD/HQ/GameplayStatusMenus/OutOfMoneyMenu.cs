@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class OutOfMoneyMenu : MonoBehaviour {
-
+public class OutOfMoneyMenu : MonoBehaviour 
+{
 	public GameObject AOKPanel,WarningPanel;
 	MissionMenuHud _menu;
 
@@ -46,7 +46,8 @@ public class OutOfMoneyMenu : MonoBehaviour {
 		CloseMenu();
 	}
 
-	public void EndGamePressed(){
-		SharedSystemsMain.I.GDB.EndGame();
+	public void EndGamePressed()
+	{
+		_menu.OpenGameoverMenu();
 	}
 }

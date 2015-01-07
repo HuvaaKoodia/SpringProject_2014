@@ -96,7 +96,6 @@ GameObject:
   - 65: {fileID: 6500000}
   - 114: {fileID: 11400014}
   - 114: {fileID: 11400012}
-  - 114: {fileID: 11400010}
   m_Layer: 13
   m_Name: BackToMainMenu
   m_TagString: Untagged
@@ -1614,7 +1613,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &100252
 GameObject:
   m_ObjectHideFlags: 1
@@ -6793,7 +6792,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100284}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.60477602, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400214}
@@ -10674,6 +10673,9 @@ MonoBehaviour:
   functionName: DecreaseShortDebt3
   trigger: 0
   includeChildren: 0
+  useAutoIncrement: 0
+  AutoIncrementDelay: 1000
+  AutoIncrementDelayMulti: .800000012
   OnPressInputIndex: 0
 --- !u!114 &11400002
 MonoBehaviour:
@@ -10746,6 +10748,9 @@ MonoBehaviour:
   functionName: IncreaseShortDebt3
   trigger: 0
   includeChildren: 0
+  useAutoIncrement: 0
+  AutoIncrementDelay: 1000
+  AutoIncrementDelayMulti: .800000012
   OnPressInputIndex: 0
 --- !u!114 &11400008
 MonoBehaviour:
@@ -10788,22 +10793,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
---- !u!114 &11400010
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100010}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4c4ff40739c7904ca26c14ffbdc4176, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 100242}
-  functionName: PlayMission
-  trigger: 0
-  includeChildren: 0
-  OnPressInputIndex: 0
 --- !u!114 &11400012
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10853,7 +10842,10 @@ MonoBehaviour:
   duration: .200000003
   disabledColor: {r: .5, g: .5, b: .5, a: 1}
   dragHighlight: 0
-  onClick: []
+  onClick:
+  - mTarget: {fileID: 11400346}
+    mMethodName: OnBackToMenuPressed
+    oneShot: 0
 --- !u!114 &11400018
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10910,6 +10902,9 @@ MonoBehaviour:
   functionName: IncreaseShortDebt3
   trigger: 0
   includeChildren: 0
+  useAutoIncrement: 0
+  AutoIncrementDelay: 1000
+  AutoIncrementDelayMulti: .800000012
   OnPressInputIndex: 0
 --- !u!114 &11400022
 MonoBehaviour:
@@ -10926,6 +10921,9 @@ MonoBehaviour:
   functionName: DecreaseShortDebt3
   trigger: 0
   includeChildren: 0
+  useAutoIncrement: 0
+  AutoIncrementDelay: 1000
+  AutoIncrementDelayMulti: .800000012
   OnPressInputIndex: 0
 --- !u!114 &11400024
 MonoBehaviour:
@@ -10942,6 +10940,9 @@ MonoBehaviour:
   functionName: IncreaseShortDebt2
   trigger: 0
   includeChildren: 0
+  useAutoIncrement: 0
+  AutoIncrementDelay: 1000
+  AutoIncrementDelayMulti: .800000012
   OnPressInputIndex: 0
 --- !u!114 &11400026
 MonoBehaviour:
@@ -10979,6 +10980,9 @@ MonoBehaviour:
   functionName: DecreaseShortDebt2
   trigger: 0
   includeChildren: 0
+  useAutoIncrement: 0
+  AutoIncrementDelay: 1000
+  AutoIncrementDelayMulti: .800000012
   OnPressInputIndex: 0
 --- !u!114 &11400030
 MonoBehaviour:
@@ -10995,6 +10999,9 @@ MonoBehaviour:
   functionName: DecreaseShortDebt2
   trigger: 0
   includeChildren: 0
+  useAutoIncrement: 0
+  AutoIncrementDelay: 1000
+  AutoIncrementDelayMulti: .800000012
   OnPressInputIndex: 0
 --- !u!114 &11400032
 MonoBehaviour:
@@ -11086,6 +11093,9 @@ MonoBehaviour:
   functionName: IncreaseShortDebt2
   trigger: 0
   includeChildren: 0
+  useAutoIncrement: 0
+  AutoIncrementDelay: 1000
+  AutoIncrementDelayMulti: .800000012
   OnPressInputIndex: 0
 --- !u!114 &11400038
 MonoBehaviour:
@@ -11287,6 +11297,9 @@ MonoBehaviour:
   functionName: DecreaseShortDebt1
   trigger: 0
   includeChildren: 0
+  useAutoIncrement: 0
+  AutoIncrementDelay: 1000
+  AutoIncrementDelayMulti: .800000012
   OnPressInputIndex: 0
 --- !u!114 &11400050
 MonoBehaviour:
@@ -11303,6 +11316,9 @@ MonoBehaviour:
   functionName: IncreaseShortDebt1
   trigger: 0
   includeChildren: 0
+  useAutoIncrement: 0
+  AutoIncrementDelay: 1000
+  AutoIncrementDelayMulti: .800000012
   OnPressInputIndex: 0
 --- !u!114 &11400052
 MonoBehaviour:
@@ -11319,6 +11335,9 @@ MonoBehaviour:
   functionName: 
   trigger: 0
   includeChildren: 0
+  useAutoIncrement: 0
+  AutoIncrementDelay: 1000
+  AutoIncrementDelayMulti: .800000012
   OnPressInputIndex: 0
 --- !u!114 &11400054
 MonoBehaviour:
@@ -11376,6 +11395,9 @@ MonoBehaviour:
   functionName: IncreaseShortDebt1
   trigger: 0
   includeChildren: 0
+  useAutoIncrement: 0
+  AutoIncrementDelay: 1000
+  AutoIncrementDelayMulti: .800000012
   OnPressInputIndex: 0
 --- !u!114 &11400058
 MonoBehaviour:
@@ -11392,6 +11414,9 @@ MonoBehaviour:
   functionName: DecreaseShortDebt1
   trigger: 0
   includeChildren: 0
+  useAutoIncrement: 0
+  AutoIncrementDelay: 1000
+  AutoIncrementDelayMulti: .800000012
   OnPressInputIndex: 0
 --- !u!114 &11400060
 MonoBehaviour:
@@ -11647,6 +11672,9 @@ MonoBehaviour:
   functionName: ShortenDebt1
   trigger: 0
   includeChildren: 0
+  useAutoIncrement: 0
+  AutoIncrementDelay: 1000
+  AutoIncrementDelayMulti: .800000012
   OnPressInputIndex: 0
 --- !u!114 &11400074
 MonoBehaviour:
@@ -11663,6 +11691,9 @@ MonoBehaviour:
   functionName: ShortenDebt2
   trigger: 0
   includeChildren: 0
+  useAutoIncrement: 0
+  AutoIncrementDelay: 1000
+  AutoIncrementDelayMulti: .800000012
   OnPressInputIndex: 0
 --- !u!114 &11400076
 MonoBehaviour:
@@ -11679,6 +11710,9 @@ MonoBehaviour:
   functionName: ShortenDebt3
   trigger: 0
   includeChildren: 0
+  useAutoIncrement: 0
+  AutoIncrementDelay: 1000
+  AutoIncrementDelayMulti: .800000012
   OnPressInputIndex: 0
 --- !u!114 &11400078
 MonoBehaviour:
@@ -11753,6 +11787,9 @@ MonoBehaviour:
   functionName: OpenMissionSelect
   trigger: 0
   includeChildren: 0
+  useAutoIncrement: 0
+  AutoIncrementDelay: 1000
+  AutoIncrementDelayMulti: .800000012
   OnPressInputIndex: 0
 --- !u!114 &11400082
 MonoBehaviour:
@@ -12888,7 +12925,7 @@ MonoBehaviour:
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 1
   mWidth: 1794
-  mHeight: 500
+  mHeight: 250
   mDepth: 3
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -12896,8 +12933,7 @@ MonoBehaviour:
   mTrueTypeFont: {fileID: 12800000, guid: 83831f88b8a199c41a5ad9534c14d4c6, type: 3}
   mFont: {fileID: 0}
   mText: "Through hard work and sheer luck it seems you have \nfinally made it. You
-    were able to cover your debts \nand start a new beginning. Stay safe.\n\n\n\n\n\n\nKeep
-    playing?"
+    were able to cover your debts \nand start a new life. \n\nStay safe, have fun!"
   mFontSize: 50
   mFontStyle: 0
   mEncoding: 1
@@ -12933,6 +12969,9 @@ MonoBehaviour:
   functionName: OpenMissionSelect
   trigger: 0
   includeChildren: 0
+  useAutoIncrement: 0
+  AutoIncrementDelay: 1000
+  AutoIncrementDelayMulti: .800000012
   OnPressInputIndex: 0
 --- !u!114 &11400138
 MonoBehaviour:
@@ -14797,6 +14836,9 @@ MonoBehaviour:
   functionName: OpenMissionSelect
   trigger: 0
   includeChildren: 0
+  useAutoIncrement: 0
+  AutoIncrementDelay: 1000
+  AutoIncrementDelayMulti: .800000012
   OnPressInputIndex: 0
 --- !u!114 &11400250
 MonoBehaviour:
@@ -15252,6 +15294,9 @@ MonoBehaviour:
   functionName: OpenFinance
   trigger: 0
   includeChildren: 0
+  useAutoIncrement: 0
+  AutoIncrementDelay: 1000
+  AutoIncrementDelayMulti: .800000012
   OnPressInputIndex: 0
 --- !u!114 &11400306
 MonoBehaviour:
@@ -15275,6 +15320,7 @@ MonoBehaviour:
   Tabs: {fileID: 11400446}
   MoneyLabel: {fileID: 11400176}
   Daylabel: {fileID: 11400284}
+  gameOverMenu: {fileID: 11400346}
   victoryMenu: {fileID: 11400202}
   outofmoney: {fileID: 11400040}
   MissionButtonGap: 3
@@ -15557,10 +15603,10 @@ MonoBehaviour:
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 12800000, guid: 83831f88b8a199c41a5ad9534c14d4c6, type: 3}
   mFont: {fileID: 0}
-  mText: "And so you ran out of money. Even selling everything you own isn't enough
-    to cover your debts. Without money you are unable to carry on as a Scavenger.
-    \ It makes little difference whether you could manage to hide from your claimants
-    for a while or not - it\u2019s all over now."
+  mText: "So you ran out of money. Even selling everything you own isn't enough to
+    cover your debts. Without money you are unable to carry on as a Scavenger.  \nIt
+    makes little difference whether you could manage to hide from your claimants for
+    a while or not - it\u2019s all over now."
   mFontSize: 50
   mFontStyle: 0
   mEncoding: 1
@@ -15711,6 +15757,9 @@ MonoBehaviour:
   functionName: PlayMission
   trigger: 0
   includeChildren: 0
+  useAutoIncrement: 0
+  AutoIncrementDelay: 1000
+  AutoIncrementDelayMulti: .800000012
   OnPressInputIndex: 0
 --- !u!114 &11400358
 MonoBehaviour:
@@ -15970,6 +16019,9 @@ MonoBehaviour:
   functionName: OpenVendor
   trigger: 0
   includeChildren: 0
+  useAutoIncrement: 0
+  AutoIncrementDelay: 1000
+  AutoIncrementDelayMulti: .800000012
   OnPressInputIndex: 0
 --- !u!114 &11400388
 MonoBehaviour:
@@ -16133,6 +16185,9 @@ MonoBehaviour:
   functionName: OpenMechanic
   trigger: 0
   includeChildren: 0
+  useAutoIncrement: 0
+  AutoIncrementDelay: 1000
+  AutoIncrementDelayMulti: .800000012
   OnPressInputIndex: 0
 --- !u!114 &11400404
 MonoBehaviour:
@@ -16713,10 +16768,10 @@ MonoBehaviour:
   mFont: {fileID: 0}
   mText: "Life was never an easy ride for you. After getting fired from your job and
     running out of money\r you end up having nothing more but a galaxy full of claimants
-    and a hefty debt to pay. \r\n\r\nYou become a scavenger. One amongst the gangs,
+    and a hefty debt to pay. \r\n\r\nYou became a scavenger. One amongst the gangs,
     riffraff and smugglers who delve through derelict space ships looking for anything
     worth a dime. \r\n\r\nYou board your rented quadrupedal mech suit and hope to
-    make enough money to make it through the next due date..."
+    make enough money to before the next due date..."
   mFontSize: 70
   mFontStyle: 0
   mEncoding: 1
@@ -17394,6 +17449,9 @@ MonoBehaviour:
   functionName: SellAll
   trigger: 0
   includeChildren: 0
+  useAutoIncrement: 0
+  AutoIncrementDelay: 1000
+  AutoIncrementDelayMulti: .800000012
   OnPressInputIndex: 0
 --- !u!114 &11400500
 MonoBehaviour:
@@ -21706,6 +21764,9 @@ MonoBehaviour:
   functionName: ActivateDebt2
   trigger: 0
   includeChildren: 0
+  useAutoIncrement: 0
+  AutoIncrementDelay: 1000
+  AutoIncrementDelayMulti: .800000012
   OnPressInputIndex: 0
 --- !u!114 &11400786
 MonoBehaviour:
@@ -22864,6 +22925,9 @@ MonoBehaviour:
   functionName: ActivateDebt1
   trigger: 0
   includeChildren: 0
+  useAutoIncrement: 0
+  AutoIncrementDelay: 1000
+  AutoIncrementDelayMulti: .800000012
   OnPressInputIndex: 0
 --- !u!114 &11400862
 MonoBehaviour:
@@ -24959,6 +25023,9 @@ MonoBehaviour:
   functionName: ActivateDebt3
   trigger: 0
   includeChildren: 0
+  useAutoIncrement: 0
+  AutoIncrementDelay: 1000
+  AutoIncrementDelayMulti: .800000012
   OnPressInputIndex: 0
 --- !u!114 &11401002
 MonoBehaviour:

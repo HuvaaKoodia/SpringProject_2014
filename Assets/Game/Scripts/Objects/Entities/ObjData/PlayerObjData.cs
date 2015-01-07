@@ -179,4 +179,14 @@ public class PlayerObjData{
 	public void ClearDownloadData(){
 		DownloadedData.Clear();
 	}
+
+	
+	public void ClearHeat ()
+	{
+		foreach(var part in MechParts){
+			part.HEAT = 0;
+		}
+
+		UpperTorso.HEAT = 0;
+	}
 }

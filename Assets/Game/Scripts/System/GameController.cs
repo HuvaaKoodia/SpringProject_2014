@@ -207,7 +207,7 @@ public class GameController : MonoBehaviour {
 		var c_mis=SS.GDB.GameData.CurrentMission;
 		var power=c_mis.MissionShipPower==MissionObjData.ShipPower.On;
 
-		if (c_mis.MissionShipPower==MissionObjData.ShipPower.Broken); //DEV.todo break generator
+		//if (c_mis.MissionShipPower == MissionObjData.ShipPower.Broken); //DEV.todo break generator
 
 		if (randomizeDoorStates)SS.SDGen.RandomizeDoorStates(this,ship_objdata);
 
@@ -232,9 +232,6 @@ public class GameController : MonoBehaviour {
 		SS.GDB.EscHudShowSaveButton=false;
 
 		SS.MusicSystem.StartGameTrack();
-
-		//test
-		SaveLoadSys.ClearSaves("Save");
 	}
 
 	// Update is called once per frame
@@ -303,10 +300,7 @@ public class GameController : MonoBehaviour {
 		if (index<0||index>Floors.Count-1) return;
 		StartCoroutine(GotoFloorTimer(index));
 	}
-	/// <summary>
-	/// Sets the floor.
-	/// </summary>
-	/// <param name="index">Index.</param>
+
 	public void SetFloor(int index){                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
 		index=Mathf.Max(0,Mathf.Min(Floors.Count-1,index));
 
